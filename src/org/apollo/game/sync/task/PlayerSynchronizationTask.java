@@ -72,9 +72,10 @@ public final class PlayerSynchronizationTask extends SynchronizationTask
 
 		List<Player> localPlayers = player.getLocalPlayers();
 		int oldLocalPlayers = localPlayers.size();
-		List<SynchronizationSegment> segments = new ArrayList<SynchronizationSegment>();
+		List<SynchronizationSegment> segments = new ArrayList<>();
 
-		for( Iterator<Player> it = localPlayers.iterator(); it.hasNext(); ) {
+		Iterator<Player> it = localPlayers.iterator();
+		while( it.hasNext() ) {
 			Player p = it.next();
 			if( ! p.isActive() || p.isTeleporting() || p.getPosition().getLongestDelta( player.getPosition() ) > player.getViewingDistance() ) {
 				it.remove();
@@ -87,14 +88,16 @@ public final class PlayerSynchronizationTask extends SynchronizationTask
 		int added = 0;
 
 		CharacterRepository<Player> repository = World.getWorld().getPlayerRepository();
-		for( Iterator<Player> it = repository.iterator(); it.hasNext(); ) {
-			Player p = it.next();
+		// lambda does not work here
+		// due to variables needing to be final.
+		for( Player p: repository ) {
 			if( localPlayers.size() >= 255 ) {
 				player.flagExcessivePlayers();
 				break;
 			} else if( added >= NEW_PLAYERS_PER_CYCLE ) {
 				break;
 			}
+
 			// we do not check p.isActive() here, since if they are active they
 			// must be in the repository
 			if( p != player && p.getPosition().isWithinDistance( player.getPosition(), player.getViewingDistance() ) && ! localPlayers.contains( p ) ) {
@@ -108,8 +111,7 @@ public final class PlayerSynchronizationTask extends SynchronizationTask
 					blockSet.add( SynchronizationBlock.createAppearanceBlock( p ) );
 				}
 
-				// TODO: Should we do anything for the id?
-				segments.add( new AddCharacterSegment( blockSet, p, p.getIndex(), - 1, p.getPosition() ) );
+				segments.add( new AddCharacterSegment( blockSet, p, p.getIndex(), p.getIndex(), p.getPosition() ) );
 			}
 		}
 
