@@ -126,9 +126,9 @@ public final class ServiceManager
 	 */
 	public void setContext( ServerContext ctx )
 	{
-		for( Service s: services.values() ) {
-			s.setContext( ctx );
-		}
+		services.values().forEach( service -> {
+			service.setContext( ctx );
+		} );
 	}
 
 }

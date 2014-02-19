@@ -131,12 +131,12 @@ public final class GameService extends Service
 				unregistered ++ ;
 			}
 
-			for( Player p: world.getPlayerRepository() ) {
+			world.getPlayerRepository().forEach( p -> {
 				GameSession session = p.getSession();
 				if( session != null ) {
 					session.handlePendingEvents();
 				}
-			}
+			});
 
 			world.pulse();
 

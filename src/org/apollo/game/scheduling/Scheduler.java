@@ -1,11 +1,9 @@
 
 package org.apollo.game.scheduling;
 
-import java.util.ArrayDeque;
-import java.util.ArrayList;
+import java.util.Deque;
 import java.util.Iterator;
-import java.util.List;
-import java.util.Queue;
+import java.util.LinkedList;
 
 /**
  * A class which manages {@link ScheduledTask}s.
@@ -20,14 +18,9 @@ public final class Scheduler
 	private static final Scheduler INSTANCE = new Scheduler();
 
 	/**
-	 * A queue of new tasks that should be added.
+	 * A deque of currently active tasks.
 	 */
-	private final Queue<ScheduledTask> newTasks = new ArrayDeque<ScheduledTask>();
-
-	/**
-	 * A list of currently active tasks.
-	 */
-	private final List<ScheduledTask> tasks = new ArrayList<ScheduledTask>();
+	private final Deque<ScheduledTask> tasks = new LinkedList<ScheduledTask>();
 
 
 	/**
@@ -36,7 +29,7 @@ public final class Scheduler
 	 */
 	public void schedule( ScheduledTask task )
 	{
-		newTasks.add( task );
+		tasks.addFirst( task );
 	}
 
 
@@ -46,17 +39,14 @@ public final class Scheduler
 	 */
 	public void pulse()
 	{
-		ScheduledTask task;
-		while( ( task = newTasks.poll() ) != null ) {
-			tasks.add( task );
-		}
-
-		for( Iterator<ScheduledTask> it = tasks.iterator(); it.hasNext(); ) {
-			task = it.next();
-			task.pulse();
+		Iterator<ScheduledTask> it = tasks.iterator();
+		while( it.hasNext() ) {
+			ScheduledTask task = it.next();
 			if( ! task.isRunning() ) {
 				it.remove();
+				continue;
 			}
+			task.pulse();
 		}
 	}
 
