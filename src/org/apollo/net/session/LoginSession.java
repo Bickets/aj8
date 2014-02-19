@@ -1,3 +1,4 @@
+
 package org.apollo.net.session;
 
 import org.apollo.ServerContext;
@@ -24,102 +25,113 @@ import org.jboss.netty.channel.ChannelHandlerContext;
  * A login session.
  * @author Graham
  */
-public final class LoginSession extends Session {
+public final class LoginSession extends Session
+{
 
-    /**
-     * The context of the {@link ApolloHandler}.
-     */
-    private final ChannelHandlerContext channelContext;
+	/**
+	 * The context of the {@link ApolloHandler}.
+	 */
+	private final ChannelHandlerContext channelContext;
 
-    /**
-     * The server context.
-     */
-    private final ServerContext serverContext;
+	/**
+	 * The server context.
+	 */
+	private final ServerContext serverContext;
 
-    /**
-     * Creates a login session for the specified channel.
-     * @param channel The channel.
-     * @param channelContext The context of the {@link ApolloHandler}.
-     * @param serverContext The server context.
-     */
-    public LoginSession(Channel channel, ChannelHandlerContext channelContext, ServerContext serverContext) {
-        super(channel);
-        this.channelContext = channelContext;
-        this.serverContext = serverContext;
-    }
 
-    @Override
-    public void messageReceived(Object message) throws Exception {
-        if (message.getClass() == LoginRequest.class) {
-            handleLoginRequest((LoginRequest) message);
-        }
-    }
+	/**
+	 * Creates a login session for the specified channel.
+	 * @param channel The channel.
+	 * @param channelContext The context of the {@link ApolloHandler}.
+	 * @param serverContext The server context.
+	 */
+	public LoginSession( Channel channel, ChannelHandlerContext channelContext, ServerContext serverContext )
+	{
+		super( channel );
+		this.channelContext = channelContext;
+		this.serverContext = serverContext;
+	}
 
-    /**
-     * Handles a login request.
-     * @param request The login request.
-     */
-    private void handleLoginRequest(LoginRequest request) {
-        LoginService loginService = serverContext.getService(LoginService.class);
-        loginService.submitLoadRequest(this, request);
-    }
 
-    /**
-     * Handles a response from the login service.
-     * @param request The request this response corresponds to.
-     * @param response The response.
-     */
-    public void handlePlayerLoaderResponse(LoginRequest request, PlayerLoaderResponse response) {
-        GameService gameService = serverContext.getService(GameService.class);
-        Channel channel = getChannel();
+	@Override
+	public void messageReceived( Object message ) throws Exception
+	{
+		if( message.getClass() == LoginRequest.class ) {
+			handleLoginRequest( ( LoginRequest )message );
+		}
+	}
 
-        int status = response.getStatus();
-        Player player = response.getPlayer();
-        int rights = player == null ? 0 : player.getPrivilegeLevel().toInteger();
-        boolean log = false;
 
-        if (player != null) {
-            GameSession session = new GameSession(channel, serverContext, player);
-            player.setSession(session, false /* TODO */);
+	/**
+	 * Handles a login request.
+	 * @param request The login request.
+	 */
+	private void handleLoginRequest( LoginRequest request )
+	{
+		LoginService loginService = serverContext.getService( LoginService.class );
+		loginService.submitLoadRequest( this, request );
+	}
 
-            RegistrationStatus registrationStatus = gameService.registerPlayer(player);
 
-            if (registrationStatus != RegistrationStatus.OK) {
-                player = null;
-                if (registrationStatus == RegistrationStatus.ALREADY_ONLINE) {
-                    status = LoginConstants.STATUS_ACCOUNT_ONLINE;
-                } else {
-                    status = LoginConstants.STATUS_SERVER_FULL;
-                }
-                rights = 0;
-            }
-        }
+	/**
+	 * Handles a response from the login service.
+	 * @param request The request this response corresponds to.
+	 * @param response The response.
+	 */
+	public void handlePlayerLoaderResponse( LoginRequest request, PlayerLoaderResponse response )
+	{
+		GameService gameService = serverContext.getService( GameService.class );
+		Channel channel = getChannel();
 
-        ChannelFuture future = channel.write(new LoginResponse(status, rights, log));
+		int status = response.getStatus();
+		Player player = response.getPlayer();
+		int rights = player == null ? 0: player.getPrivilegeLevel().toInteger();
+		boolean log = false;
 
-        destroy();
+		if( player != null ) {
+			GameSession session = new GameSession( channel, serverContext, player );
+			player.setSession( session, false /* TODO */);
 
-        if (player != null) {
-            IsaacRandomPair randomPair = request.getRandomPair();
+			RegistrationStatus registrationStatus = gameService.registerPlayer( player );
 
-            channel.getPipeline().addFirst("eventEncoder", new GameEventEncoder());
-            channel.getPipeline().addBefore("eventEncoder", "gameEncoder", new GamePacketEncoder(randomPair.getEncodingRandom()));
+			if( registrationStatus != RegistrationStatus.OK ) {
+				player = null;
+				if( registrationStatus == RegistrationStatus.ALREADY_ONLINE ) {
+					status = LoginConstants.STATUS_ACCOUNT_ONLINE;
+				} else {
+					status = LoginConstants.STATUS_SERVER_FULL;
+				}
+				rights = 0;
+			}
+		}
 
-            channel.getPipeline().addBefore("handler", "gameDecoder", new GamePacketDecoder(randomPair.getDecodingRandom()));
-            channel.getPipeline().addAfter("gameDecoder", "eventDecoder", new GameEventDecoder());
+		ChannelFuture future = channel.write( new LoginResponse( status, rights, log ) );
 
-            channel.getPipeline().remove("loginDecoder");
-            channel.getPipeline().remove("loginEncoder");
+		destroy();
 
-            channelContext.setAttachment(player.getSession());
-        } else {
-            future.addListener(ChannelFutureListener.CLOSE);
-        }
-    }
+		if( player != null ) {
+			IsaacRandomPair randomPair = request.getRandomPair();
 
-    @Override
-    public void destroy() {
+			channel.getPipeline().addFirst( "eventEncoder", new GameEventEncoder() );
+			channel.getPipeline().addBefore( "eventEncoder", "gameEncoder", new GamePacketEncoder( randomPair.getEncodingRandom() ) );
 
-    }
+			channel.getPipeline().addBefore( "handler", "gameDecoder", new GamePacketDecoder( randomPair.getDecodingRandom() ) );
+			channel.getPipeline().addAfter( "gameDecoder", "eventDecoder", new GameEventDecoder() );
+
+			channel.getPipeline().remove( "loginDecoder" );
+			channel.getPipeline().remove( "loginEncoder" );
+
+			channelContext.setAttachment( player.getSession() );
+		} else {
+			future.addListener( ChannelFutureListener.CLOSE );
+		}
+	}
+
+
+	@Override
+	public void destroy()
+	{
+
+	}
 
 }

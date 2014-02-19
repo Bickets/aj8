@@ -1,3 +1,4 @@
+
 package org.apollo.io.player;
 
 import org.apollo.game.model.Player;
@@ -8,13 +9,14 @@ import org.apollo.game.model.Player;
  * SQL savers.
  * @author Graham
  */
-public interface PlayerSaver {
+public interface PlayerSaver
+{
 
-    /**
-     * Saves a player.
-     * @param player The player to save.
-     * @throws Exception if an error occurs.
-     */
-    void savePlayer(Player player) throws Exception;
+	/**
+	 * Saves a player.
+	 * @param player The player to save.
+	 * @throws Exception if an error occurs.
+	 */
+	void savePlayer( Player player ) throws Exception;
 
 }

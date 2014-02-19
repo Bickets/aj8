@@ -1,3 +1,4 @@
+
 package org.apollo.game.event.handler;
 
 import org.apollo.game.event.EventHandler;
@@ -10,30 +11,32 @@ import org.apollo.game.model.WalkingQueue;
  * A handler for the {@link WalkEvent}.
  * @author Graham
  */
-public final class WalkEventHandler extends EventHandler<WalkEvent> {
+public final class WalkEventHandler extends EventHandler<WalkEvent>
+{
 
-    @Override
-    public void handle(Player player, WalkEvent event) {
-        WalkingQueue queue = player.getWalkingQueue();
+	@Override
+	public void handle( Player player, WalkEvent event )
+	{
+		WalkingQueue queue = player.getWalkingQueue();
 
-        Position[] steps = event.getSteps();
-        for (int index = 0; index < steps.length; index++) {
-            Position step = steps[index];
-            if (index == 0) {
-                if (!queue.addFirstStep(step)) {
-                    return; /* ignore packet */
-                }
-            } else {
-                queue.addStep(step);
-            }
-        }
+		Position[] steps = event.getSteps();
+		for( int index = 0; index < steps.length; index ++ ) {
+			Position step = steps[ index ];
+			if( index == 0 ) {
+				if( ! queue.addFirstStep( step ) ) {
+					return; /* ignore packet */
+				}
+			} else {
+				queue.addStep( step );
+			}
+		}
 
-        queue.setRunningQueue(event.isRunning());
+		queue.setRunningQueue( event.isRunning() );
 
-        if (queue.size() > 0) {
-            player.stopAction();
-            player.getInterfaceSet().close();
-        }
-    }
+		if( queue.size() > 0 ) {
+			player.stopAction();
+			player.getInterfaceSet().close();
+		}
+	}
 
 }

@@ -1,3 +1,4 @@
+
 package org.apollo.io.player;
 
 import org.apollo.security.PlayerCredentials;
@@ -8,14 +9,15 @@ import org.apollo.security.PlayerCredentials;
  * SQL loaders.
  * @author Graham
  */
-public interface PlayerLoader {
+public interface PlayerLoader
+{
 
-    /**
-     * Loads a player.
-     * @param credentials The players credentials.
-     * @return The {@link PlayerLoaderResponse}.
-     * @throws Exception if an error occurs.
-     */
-    PlayerLoaderResponse loadPlayer(PlayerCredentials credentials) throws Exception;
+	/**
+	 * Loads a player.
+	 * @param credentials The players credentials.
+	 * @return The {@link PlayerLoaderResponse}.
+	 * @throws Exception if an error occurs.
+	 */
+	PlayerLoaderResponse loadPlayer( PlayerCredentials credentials ) throws Exception;
 
 }

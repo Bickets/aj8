@@ -1,3 +1,4 @@
+
 package org.apollo.game.sync.task;
 
 import java.util.ArrayList;
@@ -16,67 +17,72 @@ import org.apollo.game.sync.seg.SynchronizationSegment;
 import org.apollo.util.CharacterRepository;
 
 /**
- * A {@link SynchronizationTask} which synchronizes the specified {@link Mob} for a {@link Player}. 
+ * A {@link SynchronizationTask} which synchronizes the specified {@link Mob} for a {@link Player}.
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public final class MobSynchronizationTask extends SynchronizationTask {
+public final class MobSynchronizationTask extends SynchronizationTask
+{
 
-    /**
-     * The maximum number of mobs to load per cycle. This prevents the update
-     * packet from becoming too large (the client uses a 5000 byte buffer) and
-     * also stops old spec PCs from crashing when they login or teleport.
-     */
-    private static final int NEW_MOBS_PER_CYCLE = 20;
+	/**
+	 * The maximum number of mobs to load per cycle. This prevents the update
+	 * packet from becoming too large (the client uses a 5000 byte buffer) and
+	 * also stops old spec PCs from crashing when they login or teleport.
+	 */
+	private static final int NEW_MOBS_PER_CYCLE = 20;
 
-    /**
-     * The player.
-     */
-    private final Player player;
+	/**
+	 * The player.
+	 */
+	private final Player player;
 
-    /**
-     * Constructs a new {@link MobSynchronizationTask}.
-     * @param player The player.
-     */
-    public MobSynchronizationTask(Player player) {
-        this.player = player;
-    }
 
-    @Override
-    public void run() {
-        SynchronizationBlockSet blockSet = player.getBlockSet();
-        List<Mob> localMobs = player.getLocalMobs();
-        int oldLocalMobs = localMobs.size();
-        List<SynchronizationSegment> segments = new ArrayList<SynchronizationSegment>();
+	/**
+	 * Constructs a new {@link MobSynchronizationTask}.
+	 * @param player The player.
+	 */
+	public MobSynchronizationTask( Player player )
+	{
+		this.player = player;
+	}
 
-        for (Iterator<Mob> it = localMobs.iterator(); it.hasNext();) {
-            Mob mob = it.next();
-            if (!mob.isActive() || mob.isTeleporting() || mob.getPosition().getLongestDelta(player.getPosition()) > player.getViewingDistance()) {
-                it.remove();
-                segments.add(new RemoveCharacterSegment());
-            } else {
-                segments.add(new MovementSegment(mob.getBlockSet(), mob.getDirections()));
-            }
-        }
 
-        int added = 0;
+	@Override
+	public void run()
+	{
+		SynchronizationBlockSet blockSet = player.getBlockSet();
+		List<Mob> localMobs = player.getLocalMobs();
+		int oldLocalMobs = localMobs.size();
+		List<SynchronizationSegment> segments = new ArrayList<SynchronizationSegment>();
 
-        CharacterRepository<Mob> repository = World.getWorld().getMobRepository();
-        for (Mob mob : repository) {
-            if (localMobs.size() >= 255) {
-                player.flagExcessiveMobs();
-                break;
-            } else if (added >= NEW_MOBS_PER_CYCLE) {
-                break;
-            }
+		for( Iterator<Mob> it = localMobs.iterator(); it.hasNext(); ) {
+			Mob mob = it.next();
+			if( ! mob.isActive() || mob.isTeleporting() || mob.getPosition().getLongestDelta( player.getPosition() ) > player.getViewingDistance() ) {
+				it.remove();
+				segments.add( new RemoveCharacterSegment() );
+			} else {
+				segments.add( new MovementSegment( mob.getBlockSet(), mob.getDirections() ) );
+			}
+		}
 
-            if (mob.getPosition().isWithinDistance(player.getPosition(), player.getViewingDistance()) && !localMobs.contains(mob)) {
-                localMobs.add(mob);
-                added++;
-                blockSet = mob.getBlockSet();
-                segments.add(new AddCharacterSegment(blockSet, mob, mob.getIndex(), mob.getDefinition().getId(), mob.getPosition()));
-            }
-        }
-        player.send(new MobSynchronizationEvent(player.getPosition(), segments, oldLocalMobs));
-    }
+		int added = 0;
+
+		CharacterRepository<Mob> repository = World.getWorld().getMobRepository();
+		for( Mob mob: repository ) {
+			if( localMobs.size() >= 255 ) {
+				player.flagExcessiveMobs();
+				break;
+			} else if( added >= NEW_MOBS_PER_CYCLE ) {
+				break;
+			}
+
+			if( mob.getPosition().isWithinDistance( player.getPosition(), player.getViewingDistance() ) && ! localMobs.contains( mob ) ) {
+				localMobs.add( mob );
+				added ++ ;
+				blockSet = mob.getBlockSet();
+				segments.add( new AddCharacterSegment( blockSet, mob, mob.getIndex(), mob.getDefinition().getId(), mob.getPosition() ) );
+			}
+		}
+		player.send( new MobSynchronizationEvent( player.getPosition(), segments, oldLocalMobs ) );
+	}
 
 }

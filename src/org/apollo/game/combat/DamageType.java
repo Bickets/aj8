@@ -1,8 +1,7 @@
 
 package org.apollo.game.combat;
 
-public enum DamageType
-{
+public enum DamageType {
 
 	MELEE_DAMAGE( 0 ),
 

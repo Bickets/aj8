@@ -1,3 +1,4 @@
+
 package org.apollo.net.codec.handshake;
 
 import org.apollo.net.codec.login.LoginDecoder;
@@ -15,48 +16,54 @@ import org.jboss.netty.handler.codec.frame.FrameDecoder;
  * pipeline as appropriate for the selected service.
  * @author Graham
  */
-public final class HandshakeDecoder extends FrameDecoder {
+public final class HandshakeDecoder extends FrameDecoder
+{
 
-    /**
-     * Creates the handshake frame decoder.
-     */
-    public HandshakeDecoder() {
-        super(true);
-    }
+	/**
+	 * Creates the handshake frame decoder.
+	 */
+	public HandshakeDecoder()
+	{
+		super( true );
+	}
 
-    @Override
-    protected Object decode(ChannelHandlerContext ctx, Channel channel, ChannelBuffer buffer) throws Exception {
-        if (buffer.readable()) {
-            int id = buffer.readUnsignedByte();
 
-            switch (id) {
-            case HandshakeConstants.SERVICE_GAME:
-                ctx.getPipeline().addFirst("loginEncoder", new LoginEncoder());
-                ctx.getPipeline().addBefore("handler", "loginDecoder", new LoginDecoder());
-                break;
-            case HandshakeConstants.SERVICE_UPDATE:
-                ctx.getPipeline().addFirst("updateEncoder", new UpdateEncoder());
-                ctx.getPipeline().addBefore("handler", "updateDecoder", new UpdateDecoder());
-                ChannelBuffer buf = ChannelBuffers.buffer(8);
-                buf.writeLong(0);
-                channel.write(buf); // TODO should it be here?
-                break;
-            default:
-                throw new Exception("Invalid service id");
-            }
+	@Override
+	protected Object decode( ChannelHandlerContext ctx, Channel channel, ChannelBuffer buffer ) throws Exception
+	{
+		if( buffer.readable() ) {
+			int id = buffer.readUnsignedByte();
 
-            ctx.getPipeline().remove(this);
+			switch( id ) {
+				case HandshakeConstants.SERVICE_GAME:
+					ctx.getPipeline().addFirst( "loginEncoder", new LoginEncoder() );
+					ctx.getPipeline().addBefore( "handler", "loginDecoder", new LoginDecoder() );
+					break;
+				case HandshakeConstants.SERVICE_UPDATE:
+					ctx.getPipeline().addFirst( "updateEncoder", new UpdateEncoder() );
+					ctx.getPipeline().addBefore( "handler", "updateDecoder", new UpdateDecoder() );
+					ChannelBuffer buf = ChannelBuffers.buffer( 8 );
+					buf.writeLong( 0 );
+					channel.write( buf ); // TODO should it be here?
+					break;
+				default:
+					throw new Exception( "Invalid service id" );
+			}
 
-            HandshakeMessage message = new HandshakeMessage(id);
+			ctx.getPipeline().remove( this );
 
-            if (buffer.readable()) {
-                return new Object[] { message, buffer.readBytes(buffer.readableBytes()) };
-            } else {
-                return message;
-            }
+			HandshakeMessage message = new HandshakeMessage( id );
 
-        }
-        return null;
-    }
+			if( buffer.readable() ) {
+				return new Object[] {
+					message, buffer.readBytes( buffer.readableBytes() )
+				};
+			} else {
+				return message;
+			}
+
+		}
+		return null;
+	}
 
 }

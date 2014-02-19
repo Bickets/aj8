@@ -1,3 +1,4 @@
+
 package org.apollo.game.event.handler;
 
 import org.apollo.game.event.EventHandler;
@@ -8,11 +9,13 @@ import org.apollo.game.model.Player;
  * An {@link EventHandler} for the {@link EnteredAmountEvent}.
  * @author Graham
  */
-public final class EnteredAmountEventHandler extends EventHandler<EnteredAmountEvent> {
+public final class EnteredAmountEventHandler extends EventHandler<EnteredAmountEvent>
+{
 
-    @Override
-    public void handle(Player player, EnteredAmountEvent event) {
-        player.getInterfaceSet().enteredAmount(event.getAmount());
-    }
+	@Override
+	public void handle( Player player, EnteredAmountEvent event )
+	{
+		player.getInterfaceSet().enteredAmount( event.getAmount() );
+	}
 
 }

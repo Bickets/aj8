@@ -4,5 +4,6 @@
  * designed for Apollo to use itself - unlike Netty's which are purely
  * designed for networking.
  */
+
 package org.apollo.net.session;
 

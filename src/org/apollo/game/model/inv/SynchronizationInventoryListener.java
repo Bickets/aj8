@@ -1,3 +1,4 @@
+
 package org.apollo.game.model.inv;
 
 import org.apollo.game.event.impl.UpdateItemsEvent;
@@ -12,46 +13,53 @@ import org.apollo.game.model.SlottedItem;
  * inventory with the client's.
  * @author Graham
  */
-public final class SynchronizationInventoryListener extends InventoryAdapter {
+public final class SynchronizationInventoryListener extends InventoryAdapter
+{
 
-    /**
-     * The inventory interface id.
-     */
-    public static final int INVENTORY_ID = 3214;
+	/**
+	 * The inventory interface id.
+	 */
+	public static final int INVENTORY_ID = 3214;
 
-    /**
-     * The equipment interface id.
-     */
-    public static final int EQUIPMENT_ID = 1688;
+	/**
+	 * The equipment interface id.
+	 */
+	public static final int EQUIPMENT_ID = 1688;
 
-    /**
-     * The player.
-     */
-    private final Player player;
+	/**
+	 * The player.
+	 */
+	private final Player player;
 
-    /**
-     * The interface id.
-     */
-    private final int interfaceId;
+	/**
+	 * The interface id.
+	 */
+	private final int interfaceId;
 
-    /**
-     * Creates the syncrhonization inventory listener.
-     * @param player The player.
-     * @param interfaceId The interface id.
-     */
-    public SynchronizationInventoryListener(Player player, int interfaceId) {
-        this.player = player;
-        this.interfaceId = interfaceId;
-    }
 
-    @Override
-    public void itemUpdated(Inventory inventory, int slot, Item item) {
-        player.send(new UpdateSlottedItemsEvent(interfaceId, new SlottedItem(slot, item)));
-    }
+	/**
+	 * Creates the syncrhonization inventory listener.
+	 * @param player The player.
+	 * @param interfaceId The interface id.
+	 */
+	public SynchronizationInventoryListener( Player player, int interfaceId )
+	{
+		this.player = player;
+		this.interfaceId = interfaceId;
+	}
 
-    @Override
-    public void itemsUpdated(Inventory inventory) {
-        player.send(new UpdateItemsEvent(interfaceId, inventory.getItems()));
-    }
+
+	@Override
+	public void itemUpdated( Inventory inventory, int slot, Item item )
+	{
+		player.send( new UpdateSlottedItemsEvent( interfaceId, new SlottedItem( slot, item ) ) );
+	}
+
+
+	@Override
+	public void itemsUpdated( Inventory inventory )
+	{
+		player.send( new UpdateItemsEvent( interfaceId, inventory.getItems() ) );
+	}
 
 }

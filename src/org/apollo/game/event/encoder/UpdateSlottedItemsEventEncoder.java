@@ -1,3 +1,4 @@
+
 package org.apollo.game.event.encoder;
 
 import org.apollo.game.event.EventEncoder;
@@ -13,37 +14,41 @@ import org.apollo.net.meta.PacketType;
  * An {@link EventEncoder} for the {@link UpdateSlottedItemsEvent}.
  * @author Graham
  */
-public final class UpdateSlottedItemsEventEncoder extends EventEncoder<UpdateSlottedItemsEvent> {
+public final class UpdateSlottedItemsEventEncoder extends EventEncoder<UpdateSlottedItemsEvent>
+{
 
-    public UpdateSlottedItemsEventEncoder(Class<UpdateSlottedItemsEvent> clazz) {
-        super(clazz);
-    }
+	public UpdateSlottedItemsEventEncoder( Class<UpdateSlottedItemsEvent> clazz )
+	{
+		super( clazz );
+	}
 
-    @Override
-    public GamePacket encode(UpdateSlottedItemsEvent event) {
-        GamePacketBuilder builder = new GamePacketBuilder(34, PacketType.VARIABLE_SHORT);
-        SlottedItem[] items = event.getSlottedItems();
 
-        builder.put(DataType.SHORT, event.getInterfaceId());
+	@Override
+	public GamePacket encode( UpdateSlottedItemsEvent event )
+	{
+		GamePacketBuilder builder = new GamePacketBuilder( 34, PacketType.VARIABLE_SHORT );
+		SlottedItem[] items = event.getSlottedItems();
 
-        for (SlottedItem slottedItem : items) {
-            builder.putSmart(slottedItem.getSlot());
+		builder.put( DataType.SHORT, event.getInterfaceId() );
 
-            Item item = slottedItem.getItem();
-            int id = item == null ? -1 : item.getId();
-            int amount = item == null ? 0 : item.getAmount();
+		for( SlottedItem slottedItem: items ) {
+			builder.putSmart( slottedItem.getSlot() );
 
-            builder.put(DataType.SHORT, id + 1);
+			Item item = slottedItem.getItem();
+			int id = item == null ? - 1: item.getId();
+			int amount = item == null ? 0: item.getAmount();
 
-            if (amount > 254) {
-                builder.put(DataType.BYTE, 255);
-                builder.put(DataType.INT, amount);
-            } else {
-                builder.put(DataType.BYTE, amount);
-            }
-        }
+			builder.put( DataType.SHORT, id + 1 );
 
-        return builder.toGamePacket();
-    }
+			if( amount > 254 ) {
+				builder.put( DataType.BYTE, 255 );
+				builder.put( DataType.INT, amount );
+			} else {
+				builder.put( DataType.BYTE, amount );
+			}
+		}
+
+		return builder.toGamePacket();
+	}
 
 }

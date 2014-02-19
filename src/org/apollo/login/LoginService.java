@@ -1,3 +1,4 @@
+
 package org.apollo.login;
 
 import java.io.File;
@@ -24,99 +25,110 @@ import org.codehaus.jackson.JsonToken;
  * The {@link LoginService} manages {@link LoginRequest}s.
  * @author Graham
  */
-public final class LoginService extends Service {
+public final class LoginService extends Service
+{
 
-    /**
-     * The {@link ExecutorService} to which workers are submitted.
-     */
-    private final ExecutorService executor = Executors.newCachedThreadPool(new NamedThreadFactory("LoginService"));
+	/**
+	 * The {@link ExecutorService} to which workers are submitted.
+	 */
+	private final ExecutorService executor = Executors.newCachedThreadPool( new NamedThreadFactory( "LoginService" ) );
 
-    /**
-     * The current {@link PlayerLoader}.
-     */
-    private PlayerLoader loader;
+	/**
+	 * The current {@link PlayerLoader}.
+	 */
+	private PlayerLoader loader;
 
-    /**
-     * The current {@link PlayerSaver}.
-     */
-    private PlayerSaver saver;
+	/**
+	 * The current {@link PlayerSaver}.
+	 */
+	private PlayerSaver saver;
 
-    /**
-     * Creates the login service.
-     * @throws Exception if an error occurs.
-     */
-    public LoginService() throws Exception {
-        init();
-    }
 
-    /**
-     * Initialises the login service.
-     * @throws Exception if an error occurs.
-     */
-    private void init() throws Exception {
-        File file = new File("data/", "login.json");
-        JsonFactory factory = new JsonFactory();
-        JsonParser parser = factory.createJsonParser(file);
+	/**
+	 * Creates the login service.
+	 * @throws Exception if an error occurs.
+	 */
+	public LoginService() throws Exception
+	{
+		init();
+	}
 
-        if (parser.nextToken() != JsonToken.START_OBJECT) {
-            throw new IOException();
-        }
 
-        while (parser.nextToken() != JsonToken.END_OBJECT) {
-            String name = parser.getCurrentName();
+	/**
+	 * Initialises the login service.
+	 * @throws Exception if an error occurs.
+	 */
+	private void init() throws Exception
+	{
+		File file = new File( "data/", "login.json" );
+		JsonFactory factory = new JsonFactory();
+		JsonParser parser = factory.createJsonParser( file );
 
-            switch (name) {
-            case "loader":
-                if (parser.nextToken() != JsonToken.START_ARRAY) {
-                    throw new IOException();
-                }
+		if( parser.nextToken() != JsonToken.START_OBJECT ) {
+			throw new IOException();
+		}
 
-                while (parser.nextToken() != JsonToken.END_ARRAY) {
-                    Class<?> loaderClazz = Class.forName(parser.getText());
-                    loader = (PlayerLoader) loaderClazz.newInstance();
-                }
-                break;
-            case "saver":
-                if (parser.nextToken() != JsonToken.START_ARRAY) {
-                    throw new IOException();
-                }
+		while( parser.nextToken() != JsonToken.END_OBJECT ) {
+			String name = parser.getCurrentName();
 
-                while (parser.nextToken() != JsonToken.END_ARRAY) {
-                    Class<?> saverClazz = Class.forName(parser.getText());
-                    saver = (PlayerSaver) saverClazz.newInstance();
-                }
-                break;
-            }
-        }
+			switch( name ) {
+				case "loader":
+					if( parser.nextToken() != JsonToken.START_ARRAY ) {
+						throw new IOException();
+					}
 
-    }
+					while( parser.nextToken() != JsonToken.END_ARRAY ) {
+						Class< ? > loaderClazz = Class.forName( parser.getText() );
+						loader = ( PlayerLoader )loaderClazz.newInstance();
+					}
+					break;
+				case "saver":
+					if( parser.nextToken() != JsonToken.START_ARRAY ) {
+						throw new IOException();
+					}
 
-    /**
-     * Submits a login request.
-     * @param session The session submitting this request.
-     * @param request The login request.
-     */
-    public void submitLoadRequest(LoginSession session, LoginRequest request) {
-        if (GameConstants.VERSION != request.getCurrentVersion()) {
-            // TODO check archive 0 CRCs
-            session.handlePlayerLoaderResponse(request, new PlayerLoaderResponse(LoginConstants.STATUS_GAME_UPDATED));
-        } else {
-            executor.submit(new PlayerLoaderWorker(loader, session, request));
-        }
-    }
+					while( parser.nextToken() != JsonToken.END_ARRAY ) {
+						Class< ? > saverClazz = Class.forName( parser.getText() );
+						saver = ( PlayerSaver )saverClazz.newInstance();
+					}
+					break;
+			}
+		}
 
-    /**
-     * Submits a save request.
-     * @param session The session submitting this request.
-     * @param player The player to save.
-     */
-    public void submitSaveRequest(GameSession session, Player player) {
-        executor.submit(new PlayerSaverWorker(saver, session, player));
-    }
+	}
 
-    @Override
-    public void start() {
-        /* empty - here for consistency with other services */
-    }
+
+	/**
+	 * Submits a login request.
+	 * @param session The session submitting this request.
+	 * @param request The login request.
+	 */
+	public void submitLoadRequest( LoginSession session, LoginRequest request )
+	{
+		if( GameConstants.VERSION != request.getCurrentVersion() ) {
+			// TODO check archive 0 CRCs
+			session.handlePlayerLoaderResponse( request, new PlayerLoaderResponse( LoginConstants.STATUS_GAME_UPDATED ) );
+		} else {
+			executor.submit( new PlayerLoaderWorker( loader, session, request ) );
+		}
+	}
+
+
+	/**
+	 * Submits a save request.
+	 * @param session The session submitting this request.
+	 * @param player The player to save.
+	 */
+	public void submitSaveRequest( GameSession session, Player player )
+	{
+		executor.submit( new PlayerSaverWorker( saver, session, player ) );
+	}
+
+
+	@Override
+	public void start()
+	{
+		/* empty - here for consistency with other services */
+	}
 
 }

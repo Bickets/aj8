@@ -1,3 +1,4 @@
+
 package org.apollo.game.event.encoder;
 
 import org.apollo.game.event.EventEncoder;
@@ -11,18 +12,22 @@ import org.apollo.net.codec.game.GamePacketBuilder;
  * An {@link EventEncoder} for the {@link RegionChangeEvent}.
  * @author Graham
  */
-public final class RegionChangeEventEncoder extends EventEncoder<RegionChangeEvent> {
+public final class RegionChangeEventEncoder extends EventEncoder<RegionChangeEvent>
+{
 
-    public RegionChangeEventEncoder(Class<RegionChangeEvent> clazz) {
-        super(clazz);
-    }
+	public RegionChangeEventEncoder( Class<RegionChangeEvent> clazz )
+	{
+		super( clazz );
+	}
 
-    @Override
-    public GamePacket encode(RegionChangeEvent event) {
-        GamePacketBuilder builder = new GamePacketBuilder(73);
-        builder.put(DataType.SHORT, DataTransformation.ADD, event.getPosition().getCentralRegionX());
-        builder.put(DataType.SHORT, event.getPosition().getCentralRegionY());
-        return builder.toGamePacket();
-    }
+
+	@Override
+	public GamePacket encode( RegionChangeEvent event )
+	{
+		GamePacketBuilder builder = new GamePacketBuilder( 73 );
+		builder.put( DataType.SHORT, DataTransformation.ADD, event.getPosition().getCentralRegionX() );
+		builder.put( DataType.SHORT, event.getPosition().getCentralRegionY() );
+		return builder.toGamePacket();
+	}
 
 }

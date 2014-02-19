@@ -1,3 +1,4 @@
+
 package org.apollo.game.event.impl;
 
 import org.apollo.game.event.Event;
@@ -7,6 +8,7 @@ import org.apollo.game.event.Event;
  * interface.
  * @author Graham
  */
-public final class EnterAmountEvent extends Event {
+public final class EnterAmountEvent extends Event
+{
 
 }

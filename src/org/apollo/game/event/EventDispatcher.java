@@ -1,3 +1,4 @@
+
 package org.apollo.game.event;
 
 import java.util.HashMap;
@@ -35,84 +36,95 @@ import org.apollo.game.model.Player;
  * Dispatches {@link Event}'s.
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public final class EventDispatcher {
+public final class EventDispatcher
+{
 
-    /**
-     * The singleton instance.
-     */
-    private static final EventDispatcher INSTANCE = new EventDispatcher();
+	/**
+	 * The singleton instance.
+	 */
+	private static final EventDispatcher INSTANCE = new EventDispatcher();
 
-    /**
-     * An instance of logger, used to print messages to the console.
-     */
-    private static final Logger logger = Logger.getLogger(EventDispatcher.class.getCanonicalName());
+	/**
+	 * An instance of logger, used to print messages to the console.
+	 */
+	private static final Logger logger = Logger.getLogger( EventDispatcher.class.getCanonicalName() );
 
-    /**
-     * A map of event handlers.
-     */
-    private final Map<Class<?>, EventHandler<?>> handlers = new HashMap<>();
+	/**
+	 * A map of event handlers.
+	 */
+	private final Map<Class< ? >, EventHandler< ? >> handlers = new HashMap<>();
 
-    /**
-     * Constructs a new {@link EventDispatcher}.
-     */
-    private EventDispatcher() {
-        init();
-    }
 
-    /**
-     * Registers all of the event handlers.
-     */
-    private void init() {
-        register(KeepAliveEvent.class, new KeepAliveEventHandler());
-        register(CharacterDesignEvent.class, new CharacterDesignEventHandler());
-        register(WalkEvent.class, new WalkEventHandler());
-        register(ChatEvent.class, new ChatEventHandler());
-        register(ButtonEvent.class, new ButtonEventHandler());
-        register(CommandEvent.class, new CommandEventHandler());
-        register(SwitchItemEvent.class, new SwitchItemEventHandler());
-        register(ObjectActionEvent.class, new ObjectEventHandler());
-        register(EquipEvent.class, new EquipEventHandler());
-        register(ItemActionEvent.class, new ItemActionEventHandler());
-        register(ClosedInterfaceEvent.class, new ClosedInterfaceEventHandler());
-        register(EnteredAmountEvent.class, new EnteredAmountEventHandler());
-    }
+	/**
+	 * Constructs a new {@link EventDispatcher}.
+	 */
+	private EventDispatcher()
+	{
+		init();
+	}
 
-    /**
-     * Dispatches an event.
-     * @param player	The player to dispatch for.
-     * @param event	The event to dispatch.
-     */
-    @SuppressWarnings("unchecked")
-    public void dispatch(Player player, Event event) {
-        EventHandler<Event> handler = (EventHandler<Event>) handlers.get(event.getClass());
 
-        if (handler == null) {
-            logger.warning("Null handler for event: " + event.getClass().getName() + ".");
-            return;
-        }
+	/**
+	 * Registers all of the event handlers.
+	 */
+	private void init()
+	{
+		register( KeepAliveEvent.class, new KeepAliveEventHandler() );
+		register( CharacterDesignEvent.class, new CharacterDesignEventHandler() );
+		register( WalkEvent.class, new WalkEventHandler() );
+		register( ChatEvent.class, new ChatEventHandler() );
+		register( ButtonEvent.class, new ButtonEventHandler() );
+		register( CommandEvent.class, new CommandEventHandler() );
+		register( SwitchItemEvent.class, new SwitchItemEventHandler() );
+		register( ObjectActionEvent.class, new ObjectEventHandler() );
+		register( EquipEvent.class, new EquipEventHandler() );
+		register( ItemActionEvent.class, new ItemActionEventHandler() );
+		register( ClosedInterfaceEvent.class, new ClosedInterfaceEventHandler() );
+		register( EnteredAmountEvent.class, new EnteredAmountEventHandler() );
+	}
 
-        try {
-            handler.handle(player, event);
-        } catch (Throwable t) {
-            logger.log(Level.SEVERE, "Error processing packet.", t);
-        }
-    }
 
-    /**
-     * Registers a handler.
-     * @param clazz	The event class.
-     * @param handler	The handler.
-     */
-    private <T extends Event> void register(Class<T> clazz, EventHandler<T> handler) {
-        handlers.put(clazz, handler);
-    }
+	/**
+	 * Dispatches an event.
+	 * @param player The player to dispatch for.
+	 * @param event The event to dispatch.
+	 */
+	@SuppressWarnings( "unchecked" )
+	public void dispatch( Player player, Event event )
+	{
+		EventHandler<Event> handler = ( EventHandler<Event> )handlers.get( event.getClass() );
 
-    /**
-     * Returns the singleton instance of this class.
-     * @return	The singleton instance
-     */
-    public static EventDispatcher getInstance() {
-        return INSTANCE;
-    }
+		if( handler == null ) {
+			logger.warning( "Null handler for event: " + event.getClass().getName() + "." );
+			return;
+		}
+
+		try {
+			handler.handle( player, event );
+		} catch( Throwable t ) {
+			logger.log( Level.SEVERE, "Error processing packet.", t );
+		}
+	}
+
+
+	/**
+	 * Registers a handler.
+	 * @param clazz The event class.
+	 * @param handler The handler.
+	 */
+	private <T extends Event> void register( Class<T> clazz, EventHandler<T> handler )
+	{
+		handlers.put( clazz, handler );
+	}
+
+
+	/**
+	 * Returns the singleton instance of this class.
+	 * @return The singleton instance
+	 */
+	public static EventDispatcher getInstance()
+	{
+		return INSTANCE;
+	}
 
 }

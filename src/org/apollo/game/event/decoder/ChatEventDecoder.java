@@ -1,3 +1,4 @@
+
 package org.apollo.game.event.decoder;
 
 import org.apollo.game.event.EventDecoder;
@@ -10,35 +11,38 @@ import org.apollo.util.TextUtil;
 
 /**
  * An {@link EventDecoder} for the {@link ChatEvent}.
- * 
  * @author Graham
  */
-public final class ChatEventDecoder extends EventDecoder<ChatEvent> {
+public final class ChatEventDecoder extends EventDecoder<ChatEvent>
+{
 
-    public ChatEventDecoder(int opcode) {
-        super(opcode);
-    }
+	public ChatEventDecoder( int opcode )
+	{
+		super( opcode );
+	}
 
-    @Override
-    public ChatEvent decode(GamePacket packet) {
-        GamePacketReader reader = new GamePacketReader(packet);
 
-        int effects = (int) reader.getUnsigned(DataType.BYTE, DataTransformation.SUBTRACT);
-        int color = (int) reader.getUnsigned(DataType.BYTE, DataTransformation.SUBTRACT);
-        int length = packet.getLength() - 2;
+	@Override
+	public ChatEvent decode( GamePacket packet )
+	{
+		GamePacketReader reader = new GamePacketReader( packet );
 
-        byte[] originalCompressed = new byte[length];
-        reader.getBytesReverse(DataTransformation.ADD, originalCompressed);
+		int effects = ( int )reader.getUnsigned( DataType.BYTE, DataTransformation.SUBTRACT );
+		int color = ( int )reader.getUnsigned( DataType.BYTE, DataTransformation.SUBTRACT );
+		int length = packet.getLength() - 2;
 
-        String uncompressed = TextUtil.uncompress(originalCompressed, length);
-        uncompressed = TextUtil.filterInvalidCharacters(uncompressed);
-        uncompressed = TextUtil.capitalize(uncompressed);
+		byte[] originalCompressed = new byte[ length ];
+		reader.getBytesReverse( DataTransformation.ADD, originalCompressed );
 
-        byte[] recompressed = new byte[length];
-        TextUtil.compress(uncompressed, recompressed);
-        // in case invalid data gets sent, this effectively verifies it
+		String uncompressed = TextUtil.uncompress( originalCompressed, length );
+		uncompressed = TextUtil.filterInvalidCharacters( uncompressed );
+		uncompressed = TextUtil.capitalize( uncompressed );
 
-        return new ChatEvent(uncompressed, recompressed, color, effects);
-    }
+		byte[] recompressed = new byte[ length ];
+		TextUtil.compress( uncompressed, recompressed );
+		// in case invalid data gets sent, this effectively verifies it
+
+		return new ChatEvent( uncompressed, recompressed, color, effects );
+	}
 
 }

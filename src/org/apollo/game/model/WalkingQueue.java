@@ -1,3 +1,4 @@
+
 package org.apollo.game.model;
 
 import java.util.ArrayDeque;
@@ -6,261 +7,274 @@ import java.util.Queue;
 
 /**
  * A queue of {@link Direction}s which a {@link GameCharacter} will follow.
- * 
  * @author Graham
  */
-public final class WalkingQueue {
+public final class WalkingQueue
+{
 
-    /**
-     * The maximum size of the queue. If any additional steps are added, they
-     * are discarded.
-     */
-    private static final int MAXIMUM_SIZE = 128;
+	/**
+	 * The maximum size of the queue. If any additional steps are added, they
+	 * are discarded.
+	 */
+	private static final int MAXIMUM_SIZE = 128;
 
-    /**
-     * Represents a single point in the queue.
-     * 
-     * @author Graham
-     */
-    private static final class Point {
+	/**
+	 * Represents a single point in the queue.
+	 * @author Graham
+	 */
+	private static final class Point
+	{
 
-        /**
-         * The point's position.
-         */
-        private final Position position;
+		/**
+		 * The point's position.
+		 */
+		private final Position position;
 
-        /**
-         * The direction to walk to this point.
-         */
-        private final Direction direction;
+		/**
+		 * The direction to walk to this point.
+		 */
+		private final Direction direction;
 
-        /**
-         * Creates a point.
-         * 
-         * @param position
-         *            The position.
-         * @param direction
-         *            The direction.
-         */
-        public Point(Position position, Direction direction) {
-            this.position = position;
-            this.direction = direction;
-        }
 
-        @Override
-        public String toString() {
-            return Point.class.getName() + " [direction=" + direction + ", position=" + position + "]";
-        }
+		/**
+		 * Creates a point.
+		 * @param position
+		 *            The position.
+		 * @param direction
+		 *            The direction.
+		 */
+		public Point( Position position, Direction direction )
+		{
+			this.position = position;
+			this.direction = direction;
+		}
 
-    }
 
-    /**
-     * The gameCharacter whose walking queue this is.
-     */
-    private GameCharacter gameCharacter;
+		@Override
+		public String toString()
+		{
+			return Point.class.getName() + " [direction=" + direction + ", position=" + position + "]";
+		}
 
-    /**
-     * The queue of directions.
-     */
-    private Deque<Point> points = new ArrayDeque<Point>();
+	}
 
-    /**
-     * The old queue of directions.
-     */
-    private Deque<Point> oldPoints = new ArrayDeque<Point>();
+	/**
+	 * The gameCharacter whose walking queue this is.
+	 */
+	private GameCharacter gameCharacter;
 
-    /**
-     * Flag indicating if this queue (only) should be ran.
-     */
-    private boolean runningQueue;
+	/**
+	 * The queue of directions.
+	 */
+	private Deque<Point> points = new ArrayDeque<Point>();
 
-    /**
-     * Creates a walking queue for the specified gameCharacter.
-     * 
-     * @param gameCharacter
-     *            The gameCharacter.
-     */
-    public WalkingQueue(GameCharacter gameCharacter) {
-        this.gameCharacter = gameCharacter;
-    }
+	/**
+	 * The old queue of directions.
+	 */
+	private Deque<Point> oldPoints = new ArrayDeque<Point>();
 
-    /**
-     * Called every pulse, updates the queue.
-     */
-    public void pulse() {
-        Position position = gameCharacter.getPosition();
+	/**
+	 * Flag indicating if this queue (only) should be ran.
+	 */
+	private boolean runningQueue;
 
-        Direction first = Direction.NONE;
-        Direction second = Direction.NONE;
 
-        Point next = points.poll();
-        if (next != null) {
-            first = next.direction;
-            position = next.position;
+	/**
+	 * Creates a walking queue for the specified gameCharacter.
+	 * @param gameCharacter
+	 *            The gameCharacter.
+	 */
+	public WalkingQueue( GameCharacter gameCharacter )
+	{
+		this.gameCharacter = gameCharacter;
+	}
 
-            if (runningQueue /* or run toggled AND enough energy */) {
-                next = points.poll();
-                if (next != null) {
-                    second = next.direction;
-                    position = next.position;
-                }
-            }
-        }
 
-        gameCharacter.setDirections(first, second);
-        gameCharacter.setPosition(position);
-    }
+	/**
+	 * Called every pulse, updates the queue.
+	 */
+	public void pulse()
+	{
+		Position position = gameCharacter.getPosition();
 
-    /**
-     * Sets the running queue flag.
-     * 
-     * @param running
-     *            The running queue flag.
-     */
-    public void setRunningQueue(boolean running) {
-        this.runningQueue = running;
-    }
+		Direction first = Direction.NONE;
+		Direction second = Direction.NONE;
 
-    /**
-     * Adds the first step to the queue, attempting to connect the server and
-     * client position by looking at the previous queue.
-     * 
-     * @param clientConnectionPosition
-     *            The first step.
-     * @return {@code true} if the queues could be connected correctly,
-     *         {@code false} if not.
-     */
-    public boolean addFirstStep(Position clientConnectionPosition) {
-        Position serverPosition = gameCharacter.getPosition();
+		Point next = points.poll();
+		if( next != null ) {
+			first = next.direction;
+			position = next.position;
 
-        int deltaX = clientConnectionPosition.getX() - serverPosition.getX();
-        int deltaY = clientConnectionPosition.getY() - serverPosition.getY();
+			if( runningQueue /* or run toggled AND enough energy */) {
+				next = points.poll();
+				if( next != null ) {
+					second = next.direction;
+					position = next.position;
+				}
+			}
+		}
 
-        if (Direction.isConnectable(deltaX, deltaY)) {
-            points.clear();
-            oldPoints.clear();
+		gameCharacter.setDirections( first, second );
+		gameCharacter.setPosition( position );
+	}
 
-            addStep(clientConnectionPosition);
-            return true;
-        }
 
-        Queue<Position> travelBackQueue = new ArrayDeque<Position>();
+	/**
+	 * Sets the running queue flag.
+	 * @param running
+	 *            The running queue flag.
+	 */
+	public void setRunningQueue( boolean running )
+	{
+		this.runningQueue = running;
+	}
 
-        Point oldPoint;
-        while ((oldPoint = oldPoints.pollLast()) != null) {
-            Position oldPosition = oldPoint.position;
 
-            deltaX = oldPosition.getX() - serverPosition.getX();
-            deltaY = oldPosition.getX() - serverPosition.getY();
+	/**
+	 * Adds the first step to the queue, attempting to connect the server and
+	 * client position by looking at the previous queue.
+	 * @param clientConnectionPosition
+	 *            The first step.
+	 * @return {@code true} if the queues could be connected correctly, {@code false} if not.
+	 */
+	public boolean addFirstStep( Position clientConnectionPosition )
+	{
+		Position serverPosition = gameCharacter.getPosition();
 
-            travelBackQueue.add(oldPosition);
+		int deltaX = clientConnectionPosition.getX() - serverPosition.getX();
+		int deltaY = clientConnectionPosition.getY() - serverPosition.getY();
 
-            if (Direction.isConnectable(deltaX, deltaY)) {
-                points.clear();
-                oldPoints.clear();
+		if( Direction.isConnectable( deltaX, deltaY ) ) {
+			points.clear();
+			oldPoints.clear();
 
-                for (Position travelBackPosition : travelBackQueue) {
-                    addStep(travelBackPosition);
-                }
+			addStep( clientConnectionPosition );
+			return true;
+		}
 
-                addStep(clientConnectionPosition);
-                return true;
-            }
-        }
+		Queue<Position> travelBackQueue = new ArrayDeque<Position>();
 
-        oldPoints.clear();
-        return false;
-    }
+		Point oldPoint;
+		while( ( oldPoint = oldPoints.pollLast() ) != null ) {
+			Position oldPosition = oldPoint.position;
 
-    /**
-     * Adds a step to the queue.
-     * 
-     * @param step
-     *            The step to add.
-     */
-    public void addStep(Position step) {
-        Point last = getLast();
+			deltaX = oldPosition.getX() - serverPosition.getX();
+			deltaY = oldPosition.getX() - serverPosition.getY();
 
-        int x = step.getX();
-        int y = step.getY();
+			travelBackQueue.add( oldPosition );
 
-        int deltaX = x - last.position.getX();
-        int deltaY = y - last.position.getY();
+			if( Direction.isConnectable( deltaX, deltaY ) ) {
+				points.clear();
+				oldPoints.clear();
 
-        int max = Math.max(Math.abs(deltaX), Math.abs(deltaY));
+				for( Position travelBackPosition: travelBackQueue ) {
+					addStep( travelBackPosition );
+				}
 
-        for (int i = 0; i < max; i++) {
-            if (deltaX < 0) {
-                deltaX++;
-            } else if (deltaX > 0) {
-                deltaX--;
-            }
+				addStep( clientConnectionPosition );
+				return true;
+			}
+		}
 
-            if (deltaY < 0) {
-                deltaY++;
-            } else if (deltaY > 0) {
-                deltaY--;
-            }
+		oldPoints.clear();
+		return false;
+	}
 
-            addStep(x - deltaX, y - deltaY);
-        }
-    }
 
-    /**
-     * Adds a step.
-     * 
-     * @param x
-     *            The x coordinate of this step.
-     * @param y
-     *            The y coordinate of this step.
-     */
-    private void addStep(int x, int y) {
-        if (points.size() >= MAXIMUM_SIZE) {
-            return;
-        }
+	/**
+	 * Adds a step to the queue.
+	 * @param step
+	 *            The step to add.
+	 */
+	public void addStep( Position step )
+	{
+		Point last = getLast();
 
-        Point last = getLast();
+		int x = step.getX();
+		int y = step.getY();
 
-        int deltaX = x - last.position.getX();
-        int deltaY = y - last.position.getY();
+		int deltaX = x - last.position.getX();
+		int deltaY = y - last.position.getY();
 
-        Direction direction = Direction.fromDeltas(deltaX, deltaY);
+		int max = Math.max( Math.abs( deltaX ), Math.abs( deltaY ) );
 
-        if (direction != Direction.NONE) {
-            Point p = new Point(new Position(x, y, gameCharacter.getPosition().getHeight()), direction);
-            points.add(p);
-            oldPoints.add(p);
-        }
-    }
+		for( int i = 0; i < max; i ++ ) {
+			if( deltaX < 0 ) {
+				deltaX ++ ;
+			} else if( deltaX > 0 ) {
+				deltaX -- ;
+			}
 
-    /**
-     * Gets the last point.
-     * 
-     * @return The last point.
-     */
-    private Point getLast() {
-        Point last = points.peekLast();
-        if (last == null) {
-            return new Point(gameCharacter.getPosition(), Direction.NONE);
-        }
-        return last;
-    }
+			if( deltaY < 0 ) {
+				deltaY ++ ;
+			} else if( deltaY > 0 ) {
+				deltaY -- ;
+			}
 
-    /**
-     * Clears the walking queue.
-     */
-    public void clear() {
-        points.clear();
-        oldPoints.clear();
-    }
+			addStep( x - deltaX, y - deltaY );
+		}
+	}
 
-    /**
-     * Gets the size of the queue.
-     * 
-     * @return The size of the queue.
-     */
-    public int size() {
-        return points.size();
-    }
+
+	/**
+	 * Adds a step.
+	 * @param x
+	 *            The x coordinate of this step.
+	 * @param y
+	 *            The y coordinate of this step.
+	 */
+	private void addStep( int x, int y )
+	{
+		if( points.size() >= MAXIMUM_SIZE ) {
+			return;
+		}
+
+		Point last = getLast();
+
+		int deltaX = x - last.position.getX();
+		int deltaY = y - last.position.getY();
+
+		Direction direction = Direction.fromDeltas( deltaX, deltaY );
+
+		if( direction != Direction.NONE ) {
+			Point p = new Point( new Position( x, y, gameCharacter.getPosition().getHeight() ), direction );
+			points.add( p );
+			oldPoints.add( p );
+		}
+	}
+
+
+	/**
+	 * Gets the last point.
+	 * @return The last point.
+	 */
+	private Point getLast()
+	{
+		Point last = points.peekLast();
+		if( last == null ) {
+			return new Point( gameCharacter.getPosition(), Direction.NONE );
+		}
+		return last;
+	}
+
+
+	/**
+	 * Clears the walking queue.
+	 */
+	public void clear()
+	{
+		points.clear();
+		oldPoints.clear();
+	}
+
+
+	/**
+	 * Gets the size of the queue.
+	 * @return The size of the queue.
+	 */
+	public int size()
+	{
+		return points.size();
+	}
 
 }

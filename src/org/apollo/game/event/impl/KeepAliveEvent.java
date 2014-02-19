@@ -1,3 +1,4 @@
+
 package org.apollo.game.event.impl;
 
 import org.apollo.game.event.Event;
@@ -7,26 +8,31 @@ import org.apollo.game.event.Event;
  * alive.
  * @author Graham
  */
-public final class KeepAliveEvent extends Event {
+public final class KeepAliveEvent extends Event
+{
 
-    /**
-     * The time this event was created.
-     */
-    private final long createdAt;
+	/**
+	 * The time this event was created.
+	 */
+	private final long createdAt;
 
-    /**
-     * Creates the keep alive event.
-     */
-    public KeepAliveEvent() {
-        createdAt = System.currentTimeMillis();
-    }
 
-    /**
-     * Gets the time when this event was created.
-     * @return The time when this event was created.
-     */
-    public long getCreatedAt() {
-        return createdAt;
-    }
+	/**
+	 * Creates the keep alive event.
+	 */
+	public KeepAliveEvent()
+	{
+		createdAt = System.currentTimeMillis();
+	}
+
+
+	/**
+	 * Gets the time when this event was created.
+	 * @return The time when this event was created.
+	 */
+	public long getCreatedAt()
+	{
+		return createdAt;
+	}
 
 }

@@ -1,3 +1,4 @@
+
 package org.apollo.game.model.inv;
 
 import org.apollo.game.model.Inventory;
@@ -10,36 +11,45 @@ import org.apollo.game.sync.block.SynchronizationBlock;
  * any items are updated.
  * @author Graham
  */
-public final class AppearanceInventoryListener extends InventoryAdapter {
+public final class AppearanceInventoryListener extends InventoryAdapter
+{
 
-    /**
-     * The player.
-     */
-    private final Player player;
+	/**
+	 * The player.
+	 */
+	private final Player player;
 
-    /**
-     * Creates the appearance inventory listener.
-     * @param player The player.
-     */
-    public AppearanceInventoryListener(Player player) {
-        this.player = player;
-    }
 
-    /**
-     * Updates the players appearance.
-     */
-    private void update() {
-        player.getBlockSet().add(SynchronizationBlock.createAppearanceBlock(player));
-    }
+	/**
+	 * Creates the appearance inventory listener.
+	 * @param player The player.
+	 */
+	public AppearanceInventoryListener( Player player )
+	{
+		this.player = player;
+	}
 
-    @Override
-    public void itemUpdated(Inventory inventory, int slot, Item item) {
-        update();
-    }
 
-    @Override
-    public void itemsUpdated(Inventory inventory) {
-        update();
-    }
+	/**
+	 * Updates the players appearance.
+	 */
+	private void update()
+	{
+		player.getBlockSet().add( SynchronizationBlock.createAppearanceBlock( player ) );
+	}
+
+
+	@Override
+	public void itemUpdated( Inventory inventory, int slot, Item item )
+	{
+		update();
+	}
+
+
+	@Override
+	public void itemsUpdated( Inventory inventory )
+	{
+		update();
+	}
 
 }

@@ -1,3 +1,4 @@
+
 package org.apollo.game.event.decoder;
 
 import org.apollo.game.event.EventDecoder;
@@ -13,39 +14,43 @@ import org.apollo.net.codec.game.GamePacketReader;
  * An {@link EventDecoder} for the {@link WalkEvent}.
  * @author Graham
  */
-public final class WalkEventDecoder extends EventDecoder<WalkEvent> {
+public final class WalkEventDecoder extends EventDecoder<WalkEvent>
+{
 
-    public WalkEventDecoder(int opcode) {
-        super(opcode);
-    }
+	public WalkEventDecoder( int opcode )
+	{
+		super( opcode );
+	}
 
-    @Override
-    public WalkEvent decode(GamePacket packet) {
-        GamePacketReader reader = new GamePacketReader(packet);
 
-        int length = packet.getLength();
-        if (packet.getOpcode() == 248) {
-            length -= 14; // strip off anti-cheat data
-        }
+	@Override
+	public WalkEvent decode( GamePacket packet )
+	{
+		GamePacketReader reader = new GamePacketReader( packet );
 
-        int steps = (length - 5) / 2;
-        int[][] path = new int[steps][2];
+		int length = packet.getLength();
+		if( packet.getOpcode() == 248 ) {
+			length -= 14; // strip off anti-cheat data
+		}
 
-        int x = (int) reader.getUnsigned(DataType.SHORT, DataOrder.LITTLE, DataTransformation.ADD);
-        for (int i = 0; i < steps; i++) {
-            path[i][0] = (int) reader.getSigned(DataType.BYTE);
-            path[i][1] = (int) reader.getSigned(DataType.BYTE);
-        }
-        int y = (int) reader.getUnsigned(DataType.SHORT, DataOrder.LITTLE);
-        boolean run = reader.getUnsigned(DataType.BYTE, DataTransformation.NEGATE) == 1;
+		int steps = ( length - 5 ) / 2;
+		int[][] path = new int[ steps ][ 2 ];
 
-        Position[] positions = new Position[steps + 1];
-        positions[0] = new Position(x, y);
-        for (int i = 0; i < steps; i++) {
-            positions[i + 1] = new Position(path[i][0] + x, path[i][1] + y);
-        }
+		int x = ( int )reader.getUnsigned( DataType.SHORT, DataOrder.LITTLE, DataTransformation.ADD );
+		for( int i = 0; i < steps; i ++ ) {
+			path[ i ][ 0 ] = ( int )reader.getSigned( DataType.BYTE );
+			path[ i ][ 1 ] = ( int )reader.getSigned( DataType.BYTE );
+		}
+		int y = ( int )reader.getUnsigned( DataType.SHORT, DataOrder.LITTLE );
+		boolean run = reader.getUnsigned( DataType.BYTE, DataTransformation.NEGATE ) == 1;
 
-        return new WalkEvent(positions, run);
-    }
+		Position[] positions = new Position[ steps + 1 ];
+		positions[ 0 ] = new Position( x, y );
+		for( int i = 0; i < steps; i ++ ) {
+			positions[ i + 1 ] = new Position( path[ i ][ 0 ] + x, path[ i ][ 1 ] + y );
+		}
+
+		return new WalkEvent( positions, run );
+	}
 
 }

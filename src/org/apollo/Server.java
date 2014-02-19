@@ -1,3 +1,4 @@
+
 package org.apollo;
 
 import java.io.File;
@@ -26,31 +27,34 @@ import org.jboss.netty.util.Timer;
  * The core class of the Apollo server.
  * @author Graham
  */
-public final class Server {
+public final class Server
+{
 
 	/**
 	 * The logger for this class.
 	 */
-	private static final Logger logger = Logger.getLogger(Server.class.getName());
+	private static final Logger logger = Logger.getLogger( Server.class.getName() );
+
 
 	/**
 	 * The entry point of the Apollo server application.
 	 * @param args The command-line arguments passed to the application.
 	 */
-	public static void main(String[] args) {
+	public static void main( String[] args )
+	{
 		Server server = null;
 		try {
 			server = new Server();
 			server.init();
 
-			SocketAddress service = new InetSocketAddress(NetworkConstants.SERVICE_PORT);
-			SocketAddress http = new InetSocketAddress(NetworkConstants.HTTP_PORT);
-			SocketAddress jaggrab = new InetSocketAddress(NetworkConstants.JAGGRAB_PORT);
+			SocketAddress service = new InetSocketAddress( NetworkConstants.SERVICE_PORT );
+			SocketAddress http = new InetSocketAddress( NetworkConstants.HTTP_PORT );
+			SocketAddress jaggrab = new InetSocketAddress( NetworkConstants.JAGGRAB_PORT );
 
 			server.start();
-			server.bind(service, http, jaggrab);
-		} catch (Exception e) {
-			logger.log(Level.SEVERE, "Exception whilst starting Apollo!", e);
+			server.bind( service, http, jaggrab );
+		} catch( Exception e ) {
+			logger.log( Level.SEVERE, "Exception whilst starting Apollo!", e );
 		}
 	}
 
@@ -90,38 +94,43 @@ public final class Server {
 	 */
 	private ServerContext context;
 
+
 	/**
 	 * Creates the Apollo server.
 	 * @throws Exception if an error occurs whilst creating services.
 	 */
-	public Server() throws Exception {
-		logger.info("Starting Apollo...");
+	public Server() throws Exception
+	{
+		logger.info( "Starting Apollo..." );
 		serviceManager = new ServiceManager();
 	}
+
 
 	/**
 	 * Initialises the server.
 	 */
-	public void init() {
-		logger.info("Initialized Apollo.");
+	public void init()
+	{
+		logger.info( "Initialized Apollo." );
 
-		ChannelFactory factory = new NioServerSocketChannelFactory(networkExecutor, networkExecutor);
-		serviceBootstrap.setFactory(factory);
-		httpBootstrap.setFactory(factory);
-		jagGrabBootstrap.setFactory(factory);
+		ChannelFactory factory = new NioServerSocketChannelFactory( networkExecutor, networkExecutor );
+		serviceBootstrap.setFactory( factory );
+		httpBootstrap.setFactory( factory );
+		jagGrabBootstrap.setFactory( factory );
 
-		context = new ServerContext(serviceManager);
-		ApolloHandler handler = new ApolloHandler(context);
+		context = new ServerContext( serviceManager );
+		ApolloHandler handler = new ApolloHandler( context );
 
-		ChannelPipelineFactory servicePipelineFactory = new ServicePipelineFactory(handler, timer);
-		serviceBootstrap.setPipelineFactory(servicePipelineFactory);
+		ChannelPipelineFactory servicePipelineFactory = new ServicePipelineFactory( handler, timer );
+		serviceBootstrap.setPipelineFactory( servicePipelineFactory );
 
-		ChannelPipelineFactory httpPipelineFactory = new HttpPipelineFactory(handler, timer);
-		httpBootstrap.setPipelineFactory(httpPipelineFactory);
+		ChannelPipelineFactory httpPipelineFactory = new HttpPipelineFactory( handler, timer );
+		httpBootstrap.setPipelineFactory( httpPipelineFactory );
 
-		ChannelPipelineFactory jagGrabPipelineFactory = new JagGrabPipelineFactory(handler, timer);
-		jagGrabBootstrap.setPipelineFactory(jagGrabPipelineFactory);
+		ChannelPipelineFactory jagGrabPipelineFactory = new JagGrabPipelineFactory( handler, timer );
+		jagGrabBootstrap.setPipelineFactory( jagGrabPipelineFactory );
 	}
+
 
 	/**
 	 * Binds the server to the specified address.
@@ -129,32 +138,35 @@ public final class Server {
 	 * @param httpAddress The HTTP address to bind to.
 	 * @param jagGrabAddress The JAGGRAB address to bind to.
 	 */
-	public void bind(SocketAddress serviceAddress, SocketAddress httpAddress, SocketAddress jagGrabAddress) {
-		logger.info("Binding service listener to address: " + serviceAddress + "...");
-		serviceBootstrap.bind(serviceAddress);
+	public void bind( SocketAddress serviceAddress, SocketAddress httpAddress, SocketAddress jagGrabAddress )
+	{
+		logger.info( "Binding service listener to address: " + serviceAddress + "..." );
+		serviceBootstrap.bind( serviceAddress );
 
-		logger.info("Binding HTTP listener to address: " + httpAddress + "...");
+		logger.info( "Binding HTTP listener to address: " + httpAddress + "..." );
 		try {
-			httpBootstrap.bind(httpAddress);
-		} catch (Throwable t) {
-			logger.log(Level.WARNING, "Binding to HTTP failed: client will use JAGGRAB as a fallback (not recommended)!", t);
+			httpBootstrap.bind( httpAddress );
+		} catch( Throwable t ) {
+			logger.log( Level.WARNING, "Binding to HTTP failed: client will use JAGGRAB as a fallback (not recommended)!", t );
 		}
 
-		logger.info("Binding JAGGRAB listener to address: " + jagGrabAddress + "...");
-		jagGrabBootstrap.bind(jagGrabAddress);
+		logger.info( "Binding JAGGRAB listener to address: " + jagGrabAddress + "..." );
+		jagGrabBootstrap.bind( jagGrabAddress );
 
-		logger.info("Ready for connections.");
+		logger.info( "Ready for connections." );
 	}
+
 
 	/**
 	 * Starts the server.
 	 * @throws Exception if an error occurs.
 	 */
-	public void start() throws Exception {
+	public void start() throws Exception
+	{
 		serviceManager.startAll();
 
-		IndexedFileSystem fs = new IndexedFileSystem(new File("data/fs/"), true);
-		World.getWorld().init(fs);
+		IndexedFileSystem fs = new IndexedFileSystem( new File( "data/fs/" ), true );
+		World.getWorld().init( fs );
 	}
 
 }

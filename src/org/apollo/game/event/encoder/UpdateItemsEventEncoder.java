@@ -1,3 +1,4 @@
+
 package org.apollo.game.event.encoder;
 
 import org.apollo.game.event.EventEncoder;
@@ -14,37 +15,41 @@ import org.apollo.net.meta.PacketType;
  * An {@link EventEncoder} for the {@link UpdateItemsEvent}.
  * @author Graham
  */
-public final class UpdateItemsEventEncoder extends EventEncoder<UpdateItemsEvent> {
+public final class UpdateItemsEventEncoder extends EventEncoder<UpdateItemsEvent>
+{
 
-    public UpdateItemsEventEncoder(Class<UpdateItemsEvent> clazz) {
-        super(clazz);
-    }
+	public UpdateItemsEventEncoder( Class<UpdateItemsEvent> clazz )
+	{
+		super( clazz );
+	}
 
-    @Override
-    public GamePacket encode(UpdateItemsEvent event) {
-        GamePacketBuilder builder = new GamePacketBuilder(53, PacketType.VARIABLE_SHORT);
 
-        Item[] items = event.getItems();
+	@Override
+	public GamePacket encode( UpdateItemsEvent event )
+	{
+		GamePacketBuilder builder = new GamePacketBuilder( 53, PacketType.VARIABLE_SHORT );
 
-        builder.put(DataType.SHORT, event.getInterfaceId());
-        builder.put(DataType.SHORT, items.length);
+		Item[] items = event.getItems();
 
-        for (int i = 0; i < items.length; i++) {
-            Item item = items[i];
-            int id = item == null ? -1 : item.getId();
-            int amount = item == null ? 0 : item.getAmount();
+		builder.put( DataType.SHORT, event.getInterfaceId() );
+		builder.put( DataType.SHORT, items.length );
 
-            if (amount > 254) {
-                builder.put(DataType.BYTE, 255);
-                builder.put(DataType.INT, DataOrder.INVERSED_MIDDLE, amount);
-            } else {
-                builder.put(DataType.BYTE, amount);
-            }
+		for( int i = 0; i < items.length; i ++ ) {
+			Item item = items[ i ];
+			int id = item == null ? - 1: item.getId();
+			int amount = item == null ? 0: item.getAmount();
 
-            builder.put(DataType.SHORT, DataOrder.LITTLE, DataTransformation.ADD, id + 1);
-        }
+			if( amount > 254 ) {
+				builder.put( DataType.BYTE, 255 );
+				builder.put( DataType.INT, DataOrder.INVERSED_MIDDLE, amount );
+			} else {
+				builder.put( DataType.BYTE, amount );
+			}
 
-        return builder.toGamePacket();
-    }
+			builder.put( DataType.SHORT, DataOrder.LITTLE, DataTransformation.ADD, id + 1 );
+		}
+
+		return builder.toGamePacket();
+	}
 
 }

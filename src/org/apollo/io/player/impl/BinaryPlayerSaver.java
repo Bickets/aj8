@@ -1,3 +1,4 @@
+
 package org.apollo.io.player.impl;
 
 import java.io.DataOutputStream;
@@ -20,77 +21,81 @@ import org.apollo.util.StreamUtil;
  * file.
  * @author Graham
  */
-public final class BinaryPlayerSaver implements PlayerSaver {
+public final class BinaryPlayerSaver implements PlayerSaver
+{
 
-    @Override
-    public void savePlayer(Player player) throws Exception {
-        File f = BinaryPlayerUtil.getFile(player.getName());
-        DataOutputStream out = new DataOutputStream(new FileOutputStream(f));
-        try {
-            // write credentials and privileges
-            StreamUtil.writeString(out, player.getName());
-            StreamUtil.writeString(out, player.getCredentials().getPassword());
-            out.writeByte(player.getPrivilegeLevel().toInteger());
-            out.writeBoolean(player.isMembers());
+	@Override
+	public void savePlayer( Player player ) throws Exception
+	{
+		File f = BinaryPlayerUtil.getFile( player.getName() );
+		DataOutputStream out = new DataOutputStream( new FileOutputStream( f ) );
+		try {
+			// write credentials and privileges
+			StreamUtil.writeString( out, player.getName() );
+			StreamUtil.writeString( out, player.getCredentials().getPassword() );
+			out.writeByte( player.getPrivilegeLevel().toInteger() );
+			out.writeBoolean( player.isMembers() );
 
-            // write position
-            Position position = player.getPosition();
-            out.writeShort(position.getX());
-            out.writeShort(position.getY());
-            out.writeByte(position.getHeight());
+			// write position
+			Position position = player.getPosition();
+			out.writeShort( position.getX() );
+			out.writeShort( position.getY() );
+			out.writeByte( position.getHeight() );
 
-            // write appearance
-            out.writeBoolean(player.hasDesignedCharacter());
-            Appearance appearance = player.getAppearance();
-            out.writeByte(appearance.getGender().toInteger());
-            int[] style = appearance.getStyle();
-            for (int i = 0; i < style.length; i++) {
-                out.writeByte(style[i]);
-            }
-            int[] colors = appearance.getColors();
-            for (int i = 0; i < colors.length; i++) {
-                out.writeByte(colors[i]);
-            }
-            out.flush();
+			// write appearance
+			out.writeBoolean( player.hasDesignedCharacter() );
+			Appearance appearance = player.getAppearance();
+			out.writeByte( appearance.getGender().toInteger() );
+			int[] style = appearance.getStyle();
+			for( int i = 0; i < style.length; i ++ ) {
+				out.writeByte( style[ i ] );
+			}
+			int[] colors = appearance.getColors();
+			for( int i = 0; i < colors.length; i ++ ) {
+				out.writeByte( colors[ i ] );
+			}
+			out.flush();
 
-            // write inventories
-            writeInventory(out, player.getInventory());
-            writeInventory(out, player.getEquipment());
-            writeInventory(out, player.getBank());
+			// write inventories
+			writeInventory( out, player.getInventory() );
+			writeInventory( out, player.getEquipment() );
+			writeInventory( out, player.getBank() );
 
-            // write skills
-            SkillSet skills = player.getSkillSet();
-            out.writeByte(skills.size());
-            for (int i = 0; i < skills.size(); i++) {
-                Skill skill = skills.getSkill(i);
-                out.writeByte(skill.getCurrentLevel());
-                out.writeDouble(skill.getExperience());
-            }
-        } finally {
-            out.close();
-        }
-    }
+			// write skills
+			SkillSet skills = player.getSkillSet();
+			out.writeByte( skills.size() );
+			for( int i = 0; i < skills.size(); i ++ ) {
+				Skill skill = skills.getSkill( i );
+				out.writeByte( skill.getCurrentLevel() );
+				out.writeDouble( skill.getExperience() );
+			}
+		} finally {
+			out.close();
+		}
+	}
 
-    /**
-     * Writes an inventory to the specified output stream.
-     * @param out The output stream.
-     * @param inventory The inventory.
-     * @throws IOException if an I/O error occurs.
-     */
-    private void writeInventory(DataOutputStream out, Inventory inventory) throws IOException {
-        int capacity = inventory.capacity();
-        out.writeShort(capacity);
 
-        for (int slot = 0; slot < capacity; slot++) {
-            Item item = inventory.get(slot);
-            if (item != null) {
-                out.writeShort(item.getId() + 1);
-                out.writeInt(item.getAmount());
-            } else {
-                out.writeShort(0);
-                out.writeInt(0);
-            }
-        }
-    }
+	/**
+	 * Writes an inventory to the specified output stream.
+	 * @param out The output stream.
+	 * @param inventory The inventory.
+	 * @throws IOException if an I/O error occurs.
+	 */
+	private void writeInventory( DataOutputStream out, Inventory inventory ) throws IOException
+	{
+		int capacity = inventory.capacity();
+		out.writeShort( capacity );
+
+		for( int slot = 0; slot < capacity; slot ++ ) {
+			Item item = inventory.get( slot );
+			if( item != null ) {
+				out.writeShort( item.getId() + 1 );
+				out.writeInt( item.getAmount() );
+			} else {
+				out.writeShort( 0 );
+				out.writeInt( 0 );
+			}
+		}
+	}
 
 }

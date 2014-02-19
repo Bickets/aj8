@@ -1,3 +1,4 @@
+
 package org.apollo.game.event.decoder;
 
 import org.apollo.game.event.EventDecoder;
@@ -13,19 +14,23 @@ import org.apollo.net.codec.game.GamePacketReader;
  * An {@link EventDecoder} for the {@link ThirdObjectActionEvent}.
  * @author Graham
  */
-public final class ThirdObjectActionEventDecoder extends EventDecoder<ThirdObjectActionEvent> {
+public final class ThirdObjectActionEventDecoder extends EventDecoder<ThirdObjectActionEvent>
+{
 
-    public ThirdObjectActionEventDecoder(int opcode) {
-        super(opcode);
-    }
+	public ThirdObjectActionEventDecoder( int opcode )
+	{
+		super( opcode );
+	}
 
-    @Override
-    public ThirdObjectActionEvent decode(GamePacket packet) {
-        GamePacketReader reader = new GamePacketReader(packet);
-        int x = (int) reader.getUnsigned(DataType.SHORT, DataOrder.LITTLE);
-        int y = (int) reader.getUnsigned(DataType.SHORT);
-        int id = (int) reader.getUnsigned(DataType.SHORT, DataOrder.LITTLE, DataTransformation.ADD);
-        return new ThirdObjectActionEvent(id, new Position(x, y));
-    }
+
+	@Override
+	public ThirdObjectActionEvent decode( GamePacket packet )
+	{
+		GamePacketReader reader = new GamePacketReader( packet );
+		int x = ( int )reader.getUnsigned( DataType.SHORT, DataOrder.LITTLE );
+		int y = ( int )reader.getUnsigned( DataType.SHORT );
+		int id = ( int )reader.getUnsigned( DataType.SHORT, DataOrder.LITTLE, DataTransformation.ADD );
+		return new ThirdObjectActionEvent( id, new Position( x, y ) );
+	}
 
 }

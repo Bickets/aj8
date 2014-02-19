@@ -1,3 +1,4 @@
+
 package org.apollo.game.sync.task;
 
 import org.apollo.game.sync.ClientSynchronizer;
@@ -8,6 +9,7 @@ import org.apollo.game.sync.ClientSynchronizer;
  * information).
  * @author Graham
  */
-public abstract class SynchronizationTask implements Runnable {
+public abstract class SynchronizationTask implements Runnable
+{
 
 }

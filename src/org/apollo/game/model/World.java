@@ -1,3 +1,4 @@
+
 package org.apollo.game.model;
 
 import java.io.BufferedInputStream;
@@ -21,19 +22,20 @@ import org.apollo.io.EquipmentDefinitionParser;
 import org.apollo.util.CharacterRepository;
 
 /**
- * The world class is a singleton which contains objects like the
- * {@link CharacterRepository} for players and mobs. It should only contain
+ * The world class is a singleton which contains objects like the {@link CharacterRepository} for
+ * players and mobs. It should only contain
  * things relevant to the in-game world and not classes which deal with I/O and
  * such (these may be better off inside some custom {@link Service} or other
  * code, however, the circumstances are rare).
  * @author Graham
  */
-public final class World {
+public final class World
+{
 
 	/**
 	 * The logger for this class.
 	 */
-	private static final Logger logger = Logger.getLogger(World.class.getName());
+	private static final Logger logger = Logger.getLogger( World.class.getName() );
 
 	/**
 	 * The world.
@@ -62,40 +64,45 @@ public final class World {
 		OK
 	}
 
+
 	/**
 	 * Gets the world.
 	 * @return The world.
 	 */
-	public static World getWorld() {
+	public static World getWorld()
+	{
 		return world;
 	}
 
 	/**
 	 * The {@link CharacterRepository} of {@link Mob}s.
 	 */
-	private final CharacterRepository<Mob> mobRepository = new CharacterRepository<Mob>(WorldConstants.MAXIMUM_MOBS);
+	private final CharacterRepository<Mob> mobRepository = new CharacterRepository<Mob>( WorldConstants.MAXIMUM_MOBS );
 
 	/**
 	 * The {@link CharacterRepository} of {@link Player}s.
 	 */
-	private final CharacterRepository<Player> playerRepository = new CharacterRepository<Player>(WorldConstants.MAXIMUM_PLAYERS);
+	private final CharacterRepository<Player> playerRepository = new CharacterRepository<Player>( WorldConstants.MAXIMUM_PLAYERS );
 
 	/**
 	 * A {@link Map} of active players.
 	 */
-	private final Map<Long, Player> activePlayers = new HashMap<>(WorldConstants.MAXIMUM_PLAYERS);
+	private final Map<Long, Player> activePlayers = new HashMap<>( WorldConstants.MAXIMUM_PLAYERS );
 
 	/**
 	 * A {@link Map} of active mobs.
 	 */
-	private final Map<Integer, Mob> activeMobs = new HashMap<>(WorldConstants.MAXIMUM_MOBS);
+	private final Map<Integer, Mob> activeMobs = new HashMap<>( WorldConstants.MAXIMUM_MOBS );
+
 
 	/**
 	 * Creates the world.
 	 */
-	private World() {
+	private World()
+	{
 
 	}
+
 
 	/**
 	 * Initialises the world by loading definitions from the specified file
@@ -103,155 +110,174 @@ public final class World {
 	 * @param fs The file system.
 	 * @throws IOException if an I/O error occurs.
 	 */
-	public void init(IndexedFileSystem fs) throws IOException {
-		logger.info("Loading item definitions...");
-		ItemDefinitionParser itemParser = new ItemDefinitionParser(fs);
+	public void init( IndexedFileSystem fs ) throws IOException
+	{
+		logger.info( "Loading item definitions..." );
+		ItemDefinitionParser itemParser = new ItemDefinitionParser( fs );
 		ItemDefinition[] itemDefs = itemParser.parse();
-		ItemDefinition.init(itemDefs);
-		logger.info("Done (loaded " + itemDefs.length + " item definitions).");
+		ItemDefinition.init( itemDefs );
+		logger.info( "Done (loaded " + itemDefs.length + " item definitions)." );
 
-		logger.info("Loading equipment definitions...");
+		logger.info( "Loading equipment definitions..." );
 		int nonNull = 0;
-		InputStream is = new BufferedInputStream(new FileInputStream("data/equipment.dat"));
+		InputStream is = new BufferedInputStream( new FileInputStream( "data/equipment.dat" ) );
 		try {
-			EquipmentDefinitionParser equipParser = new EquipmentDefinitionParser(is);
+			EquipmentDefinitionParser equipParser = new EquipmentDefinitionParser( is );
 			EquipmentDefinition[] equipDefs = equipParser.parse();
-			for (EquipmentDefinition def : equipDefs) {
-				if (def != null) {
-					nonNull++;
+			for( EquipmentDefinition def: equipDefs ) {
+				if( def != null ) {
+					nonNull ++ ;
 				}
 			}
-			EquipmentDefinition.init(equipDefs);
+			EquipmentDefinition.init( equipDefs );
 		} finally {
 			is.close();
 		}
-		logger.info("Done (loaded " + nonNull + " equipment definitions).");
+		logger.info( "Done (loaded " + nonNull + " equipment definitions)." );
 
-		logger.info("Loading mob definitions...");
-		MobDefinitionParser mobParser = new MobDefinitionParser(fs);
+		logger.info( "Loading mob definitions..." );
+		MobDefinitionParser mobParser = new MobDefinitionParser( fs );
 		MobDefinition[] mobDefs = mobParser.parse();
-		MobDefinition.init(mobDefs);
-		logger.info("Done (loaded " + mobDefs.length + " mob definitions).");
+		MobDefinition.init( mobDefs );
+		logger.info( "Done (loaded " + mobDefs.length + " mob definitions)." );
 	}
 
+
 	/**
-	 * Gets the character repository. NOTE:
-	 * {@link CharacterRepository#add(GameCharacter)} and
+	 * Gets the character repository. NOTE: {@link CharacterRepository#add(GameCharacter)} and
 	 * {@link CharacterRepository#remove(GameCharacter)} should not be called
 	 * directly! These mutation methods are not guaranteed to work in future
 	 * releases!
 	 * <p>
-	 * Instead, use the {@link World#register(Player)} and
-	 * {@link World#unregister(Player)} methods which do the same thing and
-	 * will continue to work as normal in future releases.
+	 * Instead, use the {@link World#register(Player)} and {@link World#unregister(Player)} methods
+	 * which do the same thing and will continue to work as normal in future releases.
 	 * @return The character repository.
 	 */
-	public CharacterRepository<Player> getPlayerRepository() {
+	public CharacterRepository<Player> getPlayerRepository()
+	{
 		return playerRepository;
 	}
+
 
 	/**
 	 * Gets the mob repository.
 	 * @return The mob repository.
 	 */
-	public CharacterRepository<Mob> getMobRepository() {
+	public CharacterRepository<Mob> getMobRepository()
+	{
 		return mobRepository;
 	}
+
 
 	/**
 	 * Registers the specified player.
 	 * @param player The player.
 	 * @return A {@link RegistrationStatus}.
 	 */
-	public RegistrationStatus register(Player player) {
-		if (isPlayerOnline(player.getEncodedName())) {
+	public RegistrationStatus register( Player player )
+	{
+		if( isPlayerOnline( player.getEncodedName() ) ) {
 			return RegistrationStatus.ALREADY_ONLINE;
 		}
 
-		boolean success = playerRepository.add(player);
-		if (success) {
-			activePlayers.put(player.getEncodedName(), player);
-			logger.info("Registered player: " + player + " [online=" + playerRepository.size() + "]");
+		boolean success = playerRepository.add( player );
+		if( success ) {
+			activePlayers.put( player.getEncodedName(), player );
+			logger.info( "Registered player: " + player + " [online=" + playerRepository.size() + "]" );
 			return RegistrationStatus.OK;
 		} else {
-			logger.warning("Failed to register player (server full): " + player + " [online=" + playerRepository.size() + "]");
+			logger.warning( "Failed to register player (server full): " + player + " [online=" + playerRepository.size() + "]" );
 			return RegistrationStatus.WORLD_FULL;
 		}
 	}
+
 
 	/**
 	 * Registers the specified mob.
 	 * @param mob The mob.
 	 * @return {@code true} if the mob registered successfully, otherwise {@code false}.
 	 */
-	public boolean register(Mob mob) {
-		boolean success = mobRepository.add(mob);
-		if (success) {
+	public boolean register( Mob mob )
+	{
+		boolean success = mobRepository.add( mob );
+		if( success ) {
 			activeMobs.put( mob.getIndex(), mob );
-			logger.info("Registered mob: " + mob + " [online=" + mobRepository.size() + "]");
+			logger.info( "Registered mob: " + mob + " [online=" + mobRepository.size() + "]" );
 		} else {
-			logger.warning("Failed to register mob, repository capacity reached: [online=" + mobRepository.size() + "]");
+			logger.warning( "Failed to register mob, repository capacity reached: [online=" + mobRepository.size() + "]" );
 		}
 		return success;
 	}
+
 
 	/**
 	 * Checks if the specified player is online.
 	 * @param name The players name, as a long
 	 * @return {@code true} if so, {@code false} if not.
 	 */
-	public boolean isPlayerOnline(long name) {
-		return activePlayers.containsKey(name);
+	public boolean isPlayerOnline( long name )
+	{
+		return activePlayers.containsKey( name );
 	}
+
 
 	/**
 	 * Unregisters the specified player.
 	 * @param player The player.
 	 */
-	public void unregister(Player player) {
-		if (playerRepository.remove(player)) {
-			activePlayers.remove(player.getEncodedName());
-			logger.info("Unregistered player: " + player + " [online=" + playerRepository.size() + "]");
+	public void unregister( Player player )
+	{
+		if( playerRepository.remove( player ) ) {
+			activePlayers.remove( player.getEncodedName() );
+			logger.info( "Unregistered player: " + player + " [online=" + playerRepository.size() + "]" );
 		} else {
-			logger.warning("Could not find player to unregister: " + player + "!");
+			logger.warning( "Could not find player to unregister: " + player + "!" );
 		}
 	}
+
 
 	/**
 	 * Unregisters the specified {@link Mob}.
 	 * @param mob The mob.
 	 */
-	public void unregister(Mob mob) {
-		if (mobRepository.remove(mob)) {
-			activeMobs.remove(mob.getIndex());
-			logger.info("Unregistered mob: " + mob + " [online=" + mobRepository.size() + "]");
+	public void unregister( Mob mob )
+	{
+		if( mobRepository.remove( mob ) ) {
+			activeMobs.remove( mob.getIndex() );
+			logger.info( "Unregistered mob: " + mob + " [online=" + mobRepository.size() + "]" );
 		} else {
-			logger.warning("Could not find mob " + mob + " to unregister!");
+			logger.warning( "Could not find mob " + mob + " to unregister!" );
 		}
 	}
 
+
 	/**
 	 * Returns a {@link Player} object by their encoded username.
-	 * @param name	The name to lookup.
-	 * @return	The player object, if found. Otherwise null will be returned.
+	 * @param name The name to lookup.
+	 * @return The player object, if found. Otherwise null will be returned.
 	 */
-	public Player getPlayerByName(long name) {
-		Player player = activePlayers.get(name);
+	public Player getPlayerByName( long name )
+	{
+		Player player = activePlayers.get( name );
 		return player;
 	}
+
 
 	/**
 	 * Schedules a new task.
 	 * @param task The {@link ScheduledTask}.
 	 */
-	public void schedule(ScheduledTask task) {
-		Scheduler.getInstance().schedule(task);
+	public void schedule( ScheduledTask task )
+	{
+		Scheduler.getInstance().schedule( task );
 	}
+
 
 	/**
 	 * Calls the {@link Scheduler#pulse()} method.
 	 */
-	public void pulse() {
+	public void pulse()
+	{
 		Scheduler.getInstance().pulse();
 	}
 
