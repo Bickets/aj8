@@ -1,8 +1,8 @@
 
 package org.apollo.game.sync.seg;
 
-import org.apollo.game.model.Position;
 import org.apollo.game.model.GameCharacter;
+import org.apollo.game.model.Position;
 import org.apollo.game.sync.block.SynchronizationBlockSet;
 
 /**

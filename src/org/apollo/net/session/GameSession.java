@@ -1,6 +1,11 @@
 
 package org.apollo.net.session;
 
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelHandlerContext;
+
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.logging.Logger;
@@ -12,9 +17,6 @@ import org.apollo.game.event.Event;
 import org.apollo.game.event.EventDispatcher;
 import org.apollo.game.event.impl.LogoutEvent;
 import org.apollo.game.model.Player;
-import org.jboss.netty.channel.Channel;
-import org.jboss.netty.channel.ChannelFuture;
-import org.jboss.netty.channel.ChannelFutureListener;
 
 /**
  * A game session.
@@ -45,21 +47,21 @@ public final class GameSession extends Session
 
 
 	/**
-	 * Creates a login session for the specified channel.
-	 * @param channel The channel.
+	 * Creates a login session for the specified channel context.
+	 * @param ctx This sessions channels context.
 	 * @param context The server context.
 	 * @param player The player.
 	 */
-	public GameSession( Channel channel, ServerContext context, Player player )
+	public GameSession( ChannelHandlerContext ctx, ServerContext context, Player player )
 	{
-		super( channel );
+		super( ctx );
 		this.context = context;
 		this.player = player;
 	}
 
 
 	@Override
-	public void messageReceived( Object message ) throws Exception
+	public void messageReceived( Object message )
 	{
 		Event event = ( Event )message;
 		if( eventQueue.size() >= GameConstants.EVENTS_PER_PULSE ) {
@@ -76,8 +78,8 @@ public final class GameSession extends Session
 	 */
 	public void dispatchEvent( Event event )
 	{
-		Channel channel = getChannel();
-		if( channel.isBound() && channel.isConnected() && channel.isOpen() ) {
+		Channel channel = ctx().channel();
+		if( channel.isActive() ) {
 			ChannelFuture future = channel.write( event );
 			if( event.getClass() == LogoutEvent.class ) {
 				future.addListener( ChannelFutureListener.CLOSE );
@@ -109,7 +111,7 @@ public final class GameSession extends Session
 
 
 	@Override
-	public void destroy() throws Exception
+	public void destroy()
 	{
 		context.getService( GameService.class ).unregisterPlayer( player );
 	}

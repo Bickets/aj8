@@ -1,54 +1,54 @@
 
 package org.apollo.net.session;
 
-import org.jboss.netty.channel.Channel;
-import org.jboss.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelHandlerContext;
 
 /**
  * A session which is used as the attachment of a {@link ChannelHandlerContext} in Netty.
  * @author Graham
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public abstract class Session
 {
 
 	/**
-	 * The channel.
+	 * This sessions channel context.
 	 */
-	private final Channel channel;
+	private final ChannelHandlerContext ctx;
 
 
 	/**
-	 * Creates a session for the specified channel.
-	 * @param channel The channel.
+	 * Creates a session for the specified channel context.
+	 * @param ctx This sessions channel context.
 	 */
-	public Session( Channel channel )
+	public Session( ChannelHandlerContext ctx )
 	{
-		this.channel = channel;
+		this.ctx = ctx;
 	}
 
 
 	/**
-	 * Gets the channel.
-	 * @return The channel.
+	 * Returns the context of this sessions channel.
 	 */
-	protected final Channel getChannel()
+	protected final ChannelHandlerContext ctx()
 	{
-		return channel;
+		return ctx;
 	}
 
 
 	/**
 	 * Processes a message received from the channel.
 	 * @param message The message.
-	 * @throws Exception if an error occurs.
 	 */
-	public abstract void messageReceived( Object message ) throws Exception;
+	public abstract void messageReceived( Object message );
 
 
 	/**
 	 * Destroys this session.
-	 * @throws Exception if an error occurs.
 	 */
-	public abstract void destroy() throws Exception;
+	public void destroy()
+	{
+		// Intended to be overridden.
+	}
 
 }

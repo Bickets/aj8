@@ -1,36 +1,30 @@
 
 package org.apollo.net.codec.login;
 
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
-import org.jboss.netty.channel.Channel;
-import org.jboss.netty.channel.ChannelHandlerContext;
-import org.jboss.netty.handler.codec.oneone.OneToOneEncoder;
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.MessageToMessageEncoder;
+
+import java.util.List;
 
 /**
  * A class which encodes login response messsages.
  * @author Graham
  */
-public final class LoginEncoder extends OneToOneEncoder
+public final class LoginEncoder extends MessageToMessageEncoder<LoginResponse>
 {
 
 	@Override
-	protected Object encode( ChannelHandlerContext ctx, Channel channel, Object message ) throws Exception
+	protected void encode( ChannelHandlerContext ctx, LoginResponse msg, List<Object> out ) throws Exception
 	{
-		if( ! ( message instanceof LoginResponse ) ) {
-			return message;
+		ByteBuf buffer = Unpooled.buffer( 3 );
+		buffer.writeByte( msg.getStatus() );
+		if( msg.getStatus() == LoginConstants.STATUS_OK ) {
+			buffer.writeByte( msg.getRights() );
+			buffer.writeByte( msg.isFlagged() ? 1: 0 );
 		}
-
-		LoginResponse response = ( LoginResponse )message;
-
-		ChannelBuffer buffer = ChannelBuffers.buffer( 3 );
-		buffer.writeByte( response.getStatus() );
-		if( response.getStatus() == LoginConstants.STATUS_OK ) {
-			buffer.writeByte( response.getRights() );
-			buffer.writeByte( response.isFlagged() ? 1: 0 );
-		}
-
-		return buffer;
+		out.add( buffer );
 	}
 
 }

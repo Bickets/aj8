@@ -1,27 +1,26 @@
 
 package org.apollo;
 
+import io.netty.bootstrap.ServerBootstrap;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelHandler;
+import io.netty.channel.EventLoopGroup;
+import io.netty.channel.nio.NioEventLoopGroup;
+import io.netty.channel.socket.nio.NioServerSocketChannel;
+
 import java.io.File;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apollo.fs.IndexedFileSystem;
 import org.apollo.game.model.World;
 import org.apollo.net.ApolloHandler;
-import org.apollo.net.HttpPipelineFactory;
-import org.apollo.net.JagGrabPipelineFactory;
+import org.apollo.net.HttpChannelHandler;
+import org.apollo.net.JagGrabChannelHandler;
 import org.apollo.net.NetworkConstants;
-import org.apollo.net.ServicePipelineFactory;
-import org.jboss.netty.bootstrap.ServerBootstrap;
-import org.jboss.netty.channel.ChannelFactory;
-import org.jboss.netty.channel.ChannelPipelineFactory;
-import org.jboss.netty.channel.socket.nio.NioServerSocketChannelFactory;
-import org.jboss.netty.util.HashedWheelTimer;
-import org.jboss.netty.util.Timer;
+import org.apollo.net.ServiceChannelHandler;
 
 /**
  * The core class of the Apollo server.
@@ -74,20 +73,15 @@ public final class Server
 	private final ServerBootstrap jagGrabBootstrap = new ServerBootstrap();
 
 	/**
-	 * The {@link ExecutorService} used for network events. The named thread
-	 * factory is unused as Netty names threads itself.
+	 * An instance of {@link EventLoopGroup} used for multithread selects from the NIO selector
+	 * based {@link Channel}'s
 	 */
-	private final ExecutorService networkExecutor = Executors.newCachedThreadPool();
+	private final EventLoopGroup loopGroup = new NioEventLoopGroup();
 
 	/**
 	 * The service manager.
 	 */
 	private final ServiceManager serviceManager;
-
-	/**
-	 * The timer used for idle checking.
-	 */
-	private final Timer timer = new HashedWheelTimer();
 
 	/**
 	 * The server's context.
@@ -107,28 +101,29 @@ public final class Server
 
 
 	/**
-	 * Initialises the server.
+	 * Initializes the server.
 	 */
 	public void init()
 	{
 		logger.info( "Initialized Apollo." );
 
-		ChannelFactory factory = new NioServerSocketChannelFactory( networkExecutor, networkExecutor );
-		serviceBootstrap.setFactory( factory );
-		httpBootstrap.setFactory( factory );
-		jagGrabBootstrap.setFactory( factory );
-
 		context = new ServerContext( serviceManager );
 		ApolloHandler handler = new ApolloHandler( context );
 
-		ChannelPipelineFactory servicePipelineFactory = new ServicePipelineFactory( handler, timer );
-		serviceBootstrap.setPipelineFactory( servicePipelineFactory );
+		ChannelHandler servicePipelineFactory = new ServiceChannelHandler( handler );
+		serviceBootstrap.childHandler( servicePipelineFactory );
+		serviceBootstrap.channel( NioServerSocketChannel.class );
+		serviceBootstrap.group( loopGroup );
 
-		ChannelPipelineFactory httpPipelineFactory = new HttpPipelineFactory( handler, timer );
-		httpBootstrap.setPipelineFactory( httpPipelineFactory );
+		ChannelHandler httpPipelineFactory = new HttpChannelHandler( handler );
+		httpBootstrap.childHandler( httpPipelineFactory );
+		httpBootstrap.channel( NioServerSocketChannel.class );
+		httpBootstrap.group( loopGroup );
 
-		ChannelPipelineFactory jagGrabPipelineFactory = new JagGrabPipelineFactory( handler, timer );
-		jagGrabBootstrap.setPipelineFactory( jagGrabPipelineFactory );
+		ChannelHandler jagGrabPipelineFactory = new JagGrabChannelHandler( handler );
+		jagGrabBootstrap.childHandler( jagGrabPipelineFactory );
+		jagGrabBootstrap.channel( NioServerSocketChannel.class );
+		jagGrabBootstrap.group( loopGroup );
 	}
 
 

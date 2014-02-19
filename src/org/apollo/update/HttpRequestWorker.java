@@ -1,6 +1,15 @@
 
 package org.apollo.update;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFutureListener;
+import io.netty.handler.codec.http.DefaultHttpResponse;
+import io.netty.handler.codec.http.HttpRequest;
+import io.netty.handler.codec.http.HttpResponse;
+import io.netty.handler.codec.http.HttpResponseStatus;
+
 import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -12,14 +21,6 @@ import org.apollo.update.resource.CombinedResourceProvider;
 import org.apollo.update.resource.HypertextResourceProvider;
 import org.apollo.update.resource.ResourceProvider;
 import org.apollo.update.resource.VirtualResourceProvider;
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
-import org.jboss.netty.channel.Channel;
-import org.jboss.netty.channel.ChannelFutureListener;
-import org.jboss.netty.handler.codec.http.DefaultHttpResponse;
-import org.jboss.netty.handler.codec.http.HttpRequest;
-import org.jboss.netty.handler.codec.http.HttpResponse;
-import org.jboss.netty.handler.codec.http.HttpResponseStatus;
 
 /**
  * A worker which services HTTP requests.
@@ -68,7 +69,7 @@ public final class HttpRequestWorker extends RequestWorker<HttpRequest, Resource
 		String path = request.getUri();
 		ByteBuffer buf = provider.get( path );
 
-		ChannelBuffer wrappedBuf;
+		ByteBuf wrappedBuf;
 		HttpResponseStatus status = HttpResponseStatus.OK;
 
 		String mimeType = getMimeType( request.getUri() );
@@ -78,23 +79,21 @@ public final class HttpRequestWorker extends RequestWorker<HttpRequest, Resource
 			wrappedBuf = createErrorPage( status, "The page you requested could not be found." );
 			mimeType = "text/html";
 		} else {
-			wrappedBuf = ChannelBuffers.wrappedBuffer( buf );
+			wrappedBuf = Unpooled.wrappedBuffer( buf );
 		}
 
 		HttpResponse resp = new DefaultHttpResponse( request.getProtocolVersion(), status );
 
-		resp.setHeader( "Date", new Date() );
-		resp.setHeader( "Server", SERVER_IDENTIFIER );
-		resp.setHeader( "Content-type", mimeType + ", charset=" + CHARACTER_SET.name() );
-		resp.setHeader( "Cache-control", "no-cache" );
-		resp.setHeader( "Pragma", "no-cache" );
-		resp.setHeader( "Expires", new Date( 0 ) );
-		resp.setHeader( "Connection", "close" );
-		resp.setHeader( "Content-length", wrappedBuf.readableBytes() );
-		resp.setChunked( false );
-		resp.setContent( wrappedBuf );
+		resp.headers().set( "Date", new Date() );
+		resp.headers().set( "Server", SERVER_IDENTIFIER );
+		resp.headers().set( "Content-type", mimeType + ", charset=" + CHARACTER_SET.name() );
+		resp.headers().set( "Cache-control", "no-cache" );
+		resp.headers().set( "Pragma", "no-cache" );
+		resp.headers().set( "Expires", new Date( 0 ) );
+		resp.headers().set( "Connection", "close" );
+		resp.headers().set( "Content-length", wrappedBuf.readableBytes() );
 
-		channel.write( resp ).addListener( ChannelFutureListener.CLOSE );
+		channel.writeAndFlush( resp ).addListener( ChannelFutureListener.CLOSE );
 	}
 
 
@@ -133,9 +132,9 @@ public final class HttpRequestWorker extends RequestWorker<HttpRequest, Resource
 	 * @param description The error description.
 	 * @return The error page as a buffer.
 	 */
-	private ChannelBuffer createErrorPage( HttpResponseStatus status, String description )
+	private ByteBuf createErrorPage( HttpResponseStatus status, String description )
 	{
-		String title = status.getCode() + " " + status.getReasonPhrase();
+		String title = status.code() + " " + status.reasonPhrase();
 
 		StringBuilder bldr = new StringBuilder();
 
@@ -149,7 +148,7 @@ public final class HttpRequestWorker extends RequestWorker<HttpRequest, Resource
 		bldr.append( SERVER_IDENTIFIER );
 		bldr.append( " Server</address></body></html>" );
 
-		return ChannelBuffers.copiedBuffer( bldr.toString(), Charset.defaultCharset() );
+		return Unpooled.copiedBuffer( bldr.toString(), Charset.defaultCharset() );
 	}
 
 }

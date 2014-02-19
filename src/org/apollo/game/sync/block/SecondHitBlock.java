@@ -1,6 +1,8 @@
 
 package org.apollo.game.sync.block;
 
+import org.apollo.game.model.Player;
+
 /**
  * The Second Hit Update {@link SynchronizationBlock}. This is believed to be
  * used for when multiple attacks happen at once (for example, the DDS-special

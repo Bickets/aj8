@@ -1,10 +1,11 @@
 
 package org.apollo.net.codec.game;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+
 import org.apollo.net.NetworkConstants;
 import org.apollo.net.meta.PacketType;
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
 
 /**
  * A class which assists in creating a {@link GamePacket}.
@@ -26,7 +27,7 @@ public final class GamePacketBuilder
 	/**
 	 * The buffer.
 	 */
-	private final ChannelBuffer buffer = ChannelBuffers.dynamicBuffer();
+	private final ByteBuf buffer = Unpooled.buffer();
 
 	/**
 	 * The current mode.
@@ -317,7 +318,7 @@ public final class GamePacketBuilder
 	 * @param buffer The source {@link ChannelBuffer}.
 	 * @throws IllegalStateException if the builder is not in byte access mode.
 	 */
-	public void putBytes( ChannelBuffer buffer )
+	public void putBytes( ByteBuf buffer )
 	{
 		byte[] bytes = new byte[ buffer.readableBytes() ];
 		buffer.markReaderIndex();
@@ -336,7 +337,7 @@ public final class GamePacketBuilder
 	 * @param buffer The source {@link ChannelBuffer}.
 	 * @throws IllegalStateException if the builder is not in byte access mode.
 	 */
-	public void putBytesReverse( ChannelBuffer buffer )
+	public void putBytesReverse( ByteBuf buffer )
 	{
 		byte[] bytes = new byte[ buffer.readableBytes() ];
 		buffer.markReaderIndex();
@@ -457,7 +458,7 @@ public final class GamePacketBuilder
 
 		int requiredSpace = bytePos - buffer.writerIndex() + 1;
 		requiredSpace += ( numBits + 7 ) / 8;
-		buffer.ensureWritableBytes( requiredSpace );
+		buffer.ensureWritable( requiredSpace );
 
 		for( ; numBits > bitOffset; bitOffset = 8 ) {
 			int tmp = buffer.getByte( bytePos );

@@ -1,8 +1,9 @@
 
 package org.apollo.net.codec.game;
 
+import io.netty.buffer.ByteBuf;
+
 import org.apollo.net.meta.PacketType;
-import org.jboss.netty.buffer.ChannelBuffer;
 
 /**
  * Represents a single packet used in the in-game protocol.
@@ -29,7 +30,7 @@ public final class GamePacket
 	/**
 	 * The payload.
 	 */
-	private final ChannelBuffer payload;
+	private final ByteBuf payload;
 
 
 	/**
@@ -38,7 +39,7 @@ public final class GamePacket
 	 * @param type The packet type.
 	 * @param payload The payload.
 	 */
-	public GamePacket( int opcode, PacketType type, ChannelBuffer payload )
+	public GamePacket( int opcode, PacketType type, ByteBuf payload )
 	{
 		this.opcode = opcode;
 		this.type = type;
@@ -71,7 +72,7 @@ public final class GamePacket
 	 * Gets the payload.
 	 * @return The payload.
 	 */
-	public ChannelBuffer getPayload()
+	public ByteBuf getPayload()
 	{
 		return payload;
 	}

@@ -1,7 +1,7 @@
 
 package org.apollo.update;
 
-import org.jboss.netty.channel.Channel;
+import io.netty.channel.Channel;
 
 /**
  * A specialised request which contains a channel as well as the request object

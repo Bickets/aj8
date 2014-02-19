@@ -1,20 +1,22 @@
 
 package org.apollo.net.codec.game;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.MessageToMessageEncoder;
+
+import java.util.List;
+
 import net.burtleburtle.bob.rand.IsaacAlgorithm;
 
 import org.apollo.net.meta.PacketType;
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
-import org.jboss.netty.channel.Channel;
-import org.jboss.netty.channel.ChannelHandlerContext;
-import org.jboss.netty.handler.codec.oneone.OneToOneEncoder;
 
 /**
  * A {@link OneToOneEncoder} which encodes in-game packets.
  * @author Graham
  */
-public final class GamePacketEncoder extends OneToOneEncoder
+public final class GamePacketEncoder extends MessageToMessageEncoder<GamePacket>
 {
 
 	/**
@@ -34,31 +36,26 @@ public final class GamePacketEncoder extends OneToOneEncoder
 
 
 	@Override
-	protected Object encode( ChannelHandlerContext ctx, Channel channel, Object msg ) throws Exception
+	protected void encode( ChannelHandlerContext ctx, GamePacket msg, List<Object> out )
 	{
-		if( msg.getClass() != GamePacket.class ) {
-			return msg;
-		}
-
-		GamePacket packet = ( GamePacket )msg;
-		PacketType type = packet.getType();
+		PacketType type = msg.getType();
 		int headerLength = 1;
-		int payloadLength = packet.getLength();
+		int payloadLength = msg.getLength();
 
 		if( type == PacketType.VARIABLE_BYTE ) {
 			headerLength ++ ;
 			if( payloadLength >= 256 ) {
-				throw new Exception( "Payload too long for variable byte packet" );
+				throw new IllegalStateException( "Payload too long for variable byte packet" );
 			}
 		} else if( type == PacketType.VARIABLE_SHORT ) {
 			headerLength += 2;
 			if( payloadLength >= 65536 ) {
-				throw new Exception( "Payload too long for variable short packet" );
+				throw new IllegalStateException( "Payload too long for variable short packet" );
 			}
 		}
 
-		ChannelBuffer buffer = ChannelBuffers.buffer( headerLength + payloadLength );
-		buffer.writeByte( ( packet.getOpcode() + random.nextInt() ) & 0xFF );
+		ByteBuf buffer = Unpooled.buffer( headerLength + payloadLength );
+		buffer.writeByte( ( msg.getOpcode() + random.nextInt() ) & 0xFF );
 
 		if( type == PacketType.VARIABLE_BYTE ) {
 			buffer.writeByte( payloadLength );
@@ -66,9 +63,7 @@ public final class GamePacketEncoder extends OneToOneEncoder
 			buffer.writeShort( payloadLength );
 		}
 
-		buffer.writeBytes( packet.getPayload() );
-
-		return buffer;
+		out.add( buffer.writeBytes( msg.getPayload() ) );
 	}
 
 }

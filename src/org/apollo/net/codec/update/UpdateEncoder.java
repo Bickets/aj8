@@ -1,41 +1,36 @@
 
 package org.apollo.net.codec.update;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.MessageToMessageEncoder;
+
+import java.util.List;
+
 import org.apollo.fs.FileDescriptor;
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
-import org.jboss.netty.channel.Channel;
-import org.jboss.netty.channel.ChannelHandlerContext;
-import org.jboss.netty.handler.codec.oneone.OneToOneEncoder;
 
 /**
  * A {@link OneToOneEncoder} for the 'on-demand' protocol.
  * @author Graham
  */
-public final class UpdateEncoder extends OneToOneEncoder
+public final class UpdateEncoder extends MessageToMessageEncoder<OnDemandResponse>
 {
 
 	@Override
-	protected Object encode( ChannelHandlerContext ctx, Channel c, Object msg ) throws Exception
+	protected void encode( ChannelHandlerContext ctx, OnDemandResponse msg, List<Object> out )
 	{
-		if( msg instanceof OnDemandResponse ) {
-			OnDemandResponse resp = ( OnDemandResponse )msg;
+		FileDescriptor fileDescriptor = msg.getFileDescriptor();
+		int fileSize = msg.getFileSize();
+		int chunkId = msg.getChunkId();
+		ByteBuf chunkData = msg.getChunkData();
 
-			FileDescriptor fileDescriptor = resp.getFileDescriptor();
-			int fileSize = resp.getFileSize();
-			int chunkId = resp.getChunkId();
-			ChannelBuffer chunkData = resp.getChunkData();
-
-			ChannelBuffer buf = ChannelBuffers.buffer( 6 + chunkData.readableBytes() );
-			buf.writeByte( fileDescriptor.getType() - 1 );
-			buf.writeShort( fileDescriptor.getFile() );
-			buf.writeShort( fileSize );
-			buf.writeByte( chunkId );
-			buf.writeBytes( chunkData );
-
-			return buf;
-		}
-		return msg;
+		ByteBuf buf = Unpooled.buffer( 6 + chunkData.readableBytes() );
+		buf.writeByte( fileDescriptor.getType() - 1 );
+		buf.writeShort( fileDescriptor.getFile() );
+		buf.writeShort( fileSize );
+		buf.writeByte( chunkId );
+		buf.writeBytes( chunkData );
 	}
 
 }

@@ -1,13 +1,18 @@
 
 package org.apollo.net.session;
 
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
+import io.netty.channel.ChannelHandlerContext;
+
 import org.apollo.ServerContext;
 import org.apollo.game.GameService;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.World.RegistrationStatus;
 import org.apollo.io.player.PlayerLoaderResponse;
 import org.apollo.login.LoginService;
-import org.apollo.net.ApolloHandler;
+import org.apollo.net.NetworkConstants;
 import org.apollo.net.codec.game.GameEventDecoder;
 import org.apollo.net.codec.game.GameEventEncoder;
 import org.apollo.net.codec.game.GamePacketDecoder;
@@ -16,10 +21,6 @@ import org.apollo.net.codec.login.LoginConstants;
 import org.apollo.net.codec.login.LoginRequest;
 import org.apollo.net.codec.login.LoginResponse;
 import org.apollo.security.IsaacRandomPair;
-import org.jboss.netty.channel.Channel;
-import org.jboss.netty.channel.ChannelFuture;
-import org.jboss.netty.channel.ChannelFutureListener;
-import org.jboss.netty.channel.ChannelHandlerContext;
 
 /**
  * A login session.
@@ -29,11 +30,6 @@ public final class LoginSession extends Session
 {
 
 	/**
-	 * The context of the {@link ApolloHandler}.
-	 */
-	private final ChannelHandlerContext channelContext;
-
-	/**
 	 * The server context.
 	 */
 	private final ServerContext serverContext;
@@ -41,20 +37,18 @@ public final class LoginSession extends Session
 
 	/**
 	 * Creates a login session for the specified channel.
-	 * @param channel The channel.
-	 * @param channelContext The context of the {@link ApolloHandler}.
+	 * @param channel The channels context.
 	 * @param serverContext The server context.
 	 */
-	public LoginSession( Channel channel, ChannelHandlerContext channelContext, ServerContext serverContext )
+	public LoginSession( ChannelHandlerContext ctx, ServerContext serverContext )
 	{
-		super( channel );
-		this.channelContext = channelContext;
+		super( ctx );
 		this.serverContext = serverContext;
 	}
 
 
 	@Override
-	public void messageReceived( Object message ) throws Exception
+	public void messageReceived( Object message )
 	{
 		if( message.getClass() == LoginRequest.class ) {
 			handleLoginRequest( ( LoginRequest )message );
@@ -81,7 +75,7 @@ public final class LoginSession extends Session
 	public void handlePlayerLoaderResponse( LoginRequest request, PlayerLoaderResponse response )
 	{
 		GameService gameService = serverContext.getService( GameService.class );
-		Channel channel = getChannel();
+		Channel channel = ctx().channel();
 
 		int status = response.getStatus();
 		Player player = response.getPlayer();
@@ -89,7 +83,7 @@ public final class LoginSession extends Session
 		boolean log = false;
 
 		if( player != null ) {
-			GameSession session = new GameSession( channel, serverContext, player );
+			GameSession session = new GameSession( ctx(), serverContext, player );
 			player.setSession( session, false /* TODO */);
 
 			RegistrationStatus registrationStatus = gameService.registerPlayer( player );
@@ -105,33 +99,24 @@ public final class LoginSession extends Session
 			}
 		}
 
-		ChannelFuture future = channel.write( new LoginResponse( status, rights, log ) );
-
-		destroy();
+		ChannelFuture future = channel.writeAndFlush( new LoginResponse( status, rights, log ) );
 
 		if( player != null ) {
 			IsaacRandomPair randomPair = request.getRandomPair();
 
-			channel.getPipeline().addFirst( "eventEncoder", new GameEventEncoder() );
-			channel.getPipeline().addBefore( "eventEncoder", "gameEncoder", new GamePacketEncoder( randomPair.getEncodingRandom() ) );
+			channel.pipeline().addFirst( "eventEncoder", new GameEventEncoder() );
+			channel.pipeline().addBefore( "eventEncoder", "gameEncoder", new GamePacketEncoder( randomPair.getEncodingRandom() ) );
 
-			channel.getPipeline().addBefore( "handler", "gameDecoder", new GamePacketDecoder( randomPair.getDecodingRandom() ) );
-			channel.getPipeline().addAfter( "gameDecoder", "eventDecoder", new GameEventDecoder() );
+			channel.pipeline().addBefore( "handler", "gameDecoder", new GamePacketDecoder( randomPair.getDecodingRandom() ) );
+			channel.pipeline().addAfter( "gameDecoder", "eventDecoder", new GameEventDecoder() );
 
-			channel.getPipeline().remove( "loginDecoder" );
-			channel.getPipeline().remove( "loginEncoder" );
+			channel.pipeline().remove( "loginDecoder" );
+			channel.pipeline().remove( "loginEncoder" );
 
-			channelContext.setAttachment( player.getSession() );
+			ctx().attr( NetworkConstants.NETWORK_SESSION ).set( player.getSession() );
 		} else {
 			future.addListener( ChannelFutureListener.CLOSE );
 		}
-	}
-
-
-	@Override
-	public void destroy()
-	{
-
 	}
 
 }

@@ -1,16 +1,17 @@
 
 package org.apollo.net.codec.game;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelHandlerContext;
+
+import java.util.List;
+
 import net.burtleburtle.bob.rand.IsaacAlgorithm;
 
 import org.apollo.game.event.EventTranslator;
 import org.apollo.net.meta.PacketMetaData;
 import org.apollo.net.meta.PacketType;
 import org.apollo.util.StatefulFrameDecoder;
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
-import org.jboss.netty.channel.Channel;
-import org.jboss.netty.channel.ChannelHandlerContext;
 
 /**
  * A {@link StatefulFrameDecoder} which decodes game packets.
@@ -52,116 +53,91 @@ public final class GamePacketDecoder extends StatefulFrameDecoder<GameDecoderSta
 
 
 	@Override
-	protected Object decode( ChannelHandlerContext ctx, Channel channel, ChannelBuffer buffer, GameDecoderState state ) throws Exception
+	protected void decode( ChannelHandlerContext ctx, ByteBuf buffer, List<Object> out, GameDecoderState state )
 	{
 		switch( state ) {
 			case GAME_OPCODE:
-				return decodeOpcode( ctx, channel, buffer );
+				decodeOpcode( ctx, buffer, out );
+				break;
 			case GAME_LENGTH:
-				return decodeLength( ctx, channel, buffer );
+				decodeLength( ctx, buffer, out );
+				break;
 			case GAME_PAYLOAD:
-				return decodePayload( ctx, channel, buffer );
+				decodePayload( ctx, buffer, out );
+				break;
 			default:
-				throw new Exception( "Invalid game decoder state" );
+				throw new IllegalStateException( "Invalid game decoder state" );
 		}
 	}
 
 
 	/**
-	 * Decodes in the opcode state.
-	 * @param ctx The channel handler context.
-	 * @param channel The channel.
-	 * @param buffer The buffer.
-	 * @return The frame, or {@code null}.
-	 * @throws Exception if an error occurs.
+	 * Decodes the opcode state.
+	 * @param ctx The channels context.
+	 * @param in The input buffer.
+	 * @param out The {@link List} to which written data should be added to.
 	 */
-	private Object decodeOpcode( ChannelHandlerContext ctx, Channel channel, ChannelBuffer buffer ) throws Exception
+	private void decodeOpcode( ChannelHandlerContext ctx, ByteBuf in, List<Object> out )
 	{
-		if( buffer.readable() ) {
-			int encryptedOpcode = buffer.readUnsignedByte();
-			opcode = ( encryptedOpcode - random.nextInt() ) & 0xFF;
-
-			PacketMetaData metaData = EventTranslator.getInstance().getIncomingPacketMetaData( opcode );
-			if( metaData == null ) {
-				throw new Exception( "Illegal opcode: " + opcode );
-			}
-
-			type = metaData.getType();
-			switch( type ) {
-				case FIXED:
-					length = metaData.getLength();
-					if( length == 0 ) {
-						return decodeZeroLengthPacket( ctx, channel, buffer );
-					} else {
-						setState( GameDecoderState.GAME_PAYLOAD );
-					}
-					break;
-				case VARIABLE_BYTE:
-					setState( GameDecoderState.GAME_LENGTH );
-					break;
-				default:
-					throw new Exception( "Illegal packet type: " + type );
-			}
+		if( ! in.isReadable() ) {
+			return;
 		}
-		return null;
-	}
 
+		int encryptedOpcode = in.readUnsignedByte();
+		opcode = ( encryptedOpcode - random.nextInt() ) & 0xFF;
 
-	/**
-	 * Decodes in the length state.
-	 * @param ctx The channel handler context.
-	 * @param channel The channel.
-	 * @param buffer The buffer.
-	 * @return The frame, or {@code null}.
-	 * @throws Exception if an error occurs.
-	 */
-	private Object decodeLength( ChannelHandlerContext ctx, Channel channel, ChannelBuffer buffer ) throws Exception
-	{
-		if( buffer.readable() ) {
-			length = buffer.readUnsignedByte();
-			if( length == 0 ) {
-				return decodeZeroLengthPacket( ctx, channel, buffer );
-			} else {
+		PacketMetaData metaData = EventTranslator.getInstance().getIncomingPacketMetaData( opcode );
+		if( metaData == null ) {
+			throw new IllegalStateException( "Illegal opcode: " + opcode );
+		}
+
+		type = metaData.getType();
+		switch( type ) {
+			case FIXED:
+				length = metaData.getLength();
 				setState( GameDecoderState.GAME_PAYLOAD );
-			}
+				break;
+			case VARIABLE_BYTE:
+				setState( GameDecoderState.GAME_LENGTH );
+				break;
+			default:
+				throw new IllegalStateException( "Illegal packet type: " + type );
 		}
-		return null;
 	}
 
 
 	/**
-	 * Decodes in the payload state.
-	 * @param ctx The channel handler context.
-	 * @param channel The channel.
-	 * @param buffer The buffer.
-	 * @return The frame, or {@code null}.
-	 * @throws Exception if an error occurs.
+	 * Decodes the length state.
+	 * @param ctx The channels context.
+	 * @param in The input buffer.
+	 * @param out The {@link List} to which written data should be added to.
 	 */
-	private Object decodePayload( ChannelHandlerContext ctx, Channel channel, ChannelBuffer buffer ) throws Exception
+	private void decodeLength( ChannelHandlerContext ctx, ByteBuf in, List<Object> out )
 	{
-		if( buffer.readableBytes() >= length ) {
-			ChannelBuffer payload = buffer.readBytes( length );
-			setState( GameDecoderState.GAME_OPCODE );
-			return new GamePacket( opcode, type, payload );
+		if( ! in.isReadable() ) {
+			return;
 		}
-		return null;
+
+		length = in.readUnsignedByte();
+		setState( GameDecoderState.GAME_PAYLOAD );
 	}
 
 
 	/**
-	 * Decodes a zero length packet. This hackery is required as Netty will
-	 * throw an exception if we return a frame but have read nothing!
-	 * @param ctx The channel handler context.
-	 * @param channel The channel.
-	 * @param buffer The buffer.
-	 * @return The frame, or {@code null}.
-	 * @throws Exception if an error occurs.
+	 * Decodes the payload state.
+	 * @param ctx The channels context.
+	 * @param in The input buffer.
+	 * @param out The {@link List} to which written data should be added to.
 	 */
-	private Object decodeZeroLengthPacket( ChannelHandlerContext ctx, Channel channel, ChannelBuffer buffer ) throws Exception
+	private void decodePayload( ChannelHandlerContext ctx, ByteBuf in, List<Object> out )
 	{
-		ChannelBuffer payload = ChannelBuffers.buffer( 0 );
+		if( in.readableBytes() < length ) {
+			return;
+		}
+
+		ByteBuf payload = in.readBytes( length );
 		setState( GameDecoderState.GAME_OPCODE );
-		return new GamePacket( opcode, type, payload );
+		out.add( new GamePacket( opcode, type, payload ) );
 	}
 
 }

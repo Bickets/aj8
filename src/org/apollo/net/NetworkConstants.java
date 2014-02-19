@@ -28,15 +28,18 @@ public final class NetworkConstants
 	public static final int HTTP_PORT = 80;
 
 	/**
-	 * The terminator of a string.
+	 * The terminator of a string as specified by RS2 protocol.
 	 */
-	public static final int STRING_TERMINATOR = 10;
+	public static final int STRING_TERMINATOR = '\n';
 
 	/**
 	 * The number of seconds before a connection becomes idle.
 	 */
 	public static final int IDLE_TIME = 15;
 
+	/**
+	 * An {@link AttributeKey} which represents a current {@link Session} attribute.
+	 */
 	public static final AttributeKey<Session> NETWORK_SESSION = AttributeKey.valueOf( "network.KEY" );
 
 

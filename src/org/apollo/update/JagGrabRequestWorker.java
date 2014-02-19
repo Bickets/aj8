@@ -1,6 +1,11 @@
 
 package org.apollo.update;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+import io.netty.channel.Channel;
+import io.netty.channel.ChannelFutureListener;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
 
@@ -9,10 +14,6 @@ import org.apollo.net.codec.jaggrab.JagGrabRequest;
 import org.apollo.net.codec.jaggrab.JagGrabResponse;
 import org.apollo.update.resource.ResourceProvider;
 import org.apollo.update.resource.VirtualResourceProvider;
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
-import org.jboss.netty.channel.Channel;
-import org.jboss.netty.channel.ChannelFutureListener;
 
 /**
  * A worker which services JAGGRAB requests.
@@ -46,7 +47,7 @@ public final class JagGrabRequestWorker extends RequestWorker<JagGrabRequest, Re
 		if( buf == null ) {
 			channel.close();
 		} else {
-			ChannelBuffer wrapped = ChannelBuffers.wrappedBuffer( buf );
+			ByteBuf wrapped = Unpooled.wrappedBuffer( buf );
 			channel.write( new JagGrabResponse( wrapped ) ).addListener( ChannelFutureListener.CLOSE );
 		}
 	}

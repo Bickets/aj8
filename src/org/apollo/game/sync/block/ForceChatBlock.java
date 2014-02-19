@@ -1,6 +1,8 @@
 
 package org.apollo.game.sync.block;
 
+import org.apollo.game.model.Player;
+
 /**
  * The Force Chat {@link SynchronizationBlock}. This is a block that can be
  * implemented in both {@link Player} Synchronization tasks and {@link Npc} Synchronization tasks,

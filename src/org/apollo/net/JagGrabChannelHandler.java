@@ -1,25 +1,25 @@
 
 package org.apollo.net;
 
+import io.netty.buffer.ByteBuf;
+import io.netty.buffer.Unpooled;
+import io.netty.channel.ChannelInitializer;
+import io.netty.channel.ChannelPipeline;
+import io.netty.channel.socket.SocketChannel;
+import io.netty.handler.codec.DelimiterBasedFrameDecoder;
+import io.netty.handler.codec.string.StringDecoder;
+import io.netty.handler.timeout.IdleStateHandler;
+
 import java.nio.charset.Charset;
 
 import org.apollo.net.codec.jaggrab.JagGrabRequestDecoder;
 import org.apollo.net.codec.jaggrab.JagGrabResponseEncoder;
-import org.jboss.netty.buffer.ChannelBuffer;
-import org.jboss.netty.buffer.ChannelBuffers;
-import org.jboss.netty.channel.ChannelPipeline;
-import org.jboss.netty.channel.ChannelPipelineFactory;
-import org.jboss.netty.channel.Channels;
-import org.jboss.netty.handler.codec.frame.DelimiterBasedFrameDecoder;
-import org.jboss.netty.handler.codec.string.StringDecoder;
-import org.jboss.netty.handler.timeout.IdleStateHandler;
-import org.jboss.netty.util.Timer;
 
 /**
- * A {@link ChannelPipelineFactory} for the JAGGRAB protocol.
+ * A {@link ChannelInitializer} for the JAGGRAB protocol.
  * @author Graham
  */
-public final class JagGrabPipelineFactory implements ChannelPipelineFactory
+public final class JagGrabChannelHandler extends ChannelInitializer<SocketChannel>
 {
 
 	/**
@@ -35,14 +35,13 @@ public final class JagGrabPipelineFactory implements ChannelPipelineFactory
 	/**
 	 * A buffer with two line feed (LF) characters in it.
 	 */
-	private static final ChannelBuffer DOUBLE_LINE_FEED_DELIMITER = ChannelBuffers.buffer( 2 );
+	private static final ByteBuf DOUBLE_LINE_FEED_DELIMITER = Unpooled.buffer( 2 );
 
 	/**
 	 * Populates the double line feed buffer.
 	 */
 	static {
-		DOUBLE_LINE_FEED_DELIMITER.writeByte( 10 );
-		DOUBLE_LINE_FEED_DELIMITER.writeByte( 10 );
+		DOUBLE_LINE_FEED_DELIMITER.writeByte( 10 ).writeByte( 10 );
 	}
 
 	/**
@@ -50,28 +49,21 @@ public final class JagGrabPipelineFactory implements ChannelPipelineFactory
 	 */
 	private final ApolloHandler handler;
 
-	/**
-	 * The timer used for idle checking.
-	 */
-	private final Timer timer;
-
 
 	/**
 	 * Creates a {@code JAGGRAB} pipeline factory.
 	 * @param handler The file server event handler.
-	 * @param timer The timer used for idle checking.
 	 */
-	public JagGrabPipelineFactory( ApolloHandler handler, Timer timer )
+	public JagGrabChannelHandler( ApolloHandler handler )
 	{
 		this.handler = handler;
-		this.timer = timer;
 	}
 
 
 	@Override
-	public ChannelPipeline getPipeline() throws Exception
+	protected void initChannel( SocketChannel channel )
 	{
-		ChannelPipeline pipeline = Channels.pipeline();
+		ChannelPipeline pipeline = channel.pipeline();
 
 		// decoders
 		pipeline.addLast( "framer", new DelimiterBasedFrameDecoder( MAX_REQUEST_LENGTH, DOUBLE_LINE_FEED_DELIMITER ) );
@@ -82,10 +74,8 @@ public final class JagGrabPipelineFactory implements ChannelPipelineFactory
 		pipeline.addLast( "jaggrab-encoder", new JagGrabResponseEncoder() );
 
 		// handler
-		pipeline.addLast( "timeout", new IdleStateHandler( timer, NetworkConstants.IDLE_TIME, 0, 0 ) );
+		pipeline.addLast( "timeout", new IdleStateHandler( NetworkConstants.IDLE_TIME, 0, 0 ) );
 		pipeline.addLast( "handler", handler );
-
-		return pipeline;
 	}
 
 }

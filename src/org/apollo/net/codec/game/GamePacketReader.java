@@ -1,8 +1,9 @@
 
 package org.apollo.net.codec.game;
 
+import io.netty.buffer.ByteBuf;
+
 import org.apollo.util.ChannelBufferUtil;
-import org.jboss.netty.buffer.ChannelBuffer;
 
 /**
  * A utility class for reading {@link GamePacket}s.
@@ -14,7 +15,7 @@ public final class GamePacketReader
 	/**
 	 * The buffer.
 	 */
-	private final ChannelBuffer buffer;
+	private final ByteBuf buffer;
 
 	/**
 	 * The current mode.
