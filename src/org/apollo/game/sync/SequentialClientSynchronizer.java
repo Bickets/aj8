@@ -33,35 +33,35 @@ public final class SequentialClientSynchronizer extends ClientSynchronizer
 		CharacterRepository<Player> players = World.getWorld().getPlayerRepository();
 		CharacterRepository<Mob> mobs = World.getWorld().getMobRepository();
 
-		for( Player player: players ) {
+		players.forEach( player -> {
 			SynchronizationTask task = new PrePlayerSynchronizationTask( player );
 			task.run();
-		}
+		} );
 
-		for( Mob mob: mobs ) {
+		mobs.forEach( mob -> {
 			SynchronizationTask task = new PreMobSynchronizationTask( mob );
 			task.run();
-		}
+		} );
 
-		for( Player player: players ) {
+		players.forEach( player -> {
 			SynchronizationTask task = new PlayerSynchronizationTask( player );
 			task.run();
-		}
+		} );
 
-		for( Player player: players ) {
+		players.forEach( player -> {
 			SynchronizationTask task = new MobSynchronizationTask( player );
 			task.run();
-		}
+		} );
 
-		for( Player player: players ) {
+		players.forEach( player -> {
 			SynchronizationTask task = new PostPlayerSynchronizationTask( player );
 			task.run();
-		}
+		} );
 
-		for( Mob mob: mobs ) {
+		mobs.forEach( mob -> {
 			SynchronizationTask task = new PostMobSynchronizationTask( mob );
 			task.run();
-		}
+		} );
 	}
 
 }

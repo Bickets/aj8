@@ -52,9 +52,10 @@ public final class MobSynchronizationTask extends SynchronizationTask
 		SynchronizationBlockSet blockSet = player.getBlockSet();
 		List<Mob> localMobs = player.getLocalMobs();
 		int oldLocalMobs = localMobs.size();
-		List<SynchronizationSegment> segments = new ArrayList<SynchronizationSegment>();
+		List<SynchronizationSegment> segments = new ArrayList<>();
 
-		for( Iterator<Mob> it = localMobs.iterator(); it.hasNext(); ) {
+		Iterator<Mob> it = localMobs.iterator();
+		while( it.hasNext() ) {
 			Mob mob = it.next();
 			if( ! mob.isActive() || mob.isTeleporting() || mob.getPosition().getLongestDelta( player.getPosition() ) > player.getViewingDistance() ) {
 				it.remove();
@@ -67,6 +68,8 @@ public final class MobSynchronizationTask extends SynchronizationTask
 		int added = 0;
 
 		CharacterRepository<Mob> repository = World.getWorld().getMobRepository();
+		// lambda does not work here
+		// due to variables needing to be final.
 		for( Mob mob: repository ) {
 			if( localMobs.size() >= 255 ) {
 				player.flagExcessiveMobs();

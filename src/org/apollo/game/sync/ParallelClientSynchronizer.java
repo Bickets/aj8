@@ -68,45 +68,45 @@ public final class ParallelClientSynchronizer extends ClientSynchronizer
 		int mobCount = mobs.size();
 
 		phaser.bulkRegister( playerCount );
-		for( Player player: players ) {
+		players.forEach( player -> {
 			SynchronizationTask task = new PrePlayerSynchronizationTask( player );
 			executor.submit( new PhasedSynchronizationTask( phaser, task ) );
-		}
+		} );
 		phaser.arriveAndAwaitAdvance();
 
 		phaser.bulkRegister( mobCount );
-		for( Mob mob: mobs ) {
+		mobs.forEach( mob -> {
 			SynchronizationTask task = new PreMobSynchronizationTask( mob );
 			executor.submit( new PhasedSynchronizationTask( phaser, task ) );
-		}
+		} );
 		phaser.arriveAndAwaitAdvance();
 
 		phaser.bulkRegister( playerCount );
-		for( Player player: players ) {
+		players.forEach( player -> {
 			SynchronizationTask task = new PlayerSynchronizationTask( player );
 			executor.submit( new PhasedSynchronizationTask( phaser, task ) );
-		}
+		} );
 		phaser.arriveAndAwaitAdvance();
 
 		phaser.bulkRegister( playerCount );
-		for( Player player: players ) {
+		players.forEach( player -> {
 			SynchronizationTask task = new MobSynchronizationTask( player );
 			executor.submit( new PhasedSynchronizationTask( phaser, task ) );
-		}
+		} );
 		phaser.arriveAndAwaitAdvance();
 
 		phaser.bulkRegister( playerCount );
-		for( Player player: players ) {
+		players.forEach( player -> {
 			SynchronizationTask task = new PostPlayerSynchronizationTask( player );
 			executor.submit( new PhasedSynchronizationTask( phaser, task ) );
-		}
+		} );
 		phaser.arriveAndAwaitAdvance();
 
 		phaser.bulkRegister( mobCount );
-		for( Mob mob: mobs ) {
+		mobs.forEach( mob -> {
 			SynchronizationTask task = new PostMobSynchronizationTask( mob );
 			executor.submit( new PhasedSynchronizationTask( phaser, task ) );
-		}
+		} );
 		phaser.arriveAndAwaitAdvance();
 	}
 
