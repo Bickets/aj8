@@ -43,7 +43,7 @@ public abstract class StatefulFrameDecoder<T extends Enum<T>> extends ByteToMess
 
 
 	@Override
-	protected final void decode( ChannelHandlerContext ctx, ByteBuf in, List<Object> out ) throws Exception
+	protected final void decode( ChannelHandlerContext ctx, ByteBuf in, List<Object> out )
 	{
 		decode( ctx, in, out, state );
 	}
@@ -56,7 +56,7 @@ public abstract class StatefulFrameDecoder<T extends Enum<T>> extends ByteToMess
 	 * @param out The {@link List} to which decoded messages should be added
 	 * @param state The current state. The state may be changed by calling {@link #setState(Enum)}.
 	 */
-	protected abstract void decode( ChannelHandlerContext ctx, ByteBuf in, List<Object> out, T state ) throws Exception;
+	protected abstract void decode( ChannelHandlerContext ctx, ByteBuf in, List<Object> out, T state );
 
 
 	@Override

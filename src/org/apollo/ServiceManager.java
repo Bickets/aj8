@@ -30,21 +30,27 @@ public final class ServiceManager
 
 
 	/**
-	 * Creates and initializes the {@link ServiceManager}.
-	 * @throws Exception if an error occurs.
+	 * Creates the service manager.
+	 * @throws IOException If some I/O exceptions occurs.
+	 * @throws ClassNotFoundException If the specified class is not found.
+	 * @throws IllegalAccessException If we cannot access the specified class.
+	 * @throws InstantiationException If some instantiation error occurs.
 	 */
-	public ServiceManager() throws Exception
+	public ServiceManager() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException
 	{
 		init();
 	}
 
 
 	/**
-	 * Initializes this service manager.
-	 * @throws Exception if an error occurs.
+	 * Initializes the service manager.
+	 * @throws IOException If some I/O exceptions occurs.
+	 * @throws ClassNotFoundException If the specified class is not found.
+	 * @throws IllegalAccessException If we cannot access the specified class.
+	 * @throws InstantiationException If some instantiation error occurs.
 	 */
 	@SuppressWarnings( "unchecked" )
-	private void init() throws Exception
+	private void init() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException
 	{
 		logger.info( "Registering services..." );
 

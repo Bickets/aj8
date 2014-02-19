@@ -14,7 +14,7 @@ public final class JagGrabResponseEncoder extends MessageToMessageEncoder<JagGra
 {
 
 	@Override
-	protected void encode( ChannelHandlerContext ctx, JagGrabResponse msg, List<Object> out ) throws Exception
+	protected void encode( ChannelHandlerContext ctx, JagGrabResponse msg, List<Object> out )
 	{
 		out.add( msg.getFileData() );
 	}

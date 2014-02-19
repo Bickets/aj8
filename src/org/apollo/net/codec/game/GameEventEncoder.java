@@ -18,7 +18,7 @@ public final class GameEventEncoder extends MessageToMessageEncoder<Event>
 {
 
 	@Override
-	protected void encode( ChannelHandlerContext ctx, Event msg, List<Object> out ) throws Exception
+	protected void encode( ChannelHandlerContext ctx, Event msg, List<Object> out )
 	{
 		@SuppressWarnings( "unchecked" )
 		EventEncoder<Event> encoder = ( EventEncoder<Event> )EventTranslator.getInstance().get( msg.getClass() );

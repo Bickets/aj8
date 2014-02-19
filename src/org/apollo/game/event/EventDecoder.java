@@ -1,8 +1,6 @@
 
 package org.apollo.game.event;
 
-import java.io.IOException;
-
 import org.apollo.net.codec.game.GamePacket;
 
 /**
@@ -35,9 +33,8 @@ public abstract class EventDecoder<E extends Event>
 	 * Decodes the specified packet into an event.
 	 * @param packet The packet.
 	 * @return The event.
-	 * @throws IOException If some I/O exception occurs.
 	 */
-	public abstract E decode( GamePacket packet ) throws IOException;
+	public abstract E decode( GamePacket packet );
 
 
 	/**

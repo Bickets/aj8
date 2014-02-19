@@ -43,9 +43,9 @@ public final class IndexedFileSystem implements Closeable
 	 * Creates the file system with the specified base directory.
 	 * @param base The base directory.
 	 * @param readOnly A flag indicating if the file system will be read only.
-	 * @throws Exception if the file system is invalid.
+	 * @throws FileNotFoundException if the file system is invalid or does not exist
 	 */
-	public IndexedFileSystem( File base, boolean readOnly ) throws Exception
+	public IndexedFileSystem( File base, boolean readOnly ) throws FileNotFoundException
 	{
 		this.readOnly = readOnly;
 		detectLayout( base );
@@ -65,9 +65,9 @@ public final class IndexedFileSystem implements Closeable
 	/**
 	 * Automatically detect the layout of the specified directory.
 	 * @param root The base directory.
-	 * @throws Exception if the file system is invalid.
+	 * @throws FileNotFoundException if the file system is invalid or does not exist.
 	 */
-	private void detectLayout( File root ) throws Exception
+	private void detectLayout( File root ) throws FileNotFoundException
 	{
 		int indexCount = 0;
 		for( int index = 0; index < indices.length; index ++ ) {
@@ -78,14 +78,14 @@ public final class IndexedFileSystem implements Closeable
 			}
 		}
 		if( indexCount <= 0 ) {
-			throw new Exception( "No index file(s) present" );
+			throw new FileNotFoundException( "No index file(s) present" );
 		}
 
 		File data = new File( root.getAbsolutePath() + "/main_file_cache.dat" );
 		if( data.exists() && ! data.isDirectory() ) {
 			cacheData = new RandomAccessFile( data, readOnly ? "r": "rw" );
 		} else {
-			throw new Exception( "No data file present" );
+			throw new FileNotFoundException( "No data file present" );
 		}
 	}
 

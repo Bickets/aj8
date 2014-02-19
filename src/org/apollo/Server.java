@@ -9,6 +9,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 import java.io.File;
+import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.util.logging.Level;
@@ -41,9 +42,8 @@ public final class Server
 	 */
 	public static void main( String[] args )
 	{
-		Server server = null;
 		try {
-			server = new Server();
+			Server server = new Server();
 			server.init();
 
 			SocketAddress service = new InetSocketAddress( NetworkConstants.SERVICE_PORT );
@@ -52,8 +52,8 @@ public final class Server
 
 			server.start();
 			server.bind( service, http, jaggrab );
-		} catch( Exception e ) {
-			logger.log( Level.SEVERE, "Exception whilst starting Apollo!", e );
+		} catch( ClassNotFoundException | InstantiationException | IllegalAccessException | IOException e ) {
+			logger.log( Level.SEVERE, "Exception whilst starting Apollo:", e );
 		}
 	}
 
@@ -91,9 +91,12 @@ public final class Server
 
 	/**
 	 * Creates the Apollo server.
-	 * @throws Exception if an error occurs whilst creating services.
+	 * @throws IOException If some I/O exceptions occurs.
+	 * @throws ClassNotFoundException If the specified class is not found.
+	 * @throws IllegalAccessException If we cannot access the specified class.
+	 * @throws InstantiationException If some instantiation error occurs.
 	 */
-	public Server() throws Exception
+	public Server() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException
 	{
 		logger.info( "Starting Apollo..." );
 		serviceManager = new ServiceManager();
@@ -154,9 +157,9 @@ public final class Server
 
 	/**
 	 * Starts the server.
-	 * @throws Exception if an error occurs.
+	 * @throws IOException If some I/O error occurs.
 	 */
-	public void start() throws Exception
+	public void start() throws IOException
 	{
 		serviceManager.startAll();
 

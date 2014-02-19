@@ -46,19 +46,25 @@ public final class LoginService extends Service
 
 	/**
 	 * Creates the login service.
-	 * @throws Exception if an error occurs.
+	 * @throws IOException If some I/O exceptions occurs.
+	 * @throws ClassNotFoundException If the specified class is not found.
+	 * @throws IllegalAccessException If we cannot access the specified class.
+	 * @throws InstantiationException If some instantiation error occurs.
 	 */
-	public LoginService() throws Exception
+	public LoginService() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException
 	{
 		init();
 	}
 
 
 	/**
-	 * Initialises the login service.
-	 * @throws Exception if an error occurs.
+	 * Initializes the login service.
+	 * @throws IOException If some I/O exceptions occurs.
+	 * @throws ClassNotFoundException If the specified class is not found.
+	 * @throws IllegalAccessException If we cannot access the specified class.
+	 * @throws InstantiationException If some instantiation error occurs.
 	 */
-	private void init() throws Exception
+	private void init() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException
 	{
 		File file = new File( "data/", "login.json" );
 		JsonFactory factory = new JsonFactory();

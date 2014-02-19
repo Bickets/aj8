@@ -18,7 +18,7 @@ public final class GameEventDecoder extends MessageToMessageDecoder<GamePacket>
 {
 
 	@Override
-	protected void decode( ChannelHandlerContext ctx, GamePacket msg, List<Object> out ) throws Exception
+	protected void decode( ChannelHandlerContext ctx, GamePacket msg, List<Object> out )
 	{
 		EventDecoder< ? > decoder = EventTranslator.getInstance().get( msg.getOpcode() );
 		if( decoder != null ) {

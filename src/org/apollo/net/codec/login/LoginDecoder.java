@@ -58,7 +58,7 @@ public final class LoginDecoder extends StatefulFrameDecoder<LoginDecoderState>
 
 
 	@Override
-	protected void decode( ChannelHandlerContext ctx, ByteBuf in, List<Object> out, LoginDecoderState state ) throws Exception
+	protected void decode( ChannelHandlerContext ctx, ByteBuf in, List<Object> out, LoginDecoderState state )
 	{
 		switch( state ) {
 			case LOGIN_HANDSHAKE:

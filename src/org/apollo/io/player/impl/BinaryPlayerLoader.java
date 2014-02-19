@@ -45,7 +45,7 @@ public final class BinaryPlayerLoader implements PlayerLoader
 		DataInputStream in = new DataInputStream( new FileInputStream( f ) );
 
 		try {
-			// read credentials nad privileges
+			// read credentials and privileges
 			String name = StreamUtil.readString( in );
 			String pass = StreamUtil.readString( in );
 

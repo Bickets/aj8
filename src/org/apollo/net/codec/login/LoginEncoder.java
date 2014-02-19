@@ -16,7 +16,7 @@ public final class LoginEncoder extends MessageToMessageEncoder<LoginResponse>
 {
 
 	@Override
-	protected void encode( ChannelHandlerContext ctx, LoginResponse msg, List<Object> out ) throws Exception
+	protected void encode( ChannelHandlerContext ctx, LoginResponse msg, List<Object> out )
 	{
 		ByteBuf buffer = Unpooled.buffer( 3 );
 		buffer.writeByte( msg.getStatus() );

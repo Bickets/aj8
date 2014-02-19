@@ -54,9 +54,12 @@ public final class GameService extends Service
 
 	/**
 	 * Creates the game service.
-	 * @throws Exception if an error occurs during initialization.
+	 * @throws IOException If some I/O exceptions occurs.
+	 * @throws ClassNotFoundException If the specified class is not found.
+	 * @throws IllegalAccessException If we cannot access the specified class.
+	 * @throws InstantiationException If some instantiation error occurs.
 	 */
-	public GameService() throws Exception
+	public GameService() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException
 	{
 		init();
 	}
@@ -64,9 +67,12 @@ public final class GameService extends Service
 
 	/**
 	 * Initializes the game service.
-	 * @throws Exception if an error occurs.
+	 * @throws IOException If some I/O exceptions occurs.
+	 * @throws ClassNotFoundException If the specified class is not found.
+	 * @throws IllegalAccessException If we cannot access the specified class.
+	 * @throws InstantiationException If some instantiation error occurs.
 	 */
-	private void init() throws Exception
+	private void init() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException
 	{
 		File file = new File( "data/", "events.json" );
 

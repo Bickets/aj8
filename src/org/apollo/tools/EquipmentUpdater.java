@@ -5,6 +5,7 @@ import java.io.BufferedOutputStream;
 import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 import org.apollo.fs.IndexedFileSystem;
 import org.apollo.fs.parser.ItemDefinitionParser;
@@ -21,9 +22,9 @@ public final class EquipmentUpdater
 	/**
 	 * The entry point of the application.
 	 * @param args The command line arguments.
-	 * @throws Exception if an error occurs.
+	 * @throws IOException If some I/O exception occurs.
 	 */
-	public static void main( String[] args ) throws Exception
+	public static void main( String[] args ) throws IOException
 	{
 
 		DataOutputStream os = new DataOutputStream( new BufferedOutputStream( new FileOutputStream( "data/equipment.dat" ) ) );
