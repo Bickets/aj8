@@ -1,0 +1,5 @@
+{
+	"synchronizer" : [
+		"org.apollo.game.sync.ParallelClientSynchronizer"
+	]
+}

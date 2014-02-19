@@ -1,0 +1,37 @@
+# These are untracked commits to the source before source control was used.
+# Please note that the commits are not descriptive and are only here for logging purposes.
+
+	ChatEventDecoder fix
+	Player region changing fix
+	Walking height level fix
+	ThirdObjectActionEvent fix
+	Combat level formula fix
+	Item equipping fix
+	2-handed weapon equip fix
+	SwitchItemEventDecoder fix
+	SetInterfaceTextEventencoder fix
+	317 packet length fixes.
+	Archive decoding fix
+	Updated all assets to their newest version
+	Removed multi revision support
+	Removed JRuby scripting
+	Replaced XML parsing with json
+	Rewrote some of the JRuby core, translated to Java.
+	Renaming and code cleanup in IsaacRandom
+	Redesigned event multiplexing
+	Removed a few left-overs from the old multi-revision support
+	Did a few TODOs found in the code
+	Code and documentation formatting
+	Moved org.apollo.tools.EquipmentConstants into org.apollo.tools.EquipmentUpdater and made it private to prevent confusion with the org.apollo.game.model.EquipmentConstants class
+	More TODOs completed
+	Cleaned up some of my old code from the previous release
+	Added CharacterFields, which houses fields relating to that of a character.
+	Renamed org.apollo.game.model.Character to GameCharacter to prevent confusion with java.lang.Character
+	Mob support!
+	Mob synchronization completed!
+	Finished player synchronization
+	Added a bunch of synchronization blocks (thanks buroa)
+	Code format + more documentation
+	Partial rewriting to plugins
+	Specify long literal instead of assumed int when reading packet to prevent possible integer overflow
+	Formatted the json config files
