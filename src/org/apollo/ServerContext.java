@@ -26,7 +26,7 @@ public final class ServerContext
 	protected ServerContext( ServiceManager serviceManager )
 	{
 		this.serviceManager = serviceManager;
-		this.serviceManager.setContext( this );
+		serviceManager.setContext( this );
 	}
 
 

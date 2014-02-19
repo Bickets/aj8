@@ -12,6 +12,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apollo.ServerContext;
+import org.apollo.game.event.EventTranslator;
 import org.apollo.net.codec.handshake.HandshakeConstants;
 import org.apollo.net.codec.handshake.HandshakeMessage;
 import org.apollo.net.codec.jaggrab.JagGrabRequest;
@@ -40,14 +41,21 @@ public final class ApolloHandler extends ChannelHandlerAdapter
 	 */
 	private final ServerContext serverContext;
 
+	/**
+	 * The event translator.
+	 */
+	private final EventTranslator eventTranslator;
+
 
 	/**
 	 * Creates the Apollo event handler.
 	 * @param context The server context.
+	 * @param eventTranslator The event translator.
 	 */
-	public ApolloHandler( ServerContext context )
+	public ApolloHandler( ServerContext context, EventTranslator eventTranslator )
 	{
 		this.serverContext = context;
+		this.eventTranslator = eventTranslator;
 	}
 
 
@@ -82,7 +90,7 @@ public final class ApolloHandler extends ChannelHandlerAdapter
 		HandshakeMessage handshakeMessage = ( HandshakeMessage )msg;
 		switch( handshakeMessage.getServiceId() ) {
 			case HandshakeConstants.SERVICE_GAME:
-				attribute.set( new LoginSession( ctx, serverContext ) );
+				attribute.set( new LoginSession( ctx, serverContext, eventTranslator ) );
 				break;
 			case HandshakeConstants.SERVICE_UPDATE:
 				attribute.set( new UpdateSession( ctx, serverContext ) );

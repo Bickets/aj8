@@ -64,11 +64,6 @@ public final class EventTranslator
 {
 
 	/**
-	 * The singleton instance.
-	 */
-	private static final EventTranslator INSTANCE = new EventTranslator();
-
-	/**
 	 * An array of event decoders.
 	 */
 	private final EventDecoder< ? >[] decoders = new EventDecoder< ? >[ 256 ];
@@ -85,10 +80,9 @@ public final class EventTranslator
 
 
 	/**
-	 * This constructor should not be called directly. Use the {@link #getInstance()} method
-	 * instead.
+	 * Constructs a new {@link EventTranslator}.
 	 */
-	private EventTranslator()
+	public EventTranslator()
 	{
 		init();
 	}
@@ -156,7 +150,6 @@ public final class EventTranslator
 	 * Returns an event encoder for its event class.
 	 * @param clazz The class.
 	 * @return An event encoder instance for the specified class.
-	 * @throws NullPointerException If the class doesn't exist.
 	 */
 	public EventEncoder< ? > get( Class< ? > clazz )
 	{
@@ -192,16 +185,6 @@ public final class EventTranslator
 	public final PacketMetaData getIncomingPacketMetaData( int opcode )
 	{
 		return incomingPacketMetaData.getMetaData( opcode );
-	}
-
-
-	/**
-	 * Returns the singleton instance of this class.
-	 * @return The singleton instance.
-	 */
-	public static EventTranslator getInstance()
-	{
-		return INSTANCE;
 	}
 
 }

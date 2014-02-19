@@ -8,6 +8,7 @@ import io.netty.channel.ChannelHandlerContext;
 
 import org.apollo.ServerContext;
 import org.apollo.game.GameService;
+import org.apollo.game.event.EventTranslator;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.World.RegistrationStatus;
 import org.apollo.io.player.PlayerLoaderResponse;
@@ -34,16 +35,23 @@ public final class LoginSession extends Session
 	 */
 	private final ServerContext serverContext;
 
+	/**
+	 * The event translator.
+	 */
+	private final EventTranslator eventTranslator;
+
 
 	/**
 	 * Creates a login session for the specified channel.
-	 * @param channel The channels context.
+	 * @param ctx The channels context.
 	 * @param serverContext The server context.
+	 * @param eventTranslator The event translator.
 	 */
-	public LoginSession( ChannelHandlerContext ctx, ServerContext serverContext )
+	public LoginSession( ChannelHandlerContext ctx, ServerContext serverContext, EventTranslator eventTranslator )
 	{
 		super( ctx );
 		this.serverContext = serverContext;
+		this.eventTranslator = eventTranslator;
 	}
 
 
@@ -75,7 +83,6 @@ public final class LoginSession extends Session
 	public void handlePlayerLoaderResponse( LoginRequest request, PlayerLoaderResponse response )
 	{
 		GameService gameService = serverContext.getService( GameService.class );
-		Channel channel = ctx().channel();
 
 		int status = response.getStatus();
 		Player player = response.getPlayer();
@@ -99,16 +106,17 @@ public final class LoginSession extends Session
 			}
 		}
 
+		Channel channel = ctx().channel();
 		ChannelFuture future = channel.writeAndFlush( new LoginResponse( status, rights, log ) );
 
 		if( player != null ) {
 			IsaacRandomPair randomPair = request.getRandomPair();
 
-			channel.pipeline().addFirst( "eventEncoder", new GameEventEncoder() );
+			channel.pipeline().addFirst( "eventEncoder", new GameEventEncoder( eventTranslator ) );
 			channel.pipeline().addBefore( "eventEncoder", "gameEncoder", new GamePacketEncoder( randomPair.getEncodingRandom() ) );
 
-			channel.pipeline().addBefore( "handler", "gameDecoder", new GamePacketDecoder( randomPair.getDecodingRandom() ) );
-			channel.pipeline().addAfter( "gameDecoder", "eventDecoder", new GameEventDecoder() );
+			channel.pipeline().addBefore( "handler", "gameDecoder", new GamePacketDecoder( randomPair.getDecodingRandom(), eventTranslator ) );
+			channel.pipeline().addAfter( "gameDecoder", "eventDecoder", new GameEventDecoder( eventTranslator ) );
 
 			channel.pipeline().remove( "loginDecoder" );
 			channel.pipeline().remove( "loginEncoder" );

@@ -40,15 +40,22 @@ public final class GamePacketDecoder extends StatefulFrameDecoder<GameDecoderSta
 	 */
 	private int length;
 
+	/**
+	 * The event translator.
+	 */
+	private final EventTranslator translator;
+
 
 	/**
 	 * Creates the {@link GamePacketDecoder}.
 	 * @param random The random number generator.
+	 * @param translator The event translator.
 	 */
-	public GamePacketDecoder( IsaacAlgorithm random )
+	public GamePacketDecoder( IsaacAlgorithm random, EventTranslator translator )
 	{
 		super( GameDecoderState.GAME_OPCODE );
 		this.random = random;
+		this.translator = translator;
 	}
 
 
@@ -86,7 +93,7 @@ public final class GamePacketDecoder extends StatefulFrameDecoder<GameDecoderSta
 		int encryptedOpcode = in.readUnsignedByte();
 		opcode = ( encryptedOpcode - random.nextInt() ) & 0xFF;
 
-		PacketMetaData metaData = EventTranslator.getInstance().getIncomingPacketMetaData( opcode );
+		PacketMetaData metaData = translator.getIncomingPacketMetaData( opcode );
 		if( metaData == null ) {
 			throw new IllegalStateException( "Illegal opcode: " + opcode );
 		}

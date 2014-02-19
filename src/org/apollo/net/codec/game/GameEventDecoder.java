@@ -17,10 +17,26 @@ import org.apollo.game.event.EventTranslator;
 public final class GameEventDecoder extends MessageToMessageDecoder<GamePacket>
 {
 
+	/**
+	 * The event translator.
+	 */
+	private final EventTranslator translator;
+
+
+	/**
+	 * Constructs a new {@link GameEventDecoder}.
+	 * @param translator The event translator.
+	 */
+	public GameEventDecoder( EventTranslator translator )
+	{
+		this.translator = translator;
+	}
+
+
 	@Override
 	protected void decode( ChannelHandlerContext ctx, GamePacket msg, List<Object> out )
 	{
-		EventDecoder< ? > decoder = EventTranslator.getInstance().get( msg.getOpcode() );
+		EventDecoder< ? > decoder = translator.get( msg.getOpcode() );
 		if( decoder != null ) {
 			out.add( decoder.decode( msg ) );
 		}

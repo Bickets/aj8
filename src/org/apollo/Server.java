@@ -16,6 +16,7 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apollo.fs.IndexedFileSystem;
+import org.apollo.game.event.EventTranslator;
 import org.apollo.game.model.World;
 import org.apollo.net.ApolloHandler;
 import org.apollo.net.HttpChannelHandler;
@@ -88,6 +89,11 @@ public final class Server
 	 */
 	private ServerContext context;
 
+	/**
+	 * The event translator.
+	 */
+	private EventTranslator eventTranslator;
+
 
 	/**
 	 * Creates the Apollo server.
@@ -111,7 +117,8 @@ public final class Server
 		logger.info( "Initialized Apollo." );
 
 		context = new ServerContext( serviceManager );
-		ApolloHandler handler = new ApolloHandler( context );
+		eventTranslator = new EventTranslator();
+		ApolloHandler handler = new ApolloHandler( context, eventTranslator );
 
 		ChannelHandler servicePipelineFactory = new ServiceChannelHandler( handler );
 		serviceBootstrap.childHandler( servicePipelineFactory );
