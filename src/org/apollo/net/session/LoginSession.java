@@ -90,7 +90,7 @@ public final class LoginSession extends Session
 		boolean log = false;
 
 		if( player != null ) {
-			GameSession session = new GameSession( ctx(), serverContext, player );
+			GameSession session = new GameSession( ctx(), serverContext, eventTranslator, player );
 			player.setSession( session, false /* TODO */);
 
 			RegistrationStatus registrationStatus = gameService.registerPlayer( player );

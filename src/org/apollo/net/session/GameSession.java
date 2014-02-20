@@ -14,7 +14,7 @@ import org.apollo.ServerContext;
 import org.apollo.game.GameConstants;
 import org.apollo.game.GameService;
 import org.apollo.game.event.Event;
-import org.apollo.game.event.EventDispatcher;
+import org.apollo.game.event.EventTranslator;
 import org.apollo.game.event.impl.LogoutEvent;
 import org.apollo.game.model.Player;
 
@@ -36,9 +36,14 @@ public final class GameSession extends Session
 	private final ServerContext context;
 
 	/**
+	 * The event translator.
+	 */
+	private final EventTranslator eventTranslator;
+
+	/**
 	 * The queue of pending {@link Event}s.
 	 */
-	private final BlockingQueue<Event> eventQueue = new ArrayBlockingQueue<Event>( GameConstants.EVENTS_PER_PULSE );
+	private final BlockingQueue<Event> eventQueue = new ArrayBlockingQueue<>( GameConstants.EVENTS_PER_PULSE );
 
 	/**
 	 * The player.
@@ -50,12 +55,14 @@ public final class GameSession extends Session
 	 * Creates a login session for the specified channel context.
 	 * @param ctx This sessions channels context.
 	 * @param context The server context.
+	 * @param eventTranslator The event translator.
 	 * @param player The player.
 	 */
-	public GameSession( ChannelHandlerContext ctx, ServerContext context, Player player )
+	public GameSession( ChannelHandlerContext ctx, ServerContext context, EventTranslator eventTranslator, Player player )
 	{
 		super( ctx );
 		this.context = context;
+		this.eventTranslator = eventTranslator;
 		this.player = player;
 	}
 
@@ -95,7 +102,7 @@ public final class GameSession extends Session
 	{
 		Event event;
 		while( ( event = eventQueue.poll() ) != null ) {
-			EventDispatcher.getInstance().dispatch( player, event );
+			eventTranslator.dispatch( player, event );
 		}
 	}
 
