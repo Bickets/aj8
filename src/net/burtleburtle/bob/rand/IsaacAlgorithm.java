@@ -85,7 +85,7 @@ public final class IsaacAlgorithm
 	{
 		mem = new int[ SIZE ];
 		rsl = new int[ SIZE ];
-		System.arraycopy( seed, 0, rsl, 0, Math.max( rsl.length, seed.length ));
+		System.arraycopy( seed, 0, rsl, 0, Math.max( rsl.length, seed.length ) );
 		init();
 	}
 
