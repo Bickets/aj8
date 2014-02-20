@@ -78,17 +78,6 @@ public final class IsaacAlgorithm
 
 
 	/**
-	 * Creates the random number generator without an initial seed.
-	 */
-	public IsaacAlgorithm()
-	{
-		mem = new int[ SIZE ];
-		rsl = new int[ SIZE ];
-		init( false );
-	}
-
-
-	/**
 	 * Creates the random number generator with the specified seed.
 	 * @param seed The seed.
 	 */
@@ -96,10 +85,8 @@ public final class IsaacAlgorithm
 	{
 		mem = new int[ SIZE ];
 		rsl = new int[ SIZE ];
-		for( int i = 0; i < seed.length; ++ i ) {
-			rsl[ i ] = seed[ i ];
-		}
-		init( true );
+		System.arraycopy( seed, 0, rsl, 0, Math.max( rsl.length, seed.length ));
+		init();
 	}
 
 
@@ -166,10 +153,9 @@ public final class IsaacAlgorithm
 
 
 	/**
-	 * Initialises this random number generator.
-	 * @param flag Set to {@code true} if a seed was passed to the constructor.
+	 * Initializes this random number generator.
 	 */
-	private void init( boolean flag )
+	private void init()
 	{
 		int i;
 		int a, b, c, d, e, f, g, h;
@@ -203,16 +189,15 @@ public final class IsaacAlgorithm
 		}
 
 		for( i = 0; i < SIZE; i += 8 ) { /* fill in mem[] with messy stuff */
-			if( flag ) {
-				a += rsl[ i ];
-				b += rsl[ i + 1 ];
-				c += rsl[ i + 2 ];
-				d += rsl[ i + 3 ];
-				e += rsl[ i + 4 ];
-				f += rsl[ i + 5 ];
-				g += rsl[ i + 6 ];
-				h += rsl[ i + 7 ];
-			}
+			a += rsl[ i ];
+			b += rsl[ i + 1 ];
+			c += rsl[ i + 2 ];
+			d += rsl[ i + 3 ];
+			e += rsl[ i + 4 ];
+			f += rsl[ i + 5 ];
+			g += rsl[ i + 6 ];
+			h += rsl[ i + 7 ];
+
 			a ^= b << 11;
 			d += a;
 			b += c;
@@ -247,49 +232,47 @@ public final class IsaacAlgorithm
 			mem[ i + 7 ] = h;
 		}
 
-		if( flag ) { /* second pass makes all of seed affect all of mem */
-			for( i = 0; i < SIZE; i += 8 ) {
-				a += mem[ i ];
-				b += mem[ i + 1 ];
-				c += mem[ i + 2 ];
-				d += mem[ i + 3 ];
-				e += mem[ i + 4 ];
-				f += mem[ i + 5 ];
-				g += mem[ i + 6 ];
-				h += mem[ i + 7 ];
-				a ^= b << 11;
-				d += a;
-				b += c;
-				b ^= c >>> 2;
-				e += b;
-				c += d;
-				c ^= d << 8;
-				f += c;
-				d += e;
-				d ^= e >>> 16;
-				g += d;
-				e += f;
-				e ^= f << 10;
-				h += e;
-				f += g;
-				f ^= g >>> 4;
-				a += f;
-				g += h;
-				g ^= h << 8;
-				b += g;
-				h += a;
-				h ^= a >>> 9;
-				c += h;
-				a += b;
-				mem[ i ] = a;
-				mem[ i + 1 ] = b;
-				mem[ i + 2 ] = c;
-				mem[ i + 3 ] = d;
-				mem[ i + 4 ] = e;
-				mem[ i + 5 ] = f;
-				mem[ i + 6 ] = g;
-				mem[ i + 7 ] = h;
-			}
+		for( i = 0; i < SIZE; i += 8 ) {
+			a += mem[ i ];
+			b += mem[ i + 1 ];
+			c += mem[ i + 2 ];
+			d += mem[ i + 3 ];
+			e += mem[ i + 4 ];
+			f += mem[ i + 5 ];
+			g += mem[ i + 6 ];
+			h += mem[ i + 7 ];
+			a ^= b << 11;
+			d += a;
+			b += c;
+			b ^= c >>> 2;
+			e += b;
+			c += d;
+			c ^= d << 8;
+			f += c;
+			d += e;
+			d ^= e >>> 16;
+			g += d;
+			e += f;
+			e ^= f << 10;
+			h += e;
+			f += g;
+			f ^= g >>> 4;
+			a += f;
+			g += h;
+			g ^= h << 8;
+			b += g;
+			h += a;
+			h ^= a >>> 9;
+			c += h;
+			a += b;
+			mem[ i ] = a;
+			mem[ i + 1 ] = b;
+			mem[ i + 2 ] = c;
+			mem[ i + 3 ] = d;
+			mem[ i + 4 ] = e;
+			mem[ i + 5 ] = f;
+			mem[ i + 6 ] = g;
+			mem[ i + 7 ] = h;
 		}
 
 		isaac();
