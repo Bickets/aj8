@@ -2,6 +2,7 @@
 package org.apollo.game.event.decoder;
 
 import org.apollo.game.event.EventDecoder;
+import org.apollo.game.event.annotate.DecodesEvent;
 import org.apollo.game.event.impl.WalkEvent;
 import org.apollo.game.model.Position;
 import org.apollo.net.codec.game.DataOrder;
@@ -14,14 +15,11 @@ import org.apollo.net.codec.game.GamePacketReader;
  * An {@link EventDecoder} for the {@link WalkEvent}.
  * @author Graham
  */
+@DecodesEvent( {
+	98, 164, 248
+} )
 public final class WalkEventDecoder extends EventDecoder<WalkEvent>
 {
-
-	public WalkEventDecoder( int opcode )
-	{
-		super( opcode );
-	}
-
 
 	@Override
 	public WalkEvent decode( GamePacket packet )
@@ -46,8 +44,8 @@ public final class WalkEventDecoder extends EventDecoder<WalkEvent>
 
 		Position[] positions = new Position[ steps + 1 ];
 		positions[ 0 ] = new Position( x, y );
-		for( int i = 0; i < steps; i ++ ) {
-			positions[ i + 1 ] = new Position( path[ i ][ 0 ] + x, path[ i ][ 1 ] + y );
+		for( int step = 0; step < steps; step ++ ) {
+			positions[ step + 1 ] = new Position( path[ step ][ 0 ] + x, path[ step ][ 1 ] + y );
 		}
 
 		return new WalkEvent( positions, run );

@@ -2,6 +2,7 @@
 package org.apollo.game.event.decoder;
 
 import org.apollo.game.event.EventDecoder;
+import org.apollo.game.event.annotate.DecodesEvent;
 import org.apollo.game.event.impl.FirstItemActionEvent;
 import org.apollo.net.codec.game.DataTransformation;
 import org.apollo.net.codec.game.DataType;
@@ -12,14 +13,9 @@ import org.apollo.net.codec.game.GamePacketReader;
  * An {@link EventDecoder} for the {@link FirstItemActionEvent}.
  * @author Graham
  */
+@DecodesEvent( 145 )
 public final class FirstItemActionEventDecoder extends EventDecoder<FirstItemActionEvent>
 {
-
-	public FirstItemActionEventDecoder( int opcode )
-	{
-		super( opcode );
-	}
-
 
 	@Override
 	public FirstItemActionEvent decode( GamePacket packet )

@@ -2,6 +2,7 @@
 package org.apollo.game.event.decoder;
 
 import org.apollo.game.event.EventDecoder;
+import org.apollo.game.event.annotate.DecodesEvent;
 import org.apollo.game.event.impl.FirstObjectActionEvent;
 import org.apollo.game.model.Position;
 import org.apollo.net.codec.game.DataOrder;
@@ -14,14 +15,9 @@ import org.apollo.net.codec.game.GamePacketReader;
  * An {@link EventDecoder} for the {@link FirstObjectActionEvent}.
  * @author Graham
  */
+@DecodesEvent( 132 )
 public final class FirstObjectActionEventDecoder extends EventDecoder<FirstObjectActionEvent>
 {
-
-	public FirstObjectActionEventDecoder( int opcode )
-	{
-		super( opcode );
-	}
-
 
 	public FirstObjectActionEvent decode( GamePacket packet )
 	{

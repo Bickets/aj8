@@ -4,6 +4,8 @@ package org.apollo.game.event;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apollo.game.event.annotate.DecodesEvent;
+import org.apollo.game.event.annotate.EncodesEvent;
 import org.apollo.game.event.decoder.ButtonEventDecoder;
 import org.apollo.game.event.decoder.CharacterDesignEventDecoder;
 import org.apollo.game.event.decoder.ChatEventDecoder;
@@ -37,21 +39,6 @@ import org.apollo.game.event.encoder.SwitchTabInterfaceEventEncoder;
 import org.apollo.game.event.encoder.UpdateItemsEventEncoder;
 import org.apollo.game.event.encoder.UpdateSkillEventEncoder;
 import org.apollo.game.event.encoder.UpdateSlottedItemsEventEncoder;
-import org.apollo.game.event.impl.CloseInterfaceEvent;
-import org.apollo.game.event.impl.EnterAmountEvent;
-import org.apollo.game.event.impl.IdAssignmentEvent;
-import org.apollo.game.event.impl.LogoutEvent;
-import org.apollo.game.event.impl.MobSynchronizationEvent;
-import org.apollo.game.event.impl.OpenInterfaceEvent;
-import org.apollo.game.event.impl.OpenInterfaceSidebarEvent;
-import org.apollo.game.event.impl.PlayerSynchronizationEvent;
-import org.apollo.game.event.impl.RegionChangeEvent;
-import org.apollo.game.event.impl.ServerMessageEvent;
-import org.apollo.game.event.impl.SetInterfaceTextEvent;
-import org.apollo.game.event.impl.SwitchTabInterfaceEvent;
-import org.apollo.game.event.impl.UpdateItemsEvent;
-import org.apollo.game.event.impl.UpdateSkillEvent;
-import org.apollo.game.event.impl.UpdateSlottedItemsEvent;
 import org.apollo.net.meta.PacketMetaData;
 import org.apollo.net.meta.PacketMetaDataGroup;
 
@@ -94,43 +81,41 @@ public final class EventTranslator
 	private void init()
 	{
 		// register decoders
-		register( new KeepAliveEventDecoder( 0 ) );
-		register( new CharacterDesignEventDecoder( 101 ) );
-		register( new WalkEventDecoder( 248 ) );
-		register( new WalkEventDecoder( 164 ) );
-		register( new WalkEventDecoder( 98 ) );
-		register( new ChatEventDecoder( 4 ) );
-		register( new ButtonEventDecoder( 185 ) );
-		register( new CommandEventDecoder( 103 ) );
-		register( new SwitchItemEventDecoder( 214 ) );
-		register( new FirstObjectActionEventDecoder( 132 ) );
-		register( new SecondObjectActionEventDecoder( 252 ) );
-		register( new ThirdObjectActionEventDecoder( 70 ) );
-		register( new EquipEventDecoder( 41 ) );
-		register( new FirstItemActionEventDecoder( 145 ) );
-		register( new SecondItemActionEventDecoder( 117 ) );
-		register( new ThirdItemActionEventDecoder( 43 ) );
-		register( new FourthItemActionEventDecoder( 129 ) );
-		register( new FifthItemActionEventDecoder( 135 ) );
-		register( new ClosedInterfaceEventDecoder( 130 ) );
-		register( new EnteredAmountEventDecoder( 208 ) );
+		register( new KeepAliveEventDecoder() );
+		register( new CharacterDesignEventDecoder() );
+		register( new WalkEventDecoder() );
+		register( new ChatEventDecoder() );
+		register( new ButtonEventDecoder() );
+		register( new CommandEventDecoder() );
+		register( new SwitchItemEventDecoder() );
+		register( new FirstObjectActionEventDecoder() );
+		register( new SecondObjectActionEventDecoder() );
+		register( new ThirdObjectActionEventDecoder() );
+		register( new EquipEventDecoder() );
+		register( new FirstItemActionEventDecoder() );
+		register( new SecondItemActionEventDecoder() );
+		register( new ThirdItemActionEventDecoder() );
+		register( new FourthItemActionEventDecoder() );
+		register( new FifthItemActionEventDecoder() );
+		register( new ClosedInterfaceEventDecoder() );
+		register( new EnteredAmountEventDecoder() );
 
 		// register encoders
-		register( new IdAssignmentEventEncoder( IdAssignmentEvent.class ) );
-		register( new RegionChangeEventEncoder( RegionChangeEvent.class ) );
-		register( new ServerMessageEventEncoder( ServerMessageEvent.class ) );
-		register( new MobSynchronizationEventEncoder( MobSynchronizationEvent.class ) );
-		register( new PlayerSynchronizationEventEncoder( PlayerSynchronizationEvent.class ) );
-		register( new OpenInterfaceEventEncoder( OpenInterfaceEvent.class ) );
-		register( new CloseInterfaceEventEncoder( CloseInterfaceEvent.class ) );
-		register( new SwitchTabInterfaceEventEncoder( SwitchTabInterfaceEvent.class ) );
-		register( new LogoutEventEncoder( LogoutEvent.class ) );
-		register( new UpdateItemsEventEncoder( UpdateItemsEvent.class ) );
-		register( new UpdateSlottedItemsEventEncoder( UpdateSlottedItemsEvent.class ) );
-		register( new UpdateSkillEventEncoder( UpdateSkillEvent.class ) );
-		register( new OpenInterfaceSidebarEventEncoder( OpenInterfaceSidebarEvent.class ) );
-		register( new EnterAmountEventEncoder( EnterAmountEvent.class ) );
-		register( new SetInterfaceTextEventEncoder( SetInterfaceTextEvent.class ) );
+		register( new IdAssignmentEventEncoder() );
+		register( new RegionChangeEventEncoder() );
+		register( new ServerMessageEventEncoder() );
+		register( new MobSynchronizationEventEncoder() );
+		register( new PlayerSynchronizationEventEncoder() );
+		register( new OpenInterfaceEventEncoder() );
+		register( new CloseInterfaceEventEncoder() );
+		register( new SwitchTabInterfaceEventEncoder() );
+		register( new LogoutEventEncoder() );
+		register( new UpdateItemsEventEncoder() );
+		register( new UpdateSlottedItemsEventEncoder() );
+		register( new UpdateSkillEventEncoder() );
+		register( new OpenInterfaceSidebarEventEncoder() );
+		register( new EnterAmountEventEncoder() );
+		register( new SetInterfaceTextEventEncoder() );
 	}
 
 
@@ -163,7 +148,13 @@ public final class EventTranslator
 	 */
 	public void register( EventDecoder< ? > decoder )
 	{
-		decoders[ decoder.getOpcode() ] = decoder;
+		DecodesEvent annotation = decoder.getClass().getAnnotation( DecodesEvent.class );
+		if( annotation == null ) {
+			throw new IllegalArgumentException( "Event decoders must be annotated with @DecodesEvent" );
+		}
+		for( int value: annotation.value() ) {
+			decoders[ value ] = decoder;
+		}
 	}
 
 
@@ -173,7 +164,11 @@ public final class EventTranslator
 	 */
 	public void register( EventEncoder< ? > encoder )
 	{
-		encoders.put( encoder.getClazz(), encoder );
+		EncodesEvent annotation = encoder.getClass().getAnnotation( EncodesEvent.class );
+		if( annotation == null ) {
+			throw new IllegalArgumentException( "Event encoders must be annotated with @EncodesEvent" );
+		}
+		encoders.put( annotation.value(), encoder );
 	}
 
 

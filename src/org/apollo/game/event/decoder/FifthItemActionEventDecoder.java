@@ -2,6 +2,7 @@
 package org.apollo.game.event.decoder;
 
 import org.apollo.game.event.EventDecoder;
+import org.apollo.game.event.annotate.DecodesEvent;
 import org.apollo.game.event.impl.FifthItemActionEvent;
 import org.apollo.net.codec.game.DataOrder;
 import org.apollo.net.codec.game.DataTransformation;
@@ -13,14 +14,9 @@ import org.apollo.net.codec.game.GamePacketReader;
  * An {@link EventDecoder} for the {@link FifthItemActionEvent}.
  * @author Graham
  */
+@DecodesEvent( 135 )
 public final class FifthItemActionEventDecoder extends EventDecoder<FifthItemActionEvent>
 {
-
-	public FifthItemActionEventDecoder( int opcode )
-	{
-		super( opcode );
-	}
-
 
 	@Override
 	public FifthItemActionEvent decode( GamePacket packet )

@@ -2,6 +2,7 @@
 package org.apollo.game.event.decoder;
 
 import org.apollo.game.event.EventDecoder;
+import org.apollo.game.event.annotate.DecodesEvent;
 import org.apollo.game.event.impl.SwitchItemEvent;
 import org.apollo.net.codec.game.DataOrder;
 import org.apollo.net.codec.game.DataTransformation;
@@ -13,14 +14,9 @@ import org.apollo.net.codec.game.GamePacketReader;
  * An {@link EventDecoder} for the {@link SwitchItemEvent}.
  * @author Graham
  */
+@DecodesEvent( 214 )
 public final class SwitchItemEventDecoder extends EventDecoder<SwitchItemEvent>
 {
-
-	public SwitchItemEventDecoder( int opcode )
-	{
-		super( opcode );
-	}
-
 
 	@Override
 	public SwitchItemEvent decode( GamePacket packet )

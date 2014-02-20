@@ -2,6 +2,7 @@
 package org.apollo.game.event.encoder;
 
 import org.apollo.game.event.EventEncoder;
+import org.apollo.game.event.annotate.EncodesEvent;
 import org.apollo.game.event.impl.PlayerSynchronizationEvent;
 import org.apollo.game.model.Animation;
 import org.apollo.game.model.Appearance;
@@ -40,14 +41,9 @@ import org.apollo.net.meta.PacketType;
  * An {@link EventEncoder} for the {@link PlayerSynchronizationEvent}.
  * @author Graham
  */
+@EncodesEvent( PlayerSynchronizationEvent.class )
 public final class PlayerSynchronizationEventEncoder extends EventEncoder<PlayerSynchronizationEvent>
 {
-
-	public PlayerSynchronizationEventEncoder( Class<PlayerSynchronizationEvent> clazz )
-	{
-		super( clazz );
-	}
-
 
 	@Override
 	public GamePacket encode( PlayerSynchronizationEvent event )
@@ -62,7 +58,7 @@ public final class PlayerSynchronizationEventEncoder extends EventEncoder<Player
 
 		builder.putBits( 8, event.getLocalPlayers() );
 
-		for( SynchronizationSegment segment: event.getSegments() ) {
+		event.getSegments().forEach( segment -> {
 			SegmentType type = segment.getType();
 			if( type == SegmentType.REMOVE_CHARACTER ) {
 				putRemoveCharacterUpdate( builder );
@@ -73,7 +69,7 @@ public final class PlayerSynchronizationEventEncoder extends EventEncoder<Player
 				putMovementUpdate( segment, event, builder );
 				putBlocks( segment, blockBuilder );
 			}
-		}
+		} );
 
 		if( blockBuilder.getLength() > 0 ) {
 			builder.putBits( 11, 2047 );

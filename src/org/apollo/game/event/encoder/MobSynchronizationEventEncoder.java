@@ -2,6 +2,7 @@
 package org.apollo.game.event.encoder;
 
 import org.apollo.game.event.EventEncoder;
+import org.apollo.game.event.annotate.EncodesEvent;
 import org.apollo.game.event.impl.MobSynchronizationEvent;
 import org.apollo.game.model.Animation;
 import org.apollo.game.model.Direction;
@@ -31,18 +32,9 @@ import org.apollo.net.meta.PacketType;
  * Encodes the {@link MobSynchronizationEvent}.
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
+@EncodesEvent( MobSynchronizationEvent.class )
 public final class MobSynchronizationEventEncoder extends EventEncoder<MobSynchronizationEvent>
 {
-
-	/**
-	 * Constructs a new {@link MobSynchronizationEventEncoder}.
-	 * @param clazz The MobSynchronizationEvent class.
-	 */
-	public MobSynchronizationEventEncoder( Class<MobSynchronizationEvent> clazz )
-	{
-		super( clazz );
-	}
-
 
 	@Override
 	public GamePacket encode( MobSynchronizationEvent event )
@@ -54,7 +46,7 @@ public final class MobSynchronizationEventEncoder extends EventEncoder<MobSynchr
 
 		builder.putBits( 8, event.getLocalMobs() );
 
-		for( SynchronizationSegment segment: event.getSegments() ) {
+		event.getSegments().forEach( segment -> {
 			SegmentType type = segment.getType();
 			if( type == SegmentType.REMOVE_CHARACTER ) {
 				putRemoveCharacterUpdate( builder );
@@ -65,7 +57,7 @@ public final class MobSynchronizationEventEncoder extends EventEncoder<MobSynchr
 				putMovementUpdate( segment, event, builder );
 				putBlocks( segment, blockBuilder );
 			}
-		}
+		} );
 
 		if( blockBuilder.getLength() > 0 ) {
 			builder.putBits( 14, 16383 );

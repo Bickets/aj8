@@ -2,6 +2,7 @@
 package org.apollo.game.event.decoder;
 
 import org.apollo.game.event.EventDecoder;
+import org.apollo.game.event.annotate.DecodesEvent;
 import org.apollo.game.event.impl.ChatEvent;
 import org.apollo.net.codec.game.DataTransformation;
 import org.apollo.net.codec.game.DataType;
@@ -13,14 +14,9 @@ import org.apollo.util.TextUtil;
  * An {@link EventDecoder} for the {@link ChatEvent}.
  * @author Graham
  */
+@DecodesEvent( 4 )
 public final class ChatEventDecoder extends EventDecoder<ChatEvent>
 {
-
-	public ChatEventDecoder( int opcode )
-	{
-		super( opcode );
-	}
-
 
 	@Override
 	public ChatEvent decode( GamePacket packet )

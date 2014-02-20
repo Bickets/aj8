@@ -16,7 +16,7 @@ import org.apollo.game.event.EventTranslator;
  */
 public final class GameEventEncoder extends MessageToMessageEncoder<Event>
 {
-	
+
 	/**
 	 * The event translator.
 	 */
@@ -31,6 +31,7 @@ public final class GameEventEncoder extends MessageToMessageEncoder<Event>
 	{
 		this.translator = translator;
 	}
+
 
 	@Override
 	protected void encode( ChannelHandlerContext ctx, Event msg, List<Object> out )

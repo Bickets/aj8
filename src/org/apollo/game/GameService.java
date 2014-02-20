@@ -136,7 +136,7 @@ public final class GameService extends Service
 				if( session != null ) {
 					session.handlePendingEvents();
 				}
-			});
+			} );
 
 			world.pulse();
 

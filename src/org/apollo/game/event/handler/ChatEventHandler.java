@@ -2,6 +2,7 @@
 package org.apollo.game.event.handler;
 
 import org.apollo.game.event.EventHandler;
+import org.apollo.game.event.annotate.HandlesEvent;
 import org.apollo.game.event.impl.ChatEvent;
 import org.apollo.game.model.Player;
 import org.apollo.game.sync.block.SynchronizationBlock;
@@ -10,6 +11,7 @@ import org.apollo.game.sync.block.SynchronizationBlock;
  * An event handler which broadcasts public chat messages.
  * @author Graham
  */
+@HandlesEvent( ChatEvent.class )
 public final class ChatEventHandler extends EventHandler<ChatEvent>
 {
 

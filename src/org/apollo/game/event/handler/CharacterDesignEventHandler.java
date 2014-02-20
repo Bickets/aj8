@@ -2,6 +2,7 @@
 package org.apollo.game.event.handler;
 
 import org.apollo.game.event.EventHandler;
+import org.apollo.game.event.annotate.HandlesEvent;
 import org.apollo.game.event.impl.CharacterDesignEvent;
 import org.apollo.game.event.impl.CloseInterfaceEvent;
 import org.apollo.game.model.Appearance;
@@ -12,6 +13,7 @@ import org.apollo.game.model.Player;
  * A handler which handles {@link CharacterDesignEvent}s.
  * @author Graham
  */
+@HandlesEvent( CharacterDesignEvent.class )
 public final class CharacterDesignEventHandler extends EventHandler<CharacterDesignEvent>
 {
 

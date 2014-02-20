@@ -2,6 +2,7 @@
 package org.apollo.game.event.encoder;
 
 import org.apollo.game.event.EventEncoder;
+import org.apollo.game.event.annotate.EncodesEvent;
 import org.apollo.game.event.impl.IdAssignmentEvent;
 import org.apollo.net.codec.game.DataOrder;
 import org.apollo.net.codec.game.DataTransformation;
@@ -13,14 +14,9 @@ import org.apollo.net.codec.game.GamePacketBuilder;
  * An {@link EventEncoder} for the {@link IdAssignmentEvent}.
  * @author Graham
  */
+@EncodesEvent( IdAssignmentEvent.class )
 public final class IdAssignmentEventEncoder extends EventEncoder<IdAssignmentEvent>
 {
-
-	public IdAssignmentEventEncoder( Class<IdAssignmentEvent> clazz )
-	{
-		super( clazz );
-	}
-
 
 	@Override
 	public GamePacket encode( IdAssignmentEvent event )

@@ -2,6 +2,7 @@
 package org.apollo.game.event.handler;
 
 import org.apollo.game.event.EventHandler;
+import org.apollo.game.event.annotate.EncodesEvent;
 import org.apollo.game.event.impl.ItemActionEvent;
 import org.apollo.game.model.Inventory;
 import org.apollo.game.model.Item;
@@ -16,6 +17,7 @@ import org.apollo.game.model.inv.SynchronizationInventoryListener;
  * An event handler which handles item actions.
  * @author Graham
  */
+@EncodesEvent( ItemActionEvent.class )
 public final class ItemActionEventHandler extends EventHandler<ItemActionEvent>
 {
 
@@ -81,9 +83,8 @@ public final class ItemActionEventHandler extends EventHandler<ItemActionEvent>
 		}
 
 		if( removed ) {
-			// TODO: Should we only refresh the slot that got used?
-			inventory.forceRefresh();
-			equipment.forceRefresh();
+			inventory.forceRefresh( slot );
+			equipment.forceRefresh( slot );
 		} else {
 			inventory.forceCapacityExceeded();
 		}

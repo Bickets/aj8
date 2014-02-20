@@ -2,6 +2,7 @@
 package org.apollo.game.event.encoder;
 
 import org.apollo.game.event.EventEncoder;
+import org.apollo.game.event.annotate.EncodesEvent;
 import org.apollo.game.event.impl.UpdateSkillEvent;
 import org.apollo.game.model.Skill;
 import org.apollo.net.codec.game.DataOrder;
@@ -13,14 +14,9 @@ import org.apollo.net.codec.game.GamePacketBuilder;
  * An {@link EventEncoder} for the {@link UpdateSkillEvent}.
  * @author Graham
  */
+@EncodesEvent( UpdateSkillEvent.class )
 public final class UpdateSkillEventEncoder extends EventEncoder<UpdateSkillEvent>
 {
-
-	public UpdateSkillEventEncoder( Class<UpdateSkillEvent> clazz )
-	{
-		super( clazz );
-	}
-
 
 	@Override
 	public GamePacket encode( UpdateSkillEvent event )

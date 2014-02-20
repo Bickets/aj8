@@ -2,6 +2,7 @@
 package org.apollo.game.event.encoder;
 
 import org.apollo.game.event.EventEncoder;
+import org.apollo.game.event.annotate.EncodesEvent;
 import org.apollo.game.event.impl.SwitchTabInterfaceEvent;
 import org.apollo.net.codec.game.DataTransformation;
 import org.apollo.net.codec.game.DataType;
@@ -12,14 +13,9 @@ import org.apollo.net.codec.game.GamePacketBuilder;
  * An {@link EventEncoder} for the {@link SwitchTabInterfaceEvent}.
  * @author Graham
  */
+@EncodesEvent( SwitchTabInterfaceEvent.class )
 public final class SwitchTabInterfaceEventEncoder extends EventEncoder<SwitchTabInterfaceEvent>
 {
-
-	public SwitchTabInterfaceEventEncoder( Class<SwitchTabInterfaceEvent> clazz )
-	{
-		super( clazz );
-	}
-
 
 	@Override
 	public GamePacket encode( SwitchTabInterfaceEvent event )

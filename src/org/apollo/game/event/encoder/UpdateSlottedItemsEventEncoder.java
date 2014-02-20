@@ -2,6 +2,7 @@
 package org.apollo.game.event.encoder;
 
 import org.apollo.game.event.EventEncoder;
+import org.apollo.game.event.annotate.EncodesEvent;
 import org.apollo.game.event.impl.UpdateSlottedItemsEvent;
 import org.apollo.game.model.Item;
 import org.apollo.game.model.SlottedItem;
@@ -14,14 +15,9 @@ import org.apollo.net.meta.PacketType;
  * An {@link EventEncoder} for the {@link UpdateSlottedItemsEvent}.
  * @author Graham
  */
+@EncodesEvent( UpdateSlottedItemsEvent.class )
 public final class UpdateSlottedItemsEventEncoder extends EventEncoder<UpdateSlottedItemsEvent>
 {
-
-	public UpdateSlottedItemsEventEncoder( Class<UpdateSlottedItemsEvent> clazz )
-	{
-		super( clazz );
-	}
-
 
 	@Override
 	public GamePacket encode( UpdateSlottedItemsEvent event )

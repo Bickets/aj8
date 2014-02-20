@@ -2,6 +2,7 @@
 package org.apollo.game.event.handler;
 
 import org.apollo.game.event.EventHandler;
+import org.apollo.game.event.annotate.HandlesEvent;
 import org.apollo.game.event.impl.ClosedInterfaceEvent;
 import org.apollo.game.model.Player;
 
@@ -9,6 +10,7 @@ import org.apollo.game.model.Player;
  * An {@link EventHandler} for the {@link ClosedInterfaceEvent}.
  * @author Graham
  */
+@HandlesEvent( ClosedInterfaceEvent.class )
 public final class ClosedInterfaceEventHandler extends EventHandler<ClosedInterfaceEvent>
 {
 

@@ -4,6 +4,7 @@ package org.apollo.game.event.handler;
 import org.apollo.game.command.Command;
 import org.apollo.game.command.CommandDispatcher;
 import org.apollo.game.event.EventHandler;
+import org.apollo.game.event.annotate.HandlesEvent;
 import org.apollo.game.event.impl.CommandEvent;
 import org.apollo.game.model.Player;
 
@@ -11,6 +12,7 @@ import org.apollo.game.model.Player;
  * An {@link EventHandler} which dispatches {@link CommandEvent}s.
  * @author Graham
  */
+@HandlesEvent( CommandEvent.class )
 public final class CommandEventHandler extends EventHandler<CommandEvent>
 {
 

@@ -2,6 +2,7 @@
 package org.apollo.game.event.handler;
 
 import org.apollo.game.event.EventHandler;
+import org.apollo.game.event.annotate.HandlesEvent;
 import org.apollo.game.event.impl.WalkEvent;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.Position;
@@ -11,6 +12,7 @@ import org.apollo.game.model.WalkingQueue;
  * A handler for the {@link WalkEvent}.
  * @author Graham
  */
+@HandlesEvent( WalkEvent.class )
 public final class WalkEventHandler extends EventHandler<WalkEvent>
 {
 

@@ -2,6 +2,7 @@
 package org.apollo.game.event.decoder;
 
 import org.apollo.game.event.EventDecoder;
+import org.apollo.game.event.annotate.DecodesEvent;
 import org.apollo.game.event.impl.CharacterDesignEvent;
 import org.apollo.game.model.Appearance;
 import org.apollo.game.model.Gender;
@@ -13,14 +14,9 @@ import org.apollo.net.codec.game.GamePacketReader;
  * An {@link EventDecoder} for the {@link CharacterDesignEvent}.
  * @author Graham
  */
+@DecodesEvent( 101 )
 public final class CharacterDesignEventDecoder extends EventDecoder<CharacterDesignEvent>
 {
-
-	public CharacterDesignEventDecoder( int opcode )
-	{
-		super( opcode );
-	}
-
 
 	@Override
 	public CharacterDesignEvent decode( GamePacket packet )

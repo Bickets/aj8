@@ -6,6 +6,7 @@ import java.util.Map;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apollo.game.event.annotate.HandlesEvent;
 import org.apollo.game.event.handler.ButtonEventHandler;
 import org.apollo.game.event.handler.CharacterDesignEventHandler;
 import org.apollo.game.event.handler.ChatEventHandler;
@@ -14,22 +15,9 @@ import org.apollo.game.event.handler.CommandEventHandler;
 import org.apollo.game.event.handler.EnteredAmountEventHandler;
 import org.apollo.game.event.handler.EquipEventHandler;
 import org.apollo.game.event.handler.ItemActionEventHandler;
-import org.apollo.game.event.handler.KeepAliveEventHandler;
 import org.apollo.game.event.handler.ObjectEventHandler;
 import org.apollo.game.event.handler.SwitchItemEventHandler;
 import org.apollo.game.event.handler.WalkEventHandler;
-import org.apollo.game.event.impl.ButtonEvent;
-import org.apollo.game.event.impl.CharacterDesignEvent;
-import org.apollo.game.event.impl.ChatEvent;
-import org.apollo.game.event.impl.ClosedInterfaceEvent;
-import org.apollo.game.event.impl.CommandEvent;
-import org.apollo.game.event.impl.EnteredAmountEvent;
-import org.apollo.game.event.impl.EquipEvent;
-import org.apollo.game.event.impl.ItemActionEvent;
-import org.apollo.game.event.impl.KeepAliveEvent;
-import org.apollo.game.event.impl.ObjectActionEvent;
-import org.apollo.game.event.impl.SwitchItemEvent;
-import org.apollo.game.event.impl.WalkEvent;
 import org.apollo.game.model.Player;
 
 /**
@@ -69,18 +57,17 @@ public final class EventDispatcher
 	 */
 	private void init()
 	{
-		register( KeepAliveEvent.class, new KeepAliveEventHandler() );
-		register( CharacterDesignEvent.class, new CharacterDesignEventHandler() );
-		register( WalkEvent.class, new WalkEventHandler() );
-		register( ChatEvent.class, new ChatEventHandler() );
-		register( ButtonEvent.class, new ButtonEventHandler() );
-		register( CommandEvent.class, new CommandEventHandler() );
-		register( SwitchItemEvent.class, new SwitchItemEventHandler() );
-		register( ObjectActionEvent.class, new ObjectEventHandler() );
-		register( EquipEvent.class, new EquipEventHandler() );
-		register( ItemActionEvent.class, new ItemActionEventHandler() );
-		register( ClosedInterfaceEvent.class, new ClosedInterfaceEventHandler() );
-		register( EnteredAmountEvent.class, new EnteredAmountEventHandler() );
+		register( new CharacterDesignEventHandler() );
+		register( new WalkEventHandler() );
+		register( new ChatEventHandler() );
+		register( new ButtonEventHandler() );
+		register( new CommandEventHandler() );
+		register( new SwitchItemEventHandler() );
+		register( new ObjectEventHandler() );
+		register( new EquipEventHandler() );
+		register( new ItemActionEventHandler() );
+		register( new ClosedInterfaceEventHandler() );
+		register( new EnteredAmountEventHandler() );
 	}
 
 
@@ -102,7 +89,7 @@ public final class EventDispatcher
 		try {
 			handler.handle( player, event );
 		} catch( Throwable t ) {
-			logger.log( Level.SEVERE, "Error processing packet.", t );
+			logger.log( Level.SEVERE, "Error processing event:", t );
 		}
 	}
 
@@ -112,9 +99,13 @@ public final class EventDispatcher
 	 * @param clazz The event class.
 	 * @param handler The handler.
 	 */
-	private <T extends Event> void register( Class<T> clazz, EventHandler<T> handler )
+	private <T extends Event> void register( EventHandler<T> handler )
 	{
-		handlers.put( clazz, handler );
+		HandlesEvent annotation = handler.getClass().getAnnotation( HandlesEvent.class );
+		if( annotation == null ) {
+			throw new IllegalArgumentException( "Event handlers must be annotated with @HandlesEvent" );
+		}
+		handlers.put( annotation.value(), handler );
 	}
 
 

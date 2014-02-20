@@ -2,6 +2,7 @@
 package org.apollo.game.event.handler;
 
 import org.apollo.game.event.EventHandler;
+import org.apollo.game.event.annotate.HandlesEvent;
 import org.apollo.game.event.impl.EquipEvent;
 import org.apollo.game.model.EquipmentConstants;
 import org.apollo.game.model.Inventory;
@@ -17,6 +18,7 @@ import org.apollo.game.model.inv.SynchronizationInventoryListener;
  * An event handler which equips items.
  * @author Graham
  */
+@HandlesEvent( EquipEvent.class )
 public final class EquipEventHandler extends EventHandler<EquipEvent>
 {
 
@@ -120,7 +122,7 @@ public final class EquipEventHandler extends EventHandler<EquipEvent>
 
 			if( removeWeapon ) {
 				Item tmp = equipment.reset( EquipmentConstants.WEAPON );
-				// we know tmp will not be null from the check about
+				// we know tmp will not be null from the check above
 				inventory.add( tmp );
 			}
 
