@@ -31,6 +31,8 @@ public final class UpdateEncoder extends MessageToMessageEncoder<OnDemandRespons
 		buf.writeShort( fileSize );
 		buf.writeByte( chunkId );
 		buf.writeBytes( chunkData );
+
+		out.add( buf );
 	}
 
 }

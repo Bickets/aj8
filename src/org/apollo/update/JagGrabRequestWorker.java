@@ -48,7 +48,7 @@ public final class JagGrabRequestWorker extends RequestWorker<JagGrabRequest, Re
 			channel.close();
 		} else {
 			ByteBuf wrapped = Unpooled.wrappedBuffer( buf );
-			channel.write( new JagGrabResponse( wrapped ) ).addListener( ChannelFutureListener.CLOSE );
+			channel.writeAndFlush( new JagGrabResponse( wrapped ) ).addListener( ChannelFutureListener.CLOSE );
 		}
 	}
 
