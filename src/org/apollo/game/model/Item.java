@@ -80,7 +80,7 @@ public final class Item
 	@Override
 	public String toString()
 	{
-		return "Item [id=" + id + ", amount=" + amount + "]";
+		return getClass().getName() + " [id=" + id + ", amount=" + amount + "]";
 	}
 
 }

@@ -90,7 +90,7 @@ public final class StaticObject
 	@Override
 	public String toString()
 	{
-		return "StaticObject [id=" + id + ", type=" + type + ", rotation=" + rotation + "]";
+		return getClass().getName() + " [id=" + id + ", type=" + type + ", rotation=" + rotation + "]";
 	}
 
 }
