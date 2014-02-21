@@ -416,8 +416,9 @@ public abstract class GameCharacter
 	{
 		this.teleporting = true;
 		this.position = position;
-		this.walkingQueue.clear();
-		this.stopAction(); // TODO do it on any movement is a must.. walking queue perhaps?
+
+		walkingQueue.clear();
+		stopAction();
 	}
 
 
