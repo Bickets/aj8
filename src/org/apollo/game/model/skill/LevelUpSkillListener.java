@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.apollo.game.event.impl.OpenDialogueInterfaceEvent;
 import org.apollo.game.event.impl.SetInterfaceTextEvent;
+import org.apollo.game.model.Graphic;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.Skill;
 import org.apollo.game.model.SkillSet;
@@ -59,6 +60,7 @@ public final class LevelUpSkillListener extends SkillAdapter
 		if( level == 99 ) {
 			player.sendMessage( "Well done! You've achieved the highest possible level in this skill." );
 		}
+		player.playGraphic( new Graphic( 199, 0, 100 ) );
 	}
 
 
