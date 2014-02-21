@@ -12,7 +12,7 @@ import net.burtleburtle.bob.rand.IsaacAlgorithm;
 import org.apollo.fs.FileSystemConstants;
 import org.apollo.security.IsaacRandomPair;
 import org.apollo.security.PlayerCredentials;
-import org.apollo.util.ChannelBufferUtil;
+import org.apollo.util.ByteBufUtil;
 import org.apollo.util.StatefulFrameDecoder;
 
 /**
@@ -180,8 +180,8 @@ public final class LoginDecoder extends StatefulFrameDecoder<LoginDecoderState>
 
 		int uid = securePayload.readInt();
 
-		String username = ChannelBufferUtil.readString( securePayload );
-		String password = ChannelBufferUtil.readString( securePayload );
+		String username = ByteBufUtil.readString( securePayload );
+		String password = ByteBufUtil.readString( securePayload );
 
 		if( username.length() > 12 || password.length() > 20 ) {
 			throw new IllegalStateException( "Username or password too long." );
