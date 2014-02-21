@@ -33,7 +33,10 @@ public final class SynchronizationSkillListener extends SkillAdapter
 	@Override
 	public void levelledUp( SkillSet set, int id, Skill skill )
 	{
-		player.getBlockSet().add( SynchronizationBlock.createAppearanceBlock( player ) );
+		// Only update appearance if we level up a combat skill
+		if( id < 7 ) {
+			player.getBlockSet().add( SynchronizationBlock.createAppearanceBlock( player ) );
+		}
 	}
 
 
