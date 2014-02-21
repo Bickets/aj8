@@ -3,6 +3,7 @@ package org.apollo.game.event;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.logging.Logger;
 
 import org.apollo.game.event.annotate.DecodesEvent;
 import org.apollo.game.event.annotate.EncodesEvent;
@@ -86,6 +87,11 @@ public final class EventTranslator
 	 */
 	private final PacketMetaDataGroup incomingPacketMetaData = PacketMetaDataGroup.create();
 
+	/**
+	 * The logger.
+	 */
+	private final Logger logger = Logger.getLogger( getClass().getName() );
+
 
 	/**
 	 * Constructs a new {@link EventTranslator}.
@@ -161,7 +167,8 @@ public final class EventTranslator
 	{
 		DecodesEvent annotation = decoder.getClass().getAnnotation( DecodesEvent.class );
 		if( annotation == null ) {
-			throw new IllegalArgumentException( "Event decoders must be annotated with @DecodesEvent" );
+			logger.warning( String.format( "%s is not annotated with @DecodesEvent!", decoder.toString() ) );
+			return;
 		}
 		for( int value: annotation.value() ) {
 			decoders.put( value, decoder );
@@ -176,7 +183,8 @@ public final class EventTranslator
 	{
 		EncodesEvent annotation = encoder.getClass().getAnnotation( EncodesEvent.class );
 		if( annotation == null ) {
-			throw new IllegalArgumentException( "Event encoders must be annotated with @EncodesEvent" );
+			logger.warning( String.format( "%s is not annotated with @EncodesEvent!", encoder.toString() ) );
+			return;
 		}
 		encoders.put( annotation.value(), encoder );
 	}
@@ -189,7 +197,8 @@ public final class EventTranslator
 	{
 		HandlesEvent annotation = handler.getClass().getAnnotation( HandlesEvent.class );
 		if( annotation == null ) {
-			throw new IllegalArgumentException( "Event handlers must be annotated with @HandlesEvent" );
+			logger.warning( String.format( "%s is not annotated with @HandlesEvent!", handler.toString() ) );
+			return;
 		}
 		handlers.put( annotation.value(), handler );
 	}
