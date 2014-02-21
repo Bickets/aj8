@@ -53,7 +53,7 @@ public final class WalkingQueue
 		@Override
 		public String toString()
 		{
-			return Point.class.getName() + " [direction=" + direction + ", position=" + position + "]";
+			return getClass().getName() + " [direction=" + direction + ", position=" + position + "]";
 		}
 
 	}
@@ -61,17 +61,17 @@ public final class WalkingQueue
 	/**
 	 * The gameCharacter whose walking queue this is.
 	 */
-	private GameCharacter gameCharacter;
+	private final GameCharacter gameCharacter;
 
 	/**
 	 * The queue of directions.
 	 */
-	private Deque<Point> points = new ArrayDeque<Point>();
+	private final Deque<Point> points = new ArrayDeque<Point>();
 
 	/**
 	 * The old queue of directions.
 	 */
-	private Deque<Point> oldPoints = new ArrayDeque<Point>();
+	private final Deque<Point> oldPoints = new ArrayDeque<Point>();
 
 	/**
 	 * Flag indicating if this queue (only) should be ran.
@@ -145,8 +145,7 @@ public final class WalkingQueue
 		int deltaY = clientConnectionPosition.getY() - serverPosition.getY();
 
 		if( Direction.isConnectable( deltaX, deltaY ) ) {
-			points.clear();
-			oldPoints.clear();
+			clear();
 
 			addStep( clientConnectionPosition );
 			return true;
@@ -164,8 +163,7 @@ public final class WalkingQueue
 			travelBackQueue.add( oldPosition );
 
 			if( Direction.isConnectable( deltaX, deltaY ) ) {
-				points.clear();
-				oldPoints.clear();
+				clear();
 
 				for( Position travelBackPosition: travelBackQueue ) {
 					addStep( travelBackPosition );

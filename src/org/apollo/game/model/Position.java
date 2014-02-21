@@ -251,7 +251,7 @@ public final class Position
 	@Override
 	public String toString()
 	{
-		return Position.class.getName() + " [x=" + x + ", y=" + y + ", height=" + height + "]";
+		return getClass().getName() + " [x=" + x + ", y=" + y + ", height=" + height + "]";
 	}
 
 }
