@@ -31,7 +31,7 @@ import org.apollo.game.event.encoder.EnterAmountEventEncoder;
 import org.apollo.game.event.encoder.IdAssignmentEventEncoder;
 import org.apollo.game.event.encoder.LogoutEventEncoder;
 import org.apollo.game.event.encoder.MobSynchronizationEventEncoder;
-import org.apollo.game.event.encoder.OpenChatboxOverlayEventEncoder;
+import org.apollo.game.event.encoder.OpenDialogueInterfaceEventEncoder;
 import org.apollo.game.event.encoder.OpenInterfaceEventEncoder;
 import org.apollo.game.event.encoder.OpenInterfaceSidebarEventEncoder;
 import org.apollo.game.event.encoder.PlayerSynchronizationEventEncoder;
@@ -143,7 +143,7 @@ public final class EventTranslator
 		register( new OpenInterfaceSidebarEventEncoder() );
 		register( new EnterAmountEventEncoder() );
 		register( new SetInterfaceTextEventEncoder() );
-		register( new OpenChatboxOverlayEventEncoder() );
+		register( new OpenDialogueInterfaceEventEncoder() );
 
 		// register handlers
 		register( new CharacterDesignEventHandler() );

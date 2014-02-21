@@ -6,9 +6,8 @@ import org.apollo.game.event.Event;
 /**
  * This event is used to open an overlay over the chatbox.
  * @author Ryley Kimmel <ryley.kimmel@live.com>
- * TODO: BETTER NAMING?
  */
-public final class OpenChatboxOverlayEvent extends Event
+public final class OpenDialogueInterfaceEvent extends Event
 {
 
 	/**
@@ -18,10 +17,10 @@ public final class OpenChatboxOverlayEvent extends Event
 
 
 	/**
-	 * Constructs a new {@link OpenChatboxOverlayEvent}.
+	 * Constructs a new {@link OpenDialogueInterfaceEvent}.
 	 * @param interfaceId The id of the interface.
 	 */
-	public OpenChatboxOverlayEvent( int interfaceId )
+	public OpenDialogueInterfaceEvent( int interfaceId )
 	{
 		this.interfaceId = interfaceId;
 	}
