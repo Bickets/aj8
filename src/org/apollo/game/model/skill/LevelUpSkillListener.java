@@ -1,7 +1,11 @@
 
 package org.apollo.game.model.skill;
 
-import org.apollo.game.event.impl.OpenChatboxOverlayEvent;
+import static java.util.Arrays.asList;
+
+import java.util.List;
+
+import org.apollo.game.event.impl.OpenDialogueInterfaceEvent;
 import org.apollo.game.event.impl.SetInterfaceTextEvent;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.Skill;
@@ -19,10 +23,9 @@ public final class LevelUpSkillListener extends SkillAdapter
 	/**
 	 * The interface id's for a normal level up in a skill
 	 */
-	/* XXX: It's too bad these ids aren't in order by skill id or else this would be easier. */
 	private static final int[] LEVEL_UP_IDS = {
-		157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170,
-		171, 172, 173, 174, 175, 176, 177
+		6247, 6253, 6206, 6216, 4443, 6242, 6211, 6226, 4272, 6231, 6258, 4282,
+		6263, 6221, 4416, 6237, 4277, 4261, 12122, 4887, 4267,
 	};
 
 	/**
@@ -47,13 +50,37 @@ public final class LevelUpSkillListener extends SkillAdapter
 		String name = Skill.getName( id );
 		String article = LanguageUtil.getIndefiniteArticle( name );
 		int level = skill.getMaximumLevel();
-		player.send( new OpenChatboxOverlayEvent( LEVEL_UP_IDS[ id ] ) );
-		player.send( new SetInterfaceTextEvent( 4268, "Congratulations! You've just advanced " + article + " " + name + " level!" ) );
-		player.send( new SetInterfaceTextEvent( 4269, "You have now reached level " + level + "!" ) );
+		int interfaceId = LEVEL_UP_IDS[ id ];
+		List<Integer> children = getChildren( interfaceId );
+		player.send( new SetInterfaceTextEvent( children.get( 0 ), "Congratulations! You've just advanced " + article + " " + name + " level!" ) );
+		player.send( new SetInterfaceTextEvent( children.get( 1 ), "You have now reached level " + level + "!" ) );
+		player.send( new OpenDialogueInterfaceEvent( interfaceId ) );
 		player.sendMessage( "You've just advanced " + article + " " + name + " level! You have reached level " + level + "." );
 		if( level == 99 ) {
-			player.sendMessage( "@dre@Well done! You've achieved the highest possible level in this skill." );
+			player.sendMessage( "Well done! You've achieved the highest possible level in this skill." );
 		}
+	}
+
+
+	/**
+	 * Returns the children of the specified interface id as a {@link List}.
+	 * @param id The interface id.
+	 *            TODO: This is a REALLY shitty method of doing this, but I really can't be assed
+	 *            right now to do this a better way. I'm really frustrated atm.
+	 */
+	private List<Integer> getChildren( int id )
+	{
+		switch( id ) {
+			case 4443:
+				return asList( 5453, 6114 );
+			case 4416:
+				return asList( 4417, 4438 );
+			case 4261:
+				return asList( 4263, 4264 );
+			case 4887:
+				return asList( 4890, 4891 );
+		}
+		return asList( id + 1, id + 2 );
 	}
 
 }
