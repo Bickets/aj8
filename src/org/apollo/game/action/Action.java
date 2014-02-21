@@ -2,10 +2,10 @@
 package org.apollo.game.action;
 
 import org.apollo.game.model.GameCharacter;
-import org.apollo.game.scheduling.ScheduledTask;
+import org.apollo.game.task.Task;
 
 /**
- * An action is a specialised {@link ScheduledTask} which is specific to a
+ * An action is a specialised {@link Task} which is specific to a
  * character.
  * <p>
  * <strong>ALL</strong> actions <strong>MUST</strong> implement the {@link #equals(Object)} method.
@@ -14,7 +14,7 @@ import org.apollo.game.scheduling.ScheduledTask;
  * scratch).
  * @author Graham
  */
-public abstract class Action<T extends GameCharacter> extends ScheduledTask
+public abstract class Action<T extends GameCharacter> extends Task
 {
 
 	/**

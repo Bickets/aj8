@@ -1,15 +1,15 @@
 
-package org.apollo.game.scheduling.impl;
+package org.apollo.game.task.impl;
 
 import org.apollo.game.model.GameCharacter;
-import org.apollo.game.scheduling.ScheduledTask;
+import org.apollo.game.task.Task;
 
 /**
- * A {@link ScheduledTask} which normalizes the skills of a player: gradually
+ * A {@link Task} which normalizes the skills of a player: gradually
  * brings them back to their normal value as specified by the experience.
  * @author Graham
  */
-public final class SkillNormalizationTask extends ScheduledTask
+public final class SkillNormalizationTask extends Task
 {
 
 	/**

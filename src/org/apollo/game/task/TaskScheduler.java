@@ -1,33 +1,33 @@
 
-package org.apollo.game.scheduling;
+package org.apollo.game.task;
 
 import java.util.Deque;
 import java.util.Iterator;
 import java.util.LinkedList;
 
 /**
- * A class which manages {@link ScheduledTask}s.
+ * A class which manages {@link Task}s.
  * @author Graham
  */
-public final class Scheduler
+public final class TaskScheduler
 {
 
 	/**
 	 * the singleton instance
 	 */
-	private static final Scheduler INSTANCE = new Scheduler();
+	private static final TaskScheduler INSTANCE = new TaskScheduler();
 
 	/**
-	 * A deque of currently active tasks.
+	 * A {@link Deque} of currently active tasks.
 	 */
-	private final Deque<ScheduledTask> tasks = new LinkedList<ScheduledTask>();
+	private final Deque<Task> tasks = new LinkedList<Task>();
 
 
 	/**
 	 * Schedules a new task.
 	 * @param task The task to schedule.
 	 */
-	public void schedule( ScheduledTask task )
+	public void schedule( Task task )
 	{
 		tasks.addFirst( task );
 	}
@@ -39,9 +39,9 @@ public final class Scheduler
 	 */
 	public void pulse()
 	{
-		Iterator<ScheduledTask> it = tasks.iterator();
+		Iterator<Task> it = tasks.iterator();
 		while( it.hasNext() ) {
-			ScheduledTask task = it.next();
+			Task task = it.next();
 			if( ! task.isRunning() ) {
 				it.remove();
 				continue;
@@ -54,7 +54,7 @@ public final class Scheduler
 	/**
 	 * Default private constructor to prevent instantiation by other classes.
 	 */
-	private Scheduler()
+	private TaskScheduler()
 	{
 
 	}
@@ -64,7 +64,7 @@ public final class Scheduler
 	 * Gets the singleton instance
 	 * @return the instance The singleton instance.
 	 */
-	public static Scheduler getInstance()
+	public static TaskScheduler getInstance()
 	{
 		return INSTANCE;
 	}

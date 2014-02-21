@@ -16,8 +16,8 @@ import org.apollo.fs.parser.MobDefinitionParser;
 import org.apollo.game.model.def.EquipmentDefinition;
 import org.apollo.game.model.def.ItemDefinition;
 import org.apollo.game.model.def.MobDefinition;
-import org.apollo.game.scheduling.ScheduledTask;
-import org.apollo.game.scheduling.Scheduler;
+import org.apollo.game.task.Task;
+import org.apollo.game.task.TaskScheduler;
 import org.apollo.io.EquipmentDefinitionParser;
 import org.apollo.util.CharacterRepository;
 
@@ -262,20 +262,20 @@ public final class World
 
 	/**
 	 * Schedules a new task.
-	 * @param task The {@link ScheduledTask}.
+	 * @param task The {@link Task}.
 	 */
-	public void schedule( ScheduledTask task )
+	public void schedule( Task task )
 	{
-		Scheduler.getInstance().schedule( task );
+		TaskScheduler.getInstance().schedule( task );
 	}
 
 
 	/**
-	 * Calls the {@link Scheduler#pulse()} method.
+	 * Calls the {@link TaskScheduler#pulse()} method.
 	 */
 	public void pulse()
 	{
-		Scheduler.getInstance().pulse();
+		TaskScheduler.getInstance().pulse();
 	}
 
 }

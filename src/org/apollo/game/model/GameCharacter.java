@@ -8,9 +8,9 @@ import org.apollo.game.action.Action;
 import org.apollo.game.event.Event;
 import org.apollo.game.event.impl.ServerMessageEvent;
 import org.apollo.game.model.Inventory.StackMode;
-import org.apollo.game.scheduling.impl.SkillNormalizationTask;
 import org.apollo.game.sync.block.SynchronizationBlock;
 import org.apollo.game.sync.block.SynchronizationBlockSet;
+import org.apollo.game.task.impl.SkillNormalizationTask;
 import org.apollo.util.CharacterRepository;
 
 /**

@@ -1,11 +1,11 @@
 
-package org.apollo.game.scheduling;
+package org.apollo.game.task;
 
 /**
  * A game-related task that is scheduled to run in the future.
  * @author Graham
  */
-public abstract class ScheduledTask
+public abstract class Task
 {
 
 	/**
@@ -32,7 +32,7 @@ public abstract class ScheduledTask
 	 * @throws IllegalArgumentException if the delay is less than or equal to
 	 *             zero.
 	 */
-	public ScheduledTask( int delay, boolean immediate )
+	public Task( int delay, boolean immediate )
 	{
 		setDelay( delay );
 		this.pulses = immediate ? 0: delay;
@@ -69,6 +69,9 @@ public abstract class ScheduledTask
 	 */
 	public void stop()
 	{
+		if( running ) {
+			throw new IllegalStateException();
+		}
 		running = false;
 	}
 
@@ -77,7 +80,7 @@ public abstract class ScheduledTask
 	 * Pulses this task: updates the delay and calls {@link #execute()} if
 	 * necessary.
 	 */
-	final void pulse()
+	protected final void pulse()
 	{
 		if( running && pulses -- == 0 ) {
 			execute();
