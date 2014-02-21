@@ -443,7 +443,7 @@ public final class Player extends GameCharacter
 	@Override
 	public String toString()
 	{
-		return "Player [username=" + credentials.getUsername() + ", privilegeLevel=" + privilegeLevel + "]";
+		return getClass().getName() + " [username=" + credentials.getUsername() + ", privilegeLevel=" + privilegeLevel + "]";
 	}
 
 
