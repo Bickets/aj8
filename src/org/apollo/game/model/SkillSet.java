@@ -143,10 +143,6 @@ public final class SkillSet
 	 * Gets the combat level for this skill set.
 	 * @return The combat level.
 	 */
-	/**
-	 * Gets the combat level for this skill set.
-	 * @return The combat level.
-	 */
 	public int getCombatLevel()
 	{
 		int attack = skills[ Skill.ATTACK ].getMaximumLevel();
