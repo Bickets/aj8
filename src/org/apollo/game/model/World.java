@@ -120,8 +120,7 @@ public final class World
 
 		logger.info( "Loading equipment definitions..." );
 		int nonNull = 0;
-		InputStream is = new BufferedInputStream( new FileInputStream( "data/equipment.dat" ) );
-		try {
+		try( InputStream is = new BufferedInputStream( new FileInputStream( "data/equipment.dat" ) ) ) {
 			EquipmentDefinitionParser equipParser = new EquipmentDefinitionParser( is );
 			EquipmentDefinition[] equipDefs = equipParser.parse();
 			for( EquipmentDefinition def: equipDefs ) {
@@ -130,8 +129,6 @@ public final class World
 				}
 			}
 			EquipmentDefinition.init( equipDefs );
-		} finally {
-			is.close();
 		}
 		logger.info( "Done (loaded " + nonNull + " equipment definitions)." );
 

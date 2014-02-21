@@ -27,10 +27,8 @@ public final class EquipmentUpdater
 	public static void main( String[] args ) throws IOException
 	{
 
-		DataOutputStream os = new DataOutputStream( new BufferedOutputStream( new FileOutputStream( "data/equipment.dat" ) ) );
-		try {
-			IndexedFileSystem fs = new IndexedFileSystem( new File( "data/fs/" ), true );
-			try {
+		try( DataOutputStream os = new DataOutputStream( new BufferedOutputStream( new FileOutputStream( "data/equipment.dat" ) ) ) ) {
+			try( IndexedFileSystem fs = new IndexedFileSystem( new File( "data/fs/" ), true ) ) {
 				ItemDefinitionParser parser = new ItemDefinitionParser( fs );
 				ItemDefinition[] defs = parser.parse();
 				ItemDefinition.init( defs );
@@ -52,11 +50,7 @@ public final class EquipmentUpdater
 						os.writeByte( getMagicRequirement( def ) );
 					}
 				}
-			} finally {
-				fs.close();
 			}
-		} finally {
-			os.close();
 		}
 	}
 

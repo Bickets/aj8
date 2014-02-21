@@ -58,15 +58,10 @@ public final class HypertextResourceProvider extends ResourceProvider
 			return null;
 		}
 
-		RandomAccessFile raf = new RandomAccessFile( f, "r" );
-		ByteBuffer buf;
-		try {
-			buf = raf.getChannel().map( MapMode.READ_ONLY, 0, raf.length() );
-		} finally {
-			raf.close();
+		try( RandomAccessFile raf = new RandomAccessFile( f, "r" ) ) {
+			ByteBuffer buf = raf.getChannel().map( MapMode.READ_ONLY, 0, raf.length() );
+			return buf;
 		}
-
-		return buf;
 	}
 
 }

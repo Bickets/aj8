@@ -28,8 +28,8 @@ public final class BinaryPlayerSaver implements PlayerSaver
 	public void savePlayer( Player player ) throws Exception
 	{
 		File f = BinaryPlayerUtil.getFile( player.getName() );
-		DataOutputStream out = new DataOutputStream( new FileOutputStream( f ) );
-		try {
+
+		try( DataOutputStream out = new DataOutputStream( new FileOutputStream( f ) ) ) {
 			// write credentials and privileges
 			StreamUtil.writeString( out, player.getName() );
 			StreamUtil.writeString( out, player.getCredentials().getPassword() );
@@ -69,8 +69,6 @@ public final class BinaryPlayerSaver implements PlayerSaver
 				out.writeByte( skill.getCurrentLevel() );
 				out.writeDouble( skill.getExperience() );
 			}
-		} finally {
-			out.close();
 		}
 	}
 

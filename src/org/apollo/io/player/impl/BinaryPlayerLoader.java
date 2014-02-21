@@ -42,9 +42,7 @@ public final class BinaryPlayerLoader implements PlayerLoader
 			return new PlayerLoaderResponse( LoginConstants.STATUS_OK, new Player( credentials, SPAWN_POSITION ) );
 		}
 
-		DataInputStream in = new DataInputStream( new FileInputStream( f ) );
-
-		try {
+		try( DataInputStream in = new DataInputStream( new FileInputStream( f ) ) ) {
 			// read credentials and privileges
 			String name = StreamUtil.readString( in );
 			String pass = StreamUtil.readString( in );
@@ -101,8 +99,6 @@ public final class BinaryPlayerLoader implements PlayerLoader
 			}
 
 			return new PlayerLoaderResponse( LoginConstants.STATUS_OK, p );
-		} finally {
-			in.close();
 		}
 	}
 

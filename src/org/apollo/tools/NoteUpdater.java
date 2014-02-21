@@ -28,10 +28,8 @@ public final class NoteUpdater
 	public static void main( String[] args ) throws IOException
 	{
 
-		DataOutputStream os = new DataOutputStream( new BufferedOutputStream( new FileOutputStream( "data/note.dat" ) ) );
-		try {
-			IndexedFileSystem fs = new IndexedFileSystem( new File( "data/fs/" ), true );
-			try {
+		try( DataOutputStream os = new DataOutputStream( new BufferedOutputStream( new FileOutputStream( "data/note.dat" ) ) ) ) {
+			try( IndexedFileSystem fs = new IndexedFileSystem( new File( "data/fs/" ), true ) ) {
 				ItemDefinitionParser parser = new ItemDefinitionParser( fs );
 				ItemDefinition[] defs = parser.parse();
 				ItemDefinition.init( defs );
@@ -55,11 +53,7 @@ public final class NoteUpdater
 						os.writeBoolean( false ); // not notable
 					}
 				}
-			} finally {
-				fs.close();
 			}
-		} finally {
-			os.close();
 		}
 	}
 
