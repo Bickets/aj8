@@ -105,9 +105,6 @@ public final class GameService extends Service
 	}
 
 
-	/**
-	 * Starts the game service.
-	 */
 	@Override
 	public void start()
 	{
