@@ -1,6 +1,8 @@
 
 package org.apollo.net.session;
 
+import java.io.IOException;
+
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
@@ -56,7 +58,7 @@ public final class LoginSession extends Session
 
 
 	@Override
-	public void messageReceived( Object message )
+	public void messageReceived( Object message ) throws Exception
 	{
 		if( message.getClass() == LoginRequest.class ) {
 			handleLoginRequest( ( LoginRequest )message );
@@ -67,8 +69,9 @@ public final class LoginSession extends Session
 	/**
 	 * Handles a login request.
 	 * @param request The login request.
+	 * @throws IOException If some I/O error occurs.
 	 */
-	private void handleLoginRequest( LoginRequest request )
+	private void handleLoginRequest( LoginRequest request ) throws IOException
 	{
 		LoginService loginService = serverContext.getService( LoginService.class );
 		loginService.submitLoadRequest( this, request );
@@ -91,7 +94,7 @@ public final class LoginSession extends Session
 
 		if( player != null ) {
 			GameSession session = new GameSession( ctx(), serverContext, eventTranslator, player );
-			player.setSession( session, false /* TODO */);
+			player.setSession( session, request.isReconnecting() );
 
 			RegistrationStatus registrationStatus = gameService.registerPlayer( player );
 

@@ -102,6 +102,7 @@ public final class WalkingQueue
 
 		Point next = points.poll();
 		if( next != null ) {
+			gameCharacter.stopAction();
 			first = next.direction;
 			position = next.position;
 

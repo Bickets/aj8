@@ -5,8 +5,6 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.logging.Logger;
 
 import org.apollo.Service;
@@ -35,12 +33,17 @@ public final class World
 	/**
 	 * The logger for this class.
 	 */
-	private static final Logger logger = Logger.getLogger( World.class.getName() );
+	private final Logger logger = Logger.getLogger( getClass().getName() );
+
+	/**
+	 * The file system
+	 */
+	private IndexedFileSystem fileSystem;
 
 	/**
 	 * The world.
 	 */
-	private static final World world = new World();
+	private static final World WORLD = new World();
 
 	/**
 	 * Represents the different status codes for registering a player.
@@ -71,7 +74,7 @@ public final class World
 	 */
 	public static World getWorld()
 	{
-		return world;
+		return WORLD;
 	}
 
 	/**
@@ -83,16 +86,6 @@ public final class World
 	 * The {@link CharacterRepository} of {@link Player}s.
 	 */
 	private final CharacterRepository<Player> playerRepository = new CharacterRepository<Player>( WorldConstants.MAXIMUM_PLAYERS );
-
-	/**
-	 * A {@link Map} of active players.
-	 */
-	private final Map<Long, Player> activePlayers = new HashMap<>( WorldConstants.MAXIMUM_PLAYERS );
-
-	/**
-	 * A {@link Map} of active mobs.
-	 */
-	private final Map<Integer, Mob> activeMobs = new HashMap<>( WorldConstants.MAXIMUM_MOBS );
 
 
 	/**
@@ -107,13 +100,15 @@ public final class World
 	/**
 	 * Initialises the world by loading definitions from the specified file
 	 * system.
-	 * @param fs The file system.
+	 * @param fileSystem The file system.
 	 * @throws IOException if an I/O error occurs.
 	 */
-	public void init( IndexedFileSystem fs ) throws IOException
+	public void init( IndexedFileSystem fileSystem ) throws IOException
 	{
+		this.fileSystem = fileSystem;
+
 		logger.info( "Loading item definitions..." );
-		ItemDefinitionParser itemParser = new ItemDefinitionParser( fs );
+		ItemDefinitionParser itemParser = new ItemDefinitionParser( fileSystem );
 		ItemDefinition[] itemDefs = itemParser.parse();
 		ItemDefinition.init( itemDefs );
 		logger.info( "Done (loaded " + itemDefs.length + " item definitions)." );
@@ -133,7 +128,7 @@ public final class World
 		logger.info( "Done (loaded " + nonNull + " equipment definitions)." );
 
 		logger.info( "Loading mob definitions..." );
-		MobDefinitionParser mobParser = new MobDefinitionParser( fs );
+		MobDefinitionParser mobParser = new MobDefinitionParser( fileSystem );
 		MobDefinition[] mobDefs = mobParser.parse();
 		MobDefinition.init( mobDefs );
 		logger.info( "Done (loaded " + mobDefs.length + " mob definitions)." );
@@ -179,7 +174,6 @@ public final class World
 
 		boolean success = playerRepository.add( player );
 		if( success ) {
-			activePlayers.put( player.getEncodedName(), player );
 			logger.info( "Registered player: " + player + " [online=" + playerRepository.size() + "]" );
 			return RegistrationStatus.OK;
 		} else {
@@ -198,7 +192,6 @@ public final class World
 	{
 		boolean success = mobRepository.add( mob );
 		if( success ) {
-			activeMobs.put( mob.getIndex(), mob );
 			logger.info( "Registered mob: " + mob + " [online=" + mobRepository.size() + "]" );
 		} else {
 			logger.warning( "Failed to register mob, repository capacity reached: [online=" + mobRepository.size() + "]" );
@@ -214,7 +207,12 @@ public final class World
 	 */
 	public boolean isPlayerOnline( long name )
 	{
-		return activePlayers.containsKey( name );
+		for( Player p: playerRepository ) {
+			if( p.getEncodedName() == name ) {
+				return true;
+			}
+		}
+		return false;
 	}
 
 
@@ -225,7 +223,6 @@ public final class World
 	public void unregister( Player player )
 	{
 		if( playerRepository.remove( player ) ) {
-			activePlayers.remove( player.getEncodedName() );
 			logger.info( "Unregistered player: " + player + " [online=" + playerRepository.size() + "]" );
 		} else {
 			logger.warning( "Could not find player to unregister: " + player + "!" );
@@ -240,7 +237,6 @@ public final class World
 	public void unregister( Mob mob )
 	{
 		if( mobRepository.remove( mob ) ) {
-			activeMobs.remove( mob.getIndex() );
 			logger.info( "Unregistered mob: " + mob + " [online=" + mobRepository.size() + "]" );
 		} else {
 			logger.warning( "Could not find mob " + mob + " to unregister!" );
@@ -249,14 +245,11 @@ public final class World
 
 
 	/**
-	 * Returns a {@link Player} object by their encoded username.
-	 * @param name The name to lookup.
-	 * @return The player object, if found. Otherwise null will be returned.
+	 * Returns the file system.
 	 */
-	public Player getPlayerByName( long name )
+	public IndexedFileSystem getFileSystem()
 	{
-		Player player = activePlayers.get( name );
-		return player;
+		return fileSystem;
 	}
 
 

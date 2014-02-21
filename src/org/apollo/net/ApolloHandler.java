@@ -73,7 +73,7 @@ public final class ApolloHandler extends ChannelHandlerAdapter
 
 
 	@Override
-	public void channelRead( ChannelHandlerContext ctx, Object msg )
+	public void channelRead( ChannelHandlerContext ctx, Object msg ) throws Exception
 	{
 		Attribute<Session> attribute = ctx.attr( NetworkConstants.NETWORK_SESSION );
 		Session session = attribute.get();
