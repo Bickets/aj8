@@ -3,8 +3,6 @@ package org.apollo.game.event;
 
 import java.util.HashMap;
 import java.util.Map;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.apollo.game.event.annotate.DecodesEvent;
 import org.apollo.game.event.annotate.EncodesEvent;
@@ -54,11 +52,13 @@ import org.apollo.game.event.handler.ObjectEventHandler;
 import org.apollo.game.event.handler.SwitchItemEventHandler;
 import org.apollo.game.event.handler.WalkEventHandler;
 import org.apollo.game.model.Player;
+import org.apollo.net.codec.game.GamePacket;
 import org.apollo.net.meta.PacketMetaData;
 import org.apollo.net.meta.PacketMetaDataGroup;
 
 /**
- * A {@link EventTranslator} is a translator to decode and encode a packet.
+ * The responsibility of this class is to translate registered {@link Event}'s to their respective
+ * handler.
  * @author Graham
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
@@ -66,17 +66,17 @@ public final class EventTranslator
 {
 
 	/**
-	 * An array of event decoders.
+	 * A {@link Map} of {@link Integer}s to {@link EventDecoder}s
 	 */
-	private final EventDecoder< ? >[] decoders = new EventDecoder< ? >[ 256 ];
+	private final Map<Integer, EventDecoder< ? >> decoders = new HashMap<>();
 
 	/**
-	 * A map of event encoders.
+	 * A {@link Map} of {@link Class}' to {@link EventEncoder}s
 	 */
 	private final Map<Class< ? >, EventEncoder< ? >> encoders = new HashMap<>();
 
 	/**
-	 * A map of event handlers.
+	 * A {@link Map} of {@link Class}' to {@link EventHandler}s
 	 */
 	private final Map<Class< ? >, EventHandler< ? >> handlers = new HashMap<>();
 
@@ -85,25 +85,20 @@ public final class EventTranslator
 	 */
 	private final PacketMetaDataGroup incomingPacketMetaData = PacketMetaDataGroup.create();
 
-	/**
-	 * An instance of logger, used to print messages to the console.
-	 */
-	private static final Logger logger = Logger.getLogger( EventTranslator.class.getSimpleName() );
-
 
 	/**
 	 * Constructs a new {@link EventTranslator}.
 	 */
 	public EventTranslator()
 	{
-		init();
+		registerAll();
 	}
 
 
 	/**
-	 * Initializes this event translator by registering encoders and decoders.
+	 * Registers all event decoders, encoders and handlers.
 	 */
-	private void init()
+	private void registerAll()
 	{
 		// register decoders
 		register( new KeepAliveEventDecoder() );
@@ -158,48 +153,24 @@ public final class EventTranslator
 
 
 	/**
-	 * Returns an event decoder for it's opcode.
-	 * @param opcode The opcode.
-	 * @return An event decoder instance for the specified opcode.
+	 * Registers an {@link EventDecoder} to its respective map.
 	 */
-	public EventDecoder< ? > get( int opcode )
-	{
-		return decoders[ opcode ];
-	}
-
-
-	/**
-	 * Returns an event encoder for its event class.
-	 * @param clazz The class.
-	 * @return An event encoder instance for the specified class.
-	 */
-	public EventEncoder< ? > get( Class< ? > clazz )
-	{
-		return encoders.get( clazz );
-	}
-
-
-	/**
-	 * Registers an event decoder.
-	 * @param decoder The decoder to register.
-	 */
-	public void register( EventDecoder< ? > decoder )
+	private void register( EventDecoder< ? > decoder )
 	{
 		DecodesEvent annotation = decoder.getClass().getAnnotation( DecodesEvent.class );
 		if( annotation == null ) {
 			throw new IllegalArgumentException( "Event decoders must be annotated with @DecodesEvent" );
 		}
 		for( int value: annotation.value() ) {
-			decoders[ value ] = decoder;
+			decoders.put( value, decoder );
 		}
 	}
 
 
 	/**
-	 * Registers an event encoder.
-	 * @param encoder The encoder to register.
+	 * Registers an {@link EventEncoder} to its respective map.
 	 */
-	public void register( EventEncoder< ? > encoder )
+	private void register( EventEncoder< ? > encoder )
 	{
 		EncodesEvent annotation = encoder.getClass().getAnnotation( EncodesEvent.class );
 		if( annotation == null ) {
@@ -210,10 +181,9 @@ public final class EventTranslator
 
 
 	/**
-	 * Registers a handler.
-	 * @param handler The handler.
+	 * Registers an {@link EventHandler} to its respective map.
 	 */
-	private <T extends Event> void register( EventHandler<T> handler )
+	private void register( EventHandler< ? > handler )
 	{
 		HandlesEvent annotation = handler.getClass().getAnnotation( HandlesEvent.class );
 		if( annotation == null ) {
@@ -224,34 +194,58 @@ public final class EventTranslator
 
 
 	/**
-	 * Dispatches an event.
-	 * @param player The player to dispatch for.
-	 * @param event The event to dispatch.
+	 * Returns a decoded {@link Event} or {@code null} if the {@link EventDecoder} does not exist
+	 * for the specified packets opcode.
+	 * @param packet The packet.
 	 */
-	@SuppressWarnings( "unchecked" )
-	public void dispatch( Player player, Event event )
+	public Event decode( GamePacket packet )
 	{
-		EventHandler<Event> handler = ( EventHandler<Event> )handlers.get( event.getClass() );
-
-		if( handler == null ) {
-			logger.warning( "Null handler for event: " + event.getClass().getName() + "." );
-			return;
+		@SuppressWarnings( "unchecked" )
+		EventDecoder<Event> decoder = ( EventDecoder<Event> )decoders.get( packet.getOpcode() );
+		if( decoder == null ) {
+			return null;
 		}
-
-		try {
-			handler.handle( player, event );
-		} catch( Throwable t ) {
-			logger.log( Level.SEVERE, "Error processing event:", t );
-		}
+		return decoder.decode( packet );
 	}
 
 
 	/**
-	 * Gets meta data for the specified incoming packet.
-	 * @param opcode The opcode of the incoming packet.
-	 * @return The {@link PacketMetaData} object.
+	 * Returns an encoded {@link GamePacket} or {@code null} if the {@link EventEncoder} does not
+	 * exist for the specified event's class.
+	 * @param event The event.
 	 */
-	public final PacketMetaData getIncomingPacketMetaData( int opcode )
+	public GamePacket encode( Event event )
+	{
+		@SuppressWarnings( "unchecked" )
+		EventEncoder<Event> encoder = ( EventEncoder<Event> )encoders.get( event.getClass() );
+		if( encoder == null ) {
+			return null;
+		}
+		return encoder.encode( event );
+	}
+
+
+	/**
+	 * Handles an {@link Event} for a specified {@link Player} if it exists by the event's class.
+	 * @param player The player
+	 * @param event The event
+	 */
+	public void handle( Player player, Event event )
+	{
+		@SuppressWarnings( "unchecked" )
+		EventHandler<Event> handler = ( EventHandler<Event> )handlers.get( event.getClass() );
+		if( handler == null ) {
+			return;
+		}
+		handler.handle( player, event );
+	}
+
+
+	/**
+	 * Returns data about packet data for a specified opcode.
+	 * @param opcode The opcode.
+	 */
+	public PacketMetaData getIncomingPacketMetaData( int opcode )
 	{
 		return incomingPacketMetaData.getMetaData( opcode );
 	}

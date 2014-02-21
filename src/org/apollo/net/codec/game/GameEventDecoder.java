@@ -7,7 +7,6 @@ import io.netty.handler.codec.MessageToMessageDecoder;
 import java.util.List;
 
 import org.apollo.game.event.Event;
-import org.apollo.game.event.EventDecoder;
 import org.apollo.game.event.EventTranslator;
 
 /**
@@ -36,9 +35,9 @@ public final class GameEventDecoder extends MessageToMessageDecoder<GamePacket>
 	@Override
 	protected void decode( ChannelHandlerContext ctx, GamePacket msg, List<Object> out )
 	{
-		EventDecoder< ? > decoder = translator.get( msg.getOpcode() );
-		if( decoder != null ) {
-			out.add( decoder.decode( msg ) );
+		Event event = translator.decode( msg );
+		if( event != null ) {
+			out.add( event );
 		}
 	}
 

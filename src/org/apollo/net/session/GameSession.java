@@ -102,7 +102,7 @@ public final class GameSession extends Session
 	{
 		Event event;
 		while( ( event = eventQueue.poll() ) != null ) {
-			eventTranslator.dispatch( player, event );
+			eventTranslator.handle( player, event );
 		}
 	}
 
