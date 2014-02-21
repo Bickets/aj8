@@ -94,12 +94,12 @@ public final class Player extends GameCharacter
 	/**
 	 * A temporary queue of events sent during the login process.
 	 */
-	private final Queue<Event> queuedEvents = new ArrayDeque<Event>();
+	private final Queue<Event> queuedEvents = new ArrayDeque<>();
 
 	/**
 	 * The players credentials.
 	 */
-	private PlayerCredentials credentials;
+	private final PlayerCredentials credentials;
 
 	/**
 	 * The privilege level.
@@ -213,7 +213,7 @@ public final class Player extends GameCharacter
 	 */
 	public void flagExcessiveMobs()
 	{
-		this.excessiveMobs = true;
+		excessiveMobs = true;
 	}
 
 
@@ -262,7 +262,7 @@ public final class Player extends GameCharacter
 	 */
 	public void decrementViewingDistance()
 	{
-		if( viewingDistance > 1 ) { // TODO should it be 0?
+		if( viewingDistance > 1 ) {
 			viewingDistance -- ;
 		}
 	}
@@ -336,17 +336,17 @@ public final class Player extends GameCharacter
 	@Override
 	public void send( Event event )
 	{
-		if( isActive() ) {
-			if( ! queuedEvents.isEmpty() ) {
-				for( Event queuedEvent: queuedEvents ) {
-					session.dispatchEvent( queuedEvent );
-				}
-				queuedEvents.clear();
-			}
-			session.dispatchEvent( event );
-		} else {
+		if( ! isActive() ) {
 			queuedEvents.add( event );
+			return;
 		}
+
+		if( ! queuedEvents.isEmpty() ) {
+			queuedEvents.forEach( evt -> session.dispatchEvent( evt ) );
+			queuedEvents.clear();
+		}
+
+		session.dispatchEvent( event );
 	}
 
 
@@ -464,7 +464,7 @@ public final class Player extends GameCharacter
 	public void setAppearance( Appearance appearance )
 	{
 		this.appearance = appearance;
-		this.getBlockSet().add( SynchronizationBlock.createAppearanceBlock( this ) );
+		getBlockSet().add( SynchronizationBlock.createAppearanceBlock( this ) );
 	}
 
 

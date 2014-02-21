@@ -457,7 +457,8 @@ public final class Inventory implements Cloneable
 			Item temp = items[ oldSlot ];
 			items[ oldSlot ] = items[ newSlot ];
 			items[ newSlot ] = temp;
-			notifyItemsUpdated(); // TODO can we just fire for the two slots?
+			notifyItemUpdated( oldSlot );
+			notifyItemUpdated( newSlot );
 		}
 	}
 
