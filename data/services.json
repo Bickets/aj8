@@ -1,8 +1,0 @@
-{
-  "services" : 
-  	[
-  		"org.apollo.game.GameService",
-  		"org.apollo.login.LoginService",
-  		"org.apollo.update.UpdateService"
-  	]
-}

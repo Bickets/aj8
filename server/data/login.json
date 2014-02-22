@@ -1,0 +1,9 @@
+{
+	"loader" : [
+		"org.apollo.io.player.impl.BinaryPlayerLoader"
+	],
+
+	"saver" : [
+		"org.apollo.io.player.impl.BinaryPlayerSaver"
+	]
+}
