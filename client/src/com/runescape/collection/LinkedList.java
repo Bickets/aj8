@@ -1,17 +1,23 @@
+
 package com.runescape.collection;
 
-public class LinkedList {
+public class LinkedList
+{
 
 	public Node head = new Node();
 	private Node current;
 
-	public LinkedList() {
+
+	public LinkedList()
+	{
 		head.previousNode = head;
 		head.nextNode = head;
 	}
 
-	public void insertBack(Node node) {
-		if (node.nextNode != null) {
+
+	public void insertBack( Node node )
+	{
+		if( node.nextNode != null ) {
 			node.remove();
 		}
 		node.nextNode = head.nextNode;
@@ -20,8 +26,10 @@ public class LinkedList {
 		node.previousNode.nextNode = node;
 	}
 
-	public void insertFront(Node node) {
-		if (node.nextNode != null) {
+
+	public void insertFront( Node node )
+	{
+		if( node.nextNode != null ) {
 			node.remove();
 		}
 		node.nextNode = head;
@@ -30,18 +38,22 @@ public class LinkedList {
 		node.previousNode.nextNode = node;
 	}
 
-	public Node popTail() {
+
+	public Node popTail()
+	{
 		Node node = head.previousNode;
-		if (node == head) {
+		if( node == head ) {
 			return null;
 		}
 		node.remove();
 		return node;
 	}
 
-	public Node getBack() {
+
+	public Node getBack()
+	{
 		Node node = head.previousNode;
-		if (node == head) {
+		if( node == head ) {
 			current = null;
 			return null;
 		}
@@ -49,9 +61,11 @@ public class LinkedList {
 		return node;
 	}
 
-	public Node getFront() {
+
+	public Node getFront()
+	{
 		Node node = head.nextNode;
-		if (node == head) {
+		if( node == head ) {
 			current = null;
 			return null;
 		}
@@ -59,9 +73,11 @@ public class LinkedList {
 		return node;
 	}
 
-	public Node getPrevious() {
+
+	public Node getPrevious()
+	{
 		Node node = current;
-		if (node == head) {
+		if( node == head ) {
 			current = null;
 			return null;
 		}
@@ -69,9 +85,11 @@ public class LinkedList {
 		return node;
 	}
 
-	public Node getNext() {
+
+	public Node getNext()
+	{
 		Node node = current;
-		if (node == head) {
+		if( node == head ) {
 			current = null;
 			return null;
 		}
@@ -79,11 +97,13 @@ public class LinkedList {
 		return node;
 	}
 
-	public void clear() {
-		if (head.previousNode != head) {
-			for (;;) {
+
+	public void clear()
+	{
+		if( head.previousNode != head ) {
+			for( ;; ) {
 				Node node = head.previousNode;
-				if (node == head) {
+				if( node == head ) {
 					break;
 				}
 				node.remove();

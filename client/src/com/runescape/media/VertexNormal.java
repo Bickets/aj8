@@ -1,6 +1,8 @@
+
 package com.runescape.media;
 
-public class VertexNormal {
+public class VertexNormal
+{
 
 	public int x;
 	public int y;

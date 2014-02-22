@@ -1,10 +1,12 @@
+
 package com.runescape.scene.tile;
 
 import com.runescape.collection.Node;
 import com.runescape.scene.CameraAngle;
 import com.runescape.scene.SceneSpawnRequest;
 
-public class SceneTile extends Node {
+public class SceneTile extends Node
+{
 
 	public int anInt1318;
 	public int anInt1319;
@@ -17,8 +19,8 @@ public class SceneTile extends Node {
 	public FloorDecoration floorDecoration;
 	public CameraAngle cameraAngle;
 	public int sceneSpawnRequestCount;
-	public SceneSpawnRequest[] sceneSpawnRequests = new SceneSpawnRequest[5];
-	public int[] anIntArray1330 = new int[5];
+	public SceneSpawnRequest[] sceneSpawnRequests = new SceneSpawnRequest[ 5 ];
+	public int[] anIntArray1330 = new int[ 5 ];
 	public int anInt1331;
 	public int anInt1332;
 	public boolean aBoolean1333;
@@ -30,7 +32,9 @@ public class SceneTile extends Node {
 	public int anInt1339;
 	public SceneTile sceneTile;
 
-	public SceneTile(int i, int i_0_, int i_1_) {
+
+	public SceneTile( int i, int i_0_, int i_1_ )
+	{
 		anInt1321 = anInt1318 = i;
 		anInt1319 = i_0_;
 		anInt1320 = i_1_;

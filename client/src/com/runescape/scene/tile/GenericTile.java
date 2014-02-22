@@ -1,6 +1,9 @@
+
 package com.runescape.scene.tile;
 
-public class GenericTile {
+public class GenericTile
+{
+
 	public int anInt292;
 	public int anInt293;
 	public int anInt294;
@@ -9,7 +12,9 @@ public class GenericTile {
 	public boolean flat = true;
 	public int rgbColor;
 
-	public GenericTile(int i, int i_0_, int i_1_, int i_2_, int texture, int rgbColor, boolean flat) {
+
+	public GenericTile( int i, int i_0_, int i_1_, int i_2_, int texture, int rgbColor, boolean flat )
+	{
 		this.anInt292 = i;
 		this.anInt293 = i_0_;
 		this.anInt294 = i_1_;

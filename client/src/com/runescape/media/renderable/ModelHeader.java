@@ -1,6 +1,8 @@
+
 package com.runescape.media.renderable;
 
-public class ModelHeader {
+public class ModelHeader
+{
 
 	public byte[] modelData;
 	public int vertexCount;

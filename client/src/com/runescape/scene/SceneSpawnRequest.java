@@ -1,8 +1,11 @@
+
 package com.runescape.scene;
 
 import com.runescape.media.renderable.Renderable;
 
-public class SceneSpawnRequest {
+public class SceneSpawnRequest
+{
+
 	protected int anInt597;
 	protected int anInt598;
 	protected int anInt599;

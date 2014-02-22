@@ -1,8 +1,10 @@
+
 package com.runescape.scene.tile;
 
 import com.runescape.media.renderable.Renderable;
 
-public class Wall {
+public class Wall
+{
 
 	public int plane;
 	public int x;
