@@ -79,9 +79,9 @@ public class SignLink implements Runnable
 	@Override
 	public final void run()
 	{
-		SignLink.active = true;
-		String directory = SignLink.getCacheDirectory();
-		SignLink.uid = SignLink.getUID( directory );
+		active = true;
+		String directory = getCacheDirectory();
+		uid = getUID( getRootDirectory() );
 
 		try {
 			File file = new File( directory + "main_file_cache.dat" );
@@ -153,18 +153,47 @@ public class SignLink implements Runnable
 	}
 
 
-	public static final String getCacheDirectory()
+	private static String buildRoot()
 	{
-		return "./cache/";
+		StringBuilder bldr = new StringBuilder();
+		bldr.append( System.getProperty( "user.home" ) );
+		bldr.append( File.separator );
+		bldr.append( "apollo.fs_" ).append( storeId );
+		return bldr.toString();
+	}
+
+	private static final File ROOT = getAndCreateDir( buildRoot() );
+
+
+	private static File getAndCreateDir( String dir )
+	{
+		File file = new File( dir, File.separator );
+		if( ! file.exists() ) {
+			file.mkdirs();
+		}
+		return file;
 	}
 
 
-	private static final int getUID( String directory )
+	public static String getCacheDirectory()
+	{
+		File file = getAndCreateDir( getRootDirectory() + "cache" );
+		return file.getPath();
+	}
+
+
+	public static String getRootDirectory()
+	{
+		return ROOT.getPath();
+	}
+
+
+	private static int getUID( String directory )
 	{
 		try {
-			File file = new File( directory + "uid.dat" );
+			File file = new File( directory + "random.dat" );
 			if( ! file.exists() || ( file.length() < 4L ) ) {
-				DataOutputStream out = new DataOutputStream( new FileOutputStream( directory + "uid.dat" ) );
+				DataOutputStream out = new DataOutputStream( new FileOutputStream( directory + "random.dat" ) );
 				out.writeInt( ( int )( Math.random() * 9.9999999E7 ) );
 				out.close();
 			}
@@ -172,7 +201,7 @@ public class SignLink implements Runnable
 			/* empty */
 		}
 		try {
-			DataInputStream in = new DataInputStream( new FileInputStream( directory + "uid.dat" ) );
+			DataInputStream in = new DataInputStream( new FileInputStream( directory + "random.dat" ) );
 			int i = in.readInt();
 			in.close();
 			return i + 1;
