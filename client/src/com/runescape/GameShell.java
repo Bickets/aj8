@@ -20,14 +20,11 @@ import java.awt.event.WindowListener;
 import com.runescape.cache.media.ImageRGB;
 import com.runescape.media.ProducingGraphicsBuffer;
 
-@SuppressWarnings( "serial" )
 public class GameShell extends Applet implements Runnable, MouseListener, MouseMotionListener, KeyListener, FocusListener, WindowListener
 {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3509040447366035419L;
+
 	private int gameState;
 	private int deltime = 20;
 	public int mindel = 1;

@@ -4,14 +4,11 @@ package com.runescape;
 import java.awt.Frame;
 import java.awt.Graphics;
 
-@SuppressWarnings( "serial" )
 public class GameFrame extends Frame
 {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 3026034244991236878L;
+
 	private final GameShell gameStub;
 
 
