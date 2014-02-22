@@ -135,7 +135,7 @@ public class ChatCensor
 			} else {
 				characters[ character ] = ' ';
 			}
-			if( character == 0 || characters[ character ] != ' ' || characters[ character - 1 ] != ' ' ) {
+			if( ( character == 0 ) || ( characters[ character ] != ' ' ) || ( characters[ character - 1 ] != ' ' ) ) {
 				character ++ ;
 			}
 		}
@@ -147,7 +147,7 @@ public class ChatCensor
 
 	private static final boolean isLegalCharacter( char character )
 	{
-		if( ( character < ' ' || character > '\u007f' ) && character != ' ' && character != '\n' && character != '\t' && character != '\u00a3' && character != '\u20ac' ) {
+		if( ( ( character < ' ' ) || ( character > '\u007f' ) ) && ( character != ' ' ) && ( character != '\n' ) && ( character != '\t' ) && ( character != '\u00a3' ) && ( character != '\u20ac' ) ) {
 			return false;
 		}
 		return true;
@@ -184,7 +184,7 @@ public class ChatCensor
 	{
 		try {
 			for( int i_26_ = 0; i_26_ < cs.length; i_26_ ++ ) {
-				if( cs_25_[ i_26_ ] != '*' && ChatCensor.method210( true, cs[ i_26_ ] ) ) {
+				if( ( cs_25_[ i_26_ ] != '*' ) && ChatCensor.method210( true, cs[ i_26_ ] ) ) {
 					cs_25_[ i_26_ ] = cs[ i_26_ ];
 				}
 			}
@@ -210,7 +210,7 @@ public class ChatCensor
 							bool = false;
 						}
 					} else if( ChatCensor.method210( true, c ) ) {
-						cs[ i_27_ ] = ( char )( c + 'a' - 'A' );
+						cs[ i_27_ ] = ( char )( ( c + 'a' ) - 'A' );
 					}
 				} else {
 					bool = true;
@@ -272,20 +272,20 @@ public class ChatCensor
 	private static final void method190( int i, char[] cs, char[] cs_33_, char[] cs_34_, char[] cs_35_ )
 	{
 		try {
-			if( i == 29200 && cs_33_.length <= cs.length ) {
+			if( ( i == 29200 ) && ( cs_33_.length <= cs.length ) ) {
 				int i_37_;
-				for( int i_36_ = 0; i_36_ <= cs.length - cs_33_.length; i_36_ += i_37_ ) {
+				for( int i_36_ = 0; i_36_ <= ( cs.length - cs_33_.length ); i_36_ += i_37_ ) {
 					int i_38_ = i_36_;
 					int i_39_ = 0;
 					i_37_ = 1;
 					while( i_38_ < cs.length ) {
 						char c = cs[ i_38_ ];
 						char c_41_ = '\0';
-						if( i_38_ + 1 < cs.length ) {
+						if( ( i_38_ + 1 ) < cs.length ) {
 							c_41_ = cs[ i_38_ + 1 ];
 						}
 						int i_42_;
-						if( i_39_ < cs_33_.length && ( i_42_ = ChatCensor.method199( 43, c, cs_33_[ i_39_ ], c_41_ ) ) > 0 ) {
+						if( ( i_39_ < cs_33_.length ) && ( ( i_42_ = ChatCensor.method199( 43, c, cs_33_[ i_39_ ], c_41_ ) ) > 0 ) ) {
 							i_38_ += i_42_;
 							i_39_ ++ ;
 						} else {
@@ -298,7 +298,7 @@ public class ChatCensor
 									i_37_ ++ ;
 								}
 							} else {
-								if( i_39_ >= cs_33_.length || ! ChatCensor.method205( - 12789, c ) ) {
+								if( ( i_39_ >= cs_33_.length ) || ! ChatCensor.method205( - 12789, c ) ) {
 									break;
 								}
 								i_38_ ++ ;
@@ -309,7 +309,7 @@ public class ChatCensor
 						boolean bool_43_ = false;
 						int i_44_ = ChatCensor.method191( cs, 4, cs_35_, i_36_ );
 						int i_45_ = ChatCensor.method192( ChatCensor.aByte161, cs_34_, i_38_ - 1, cs );
-						if( i_44_ > 2 || i_45_ > 2 ) {
+						if( ( i_44_ > 2 ) || ( i_45_ > 2 ) ) {
 							bool_43_ = true;
 						}
 						if( bool_43_ ) {
@@ -330,7 +330,7 @@ public class ChatCensor
 	private static final int method191( char[] cs, int i, char[] cs_47_, int i_48_ )
 	{
 		try {
-			if( i < 4 || i > 4 ) {
+			if( ( i < 4 ) || ( i > 4 ) ) {
 				return 2;
 			}
 			if( i_48_ == 0 ) {
@@ -370,14 +370,14 @@ public class ChatCensor
 	private static final int method192( byte b, char[] cs, int i, char[] cs_52_ )
 	{
 		try {
-			if( i + 1 == cs_52_.length ) {
+			if( ( i + 1 ) == cs_52_.length ) {
 				return 2;
 			}
 			for( int i_53_ = i + 1; i_53_ < cs_52_.length; i_53_ ++ ) {
 				if( ! ChatCensor.method205( - 12789, cs_52_[ i_53_ ] ) ) {
 					break;
 				}
-				if( cs_52_[ i_53_ ] == '.' || cs_52_[ i_53_ ] == ',' ) {
+				if( ( cs_52_[ i_53_ ] == '.' ) || ( cs_52_[ i_53_ ] == ',' ) ) {
 					return 3;
 				}
 			}
@@ -438,18 +438,18 @@ public class ChatCensor
 			try {
 				if( cs_60_.length <= cs_62_.length ) {
 					int i_63_;
-					for( int i_64_ = 0; i_64_ <= cs_62_.length - cs_60_.length; i_64_ += i_63_ ) {
+					for( int i_64_ = 0; i_64_ <= ( cs_62_.length - cs_60_.length ); i_64_ += i_63_ ) {
 						int i_65_ = i_64_;
 						int i_66_ = 0;
 						i_63_ = 1;
 						while( i_65_ < cs_62_.length ) {
 							char c = cs_62_[ i_65_ ];
 							char c_68_ = '\0';
-							if( i_65_ + 1 < cs_62_.length ) {
+							if( ( i_65_ + 1 ) < cs_62_.length ) {
 								c_68_ = cs_62_[ i_65_ + 1 ];
 							}
 							int i_69_;
-							if( i_66_ < cs_60_.length && ( i_69_ = ChatCensor.method199( 43, c, cs_60_[ i_66_ ], c_68_ ) ) > 0 ) {
+							if( ( i_66_ < cs_60_.length ) && ( ( i_69_ = ChatCensor.method199( 43, c, cs_60_[ i_66_ ], c_68_ ) ) > 0 ) ) {
 								i_65_ += i_69_;
 								i_66_ ++ ;
 							} else {
@@ -462,7 +462,7 @@ public class ChatCensor
 										i_63_ ++ ;
 									}
 								} else {
-									if( i_66_ >= cs_60_.length || ! ChatCensor.method205( - 12789, c ) ) {
+									if( ( i_66_ >= cs_60_.length ) || ! ChatCensor.method205( - 12789, c ) ) {
 										break;
 									}
 									i_65_ ++ ;
@@ -473,16 +473,16 @@ public class ChatCensor
 							boolean bool_70_ = false;
 							int i_71_ = ChatCensor.method195( 36209, cs_62_, i_64_, cs_61_ );
 							int i_72_ = ChatCensor.method196( false, cs_62_, cs, i_65_ - 1 );
-							if( i == 1 && i_71_ > 0 && i_72_ > 0 ) {
+							if( ( i == 1 ) && ( i_71_ > 0 ) && ( i_72_ > 0 ) ) {
 								bool_70_ = true;
 							}
-							if( i == 2 && ( i_71_ > 2 && i_72_ > 0 || i_71_ > 0 && i_72_ > 2 ) ) {
+							if( ( i == 2 ) && ( ( ( i_71_ > 2 ) && ( i_72_ > 0 ) ) || ( ( i_71_ > 0 ) && ( i_72_ > 2 ) ) ) ) {
 								bool_70_ = true;
 							}
-							if( i == 3 && i_71_ > 0 && i_72_ > 2 ) {
+							if( ( i == 3 ) && ( i_71_ > 0 ) && ( i_72_ > 2 ) ) {
 								bool_70_ = true;
 							}
-							if( i == 3 && i_71_ > 2 && i_72_ > 0 ) {
+							if( ( i == 3 ) && ( i_71_ > 2 ) && ( i_72_ > 0 ) ) {
 								/* empty */
 							}
 							if( bool_70_ ) {
@@ -574,7 +574,7 @@ public class ChatCensor
 				if( ! ChatCensor.method205( - 12789, cs[ i_86_ ] ) ) {
 					break;
 				}
-				if( cs[ i_86_ ] == ',' || cs[ i_86_ ] == '.' ) {
+				if( ( cs[ i_86_ ] == ',' ) || ( cs[ i_86_ ] == '.' ) ) {
 					return 3;
 				}
 			}
@@ -610,14 +610,14 @@ public class ChatCensor
 			if( bool ) {
 				ChatCensor.anInt157 = 391;
 			}
-			if( i + 1 == cs.length ) {
+			if( ( i + 1 ) == cs.length ) {
 				return 2;
 			}
 			for( int i_90_ = i + 1; i_90_ < cs.length; i_90_ ++ ) {
 				if( ! ChatCensor.method205( - 12789, cs[ i_90_ ] ) ) {
 					break;
 				}
-				if( cs[ i_90_ ] == '\\' || cs[ i_90_ ] == '/' ) {
+				if( ( cs[ i_90_ ] == '\\' ) || ( cs[ i_90_ ] == '/' ) ) {
 					return 3;
 				}
 			}
@@ -647,9 +647,9 @@ public class ChatCensor
 	public static final void method197( byte[][] bs, char[] cs, int i, char[] cs_93_ )
 	{
 		try {
-			if( i < 0 && cs_93_.length <= cs.length ) {
+			if( ( i < 0 ) && ( cs_93_.length <= cs.length ) ) {
 				int i_95_;
-				for( int i_94_ = 0; i_94_ <= cs.length - cs_93_.length; i_94_ += i_95_ ) {
+				for( int i_94_ = 0; i_94_ <= ( cs.length - cs_93_.length ); i_94_ += i_95_ ) {
 					int i_96_ = i_94_;
 					int i_97_ = 0;
 					int i_98_ = 0;
@@ -657,18 +657,18 @@ public class ChatCensor
 					boolean bool_99_ = false;
 					boolean bool_100_ = false;
 					boolean bool_101_ = false;
-					while( i_96_ < cs.length && ( ! bool_100_ || ! bool_101_ ) ) {
+					while( ( i_96_ < cs.length ) && ( ! bool_100_ || ! bool_101_ ) ) {
 						char c = cs[ i_96_ ];
 						char c_103_ = '\0';
-						if( i_96_ + 1 < cs.length ) {
+						if( ( i_96_ + 1 ) < cs.length ) {
 							c_103_ = cs[ i_96_ + 1 ];
 						}
 						int i_104_;
-						if( i_97_ < cs_93_.length && ( i_104_ = ChatCensor.method200( c_103_, c, ChatCensor.aBoolean163, cs_93_[ i_97_ ] ) ) > 0 ) {
-							if( i_104_ == 1 && ChatCensor.method208( c, - 976 ) ) {
+						if( ( i_97_ < cs_93_.length ) && ( ( i_104_ = ChatCensor.method200( c_103_, c, ChatCensor.aBoolean163, cs_93_[ i_97_ ] ) ) > 0 ) ) {
+							if( ( i_104_ == 1 ) && ChatCensor.method208( c, - 976 ) ) {
 								bool_100_ = true;
 							}
-							if( i_104_ == 2 && ( ChatCensor.method208( c, - 976 ) || ChatCensor.method208( c_103_, - 976 ) ) ) {
+							if( ( i_104_ == 2 ) && ( ChatCensor.method208( c, - 976 ) || ChatCensor.method208( c_103_, - 976 ) ) ) {
 								bool_100_ = true;
 							}
 							i_96_ += i_104_;
@@ -683,27 +683,27 @@ public class ChatCensor
 									i_95_ ++ ;
 								}
 							} else {
-								if( i_97_ >= cs_93_.length || ! ChatCensor.method206( false, c ) ) {
+								if( ( i_97_ >= cs_93_.length ) || ! ChatCensor.method206( false, c ) ) {
 									break;
 								}
-								if( ChatCensor.method205( - 12789, c ) && c != '\'' ) {
+								if( ChatCensor.method205( - 12789, c ) && ( c != '\'' ) ) {
 									bool_99_ = true;
 								}
 								if( ChatCensor.method208( c, - 976 ) ) {
 									bool_101_ = true;
 								}
 								i_96_ ++ ;
-								if( ++ i_98_ * 100 / ( i_96_ - i_94_ ) > 90 ) {
+								if( ( ( ++ i_98_ * 100 ) / ( i_96_ - i_94_ ) ) > 90 ) {
 									break;
 								}
 							}
 						}
 					}
-					if( i_97_ >= cs_93_.length && ( ! bool_100_ || ! bool_101_ ) ) {
+					if( ( i_97_ >= cs_93_.length ) && ( ! bool_100_ || ! bool_101_ ) ) {
 						boolean bool_105_ = true;
 						if( ! bool_99_ ) {
 							char c = ' ';
-							if( i_94_ - 1 >= 0 ) {
+							if( ( i_94_ - 1 ) >= 0 ) {
 								c = cs[ i_94_ - 1 ];
 							}
 							char c_106_ = ' ';
@@ -712,16 +712,16 @@ public class ChatCensor
 							}
 							byte b = ChatCensor.method201( c, ChatCensor.anInt164 );
 							byte b_107_ = ChatCensor.method201( c_106_, ChatCensor.anInt164 );
-							if( bs != null && ChatCensor.method198( b, ( byte )8, bs, b_107_ ) ) {
+							if( ( bs != null ) && ChatCensor.method198( b, ( byte )8, bs, b_107_ ) ) {
 								bool_105_ = false;
 							}
 						} else {
 							boolean bool_108_ = false;
 							boolean bool_109_ = false;
-							if( i_94_ - 1 < 0 || ChatCensor.method205( - 12789, cs[ i_94_ - 1 ] ) && cs[ i_94_ - 1 ] != '\'' ) {
+							if( ( ( i_94_ - 1 ) < 0 ) || ( ChatCensor.method205( - 12789, cs[ i_94_ - 1 ] ) && ( cs[ i_94_ - 1 ] != '\'' ) ) ) {
 								bool_108_ = true;
 							}
-							if( i_96_ >= cs.length || ChatCensor.method205( - 12789, cs[ i_96_ ] ) && cs[ i_96_ ] != '\'' ) {
+							if( ( i_96_ >= cs.length ) || ( ChatCensor.method205( - 12789, cs[ i_96_ ] ) && ( cs[ i_96_ ] != '\'' ) ) ) {
 								bool_109_ = true;
 							}
 							if( ! bool_108_ || ! bool_109_ ) {
@@ -730,12 +730,12 @@ public class ChatCensor
 								if( bool_108_ ) {
 									i_111_ = i_94_;
 								}
-								for( /**/; ! bool_110_ && i_111_ < i_96_; i_111_ ++ ) {
-									if( i_111_ >= 0 && ( ! ChatCensor.method205( - 12789, cs[ i_111_ ] ) || cs[ i_111_ ] == '\'' ) ) {
+								for( /**/; ! bool_110_ && ( i_111_ < i_96_ ); i_111_ ++ ) {
+									if( ( i_111_ >= 0 ) && ( ! ChatCensor.method205( - 12789, cs[ i_111_ ] ) || ( cs[ i_111_ ] == '\'' ) ) ) {
 										char[] cs_112_ = new char[ 3 ];
 										int i_113_;
 										for( i_113_ = 0; i_113_ < 3; i_113_ ++ ) {
-											if( i_111_ + i_113_ >= cs.length || ChatCensor.method205( - 12789, cs[ i_111_ + i_113_ ] ) && cs[ i_111_ + i_113_ ] != '\'' ) {
+											if( ( ( i_111_ + i_113_ ) >= cs.length ) || ( ChatCensor.method205( - 12789, cs[ i_111_ + i_113_ ] ) && ( cs[ i_111_ + i_113_ ] != '\'' ) ) ) {
 												break;
 											}
 											cs_112_[ i_113_ ] = cs[ i_111_ + i_113_ ];
@@ -744,7 +744,7 @@ public class ChatCensor
 										if( i_113_ == 0 ) {
 											bool_114_ = false;
 										}
-										if( i_113_ < 3 && i_111_ - 1 >= 0 && ( ! ChatCensor.method205( - 12789, cs[ i_111_ - 1 ] ) || cs[ i_111_ - 1 ] == '\'' ) ) {
+										if( ( i_113_ < 3 ) && ( ( i_111_ - 1 ) >= 0 ) && ( ! ChatCensor.method205( - 12789, cs[ i_111_ - 1 ] ) || ( cs[ i_111_ - 1 ] == '\'' ) ) ) {
 											bool_114_ = false;
 										}
 										if( bool_114_ && ! ChatCensor.method211( cs_112_, ( byte )4 ) ) {
@@ -797,24 +797,24 @@ public class ChatCensor
 			if( b_120_ != 8 ) {
 				ChatCensor.anInt162 = 308;
 			}
-			if( bs[ i ][ 0 ] == b && bs[ i ][ 1 ] == b_121_ ) {
+			if( ( bs[ i ][ 0 ] == b ) && ( bs[ i ][ 1 ] == b_121_ ) ) {
 				return true;
 			}
 			int i_122_ = bs.length - 1;
-			if( bs[ i_122_ ][ 0 ] == b && bs[ i_122_ ][ 1 ] == b_121_ ) {
+			if( ( bs[ i_122_ ][ 0 ] == b ) && ( bs[ i_122_ ][ 1 ] == b_121_ ) ) {
 				return true;
 			}
 			do {
 				int i_123_ = ( i + i_122_ ) / 2;
-				if( bs[ i_123_ ][ 0 ] == b && bs[ i_123_ ][ 1 ] == b_121_ ) {
+				if( ( bs[ i_123_ ][ 0 ] == b ) && ( bs[ i_123_ ][ 1 ] == b_121_ ) ) {
 					return true;
 				}
-				if( b < bs[ i_123_ ][ 0 ] || b == bs[ i_123_ ][ 0 ] && b_121_ < bs[ i_123_ ][ 1 ] ) {
+				if( ( b < bs[ i_123_ ][ 0 ] ) || ( ( b == bs[ i_123_ ][ 0 ] ) && ( b_121_ < bs[ i_123_ ][ 1 ] ) ) ) {
 					i_122_ = i_123_;
 				} else {
 					i = i_123_;
 				}
-			} while( i != i_122_ && i + 1 != i_122_ );
+			} while( ( i != i_122_ ) && ( ( i + 1 ) != i_122_ ) );
 			return false;
 		} catch( RuntimeException runtimeexception ) {
 			SignLink.reportError( "67276, " + b + ", " + b_120_ + ", " + bs + ", " + b_121_ + ", " + runtimeexception.toString() );
@@ -832,22 +832,22 @@ public class ChatCensor
 			if( c_124_ == c ) {
 				return 1;
 			}
-			if( c_124_ == 'o' && c == '0' ) {
+			if( ( c_124_ == 'o' ) && ( c == '0' ) ) {
 				return 1;
 			}
-			if( c_124_ == 'o' && c == '(' && c_125_ == ')' ) {
+			if( ( c_124_ == 'o' ) && ( c == '(' ) && ( c_125_ == ')' ) ) {
 				return 2;
 			}
-			if( c_124_ == 'c' && ( c == '(' || c == '<' || c == '[' ) ) {
+			if( ( c_124_ == 'c' ) && ( ( c == '(' ) || ( c == '<' ) || ( c == '[' ) ) ) {
 				return 1;
 			}
-			if( c_124_ == 'e' && c == '\u20ac' ) {
+			if( ( c_124_ == 'e' ) && ( c == '\u20ac' ) ) {
 				return 1;
 			}
-			if( c_124_ == 's' && c == '$' ) {
+			if( ( c_124_ == 's' ) && ( c == '$' ) ) {
 				return 1;
 			}
-			if( c_124_ == 'l' && c == 'i' ) {
+			if( ( c_124_ == 'l' ) && ( c == 'i' ) ) {
 				return 1;
 			}
 			return 0;
@@ -867,45 +867,45 @@ public class ChatCensor
 			if( c_127_ == c_126_ ) {
 				return 1;
 			}
-			if( c_127_ >= 'a' && c_127_ <= 'm' ) {
+			if( ( c_127_ >= 'a' ) && ( c_127_ <= 'm' ) ) {
 				if( c_127_ == 'a' ) {
-					if( c_126_ == '4' || c_126_ == '@' || c_126_ == '^' ) {
+					if( ( c_126_ == '4' ) || ( c_126_ == '@' ) || ( c_126_ == '^' ) ) {
 						return 1;
 					}
-					if( c_126_ == '/' && c == '\\' ) {
+					if( ( c_126_ == '/' ) && ( c == '\\' ) ) {
 						return 2;
 					}
 					return 0;
 				}
 				if( c_127_ == 'b' ) {
-					if( c_126_ == '6' || c_126_ == '8' ) {
+					if( ( c_126_ == '6' ) || ( c_126_ == '8' ) ) {
 						return 1;
 					}
-					if( c_126_ == '1' && c == '3' || c_126_ == 'i' && c == '3' ) {
+					if( ( ( c_126_ == '1' ) && ( c == '3' ) ) || ( ( c_126_ == 'i' ) && ( c == '3' ) ) ) {
 						return 2;
 					}
 					return 0;
 				}
 				if( c_127_ == 'c' ) {
-					if( c_126_ == '(' || c_126_ == '<' || c_126_ == '{' || c_126_ == '[' ) {
+					if( ( c_126_ == '(' ) || ( c_126_ == '<' ) || ( c_126_ == '{' ) || ( c_126_ == '[' ) ) {
 						return 1;
 					}
 					return 0;
 				}
 				if( c_127_ == 'd' ) {
-					if( c_126_ == '[' && c == ')' || c_126_ == 'i' && c == ')' ) {
+					if( ( ( c_126_ == '[' ) && ( c == ')' ) ) || ( ( c_126_ == 'i' ) && ( c == ')' ) ) ) {
 						return 2;
 					}
 					return 0;
 				}
 				if( c_127_ == 'e' ) {
-					if( c_126_ == '3' || c_126_ == '\u20ac' ) {
+					if( ( c_126_ == '3' ) || ( c_126_ == '\u20ac' ) ) {
 						return 1;
 					}
 					return 0;
 				}
 				if( c_127_ == 'f' ) {
-					if( c_126_ == 'p' && c == 'h' ) {
+					if( ( c_126_ == 'p' ) && ( c == 'h' ) ) {
 						return 2;
 					}
 					if( c_126_ == '\u00a3' ) {
@@ -914,7 +914,7 @@ public class ChatCensor
 					return 0;
 				}
 				if( c_127_ == 'g' ) {
-					if( c_126_ == '9' || c_126_ == '6' || c_126_ == 'q' ) {
+					if( ( c_126_ == '9' ) || ( c_126_ == '6' ) || ( c_126_ == 'q' ) ) {
 						return 1;
 					}
 					return 0;
@@ -926,7 +926,7 @@ public class ChatCensor
 					return 0;
 				}
 				if( c_127_ == 'i' ) {
-					if( c_126_ == 'y' || c_126_ == 'l' || c_126_ == 'j' || c_126_ == '1' || c_126_ == '!' || c_126_ == ':' || c_126_ == ';' || c_126_ == '|' ) {
+					if( ( c_126_ == 'y' ) || ( c_126_ == 'l' ) || ( c_126_ == 'j' ) || ( c_126_ == '1' ) || ( c_126_ == '!' ) || ( c_126_ == ':' ) || ( c_126_ == ';' ) || ( c_126_ == '|' ) ) {
 						return 1;
 					}
 					return 0;
@@ -938,7 +938,7 @@ public class ChatCensor
 					return 0;
 				}
 				if( c_127_ == 'l' ) {
-					if( c_126_ == '1' || c_126_ == '|' || c_126_ == 'i' ) {
+					if( ( c_126_ == '1' ) || ( c_126_ == '|' ) || ( c_126_ == 'i' ) ) {
 						return 1;
 					}
 					return 0;
@@ -947,15 +947,15 @@ public class ChatCensor
 					return 0;
 				}
 			}
-			if( c_127_ >= 'n' && c_127_ <= 'z' ) {
+			if( ( c_127_ >= 'n' ) && ( c_127_ <= 'z' ) ) {
 				if( c_127_ == 'n' ) {
 					return 0;
 				}
 				if( c_127_ == 'o' ) {
-					if( c_126_ == '0' || c_126_ == '*' ) {
+					if( ( c_126_ == '0' ) || ( c_126_ == '*' ) ) {
 						return 1;
 					}
-					if( c_126_ == '(' && c == ')' || c_126_ == '[' && c == ']' || c_126_ == '{' && c == '}' || c_126_ == '<' && c == '>' ) {
+					if( ( ( c_126_ == '(' ) && ( c == ')' ) ) || ( ( c_126_ == '[' ) && ( c == ']' ) ) || ( ( c_126_ == '{' ) && ( c == '}' ) ) || ( ( c_126_ == '<' ) && ( c == '>' ) ) ) {
 						return 2;
 					}
 					return 0;
@@ -970,13 +970,13 @@ public class ChatCensor
 					return 0;
 				}
 				if( c_127_ == 's' ) {
-					if( c_126_ == '5' || c_126_ == 'z' || c_126_ == '$' || c_126_ == '2' ) {
+					if( ( c_126_ == '5' ) || ( c_126_ == 'z' ) || ( c_126_ == '$' ) || ( c_126_ == '2' ) ) {
 						return 1;
 					}
 					return 0;
 				}
 				if( c_127_ == 't' ) {
-					if( c_126_ == '7' || c_126_ == '+' ) {
+					if( ( c_126_ == '7' ) || ( c_126_ == '+' ) ) {
 						return 1;
 					}
 					return 0;
@@ -985,25 +985,25 @@ public class ChatCensor
 					if( c_126_ == 'v' ) {
 						return 1;
 					}
-					if( c_126_ == '\\' && c == '/' || c_126_ == '\\' && c == '|' || c_126_ == '|' && c == '/' ) {
+					if( ( ( c_126_ == '\\' ) && ( c == '/' ) ) || ( ( c_126_ == '\\' ) && ( c == '|' ) ) || ( ( c_126_ == '|' ) && ( c == '/' ) ) ) {
 						return 2;
 					}
 					return 0;
 				}
 				if( c_127_ == 'v' ) {
-					if( c_126_ == '\\' && c == '/' || c_126_ == '\\' && c == '|' || c_126_ == '|' && c == '/' ) {
+					if( ( ( c_126_ == '\\' ) && ( c == '/' ) ) || ( ( c_126_ == '\\' ) && ( c == '|' ) ) || ( ( c_126_ == '|' ) && ( c == '/' ) ) ) {
 						return 2;
 					}
 					return 0;
 				}
 				if( c_127_ == 'w' ) {
-					if( c_126_ == 'v' && c == 'v' ) {
+					if( ( c_126_ == 'v' ) && ( c == 'v' ) ) {
 						return 2;
 					}
 					return 0;
 				}
 				if( c_127_ == 'x' ) {
-					if( c_126_ == ')' && c == '(' || c_126_ == '}' && c == '{' || c_126_ == ']' && c == '[' || c_126_ == '>' && c == '<' ) {
+					if( ( ( c_126_ == ')' ) && ( c == '(' ) ) || ( ( c_126_ == '}' ) && ( c == '{' ) ) || ( ( c_126_ == ']' ) && ( c == '[' ) ) || ( ( c_126_ == '>' ) && ( c == '<' ) ) ) {
 						return 2;
 					}
 					return 0;
@@ -1015,12 +1015,12 @@ public class ChatCensor
 					return 0;
 				}
 			}
-			if( c_127_ >= '0' && c_127_ <= '9' ) {
+			if( ( c_127_ >= '0' ) && ( c_127_ <= '9' ) ) {
 				if( c_127_ == '0' ) {
-					if( c_126_ == 'o' || c_126_ == 'O' ) {
+					if( ( c_126_ == 'o' ) || ( c_126_ == 'O' ) ) {
 						return 1;
 					}
-					if( c_126_ == '(' && c == ')' || c_126_ == '{' && c == '}' || c_126_ == '[' && c == ']' ) {
+					if( ( ( c_126_ == '(' ) && ( c == ')' ) ) || ( ( c_126_ == '{' ) && ( c == '}' ) ) || ( ( c_126_ == '[' ) && ( c == ']' ) ) ) {
 						return 2;
 					}
 					return 0;
@@ -1064,14 +1064,14 @@ public class ChatCensor
 		try {
 			while( i >= 0 ) {
 			}
-			if( c >= 'a' && c <= 'z' ) {
-				return ( byte )( c - 'a' + '\001' );
+			if( ( c >= 'a' ) && ( c <= 'z' ) ) {
+				return ( byte )( ( c - 'a' ) + '\001' );
 			}
 			if( c == '\'' ) {
 				return ( byte )28;
 			}
-			if( c >= '0' && c <= '9' ) {
-				return ( byte )( c - '0' + '\035' );
+			if( ( c >= '0' ) && ( c <= '9' ) ) {
+				return ( byte )( ( c - '0' ) + '\035' );
 			}
 			return ( byte )27;
 		} catch( RuntimeException runtimeexception ) {
@@ -1093,7 +1093,7 @@ public class ChatCensor
 			int i_131_;
 			while( ( i_131_ = ChatCensor.method203( cs, i_128_, 319 ) ) != - 1 ) {
 				boolean bool_132_ = false;
-				for( int i_133_ = i_128_; i_133_ >= 0 && i_133_ < i_131_ && ! bool_132_; i_133_ ++ ) {
+				for( int i_133_ = i_128_; ( i_133_ >= 0 ) && ( i_133_ < i_131_ ) && ! bool_132_; i_133_ ++ ) {
 					if( ! ChatCensor.method205( - 12789, cs[ i_133_ ] ) && ! ChatCensor.method206( false, cs[ i_133_ ] ) ) {
 						bool_132_ = true;
 					}
@@ -1107,9 +1107,9 @@ public class ChatCensor
 				i_128_ = ChatCensor.method204( cs, 0, i_131_ );
 				int i_134_ = 0;
 				for( int i_135_ = i_131_; i_135_ < i_128_; i_135_ ++ ) {
-					i_134_ = i_134_ * 10 + cs[ i_135_ ] - 48;
+					i_134_ = ( ( i_134_ * 10 ) + cs[ i_135_ ] ) - 48;
 				}
-				if( i_134_ > 255 || i_128_ - i_131_ > 8 ) {
+				if( ( i_134_ > 255 ) || ( ( i_128_ - i_131_ ) > 8 ) ) {
 					i_129_ = 0;
 				} else {
 					i_129_ ++ ;
@@ -1132,8 +1132,8 @@ public class ChatCensor
 	{
 		try {
 			i_137_ = 23 / i_137_;
-			for( int i_138_ = i; i_138_ < cs.length && i_138_ >= 0; i_138_ ++ ) {
-				if( cs[ i_138_ ] >= '0' && cs[ i_138_ ] <= '9' ) {
+			for( int i_138_ = i; ( i_138_ < cs.length ) && ( i_138_ >= 0 ); i_138_ ++ ) {
+				if( ( cs[ i_138_ ] >= '0' ) && ( cs[ i_138_ ] <= '9' ) ) {
 					return i_138_;
 				}
 			}
@@ -1148,8 +1148,8 @@ public class ChatCensor
 	private static final int method204( char[] cs, int i, int i_139_ )
 	{
 		try {
-			for( int i_140_ = i_139_; i_140_ < cs.length && i_140_ >= 0; i_140_ ++ ) {
-				if( cs[ i_140_ ] < '0' || cs[ i_140_ ] > '9' ) {
+			for( int i_140_ = i_139_; ( i_140_ < cs.length ) && ( i_140_ >= 0 ); i_140_ ++ ) {
+				if( ( cs[ i_140_ ] < '0' ) || ( cs[ i_140_ ] > '9' ) ) {
 					return i_140_;
 				}
 			}
@@ -1187,10 +1187,10 @@ public class ChatCensor
 			if( bool ) {
 				ChatCensor.anInt164 = - 233;
 			}
-			if( c < 'a' || c > 'z' ) {
+			if( ( c < 'a' ) || ( c > 'z' ) ) {
 				return true;
 			}
-			if( c == 'v' || c == 'x' || c == 'j' || c == 'q' || c == 'z' ) {
+			if( ( c == 'v' ) || ( c == 'x' ) || ( c == 'j' ) || ( c == 'q' ) || ( c == 'z' ) ) {
 				return true;
 			}
 			return false;
@@ -1209,7 +1209,7 @@ public class ChatCensor
 					/* empty */
 				}
 			}
-			if( ( c < 'a' || c > 'z' ) && ( c < 'A' || c > 'Z' ) ) {
+			if( ( ( c < 'a' ) || ( c > 'z' ) ) && ( ( c < 'A' ) || ( c > 'Z' ) ) ) {
 				return false;
 			}
 			return true;
@@ -1226,7 +1226,7 @@ public class ChatCensor
 			if( i >= 0 ) {
 				ChatCensor.anInt164 = 254;
 			}
-			if( c < '0' || c > '9' ) {
+			if( ( c < '0' ) || ( c > '9' ) ) {
 				return false;
 			}
 			return true;
@@ -1245,7 +1245,7 @@ public class ChatCensor
 					/* empty */
 				}
 			}
-			if( c < 'a' || c > 'z' ) {
+			if( ( c < 'a' ) || ( c > 'z' ) ) {
 				return false;
 			}
 			return true;
@@ -1262,7 +1262,7 @@ public class ChatCensor
 			if( ! bool ) {
 				throw new NullPointerException();
 			}
-			if( c < 'A' || c > 'Z' ) {
+			if( ( c < 'A' ) || ( c > 'Z' ) ) {
 				return false;
 			}
 			return true;
@@ -1283,7 +1283,7 @@ public class ChatCensor
 			}
 			boolean bool = true;
 			for( int i = 0; i < cs.length; i ++ ) {
-				if( ! ChatCensor.method208( cs[ i ], - 976 ) && cs[ i ] != 0 ) {
+				if( ! ChatCensor.method208( cs[ i ], - 976 ) && ( cs[ i ] != 0 ) ) {
 					bool = false;
 				}
 			}
@@ -1293,7 +1293,7 @@ public class ChatCensor
 			int i = ChatCensor.method212( cs, 8801 );
 			int i_143_ = 0;
 			int i_144_ = ChatCensor.fragments.length - 1;
-			if( i == ChatCensor.fragments[ i_143_ ] || i == ChatCensor.fragments[ i_144_ ] ) {
+			if( ( i == ChatCensor.fragments[ i_143_ ] ) || ( i == ChatCensor.fragments[ i_144_ ] ) ) {
 				return true;
 			}
 			do {
@@ -1306,7 +1306,7 @@ public class ChatCensor
 				} else {
 					i_143_ = i_145_;
 				}
-			} while( i_143_ != i_144_ && i_143_ + 1 != i_144_ );
+			} while( ( i_143_ != i_144_ ) && ( ( i_143_ + 1 ) != i_144_ ) );
 			return false;
 		} catch( RuntimeException runtimeexception ) {
 			SignLink.reportError( "62482, " + new String( cs ) + ", " + b + ", " + runtimeexception.toString() );
@@ -1329,12 +1329,12 @@ public class ChatCensor
 			int i_147_ = 0;
 			for( int i_148_ = 0; i_148_ < cs.length; i_148_ ++ ) {
 				int i_149_ = cs[ cs.length - i_148_ - 1 ];
-				if( i_149_ >= 97 && i_149_ <= 122 ) {
-					i_147_ = i_147_ * 38 + ( i_149_ - 97 + 1 );
+				if( ( i_149_ >= 97 ) && ( i_149_ <= 122 ) ) {
+					i_147_ = ( i_147_ * 38 ) + ( ( i_149_ - 97 ) + 1 );
 				} else if( i_149_ == 39 ) {
-					i_147_ = i_147_ * 38 + 27;
-				} else if( i_149_ >= 48 && i_149_ <= 57 ) {
-					i_147_ = i_147_ * 38 + ( i_149_ - 48 + 28 );
+					i_147_ = ( i_147_ * 38 ) + 27;
+				} else if( ( i_149_ >= 48 ) && ( i_149_ <= 57 ) ) {
+					i_147_ = ( i_147_ * 38 ) + ( ( i_149_ - 48 ) + 28 );
 				} else if( i_149_ != 0 ) {
 					return 0;
 				}

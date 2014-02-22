@@ -23,7 +23,7 @@ public class ChatEncoder
 		int validCharacterIndex = - 1;
 		for( int lengthCounter = 0; lengthCounter < length; lengthCounter ++ ) {
 			int character = buffer.getUnsignedByte();
-			int characterBit = character >> 4 & 0xf;
+			int characterBit = ( character >> 4 ) & 0xf;
 			if( validCharacterIndex == - 1 ) {
 				if( characterBit < 13 ) {
 					ChatEncoder.message[ count ++ ] = ChatEncoder.VALID_CHARACTERS[ characterBit ];
@@ -31,7 +31,7 @@ public class ChatEncoder
 					validCharacterIndex = characterBit;
 				}
 			} else {
-				ChatEncoder.message[ count ++ ] = ChatEncoder.VALID_CHARACTERS[ ( validCharacterIndex << 4 ) + characterBit - 195 ];
+				ChatEncoder.message[ count ++ ] = ChatEncoder.VALID_CHARACTERS[ ( ( validCharacterIndex << 4 ) + characterBit ) - 195 ];
 				validCharacterIndex = - 1;
 			}
 			characterBit = character & 0xf;
@@ -42,18 +42,18 @@ public class ChatEncoder
 					validCharacterIndex = characterBit;
 				}
 			} else {
-				ChatEncoder.message[ count ++ ] = ChatEncoder.VALID_CHARACTERS[ ( validCharacterIndex << 4 ) + characterBit - 195 ];
+				ChatEncoder.message[ count ++ ] = ChatEncoder.VALID_CHARACTERS[ ( ( validCharacterIndex << 4 ) + characterBit ) - 195 ];
 				validCharacterIndex = - 1;
 			}
 		}
 		boolean isSymbol = true;
 		for( int messageIndex = 0; messageIndex < count; messageIndex ++ ) {
 			char c = ChatEncoder.message[ messageIndex ];
-			if( isSymbol && c >= 'a' && c <= 'z' ) {
+			if( isSymbol && ( c >= 'a' ) && ( c <= 'z' ) ) {
 				ChatEncoder.message[ messageIndex ] += - 32;
 				isSymbol = false;
 			}
-			if( c == '.' || c == '!' || c == '?' ) {
+			if( ( c == '.' ) || ( c == '!' ) || ( c == '?' ) ) {
 				isSymbol = true;
 			}
 		}

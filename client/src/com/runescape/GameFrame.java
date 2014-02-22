@@ -8,16 +8,20 @@ import java.awt.Graphics;
 public class GameFrame extends Frame
 {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3026034244991236878L;
 	private final GameShell gameStub;
 
 
 	public GameFrame( GameShell gameStub, int width, int height )
 	{
 		this.gameStub = gameStub;
-		this.setTitle( "Jagex" );
-		this.setResizable( false );
-		this.setVisible( true );
-		this.toFront();
+		setTitle( "Jagex" );
+		setResizable( false );
+		setVisible( true );
+		toFront();
 		this.setSize( width + 8, height + 28 );
 	}
 

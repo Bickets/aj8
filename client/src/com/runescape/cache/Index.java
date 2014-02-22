@@ -37,7 +37,7 @@ public class Index
 			if( fileSize < 0 ) {
 				return null;
 			}
-			if( fileBlock <= 0 || fileBlock > dataFile.length() / 520L ) {
+			if( ( fileBlock <= 0 ) || ( fileBlock > ( dataFile.length() / 520L ) ) ) {
 				return null;
 			}
 			byte[] fileBuffer = new byte[ fileSize ];
@@ -54,8 +54,8 @@ public class Index
 					remaining = 512;
 				}
 				int nextFileId;
-				for( ; size < remaining + 8; size += nextFileId ) {
-					nextFileId = dataFile.read( Index.buffer, size, remaining + 8 - size );
+				for( ; size < ( remaining + 8 ); size += nextFileId ) {
+					nextFileId = dataFile.read( Index.buffer, size, ( remaining + 8 ) - size );
 					if( nextFileId == - 1 ) {
 						return null;
 					}
@@ -64,10 +64,10 @@ public class Index
 				int currentPartId = ( ( Index.buffer[ 2 ] & 0xff ) << 8 ) + ( Index.buffer[ 3 ] & 0xff );
 				int nextBlockId = ( ( Index.buffer[ 4 ] & 0xff ) << 16 ) + ( ( Index.buffer[ 5 ] & 0xff ) << 8 ) + ( Index.buffer[ 6 ] & 0xff );
 				int nextStoreId = Index.buffer[ 7 ] & 0xff;
-				if( nextFileId != index || currentPartId != cycles || nextStoreId != storeId ) {
+				if( ( nextFileId != index ) || ( currentPartId != cycles ) || ( nextStoreId != storeId ) ) {
 					return null;
 				}
-				if( nextBlockId < 0 || nextBlockId > dataFile.length() / 520L ) {
+				if( ( nextBlockId < 0 ) || ( nextBlockId > ( dataFile.length() / 520L ) ) ) {
 					return null;
 				}
 				for( int offset = 0; offset < remaining; offset ++ ) {
@@ -107,7 +107,7 @@ public class Index
 					}
 				}
 				sector = ( ( Index.buffer[ 3 ] & 0xff ) << 16 ) + ( ( Index.buffer[ 4 ] & 0xff ) << 8 ) + ( Index.buffer[ 5 ] & 0xff );
-				if( sector <= 0 || sector > dataFile.length() / 520L ) {
+				if( ( sector <= 0 ) || ( sector > ( dataFile.length() / 520L ) ) ) {
 					return false;
 				}
 			} else {
@@ -143,10 +143,10 @@ public class Index
 						int currentPart = ( ( Index.buffer[ 2 ] & 0xff ) << 8 ) + ( Index.buffer[ 3 ] & 0xff );
 						nextSector = ( ( Index.buffer[ 4 ] & 0xff ) << 16 ) + ( ( Index.buffer[ 5 ] & 0xff ) << 8 ) + ( Index.buffer[ 6 ] & 0xff );
 						int currentCache = Index.buffer[ 7 ] & 0xff;
-						if( currentFile != index || currentPart != zero || currentCache != storeId ) {
+						if( ( currentFile != index ) || ( currentPart != zero ) || ( currentCache != storeId ) ) {
 							return false;
 						}
-						if( nextSector < 0 || nextSector > dataFile.length() / 520L ) {
+						if( ( nextSector < 0 ) || ( nextSector > ( dataFile.length() / 520L ) ) ) {
 							return false;
 						}
 					}
@@ -161,7 +161,7 @@ public class Index
 						nextSector ++ ;
 					}
 				}
-				if( length - written <= 512 ) {
+				if( ( length - written ) <= 512 ) {
 					nextSector = 0;
 				}
 				Index.buffer[ 0 ] = ( byte )( index >> 8 );
@@ -191,7 +191,7 @@ public class Index
 
 	public synchronized void seek( RandomAccessFile dataFile, int position ) throws IOException
 	{
-		if( position < 0 || position > 62914560 ) {
+		if( ( position < 0 ) || ( position > 62914560 ) ) {
 			System.out.println( "Badseek - pos:" + position + " len:" + dataFile.length() );
 			position = 62914560;
 			try {

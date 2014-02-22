@@ -15,10 +15,10 @@ public class Npc extends Actor
 
 	private final Model getChildModel()
 	{
-		if( animation >= 0 && aniomationDelay == 0 ) {
+		if( ( animation >= 0 ) && ( aniomationDelay == 0 ) ) {
 			int frameId = AnimationSequence.cache[ animation ].frame2Ids[ anInt1547 ];
 			int frameId2 = - 1;
-			if( anInt1537 >= 0 && anInt1537 != standAnimationId ) {
+			if( ( anInt1537 >= 0 ) && ( anInt1537 != standAnimationId ) ) {
 				frameId2 = AnimationSequence.cache[ anInt1537 ].frame2Ids[ anInt1538 ];
 			}
 			return npcDefinition.getChildModel( frameId2, frameId, AnimationSequence.cache[ animation ].flowControl );
@@ -42,7 +42,7 @@ public class Npc extends Actor
 			return null;
 		}
 		modelHeight = model.modelHeight;
-		if( spotAnimationId != - 1 && currentAnimationFrame != - 1 ) {
+		if( ( spotAnimationId != - 1 ) && ( currentAnimationFrame != - 1 ) ) {
 			SpotAnimation spotanimation = SpotAnimation.cache[ spotAnimationId ];
 			Model model_4_ = spotanimation.getModel();
 			if( model_4_ != null ) {
@@ -53,7 +53,7 @@ public class Npc extends Actor
 				animationModel.applyTransform( animationId );
 				animationModel.triangleSkin = null;
 				animationModel.vectorSkin = null;
-				if( spotanimation.resizeXY != 128 || spotanimation.resizeZ != 128 ) {
+				if( ( spotanimation.resizeXY != 128 ) || ( spotanimation.resizeZ != 128 ) ) {
 					animationModel.scaleT( spotanimation.resizeXY, spotanimation.resizeXY, spotanimation.resizeZ );
 				}
 				animationModel.applyLighting( 64 + spotanimation.modelLightFalloff, 850 + spotanimation.modelLightAmbient, - 30, - 50, - 30, true );

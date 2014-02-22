@@ -38,19 +38,19 @@ public class Projectile extends Renderable
 		if( ! moving ) {
 			double distanceX = targetX - startX;
 			double distanceY = targetY - startY;
-			double distanceScalar = Math.sqrt( distanceX * distanceX + distanceY * distanceY );
-			currentX = startX + distanceX * startDistanceFromTarget / distanceScalar;
-			currentY = startY + distanceY * startDistanceFromTarget / distanceScalar;
+			double distanceScalar = Math.sqrt( ( distanceX * distanceX ) + ( distanceY * distanceY ) );
+			currentX = startX + ( ( distanceX * startDistanceFromTarget ) / distanceScalar );
+			currentY = startY + ( ( distanceY * startDistanceFromTarget ) / distanceScalar );
 			currentHeight = startHeight;
 		}
-		double cyclesRemaining = endCycle + 1 - loopCycle;
+		double cyclesRemaining = ( endCycle + 1 ) - loopCycle;
 		speedVectorX = ( targetX - currentX ) / cyclesRemaining;
 		speedVectorY = ( targetY - currentY ) / cyclesRemaining;
-		speedVectorScalar = Math.sqrt( speedVectorX * speedVectorX + speedVectorY * speedVectorY );
+		speedVectorScalar = Math.sqrt( ( speedVectorX * speedVectorX ) + ( speedVectorY * speedVectorY ) );
 		if( ! moving ) {
 			speedVectorZ = - speedVectorScalar * Math.tan( startSlope * 0.02454369 );
 		}
-		heightOffset = 2.0 * ( targetZ - currentHeight - speedVectorZ * cyclesRemaining ) / ( cyclesRemaining * cyclesRemaining );
+		heightOffset = ( 2.0 * ( targetZ - currentHeight - ( speedVectorZ * cyclesRemaining ) ) ) / ( cyclesRemaining * cyclesRemaining );
 	}
 
 
@@ -72,7 +72,7 @@ public class Projectile extends Renderable
 			projectileModel.triangleSkin = null;
 			projectileModel.vectorSkin = null;
 		}
-		if( animation.resizeXY != 128 || animation.resizeZ != 128 ) {
+		if( ( animation.resizeXY != 128 ) || ( animation.resizeZ != 128 ) ) {
 			projectileModel.scaleT( animation.resizeXY, animation.resizeXY, animation.resizeZ );
 		}
 		projectileModel.rotateX( modelRotationX, 1 );
@@ -83,18 +83,18 @@ public class Projectile extends Renderable
 
 	public Projectile( int startSlope, int endHeight, int delay, int speed, int startDistanceFromTarget, int sceneId, int height, int projectileY, int projectileX, int targetedEntityIndex, int spotAnimationId )
 	{
-		this.animation = SpotAnimation.cache[ spotAnimationId ];
+		animation = SpotAnimation.cache[ spotAnimationId ];
 		this.sceneId = sceneId;
-		this.startX = projectileX;
-		this.startY = projectileY;
-		this.startHeight = height;
+		startX = projectileX;
+		startY = projectileY;
+		startHeight = height;
 		this.delay = delay;
-		this.endCycle = speed;
+		endCycle = speed;
 		this.startSlope = startSlope;
 		this.startDistanceFromTarget = startDistanceFromTarget;
-		this.targetedEntityId = targetedEntityIndex;
+		targetedEntityId = targetedEntityIndex;
 		this.endHeight = endHeight;
-		this.moving = false;
+		moving = false;
 	}
 
 
@@ -103,9 +103,9 @@ public class Projectile extends Renderable
 		moving = true;
 		currentX += speedVectorX * time;
 		currentY += speedVectorY * time;
-		currentHeight += speedVectorZ * time + 0.5 * heightOffset * time * time;
+		currentHeight += ( speedVectorZ * time ) + ( 0.5 * heightOffset * time * time );
 		speedVectorZ += heightOffset * time;
-		modelRotationY = ( int )( Math.atan2( speedVectorX, speedVectorY ) * 325.949 ) + 1024 & 0x7ff;
+		modelRotationY = ( ( int )( Math.atan2( speedVectorX, speedVectorY ) * 325.949 ) + 1024 ) & 0x7ff;
 		modelRotationX = ( int )( Math.atan2( speedVectorZ, speedVectorScalar ) * 325.949 ) & 0x7ff;
 		if( animation.sequences == null ) {
 			return;

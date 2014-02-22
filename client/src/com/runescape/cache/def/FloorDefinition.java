@@ -76,8 +76,8 @@ public class FloorDefinition
 
 	private void shiftRGBColors( int color )
 	{
-		double r = ( color >> 16 & 0xff ) / 256.0;
-		double b = ( color >> 8 & 0xff ) / 256.0;
+		double r = ( ( color >> 16 ) & 0xff ) / 256.0;
+		double b = ( ( color >> 8 ) & 0xff ) / 256.0;
 		double g = ( color & 0xff ) / 256.0;
 		double cmin = r;
 		if( b < cmin ) {
@@ -106,9 +106,9 @@ public class FloorDefinition
 			if( r == cmax ) {
 				d_11_ = ( b - g ) / ( cmax - cmin );
 			} else if( b == cmax ) {
-				d_11_ = 2.0 + ( g - r ) / ( cmax - cmin );
+				d_11_ = 2.0 + ( ( g - r ) / ( cmax - cmin ) );
 			} else if( g == cmax ) {
-				d_11_ = 4.0 + ( r - b ) / ( cmax - cmin );
+				d_11_ = 4.0 + ( ( r - b ) / ( cmax - cmin ) );
 			}
 		}
 		d_11_ /= 6.0;
@@ -134,19 +134,19 @@ public class FloorDefinition
 			hueDivisor = 1;
 		}
 		hue = ( int )( d_11_ * hueDivisor );
-		int huerand = hue2 + ( int )( Math.random() * 16.0 ) - 8;
+		int huerand = ( hue2 + ( int )( Math.random() * 16.0 ) ) - 8;
 		if( huerand < 0 ) {
 			huerand = 0;
 		} else if( huerand > 255 ) {
 			huerand = 255;
 		}
-		int satrand = saturation + ( int )( Math.random() * 48.0 ) - 24;
+		int satrand = ( saturation + ( int )( Math.random() * 48.0 ) ) - 24;
 		if( satrand < 0 ) {
 			satrand = 0;
 		} else if( satrand > 255 ) {
 			satrand = 255;
 		}
-		int lightrand = lightness + ( int )( Math.random() * 48.0 ) - 24;
+		int lightrand = ( lightness + ( int )( Math.random() * 48.0 ) ) - 24;
 		if( lightrand < 0 ) {
 			lightrand = 0;
 		} else if( lightrand > 255 ) {
@@ -170,7 +170,7 @@ public class FloorDefinition
 		if( i_18_ > 243 ) {
 			i_17_ /= 2;
 		}
-		int i_19_ = ( i / 4 << 10 ) + ( i_17_ / 32 << 7 ) + i_18_ / 2;
+		int i_19_ = ( ( i / 4 ) << 10 ) + ( ( i_17_ / 32 ) << 7 ) + ( i_18_ / 2 );
 		return i_19_;
 	}
 }

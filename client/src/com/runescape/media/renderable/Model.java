@@ -391,7 +391,7 @@ public class Model extends Renderable
 				vertexCount += model_41_.vertexCount;
 				triangleCount += model_41_.triangleCount;
 				texturedTriangleCount += model_41_.texturedTriangleCount;
-				bool = bool | model_41_.texturePoints != null;
+				bool = bool | ( model_41_.texturePoints != null );
 				if( model_41_.trianglePriorities != null ) {
 					bool_37_ = true;
 				} else {
@@ -402,8 +402,8 @@ public class Model extends Renderable
 						bool_37_ = true;
 					}
 				}
-				bool_38_ = bool_38_ | model_41_.triangleAlphaValues != null;
-				bool_39_ = bool_39_ | model_41_.triangleSkinValues != null;
+				bool_38_ = bool_38_ | ( model_41_.triangleAlphaValues != null );
+				bool_39_ = bool_39_ | ( model_41_.triangleSkinValues != null );
 			}
 		}
 		verticesX = new int[ vertexCount ];
@@ -462,7 +462,7 @@ public class Model extends Renderable
 							triangleAlphaValues[ triangleCount ] = model_44_.triangleAlphaValues[ i_45_ ];
 						}
 					}
-					if( bool_39_ && model_44_.triangleSkinValues != null ) {
+					if( bool_39_ && ( model_44_.triangleSkinValues != null ) ) {
 						triangleSkinValues[ triangleCount ] = model_44_.triangleSkinValues[ i_45_ ];
 					}
 					triangleColorValues[ triangleCount ] = model_44_.triangleColorValues[ i_45_ ];
@@ -500,7 +500,7 @@ public class Model extends Renderable
 					vertexCount += model_54_.vertexCount;
 					triangleCount += model_54_.triangleCount;
 					texturedTriangleCount += model_54_.texturedTriangleCount;
-					bool_49_ = bool_49_ | model_54_.texturePoints != null;
+					bool_49_ = bool_49_ | ( model_54_.texturePoints != null );
 					if( model_54_.trianglePriorities != null ) {
 						bool_50_ = true;
 					} else {
@@ -511,8 +511,8 @@ public class Model extends Renderable
 							bool_50_ = true;
 						}
 					}
-					bool_51_ = bool_51_ | model_54_.triangleAlphaValues != null;
-					bool_52_ = bool_52_ | model_54_.triangleColorValues != null;
+					bool_51_ = bool_51_ | ( model_54_.triangleAlphaValues != null );
+					bool_52_ = bool_52_ | ( model_54_.triangleColorValues != null );
 				}
 			}
 			verticesX = new int[ vertexCount ];
@@ -590,7 +590,7 @@ public class Model extends Renderable
 								triangleAlphaValues[ triangleCount ] = model_58_.triangleAlphaValues[ i_61_ ];
 							}
 						}
-						if( bool_52_ && model_58_.triangleColorValues != null ) {
+						if( bool_52_ && ( model_58_.triangleColorValues != null ) ) {
 							triangleColorValues[ triangleCount ] = model_58_.triangleColorValues[ i_61_ ];
 						}
 						triangleCount ++ ;
@@ -813,7 +813,7 @@ public class Model extends Renderable
 		int vertexY = model.verticesY[ vertex ];
 		int vertexZ = model.verticesZ[ vertex ];
 		for( int index = 0; index < vertexCount; index ++ ) {
-			if( vertexX == verticesX[ index ] && vertexY == verticesY[ index ] && vertexZ == verticesZ[ index ] ) {
+			if( ( vertexX == verticesX[ index ] ) && ( vertexY == verticesY[ index ] ) && ( vertexZ == verticesZ[ index ] ) ) {
 				identicalVertexIndex = index;
 				break;
 			}
@@ -846,14 +846,14 @@ public class Model extends Renderable
 			if( vertexY > maxY ) {
 				maxY = vertexY;
 			}
-			int i_94_ = vertexX * vertexX + vertexZ * vertexZ;
+			int i_94_ = ( vertexX * vertexX ) + ( vertexZ * vertexZ );
 			if( i_94_ > shadowIntensity ) {
 				shadowIntensity = i_94_;
 			}
 		}
 		shadowIntensity = ( int )( Math.sqrt( shadowIntensity ) + 0.99 );
-		anInt1646 = ( int )( Math.sqrt( shadowIntensity * shadowIntensity + modelHeight * modelHeight ) + 0.99 );
-		anInt1645 = anInt1646 + ( int )( Math.sqrt( shadowIntensity * shadowIntensity + maxY * maxY ) + 0.99 );
+		anInt1646 = ( int )( Math.sqrt( ( shadowIntensity * shadowIntensity ) + ( modelHeight * modelHeight ) ) + 0.99 );
+		anInt1645 = anInt1646 + ( int )( Math.sqrt( ( shadowIntensity * shadowIntensity ) + ( maxY * maxY ) ) + 0.99 );
 	}
 
 
@@ -874,8 +874,8 @@ public class Model extends Renderable
 					maxY = i_95_;
 				}
 			}
-			anInt1646 = ( int )( Math.sqrt( shadowIntensity * shadowIntensity + modelHeight * modelHeight ) + 0.99 );
-			anInt1645 = anInt1646 + ( int )( Math.sqrt( shadowIntensity * shadowIntensity + maxY * maxY ) + 0.99 );
+			anInt1646 = ( int )( Math.sqrt( ( shadowIntensity * shadowIntensity ) + ( modelHeight * modelHeight ) ) + 0.99 );
+			anInt1645 = anInt1646 + ( int )( Math.sqrt( ( shadowIntensity * shadowIntensity ) + ( maxY * maxY ) ) + 0.99 );
 		} catch( RuntimeException runtimeexception ) {
 			SignLink.reportError( "87212, " + bool + ", " + runtimeexception.toString() );
 			throw new RuntimeException();
@@ -915,15 +915,15 @@ public class Model extends Renderable
 				if( i_98_ > maxY ) {
 					maxY = i_98_;
 				}
-				int i_100_ = i_97_ * i_97_ + i_99_ * i_99_;
+				int i_100_ = ( i_97_ * i_97_ ) + ( i_99_ * i_99_ );
 				if( i_100_ > shadowIntensity ) {
 					shadowIntensity = i_100_;
 				}
 			}
 			shadowIntensity = ( int )Math.sqrt( shadowIntensity );
-			anInt1646 = ( int )Math.sqrt( shadowIntensity * shadowIntensity + modelHeight * modelHeight );
+			anInt1646 = ( int )Math.sqrt( ( shadowIntensity * shadowIntensity ) + ( modelHeight * modelHeight ) );
 			if( i == 21073 ) {
-				anInt1645 = anInt1646 + ( int )Math.sqrt( shadowIntensity * shadowIntensity + maxY * maxY );
+				anInt1645 = anInt1646 + ( int )Math.sqrt( ( shadowIntensity * shadowIntensity ) + ( maxY * maxY ) );
 			}
 		} catch( RuntimeException runtimeexception ) {
 			SignLink.reportError( "2042, " + i + ", " + runtimeexception.toString() );
@@ -982,7 +982,7 @@ public class Model extends Renderable
 
 	public void applyTransform( int frameId )
 	{
-		if( vectorSkin != null && frameId != - 1 ) {
+		if( ( vectorSkin != null ) && ( frameId != - 1 ) ) {
 			Animation animation = Animation.getAnimation( frameId );
 			if( animation != null ) {
 				Skins skins = animation.animationSkins;
@@ -1002,7 +1002,7 @@ public class Model extends Renderable
 	{
 		try {
 			if( i_115_ != - 1 ) {
-				if( is == null || i_114_ == - 1 ) {
+				if( ( is == null ) || ( i_114_ == - 1 ) ) {
 					applyTransform( i_115_ );
 				} else {
 					Animation animation = Animation.getAnimation( i_115_ );
@@ -1023,7 +1023,7 @@ public class Model extends Renderable
 									for( i_120_ = animation.opcodeTable[ i_119_ ]; i_120_ > i_118_; i_118_ = is[ i_117_ ++ ] ) {
 										/* empty */
 									}
-									if( i_120_ != i_118_ || skins.opcodes[ i_120_ ] == 0 ) {
+									if( ( i_120_ != i_118_ ) || ( skins.opcodes[ i_120_ ] == 0 ) ) {
 										transformStep( skins.opcodes[ i_120_ ], skins.skinList[ i_120_ ], animation.modifier1[ i_119_ ], animation.modifier2[ i_119_ ], animation.modifier3[ i_119_ ] );
 									}
 								}
@@ -1037,7 +1037,7 @@ public class Model extends Renderable
 									for( i_122_ = animation_116_.opcodeTable[ i_121_ ]; i_122_ > i_118_; i_118_ = is[ i_117_ ++ ] ) {
 										/* empty */
 									}
-									if( i_122_ == i_118_ || skins.opcodes[ i_122_ ] == 0 ) {
+									if( ( i_122_ == i_118_ ) || ( skins.opcodes[ i_122_ ] == 0 ) ) {
 										transformStep( skins.opcodes[ i_122_ ], skins.skinList[ i_122_ ], animation_116_.modifier1[ i_121_ ], animation_116_.modifier2[ i_121_ ], animation_116_.modifier3[ i_121_ ] );
 									}
 								}
@@ -1074,9 +1074,9 @@ public class Model extends Renderable
 				}
 			}
 			if( i_127_ > 0 ) {
-				Model.vertexXModifier = Model.vertexXModifier / i_127_ + i_123_;
-				Model.vertexYModifier = Model.vertexYModifier / i_127_ + i_124_;
-				Model.vertexZModifier = Model.vertexZModifier / i_127_ + i_125_;
+				Model.vertexXModifier = ( Model.vertexXModifier / i_127_ ) + i_123_;
+				Model.vertexYModifier = ( Model.vertexYModifier / i_127_ ) + i_124_;
+				Model.vertexZModifier = ( Model.vertexZModifier / i_127_ ) + i_125_;
 			} else {
 				Model.vertexXModifier = i_123_;
 				Model.vertexYModifier = i_124_;
@@ -1111,22 +1111,22 @@ public class Model extends Renderable
 						if( i_145_ != 0 ) {
 							int i_146_ = Model.SINE[ i_145_ ];
 							int i_147_ = Model.COSINE[ i_145_ ];
-							int i_148_ = verticesY[ i_142_ ] * i_146_ + verticesX[ i_142_ ] * i_147_ >> 16;
-							verticesY[ i_142_ ] = verticesY[ i_142_ ] * i_147_ - verticesX[ i_142_ ] * i_146_ >> 16;
+							int i_148_ = ( ( verticesY[ i_142_ ] * i_146_ ) + ( verticesX[ i_142_ ] * i_147_ ) ) >> 16;
+							verticesY[ i_142_ ] = ( ( verticesY[ i_142_ ] * i_147_ ) - ( verticesX[ i_142_ ] * i_146_ ) ) >> 16;
 							verticesX[ i_142_ ] = i_148_;
 						}
 						if( i_143_ != 0 ) {
 							int i_149_ = Model.SINE[ i_143_ ];
 							int i_150_ = Model.COSINE[ i_143_ ];
-							int i_151_ = verticesY[ i_142_ ] * i_150_ - verticesZ[ i_142_ ] * i_149_ >> 16;
-							verticesZ[ i_142_ ] = verticesY[ i_142_ ] * i_149_ + verticesZ[ i_142_ ] * i_150_ >> 16;
+							int i_151_ = ( ( verticesY[ i_142_ ] * i_150_ ) - ( verticesZ[ i_142_ ] * i_149_ ) ) >> 16;
+							verticesZ[ i_142_ ] = ( ( verticesY[ i_142_ ] * i_149_ ) + ( verticesZ[ i_142_ ] * i_150_ ) ) >> 16;
 							verticesY[ i_142_ ] = i_151_;
 						}
 						if( i_144_ != 0 ) {
 							int i_152_ = Model.SINE[ i_144_ ];
 							int i_153_ = Model.COSINE[ i_144_ ];
-							int i_154_ = verticesZ[ i_142_ ] * i_152_ + verticesX[ i_142_ ] * i_153_ >> 16;
-							verticesZ[ i_142_ ] = verticesZ[ i_142_ ] * i_153_ - verticesX[ i_142_ ] * i_152_ >> 16;
+							int i_154_ = ( ( verticesZ[ i_142_ ] * i_152_ ) + ( verticesX[ i_142_ ] * i_153_ ) ) >> 16;
+							verticesZ[ i_142_ ] = ( ( verticesZ[ i_142_ ] * i_153_ ) - ( verticesX[ i_142_ ] * i_152_ ) ) >> 16;
 							verticesX[ i_142_ ] = i_154_;
 						}
 						verticesX[ i_142_ ] += Model.vertexXModifier;
@@ -1145,16 +1145,16 @@ public class Model extends Renderable
 						verticesX[ i_159_ ] -= Model.vertexXModifier;
 						verticesY[ i_159_ ] -= Model.vertexYModifier;
 						verticesZ[ i_159_ ] -= Model.vertexZModifier;
-						verticesX[ i_159_ ] = verticesX[ i_159_ ] * i_123_ / 128;
-						verticesY[ i_159_ ] = verticesY[ i_159_ ] * i_124_ / 128;
-						verticesZ[ i_159_ ] = verticesZ[ i_159_ ] * i_125_ / 128;
+						verticesX[ i_159_ ] = ( verticesX[ i_159_ ] * i_123_ ) / 128;
+						verticesY[ i_159_ ] = ( verticesY[ i_159_ ] * i_124_ ) / 128;
+						verticesZ[ i_159_ ] = ( verticesZ[ i_159_ ] * i_125_ ) / 128;
 						verticesX[ i_159_ ] += Model.vertexXModifier;
 						verticesY[ i_159_ ] += Model.vertexYModifier;
 						verticesZ[ i_159_ ] += Model.vertexZModifier;
 					}
 				}
 			}
-		} else if( i == 5 && triangleSkin != null && triangleAlphaValues != null ) {
+		} else if( ( i == 5 ) && ( triangleSkin != null ) && ( triangleAlphaValues != null ) ) {
 			for( int i_160_ = 0; i_160_ < i_126_; i_160_ ++ ) {
 				int i_161_ = is[ i_160_ ];
 				if( i_161_ < triangleSkin.length ) {
@@ -1198,11 +1198,11 @@ public class Model extends Renderable
 			int i_168_ = Model.SINE[ i ];
 			int i_169_ = Model.COSINE[ i ];
 			for( int i_170_ = 0; i_170_ < vertexCount; i_170_ ++ ) {
-				int i_171_ = verticesY[ i_170_ ] * i_169_ - verticesZ[ i_170_ ] * i_168_ >> 16;
-				verticesZ[ i_170_ ] = verticesY[ i_170_ ] * i_168_ + verticesZ[ i_170_ ] * i_169_ >> 16;
+				int i_171_ = ( ( verticesY[ i_170_ ] * i_169_ ) - ( verticesZ[ i_170_ ] * i_168_ ) ) >> 16;
+				verticesZ[ i_170_ ] = ( ( verticesY[ i_170_ ] * i_168_ ) + ( verticesZ[ i_170_ ] * i_169_ ) ) >> 16;
 				verticesY[ i_170_ ] = i_171_;
 			}
-			if( i_167_ < anInt1610 || i_167_ > anInt1610 ) {
+			if( ( i_167_ < anInt1610 ) || ( i_167_ > anInt1610 ) ) {
 				anInt1610 = 324;
 			}
 		} catch( RuntimeException runtimeexception ) {
@@ -1274,17 +1274,17 @@ public class Model extends Renderable
 	public void scaleT( int i, int i_181_, int i_183_ )
 	{
 		for( int vertex = 0; vertex < vertexCount; vertex ++ ) {
-			verticesX[ vertex ] = verticesX[ vertex ] * i / 128;
-			verticesY[ vertex ] = verticesY[ vertex ] * i_183_ / 128;
-			verticesZ[ vertex ] = verticesZ[ vertex ] * i_181_ / 128;
+			verticesX[ vertex ] = ( verticesX[ vertex ] * i ) / 128;
+			verticesY[ vertex ] = ( verticesY[ vertex ] * i_183_ ) / 128;
+			verticesZ[ vertex ] = ( verticesZ[ vertex ] * i_181_ ) / 128;
 		}
 	}
 
 
 	public final void applyLighting( int i, int i_185_, int i_186_, int i_187_, int i_188_, boolean bool )
 	{
-		int i_189_ = ( int )Math.sqrt( i_186_ * i_186_ + i_187_ * i_187_ + i_188_ * i_188_ );
-		int i_190_ = i_185_ * i_189_ >> 8;
+		int i_189_ = ( int )Math.sqrt( ( i_186_ * i_186_ ) + ( i_187_ * i_187_ ) + ( i_188_ * i_188_ ) );
+		int i_190_ = ( i_185_ * i_189_ ) >> 8;
 		if( anIntArray1627 == null ) {
 			anIntArray1627 = new int[ triangleCount ];
 			anIntArray1628 = new int[ triangleCount ];
@@ -1306,21 +1306,21 @@ public class Model extends Renderable
 			int i_199_ = verticesX[ i_195_ ] - verticesX[ i_193_ ];
 			int i_200_ = verticesY[ i_195_ ] - verticesY[ i_193_ ];
 			int i_201_ = verticesZ[ i_195_ ] - verticesZ[ i_193_ ];
-			int i_202_ = i_197_ * i_201_ - i_200_ * i_198_;
-			int i_203_ = i_198_ * i_199_ - i_201_ * i_196_;
+			int i_202_ = ( i_197_ * i_201_ ) - ( i_200_ * i_198_ );
+			int i_203_ = ( i_198_ * i_199_ ) - ( i_201_ * i_196_ );
 			int i_204_;
-			for( i_204_ = i_196_ * i_200_ - i_199_ * i_197_; i_202_ > 8192 || i_203_ > 8192 || i_204_ > 8192 || i_202_ < - 8192 || i_203_ < - 8192 || i_204_ < - 8192; i_204_ >>= 1 ) {
+			for( i_204_ = ( i_196_ * i_200_ ) - ( i_199_ * i_197_ ); ( i_202_ > 8192 ) || ( i_203_ > 8192 ) || ( i_204_ > 8192 ) || ( i_202_ < - 8192 ) || ( i_203_ < - 8192 ) || ( i_204_ < - 8192 ); i_204_ >>= 1 ) {
 				i_202_ >>= 1;
 				i_203_ >>= 1;
 			}
-			int i_205_ = ( int )Math.sqrt( i_202_ * i_202_ + i_203_ * i_203_ + i_204_ * i_204_ );
+			int i_205_ = ( int )Math.sqrt( ( i_202_ * i_202_ ) + ( i_203_ * i_203_ ) + ( i_204_ * i_204_ ) );
 			if( i_205_ <= 0 ) {
 				i_205_ = 1;
 			}
-			i_202_ = i_202_ * 256 / i_205_;
-			i_203_ = i_203_ * 256 / i_205_;
-			i_204_ = i_204_ * 256 / i_205_;
-			if( texturePoints == null || ( texturePoints[ i_192_ ] & 0x1 ) == 0 ) {
+			i_202_ = ( i_202_ * 256 ) / i_205_;
+			i_203_ = ( i_203_ * 256 ) / i_205_;
+			i_204_ = ( i_204_ * 256 ) / i_205_;
+			if( ( texturePoints == null ) || ( ( texturePoints[ i_192_ ] & 0x1 ) == 0 ) ) {
 				VertexNormal vertexnormal = verticesNormal[ i_193_ ];
 				vertexnormal.x += i_202_;
 				vertexnormal.y += i_203_;
@@ -1337,7 +1337,7 @@ public class Model extends Renderable
 				vertexnormal.z += i_204_;
 				vertexnormal.magnitude ++ ;
 			} else {
-				int i_206_ = i + ( i_186_ * i_202_ + i_187_ * i_203_ + i_188_ * i_204_ ) / ( i_190_ + i_190_ / 2 );
+				int i_206_ = i + ( ( ( i_186_ * i_202_ ) + ( i_187_ * i_203_ ) + ( i_188_ * i_204_ ) ) / ( i_190_ + ( i_190_ / 2 ) ) );
 				anIntArray1627[ i_192_ ] = Model.method429( triangleColorValues[ i_192_ ], i_206_, texturePoints[ i_192_ ] );
 			}
 		}
@@ -1371,25 +1371,25 @@ public class Model extends Renderable
 			if( texturePoints == null ) {
 				int i_217_ = triangleColorValues[ i_213_ ];
 				VertexNormal vertexnormal = verticesNormal[ i_214_ ];
-				int i_218_ = i + ( i_210_ * vertexnormal.x + i_211_ * vertexnormal.y + i_212_ * vertexnormal.z ) / ( i_209_ * vertexnormal.magnitude );
+				int i_218_ = i + ( ( ( i_210_ * vertexnormal.x ) + ( i_211_ * vertexnormal.y ) + ( i_212_ * vertexnormal.z ) ) / ( i_209_ * vertexnormal.magnitude ) );
 				anIntArray1627[ i_213_ ] = Model.method429( i_217_, i_218_, 0 );
 				vertexnormal = verticesNormal[ i_215_ ];
-				i_218_ = i + ( i_210_ * vertexnormal.x + i_211_ * vertexnormal.y + i_212_ * vertexnormal.z ) / ( i_209_ * vertexnormal.magnitude );
+				i_218_ = i + ( ( ( i_210_ * vertexnormal.x ) + ( i_211_ * vertexnormal.y ) + ( i_212_ * vertexnormal.z ) ) / ( i_209_ * vertexnormal.magnitude ) );
 				anIntArray1628[ i_213_ ] = Model.method429( i_217_, i_218_, 0 );
 				vertexnormal = verticesNormal[ i_216_ ];
-				i_218_ = i + ( i_210_ * vertexnormal.x + i_211_ * vertexnormal.y + i_212_ * vertexnormal.z ) / ( i_209_ * vertexnormal.magnitude );
+				i_218_ = i + ( ( ( i_210_ * vertexnormal.x ) + ( i_211_ * vertexnormal.y ) + ( i_212_ * vertexnormal.z ) ) / ( i_209_ * vertexnormal.magnitude ) );
 				anIntArray1629[ i_213_ ] = Model.method429( i_217_, i_218_, 0 );
 			} else if( ( texturePoints[ i_213_ ] & 0x1 ) == 0 ) {
 				int i_219_ = triangleColorValues[ i_213_ ];
 				int i_220_ = texturePoints[ i_213_ ];
 				VertexNormal vertexnormal = verticesNormal[ i_214_ ];
-				int i_221_ = i + ( i_210_ * vertexnormal.x + i_211_ * vertexnormal.y + i_212_ * vertexnormal.z ) / ( i_209_ * vertexnormal.magnitude );
+				int i_221_ = i + ( ( ( i_210_ * vertexnormal.x ) + ( i_211_ * vertexnormal.y ) + ( i_212_ * vertexnormal.z ) ) / ( i_209_ * vertexnormal.magnitude ) );
 				anIntArray1627[ i_213_ ] = Model.method429( i_219_, i_221_, i_220_ );
 				vertexnormal = verticesNormal[ i_215_ ];
-				i_221_ = i + ( i_210_ * vertexnormal.x + i_211_ * vertexnormal.y + i_212_ * vertexnormal.z ) / ( i_209_ * vertexnormal.magnitude );
+				i_221_ = i + ( ( ( i_210_ * vertexnormal.x ) + ( i_211_ * vertexnormal.y ) + ( i_212_ * vertexnormal.z ) ) / ( i_209_ * vertexnormal.magnitude ) );
 				anIntArray1628[ i_213_ ] = Model.method429( i_219_, i_221_, i_220_ );
 				vertexnormal = verticesNormal[ i_216_ ];
-				i_221_ = i + ( i_210_ * vertexnormal.x + i_211_ * vertexnormal.y + i_212_ * vertexnormal.z ) / ( i_209_ * vertexnormal.magnitude );
+				i_221_ = i + ( ( ( i_210_ * vertexnormal.x ) + ( i_211_ * vertexnormal.y ) + ( i_212_ * vertexnormal.z ) ) / ( i_209_ * vertexnormal.magnitude ) );
 				anIntArray1629[ i_213_ ] = Model.method429( i_219_, i_221_, i_220_ );
 			}
 		}
@@ -1419,7 +1419,7 @@ public class Model extends Renderable
 			i_223_ = 127 - i_223_;
 			return i_223_;
 		}
-		i_223_ = i_223_ * ( i & 0x7f ) >> 7;
+		i_223_ = ( i_223_ * ( i & 0x7f ) ) >> 7;
 		if( i_223_ < 2 ) {
 			i_223_ = 2;
 		} else if( i_223_ > 126 ) {
@@ -1441,35 +1441,35 @@ public class Model extends Renderable
 		int i_238_ = Model.COSINE[ i_226_ ];
 		int i_239_ = Model.SINE[ i_227_ ];
 		int i_240_ = Model.COSINE[ i_227_ ];
-		int i_241_ = i_229_ * i_239_ + i_230_ * i_240_ >> 16;
+		int i_241_ = ( ( i_229_ * i_239_ ) + ( i_230_ * i_240_ ) ) >> 16;
 		for( int i_242_ = 0; i_242_ < vertexCount; i_242_ ++ ) {
 			int i_243_ = verticesX[ i_242_ ];
 			int i_244_ = verticesY[ i_242_ ];
 			int i_245_ = verticesZ[ i_242_ ];
 			if( i_226_ != 0 ) {
-				int i_246_ = i_244_ * i_237_ + i_243_ * i_238_ >> 16;
-				i_244_ = i_244_ * i_238_ - i_243_ * i_237_ >> 16;
+				int i_246_ = ( ( i_244_ * i_237_ ) + ( i_243_ * i_238_ ) ) >> 16;
+				i_244_ = ( ( i_244_ * i_238_ ) - ( i_243_ * i_237_ ) ) >> 16;
 				i_243_ = i_246_;
 			}
 			if( i != 0 ) {
-				int i_247_ = i_244_ * i_234_ - i_245_ * i_233_ >> 16;
-				i_245_ = i_244_ * i_233_ + i_245_ * i_234_ >> 16;
+				int i_247_ = ( ( i_244_ * i_234_ ) - ( i_245_ * i_233_ ) ) >> 16;
+				i_245_ = ( ( i_244_ * i_233_ ) + ( i_245_ * i_234_ ) ) >> 16;
 				i_244_ = i_247_;
 			}
 			if( i_225_ != 0 ) {
-				int i_248_ = i_245_ * i_235_ + i_243_ * i_236_ >> 16;
-				i_245_ = i_245_ * i_236_ - i_243_ * i_235_ >> 16;
+				int i_248_ = ( ( i_245_ * i_235_ ) + ( i_243_ * i_236_ ) ) >> 16;
+				i_245_ = ( ( i_245_ * i_236_ ) - ( i_243_ * i_235_ ) ) >> 16;
 				i_243_ = i_248_;
 			}
 			i_243_ += i_228_;
 			i_244_ += i_229_;
 			i_245_ += i_230_;
-			int i_249_ = i_244_ * i_240_ - i_245_ * i_239_ >> 16;
-			i_245_ = i_244_ * i_239_ + i_245_ * i_240_ >> 16;
+			int i_249_ = ( ( i_244_ * i_240_ ) - ( i_245_ * i_239_ ) ) >> 16;
+			i_245_ = ( ( i_244_ * i_239_ ) + ( i_245_ * i_240_ ) ) >> 16;
 			i_244_ = i_249_;
 			Model.anIntArray1660[ i_242_ ] = i_245_ - i_241_;
-			Model.anIntArray1658[ i_242_ ] = i_231_ + ( i_243_ << 9 ) / i_245_;
-			Model.anIntArray1659[ i_242_ ] = i_232_ + ( i_244_ << 9 ) / i_245_;
+			Model.anIntArray1658[ i_242_ ] = i_231_ + ( ( i_243_ << 9 ) / i_245_ );
+			Model.anIntArray1659[ i_242_ ] = i_232_ + ( ( i_244_ << 9 ) / i_245_ );
 			if( texturedTriangleCount > 0 ) {
 				Model.anIntArray1661[ i_242_ ] = i_243_;
 				Model.anIntArray1662[ i_242_ ] = i_244_;
@@ -1487,30 +1487,30 @@ public class Model extends Renderable
 	@Override
 	public final void renderAtPoint( int i, int i_250_, int i_251_, int i_252_, int i_253_, int i_254_, int i_255_, int i_256_, int i_257_ )
 	{
-		int i_258_ = i_256_ * i_253_ - i_254_ * i_252_ >> 16;
-		int i_259_ = i_255_ * i_250_ + i_258_ * i_251_ >> 16;
-		int i_260_ = shadowIntensity * i_251_ >> 16;
+		int i_258_ = ( ( i_256_ * i_253_ ) - ( i_254_ * i_252_ ) ) >> 16;
+		int i_259_ = ( ( i_255_ * i_250_ ) + ( i_258_ * i_251_ ) ) >> 16;
+		int i_260_ = ( shadowIntensity * i_251_ ) >> 16;
 		int i_261_ = i_259_ + i_260_;
-		if( i_261_ > 50 && i_259_ < 3500 ) {
-			int i_262_ = i_256_ * i_252_ + i_254_ * i_253_ >> 16;
-			int i_263_ = i_262_ - shadowIntensity << 9;
-			if( i_263_ / i_261_ < Rasterizer.centerX ) {
-				int i_264_ = i_262_ + shadowIntensity << 9;
-				if( i_264_ / i_261_ > - Rasterizer.centerX ) {
-					int i_265_ = i_255_ * i_251_ - i_258_ * i_250_ >> 16;
-					int i_266_ = shadowIntensity * i_250_ >> 16;
-					int i_267_ = i_265_ + i_266_ << 9;
-					if( i_267_ / i_261_ > - Rasterizer.centerY ) {
-						int i_268_ = i_266_ + ( modelHeight * i_251_ >> 16 );
-						int i_269_ = i_265_ - i_268_ << 9;
-						if( i_269_ / i_261_ < Rasterizer.centerY ) {
-							int i_270_ = i_260_ + ( modelHeight * i_250_ >> 16 );
+		if( ( i_261_ > 50 ) && ( i_259_ < 3500 ) ) {
+			int i_262_ = ( ( i_256_ * i_252_ ) + ( i_254_ * i_253_ ) ) >> 16;
+			int i_263_ = ( i_262_ - shadowIntensity ) << 9;
+			if( ( i_263_ / i_261_ ) < Rasterizer.centerX ) {
+				int i_264_ = ( i_262_ + shadowIntensity ) << 9;
+				if( ( i_264_ / i_261_ ) > - Rasterizer.centerX ) {
+					int i_265_ = ( ( i_255_ * i_251_ ) - ( i_258_ * i_250_ ) ) >> 16;
+					int i_266_ = ( shadowIntensity * i_250_ ) >> 16;
+					int i_267_ = ( i_265_ + i_266_ ) << 9;
+					if( ( i_267_ / i_261_ ) > - Rasterizer.centerY ) {
+						int i_268_ = i_266_ + ( ( modelHeight * i_251_ ) >> 16 );
+						int i_269_ = ( i_265_ - i_268_ ) << 9;
+						if( ( i_269_ / i_261_ ) < Rasterizer.centerY ) {
+							int i_270_ = i_260_ + ( ( modelHeight * i_250_ ) >> 16 );
 							boolean bool = false;
-							if( i_259_ - i_270_ <= 50 ) {
+							if( ( i_259_ - i_270_ ) <= 50 ) {
 								bool = true;
 							}
 							boolean bool_271_ = false;
-							if( i_257_ > 0 && Model.aBoolean1677 ) {
+							if( ( i_257_ > 0 ) && Model.aBoolean1677 ) {
 								int i_272_ = i_259_ - i_260_;
 								if( i_272_ <= 50 ) {
 									i_272_ = 50;
@@ -1531,7 +1531,7 @@ public class Model extends Renderable
 								}
 								int i_273_ = Model.anInt1678 - Rasterizer3D.centerX;
 								int i_274_ = Model.anInt1679 - Rasterizer3D.centerY;
-								if( i_273_ > i_263_ && i_273_ < i_264_ && i_274_ > i_269_ && i_274_ < i_267_ ) {
+								if( ( i_273_ > i_263_ ) && ( i_273_ < i_264_ ) && ( i_274_ > i_269_ ) && ( i_274_ < i_267_ ) ) {
 									if( oneSquareModel ) {
 										Model.anIntArray1681[ Model.anInt1680 ++ ] = i_257_;
 									} else {
@@ -1552,28 +1552,28 @@ public class Model extends Renderable
 								int i_281_ = verticesY[ i_279_ ];
 								int i_282_ = verticesZ[ i_279_ ];
 								if( i != 0 ) {
-									int i_283_ = i_282_ * i_277_ + i_280_ * i_278_ >> 16;
-									i_282_ = i_282_ * i_278_ - i_280_ * i_277_ >> 16;
+									int i_283_ = ( ( i_282_ * i_277_ ) + ( i_280_ * i_278_ ) ) >> 16;
+									i_282_ = ( ( i_282_ * i_278_ ) - ( i_280_ * i_277_ ) ) >> 16;
 									i_280_ = i_283_;
 								}
 								i_280_ += i_254_;
 								i_281_ += i_255_;
 								i_282_ += i_256_;
-								int i_284_ = i_282_ * i_252_ + i_280_ * i_253_ >> 16;
-								i_282_ = i_282_ * i_253_ - i_280_ * i_252_ >> 16;
+								int i_284_ = ( ( i_282_ * i_252_ ) + ( i_280_ * i_253_ ) ) >> 16;
+								i_282_ = ( ( i_282_ * i_253_ ) - ( i_280_ * i_252_ ) ) >> 16;
 								i_280_ = i_284_;
-								i_284_ = i_281_ * i_251_ - i_282_ * i_250_ >> 16;
-								i_282_ = i_281_ * i_250_ + i_282_ * i_251_ >> 16;
+								i_284_ = ( ( i_281_ * i_251_ ) - ( i_282_ * i_250_ ) ) >> 16;
+								i_282_ = ( ( i_281_ * i_250_ ) + ( i_282_ * i_251_ ) ) >> 16;
 								i_281_ = i_284_;
 								Model.anIntArray1660[ i_279_ ] = i_282_ - i_259_;
 								if( i_282_ >= 50 ) {
-									Model.anIntArray1658[ i_279_ ] = i_275_ + ( i_280_ << 9 ) / i_282_;
-									Model.anIntArray1659[ i_279_ ] = i_276_ + ( i_281_ << 9 ) / i_282_;
+									Model.anIntArray1658[ i_279_ ] = i_275_ + ( ( i_280_ << 9 ) / i_282_ );
+									Model.anIntArray1659[ i_279_ ] = i_276_ + ( ( i_281_ << 9 ) / i_282_ );
 								} else {
 									Model.anIntArray1658[ i_279_ ] = - 5000;
 									bool = true;
 								}
-								if( bool || texturedTriangleCount > 0 ) {
+								if( bool || ( texturedTriangleCount > 0 ) ) {
 									Model.anIntArray1661[ i_279_ ] = i_280_;
 									Model.anIntArray1662[ i_279_ ] = i_281_;
 									Model.anIntArray1663[ i_279_ ] = i_282_;
@@ -1598,30 +1598,30 @@ public class Model extends Renderable
 			Model.anIntArray1664[ i_286_ ] = 0;
 		}
 		for( int i_287_ = 0; i_287_ < triangleCount; i_287_ ++ ) {
-			if( texturePoints == null || texturePoints[ i_287_ ] != - 1 ) {
+			if( ( texturePoints == null ) || ( texturePoints[ i_287_ ] != - 1 ) ) {
 				int i_288_ = trianglePointsX[ i_287_ ];
 				int i_289_ = trianglePointsY[ i_287_ ];
 				int i_290_ = trianglePointsZ[ i_287_ ];
 				int i_291_ = Model.anIntArray1658[ i_288_ ];
 				int i_292_ = Model.anIntArray1658[ i_289_ ];
 				int i_293_ = Model.anIntArray1658[ i_290_ ];
-				if( bool && ( i_291_ == - 5000 || i_292_ == - 5000 || i_293_ == - 5000 ) ) {
+				if( bool && ( ( i_291_ == - 5000 ) || ( i_292_ == - 5000 ) || ( i_293_ == - 5000 ) ) ) {
 					Model.aBooleanArray1657[ i_287_ ] = true;
-					int i_294_ = ( Model.anIntArray1660[ i_288_ ] + Model.anIntArray1660[ i_289_ ] + Model.anIntArray1660[ i_290_ ] ) / 3 + anInt1646;
+					int i_294_ = ( ( Model.anIntArray1660[ i_288_ ] + Model.anIntArray1660[ i_289_ ] + Model.anIntArray1660[ i_290_ ] ) / 3 ) + anInt1646;
 					Model.anIntArrayArray1665[ i_294_ ][ Model.anIntArray1664[ i_294_ ] ++ ] = i_287_;
 				} else {
 					if( bool_285_ && method434( Model.anInt1678, Model.anInt1679, Model.anIntArray1659[ i_288_ ], Model.anIntArray1659[ i_289_ ], Model.anIntArray1659[ i_290_ ], i_291_, i_292_, i_293_ ) ) {
 						Model.anIntArray1681[ Model.anInt1680 ++ ] = i;
 						bool_285_ = false;
 					}
-					if( ( i_291_ - i_292_ ) * ( Model.anIntArray1659[ i_290_ ] - Model.anIntArray1659[ i_289_ ] ) - ( Model.anIntArray1659[ i_288_ ] - Model.anIntArray1659[ i_289_ ] ) * ( i_293_ - i_292_ ) > 0 ) {
+					if( ( ( ( i_291_ - i_292_ ) * ( Model.anIntArray1659[ i_290_ ] - Model.anIntArray1659[ i_289_ ] ) ) - ( ( Model.anIntArray1659[ i_288_ ] - Model.anIntArray1659[ i_289_ ] ) * ( i_293_ - i_292_ ) ) ) > 0 ) {
 						Model.aBooleanArray1657[ i_287_ ] = false;
-						if( i_291_ < 0 || i_292_ < 0 || i_293_ < 0 || i_291_ > Rasterizer.virtualBottomX || i_292_ > Rasterizer.virtualBottomX || i_293_ > Rasterizer.virtualBottomX ) {
+						if( ( i_291_ < 0 ) || ( i_292_ < 0 ) || ( i_293_ < 0 ) || ( i_291_ > Rasterizer.virtualBottomX ) || ( i_292_ > Rasterizer.virtualBottomX ) || ( i_293_ > Rasterizer.virtualBottomX ) ) {
 							Model.aBooleanArray1656[ i_287_ ] = true;
 						} else {
 							Model.aBooleanArray1656[ i_287_ ] = false;
 						}
-						int i_295_ = ( Model.anIntArray1660[ i_288_ ] + Model.anIntArray1660[ i_289_ ] + Model.anIntArray1660[ i_290_ ] ) / 3 + anInt1646;
+						int i_295_ = ( ( Model.anIntArray1660[ i_288_ ] + Model.anIntArray1660[ i_289_ ] + Model.anIntArray1660[ i_290_ ] ) / 3 ) + anInt1646;
 						Model.anIntArrayArray1665[ i_295_ ][ Model.anIntArray1664[ i_295_ ] ++ ] = i_287_;
 					}
 				}
@@ -1662,15 +1662,15 @@ public class Model extends Renderable
 				}
 			}
 			int i_306_ = 0;
-			if( Model.anIntArray1666[ 1 ] > 0 || Model.anIntArray1666[ 2 ] > 0 ) {
+			if( ( Model.anIntArray1666[ 1 ] > 0 ) || ( Model.anIntArray1666[ 2 ] > 0 ) ) {
 				i_306_ = ( Model.anIntArray1670[ 1 ] + Model.anIntArray1670[ 2 ] ) / ( Model.anIntArray1666[ 1 ] + Model.anIntArray1666[ 2 ] );
 			}
 			int i_307_ = 0;
-			if( Model.anIntArray1666[ 3 ] > 0 || Model.anIntArray1666[ 4 ] > 0 ) {
+			if( ( Model.anIntArray1666[ 3 ] > 0 ) || ( Model.anIntArray1666[ 4 ] > 0 ) ) {
 				i_307_ = ( Model.anIntArray1670[ 3 ] + Model.anIntArray1670[ 4 ] ) / ( Model.anIntArray1666[ 3 ] + Model.anIntArray1666[ 4 ] );
 			}
 			int i_308_ = 0;
-			if( Model.anIntArray1666[ 6 ] > 0 || Model.anIntArray1666[ 8 ] > 0 ) {
+			if( ( Model.anIntArray1666[ 6 ] > 0 ) || ( Model.anIntArray1666[ 8 ] > 0 ) ) {
 				i_308_ = ( Model.anIntArray1670[ 6 ] + Model.anIntArray1670[ 8 ] ) / ( Model.anIntArray1666[ 6 ] + Model.anIntArray1666[ 8 ] );
 			}
 			int i_309_ = 0;
@@ -1695,7 +1695,7 @@ public class Model extends Renderable
 						break;
 					}
 					method432( is[ i_309_ ++ ] );
-					if( i_309_ == i_310_ && is != Model.anIntArrayArray1667[ 11 ] ) {
+					if( ( i_309_ == i_310_ ) && ( is != Model.anIntArrayArray1667[ 11 ] ) ) {
 						i_309_ = 0;
 						i_310_ = Model.anIntArray1666[ 11 ];
 						is = Model.anIntArrayArray1667[ 11 ];
@@ -1712,7 +1712,7 @@ public class Model extends Renderable
 						break;
 					}
 					method432( is[ i_309_ ++ ] );
-					if( i_309_ == i_310_ && is != Model.anIntArrayArray1667[ 11 ] ) {
+					if( ( i_309_ == i_310_ ) && ( is != Model.anIntArrayArray1667[ 11 ] ) ) {
 						i_309_ = 0;
 						i_310_ = Model.anIntArray1666[ 11 ];
 						is = Model.anIntArrayArray1667[ 11 ];
@@ -1724,9 +1724,9 @@ public class Model extends Renderable
 						i_312_ = - 1000;
 					}
 				}
-				while( i_313_ == 5 && i_312_ > i_308_ ) {
+				while( ( i_313_ == 5 ) && ( i_312_ > i_308_ ) ) {
 					method432( is[ i_309_ ++ ] );
-					if( i_309_ == i_310_ && is != Model.anIntArrayArray1667[ 11 ] ) {
+					if( ( i_309_ == i_310_ ) && ( is != Model.anIntArrayArray1667[ 11 ] ) ) {
 						i_309_ = 0;
 						i_310_ = Model.anIntArray1666[ 11 ];
 						is = Model.anIntArrayArray1667[ 11 ];
@@ -1746,7 +1746,7 @@ public class Model extends Renderable
 			}
 			while( i_312_ != - 1000 ) {
 				method432( is[ i_309_ ++ ] );
-				if( i_309_ == i_310_ && is != Model.anIntArrayArray1667[ 11 ] ) {
+				if( ( i_309_ == i_310_ ) && ( is != Model.anIntArrayArray1667[ 11 ] ) ) {
 					i_309_ = 0;
 					is = Model.anIntArrayArray1667[ 11 ];
 					i_310_ = Model.anIntArray1666[ 11 ];
@@ -1824,15 +1824,15 @@ public class Model extends Renderable
 			int i_340_ = anIntArray1627[ i ];
 			if( i_337_ >= 50 ) {
 				int i_341_ = ( 50 - i_335_ ) * Model.anIntArray1685[ i_337_ - i_335_ ];
-				Model.anIntArray1671[ i_331_ ] = i_329_ + ( i_338_ + ( ( Model.anIntArray1661[ i_334_ ] - i_338_ ) * i_341_ >> 16 ) << 9 ) / 50;
-				Model.anIntArray1672[ i_331_ ] = i_330_ + ( i_339_ + ( ( Model.anIntArray1662[ i_334_ ] - i_339_ ) * i_341_ >> 16 ) << 9 ) / 50;
-				Model.anIntArray1673[ i_331_ ++ ] = i_340_ + ( ( anIntArray1629[ i ] - i_340_ ) * i_341_ >> 16 );
+				Model.anIntArray1671[ i_331_ ] = i_329_ + ( ( ( i_338_ + ( ( ( Model.anIntArray1661[ i_334_ ] - i_338_ ) * i_341_ ) >> 16 ) ) << 9 ) / 50 );
+				Model.anIntArray1672[ i_331_ ] = i_330_ + ( ( ( i_339_ + ( ( ( Model.anIntArray1662[ i_334_ ] - i_339_ ) * i_341_ ) >> 16 ) ) << 9 ) / 50 );
+				Model.anIntArray1673[ i_331_ ++ ] = i_340_ + ( ( ( anIntArray1629[ i ] - i_340_ ) * i_341_ ) >> 16 );
 			}
 			if( i_336_ >= 50 ) {
 				int i_342_ = ( 50 - i_335_ ) * Model.anIntArray1685[ i_336_ - i_335_ ];
-				Model.anIntArray1671[ i_331_ ] = i_329_ + ( i_338_ + ( ( Model.anIntArray1661[ i_333_ ] - i_338_ ) * i_342_ >> 16 ) << 9 ) / 50;
-				Model.anIntArray1672[ i_331_ ] = i_330_ + ( i_339_ + ( ( Model.anIntArray1662[ i_333_ ] - i_339_ ) * i_342_ >> 16 ) << 9 ) / 50;
-				Model.anIntArray1673[ i_331_ ++ ] = i_340_ + ( ( anIntArray1628[ i ] - i_340_ ) * i_342_ >> 16 );
+				Model.anIntArray1671[ i_331_ ] = i_329_ + ( ( ( i_338_ + ( ( ( Model.anIntArray1661[ i_333_ ] - i_338_ ) * i_342_ ) >> 16 ) ) << 9 ) / 50 );
+				Model.anIntArray1672[ i_331_ ] = i_330_ + ( ( ( i_339_ + ( ( ( Model.anIntArray1662[ i_333_ ] - i_339_ ) * i_342_ ) >> 16 ) ) << 9 ) / 50 );
+				Model.anIntArray1673[ i_331_ ++ ] = i_340_ + ( ( ( anIntArray1628[ i ] - i_340_ ) * i_342_ ) >> 16 );
 			}
 		}
 		if( i_336_ >= 50 ) {
@@ -1845,15 +1845,15 @@ public class Model extends Renderable
 			int i_345_ = anIntArray1628[ i ];
 			if( i_335_ >= 50 ) {
 				int i_346_ = ( 50 - i_336_ ) * Model.anIntArray1685[ i_335_ - i_336_ ];
-				Model.anIntArray1671[ i_331_ ] = i_329_ + ( i_343_ + ( ( Model.anIntArray1661[ i_332_ ] - i_343_ ) * i_346_ >> 16 ) << 9 ) / 50;
-				Model.anIntArray1672[ i_331_ ] = i_330_ + ( i_344_ + ( ( Model.anIntArray1662[ i_332_ ] - i_344_ ) * i_346_ >> 16 ) << 9 ) / 50;
-				Model.anIntArray1673[ i_331_ ++ ] = i_345_ + ( ( anIntArray1627[ i ] - i_345_ ) * i_346_ >> 16 );
+				Model.anIntArray1671[ i_331_ ] = i_329_ + ( ( ( i_343_ + ( ( ( Model.anIntArray1661[ i_332_ ] - i_343_ ) * i_346_ ) >> 16 ) ) << 9 ) / 50 );
+				Model.anIntArray1672[ i_331_ ] = i_330_ + ( ( ( i_344_ + ( ( ( Model.anIntArray1662[ i_332_ ] - i_344_ ) * i_346_ ) >> 16 ) ) << 9 ) / 50 );
+				Model.anIntArray1673[ i_331_ ++ ] = i_345_ + ( ( ( anIntArray1627[ i ] - i_345_ ) * i_346_ ) >> 16 );
 			}
 			if( i_337_ >= 50 ) {
 				int i_347_ = ( 50 - i_336_ ) * Model.anIntArray1685[ i_337_ - i_336_ ];
-				Model.anIntArray1671[ i_331_ ] = i_329_ + ( i_343_ + ( ( Model.anIntArray1661[ i_334_ ] - i_343_ ) * i_347_ >> 16 ) << 9 ) / 50;
-				Model.anIntArray1672[ i_331_ ] = i_330_ + ( i_344_ + ( ( Model.anIntArray1662[ i_334_ ] - i_344_ ) * i_347_ >> 16 ) << 9 ) / 50;
-				Model.anIntArray1673[ i_331_ ++ ] = i_345_ + ( ( anIntArray1629[ i ] - i_345_ ) * i_347_ >> 16 );
+				Model.anIntArray1671[ i_331_ ] = i_329_ + ( ( ( i_343_ + ( ( ( Model.anIntArray1661[ i_334_ ] - i_343_ ) * i_347_ ) >> 16 ) ) << 9 ) / 50 );
+				Model.anIntArray1672[ i_331_ ] = i_330_ + ( ( ( i_344_ + ( ( ( Model.anIntArray1662[ i_334_ ] - i_344_ ) * i_347_ ) >> 16 ) ) << 9 ) / 50 );
+				Model.anIntArray1673[ i_331_ ++ ] = i_345_ + ( ( ( anIntArray1629[ i ] - i_345_ ) * i_347_ ) >> 16 );
 			}
 		}
 		if( i_337_ >= 50 ) {
@@ -1866,15 +1866,15 @@ public class Model extends Renderable
 			int i_350_ = anIntArray1629[ i ];
 			if( i_336_ >= 50 ) {
 				int i_351_ = ( 50 - i_337_ ) * Model.anIntArray1685[ i_336_ - i_337_ ];
-				Model.anIntArray1671[ i_331_ ] = i_329_ + ( i_348_ + ( ( Model.anIntArray1661[ i_333_ ] - i_348_ ) * i_351_ >> 16 ) << 9 ) / 50;
-				Model.anIntArray1672[ i_331_ ] = i_330_ + ( i_349_ + ( ( Model.anIntArray1662[ i_333_ ] - i_349_ ) * i_351_ >> 16 ) << 9 ) / 50;
-				Model.anIntArray1673[ i_331_ ++ ] = i_350_ + ( ( anIntArray1628[ i ] - i_350_ ) * i_351_ >> 16 );
+				Model.anIntArray1671[ i_331_ ] = i_329_ + ( ( ( i_348_ + ( ( ( Model.anIntArray1661[ i_333_ ] - i_348_ ) * i_351_ ) >> 16 ) ) << 9 ) / 50 );
+				Model.anIntArray1672[ i_331_ ] = i_330_ + ( ( ( i_349_ + ( ( ( Model.anIntArray1662[ i_333_ ] - i_349_ ) * i_351_ ) >> 16 ) ) << 9 ) / 50 );
+				Model.anIntArray1673[ i_331_ ++ ] = i_350_ + ( ( ( anIntArray1628[ i ] - i_350_ ) * i_351_ ) >> 16 );
 			}
 			if( i_335_ >= 50 ) {
 				int i_352_ = ( 50 - i_337_ ) * Model.anIntArray1685[ i_335_ - i_337_ ];
-				Model.anIntArray1671[ i_331_ ] = i_329_ + ( i_348_ + ( ( Model.anIntArray1661[ i_332_ ] - i_348_ ) * i_352_ >> 16 ) << 9 ) / 50;
-				Model.anIntArray1672[ i_331_ ] = i_330_ + ( i_349_ + ( ( Model.anIntArray1662[ i_332_ ] - i_349_ ) * i_352_ >> 16 ) << 9 ) / 50;
-				Model.anIntArray1673[ i_331_ ++ ] = i_350_ + ( ( anIntArray1627[ i ] - i_350_ ) * i_352_ >> 16 );
+				Model.anIntArray1671[ i_331_ ] = i_329_ + ( ( ( i_348_ + ( ( ( Model.anIntArray1661[ i_332_ ] - i_348_ ) * i_352_ ) >> 16 ) ) << 9 ) / 50 );
+				Model.anIntArray1672[ i_331_ ] = i_330_ + ( ( ( i_349_ + ( ( ( Model.anIntArray1662[ i_332_ ] - i_349_ ) * i_352_ ) >> 16 ) ) << 9 ) / 50 );
+				Model.anIntArray1673[ i_331_ ++ ] = i_350_ + ( ( ( anIntArray1627[ i ] - i_350_ ) * i_352_ ) >> 16 );
 			}
 		}
 		int i_353_ = Model.anIntArray1671[ 0 ];
@@ -1883,10 +1883,10 @@ public class Model extends Renderable
 		int i_356_ = Model.anIntArray1672[ 0 ];
 		int i_357_ = Model.anIntArray1672[ 1 ];
 		int i_358_ = Model.anIntArray1672[ 2 ];
-		if( ( i_353_ - i_354_ ) * ( i_358_ - i_357_ ) - ( i_356_ - i_357_ ) * ( i_355_ - i_354_ ) > 0 ) {
+		if( ( ( ( i_353_ - i_354_ ) * ( i_358_ - i_357_ ) ) - ( ( i_356_ - i_357_ ) * ( i_355_ - i_354_ ) ) ) > 0 ) {
 			Rasterizer3D.aBoolean1482 = false;
 			if( i_331_ == 3 ) {
-				if( i_353_ < 0 || i_354_ < 0 || i_355_ < 0 || i_353_ > Rasterizer.virtualBottomX || i_354_ > Rasterizer.virtualBottomX || i_355_ > Rasterizer.virtualBottomX ) {
+				if( ( i_353_ < 0 ) || ( i_354_ < 0 ) || ( i_355_ < 0 ) || ( i_353_ > Rasterizer.virtualBottomX ) || ( i_354_ > Rasterizer.virtualBottomX ) || ( i_355_ > Rasterizer.virtualBottomX ) ) {
 					Rasterizer3D.aBoolean1482 = true;
 				}
 				int i_359_;
@@ -1914,7 +1914,7 @@ public class Model extends Renderable
 				}
 			}
 			if( i_331_ == 4 ) {
-				if( i_353_ < 0 || i_354_ < 0 || i_355_ < 0 || i_353_ > Rasterizer.virtualBottomX || i_354_ > Rasterizer.virtualBottomX || i_355_ > Rasterizer.virtualBottomX || Model.anIntArray1671[ 3 ] < 0 || Model.anIntArray1671[ 3 ] > Rasterizer.virtualBottomX ) {
+				if( ( i_353_ < 0 ) || ( i_354_ < 0 ) || ( i_355_ < 0 ) || ( i_353_ > Rasterizer.virtualBottomX ) || ( i_354_ > Rasterizer.virtualBottomX ) || ( i_355_ > Rasterizer.virtualBottomX ) || ( Model.anIntArray1671[ 3 ] < 0 ) || ( Model.anIntArray1671[ 3 ] > Rasterizer.virtualBottomX ) ) {
 					Rasterizer3D.aBoolean1482 = true;
 				}
 				int i_368_;
@@ -1952,16 +1952,16 @@ public class Model extends Renderable
 
 	private final boolean method434( int i, int i_378_, int i_379_, int i_380_, int i_381_, int i_382_, int i_383_, int i_384_ )
 	{
-		if( i_378_ < i_379_ && i_378_ < i_380_ && i_378_ < i_381_ ) {
+		if( ( i_378_ < i_379_ ) && ( i_378_ < i_380_ ) && ( i_378_ < i_381_ ) ) {
 			return false;
 		}
-		if( i_378_ > i_379_ && i_378_ > i_380_ && i_378_ > i_381_ ) {
+		if( ( i_378_ > i_379_ ) && ( i_378_ > i_380_ ) && ( i_378_ > i_381_ ) ) {
 			return false;
 		}
-		if( i < i_382_ && i < i_383_ && i < i_384_ ) {
+		if( ( i < i_382_ ) && ( i < i_383_ ) && ( i < i_384_ ) ) {
 			return false;
 		}
-		if( i > i_382_ && i > i_383_ && i > i_384_ ) {
+		if( ( i > i_382_ ) && ( i > i_383_ ) && ( i > i_384_ ) ) {
 			return false;
 		}
 		return true;

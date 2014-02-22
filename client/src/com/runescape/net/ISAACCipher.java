@@ -90,7 +90,7 @@ public final class ISAACCipher
 		int i, j, x, y;
 
 		b += ++ c;
-		for( i = 0, j = ISAACCipher.SIZE / 2; i < ISAACCipher.SIZE / 2; ) {
+		for( i = 0, j = ISAACCipher.SIZE / 2; i < ( ISAACCipher.SIZE / 2 ); ) {
 			x = mem[ i ];
 			a ^= a << 13;
 			a += mem[ j ++ ];
@@ -116,7 +116,7 @@ public final class ISAACCipher
 			rsl[ i ++ ] = b = mem[ ( ( y >> ISAACCipher.SIZEL ) & ISAACCipher.MASK ) >> 2 ] + x;
 		}
 
-		for( j = 0; j < ISAACCipher.SIZE / 2; ) {
+		for( j = 0; j < ( ISAACCipher.SIZE / 2 ); ) {
 			x = mem[ i ];
 			a ^= a << 13;
 			a += mem[ j ++ ];

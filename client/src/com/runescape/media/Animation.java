@@ -22,7 +22,7 @@ public class Animation
 	{
 		Animation.cache = new Animation[ i + 1 ];
 		Animation.aBooleanArray45 = new boolean[ i + 1 ];
-		for( int i_0_ = 0; i_0_ < i + 1; i_0_ ++ ) {
+		for( int i_0_ = 0; i_0_ < ( i + 1 ); i_0_ ++ ) {
 			Animation.aBooleanArray45[ i_0_ ] = true;
 		}
 	}

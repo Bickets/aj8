@@ -24,6 +24,10 @@ import com.runescape.media.ProducingGraphicsBuffer;
 public class GameShell extends Applet implements Runnable, MouseListener, MouseMotionListener, KeyListener, FocusListener, WindowListener
 {
 
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 3509040447366035419L;
 	private int gameState;
 	private int deltime = 20;
 	public int mindel = 1;
@@ -110,14 +114,14 @@ public class GameShell extends Applet implements Runnable, MouseListener, MouseM
 			del = 1;
 			currentTime = System.currentTimeMillis();
 			if( currentTime > optims[ opos ] ) {
-				ratio = ( int )( 2560 * deltime / ( currentTime - optims[ opos ] ) );
+				ratio = ( int )( ( 2560 * deltime ) / ( currentTime - optims[ opos ] ) );
 			}
 			if( ratio < 25 ) {
 				ratio = 25;
 			}
 			if( ratio > 256 ) {
 				ratio = 256;
-				del = ( int )( deltime - ( currentTime - optims[ opos ] ) / 10L );
+				del = ( int )( deltime - ( ( currentTime - optims[ opos ] ) / 10L ) );
 			}
 			if( del > deltime ) {
 				del = deltime;
@@ -150,13 +154,13 @@ public class GameShell extends Applet implements Runnable, MouseListener, MouseM
 			}
 			count &= 0xff;
 			if( deltime > 0 ) {
-				fps = 1000 * ratio / ( deltime * 256 );
+				fps = ( 1000 * ratio ) / ( deltime * 256 );
 			}
 			repaintGame();
 			if( dumpRequested ) {
 				System.out.println( "ntime:" + currentTime );
 				for( int i = 0; i < 10; i ++ ) {
-					int optim = ( opos - i - 1 + 20 ) % 10;
+					int optim = ( ( opos - i - 1 ) + 20 ) % 10;
 					System.out.println( "otim" + optim + ":" + optims[ optim ] );
 				}
 				System.out.println( "fps:" + fps + " ratio:" + ratio + " count:" + count );
@@ -372,8 +376,8 @@ public class GameShell extends Applet implements Runnable, MouseListener, MouseM
 		if( keyCode == 10 ) {
 			keyChar = 10;
 		}
-		if( keyCode >= 112 && keyCode <= 123 ) {
-			keyChar = 1008 + keyCode - 112;
+		if( ( keyCode >= 112 ) && ( keyCode <= 123 ) ) {
+			keyChar = ( 1008 + keyCode ) - 112;
 		}
 		if( keyCode == 36 ) {
 			keyChar = 1000;
@@ -387,12 +391,12 @@ public class GameShell extends Applet implements Runnable, MouseListener, MouseM
 		if( keyCode == 34 ) {
 			keyChar = 1003;
 		}
-		if( keyChar > 0 && keyChar < 128 ) {
+		if( ( keyChar > 0 ) && ( keyChar < 128 ) ) {
 			keyStatus[ keyChar ] = 1;
 		}
 		if( keyChar > 4 ) {
 			inputBuffer[ writeIndex ] = keyChar;
-			writeIndex = writeIndex + 1 & 0x7f;
+			writeIndex = ( writeIndex + 1 ) & 0x7f;
 		}
 	}
 
@@ -433,7 +437,7 @@ public class GameShell extends Applet implements Runnable, MouseListener, MouseM
 		if( keyCode == 10 ) {
 			keyChar = '\n';
 		}
-		if( keyChar > 0 && keyChar < '\u0080' ) {
+		if( ( keyChar > 0 ) && ( keyChar < '\u0080' ) ) {
 			keyStatus[ keyChar ] = 0;
 		}
 	}
@@ -451,7 +455,7 @@ public class GameShell extends Applet implements Runnable, MouseListener, MouseM
 		int character = - 1;
 		if( writeIndex != readIndex ) {
 			character = inputBuffer[ readIndex ];
-			readIndex = readIndex + 1 & 0x7f;
+			readIndex = ( readIndex + 1 ) & 0x7f;
 		}
 		return character;
 	}
@@ -582,12 +586,12 @@ public class GameShell extends Applet implements Runnable, MouseListener, MouseM
 			clearScreen = false;
 		}
 		Color color = new Color( 140, 17, 17 );
-		int centerHeight = height / 2 - 18;
+		int centerHeight = ( height / 2 ) - 18;
 		gameGraphics.setColor( color );
-		gameGraphics.drawRect( width / 2 - 152, centerHeight, 304, 34 );
-		gameGraphics.fillRect( width / 2 - 150, centerHeight + 2, percentage * 3, 30 );
+		gameGraphics.drawRect( ( width / 2 ) - 152, centerHeight, 304, 34 );
+		gameGraphics.fillRect( ( width / 2 ) - 150, centerHeight + 2, percentage * 3, 30 );
 		gameGraphics.setColor( Color.black );
-		gameGraphics.fillRect( width / 2 - 150 + percentage * 3, centerHeight + 2, 300 - percentage * 3, 30 );
+		gameGraphics.fillRect( ( ( width / 2 ) - 150 ) + ( percentage * 3 ), centerHeight + 2, 300 - ( percentage * 3 ), 30 );
 		gameGraphics.setFont( helveticaBold );
 		gameGraphics.setColor( Color.white );
 		gameGraphics.drawString( string, ( width - fontmetrics.stringWidth( string ) ) / 2, centerHeight + 22 );

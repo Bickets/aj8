@@ -22,7 +22,7 @@ public class HashTable
 
 	public Node get( long nodeId )
 	{
-		Node node = cache[ ( int )( nodeId & size - 1 ) ];
+		Node node = cache[ ( int )( nodeId & ( size - 1 ) ) ];
 		for( Node nodePrevious_ = node.previousNode; nodePrevious_ != node; nodePrevious_ = nodePrevious_.previousNode ) {
 			if( nodePrevious_.nodeId == nodeId ) {
 				return nodePrevious_;
@@ -37,7 +37,7 @@ public class HashTable
 		if( node.nextNode != null ) {
 			node.remove();
 		}
-		Node cachedNode = cache[ ( int )( nodeId & size - 1 ) ];
+		Node cachedNode = cache[ ( int )( nodeId & ( size - 1 ) ) ];
 		node.nextNode = cachedNode.nextNode;
 		node.previousNode = cachedNode;
 		node.nextNode.previousNode = node;

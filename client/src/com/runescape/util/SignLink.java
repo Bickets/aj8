@@ -85,7 +85,7 @@ public class SignLink implements Runnable
 
 		try {
 			File file = new File( directory + "main_file_cache.dat" );
-			if( file.exists() && file.length() > 0x3200000 ) {
+			if( file.exists() && ( file.length() > 0x3200000 ) ) {
 				file.delete();
 			}
 			SignLink.cacheDat = new RandomAccessFile( directory + "main_file_cache.dat", "rw" );
@@ -163,7 +163,7 @@ public class SignLink implements Runnable
 	{
 		try {
 			File file = new File( directory + "uid.dat" );
-			if( ! file.exists() || file.length() < 4L ) {
+			if( ! file.exists() || ( file.length() < 4L ) ) {
 				DataOutputStream out = new DataOutputStream( new FileOutputStream( directory + "uid.dat" ) );
 				out.writeInt( ( int )( Math.random() * 9.9999999E7 ) );
 				out.close();
@@ -261,7 +261,7 @@ public class SignLink implements Runnable
 
 	public static final synchronized void midiSave( byte[] buffer, int length )
 	{
-		if( length <= 0x1E8480 && SignLink.saveRequest == null ) {
+		if( ( length <= 0x1E8480 ) && ( SignLink.saveRequest == null ) ) {
 			SignLink.midiPosition = ( SignLink.midiPosition + 1 ) % 5;
 			SignLink.saveLength = length;
 			SignLink.saveBuffer = buffer;

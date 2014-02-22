@@ -27,13 +27,13 @@ public class Buffer extends CacheableNode
 	{
 		synchronized( Buffer.mode1Pool ) {
 			Buffer buffer = null;
-			if( sizeMode == 0 && Buffer.availableMode0Buffers > 0 ) {
+			if( ( sizeMode == 0 ) && ( Buffer.availableMode0Buffers > 0 ) ) {
 				Buffer.availableMode0Buffers -- ;
 				buffer = ( Buffer )Buffer.mode0Pool.popTail();
-			} else if( sizeMode == 1 && Buffer.availableMode1Buffers > 0 ) {
+			} else if( ( sizeMode == 1 ) && ( Buffer.availableMode1Buffers > 0 ) ) {
 				Buffer.availableMode1Buffers -- ;
 				buffer = ( Buffer )Buffer.mode1Pool.popTail();
-			} else if( sizeMode == 2 && Buffer.availableMode2Buffers > 0 ) {
+			} else if( ( sizeMode == 2 ) && ( Buffer.availableMode2Buffers > 0 ) ) {
 				Buffer.availableMode2Buffers -- ;
 				buffer = ( Buffer )Buffer.mode2Pool.popTail();
 			}
@@ -57,8 +57,8 @@ public class Buffer extends CacheableNode
 
 	public Buffer( byte[] buffer )
 	{
-		this.payload = buffer;
-		this.offset = 0;
+		payload = buffer;
+		offset = 0;
 	}
 
 
@@ -137,7 +137,7 @@ public class Buffer extends CacheableNode
 
 	public void putBytes( byte[] src, int length, int offset )
 	{
-		for( int i = offset; i < offset + length; i ++ ) {
+		for( int i = offset; i < ( offset + length ); i ++ ) {
 			payload[ this.offset ++ ] = src[ i ];
 		}
 	}
@@ -225,7 +225,7 @@ public class Buffer extends CacheableNode
 			/* empty */
 		}
 		byte[] value = new byte[ offset - originalOffset - 1 ];
-		for( int offset = originalOffset; offset < this.offset - 1; offset ++ ) {
+		for( int offset = originalOffset; offset < ( this.offset - 1 ); offset ++ ) {
 			value[ offset - originalOffset ] = payload[ offset ];
 		}
 		return value;
@@ -234,7 +234,7 @@ public class Buffer extends CacheableNode
 
 	public void getBytes( byte[] src, int offset, int length )
 	{
-		for( int i = offset; i < offset + length; i ++ ) {
+		for( int i = offset; i < ( offset + length ); i ++ ) {
 			src[ i ] = payload[ this.offset ++ ];
 		}
 	}
@@ -253,13 +253,13 @@ public class Buffer extends CacheableNode
 		int value = 0;
 		bitOffset += size;
 		for( ; size > bitsToRead; bitsToRead = 8 ) {
-			value += ( payload[ byteOffset ++ ] & Buffer.BIT_MASKS[ bitsToRead ] ) << size - bitsToRead;
+			value += ( payload[ byteOffset ++ ] & Buffer.BIT_MASKS[ bitsToRead ] ) << ( size - bitsToRead );
 			size -= bitsToRead;
 		}
 		if( size == bitsToRead ) {
 			value += payload[ byteOffset ] & Buffer.BIT_MASKS[ bitsToRead ];
 		} else {
-			value += payload[ byteOffset ] >> bitsToRead - size & Buffer.BIT_MASKS[ size ];
+			value += ( payload[ byteOffset ] >> ( bitsToRead - size ) ) & Buffer.BIT_MASKS[ size ];
 		}
 		return value;
 	}
@@ -322,7 +322,7 @@ public class Buffer extends CacheableNode
 
 	public int getUnsignedByteA()
 	{
-		return payload[ offset ++ ] - 128 & 0xff;
+		return ( payload[ offset ++ ] - 128 ) & 0xff;
 	}
 
 
@@ -334,7 +334,7 @@ public class Buffer extends CacheableNode
 
 	public int getUnsignedByteS()
 	{
-		return 128 - payload[ offset ++ ] & 0xff;
+		return ( 128 - payload[ offset ++ ] ) & 0xff;
 	}
 
 
@@ -367,14 +367,14 @@ public class Buffer extends CacheableNode
 	public int getUnsignedLEShortA()
 	{
 		offset += 2;
-		return ( ( payload[ offset - 2 ] & 0xff ) << 8 ) + ( payload[ offset - 1 ] - 128 & 0xff );
+		return ( ( payload[ offset - 2 ] & 0xff ) << 8 ) + ( ( payload[ offset - 1 ] - 128 ) & 0xff );
 	}
 
 
 	public int getUnsignedShortA()
 	{
 		offset += 2;
-		return ( ( payload[ offset - 1 ] & 0xff ) << 8 ) + ( payload[ offset - 2 ] - 128 & 0xff );
+		return ( ( payload[ offset - 1 ] & 0xff ) << 8 ) + ( ( payload[ offset - 2 ] - 128 ) & 0xff );
 	}
 
 
@@ -392,7 +392,7 @@ public class Buffer extends CacheableNode
 	public int getForceLEShortA()
 	{
 		offset += 2;
-		int value = ( ( payload[ offset - 1 ] & 0xff ) << 8 ) + ( payload[ offset - 2 ] - 128 & 0xff );
+		int value = ( ( payload[ offset - 1 ] & 0xff ) << 8 ) + ( ( payload[ offset - 2 ] - 128 ) & 0xff );
 		if( value > 32767 ) {
 			value -= 65536;
 		}
@@ -416,7 +416,7 @@ public class Buffer extends CacheableNode
 
 	public void putBytesA( int length, byte[] src, int offset )
 	{
-		for( int index = length + offset - 1; index >= length; index -- ) {
+		for( int index = ( length + offset ) - 1; index >= length; index -- ) {
 			payload[ this.offset ++ ] = ( byte )( src[ index ] + 128 );
 		}
 	}
@@ -424,7 +424,7 @@ public class Buffer extends CacheableNode
 
 	public void getBytes( int length, int offset, byte[] src )
 	{
-		for( int index = offset + length - 1; index >= offset; index -- ) {
+		for( int index = ( offset + length ) - 1; index >= offset; index -- ) {
 			src[ index ] = payload[ this.offset ++ ];
 		}
 	}
@@ -434,7 +434,7 @@ public class Buffer extends CacheableNode
 			int generatedCRC = index;
 			for( int count = 0; count < 8; count ++ ) {
 				if( ( generatedCRC & 0x1 ) == 1 ) {
-					generatedCRC = generatedCRC >>> 1 ^ ~ 0x12477cdf;
+					generatedCRC = ( generatedCRC >>> 1 ) ^ ~ 0x12477cdf;
 				} else {
 					generatedCRC >>>= 1;
 				}

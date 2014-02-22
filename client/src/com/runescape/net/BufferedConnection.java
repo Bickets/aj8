@@ -29,8 +29,8 @@ public class BufferedConnection implements Runnable
 		this.socket = socket;
 		this.socket.setSoTimeout( 30000 );
 		this.socket.setTcpNoDelay( true );
-		this.inputStream = socket.getInputStream();
-		this.outputStream = socket.getOutputStream();
+		inputStream = socket.getInputStream();
+		outputStream = socket.getOutputStream();
 	}
 
 
@@ -52,7 +52,7 @@ public class BufferedConnection implements Runnable
 		}
 		writing = false;
 		synchronized( this ) {
-			this.notify();
+			notify();
 		}
 		buffer = null;
 	}
@@ -105,7 +105,7 @@ public class BufferedConnection implements Runnable
 				for( int position = 0; position < length; position ++ ) {
 					buffer[ bufferPosition ] = src[ position + offset ];
 					bufferPosition = ( bufferPosition + 1 ) % 5000;
-					if( bufferPosition == ( writerPosition + 4900 ) % 5000 ) {
+					if( bufferPosition == ( ( writerPosition + 4900 ) % 5000 ) ) {
 						throw new IOException( "buffer overflow" );
 					}
 				}
@@ -113,7 +113,7 @@ public class BufferedConnection implements Runnable
 					writing = true;
 					gameStub.startRunnable( this, 3 );
 				}
-				this.notify();
+				notify();
 			}
 		}
 	}

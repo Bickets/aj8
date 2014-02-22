@@ -31,7 +31,7 @@ public class GameObject extends Renderable
 		int animation = - 1;
 		if( animationSequence != null ) {
 			int step = Game.currentCycle - animationCycleDelay;
-			if( step > 100 && animationSequence.frameStep > 0 ) {
+			if( ( step > 100 ) && ( animationSequence.frameStep > 0 ) ) {
 				step = 100;
 			}
 			while( step > animationSequence.getFrameLength( animationFrame ) ) {
@@ -39,7 +39,7 @@ public class GameObject extends Renderable
 				animationFrame ++ ;
 				if( animationFrame >= animationSequence.frameCount ) {
 					animationFrame -= animationSequence.frameStep;
-					if( animationFrame < 0 || animationFrame >= animationSequence.frameCount ) {
+					if( ( animationFrame < 0 ) || ( animationFrame >= animationSequence.frameCount ) ) {
 						animationSequence = null;
 						break;
 					}
@@ -73,11 +73,11 @@ public class GameObject extends Renderable
 			int leastSignificantBit = varbit.leastSignificantBit;
 			int mostSignificantBit = varbit.mostSignificantBit;
 			int bit = Game.BITFIELD_MAX_VALUE[ mostSignificantBit - leastSignificantBit ];
-			child = GameObject.client.widgetSettings[ configId ] >> leastSignificantBit & bit;
+			child = ( GameObject.client.widgetSettings[ configId ] >> leastSignificantBit ) & bit;
 		} else if( configId != - 1 ) {
 			child = GameObject.client.widgetSettings[ configId ];
 		}
-		if( child < 0 || child >= childrenIds.length || childrenIds[ child ] == - 1 ) {
+		if( ( child < 0 ) || ( child >= childrenIds.length ) || ( childrenIds[ child ] == - 1 ) ) {
 			return null;
 		}
 		return GameObjectDefinition.getDefinition( childrenIds[ child ] );
@@ -97,7 +97,7 @@ public class GameObject extends Renderable
 			animationSequence = AnimationSequence.cache[ animationId ];
 			animationFrame = 0;
 			animationCycleDelay = Game.currentCycle;
-			if( bool && animationSequence.frameStep != - 1 ) {
+			if( bool && ( animationSequence.frameStep != - 1 ) ) {
 				animationFrame = ( int )( Math.random() * animationSequence.frameCount );
 				animationCycleDelay -= ( int )( Math.random() * animationSequence.getFrameLength( animationFrame ) );
 			}

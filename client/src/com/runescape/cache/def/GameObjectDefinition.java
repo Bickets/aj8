@@ -196,9 +196,9 @@ public class GameObjectDefinition
 			for( int vertex = 0; vertex < model.vertexCount; vertex ++ ) {
 				int vertexX = model.verticesX[ vertex ];
 				int vertexY = model.verticesZ[ vertex ];
-				int i_17_ = i_8_ + ( i_9_ - i_8_ ) * ( vertexX + 64 ) / 128;
-				int i_18_ = i_11_ + ( i_10_ - i_11_ ) * ( vertexX + 64 ) / 128;
-				int i_19_ = i_17_ + ( i_18_ - i_17_ ) * ( vertexY + 64 ) / 128;
+				int i_17_ = i_8_ + ( ( ( i_9_ - i_8_ ) * ( vertexX + 64 ) ) / 128 );
+				int i_18_ = i_11_ + ( ( ( i_10_ - i_11_ ) * ( vertexX + 64 ) ) / 128 );
+				int i_19_ = i_17_ + ( ( ( i_18_ - i_17_ ) * ( vertexY + 64 ) ) / 128 );
 				model.verticesY[ vertex ] += i_19_ - i_13_;
 			}
 			model.normalise( false );
@@ -229,11 +229,11 @@ public class GameObjectDefinition
 			int leastSignificantBit = varbit.leastSignificantBit;
 			int mostSignificantBit = varbit.mostSignificantBit;
 			int bit = Game.BITFIELD_MAX_VALUE[ mostSignificantBit - leastSignificantBit ];
-			child = GameObjectDefinition.client.widgetSettings[ configId ] >> leastSignificantBit & bit;
+			child = ( GameObjectDefinition.client.widgetSettings[ configId ] >> leastSignificantBit ) & bit;
 		} else if( configId != - 1 ) {
 			child = GameObjectDefinition.client.widgetSettings[ configId ];
 		}
-		if( child < 0 || child >= childrenIds.length || childrenIds[ child ] == - 1 ) {
+		if( ( child < 0 ) || ( child >= childrenIds.length ) || ( childrenIds[ child ] == - 1 ) ) {
 			return null;
 		}
 		return GameObjectDefinition.getDefinition( childrenIds[ child ] );
@@ -256,7 +256,7 @@ public class GameObjectDefinition
 			if( modelIds == null ) {
 				return null;
 			}
-			boolean mirror = unknown3 ^ face > 3;
+			boolean mirror = unknown3 ^ ( face > 3 );
 			int modelCount = modelIds.length;
 			for( int modelId = 0; modelId < modelCount; modelId ++ ) {
 				int subModelId = modelIds[ modelId ];
@@ -298,7 +298,7 @@ public class GameObjectDefinition
 				return model;
 			}
 			int modelId = modelIds[ modelType ];
-			boolean mirror = unknown3 ^ face > 3;
+			boolean mirror = unknown3 ^ ( face > 3 );
 			if( mirror ) {
 				modelId += 65536;
 			}
@@ -315,18 +315,18 @@ public class GameObjectDefinition
 			}
 		}
 		boolean scale;
-		if( modelSizeX != 128 || modelSizeY != 128 || modelSizeZ != 128 ) {
+		if( ( modelSizeX != 128 ) || ( modelSizeY != 128 ) || ( modelSizeZ != 128 ) ) {
 			scale = true;
 		} else {
 			scale = false;
 		}
 		boolean needsTranslation;
-		if( translateX != 0 || translateY != 0 || translateZ != 0 ) {
+		if( ( translateX != 0 ) || ( translateY != 0 ) || ( translateZ != 0 ) ) {
 			needsTranslation = true;
 		} else {
 			needsTranslation = false;
 		}
-		Model animtedModel = new Model( modifiedModelColors == null, Animation.exists( animationId ), face == 0 && animationId == - 1 && ! scale && ! needsTranslation, subModel );
+		Model animtedModel = new Model( modifiedModelColors == null, Animation.exists( animationId ), ( face == 0 ) && ( animationId == - 1 ) && ! scale && ! needsTranslation, subModel );
 		if( animationId != - 1 ) {
 			animtedModel.createBones();
 			animtedModel.applyTransform( animationId );
@@ -347,7 +347,7 @@ public class GameObjectDefinition
 		if( needsTranslation ) {
 			animtedModel.translate( translateX, translateY, translateZ );
 		}
-		animtedModel.applyLighting( 64 + modelLightFalloff, 768 + modelLightAmbient * 5, - 50, - 10, - 50, ! nonFlatShading );
+		animtedModel.applyLighting( 64 + modelLightFalloff, 768 + ( modelLightAmbient * 5 ), - 50, - 10, - 50, ! nonFlatShading );
 		if( solidInt == 1 ) {
 			animtedModel.anInt1647 = animtedModel.modelHeight;
 		}
@@ -367,7 +367,7 @@ public class GameObjectDefinition
 			if( attributeId == 1 ) {
 				int modelCount = buffer.getUnsignedByte();
 				if( modelCount > 0 ) {
-					if( modelIds == null || GameObjectDefinition.lowMemory ) {
+					if( ( modelIds == null ) || GameObjectDefinition.lowMemory ) {
 						modelTypes = new int[ modelCount ];
 						modelIds = new int[ modelCount ];
 						for( int model = 0; model < modelCount; model ++ ) {
@@ -385,7 +385,7 @@ public class GameObjectDefinition
 			} else if( attributeId == 5 ) {
 				int modelCount = buffer.getUnsignedByte();
 				if( modelCount > 0 ) {
-					if( modelIds == null || GameObjectDefinition.lowMemory ) {
+					if( ( modelIds == null ) || GameObjectDefinition.lowMemory ) {
 						modelTypes = null;
 						modelIds = new int[ modelCount ];
 						for( int model = 0; model < modelCount; model ++ ) {
@@ -425,7 +425,7 @@ public class GameObjectDefinition
 				modelLightFalloff = buffer.get();
 			} else if( attributeId == 39 ) {
 				modelLightAmbient = buffer.get();
-			} else if( attributeId >= 30 && attributeId < 39 ) {
+			} else if( ( attributeId >= 30 ) && ( attributeId < 39 ) ) {
 				if( actions == null ) {
 					actions = new String[ 5 ];
 				}
@@ -490,7 +490,7 @@ public class GameObjectDefinition
 		}
 		if( hasActionsInt == - 1 ) {
 			actionsBoolean = false;
-			if( modelIds != null && ( modelTypes == null || modelTypes[ 0 ] == 10 ) ) {
+			if( ( modelIds != null ) && ( ( modelTypes == null ) || ( modelTypes[ 0 ] == 10 ) ) ) {
 				actionsBoolean = true;
 			}
 			if( actions != null ) {

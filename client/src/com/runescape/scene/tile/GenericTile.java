@@ -15,10 +15,10 @@ public class GenericTile
 
 	public GenericTile( int i, int i_0_, int i_1_, int i_2_, int texture, int rgbColor, boolean flat )
 	{
-		this.anInt292 = i;
-		this.anInt293 = i_0_;
-		this.anInt294 = i_1_;
-		this.anInt295 = i_2_;
+		anInt292 = i;
+		anInt293 = i_0_;
+		anInt294 = i_1_;
+		anInt295 = i_2_;
 		this.texture = texture;
 		this.rgbColor = rgbColor;
 		this.flat = flat;

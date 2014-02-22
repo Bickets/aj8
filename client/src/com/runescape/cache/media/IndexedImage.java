@@ -27,7 +27,7 @@ public class IndexedImage extends Rasterizer
 		maxHeight = indexBuffer.getUnsignedLEShort();
 		int palleteLength = indexBuffer.getUnsignedByte();
 		palette = new int[ palleteLength ];
-		for( int index = 0; index < palleteLength - 1; index ++ ) {
+		for( int index = 0; index < ( palleteLength - 1 ); index ++ ) {
 			palette[ index + 1 ] = indexBuffer.get24BitInt();
 		}
 		for( int counter = 0; counter < offset; counter ++ ) {
@@ -49,7 +49,7 @@ public class IndexedImage extends Rasterizer
 		} else if( type == 1 ) {
 			for( int x = 0; x < width; x ++ ) {
 				for( int y = 0; y < height; y ++ ) {
-					pixels[ x + y * width ] = dataBuffer.get();
+					pixels[ x + ( y * width ) ] = dataBuffer.get();
 				}
 			}
 		}
@@ -64,7 +64,7 @@ public class IndexedImage extends Rasterizer
 		int pixelCount = 0;
 		for( int y = 0; y < height; y ++ ) {
 			for( int x = 0; x < width; x ++ ) {
-				resizedPixels[ ( x + xDrawOffset >> 1 ) + ( y + yDrawOffset >> 1 ) * maxWidth ] = pixels[ pixelCount ++ ];
+				resizedPixels[ ( ( x + xDrawOffset ) >> 1 ) + ( ( ( y + yDrawOffset ) >> 1 ) * maxWidth ) ] = pixels[ pixelCount ++ ];
 			}
 		}
 		pixels = resizedPixels;
@@ -77,12 +77,12 @@ public class IndexedImage extends Rasterizer
 
 	public void resizeToMax()
 	{
-		if( width != maxWidth || height != maxHeight ) {
+		if( ( width != maxWidth ) || ( height != maxHeight ) ) {
 			byte[] resizedPixels = new byte[ maxWidth * maxHeight ];
 			int pixelCount = 0;
 			for( int y = 0; y < height; y ++ ) {
 				for( int x = 0; x < width; x ++ ) {
-					resizedPixels[ x + xDrawOffset + ( y + yDrawOffset ) * maxWidth ] = pixels[ pixelCount ++ ];
+					resizedPixels[ x + xDrawOffset + ( ( y + yDrawOffset ) * maxWidth ) ] = pixels[ pixelCount ++ ];
 				}
 			}
 			pixels = resizedPixels;
@@ -100,7 +100,7 @@ public class IndexedImage extends Rasterizer
 		int pixelCount = 0;
 		for( int y = 0; y < height; y ++ ) {
 			for( int x = width - 1; x >= 0; x -- ) {
-				flipedPixels[ pixelCount ++ ] = pixels[ x + y * width ];
+				flipedPixels[ pixelCount ++ ] = pixels[ x + ( y * width ) ];
 			}
 		}
 		pixels = flipedPixels;
@@ -114,7 +114,7 @@ public class IndexedImage extends Rasterizer
 		int pixelCount = 0;
 		for( int y = height - 1; y >= 0; y -- ) {
 			for( int x = 0; x < width; x ++ ) {
-				flipedPixels[ pixelCount ++ ] = pixels[ x + y * width ];
+				flipedPixels[ pixelCount ++ ] = pixels[ x + ( y * width ) ];
 			}
 		}
 		pixels = flipedPixels;
@@ -125,14 +125,14 @@ public class IndexedImage extends Rasterizer
 	public void mixPalette( int red, int green, int blue )
 	{
 		for( int index = 0; index < palette.length; index ++ ) {
-			int r = palette[ index ] >> 16 & 0xff;
+			int r = ( palette[ index ] >> 16 ) & 0xff;
 			r += red;
 			if( r < 0 ) {
 				r = 0;
 			} else if( r > 255 ) {
 				r = 255;
 			}
-			int g = palette[ index ] >> 8 & 0xff;
+			int g = ( palette[ index ] >> 8 ) & 0xff;
 			g += green;
 			if( g < 0 ) {
 				g = 0;
@@ -155,7 +155,7 @@ public class IndexedImage extends Rasterizer
 	{
 		x += xDrawOffset;
 		y += yDrawOffset;
-		int offset = x + y * Rasterizer.width;
+		int offset = x + ( y * Rasterizer.width );
 		int originalOffset = 0;
 		int imageHeight = height;
 		int imageWidth = width;
@@ -168,8 +168,8 @@ public class IndexedImage extends Rasterizer
 			originalOffset += yOffset * imageWidth;
 			offset += yOffset * Rasterizer.width;
 		}
-		if( y + imageHeight > Rasterizer.bottomY ) {
-			imageHeight -= y + imageHeight - Rasterizer.bottomY;
+		if( ( y + imageHeight ) > Rasterizer.bottomY ) {
+			imageHeight -= ( y + imageHeight ) - Rasterizer.bottomY;
 		}
 		if( x < Rasterizer.topX ) {
 			int xOffset = Rasterizer.topX - x;
@@ -180,13 +180,13 @@ public class IndexedImage extends Rasterizer
 			originalDeviation += xOffset;
 			deviation += xOffset;
 		}
-		if( x + imageWidth > Rasterizer.bottomX ) {
-			int xOffset = x + imageWidth - Rasterizer.bottomX;
+		if( ( x + imageWidth ) > Rasterizer.bottomX ) {
+			int xOffset = ( x + imageWidth ) - Rasterizer.bottomX;
 			imageWidth -= xOffset;
 			originalDeviation += xOffset;
 			deviation += xOffset;
 		}
-		if( imageWidth > 0 && imageHeight > 0 ) {
+		if( ( imageWidth > 0 ) && ( imageHeight > 0 ) ) {
 			copyPixels( pixels, Rasterizer.pixels, imageWidth, imageHeight, offset, originalOffset, deviation, originalDeviation, palette );
 		}
 	}

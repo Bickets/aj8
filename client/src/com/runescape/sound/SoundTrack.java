@@ -61,14 +61,14 @@ public class SoundTrack
 	{
 		int delay = 9999999;
 		for( int instrument = 0; instrument < 10; instrument ++ ) {
-			if( instruments[ instrument ] != null && instruments[ instrument ].begin / 20 < delay ) {
+			if( ( instruments[ instrument ] != null ) && ( ( instruments[ instrument ].begin / 20 ) < delay ) ) {
 				delay = instruments[ instrument ].begin / 20;
 			}
 		}
-		if( loopBegin < loopEnd && loopBegin / 20 < delay ) {
+		if( ( loopBegin < loopEnd ) && ( ( loopBegin / 20 ) < delay ) ) {
 			delay = loopBegin / 20;
 		}
-		if( delay == 9999999 || delay == 0 ) {
+		if( ( delay == 9999999 ) || ( delay == 0 ) ) {
 			return 0;
 		}
 		for( int instrument = 0; instrument < 10; instrument ++ ) {
@@ -110,27 +110,27 @@ public class SoundTrack
 	{
 		int _dur = 0;
 		for( int instrument = 0; instrument < 10; instrument ++ ) {
-			if( instruments[ instrument ] != null && instruments[ instrument ].duration + instruments[ instrument ].begin > _dur ) {
+			if( ( instruments[ instrument ] != null ) && ( ( instruments[ instrument ].duration + instruments[ instrument ].begin ) > _dur ) ) {
 				_dur = instruments[ instrument ].duration + instruments[ instrument ].begin;
 			}
 		}
 		if( _dur == 0 ) {
 			return 0;
 		}
-		int nS = 22050 * _dur / 1000;
-		int loopBegin = 22050 * this.loopBegin / 1000;
-		int loopEnd = 22050 * this.loopEnd / 1000;
-		if( loopBegin < 0 || loopBegin > nS || loopEnd < 0 || loopEnd > nS || loopBegin >= loopEnd ) {
+		int nS = ( 22050 * _dur ) / 1000;
+		int loopBegin = ( 22050 * this.loopBegin ) / 1000;
+		int loopEnd = ( 22050 * this.loopEnd ) / 1000;
+		if( ( loopBegin < 0 ) || ( loopBegin > nS ) || ( loopEnd < 0 ) || ( loopEnd > nS ) || ( loopBegin >= loopEnd ) ) {
 			loops = 0;
 		}
-		int length = nS + ( loopEnd - loopBegin ) * ( loops - 1 );
-		for( int position = 44; position < length + 44; position ++ ) {
+		int length = nS + ( ( loopEnd - loopBegin ) * ( loops - 1 ) );
+		for( int position = 44; position < ( length + 44 ); position ++ ) {
 			SoundTrack._buffer[ position ] = ( byte ) - 128;
 		}
 		for( int instrument = 0; instrument < 10; instrument ++ ) {
 			if( instruments[ instrument ] != null ) {
-				int dur = instruments[ instrument ].duration * 22050 / 1000;
-				int offset = instruments[ instrument ].begin * 22050 / 1000;
+				int dur = ( instruments[ instrument ].duration * 22050 ) / 1000;
+				int offset = ( instruments[ instrument ].begin * 22050 ) / 1000;
 				int[] samples = instruments[ instrument ].synthesize( dur, instruments[ instrument ].duration );
 				for( int position = 0; position < dur; position ++ ) {
 					SoundTrack._buffer[ position + offset + 44 ] += ( byte )( samples[ position ] >> 8 );

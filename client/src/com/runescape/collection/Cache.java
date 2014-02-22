@@ -14,8 +14,8 @@ public class Cache
 	public Cache( int size )
 	{
 		this.size = size;
-		this.remaining = size;
-		this.hashTable = new HashTable( 1024 );
+		remaining = size;
+		hashTable = new HashTable( 1024 );
 	}
 
 

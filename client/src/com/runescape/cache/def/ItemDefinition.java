@@ -82,7 +82,7 @@ public class ItemDefinition
 		if( ! Model.isCached( modelIndex ) ) {
 			isCached = false;
 		}
-		if( hatModelIndex != - 1 && ! Model.isCached( hatModelIndex ) ) {
+		if( ( hatModelIndex != - 1 ) && ! Model.isCached( hatModelIndex ) ) {
 			isCached = false;
 		}
 		return isCached;
@@ -146,10 +146,10 @@ public class ItemDefinition
 		if( ! Model.isCached( equipPrimaryModel ) ) {
 			isCached = false;
 		}
-		if( equipSecondaryModel != - 1 && ! Model.isCached( equipSecondaryModel ) ) {
+		if( ( equipSecondaryModel != - 1 ) && ! Model.isCached( equipSecondaryModel ) ) {
 			isCached = false;
 		}
-		if( emblem != - 1 && ! Model.isCached( emblem ) ) {
+		if( ( emblem != - 1 ) && ! Model.isCached( emblem ) ) {
 			isCached = false;
 		}
 		return isCached;
@@ -186,10 +186,10 @@ public class ItemDefinition
 				modelEquip1 = new Model( 2, equipModelsWithoutEmblem );
 			}
 		}
-		if( gender == 0 && maleEquipOffset != 0 ) {
+		if( ( gender == 0 ) && ( maleEquipOffset != 0 ) ) {
 			modelEquip1.translate( 0, maleEquipOffset, 0 );
 		}
-		if( gender == 1 && femaleEquipOffset != 0 ) {
+		if( ( gender == 1 ) && ( femaleEquipOffset != 0 ) ) {
 			modelEquip1.translate( 0, femaleEquipOffset, 0 );
 		}
 		if( originalModelColors != null ) {
@@ -289,7 +289,7 @@ public class ItemDefinition
 		value = noteDefinition.value;
 		String artical = "a";
 		char firstCharacter = noteDefinition.name.charAt( 0 );
-		if( firstCharacter == 'A' || firstCharacter == 'E' || firstCharacter == 'I' || firstCharacter == 'O' || firstCharacter == 'U' ) {
+		if( ( firstCharacter == 'A' ) || ( firstCharacter == 'E' ) || ( firstCharacter == 'I' ) || ( firstCharacter == 'O' ) || ( firstCharacter == 'U' ) ) {
 			artical = "an";
 		}
 		description = ( "Swap this note at any bank for " + artical + " " + noteDefinition.name + "." ).getBytes();
@@ -301,7 +301,7 @@ public class ItemDefinition
 	{
 		if( type == 0 ) {
 			ImageRGB cachedSprite = ( ImageRGB )ItemDefinition.rgbImageCache.get( itemId );
-			if( cachedSprite != null && cachedSprite.maxHeight != itemAmount && cachedSprite.maxHeight != - 1 ) {
+			if( ( cachedSprite != null ) && ( cachedSprite.maxHeight != itemAmount ) && ( cachedSprite.maxHeight != - 1 ) ) {
 				cachedSprite.remove();
 				cachedSprite = null;
 			}
@@ -316,7 +316,7 @@ public class ItemDefinition
 		if( itemAmount > 1 ) {
 			int stackedId = - 1;
 			for( int amount = 0; amount < 10; amount ++ ) {
-				if( itemAmount >= itemDefinition.stackableAmounts[ amount ] && itemDefinition.stackableAmounts[ amount ] != 0 ) {
+				if( ( itemAmount >= itemDefinition.stackableAmounts[ amount ] ) && ( itemDefinition.stackableAmounts[ amount ] != 0 ) ) {
 					stackedId = itemDefinition.stackableIds[ amount ];
 				}
 			}
@@ -357,20 +357,20 @@ public class ItemDefinition
 		if( type > 0 ) {
 			modelZoom *= 1.04;
 		}
-		int sine = Rasterizer3D.SINE[ itemDefinition.modelRotation1 ] * modelZoom >> 16;
-		int cosine = Rasterizer3D.COSINE[ itemDefinition.modelRotation1 ] * modelZoom >> 16;
-		model.method430( 0, itemDefinition.modelRotation2, itemDefinition.diagonalRotation, itemDefinition.modelRotation1, itemDefinition.modelOffset1, sine + model.modelHeight / 2 + itemDefinition.sine, cosine + itemDefinition.sine );
+		int sine = ( Rasterizer3D.SINE[ itemDefinition.modelRotation1 ] * modelZoom ) >> 16;
+		int cosine = ( Rasterizer3D.COSINE[ itemDefinition.modelRotation1 ] * modelZoom ) >> 16;
+		model.method430( 0, itemDefinition.modelRotation2, itemDefinition.diagonalRotation, itemDefinition.modelRotation1, itemDefinition.modelOffset1, sine + ( model.modelHeight / 2 ) + itemDefinition.sine, cosine + itemDefinition.sine );
 		for( int pixel = 31; pixel >= 0; pixel -- ) {
 			for( cosine = 31; cosine >= 0; cosine -- ) {
-				if( itemSprite.pixels[ pixel + cosine * 32 ] == 0 ) {
-					if( pixel > 0 && itemSprite.pixels[ pixel - 1 + cosine * 32 ] > 1 ) {
-						itemSprite.pixels[ pixel + cosine * 32 ] = 1;
-					} else if( cosine > 0 && itemSprite.pixels[ pixel + ( cosine - 1 ) * 32 ] > 1 ) {
-						itemSprite.pixels[ pixel + cosine * 32 ] = 1;
-					} else if( pixel < 31 && itemSprite.pixels[ pixel + 1 + cosine * 32 ] > 1 ) {
-						itemSprite.pixels[ pixel + cosine * 32 ] = 1;
-					} else if( cosine < 31 && itemSprite.pixels[ pixel + ( cosine + 1 ) * 32 ] > 1 ) {
-						itemSprite.pixels[ pixel + cosine * 32 ] = 1;
+				if( itemSprite.pixels[ pixel + ( cosine * 32 ) ] == 0 ) {
+					if( ( pixel > 0 ) && ( itemSprite.pixels[ ( pixel - 1 ) + ( cosine * 32 ) ] > 1 ) ) {
+						itemSprite.pixels[ pixel + ( cosine * 32 ) ] = 1;
+					} else if( ( cosine > 0 ) && ( itemSprite.pixels[ pixel + ( ( cosine - 1 ) * 32 ) ] > 1 ) ) {
+						itemSprite.pixels[ pixel + ( cosine * 32 ) ] = 1;
+					} else if( ( pixel < 31 ) && ( itemSprite.pixels[ pixel + 1 + ( cosine * 32 ) ] > 1 ) ) {
+						itemSprite.pixels[ pixel + ( cosine * 32 ) ] = 1;
+					} else if( ( cosine < 31 ) && ( itemSprite.pixels[ pixel + ( ( cosine + 1 ) * 32 ) ] > 1 ) ) {
+						itemSprite.pixels[ pixel + ( cosine * 32 ) ] = 1;
 					}
 				}
 			}
@@ -378,15 +378,15 @@ public class ItemDefinition
 		if( type > 0 ) {
 			for( int pixel = 31; pixel >= 0; pixel -- ) {
 				for( cosine = 31; cosine >= 0; cosine -- ) {
-					if( itemSprite.pixels[ pixel + cosine * 32 ] == 0 ) {
-						if( pixel > 0 && itemSprite.pixels[ pixel - 1 + cosine * 32 ] == 1 ) {
-							itemSprite.pixels[ pixel + cosine * 32 ] = type;
-						} else if( cosine > 0 && itemSprite.pixels[ pixel + ( cosine - 1 ) * 32 ] == 1 ) {
-							itemSprite.pixels[ pixel + cosine * 32 ] = type;
-						} else if( pixel < 31 && itemSprite.pixels[ pixel + 1 + cosine * 32 ] == 1 ) {
-							itemSprite.pixels[ pixel + cosine * 32 ] = type;
-						} else if( cosine < 31 && itemSprite.pixels[ pixel + ( cosine + 1 ) * 32 ] == 1 ) {
-							itemSprite.pixels[ pixel + cosine * 32 ] = type;
+					if( itemSprite.pixels[ pixel + ( cosine * 32 ) ] == 0 ) {
+						if( ( pixel > 0 ) && ( itemSprite.pixels[ ( pixel - 1 ) + ( cosine * 32 ) ] == 1 ) ) {
+							itemSprite.pixels[ pixel + ( cosine * 32 ) ] = type;
+						} else if( ( cosine > 0 ) && ( itemSprite.pixels[ pixel + ( ( cosine - 1 ) * 32 ) ] == 1 ) ) {
+							itemSprite.pixels[ pixel + ( cosine * 32 ) ] = type;
+						} else if( ( pixel < 31 ) && ( itemSprite.pixels[ pixel + 1 + ( cosine * 32 ) ] == 1 ) ) {
+							itemSprite.pixels[ pixel + ( cosine * 32 ) ] = type;
+						} else if( ( cosine < 31 ) && ( itemSprite.pixels[ pixel + ( ( cosine + 1 ) * 32 ) ] == 1 ) ) {
+							itemSprite.pixels[ pixel + ( cosine * 32 ) ] = type;
 						}
 					}
 				}
@@ -394,8 +394,8 @@ public class ItemDefinition
 		} else if( type == 0 ) {
 			for( int pixel = 31; pixel >= 0; pixel -- ) {
 				for( cosine = 31; cosine >= 0; cosine -- ) {
-					if( itemSprite.pixels[ pixel + cosine * 32 ] == 0 && pixel > 0 && cosine > 0 && itemSprite.pixels[ pixel - 1 + ( cosine - 1 ) * 32 ] > 0 ) {
-						itemSprite.pixels[ pixel + cosine * 32 ] = 3153952;
+					if( ( itemSprite.pixels[ pixel + ( cosine * 32 ) ] == 0 ) && ( pixel > 0 ) && ( cosine > 0 ) && ( itemSprite.pixels[ ( pixel - 1 ) + ( ( cosine - 1 ) * 32 ) ] > 0 ) ) {
+						itemSprite.pixels[ pixel + ( cosine * 32 ) ] = 3153952;
 					}
 				}
 			}
@@ -430,10 +430,10 @@ public class ItemDefinition
 
 	public final Model getAmountModel( int amount )
 	{
-		if( stackableIds != null && amount > 1 ) {
+		if( ( stackableIds != null ) && ( amount > 1 ) ) {
 			int stackedItemId = - 1;
 			for( int index = 0; index < 10; index ++ ) {
-				if( amount >= stackableAmounts[ index ] && stackableAmounts[ index ] != 0 ) {
+				if( ( amount >= stackableAmounts[ index ] ) && ( stackableAmounts[ index ] != 0 ) ) {
 					stackedItemId = stackableIds[ index ];
 				}
 			}
@@ -449,7 +449,7 @@ public class ItemDefinition
 		if( stackedModel == null ) {
 			return null;
 		}
-		if( modelSizeX != 128 || modelSizeY != 128 || modelSizeZ != 128 ) {
+		if( ( modelSizeX != 128 ) || ( modelSizeY != 128 ) || ( modelSizeZ != 128 ) ) {
 			stackedModel.scaleT( modelSizeX, modelSizeZ, modelSizeY );
 		}
 		if( originalModelColors != null ) {
@@ -466,10 +466,10 @@ public class ItemDefinition
 
 	public final Model getInventoryModel( int amount )
 	{
-		if( stackableIds != null && amount > 1 ) {
+		if( ( stackableIds != null ) && ( amount > 1 ) ) {
 			int amountItemId = - 1;
 			for( int index = 0; index < 10; index ++ ) {
-				if( amount >= stackableAmounts[ index ] && stackableAmounts[ index ] != 0 ) {
+				if( ( amount >= stackableAmounts[ index ] ) && ( stackableAmounts[ index ] != 0 ) ) {
 					amountItemId = stackableIds[ index ];
 				}
 			}
@@ -537,7 +537,7 @@ public class ItemDefinition
 				femaleEquipOffset = buffer.get();
 			} else if( attributeId == 26 ) {
 				femaleEquipSecondaryModel = buffer.getUnsignedLEShort();
-			} else if( attributeId >= 30 && attributeId < 35 ) {
+			} else if( ( attributeId >= 30 ) && ( attributeId < 35 ) ) {
 				if( groundActions == null ) {
 					groundActions = new String[ 5 ];
 				}
@@ -545,7 +545,7 @@ public class ItemDefinition
 				if( groundActions[ attributeId - 30 ].equalsIgnoreCase( "hidden" ) ) {
 					groundActions[ attributeId - 30 ] = null;
 				}
-			} else if( attributeId >= 35 && attributeId < 40 ) {
+			} else if( ( attributeId >= 35 ) && ( attributeId < 40 ) ) {
 				if( inventoryActions == null ) {
 					inventoryActions = new String[ 5 ];
 				}
@@ -576,7 +576,7 @@ public class ItemDefinition
 				noteIndex = buffer.getUnsignedLEShort();
 			} else if( attributeId == 98 ) {
 				noteTemplateIndex = buffer.getUnsignedLEShort();
-			} else if( attributeId >= 100 && attributeId < 110 ) {
+			} else if( ( attributeId >= 100 ) && ( attributeId < 110 ) ) {
 				if( stackableIds == null ) {
 					stackableIds = new int[ 10 ];
 					stackableAmounts = new int[ 10 ];
