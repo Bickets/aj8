@@ -36,14 +36,9 @@ public final class World
 	private final Logger logger = Logger.getLogger( getClass().getName() );
 
 	/**
-	 * The file system
-	 */
-	private IndexedFileSystem fileSystem;
-
-	/**
 	 * The world.
 	 */
-	private static final World WORLD = new World();
+	private static final World INSTANCE = new World();
 
 	/**
 	 * Represents the different status codes for registering a player.
@@ -74,7 +69,7 @@ public final class World
 	 */
 	public static World getWorld()
 	{
-		return WORLD;
+		return INSTANCE;
 	}
 
 	/**
@@ -105,8 +100,6 @@ public final class World
 	 */
 	public void init( IndexedFileSystem fileSystem ) throws IOException
 	{
-		this.fileSystem = fileSystem;
-
 		logger.info( "Loading item definitions..." );
 		ItemDefinitionParser itemParser = new ItemDefinitionParser( fileSystem );
 		ItemDefinition[] itemDefs = itemParser.parse();
@@ -241,15 +234,6 @@ public final class World
 		} else {
 			logger.warning( "Could not find mob " + mob + " to unregister!" );
 		}
-	}
-
-
-	/**
-	 * Returns the file system.
-	 */
-	public IndexedFileSystem getFileSystem()
-	{
-		return fileSystem;
 	}
 
 

@@ -9,6 +9,7 @@ import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
@@ -94,6 +95,11 @@ public final class Server
 	 */
 	private EventTranslator eventTranslator;
 
+	/**
+	 * The file system.
+	 */
+	private IndexedFileSystem fileSystem;
+
 
 	/**
 	 * Creates the Apollo server.
@@ -111,14 +117,16 @@ public final class Server
 
 	/**
 	 * Initializes the server.
+	 * @throws FileNotFoundException If the file system cannot be found.
 	 */
-	public void init()
+	public void init() throws FileNotFoundException
 	{
 		logger.info( "Initialized Apollo." );
 
 		context = new ServerContext( serviceManager );
 		eventTranslator = new EventTranslator();
-		ApolloHandler handler = new ApolloHandler( context, eventTranslator );
+		fileSystem = new IndexedFileSystem( new File( "data/fs/" ), true );
+		ApolloHandler handler = new ApolloHandler( context, eventTranslator, fileSystem );
 
 		ChannelHandler servicePipelineFactory = new ServiceChannelHandler( handler );
 		serviceBootstrap.childHandler( servicePipelineFactory );
@@ -170,8 +178,7 @@ public final class Server
 	{
 		serviceManager.startAll();
 
-		IndexedFileSystem fs = new IndexedFileSystem( new File( "data/fs/" ), true );
-		World.getWorld().init( fs );
+		World.getWorld().init( fileSystem );
 	}
 
 }

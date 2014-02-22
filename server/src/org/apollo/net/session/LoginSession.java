@@ -1,14 +1,15 @@
 
 package org.apollo.net.session;
 
-import java.io.IOException;
-
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 
+import java.io.IOException;
+
 import org.apollo.ServerContext;
+import org.apollo.fs.IndexedFileSystem;
 import org.apollo.game.GameService;
 import org.apollo.game.event.EventTranslator;
 import org.apollo.game.model.Player;
@@ -42,18 +43,25 @@ public final class LoginSession extends Session
 	 */
 	private final EventTranslator eventTranslator;
 
+	/**
+	 * The file system.
+	 */
+	private final IndexedFileSystem fileSystem;
+
 
 	/**
 	 * Creates a login session for the specified channel.
 	 * @param ctx The channels context.
 	 * @param serverContext The server context.
 	 * @param eventTranslator The event translator.
+	 * @param fileSystem The file system
 	 */
-	public LoginSession( ChannelHandlerContext ctx, ServerContext serverContext, EventTranslator eventTranslator )
+	public LoginSession( ChannelHandlerContext ctx, ServerContext serverContext, EventTranslator eventTranslator, IndexedFileSystem fileSystem )
 	{
 		super( ctx );
 		this.serverContext = serverContext;
 		this.eventTranslator = eventTranslator;
+		this.fileSystem = fileSystem;
 	}
 
 
@@ -74,7 +82,7 @@ public final class LoginSession extends Session
 	private void handleLoginRequest( LoginRequest request ) throws IOException
 	{
 		LoginService loginService = serverContext.getService( LoginService.class );
-		loginService.submitLoadRequest( this, request );
+		loginService.submitLoadRequest( this, request, fileSystem );
 	}
 
 
