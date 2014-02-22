@@ -69,9 +69,6 @@ public abstract class Task
 	 */
 	public void stop()
 	{
-		if( running ) {
-			throw new IllegalStateException();
-		}
 		running = false;
 	}
 
