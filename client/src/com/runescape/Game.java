@@ -67,13 +67,9 @@ import com.runescape.util.SignLink;
 import com.runescape.util.SkillConstants;
 import com.runescape.util.TextUtils;
 
-@SuppressWarnings( "serial" )
 public class Game extends GameShell
 {
 
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = - 5513716024134921842L;
 	private int ignoreListCount;
 	private long aLong849;
@@ -121,7 +117,7 @@ public class Game extends GameShell
 	private IndexedImage anIndexedImage894;
 	private ImageRGB mapFlagMarker;
 	private ImageRGB anImageRGB896;
-	private boolean aBoolean897 = false;
+	private boolean aBoolean897 = true;
 	private final int[] anIntArray898 = new int[ 5 ];
 	private int anInt899 = - 1;
 	private final int anInt900 = - 680;
