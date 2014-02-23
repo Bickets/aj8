@@ -143,7 +143,7 @@ public final class BankUtils
 
 
 	/**
-	 * Default private constructor to prevent insantiation.
+	 * Default private constructor to prevent instantiation.
 	 */
 	private BankUtils()
 	{

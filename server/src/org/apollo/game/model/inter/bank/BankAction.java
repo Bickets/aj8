@@ -13,7 +13,7 @@ public final class BankAction extends DistancedAction<Player>
 {
 
 	/**
-	 * The size of a bank booth.
+	 * The size of a bank booth, in tiles.
 	 */
 	public static final int BANK_BOOTH_SIZE = 1;
 
