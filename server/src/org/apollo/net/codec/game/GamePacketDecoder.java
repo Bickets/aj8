@@ -11,13 +11,13 @@ import net.burtleburtle.bob.rand.IsaacAlgorithm;
 import org.apollo.game.event.EventTranslator;
 import org.apollo.net.meta.PacketMetaData;
 import org.apollo.net.meta.PacketType;
-import org.apollo.util.StatefulFrameDecoder;
+import org.apollo.util.StatefulByteToMessageDecoder;
 
 /**
- * A {@link StatefulFrameDecoder} which decodes game packets.
+ * A {@link StatefulByteToMessageDecoder} which decodes game packets.
  * @author Graham
  */
-public final class GamePacketDecoder extends StatefulFrameDecoder<GameDecoderState>
+public final class GamePacketDecoder extends StatefulByteToMessageDecoder<GameDecoderState>
 {
 
 	/**

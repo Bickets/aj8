@@ -13,13 +13,13 @@ import org.apollo.fs.FileSystemConstants;
 import org.apollo.security.IsaacRandomPair;
 import org.apollo.security.PlayerCredentials;
 import org.apollo.util.ByteBufUtil;
-import org.apollo.util.StatefulFrameDecoder;
+import org.apollo.util.StatefulByteToMessageDecoder;
 
 /**
- * A {@link StatefulFrameDecoder} which decodes the login request frames.
+ * A {@link StatefulByteToMessageDecoder} which decodes the login request frames.
  * @author Graham
  */
-public final class LoginDecoder extends StatefulFrameDecoder<LoginDecoderState>
+public final class LoginDecoder extends StatefulByteToMessageDecoder<LoginDecoderState>
 {
 
 	/**

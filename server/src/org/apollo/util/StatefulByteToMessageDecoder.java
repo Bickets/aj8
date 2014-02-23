@@ -13,17 +13,19 @@ import java.util.List;
  * other
  * classes. The current
  * state is tracked by this class and is a user-specified enumeration.
- * The state may be changed by calling the {@link StatefulFrameDecoder#setState(Enum)} method.
+ * The state may be changed by calling the {@link StatefulByteToMessageDecoder#setState(Enum)}
+ * method.
  * The current state is supplied as a parameter in the
- * {@link StatefulFrameDecoder#decode(ChannelHandlerContext, Channel, ByteBuf, Enum)} and
- * {@link StatefulFrameDecoder#decodeLast(ChannelHandlerContext, Channel, ByteBuf, Enum)} methods.
+ * {@link StatefulByteToMessageDecoder#decode(ChannelHandlerContext, Channel, ByteBuf, Enum)} and
+ * {@link StatefulByteToMessageDecoder#decodeLast(ChannelHandlerContext, Channel, ByteBuf, Enum)}
+ * methods.
  * This class is not thread safe: it is recommended that the state is only set in the decode methods
  * overridden. {@code null} states are not permitted. If you do not need state management, the
  * {@link ByteToMessageDecoder} class should be used instead.
  * @author Graham
  * @param <T> The state enumeration.
  */
-public abstract class StatefulFrameDecoder<T extends Enum<T>> extends ByteToMessageDecoder
+public abstract class StatefulByteToMessageDecoder<T extends Enum<T>> extends ByteToMessageDecoder
 {
 
 	/**
@@ -36,7 +38,7 @@ public abstract class StatefulFrameDecoder<T extends Enum<T>> extends ByteToMess
 	 * Creates the stateful frame decoder with the specified initial state.
 	 * @param state The initial state.
 	 */
-	public StatefulFrameDecoder( T state )
+	public StatefulByteToMessageDecoder( T state )
 	{
 		setState( state );
 	}
