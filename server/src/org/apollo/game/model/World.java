@@ -11,6 +11,7 @@ import org.apollo.Service;
 import org.apollo.fs.IndexedFileSystem;
 import org.apollo.fs.parser.ItemDefinitionParser;
 import org.apollo.fs.parser.MobDefinitionParser;
+import org.apollo.game.interact.InteractionHandler;
 import org.apollo.game.model.def.EquipmentDefinition;
 import org.apollo.game.model.def.ItemDefinition;
 import org.apollo.game.model.def.MobDefinition;
@@ -67,7 +68,7 @@ public final class World
 	 * Gets the world.
 	 * @return The world.
 	 */
-	public static World getWorld()
+	public static World getInstance()
 	{
 		return INSTANCE;
 	}
@@ -75,12 +76,17 @@ public final class World
 	/**
 	 * The {@link CharacterRepository} of {@link Mob}s.
 	 */
-	private final CharacterRepository<Mob> mobRepository = new CharacterRepository<Mob>( WorldConstants.MAXIMUM_MOBS );
+	private final CharacterRepository<Mob> mobRepository = new CharacterRepository<>( WorldConstants.MAXIMUM_MOBS );
 
 	/**
 	 * The {@link CharacterRepository} of {@link Player}s.
 	 */
-	private final CharacterRepository<Player> playerRepository = new CharacterRepository<Player>( WorldConstants.MAXIMUM_PLAYERS );
+	private final CharacterRepository<Player> playerRepository = new CharacterRepository<>( WorldConstants.MAXIMUM_PLAYERS );
+
+	/**
+	 * The worlds interaction handler.
+	 */
+	private final InteractionHandler interactionHandler = new InteractionHandler();
 
 
 	/**
@@ -125,32 +131,6 @@ public final class World
 		MobDefinition[] mobDefs = mobParser.parse();
 		MobDefinition.init( mobDefs );
 		logger.info( "Done (loaded " + mobDefs.length + " mob definitions)." );
-	}
-
-
-	/**
-	 * Gets the character repository. NOTE: {@link CharacterRepository#add(GameCharacter)} and
-	 * {@link CharacterRepository#remove(GameCharacter)} should not be called
-	 * directly! These mutation methods are not guaranteed to work in future
-	 * releases!
-	 * <p>
-	 * Instead, use the {@link World#register(Player)} and {@link World#unregister(Player)} methods
-	 * which do the same thing and will continue to work as normal in future releases.
-	 * @return The character repository.
-	 */
-	public CharacterRepository<Player> getPlayerRepository()
-	{
-		return playerRepository;
-	}
-
-
-	/**
-	 * Gets the mob repository.
-	 * @return The mob repository.
-	 */
-	public CharacterRepository<Mob> getMobRepository()
-	{
-		return mobRepository;
 	}
 
 
@@ -253,6 +233,41 @@ public final class World
 	public void pulse()
 	{
 		TaskScheduler.getInstance().pulse();
+	}
+
+
+	/**
+	 * Gets the character repository. NOTE: {@link CharacterRepository#add(GameCharacter)} and
+	 * {@link CharacterRepository#remove(GameCharacter)} should not be called
+	 * directly! These mutation methods are not guaranteed to work in future
+	 * releases!
+	 * <p>
+	 * Instead, use the {@link World#register(Player)} and {@link World#unregister(Player)} methods
+	 * which do the same thing and will continue to work as normal in future releases.
+	 * @return The character repository.
+	 */
+	public CharacterRepository<Player> getPlayerRepository()
+	{
+		return playerRepository;
+	}
+
+
+	/**
+	 * Gets the mob repository.
+	 * @return The mob repository.
+	 */
+	public CharacterRepository<Mob> getMobRepository()
+	{
+		return mobRepository;
+	}
+
+
+	/**
+	 * Returns the world interaction handler.
+	 */
+	public InteractionHandler getInteractionHandler()
+	{
+		return interactionHandler;
 	}
 
 }

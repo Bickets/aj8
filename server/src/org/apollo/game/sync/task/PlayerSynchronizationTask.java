@@ -87,7 +87,7 @@ public final class PlayerSynchronizationTask extends SynchronizationTask
 
 		int added = 0;
 
-		CharacterRepository<Player> repository = World.getWorld().getPlayerRepository();
+		CharacterRepository<Player> repository = World.getInstance().getPlayerRepository();
 		// lambda does not work here
 		// due to variables needing to be final.
 		for( Player p: repository ) {

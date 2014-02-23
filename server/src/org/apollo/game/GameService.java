@@ -4,6 +4,7 @@ package org.apollo.game;
 import java.io.File;
 import java.io.IOException;
 import java.util.Queue;
+import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -11,6 +12,7 @@ import java.util.concurrent.TimeUnit;
 
 import org.apollo.Service;
 import org.apollo.game.model.Player;
+import org.apollo.game.model.Position;
 import org.apollo.game.model.World;
 import org.apollo.game.model.World.RegistrationStatus;
 import org.apollo.game.sync.ClientSynchronizer;
@@ -119,7 +121,7 @@ public final class GameService extends Service
 	{
 		synchronized( this ) {
 			LoginService loginService = getContext().getService( LoginService.class );
-			World world = World.getWorld();
+			World world = World.getInstance();
 
 			int unregistered = 0;
 			Player old;
@@ -150,7 +152,7 @@ public final class GameService extends Service
 	public RegistrationStatus registerPlayer( Player player )
 	{
 		synchronized( this ) {
-			return World.getWorld().register( player );
+			return World.getInstance().register( player );
 		}
 	}
 
@@ -173,7 +175,7 @@ public final class GameService extends Service
 	public void finalizePlayerUnregistration( Player player )
 	{
 		synchronized( this ) {
-			World.getWorld().unregister( player );
+			World.getInstance().unregister( player );
 		}
 	}
 

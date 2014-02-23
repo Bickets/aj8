@@ -67,7 +67,7 @@ public final class MobSynchronizationTask extends SynchronizationTask
 
 		int added = 0;
 
-		CharacterRepository<Mob> repository = World.getWorld().getMobRepository();
+		CharacterRepository<Mob> repository = World.getInstance().getMobRepository();
 		// lambda does not work here
 		// due to variables needing to be final.
 		for( Mob mob: repository ) {

@@ -124,7 +124,7 @@ public abstract class GameCharacter
 	 */
 	private void init()
 	{
-		World.getWorld().schedule( new SkillNormalizationTask( this ) );
+		World.getInstance().schedule( new SkillNormalizationTask( this ) );
 	}
 
 
@@ -494,7 +494,7 @@ public abstract class GameCharacter
 			stopAction();
 		}
 		this.action = action;
-		World.getWorld().schedule( action );
+		World.getInstance().schedule( action );
 		return true; // TODO maybe this should be incorporated into the action class itself?
 	}
 

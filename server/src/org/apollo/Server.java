@@ -178,7 +178,7 @@ public final class Server
 	{
 		serviceManager.startAll();
 
-		World.getWorld().init( fileSystem );
+		World.getInstance().init( fileSystem );
 	}
 
 }

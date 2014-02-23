@@ -30,8 +30,8 @@ public final class SequentialClientSynchronizer extends ClientSynchronizer
 	@Override
 	public void synchronize()
 	{
-		CharacterRepository<Player> players = World.getWorld().getPlayerRepository();
-		CharacterRepository<Mob> mobs = World.getWorld().getMobRepository();
+		CharacterRepository<Player> players = World.getInstance().getPlayerRepository();
+		CharacterRepository<Mob> mobs = World.getInstance().getMobRepository();
 
 		players.forEach( player -> {
 			SynchronizationTask task = new PrePlayerSynchronizationTask( player );

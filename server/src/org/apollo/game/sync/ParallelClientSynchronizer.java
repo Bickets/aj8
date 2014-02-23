@@ -61,8 +61,8 @@ public final class ParallelClientSynchronizer extends ClientSynchronizer
 	@Override
 	public void synchronize()
 	{
-		CharacterRepository<Player> players = World.getWorld().getPlayerRepository();
-		CharacterRepository<Mob> mobs = World.getWorld().getMobRepository();
+		CharacterRepository<Player> players = World.getInstance().getPlayerRepository();
+		CharacterRepository<Mob> mobs = World.getInstance().getMobRepository();
 
 		int playerCount = players.size();
 		int mobCount = mobs.size();
