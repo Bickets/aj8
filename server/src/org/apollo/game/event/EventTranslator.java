@@ -54,6 +54,7 @@ import org.apollo.game.event.handler.ObjectEventHandler;
 import org.apollo.game.event.handler.SwitchItemEventHandler;
 import org.apollo.game.event.handler.WalkEventHandler;
 import org.apollo.game.model.Player;
+import org.apollo.game.model.World;
 import org.apollo.net.codec.game.GamePacket;
 import org.apollo.net.meta.PacketMetaData;
 import org.apollo.net.meta.PacketMetaDataGroup;
@@ -86,6 +87,11 @@ public final class EventTranslator
 	 * The incoming packet meta data.
 	 */
 	private final PacketMetaDataGroup incomingPacketMetaData = PacketMetaDataGroup.create();
+
+	/**
+	 * The world, used for world event handlers
+	 */
+	private final World world = World.getInstance();
 
 	/**
 	 * The logger.
@@ -149,7 +155,6 @@ public final class EventTranslator
 		register( new CharacterDesignEventHandler() );
 		register( new WalkEventHandler() );
 		register( new ChatEventHandler() );
-		register( new ButtonEventHandler() );
 		register( new CommandEventHandler() );
 		register( new SwitchItemEventHandler() );
 		register( new ObjectEventHandler() );
@@ -157,6 +162,9 @@ public final class EventTranslator
 		register( new ItemActionEventHandler() );
 		register( new ClosedInterfaceEventHandler() );
 		register( new EnteredAmountEventHandler() );
+
+		// world handlers
+		register( new ButtonEventHandler( world ) );
 	}
 
 

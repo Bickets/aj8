@@ -4,7 +4,6 @@ package org.apollo.game.command;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apollo.game.command.impl.LevelCommandListener;
 import org.apollo.game.model.Player;
 
 /**
@@ -26,28 +25,32 @@ public final class CommandDispatcher
 
 
 	/**
-	 * Constructs a new {@link CommandDispatcher}.
+	 * Default private constructor used to prevent this class from being instantiated by other
+	 * classes.
 	 */
 	private CommandDispatcher()
 	{
-		registerAll();
-	}
 
-
-	private void registerAll()
-	{
-		addListener("level", new LevelCommandListener());
 	}
 
 
 	/**
-	 * Adds a command listener to the map.
-	 * @param name The commands name
+	 * Binds a command listener to the map.
 	 * @param listener The commands listener.
 	 */
-	public void addListener( String name, CommandListener listener )
+	public void bind( CommandListener listener )
 	{
-		listeners.put( name, listener );
+		listeners.put( listener.getName(), listener );
+	}
+
+
+	/**
+	 * Unbinds a command listener from the map.
+	 * @param listener The command listener
+	 */
+	public void unbind( CommandListener listener )
+	{
+		listeners.remove( listener.getName() );
 	}
 
 

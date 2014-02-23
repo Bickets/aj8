@@ -5,6 +5,7 @@ import org.apollo.game.event.EventHandler;
 import org.apollo.game.event.annotate.HandlesEvent;
 import org.apollo.game.event.impl.ButtonEvent;
 import org.apollo.game.model.Player;
+import org.apollo.game.model.World;
 
 /**
  * An {@link EventHandler} which responds to {@link ButtonEvent}s for
@@ -15,32 +16,19 @@ import org.apollo.game.model.Player;
 public final class ButtonEventHandler extends EventHandler<ButtonEvent>
 {
 
-	/**
-	 * The withdraw as item button id.
-	 */
-	private static final int WITHDRAW_AS_ITEM = 5387;
+	private final World world;
 
-	/**
-	 * The withdraw as note button id.
-	 */
-	private static final int WITHDRAW_AS_NOTE = 5386;
 
-	/**
-	 * The logout button interface
-	 */
-	private static final int LOGOUT = 2458;
+	public ButtonEventHandler( World world )
+	{
+		this.world = world;
+	}
 
 
 	@Override
 	public void handle( Player player, ButtonEvent event )
 	{
-		if( event.getInterfaceId() == WITHDRAW_AS_ITEM ) {
-			player.getFields().setWithdrawingNotes( false );
-		} else if( event.getInterfaceId() == WITHDRAW_AS_NOTE ) {
-			player.getFields().setWithdrawingNotes( true );
-		} else if( event.getInterfaceId() == LOGOUT ) {
-			player.logout();
-		}
+		world.getInteractionHandler().dispatch( player, event.getInterfaceId() );
 	}
 
 }
