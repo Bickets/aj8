@@ -4,7 +4,6 @@ package org.apollo.game;
 import java.io.File;
 import java.io.IOException;
 import java.util.Queue;
-import java.util.Random;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
@@ -12,7 +11,6 @@ import java.util.concurrent.TimeUnit;
 
 import org.apollo.Service;
 import org.apollo.game.model.Player;
-import org.apollo.game.model.Position;
 import org.apollo.game.model.World;
 import org.apollo.game.model.World.RegistrationStatus;
 import org.apollo.game.sync.ClientSynchronizer;

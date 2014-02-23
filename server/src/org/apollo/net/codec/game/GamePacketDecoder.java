@@ -102,7 +102,7 @@ public final class GamePacketDecoder extends StatefulByteToMessageDecoder<GameDe
 		switch( type ) {
 			case FIXED:
 				length = metaData.getLength();
-				if (length != 0) {
+				if( length != 0 ) {
 					setState( GameDecoderState.GAME_PAYLOAD );
 				}
 				break;
@@ -128,7 +128,7 @@ public final class GamePacketDecoder extends StatefulByteToMessageDecoder<GameDe
 		}
 
 		length = in.readUnsignedByte();
-		if (length != 0) {
+		if( length != 0 ) {
 			setState( GameDecoderState.GAME_PAYLOAD );
 		}
 	}
