@@ -157,13 +157,13 @@ public final class EventTranslator
 		register( new ChatEventHandler() );
 		register( new CommandEventHandler() );
 		register( new SwitchItemEventHandler() );
-		register( new ObjectEventHandler() );
 		register( new EquipEventHandler() );
 		register( new ItemActionEventHandler() );
 		register( new ClosedInterfaceEventHandler() );
 		register( new EnteredAmountEventHandler() );
 
 		// world handlers
+		register( new ObjectEventHandler( world ) );
 		register( new ButtonEventHandler( world ) );
 	}
 

@@ -4,9 +4,19 @@ import java.util.ArrayList
 import org.apollo.game.command.CommandDispatcher
 import org.apollo.game.command.CommandListener
 import org.apollo.game.interact.ButtonEventHandler
+import org.apollo.game.interact.ObjectActionEventHandler
 import org.apollo.game.model.World
 
+/* TODO: Should I rewrite this in Java? */
 class Bootstrap {
+
+	def initObjects() {
+		val classes = getClasses('objects')
+		classes.forEach [ clazz |
+			val handler = clazz.newInstance as ObjectActionEventHandler
+			World::getInstance.interactionHandler.bind(handler)
+		]
+	}
 
 	def initButtons() {
 		val classes = getClasses('buttons')
@@ -56,6 +66,7 @@ class Bootstrap {
 	new() {
 		initButtons
 		initCommands
+		initObjects
 	}
 
 }

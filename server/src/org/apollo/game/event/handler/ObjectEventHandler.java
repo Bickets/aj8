@@ -5,7 +5,7 @@ import org.apollo.game.event.EventHandler;
 import org.apollo.game.event.annotate.HandlesEvent;
 import org.apollo.game.event.impl.ObjectActionEvent;
 import org.apollo.game.model.Player;
-import org.apollo.game.model.inter.bank.BankAction;
+import org.apollo.game.model.World;
 
 /**
  * Handles an object action for the {@link ObjectActionEvent}.
@@ -15,18 +15,19 @@ import org.apollo.game.model.inter.bank.BankAction;
 public final class ObjectEventHandler extends EventHandler<ObjectActionEvent>
 {
 
-	/**
-	 * The object id of a bank booth.
-	 */
-	private static final int BANK_BOOTH_ID = 2213;
+	private final World world;
+
+
+	public ObjectEventHandler( World world )
+	{
+		this.world = world;
+	}
 
 
 	@Override
 	public void handle( Player player, ObjectActionEvent event )
 	{
-		if( event.getOption() == 2 && event.getId() == BANK_BOOTH_ID ) {
-			player.startAction( new BankAction( player, event.getPosition() ) );
-		}
+		world.getInteractionHandler().dispatch( event.getId(), event.getOption(), player, event.getPosition() );
 	}
 
 }
