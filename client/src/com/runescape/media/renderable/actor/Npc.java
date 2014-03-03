@@ -1,16 +1,16 @@
 
 package com.runescape.media.renderable.actor;
 
-import com.runescape.cache.def.ActorDefinition;
+import com.runescape.cache.def.NPCDefinition;
 import com.runescape.cache.media.AnimationSequence;
 import com.runescape.cache.media.SpotAnimation;
 import com.runescape.media.Animation;
 import com.runescape.media.renderable.Model;
 
-public class Npc extends Actor
+public class Npc extends Mob
 {
 
-	public ActorDefinition npcDefinition;
+	public NPCDefinition npcDefinition;
 
 
 	private final Model getChildModel()

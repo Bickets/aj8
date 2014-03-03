@@ -2,7 +2,7 @@
 package com.runescape.media.renderable.actor;
 
 import com.runescape.Game;
-import com.runescape.cache.def.ActorDefinition;
+import com.runescape.cache.def.NPCDefinition;
 import com.runescape.cache.def.ItemDefinition;
 import com.runescape.cache.media.AnimationSequence;
 import com.runescape.cache.media.IdentityKit;
@@ -13,11 +13,11 @@ import com.runescape.media.renderable.Model;
 import com.runescape.net.Buffer;
 import com.runescape.util.TextUtils;
 
-public class Player extends Actor
+public class Player extends Mob
 {
 
 	public long cachedModel = - 1L;
-	public ActorDefinition npcDefinition;
+	public NPCDefinition npcDefinition;
 	public boolean aBoolean1719 = false;
 	public int[] appearanceColors = new int[ 5 ];
 	public int teamId;
@@ -132,7 +132,7 @@ public class Player extends Actor
 				int i_5_ = buffer.getUnsignedByte();
 				appearance[ index ] = ( i_4_ << 8 ) + i_5_;
 				if( ( index == 0 ) && ( appearance[ 0 ] == 65535 ) ) {
-					npcDefinition = ActorDefinition.getDefinition( buffer.getUnsignedLEShort() );
+					npcDefinition = NPCDefinition.getDefinition( buffer.getUnsignedLEShort() );
 					break;
 				}
 				if( ( appearance[ index ] >= 512 ) && ( ( appearance[ index ] - 512 ) < ItemDefinition.itemCount ) ) {

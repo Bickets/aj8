@@ -4,7 +4,7 @@ package com.runescape.media.renderable.actor;
 import com.runescape.cache.media.AnimationSequence;
 import com.runescape.media.renderable.Renderable;
 
-public class Actor extends Renderable
+public class Mob extends Renderable
 {
 
 	public int[] pathX = new int[ 10 ];

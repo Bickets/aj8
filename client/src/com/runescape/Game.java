@@ -22,7 +22,7 @@ import com.runescape.cache.Index;
 import com.runescape.cache.cfg.ChatCensor;
 import com.runescape.cache.cfg.VarBit;
 import com.runescape.cache.cfg.Varp;
-import com.runescape.cache.def.ActorDefinition;
+import com.runescape.cache.def.NPCDefinition;
 import com.runescape.cache.def.FloorDefinition;
 import com.runescape.cache.def.GameObjectDefinition;
 import com.runescape.cache.def.ItemDefinition;
@@ -43,7 +43,7 @@ import com.runescape.media.renderable.GameObject;
 import com.runescape.media.renderable.Item;
 import com.runescape.media.renderable.Model;
 import com.runescape.media.renderable.Projectile;
-import com.runescape.media.renderable.actor.Actor;
+import com.runescape.media.renderable.actor.Mob;
 import com.runescape.media.renderable.actor.Npc;
 import com.runescape.media.renderable.actor.Player;
 import com.runescape.net.Buffer;
@@ -1115,7 +1115,7 @@ public class Game extends GameShell
 	{
 		GameObjectDefinition.modelCache.removeAll();
 		GameObjectDefinition.animatedModelCache.removeAll();
-		ActorDefinition.modelCache.removeAll();
+		NPCDefinition.modelCache.removeAll();
 		ItemDefinition.modelCache.removeAll();
 		ItemDefinition.rgbImageCache.removeAll();
 		Player.modelCache.removeAll();
@@ -1683,17 +1683,17 @@ public class Game extends GameShell
 		try {
 			anInt999 = 0;
 			for( int i_143_ = - 1; i_143_ < ( playerCount + actorCount ); i_143_ ++ ) {
-				Actor actor;
+				Mob mob;
 				if( i_143_ == - 1 ) {
-					actor = Game.localPlayer;
+					mob = Game.localPlayer;
 				} else if( i_143_ < playerCount ) {
-					actor = players[ anIntArray917[ i_143_ ] ];
+					mob = players[ anIntArray917[ i_143_ ] ];
 				} else {
-					actor = localNpcs[ anIntArray862[ i_143_ - playerCount ] ];
+					mob = localNpcs[ anIntArray862[ i_143_ - playerCount ] ];
 				}
-				if( ( actor != null ) && actor.isVisibile() ) {
-					if( actor instanceof Npc ) {
-						ActorDefinition npcdefinition = ( ( Npc )actor ).npcDefinition;
+				if( ( mob != null ) && mob.isVisibile() ) {
+					if( mob instanceof Npc ) {
+						NPCDefinition npcdefinition = ( ( Npc )mob ).npcDefinition;
 						if( npcdefinition.childrenIds != null ) {
 							npcdefinition = npcdefinition.getChildDefinition();
 						}
@@ -1703,9 +1703,9 @@ public class Game extends GameShell
 					}
 					if( i_143_ < playerCount ) {
 						int i_144_ = 30;
-						Player player = ( Player )actor;
+						Player player = ( Player )mob;
 						if( player.headIcon != 0 ) {
-							method127( true, actor, actor.modelHeight + 15 );
+							method127( true, mob, mob.modelHeight + 15 );
 							if( anInt988 > - 1 ) {
 								for( int i_145_ = 0; i_145_ < 8; i_145_ ++ ) {
 									if( ( player.headIcon & ( 1 << i_145_ ) ) != 0 ) {
@@ -1716,53 +1716,53 @@ public class Game extends GameShell
 							}
 						}
 						if( ( i_143_ >= 0 ) && ( hintIconType == 10 ) && ( hintIconId == anIntArray917[ i_143_ ] ) ) {
-							method127( true, actor, actor.modelHeight + 15 );
+							method127( true, mob, mob.modelHeight + 15 );
 							if( anInt988 > - 1 ) {
 								anImageRGBArray1120[ 7 ].drawImage( anInt988 - 12, anInt989 - i_144_ );
 							}
 						}
 					} else {
-						ActorDefinition npcdefinition = ( ( Npc )actor ).npcDefinition;
+						NPCDefinition npcdefinition = ( ( Npc )mob ).npcDefinition;
 						if( ( npcdefinition.headIcon >= 0 ) && ( npcdefinition.headIcon < anImageRGBArray1120.length ) ) {
-							method127( true, actor, actor.modelHeight + 15 );
+							method127( true, mob, mob.modelHeight + 15 );
 							if( anInt988 > - 1 ) {
 								anImageRGBArray1120[ npcdefinition.headIcon ].drawImage( anInt988 - 12, anInt989 - 30 );
 							}
 						}
 						if( ( hintIconType == 1 ) && ( hintIconActorId == anIntArray862[ i_143_ - playerCount ] ) && ( ( Game.currentCycle % 20 ) < 10 ) ) {
-							method127( true, actor, actor.modelHeight + 15 );
+							method127( true, mob, mob.modelHeight + 15 );
 							if( anInt988 > - 1 ) {
 								anImageRGBArray1120[ 2 ].drawImage( anInt988 - 12, anInt989 - 28 );
 							}
 						}
 					}
-					if( ( actor.forcedChat != null ) && ( ( i_143_ >= playerCount ) || ( publicChatSetting == 0 ) || ( publicChatSetting == 3 ) || ( ( publicChatSetting == 1 ) && method109( false, ( ( Player )actor ).playerName ) ) ) ) {
-						method127( true, actor, actor.modelHeight );
+					if( ( mob.forcedChat != null ) && ( ( i_143_ >= playerCount ) || ( publicChatSetting == 0 ) || ( publicChatSetting == 3 ) || ( ( publicChatSetting == 1 ) && method109( false, ( ( Player )mob ).playerName ) ) ) ) {
+						method127( true, mob, mob.modelHeight );
 						if( ( anInt988 > - 1 ) && ( anInt999 < anInt1000 ) ) {
-							anIntArray1004[ anInt999 ] = fontBold.getStringWidth( actor.forcedChat ) / 2;
+							anIntArray1004[ anInt999 ] = fontBold.getStringWidth( mob.forcedChat ) / 2;
 							anIntArray1003[ anInt999 ] = fontBold.characterDefaultHeight;
 							anIntArray1001[ anInt999 ] = anInt988;
 							anIntArray1002[ anInt999 ] = anInt989;
-							anIntArray1005[ anInt999 ] = actor.chatColor;
-							anIntArray1006[ anInt999 ] = actor.chatEffect;
-							anIntArray1007[ anInt999 ] = actor.anInt1555;
-							aStringArray1008[ anInt999 ++ ] = actor.forcedChat;
-							if( ( anInt1274 == 0 ) && ( actor.chatEffect >= 1 ) && ( actor.chatEffect <= 3 ) ) {
+							anIntArray1005[ anInt999 ] = mob.chatColor;
+							anIntArray1006[ anInt999 ] = mob.chatEffect;
+							anIntArray1007[ anInt999 ] = mob.anInt1555;
+							aStringArray1008[ anInt999 ++ ] = mob.forcedChat;
+							if( ( anInt1274 == 0 ) && ( mob.chatEffect >= 1 ) && ( mob.chatEffect <= 3 ) ) {
 								anIntArray1003[ anInt999 ] += 10;
 								anIntArray1002[ anInt999 ] += 5;
 							}
-							if( ( anInt1274 == 0 ) && ( actor.chatEffect == 4 ) ) {
+							if( ( anInt1274 == 0 ) && ( mob.chatEffect == 4 ) ) {
 								anIntArray1004[ anInt999 ] = 60;
 							}
-							if( ( anInt1274 == 0 ) && ( actor.chatEffect == 5 ) ) {
+							if( ( anInt1274 == 0 ) && ( mob.chatEffect == 5 ) ) {
 								anIntArray1003[ anInt999 ] += 5;
 							}
 						}
 					}
-					if( actor.endCycle > Game.currentCycle ) {
-						method127( true, actor, actor.modelHeight + 15 );
+					if( mob.endCycle > Game.currentCycle ) {
+						method127( true, mob, mob.modelHeight + 15 );
 						if( anInt988 > - 1 ) {
-							int i_146_ = ( actor.maxHealth * 30 ) / actor.currentHealth;
+							int i_146_ = ( mob.maxHealth * 30 ) / mob.currentHealth;
 							if( i_146_ > 30 ) {
 								i_146_ = 30;
 							}
@@ -1771,8 +1771,8 @@ public class Game extends GameShell
 						}
 					}
 					for( int i_147_ = 0; i_147_ < 4; i_147_ ++ ) {
-						if( actor.hitCycles[ i_147_ ] > Game.currentCycle ) {
-							method127( true, actor, actor.modelHeight / 2 );
+						if( mob.hitCycles[ i_147_ ] > Game.currentCycle ) {
+							method127( true, mob, mob.modelHeight / 2 );
 							if( anInt988 > - 1 ) {
 								if( i_147_ == 1 ) {
 									anInt989 -= 20;
@@ -1785,9 +1785,9 @@ public class Game extends GameShell
 									anInt988 += 15;
 									anInt989 -= 10;
 								}
-								anImageRGBArray1012[ actor.hitTypes[ i_147_ ] ].drawImage( anInt988 - 12, anInt989 - 12 );
-								fontSmall.drawStringLeft( String.valueOf( actor.hitDamages[ i_147_ ] ), anInt988, anInt989 + 4, 0 );
-								fontSmall.drawStringLeft( String.valueOf( actor.hitDamages[ i_147_ ] ), anInt988 - 1, anInt989 + 3, 0xFFFFFF );
+								anImageRGBArray1012[ mob.hitTypes[ i_147_ ] ].drawImage( anInt988 - 12, anInt989 - 12 );
+								fontSmall.drawStringLeft( String.valueOf( mob.hitDamages[ i_147_ ] ), anInt988, anInt989 + 4, 0 );
+								fontSmall.drawStringLeft( String.valueOf( mob.hitDamages[ i_147_ ] ), anInt988 - 1, anInt989 + 3, 0xFFFFFF );
 							}
 						}
 					}
@@ -2388,7 +2388,7 @@ public class Game extends GameShell
 					i_213_ -= 32;
 				}
 				buffer.getBits( 1 );
-				npc.npcDefinition = ActorDefinition.getDefinition( buffer.getBits( 12 ) );
+				npc.npcDefinition = NPCDefinition.getDefinition( buffer.getBits( 12 ) );
 				int i_215_ = buffer.getBits( 1 );
 				if( i_215_ == 1 ) {
 					anIntArray919[ anInt918 ++ ] = i_211_;
@@ -4422,7 +4422,7 @@ public class Game extends GameShell
 					if( menuActionId == 1025 ) {
 						Npc npc = localNpcs[ itemId ];
 						if( npc != null ) {
-							ActorDefinition npcdefinition = npc.npcDefinition;
+							NPCDefinition npcdefinition = npc.npcDefinition;
 							if( npcdefinition.childrenIds != null ) {
 								npcdefinition = npcdefinition.getChildDefinition();
 							}
@@ -5097,7 +5097,7 @@ public class Game extends GameShell
 		aProducingGraphicsBuffer1140 = null;
 		method118();
 		GameObjectDefinition.reset();
-		ActorDefinition.reset();
+		NPCDefinition.reset();
 		ItemDefinition.reset();
 		FloorDefinition.cache = null;
 		IdentityKit.cache = null;
@@ -6603,7 +6603,7 @@ public class Game extends GameShell
 					npc.currentHealth = buffer.getUnsignedByteC();
 				}
 				if( ( i_514_ & 0x2 ) != 0 ) {
-					npc.npcDefinition = ActorDefinition.getDefinition( buffer.getUnsignedShortA() );
+					npc.npcDefinition = NPCDefinition.getDefinition( buffer.getUnsignedShortA() );
 					npc.boundaryDimension = npc.npcDefinition.boundaryDimension;
 					npc.anInt1524 = npc.npcDefinition.degreesToTurn;
 					npc.walkAnimationId = npc.npcDefinition.walkAnimationId;
@@ -6625,7 +6625,7 @@ public class Game extends GameShell
 	}
 
 
-	public final void method87( ActorDefinition npcdefinition, int i, boolean bool, int i_523_, int i_524_ )
+	public final void method87( NPCDefinition npcdefinition, int i, boolean bool, int i_523_, int i_524_ )
 	{
 		try {
 			if( menuActionRow < 400 ) {
@@ -7188,7 +7188,7 @@ public class Game extends GameShell
 			GameObjectDefinition.load( archiveConfig );
 			FloorDefinition.load( archiveConfig );
 			ItemDefinition.load( archiveConfig );
-			ActorDefinition.load( archiveConfig );
+			NPCDefinition.load( archiveConfig );
 			IdentityKit.load( archiveConfig );
 			SpotAnimation.load( archiveConfig );
 			Varp.load( archiveConfig );
@@ -7257,7 +7257,7 @@ public class Game extends GameShell
 			startRunnable( mouseCapturer, 10 );
 			GameObject.client = this;
 			GameObjectDefinition.client = this;
-			ActorDefinition.client = this;
+			NPCDefinition.client = this;
 		} catch( Exception exception ) {
 			SignLink.reportError( "loaderror " + aString1074 + " " + anInt1104 );
 			aBoolean951 = true;
@@ -7501,70 +7501,70 @@ public class Game extends GameShell
 	}
 
 
-	public final void method96( Actor actor )
+	public final void method96( Mob mob )
 	{
 		try {
-			if( ( actor.xWithBoundary < 128 ) || ( actor.yWithBoundary < 128 ) || ( actor.xWithBoundary >= 13184 ) || ( actor.yWithBoundary >= 13184 ) ) {
-				actor.animation = - 1;
-				actor.spotAnimationId = - 1;
-				actor.anInt1567 = 0;
-				actor.anInt1568 = 0;
-				actor.xWithBoundary = ( actor.pathX[ 0 ] * 128 ) + ( actor.boundaryDimension * 64 );
-				actor.yWithBoundary = ( actor.pathY[ 0 ] * 128 ) + ( actor.boundaryDimension * 64 );
-				actor.resetPath();
+			if( ( mob.xWithBoundary < 128 ) || ( mob.yWithBoundary < 128 ) || ( mob.xWithBoundary >= 13184 ) || ( mob.yWithBoundary >= 13184 ) ) {
+				mob.animation = - 1;
+				mob.spotAnimationId = - 1;
+				mob.anInt1567 = 0;
+				mob.anInt1568 = 0;
+				mob.xWithBoundary = ( mob.pathX[ 0 ] * 128 ) + ( mob.boundaryDimension * 64 );
+				mob.yWithBoundary = ( mob.pathY[ 0 ] * 128 ) + ( mob.boundaryDimension * 64 );
+				mob.resetPath();
 			}
-			if( ( actor == Game.localPlayer ) && ( ( actor.xWithBoundary < 1536 ) || ( actor.yWithBoundary < 1536 ) || ( actor.xWithBoundary >= 11776 ) || ( actor.yWithBoundary >= 11776 ) ) ) {
-				actor.animation = - 1;
-				actor.spotAnimationId = - 1;
-				actor.anInt1567 = 0;
-				actor.anInt1568 = 0;
-				actor.xWithBoundary = ( actor.pathX[ 0 ] * 128 ) + ( actor.boundaryDimension * 64 );
-				actor.yWithBoundary = ( actor.pathY[ 0 ] * 128 ) + ( actor.boundaryDimension * 64 );
-				actor.resetPath();
+			if( ( mob == Game.localPlayer ) && ( ( mob.xWithBoundary < 1536 ) || ( mob.yWithBoundary < 1536 ) || ( mob.xWithBoundary >= 11776 ) || ( mob.yWithBoundary >= 11776 ) ) ) {
+				mob.animation = - 1;
+				mob.spotAnimationId = - 1;
+				mob.anInt1567 = 0;
+				mob.anInt1568 = 0;
+				mob.xWithBoundary = ( mob.pathX[ 0 ] * 128 ) + ( mob.boundaryDimension * 64 );
+				mob.yWithBoundary = ( mob.pathY[ 0 ] * 128 ) + ( mob.boundaryDimension * 64 );
+				mob.resetPath();
 			}
-			if( actor.anInt1567 > Game.currentCycle ) {
-				method97( actor, true );
-			} else if( actor.anInt1568 >= Game.currentCycle ) {
-				method98( actor, aByte1037 );
+			if( mob.anInt1567 > Game.currentCycle ) {
+				method97( mob, true );
+			} else if( mob.anInt1568 >= Game.currentCycle ) {
+				method98( mob, aByte1037 );
 			} else {
-				method99( ( byte )34, actor );
+				method99( ( byte )34, mob );
 			}
-			method100( actor );
-			method101( actor );
+			method100( mob );
+			method101( mob );
 		} catch( RuntimeException runtimeexception ) {
-			SignLink.reportError( "29397, " + actor + ", " + runtimeexception.toString() );
+			SignLink.reportError( "29397, " + mob + ", " + runtimeexception.toString() );
 			throw new RuntimeException();
 		}
 	}
 
 
-	public final void method97( Actor actor, boolean bool )
+	public final void method97( Mob mob, boolean bool )
 	{
 		do {
 			try {
-				int cycle = actor.anInt1567 - Game.currentCycle;
-				int x = ( actor.anInt1563 * 128 ) + ( actor.boundaryDimension * 64 );
-				int y = ( actor.anInt1565 * 128 ) + ( actor.boundaryDimension * 64 );
-				actor.xWithBoundary += ( x - actor.xWithBoundary ) / cycle;
+				int cycle = mob.anInt1567 - Game.currentCycle;
+				int x = ( mob.anInt1563 * 128 ) + ( mob.boundaryDimension * 64 );
+				int y = ( mob.anInt1565 * 128 ) + ( mob.boundaryDimension * 64 );
+				mob.xWithBoundary += ( x - mob.xWithBoundary ) / cycle;
 				if( bool ) {
-					actor.yWithBoundary += ( y - actor.yWithBoundary ) / cycle;
-					actor.anInt1523 = 0;
-					if( actor.anInt1569 == 0 ) {
-						actor.anInt1530 = 1024;
+					mob.yWithBoundary += ( y - mob.yWithBoundary ) / cycle;
+					mob.anInt1523 = 0;
+					if( mob.anInt1569 == 0 ) {
+						mob.anInt1530 = 1024;
 					}
-					if( actor.anInt1569 == 1 ) {
-						actor.anInt1530 = 1536;
+					if( mob.anInt1569 == 1 ) {
+						mob.anInt1530 = 1536;
 					}
-					if( actor.anInt1569 == 2 ) {
-						actor.anInt1530 = 0;
+					if( mob.anInt1569 == 2 ) {
+						mob.anInt1530 = 0;
 					}
-					if( actor.anInt1569 != 3 ) {
+					if( mob.anInt1569 != 3 ) {
 						break;
 					}
-					actor.anInt1530 = 512;
+					mob.anInt1530 = 512;
 				}
 			} catch( RuntimeException runtimeexception ) {
-				SignLink.reportError( "99888, " + actor + ", " + bool + ", " + runtimeexception.toString() );
+				SignLink.reportError( "99888, " + mob + ", " + bool + ", " + runtimeexception.toString() );
 				throw new RuntimeException();
 			}
 			break;
@@ -7572,39 +7572,39 @@ public class Game extends GameShell
 	}
 
 
-	public final void method98( Actor actor, byte b )
+	public final void method98( Mob mob, byte b )
 	{
 		do {
 			try {
-				if( ( actor.anInt1568 == Game.currentCycle ) || ( actor.animation == - 1 ) || ( actor.aniomationDelay != 0 ) || ( ( actor.anInt1548 + 1 ) > AnimationSequence.cache[ actor.animation ].getFrameLength( actor.anInt1547 ) ) ) {
-					int i = actor.anInt1568 - actor.anInt1567;
-					int i_603_ = Game.currentCycle - actor.anInt1567;
-					int i_604_ = ( actor.anInt1563 * 128 ) + ( actor.boundaryDimension * 64 );
-					int i_605_ = ( actor.anInt1565 * 128 ) + ( actor.boundaryDimension * 64 );
-					int i_606_ = ( actor.anInt1564 * 128 ) + ( actor.boundaryDimension * 64 );
-					int i_607_ = ( actor.anInt1566 * 128 ) + ( actor.boundaryDimension * 64 );
-					actor.xWithBoundary = ( ( i_604_ * ( i - i_603_ ) ) + ( i_606_ * i_603_ ) ) / i;
-					actor.yWithBoundary = ( ( i_605_ * ( i - i_603_ ) ) + ( i_607_ * i_603_ ) ) / i;
+				if( ( mob.anInt1568 == Game.currentCycle ) || ( mob.animation == - 1 ) || ( mob.aniomationDelay != 0 ) || ( ( mob.anInt1548 + 1 ) > AnimationSequence.cache[ mob.animation ].getFrameLength( mob.anInt1547 ) ) ) {
+					int i = mob.anInt1568 - mob.anInt1567;
+					int i_603_ = Game.currentCycle - mob.anInt1567;
+					int i_604_ = ( mob.anInt1563 * 128 ) + ( mob.boundaryDimension * 64 );
+					int i_605_ = ( mob.anInt1565 * 128 ) + ( mob.boundaryDimension * 64 );
+					int i_606_ = ( mob.anInt1564 * 128 ) + ( mob.boundaryDimension * 64 );
+					int i_607_ = ( mob.anInt1566 * 128 ) + ( mob.boundaryDimension * 64 );
+					mob.xWithBoundary = ( ( i_604_ * ( i - i_603_ ) ) + ( i_606_ * i_603_ ) ) / i;
+					mob.yWithBoundary = ( ( i_605_ * ( i - i_603_ ) ) + ( i_607_ * i_603_ ) ) / i;
 				}
-				actor.anInt1523 = 0;
-				if( actor.anInt1569 == 0 ) {
-					actor.anInt1530 = 1024;
+				mob.anInt1523 = 0;
+				if( mob.anInt1569 == 0 ) {
+					mob.anInt1530 = 1024;
 				}
-				if( actor.anInt1569 == 1 ) {
-					actor.anInt1530 = 1536;
+				if( mob.anInt1569 == 1 ) {
+					mob.anInt1530 = 1536;
 				}
-				if( actor.anInt1569 == 2 ) {
-					actor.anInt1530 = 0;
+				if( mob.anInt1569 == 2 ) {
+					mob.anInt1530 = 0;
 				}
-				if( actor.anInt1569 == 3 ) {
-					actor.anInt1530 = 512;
+				if( mob.anInt1569 == 3 ) {
+					mob.anInt1530 = 512;
 				}
-				actor.anInt1572 = actor.anInt1530;
+				mob.anInt1572 = mob.anInt1530;
 				if( b == aByte1037 ) {
 					break;
 				}
 			} catch( RuntimeException runtimeexception ) {
-				SignLink.reportError( "10794, " + actor + ", " + b + ", " + runtimeexception.toString() );
+				SignLink.reportError( "10794, " + mob + ", " + b + ", " + runtimeexception.toString() );
 				throw new RuntimeException();
 			}
 			break;
@@ -7612,124 +7612,124 @@ public class Game extends GameShell
 	}
 
 
-	public final void method99( byte b, Actor actor )
+	public final void method99( byte b, Mob mob )
 	{
 		do {
 			try {
-				actor.anInt1537 = actor.standAnimationId;
-				if( actor.pathLength == 0 ) {
-					actor.anInt1523 = 0;
+				mob.anInt1537 = mob.standAnimationId;
+				if( mob.pathLength == 0 ) {
+					mob.anInt1523 = 0;
 				} else {
-					if( ( actor.animation != - 1 ) && ( actor.aniomationDelay == 0 ) ) {
-						AnimationSequence animationsequence = AnimationSequence.cache[ actor.animation ];
-						if( ( actor.anInt1562 > 0 ) && ( animationsequence.anInt61 == 0 ) ) {
-							actor.anInt1523 ++ ;
+					if( ( mob.animation != - 1 ) && ( mob.aniomationDelay == 0 ) ) {
+						AnimationSequence animationsequence = AnimationSequence.cache[ mob.animation ];
+						if( ( mob.anInt1562 > 0 ) && ( animationsequence.anInt61 == 0 ) ) {
+							mob.anInt1523 ++ ;
 							break;
 						}
-						if( ( actor.anInt1562 <= 0 ) && ( animationsequence.priority == 0 ) ) {
-							actor.anInt1523 ++ ;
+						if( ( mob.anInt1562 <= 0 ) && ( animationsequence.priority == 0 ) ) {
+							mob.anInt1523 ++ ;
 							break;
 						}
 					}
-					int i = actor.xWithBoundary;
-					int i_608_ = actor.yWithBoundary;
-					int i_609_ = ( actor.pathX[ actor.pathLength - 1 ] * 128 ) + ( actor.boundaryDimension * 64 );
-					int i_610_ = ( actor.pathY[ actor.pathLength - 1 ] * 128 ) + ( actor.boundaryDimension * 64 );
+					int i = mob.xWithBoundary;
+					int i_608_ = mob.yWithBoundary;
+					int i_609_ = ( mob.pathX[ mob.pathLength - 1 ] * 128 ) + ( mob.boundaryDimension * 64 );
+					int i_610_ = ( mob.pathY[ mob.pathLength - 1 ] * 128 ) + ( mob.boundaryDimension * 64 );
 					if( ( ( i_609_ - i ) > 256 ) || ( ( i_609_ - i ) < - 256 ) || ( ( i_610_ - i_608_ ) > 256 ) || ( ( i_610_ - i_608_ ) < - 256 ) ) {
-						actor.xWithBoundary = i_609_;
-						actor.yWithBoundary = i_610_;
+						mob.xWithBoundary = i_609_;
+						mob.yWithBoundary = i_610_;
 					} else {
 						if( i < i_609_ ) {
 							if( i_608_ < i_610_ ) {
-								actor.anInt1530 = 1280;
+								mob.anInt1530 = 1280;
 							} else if( i_608_ > i_610_ ) {
-								actor.anInt1530 = 1792;
+								mob.anInt1530 = 1792;
 							} else {
-								actor.anInt1530 = 1536;
+								mob.anInt1530 = 1536;
 							}
 						} else if( i > i_609_ ) {
 							if( i_608_ < i_610_ ) {
-								actor.anInt1530 = 768;
+								mob.anInt1530 = 768;
 							} else if( i_608_ > i_610_ ) {
-								actor.anInt1530 = 256;
+								mob.anInt1530 = 256;
 							} else {
-								actor.anInt1530 = 512;
+								mob.anInt1530 = 512;
 							}
 						} else if( i_608_ < i_610_ ) {
-							actor.anInt1530 = 1024;
+							mob.anInt1530 = 1024;
 						} else {
-							actor.anInt1530 = 0;
+							mob.anInt1530 = 0;
 						}
-						int i_611_ = ( actor.anInt1530 - actor.anInt1572 ) & 0x7ff;
+						int i_611_ = ( mob.anInt1530 - mob.anInt1572 ) & 0x7ff;
 						if( i_611_ > 1024 ) {
 							i_611_ -= 2048;
 						}
-						int animation = actor.turnAroundAnimationId;
+						int animation = mob.turnAroundAnimationId;
 						if( ( i_611_ >= - 256 ) && ( i_611_ <= 256 ) ) {
-							animation = actor.walkAnimationId;
+							animation = mob.walkAnimationId;
 						} else if( ( i_611_ >= 256 ) && ( i_611_ < 768 ) ) {
-							animation = actor.turnLeftAnimationId;
+							animation = mob.turnLeftAnimationId;
 						} else if( ( i_611_ >= - 768 ) && ( i_611_ <= - 256 ) ) {
-							animation = actor.turnRightAnimationId;
+							animation = mob.turnRightAnimationId;
 						}
 						if( animation == - 1 ) {
-							animation = actor.walkAnimationId;
+							animation = mob.walkAnimationId;
 						}
-						actor.anInt1537 = animation;
+						mob.anInt1537 = animation;
 						int i_613_ = 4;
-						if( ( actor.anInt1572 != actor.anInt1530 ) && ( actor.interactingEntity == - 1 ) && ( actor.anInt1524 != 0 ) ) {
+						if( ( mob.anInt1572 != mob.anInt1530 ) && ( mob.interactingEntity == - 1 ) && ( mob.anInt1524 != 0 ) ) {
 							i_613_ = 2;
 						}
-						if( actor.pathLength > 2 ) {
+						if( mob.pathLength > 2 ) {
 							i_613_ = 6;
 						}
-						if( actor.pathLength > 3 ) {
+						if( mob.pathLength > 3 ) {
 							i_613_ = 8;
 						}
-						if( ( actor.anInt1523 > 0 ) && ( actor.pathLength > 1 ) ) {
+						if( ( mob.anInt1523 > 0 ) && ( mob.pathLength > 1 ) ) {
 							i_613_ = 8;
-							actor.anInt1523 -- ;
+							mob.anInt1523 -- ;
 						}
-						if( actor.pathRun[ actor.pathLength - 1 ] ) {
+						if( mob.pathRun[ mob.pathLength - 1 ] ) {
 							i_613_ <<= 1;
 						}
-						if( ( i_613_ >= 8 ) && ( actor.anInt1537 == actor.walkAnimationId ) && ( actor.runAnimationId != - 1 ) ) {
-							actor.anInt1537 = actor.runAnimationId;
+						if( ( i_613_ >= 8 ) && ( mob.anInt1537 == mob.walkAnimationId ) && ( mob.runAnimationId != - 1 ) ) {
+							mob.anInt1537 = mob.runAnimationId;
 						}
 						if( i < i_609_ ) {
-							actor.xWithBoundary += i_613_;
-							if( actor.xWithBoundary > i_609_ ) {
-								actor.xWithBoundary = i_609_;
+							mob.xWithBoundary += i_613_;
+							if( mob.xWithBoundary > i_609_ ) {
+								mob.xWithBoundary = i_609_;
 							}
 						} else if( i > i_609_ ) {
-							actor.xWithBoundary -= i_613_;
-							if( actor.xWithBoundary < i_609_ ) {
-								actor.xWithBoundary = i_609_;
+							mob.xWithBoundary -= i_613_;
+							if( mob.xWithBoundary < i_609_ ) {
+								mob.xWithBoundary = i_609_;
 							}
 						}
 						if( i_608_ < i_610_ ) {
-							actor.yWithBoundary += i_613_;
-							if( actor.yWithBoundary > i_610_ ) {
-								actor.yWithBoundary = i_610_;
+							mob.yWithBoundary += i_613_;
+							if( mob.yWithBoundary > i_610_ ) {
+								mob.yWithBoundary = i_610_;
 							}
 						} else if( i_608_ > i_610_ ) {
-							actor.yWithBoundary -= i_613_;
-							if( actor.yWithBoundary < i_610_ ) {
-								actor.yWithBoundary = i_610_;
+							mob.yWithBoundary -= i_613_;
+							if( mob.yWithBoundary < i_610_ ) {
+								mob.yWithBoundary = i_610_;
 							}
 						}
-						if( ( actor.xWithBoundary != i_609_ ) || ( actor.yWithBoundary != i_610_ ) ) {
+						if( ( mob.xWithBoundary != i_609_ ) || ( mob.yWithBoundary != i_610_ ) ) {
 							break;
 						}
-						actor.pathLength -- ;
-						if( actor.anInt1562 <= 0 ) {
+						mob.pathLength -- ;
+						if( mob.anInt1562 <= 0 ) {
 							break;
 						}
-						actor.anInt1562 -- ;
+						mob.anInt1562 -- ;
 					}
 				}
 			} catch( RuntimeException runtimeexception ) {
-				SignLink.reportError( "41887, " + b + ", " + actor + ", " + runtimeexception.toString() );
+				SignLink.reportError( "41887, " + b + ", " + mob + ", " + runtimeexception.toString() );
 				throw new RuntimeException();
 			}
 			break;
@@ -7737,67 +7737,67 @@ public class Game extends GameShell
 	}
 
 
-	public final void method100( Actor actor )
+	public final void method100( Mob mob )
 	{
 		do {
 			try {
-				if( actor.anInt1524 != 0 ) {
-					if( ( actor.interactingEntity != - 1 ) && ( actor.interactingEntity < 32768 ) ) {
-						Npc npc = localNpcs[ actor.interactingEntity ];
+				if( mob.anInt1524 != 0 ) {
+					if( ( mob.interactingEntity != - 1 ) && ( mob.interactingEntity < 32768 ) ) {
+						Npc npc = localNpcs[ mob.interactingEntity ];
 						if( npc != null ) {
-							int i_614_ = actor.xWithBoundary - npc.xWithBoundary;
-							int i_615_ = actor.yWithBoundary - npc.yWithBoundary;
+							int i_614_ = mob.xWithBoundary - npc.xWithBoundary;
+							int i_615_ = mob.yWithBoundary - npc.yWithBoundary;
 							if( ( i_614_ != 0 ) || ( i_615_ != 0 ) ) {
-								actor.anInt1530 = ( int )( Math.atan2( i_614_, i_615_ ) * 325.949 ) & 0x7ff;
+								mob.anInt1530 = ( int )( Math.atan2( i_614_, i_615_ ) * 325.949 ) & 0x7ff;
 							}
 						}
 					}
-					if( actor.interactingEntity >= 32768 ) {
-						int i_616_ = actor.interactingEntity - 32768;
+					if( mob.interactingEntity >= 32768 ) {
+						int i_616_ = mob.interactingEntity - 32768;
 						if( i_616_ == anInt909 ) {
 							i_616_ = localPlayerId;
 						}
 						Player player = players[ i_616_ ];
 						if( player != null ) {
-							int i_617_ = actor.xWithBoundary - player.xWithBoundary;
-							int i_618_ = actor.yWithBoundary - player.yWithBoundary;
+							int i_617_ = mob.xWithBoundary - player.xWithBoundary;
+							int i_618_ = mob.yWithBoundary - player.yWithBoundary;
 							if( ( i_617_ != 0 ) || ( i_618_ != 0 ) ) {
-								actor.anInt1530 = ( int )( Math.atan2( i_617_, i_618_ ) * 325.949 ) & 0x7ff;
+								mob.anInt1530 = ( int )( Math.atan2( i_617_, i_618_ ) * 325.949 ) & 0x7ff;
 							}
 						}
 					}
-					if( ( ( actor.faceTowardX != 0 ) || ( actor.faceTowardY != 0 ) ) && ( ( actor.pathLength == 0 ) || ( actor.anInt1523 > 0 ) ) ) {
-						int i_619_ = actor.xWithBoundary - ( ( actor.faceTowardX - regionAbsoluteBaseX - regionAbsoluteBaseX ) * 64 );
-						int i_620_ = actor.yWithBoundary - ( ( actor.faceTowardY - regionAbsoluteBaseY - regionAbsoluteBaseY ) * 64 );
+					if( ( ( mob.faceTowardX != 0 ) || ( mob.faceTowardY != 0 ) ) && ( ( mob.pathLength == 0 ) || ( mob.anInt1523 > 0 ) ) ) {
+						int i_619_ = mob.xWithBoundary - ( ( mob.faceTowardX - regionAbsoluteBaseX - regionAbsoluteBaseX ) * 64 );
+						int i_620_ = mob.yWithBoundary - ( ( mob.faceTowardY - regionAbsoluteBaseY - regionAbsoluteBaseY ) * 64 );
 						if( ( i_619_ != 0 ) || ( i_620_ != 0 ) ) {
-							actor.anInt1530 = ( int )( Math.atan2( i_619_, i_620_ ) * 325.949 ) & 0x7ff;
+							mob.anInt1530 = ( int )( Math.atan2( i_619_, i_620_ ) * 325.949 ) & 0x7ff;
 						}
-						actor.faceTowardX = 0;
-						actor.faceTowardY = 0;
+						mob.faceTowardX = 0;
+						mob.faceTowardY = 0;
 					}
-					int i_621_ = ( actor.anInt1530 - actor.anInt1572 ) & 0x7ff;
+					int i_621_ = ( mob.anInt1530 - mob.anInt1572 ) & 0x7ff;
 					if( i_621_ == 0 ) {
 						break;
 					}
-					if( ( i_621_ < actor.anInt1524 ) || ( i_621_ > ( 2048 - actor.anInt1524 ) ) ) {
-						actor.anInt1572 = actor.anInt1530;
+					if( ( i_621_ < mob.anInt1524 ) || ( i_621_ > ( 2048 - mob.anInt1524 ) ) ) {
+						mob.anInt1572 = mob.anInt1530;
 					} else if( i_621_ > 1024 ) {
-						actor.anInt1572 -= actor.anInt1524;
+						mob.anInt1572 -= mob.anInt1524;
 					} else {
-						actor.anInt1572 += actor.anInt1524;
+						mob.anInt1572 += mob.anInt1524;
 					}
-					actor.anInt1572 &= 0x7ff;
-					if( ( actor.anInt1537 != actor.standAnimationId ) || ( actor.anInt1572 == actor.anInt1530 ) ) {
+					mob.anInt1572 &= 0x7ff;
+					if( ( mob.anInt1537 != mob.standAnimationId ) || ( mob.anInt1572 == mob.anInt1530 ) ) {
 						break;
 					}
-					if( actor.standTurnAnimationId != - 1 ) {
-						actor.anInt1537 = actor.standTurnAnimationId;
+					if( mob.standTurnAnimationId != - 1 ) {
+						mob.anInt1537 = mob.standTurnAnimationId;
 					} else {
-						actor.anInt1537 = actor.walkAnimationId;
+						mob.anInt1537 = mob.walkAnimationId;
 					}
 				}
 			} catch( RuntimeException runtimeexception ) {
-				SignLink.reportError( "73745, " + actor + ", " + runtimeexception.toString() );
+				SignLink.reportError( "73745, " + mob + ", " + runtimeexception.toString() );
 				throw new RuntimeException();
 			}
 			break;
@@ -7805,65 +7805,65 @@ public class Game extends GameShell
 	}
 
 
-	public final void method101( Actor actor )
+	public final void method101( Mob mob )
 	{
 		do {
 			try {
-				actor.aBoolean1561 = false;
-				if( actor.anInt1537 != - 1 ) {
-					AnimationSequence animationsequence = AnimationSequence.cache[ actor.anInt1537 ];
-					actor.anInt1539 ++ ;
-					if( ( actor.anInt1538 < animationsequence.frameCount ) && ( actor.anInt1539 > animationsequence.getFrameLength( actor.anInt1538 ) ) ) {
-						actor.anInt1539 = 0;
-						actor.anInt1538 ++ ;
+				mob.aBoolean1561 = false;
+				if( mob.anInt1537 != - 1 ) {
+					AnimationSequence animationsequence = AnimationSequence.cache[ mob.anInt1537 ];
+					mob.anInt1539 ++ ;
+					if( ( mob.anInt1538 < animationsequence.frameCount ) && ( mob.anInt1539 > animationsequence.getFrameLength( mob.anInt1538 ) ) ) {
+						mob.anInt1539 = 0;
+						mob.anInt1538 ++ ;
 					}
-					if( actor.anInt1538 >= animationsequence.frameCount ) {
-						actor.anInt1539 = 0;
-						actor.anInt1538 = 0;
-					}
-				}
-				if( ( actor.spotAnimationId != - 1 ) && ( Game.currentCycle >= actor.spotAnimationEndCycle ) ) {
-					if( actor.currentAnimationFrame < 0 ) {
-						actor.currentAnimationFrame = 0;
-					}
-					AnimationSequence animationsequence = SpotAnimation.cache[ actor.spotAnimationId ].sequences;
-					for( actor.anInt1542 ++ ; ( actor.currentAnimationFrame < animationsequence.frameCount ) && ( actor.anInt1542 > animationsequence.getFrameLength( actor.currentAnimationFrame ) ); actor.currentAnimationFrame ++ ) {
-						actor.anInt1542 -= animationsequence.getFrameLength( actor.currentAnimationFrame );
-					}
-					if( ( actor.currentAnimationFrame >= animationsequence.frameCount ) && ( ( actor.currentAnimationFrame < 0 ) || ( actor.currentAnimationFrame >= animationsequence.frameCount ) ) ) {
-						actor.spotAnimationId = - 1;
+					if( mob.anInt1538 >= animationsequence.frameCount ) {
+						mob.anInt1539 = 0;
+						mob.anInt1538 = 0;
 					}
 				}
-				if( ( actor.animation != - 1 ) && ( actor.aniomationDelay <= 1 ) ) {
-					AnimationSequence animationsequence = AnimationSequence.cache[ actor.animation ];
-					if( ( animationsequence.anInt61 == 1 ) && ( actor.anInt1562 > 0 ) && ( actor.anInt1567 <= Game.currentCycle ) && ( actor.anInt1568 < Game.currentCycle ) ) {
-						actor.aniomationDelay = 1;
+				if( ( mob.spotAnimationId != - 1 ) && ( Game.currentCycle >= mob.spotAnimationEndCycle ) ) {
+					if( mob.currentAnimationFrame < 0 ) {
+						mob.currentAnimationFrame = 0;
+					}
+					AnimationSequence animationsequence = SpotAnimation.cache[ mob.spotAnimationId ].sequences;
+					for( mob.anInt1542 ++ ; ( mob.currentAnimationFrame < animationsequence.frameCount ) && ( mob.anInt1542 > animationsequence.getFrameLength( mob.currentAnimationFrame ) ); mob.currentAnimationFrame ++ ) {
+						mob.anInt1542 -= animationsequence.getFrameLength( mob.currentAnimationFrame );
+					}
+					if( ( mob.currentAnimationFrame >= animationsequence.frameCount ) && ( ( mob.currentAnimationFrame < 0 ) || ( mob.currentAnimationFrame >= animationsequence.frameCount ) ) ) {
+						mob.spotAnimationId = - 1;
+					}
+				}
+				if( ( mob.animation != - 1 ) && ( mob.aniomationDelay <= 1 ) ) {
+					AnimationSequence animationsequence = AnimationSequence.cache[ mob.animation ];
+					if( ( animationsequence.anInt61 == 1 ) && ( mob.anInt1562 > 0 ) && ( mob.anInt1567 <= Game.currentCycle ) && ( mob.anInt1568 < Game.currentCycle ) ) {
+						mob.aniomationDelay = 1;
 						break;
 					}
 				}
-				if( ( actor.animation != - 1 ) && ( actor.aniomationDelay == 0 ) ) {
-					AnimationSequence animationsequence = AnimationSequence.cache[ actor.animation ];
-					for( actor.anInt1548 ++ ; ( actor.anInt1547 < animationsequence.frameCount ) && ( actor.anInt1548 > animationsequence.getFrameLength( actor.anInt1547 ) ); actor.anInt1547 ++ ) {
-						actor.anInt1548 -= animationsequence.getFrameLength( actor.anInt1547 );
+				if( ( mob.animation != - 1 ) && ( mob.aniomationDelay == 0 ) ) {
+					AnimationSequence animationsequence = AnimationSequence.cache[ mob.animation ];
+					for( mob.anInt1548 ++ ; ( mob.anInt1547 < animationsequence.frameCount ) && ( mob.anInt1548 > animationsequence.getFrameLength( mob.anInt1547 ) ); mob.anInt1547 ++ ) {
+						mob.anInt1548 -= animationsequence.getFrameLength( mob.anInt1547 );
 					}
-					if( actor.anInt1547 >= animationsequence.frameCount ) {
-						actor.anInt1547 -= animationsequence.frameStep;
-						actor.anInt1550 ++ ;
-						if( actor.anInt1550 >= animationsequence.anInt60 ) {
-							actor.animation = - 1;
+					if( mob.anInt1547 >= animationsequence.frameCount ) {
+						mob.anInt1547 -= animationsequence.frameStep;
+						mob.anInt1550 ++ ;
+						if( mob.anInt1550 >= animationsequence.anInt60 ) {
+							mob.animation = - 1;
 						}
-						if( ( actor.anInt1547 < 0 ) || ( actor.anInt1547 >= animationsequence.frameCount ) ) {
-							actor.animation = - 1;
+						if( ( mob.anInt1547 < 0 ) || ( mob.anInt1547 >= animationsequence.frameCount ) ) {
+							mob.animation = - 1;
 						}
 					}
-					actor.aBoolean1561 = animationsequence.aBoolean56;
+					mob.aBoolean1561 = animationsequence.aBoolean56;
 				}
-				if( actor.aniomationDelay <= 0 ) {
+				if( mob.aniomationDelay <= 0 ) {
 					break;
 				}
-				actor.aniomationDelay -- ;
+				mob.aniomationDelay -- ;
 			} catch( RuntimeException runtimeexception ) {
-				SignLink.reportError( "56331, " + actor + ", " + runtimeexception.toString() );
+				SignLink.reportError( "56331, " + mob + ", " + runtimeexception.toString() );
 				throw new RuntimeException();
 			}
 			break;
@@ -9614,7 +9614,7 @@ public class Game extends GameShell
 				for( int i = 0; i < actorCount; i ++ ) {
 					Npc npc = localNpcs[ anIntArray862[ i ] ];
 					if( ( npc != null ) && npc.isVisibile() ) {
-						ActorDefinition definition = npc.npcDefinition;
+						NPCDefinition definition = npc.npcDefinition;
 						if( definition.childrenIds != null ) {
 							definition = definition.getChildDefinition();
 						}
@@ -9696,15 +9696,15 @@ public class Game extends GameShell
 	}
 
 
-	public final void method127( boolean bool, Actor actor, int i )
+	public final void method127( boolean bool, Mob mob, int i )
 	{
 		try {
 			if( ! bool ) {
 				opcode = inBuffer.getUnsignedByte();
 			}
-			method128( actor.xWithBoundary, i, anInt900, actor.yWithBoundary );
+			method128( mob.xWithBoundary, i, anInt900, mob.yWithBoundary );
 		} catch( RuntimeException runtimeexception ) {
-			SignLink.reportError( "30100, " + bool + ", " + actor + ", " + i + ", " + runtimeexception.toString() );
+			SignLink.reportError( "30100, " + bool + ", " + mob + ", " + i + ", " + runtimeexception.toString() );
 			throw new RuntimeException();
 		}
 	}
