@@ -39,15 +39,21 @@ public final class PlayerSynchronizationTask extends SynchronizationTask
 	 */
 	private final Player player;
 
+	/**
+	 * The world.
+	 */
+	private final World world;
+
 
 	/**
 	 * Creates the {@link PlayerSynchronizationTask} for the specified player.
-	 * @param player
-	 *            The player.
+	 * @param player The player.
+	 * @param world The world.
 	 */
-	public PlayerSynchronizationTask( Player player )
+	public PlayerSynchronizationTask( Player player, World world )
 	{
 		this.player = player;
+		this.world = world;
 	}
 
 
@@ -57,12 +63,13 @@ public final class PlayerSynchronizationTask extends SynchronizationTask
 		Position lastKnownRegion = player.getLastKnownRegion();
 		boolean regionChanged = player.hasRegionChanged();
 
-		SynchronizationSegment segment;
 		SynchronizationBlockSet blockSet = player.getBlockSet();
 		if( blockSet.contains( ChatBlock.class ) ) {
 			blockSet = blockSet.clone();
 			blockSet.remove( ChatBlock.class );
 		}
+
+		SynchronizationSegment segment;
 
 		if( player.isTeleporting() || player.hasRegionChanged() ) {
 			segment = new TeleportSegment( blockSet, player.getPosition() );
@@ -87,7 +94,7 @@ public final class PlayerSynchronizationTask extends SynchronizationTask
 
 		int added = 0;
 
-		CharacterRepository<Player> repository = World.getInstance().getPlayerRepository();
+		CharacterRepository<Player> repository = world.getPlayerRepository();
 		// lambda does not work here
 		// due to variables needing to be final.
 		for( Player p: repository ) {
@@ -111,7 +118,7 @@ public final class PlayerSynchronizationTask extends SynchronizationTask
 					blockSet.add( SynchronizationBlock.createAppearanceBlock( p ) );
 				}
 
-				segments.add( new AddCharacterSegment( blockSet, p, p.getIndex(), p.getIndex(), p.getPosition() ) );
+				segments.add( new AddCharacterSegment( blockSet, p, p.getIndex(), - 1, p.getPosition() ) );
 			}
 		}
 

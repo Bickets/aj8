@@ -2,9 +2,7 @@
 package org.apollo;
 
 import io.netty.bootstrap.ServerBootstrap;
-import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler;
-import io.netty.channel.EventLoopGroup;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
 
@@ -13,29 +11,33 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
-import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apollo.fs.IndexedFileSystem;
+import org.apollo.game.GameService;
 import org.apollo.game.event.EventTranslator;
 import org.apollo.game.model.World;
+import org.apollo.io.player.PlayerSerializer;
 import org.apollo.net.ApolloHandler;
 import org.apollo.net.HttpChannelHandler;
 import org.apollo.net.JagGrabChannelHandler;
 import org.apollo.net.NetworkConstants;
 import org.apollo.net.ServiceChannelHandler;
+import org.apollo.plugin.PluginService;
+import org.apollo.service.ServiceManager;
+import org.apollo.update.UpdateService;
 
 /**
  * The core class of the Apollo server.
  * @author Graham
  */
-public final class Server
+final class Server
 {
 
 	/**
 	 * The logger for this class.
 	 */
-	private static final Logger logger = Logger.getLogger( Server.class.getName() );
+	private final Logger logger = Logger.getLogger( getClass().getName() );
 
 
 	/**
@@ -54,8 +56,8 @@ public final class Server
 
 			server.start();
 			server.bind( service, http, jaggrab );
-		} catch( ClassNotFoundException | InstantiationException | IllegalAccessException | IOException e ) {
-			logger.log( Level.SEVERE, "Exception whilst starting Apollo:", e );
+		} catch( IOException e ) {
+			e.printStackTrace();
 		}
 	}
 
@@ -75,25 +77,39 @@ public final class Server
 	private final ServerBootstrap jagGrabBootstrap = new ServerBootstrap();
 
 	/**
-	 * An instance of {@link EventLoopGroup} used for multithread selects from the NIO selector
-	 * based {@link Channel}'s
-	 */
-	private final EventLoopGroup loopGroup = new NioEventLoopGroup();
-
-	/**
 	 * The service manager.
 	 */
-	private final ServiceManager serviceManager;
+	private final ServiceManager serviceManager = new ServiceManager();
 
 	/**
-	 * The server's context.
+	 * The world.
 	 */
-	private ServerContext context;
+	private final World world = new World();
+
+	/**
+	 * The player serializer.
+	 */
+	private final PlayerSerializer playerSerializer = new PlayerSerializer();
+
+	/**
+	 * The game service.
+	 */
+	private final GameService gameService = new GameService( world, playerSerializer );
+
+	/**
+	 * The plugin service.
+	 */
+	private final PluginService pluginService = new PluginService( world );
+
+	/**
+	 * The update service.
+	 */
+	private final UpdateService updateService = new UpdateService();
 
 	/**
 	 * The event translator.
 	 */
-	private EventTranslator eventTranslator;
+	private final EventTranslator eventTranslator = new EventTranslator( world );
 
 	/**
 	 * The file system.
@@ -103,45 +119,44 @@ public final class Server
 
 	/**
 	 * Creates the Apollo server.
-	 * @throws IOException If some I/O exceptions occurs.
-	 * @throws ClassNotFoundException If the specified class is not found.
-	 * @throws IllegalAccessException If we cannot access the specified class.
-	 * @throws InstantiationException If some instantiation error occurs.
+	 * @throws FileNotFoundException If the file system cannot be found.
 	 */
-	public Server() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException
+	private Server() throws FileNotFoundException
 	{
 		logger.info( "Starting Apollo..." );
-		serviceManager = new ServiceManager();
+		fileSystem = new IndexedFileSystem( new File( "data/fs/" ), true );
 	}
 
 
 	/**
 	 * Initializes the server.
-	 * @throws FileNotFoundException If the file system cannot be found.
 	 */
-	public void init() throws FileNotFoundException
+	public void init()
 	{
 		logger.info( "Initialized Apollo." );
 
-		context = new ServerContext( serviceManager );
-		eventTranslator = new EventTranslator();
-		fileSystem = new IndexedFileSystem( new File( "data/fs/" ), true );
-		ApolloHandler handler = new ApolloHandler( context, eventTranslator, fileSystem );
+		ApolloHandler handler = new ApolloHandler( eventTranslator, fileSystem, playerSerializer, gameService, updateService );
 
-		ChannelHandler servicePipelineFactory = new ServiceChannelHandler( handler );
-		serviceBootstrap.childHandler( servicePipelineFactory );
-		serviceBootstrap.channel( NioServerSocketChannel.class );
-		serviceBootstrap.group( loopGroup );
+		bootstrap( serviceBootstrap, new ServiceChannelHandler( handler ) );
+		bootstrap( httpBootstrap, new HttpChannelHandler( handler ) );
+		bootstrap( jagGrabBootstrap, new JagGrabChannelHandler( handler ) );
 
-		ChannelHandler httpPipelineFactory = new HttpChannelHandler( handler );
-		httpBootstrap.childHandler( httpPipelineFactory );
-		httpBootstrap.channel( NioServerSocketChannel.class );
-		httpBootstrap.group( loopGroup );
+		serviceManager.register( gameService );
+		serviceManager.register( updateService );
+		serviceManager.register( pluginService );
+	}
 
-		ChannelHandler jagGrabPipelineFactory = new JagGrabChannelHandler( handler );
-		jagGrabBootstrap.childHandler( jagGrabPipelineFactory );
-		jagGrabBootstrap.channel( NioServerSocketChannel.class );
-		jagGrabBootstrap.group( loopGroup );
+
+	/**
+	 * "Bootstrap"'s a specified {@link ServerBootstrap} to a {@link ChannelHandler}.
+	 * @param bootstrap The bootstrap.
+	 * @param handler The channel handler.
+	 */
+	private void bootstrap( ServerBootstrap bootstrap, ChannelHandler handler )
+	{
+		bootstrap.childHandler( handler );
+		bootstrap.channel( NioServerSocketChannel.class );
+		bootstrap.group( new NioEventLoopGroup() );
 	}
 
 
@@ -157,11 +172,7 @@ public final class Server
 		serviceBootstrap.bind( serviceAddress );
 
 		logger.info( "Binding HTTP listener to address: " + httpAddress + "..." );
-		try {
-			httpBootstrap.bind( httpAddress );
-		} catch( Throwable t ) {
-			logger.log( Level.WARNING, "Binding to HTTP failed: client will use JAGGRAB as a fallback (not recommended)!", t );
-		}
+		httpBootstrap.bind( httpAddress );
 
 		logger.info( "Binding JAGGRAB listener to address: " + jagGrabAddress + "..." );
 		jagGrabBootstrap.bind( jagGrabAddress );
@@ -178,7 +189,7 @@ public final class Server
 	{
 		serviceManager.startAll();
 
-		World.getInstance().init( fileSystem );
+		world.init( fileSystem );
 	}
 
 }

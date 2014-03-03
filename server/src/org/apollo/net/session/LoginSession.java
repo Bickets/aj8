@@ -8,14 +8,13 @@ import io.netty.channel.ChannelHandlerContext;
 
 import java.io.IOException;
 
-import org.apollo.ServerContext;
 import org.apollo.fs.IndexedFileSystem;
 import org.apollo.game.GameService;
 import org.apollo.game.event.EventTranslator;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.World.RegistrationStatus;
 import org.apollo.io.player.PlayerLoaderResponse;
-import org.apollo.login.LoginService;
+import org.apollo.io.player.PlayerSerializer;
 import org.apollo.net.NetworkConstants;
 import org.apollo.net.codec.game.GameEventDecoder;
 import org.apollo.net.codec.game.GameEventEncoder;
@@ -34,11 +33,6 @@ public final class LoginSession extends Session
 {
 
 	/**
-	 * The server context.
-	 */
-	private final ServerContext serverContext;
-
-	/**
 	 * The event translator.
 	 */
 	private final EventTranslator eventTranslator;
@@ -48,20 +42,32 @@ public final class LoginSession extends Session
 	 */
 	private final IndexedFileSystem fileSystem;
 
+	/**
+	 * The player synchronizer.
+	 */
+	private final PlayerSerializer playerSerializer;
+
+	/**
+	 * The game service.
+	 */
+	private final GameService gameService;
+
 
 	/**
 	 * Creates a login session for the specified channel.
 	 * @param ctx The channels context.
-	 * @param serverContext The server context.
 	 * @param eventTranslator The event translator.
 	 * @param fileSystem The file system
+	 * @param playerSerializer The player serializer.
+	 * @param gameSession The game session.
 	 */
-	public LoginSession( ChannelHandlerContext ctx, ServerContext serverContext, EventTranslator eventTranslator, IndexedFileSystem fileSystem )
+	public LoginSession( ChannelHandlerContext ctx, EventTranslator eventTranslator, IndexedFileSystem fileSystem, PlayerSerializer playerSerializer, GameService gameService )
 	{
 		super( ctx );
-		this.serverContext = serverContext;
 		this.eventTranslator = eventTranslator;
 		this.fileSystem = fileSystem;
+		this.playerSerializer = playerSerializer;
+		this.gameService = gameService;
 	}
 
 
@@ -81,8 +87,7 @@ public final class LoginSession extends Session
 	 */
 	private void handleLoginRequest( LoginRequest request ) throws IOException
 	{
-		LoginService loginService = serverContext.getService( LoginService.class );
-		loginService.submitLoadRequest( this, request, fileSystem );
+		playerSerializer.submitLoadRequest( this, request, fileSystem );
 	}
 
 
@@ -93,15 +98,14 @@ public final class LoginSession extends Session
 	 */
 	public void handlePlayerLoaderResponse( LoginRequest request, PlayerLoaderResponse response )
 	{
-		GameService gameService = serverContext.getService( GameService.class );
-
 		int status = response.getStatus();
 		Player player = response.getPlayer();
 		int rights = player == null ? 0: player.getPrivilegeLevel().toInteger();
+		// TODO: Utilize the logging packet! :- )
 		boolean log = false;
 
 		if( player != null ) {
-			GameSession session = new GameSession( ctx(), serverContext, eventTranslator, player );
+			GameSession session = new GameSession( ctx(), eventTranslator, player, gameService );
 			player.setSession( session, request.isReconnecting() );
 
 			RegistrationStatus registrationStatus = gameService.registerPlayer( player );

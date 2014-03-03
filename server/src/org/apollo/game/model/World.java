@@ -7,7 +7,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.util.logging.Logger;
 
-import org.apollo.Service;
 import org.apollo.fs.IndexedFileSystem;
 import org.apollo.fs.parser.ItemDefinitionParser;
 import org.apollo.fs.parser.MobDefinitionParser;
@@ -15,9 +14,8 @@ import org.apollo.game.interact.InteractionHandler;
 import org.apollo.game.model.def.EquipmentDefinition;
 import org.apollo.game.model.def.ItemDefinition;
 import org.apollo.game.model.def.MobDefinition;
-import org.apollo.game.task.Task;
-import org.apollo.game.task.TaskScheduler;
 import org.apollo.io.EquipmentDefinitionParser;
+import org.apollo.service.Service;
 import org.apollo.util.CharacterRepository;
 
 /**
@@ -35,11 +33,6 @@ public final class World
 	 * The logger for this class.
 	 */
 	private final Logger logger = Logger.getLogger( getClass().getName() );
-
-	/**
-	 * The world.
-	 */
-	private static final World INSTANCE = new World();
 
 	/**
 	 * Represents the different status codes for registering a player.
@@ -63,16 +56,6 @@ public final class World
 		OK
 	}
 
-
-	/**
-	 * Gets the world.
-	 * @return The world.
-	 */
-	public static World getInstance()
-	{
-		return INSTANCE;
-	}
-
 	/**
 	 * The {@link CharacterRepository} of {@link Mob}s.
 	 */
@@ -92,7 +75,7 @@ public final class World
 	/**
 	 * Creates the world.
 	 */
-	private World()
+	public World()
 	{
 
 	}
@@ -214,25 +197,6 @@ public final class World
 		} else {
 			logger.warning( "Could not find mob " + mob + " to unregister!" );
 		}
-	}
-
-
-	/**
-	 * Schedules a new task.
-	 * @param task The {@link Task}.
-	 */
-	public void schedule( Task task )
-	{
-		TaskScheduler.getInstance().schedule( task );
-	}
-
-
-	/**
-	 * Calls the {@link TaskScheduler#pulse()} method.
-	 */
-	public void pulse()
-	{
-		TaskScheduler.getInstance().pulse();
 	}
 
 

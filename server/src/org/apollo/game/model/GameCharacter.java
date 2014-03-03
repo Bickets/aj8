@@ -10,6 +10,7 @@ import org.apollo.game.event.impl.ServerMessageEvent;
 import org.apollo.game.model.Inventory.StackMode;
 import org.apollo.game.sync.block.SynchronizationBlock;
 import org.apollo.game.sync.block.SynchronizationBlockSet;
+import org.apollo.game.task.TaskScheduler;
 import org.apollo.game.task.impl.SkillNormalizationTask;
 import org.apollo.util.CharacterRepository;
 
@@ -124,7 +125,7 @@ public abstract class GameCharacter
 	 */
 	private void init()
 	{
-		World.getInstance().schedule( new SkillNormalizationTask( this ) );
+		TaskScheduler.getInstance().schedule( new SkillNormalizationTask( this ) );
 	}
 
 
@@ -494,7 +495,7 @@ public abstract class GameCharacter
 			stopAction();
 		}
 		this.action = action;
-		World.getInstance().schedule( action );
+		TaskScheduler.getInstance().schedule( action );
 		return true; // TODO maybe this should be incorporated into the action class itself?
 	}
 
@@ -528,33 +529,6 @@ public abstract class GameCharacter
 	public void sendMessage( String message )
 	{
 		send( new ServerMessageEvent( message ) );
-	}
-
-
-	/**
-	 * Returns the size of this character.
-	 * @return The size.
-	 */
-	public abstract int getSize();
-
-
-	/**
-	 * Returns whether or not the character is a player.
-	 * @return true if the character is a player, otherwise false
-	 */
-	public boolean isPlayer()
-	{
-		return false;
-	}
-
-
-	/**
-	 * Returns whether or not the character is an mob.
-	 * @return true if the character is an mob, otherwise false
-	 */
-	public boolean isMob()
-	{
-		return false;
 	}
 
 }

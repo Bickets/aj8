@@ -13,7 +13,7 @@ public final class TaskScheduler
 {
 
 	/**
-	 * the singleton instance
+	 * Singleton instance of {@link TaskScheduler}.
 	 */
 	private static final TaskScheduler INSTANCE = new TaskScheduler();
 
@@ -52,7 +52,8 @@ public final class TaskScheduler
 
 
 	/**
-	 * Default private constructor to prevent instantiation by other classes.
+	 * Default private constructor used to prevent this class from being instantiated by other
+	 * classes.
 	 */
 	private TaskScheduler()
 	{
@@ -61,8 +62,7 @@ public final class TaskScheduler
 
 
 	/**
-	 * Gets the singleton instance
-	 * @return the instance The singleton instance.
+	 * Returns the instance of {@link TaskSehcduler}.
 	 */
 	public static TaskScheduler getInstance()
 	{

@@ -1,11 +1,9 @@
 
-package org.apollo.login;
+package org.apollo.io.player;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apollo.io.player.PlayerLoader;
-import org.apollo.io.player.PlayerLoaderResponse;
 import org.apollo.net.codec.login.LoginConstants;
 import org.apollo.net.codec.login.LoginRequest;
 import org.apollo.net.session.LoginSession;

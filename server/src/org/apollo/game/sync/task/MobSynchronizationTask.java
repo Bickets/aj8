@@ -35,14 +35,21 @@ public final class MobSynchronizationTask extends SynchronizationTask
 	 */
 	private final Player player;
 
+	/**
+	 * The world.
+	 */
+	private final World world;
+
 
 	/**
 	 * Constructs a new {@link MobSynchronizationTask}.
 	 * @param player The player.
+	 * @param world The world.
 	 */
-	public MobSynchronizationTask( Player player )
+	public MobSynchronizationTask( Player player, World world )
 	{
 		this.player = player;
+		this.world = world;
 	}
 
 
@@ -67,7 +74,7 @@ public final class MobSynchronizationTask extends SynchronizationTask
 
 		int added = 0;
 
-		CharacterRepository<Mob> repository = World.getInstance().getMobRepository();
+		CharacterRepository<Mob> repository = world.getMobRepository();
 		// lambda does not work here
 		// due to variables needing to be final.
 		for( Mob mob: repository ) {

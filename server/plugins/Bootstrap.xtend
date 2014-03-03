@@ -10,19 +10,19 @@ import org.apollo.game.model.World
 /* TODO: Should I rewrite this in Java? */
 class Bootstrap {
 
-	def initObjects() {
+	def initObjects(World world) {
 		val classes = getClasses('objects')
 		classes.forEach [ clazz |
 			val handler = clazz.newInstance as ObjectActionEventHandler
-			World::getInstance.interactionHandler.bind(handler)
+			world.interactionHandler.bind(handler)
 		]
 	}
 
-	def initButtons() {
+	def initButtons(World world) {
 		val classes = getClasses('buttons')
 		classes.forEach [ clazz |
 			val handler = clazz.newInstance as ButtonEventHandler
-			World::getInstance.interactionHandler.bind(handler)
+			world.interactionHandler.bind(handler)
 		]
 	}
 
@@ -63,10 +63,11 @@ class Bootstrap {
 		return classes
 	}
 
-	new() {
-		initButtons
+	new(World world) {
+		world.initButtons
+		world.initObjects
+
 		initCommands
-		initObjects
 	}
 
 }

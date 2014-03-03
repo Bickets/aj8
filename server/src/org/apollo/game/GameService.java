@@ -1,25 +1,21 @@
 
 package org.apollo.game;
 
-import java.io.File;
-import java.io.IOException;
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.TimeUnit;
 
-import org.apollo.Service;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.World;
 import org.apollo.game.model.World.RegistrationStatus;
 import org.apollo.game.sync.ClientSynchronizer;
-import org.apollo.login.LoginService;
+import org.apollo.game.task.TaskScheduler;
+import org.apollo.io.player.PlayerSerializer;
 import org.apollo.net.session.GameSession;
+import org.apollo.service.Service;
 import org.apollo.util.NamedThreadFactory;
-import org.codehaus.jackson.JsonFactory;
-import org.codehaus.jackson.JsonParser;
-import org.codehaus.jackson.JsonToken;
 
 /**
  * The {@link GameService} class schedules and manages the execution of the {@link GamePulseHandler}
@@ -44,64 +40,35 @@ public final class GameService extends Service
 	/**
 	 * A queue of players to remove.
 	 */
-	private final Queue<Player> oldPlayers = new ConcurrentLinkedQueue<Player>();
+	private final Queue<Player> oldPlayers = new ConcurrentLinkedQueue<>();
 
 	/**
-	 * The {@link ClientSynchronizer}.
+	 * The client synchronizer.
 	 */
-	private ClientSynchronizer synchronizer;
+	private final ClientSynchronizer clientSynchronizer;
+
+	/**
+	 * The player serializer.
+	 */
+	private final PlayerSerializer playerSerializer;
+
+	/**
+	 * The world.
+	 */
+	private final World world;
 
 
 	/**
-	 * Creates the game service.
-	 * @throws IOException If some I/O exceptions occurs.
-	 * @throws ClassNotFoundException If the specified class is not found.
-	 * @throws IllegalAccessException If we cannot access the specified class.
-	 * @throws InstantiationException If some instantiation error occurs.
+	 * Constructs a new {@link GameService}.
+	 * @param world The world.
+	 * @param playerSerializer The player serializer
 	 */
-	public GameService() throws ClassNotFoundException, InstantiationException, IllegalAccessException, IOException
+	public GameService( World world, PlayerSerializer playerSerializer )
 	{
-		init();
-	}
+		this.world = world;
+		this.playerSerializer = playerSerializer;
 
-
-	/**
-	 * Initializes the game service.
-	 * @throws IOException If some I/O exceptions occurs.
-	 * @throws ClassNotFoundException If the specified class is not found.
-	 * @throws IllegalAccessException If we cannot access the specified class.
-	 * @throws InstantiationException If some instantiation error occurs.
-	 */
-	private void init() throws IOException, ClassNotFoundException, InstantiationException, IllegalAccessException
-	{
-		File file = new File( "data/", "events.json" );
-
-		file = new File( "data/", "synchronizer.json" );
-
-		JsonFactory factory = new JsonFactory();
-		JsonParser parser = factory.createJsonParser( file );
-
-		if( parser.nextToken() != JsonToken.START_OBJECT ) {
-			throw new IOException();
-		}
-
-		while( parser.nextToken() != JsonToken.END_OBJECT ) {
-			String name = parser.getCurrentName();
-
-			switch( name ) {
-				case "synchronizer":
-					if( parser.nextToken() != JsonToken.START_ARRAY ) {
-						throw new IOException();
-					}
-
-					while( parser.nextToken() != JsonToken.END_ARRAY ) {
-						Class< ? > clazz = Class.forName( parser.getText() );
-						synchronizer = ( ClientSynchronizer )clazz.newInstance();
-					}
-					break;
-			}
-		}
-
+		clientSynchronizer = new ClientSynchronizer( world );
 	}
 
 
@@ -118,13 +85,10 @@ public final class GameService extends Service
 	public void pulse()
 	{
 		synchronized( this ) {
-			LoginService loginService = getContext().getService( LoginService.class );
-			World world = World.getInstance();
-
 			int unregistered = 0;
 			Player old;
 			while( unregistered < UNREGISTERS_PER_CYCLE && ( old = oldPlayers.poll() ) != null ) {
-				loginService.submitSaveRequest( old.getSession(), old );
+				playerSerializer.submitSaveRequest( old.getSession(), old );
 				unregistered ++ ;
 			}
 
@@ -135,9 +99,9 @@ public final class GameService extends Service
 				}
 			} );
 
-			world.pulse();
+			TaskScheduler.getInstance().pulse();
 
-			synchronizer.synchronize();
+			clientSynchronizer.synchronize();
 		}
 	}
 
@@ -150,7 +114,7 @@ public final class GameService extends Service
 	public RegistrationStatus registerPlayer( Player player )
 	{
 		synchronized( this ) {
-			return World.getInstance().register( player );
+			return world.register( player );
 		}
 	}
 
@@ -173,7 +137,7 @@ public final class GameService extends Service
 	public void finalizePlayerUnregistration( Player player )
 	{
 		synchronized( this ) {
-			World.getInstance().unregister( player );
+			world.unregister( player );
 		}
 	}
 

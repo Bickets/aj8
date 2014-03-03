@@ -5,7 +5,6 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.HttpRequest;
 
-import org.apollo.ServerContext;
 import org.apollo.net.codec.jaggrab.JagGrabRequest;
 import org.apollo.net.codec.update.OnDemandRequest;
 import org.apollo.update.UpdateDispatcher;
@@ -19,33 +18,33 @@ public final class UpdateSession extends Session
 {
 
 	/**
-	 * The server context.
+	 * The update service.
 	 */
-	private final ServerContext context;
+	private final UpdateService updateService;
 
 
 	/**
 	 * Creates an update session for the specified channel.
+	 * @param service The update service.
 	 * @param ctx The channels context.
-	 * @param context The server context.
 	 */
-	public UpdateSession( ChannelHandlerContext ctx, ServerContext context )
+	public UpdateSession( ChannelHandlerContext ctx, UpdateService updateService )
 	{
 		super( ctx );
-		this.context = context;
+		this.updateService = updateService;
 	}
 
 
 	@Override
 	public void messageReceived( Object message )
 	{
-		UpdateDispatcher dispatcher = context.getService( UpdateService.class ).getDispatcher();
+		UpdateDispatcher dispatcher = updateService.getDispatcher();
 		Channel channel = ctx().channel();
-		if( message instanceof OnDemandRequest ) {
+		if( message.getClass() == OnDemandRequest.class ) {
 			dispatcher.dispatch( channel, ( OnDemandRequest )message );
-		} else if( message instanceof JagGrabRequest ) {
+		} else if( message.getClass() == JagGrabRequest.class ) {
 			dispatcher.dispatch( channel, ( JagGrabRequest )message );
-		} else if( message instanceof HttpRequest ) {
+		} else if( message.getClass() == HttpRequest.class ) {
 			dispatcher.dispatch( channel, ( HttpRequest )message );
 		} else {
 			throw new IllegalStateException( "unknown message type" );

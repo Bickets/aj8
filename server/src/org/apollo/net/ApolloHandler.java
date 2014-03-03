@@ -11,15 +11,17 @@ import io.netty.util.Attribute;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-import org.apollo.ServerContext;
 import org.apollo.fs.IndexedFileSystem;
+import org.apollo.game.GameService;
 import org.apollo.game.event.EventTranslator;
+import org.apollo.io.player.PlayerSerializer;
 import org.apollo.net.codec.handshake.HandshakeConstants;
 import org.apollo.net.codec.handshake.HandshakeMessage;
 import org.apollo.net.codec.jaggrab.JagGrabRequest;
 import org.apollo.net.session.LoginSession;
 import org.apollo.net.session.Session;
 import org.apollo.net.session.UpdateSession;
+import org.apollo.update.UpdateService;
 
 /**
  * An implementation of {@link ChannelHandlerAdapter} which handles
@@ -38,11 +40,6 @@ public final class ApolloHandler extends ChannelHandlerAdapter
 	private static final Logger logger = Logger.getLogger( ApolloHandler.class.getName() );
 
 	/**
-	 * The server context.
-	 */
-	private final ServerContext serverContext;
-
-	/**
 	 * The event translator.
 	 */
 	private final EventTranslator eventTranslator;
@@ -52,18 +49,37 @@ public final class ApolloHandler extends ChannelHandlerAdapter
 	 */
 	private final IndexedFileSystem fileSystem;
 
+	/**
+	 * The player serializer.
+	 */
+	private final PlayerSerializer playerSerializer;
+
+	/**
+	 * The game service.
+	 */
+	private final GameService gameService;
+
+	/**
+	 * The update service.
+	 */
+	private final UpdateService updateService;
+
 
 	/**
 	 * Creates the Apollo event handler.
-	 * @param context The server context.
 	 * @param eventTranslator The event translator.
 	 * @param fileSystem The file system
+	 * @param playerSerializer The player serializer.
+	 * @param gameService The game service.
+	 * @param updateService The update service.
 	 */
-	public ApolloHandler( ServerContext context, EventTranslator eventTranslator, IndexedFileSystem fileSystem )
+	public ApolloHandler( EventTranslator eventTranslator, IndexedFileSystem fileSystem, PlayerSerializer playerSerializer, GameService gameService, UpdateService updateService )
 	{
-		this.serverContext = context;
 		this.eventTranslator = eventTranslator;
 		this.fileSystem = fileSystem;
+		this.playerSerializer = playerSerializer;
+		this.gameService = gameService;
+		this.updateService = updateService;
 	}
 
 
@@ -76,6 +92,7 @@ public final class ApolloHandler extends ChannelHandlerAdapter
 			session.destroy();
 		}
 		logger.info( "Channel disconnected: " + channel );
+		// TODO: Check if close() is called automatically (or if we could configure it to), this may be redundant.
 		channel.close();
 	}
 
@@ -87,7 +104,7 @@ public final class ApolloHandler extends ChannelHandlerAdapter
 		Session session = attribute.get();
 
 		if( msg.getClass() == HttpRequest.class || msg.getClass() == JagGrabRequest.class ) {
-			session = new UpdateSession( ctx, serverContext );
+			session = new UpdateSession( ctx, updateService );
 		}
 
 		if( session != null ) {
@@ -98,10 +115,10 @@ public final class ApolloHandler extends ChannelHandlerAdapter
 		HandshakeMessage handshakeMessage = ( HandshakeMessage )msg;
 		switch( handshakeMessage.getServiceId() ) {
 			case HandshakeConstants.SERVICE_GAME:
-				attribute.set( new LoginSession( ctx, serverContext, eventTranslator, fileSystem ) );
+				attribute.set( new LoginSession( ctx, eventTranslator, fileSystem, playerSerializer, gameService ) );
 				break;
 			case HandshakeConstants.SERVICE_UPDATE:
-				attribute.set( new UpdateSession( ctx, serverContext ) );
+				attribute.set( new UpdateSession( ctx, updateService ) );
 				break;
 			default:
 				throw new IllegalStateException( "Invalid service id" );

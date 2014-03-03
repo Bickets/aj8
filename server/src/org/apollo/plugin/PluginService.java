@@ -1,7 +1,11 @@
 
 package org.apollo.plugin;
 
-import org.apollo.Service;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
+
+import org.apollo.game.model.World;
+import org.apollo.service.Service;
 
 /**
  * The plugin service is responsible for initializing the bootstrap plugin --
@@ -14,24 +18,23 @@ public final class PluginService extends Service
 {
 
 	/**
-	 * Constructs a new {@link PluginService}.
-	 * @throws ClassNotFoundException If the specified class was not found.
-	 * @throws IllegalAccessException If we are unable to access the specified class.
-	 * @throws InstantiationException If something goes wrong during instantiation.
+	 * The world.
 	 */
-	public PluginService() throws ClassNotFoundException, InstantiationException, IllegalAccessException
-	{
-		init();
-	}
+	private final World world;
 
 
 	/**
-	 * Initializes the plugin service.
-	 * @throws ClassNotFoundException If the specified class was not found.
-	 * @throws IllegalAccessException If we are unable to access the specified class.
-	 * @throws InstantiationException If something goes wrong during instantiation.
+	 * Constructs a new {@link PluginService}.
+	 * @param world The world.
 	 */
-	private void init() throws ClassNotFoundException, InstantiationException, IllegalAccessException
+	public PluginService( World world )
+	{
+		this.world = world;
+	}
+
+
+	@Override
+	public void start()
 	{
 		/*
 		 * This may make some people go "what" in their heads, so let me explain exactly what's going on:
@@ -39,15 +42,13 @@ public final class PluginService extends Service
 		 * After our plugins are compiled we compile the Java plugin into Java byte code which gets added to the main class path.
 		 * Therefore this call is perfectly legal. 
 		 */
-		Class< ? > clazz = Class.forName( "Bootstrap" );
-		clazz.newInstance();
-	}
-
-
-	@Override
-	public void start()
-	{
-		/* empty - here for consistency with other services */
+		try {
+			Class< ? > clazz = Class.forName( "Bootstrap" );
+			Constructor< ? > bootstrap = clazz.getConstructor( World.class );
+			bootstrap.newInstance( world );
+		} catch( ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e ) {
+			e.printStackTrace();
+		}
 	}
 
 }

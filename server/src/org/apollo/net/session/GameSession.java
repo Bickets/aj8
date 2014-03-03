@@ -10,7 +10,6 @@ import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 import java.util.logging.Logger;
 
-import org.apollo.ServerContext;
 import org.apollo.game.GameConstants;
 import org.apollo.game.GameService;
 import org.apollo.game.event.Event;
@@ -31,11 +30,6 @@ public final class GameSession extends Session
 	private static final Logger logger = Logger.getLogger( GameSession.class.getName() );
 
 	/**
-	 * The server context.
-	 */
-	private final ServerContext context;
-
-	/**
 	 * The event translator.
 	 */
 	private final EventTranslator eventTranslator;
@@ -50,20 +44,25 @@ public final class GameSession extends Session
 	 */
 	private final Player player;
 
+	/**
+	 * The game service.
+	 */
+	private final GameService gameService;
+
 
 	/**
 	 * Creates a login session for the specified channel context.
 	 * @param ctx This sessions channels context.
-	 * @param context The server context.
 	 * @param eventTranslator The event translator.
 	 * @param player The player.
+	 * @param gameService The game service.
 	 */
-	public GameSession( ChannelHandlerContext ctx, ServerContext context, EventTranslator eventTranslator, Player player )
+	public GameSession( ChannelHandlerContext ctx, EventTranslator eventTranslator, Player player, GameService gameService )
 	{
 		super( ctx );
-		this.context = context;
 		this.eventTranslator = eventTranslator;
 		this.player = player;
+		this.gameService = gameService;
 	}
 
 
@@ -88,7 +87,7 @@ public final class GameSession extends Session
 		Channel channel = ctx().channel();
 		if( channel.isActive() ) {
 			ChannelFuture future = channel.writeAndFlush( event );
-			if( event.getClass() == LogoutEvent.class ) {
+			if( event.getClass() == LogoutEvent.class ) { // TODO: Better way?
 				future.addListener( ChannelFutureListener.CLOSE );
 			}
 		}
@@ -109,18 +108,17 @@ public final class GameSession extends Session
 
 	/**
 	 * Handles a player saver response.
-	 * @param success A flag indicating if the save was successful.
 	 */
-	public void handlePlayerSaverResponse( boolean success )
+	public void handlePlayerSaverResponse()
 	{
-		context.getService( GameService.class ).finalizePlayerUnregistration( player );
+		gameService.finalizePlayerUnregistration( player );
 	}
 
 
 	@Override
 	public void destroy()
 	{
-		context.getService( GameService.class ).unregisterPlayer( player );
+		gameService.unregisterPlayer( player );
 	}
 
 }

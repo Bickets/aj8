@@ -89,9 +89,9 @@ public final class EventTranslator
 	private final PacketMetaDataGroup incomingPacketMetaData = PacketMetaDataGroup.create();
 
 	/**
-	 * The world, used for world event handlers
+	 * The world used for world event handlers
 	 */
-	private final World world = World.getInstance();
+	private final World world;
 
 	/**
 	 * The logger.
@@ -101,9 +101,11 @@ public final class EventTranslator
 
 	/**
 	 * Constructs a new {@link EventTranslator}.
+	 * @param world The world used for world event handlers.
 	 */
-	public EventTranslator()
+	public EventTranslator( World world )
 	{
+		this.world = world;
 		registerAll();
 	}
 

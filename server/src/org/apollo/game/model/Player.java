@@ -535,18 +535,4 @@ public final class Player extends GameCharacter
 		interfaceSet.close();
 	}
 
-
-	@Override
-	public int getSize()
-	{
-		return 1;
-	}
-
-
-	@Override
-	public boolean isPlayer()
-	{
-		return true;
-	}
-
 }

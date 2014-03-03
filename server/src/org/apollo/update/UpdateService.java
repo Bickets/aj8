@@ -7,8 +7,8 @@ import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.apollo.Service;
 import org.apollo.fs.IndexedFileSystem;
+import org.apollo.service.Service;
 
 /**
  * A class which services file requests.

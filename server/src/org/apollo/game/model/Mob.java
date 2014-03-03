@@ -51,20 +51,6 @@ public final class Mob extends GameCharacter
 
 
 	@Override
-	public int getSize()
-	{
-		return definition.getSize();
-	}
-
-
-	@Override
-	public boolean isMob()
-	{
-		return true;
-	}
-
-
-	@Override
 	public void send( Event event )
 	{
 		throw new UnsupportedOperationException();

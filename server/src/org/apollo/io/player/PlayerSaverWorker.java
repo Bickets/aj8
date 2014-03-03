@@ -1,11 +1,10 @@
 
-package org.apollo.login;
+package org.apollo.io.player;
 
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import org.apollo.game.model.Player;
-import org.apollo.io.player.PlayerSaver;
 import org.apollo.net.session.GameSession;
 
 /**
@@ -55,10 +54,10 @@ public final class PlayerSaverWorker implements Runnable
 	{
 		try {
 			saver.savePlayer( player );
-			session.handlePlayerSaverResponse( true );
 		} catch( Exception e ) {
 			logger.log( Level.SEVERE, "Unable to save players game.", e );
-			session.handlePlayerSaverResponse( false );
+		} finally {
+			session.handlePlayerSaverResponse();
 		}
 	}
 
