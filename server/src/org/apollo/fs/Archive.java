@@ -1,0 +1,71 @@
+package org.apollo.fs;
+
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.apollo.util.ByteBufferUtil;
+import org.apollo.util.CompressionUtil;
+import org.apollo.util.NameUtil;
+
+public final class Archive {
+
+    private Map<Integer, ArchiveEntry> entries = new HashMap<>();
+
+    private boolean packed;
+
+    public Archive(byte[] bytes) throws IOException {
+	decode(bytes);
+    }
+
+    public void decode(byte[] bytes) throws IOException {
+	ByteBuffer buffer = ByteBuffer.wrap(bytes);
+	int unpackedSize = ByteBufferUtil.readMedium(buffer);
+	int packedSize = ByteBufferUtil.readMedium(buffer);
+
+	byte[] unpackedBytes = bytes;
+
+	packed = packedSize != unpackedSize;
+
+	if (packed) {
+	    unpackedBytes = CompressionUtil.unbzip2(bytes, 6, packedSize);
+	    buffer = ByteBuffer.wrap(unpackedBytes);
+	}
+
+	int amountEntries = buffer.getShort() & 0xff;
+	int offset = buffer.position() + amountEntries * 10;
+
+	for (int i = 0; i < amountEntries; i++) {
+	    int name = buffer.getInt();
+	    int unpacked = ByteBufferUtil.readMedium(buffer);
+	    int packed = ByteBufferUtil.readMedium(buffer);
+
+	    byte[] entryBytes = null;
+
+	    if (unpacked != packed) {
+		entryBytes = CompressionUtil.unbzip2(unpackedBytes, offset, packed);
+	    } else {
+		entryBytes = new byte[unpacked];
+		System.arraycopy(unpackedBytes, offset, entryBytes, 0, unpacked);
+	    }
+
+	    offset += packed;
+
+	    entries.put(name, new ArchiveEntry(entryBytes, name));
+	}
+    }
+
+    public byte[] get(String name) {
+	ArchiveEntry entry = entries.get(NameUtil.hash(name));
+	if (entry != null) {
+	    return entry.getBytes();
+	}
+	return null;
+    }
+
+    public boolean isPacked() {
+	return packed;
+    }
+
+}

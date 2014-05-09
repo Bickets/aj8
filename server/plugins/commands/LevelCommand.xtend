@@ -15,17 +15,20 @@ class LevelCommand extends PrivilegedCommandListener {
 	override executePrivileged(Player player, Command command) {
 		val args = command.arguments
 
-		if (isDigit(args.get(0)) && isDigit(args.get(1))) {
-			val id = Integer.valueOf(args.get(0))
-			val level = Integer.valueOf(args.get(1))
-
-			if (id <= player.skillSet.size) {
-				if (level > 0 && level < 99) {
-					player.skillSet.addExperience(id, SkillSet::getExperienceForLevel(level));
-				}
-			}
+		if (!isDigit(args.get(0)) || !isDigit(args.get(1))) {
+			player.sendMessage('Syntax is ::' + getName() + ' [skill_id, level]')
+			return
 		}
 
+		val id = Integer.valueOf(args.get(0))
+		val level = Integer.valueOf(args.get(1))
+
+		if (id > SkillSet::SKILL_COUNT || id < 0 || level < 0 || level > 99) {
+			player.sendMessage('Syntax is ::' + getName() + ' [skill_id, level]')
+			return
+		}
+
+		player.skillSet.addExperience(id, SkillSet::getExperienceForLevel(level));
 	}
 
 	override getName() {

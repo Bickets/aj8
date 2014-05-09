@@ -1,9 +1,10 @@
 /.Bootstrap.java._trace
-/.Plugins.java._trace
+/.RemoveEquipmentPlugin.java._trace
 /Bootstrap.java
-/.gitignore
 /buttons
 /commands
-/net
+/items
 /objects
 /org
+/mobs
+/net

@@ -1,4 +1,3 @@
-
 package org.apollo.game.event.decoder;
 
 import org.apollo.game.event.EventDecoder;
@@ -12,33 +11,32 @@ import org.apollo.util.TextUtil;
 
 /**
  * An {@link EventDecoder} for the {@link ChatEvent}.
+ * 
  * @author Graham
  */
-@DecodesEvent( 4 )
-public final class ChatEventDecoder extends EventDecoder<ChatEvent>
-{
+@DecodesEvent(4)
+public final class ChatEventDecoder extends EventDecoder<ChatEvent> {
 
-	@Override
-	public ChatEvent decode( GamePacket packet )
-	{
-		GamePacketReader reader = new GamePacketReader( packet );
+    @Override
+    public ChatEvent decode(GamePacket packet) {
+	GamePacketReader reader = new GamePacketReader(packet);
 
-		int effects = ( int )reader.getUnsigned( DataType.BYTE, DataTransformation.SUBTRACT );
-		int color = ( int )reader.getUnsigned( DataType.BYTE, DataTransformation.SUBTRACT );
-		int length = packet.getLength() - 2;
+	int effects = (int) reader.getUnsigned(DataType.BYTE, DataTransformation.SUBTRACT);
+	int color = (int) reader.getUnsigned(DataType.BYTE, DataTransformation.SUBTRACT);
+	int length = packet.getLength() - 2;
 
-		byte[] originalCompressed = new byte[ length ];
-		reader.getBytesReverse( DataTransformation.ADD, originalCompressed );
+	byte[] originalCompressed = new byte[length];
+	reader.getBytesReverse(DataTransformation.ADD, originalCompressed);
 
-		String uncompressed = TextUtil.uncompress( originalCompressed, length );
-		uncompressed = TextUtil.filterInvalidCharacters( uncompressed );
-		uncompressed = TextUtil.capitalize( uncompressed );
+	String uncompressed = TextUtil.uncompress(originalCompressed, length);
+	uncompressed = TextUtil.filterInvalidCharacters(uncompressed);
+	uncompressed = TextUtil.capitalize(uncompressed);
 
-		byte[] recompressed = new byte[ length ];
-		TextUtil.compress( uncompressed, recompressed );
-		// in case invalid data gets sent, this effectively verifies it
+	byte[] recompressed = new byte[length];
+	TextUtil.compress(uncompressed, recompressed);
+	// in case invalid data gets sent, this effectively verifies it
 
-		return new ChatEvent( uncompressed, recompressed, color, effects );
-	}
+	return new ChatEvent(uncompressed, recompressed, color, effects);
+    }
 
 }

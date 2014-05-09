@@ -1,11 +1,11 @@
 package objects
 
-import org.apollo.game.interact.ObjectActionEventHandler
 import org.apollo.game.model.Player
 import org.apollo.game.model.Position
 import org.apollo.game.model.inter.bank.BankAction
+import org.apollo.game.interact.ObjectActionListener
 
-class BankObject extends ObjectActionEventHandler {
+class BankObject extends ObjectActionListener {
 
 	new() {
 		super(2213)
@@ -13,7 +13,7 @@ class BankObject extends ObjectActionEventHandler {
 
 	override handle(int id, int option, Player player, Position position) {
 		switch option {
-			case 2: player.startAction(new BankAction(player, position))
+			case 1: player.startAction(new BankAction(player, position))
 		}
 	}
 

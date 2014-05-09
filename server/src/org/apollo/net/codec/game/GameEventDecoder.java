@@ -1,4 +1,3 @@
-
 package org.apollo.net.codec.game;
 
 import io.netty.channel.ChannelHandlerContext;
@@ -10,35 +9,33 @@ import org.apollo.game.event.Event;
 import org.apollo.game.event.EventTranslator;
 
 /**
- * A {@link MessageToMessageDecoder} that decodes {@link GamePacket}s into {@link Event}s.
+ * A {@link MessageToMessageDecoder} that decodes {@link GamePacket}s into
+ * {@link Event}s.
+ * 
  * @author Graham
  */
-public final class GameEventDecoder extends MessageToMessageDecoder<GamePacket>
-{
+public final class GameEventDecoder extends MessageToMessageDecoder<GamePacket> {
 
-	/**
-	 * The event translator.
-	 */
-	private final EventTranslator translator;
+    /**
+     * The event translator.
+     */
+    private final EventTranslator translator;
 
+    /**
+     * Constructs a new {@link GameEventDecoder}.
+     * 
+     * @param translator The event translator.
+     */
+    public GameEventDecoder(EventTranslator translator) {
+	this.translator = translator;
+    }
 
-	/**
-	 * Constructs a new {@link GameEventDecoder}.
-	 * @param translator The event translator.
-	 */
-	public GameEventDecoder( EventTranslator translator )
-	{
-		this.translator = translator;
+    @Override
+    protected void decode(ChannelHandlerContext ctx, GamePacket msg, List<Object> out) {
+	Event event = translator.decode(msg);
+	if (event != null) {
+	    out.add(event);
 	}
-
-
-	@Override
-	protected void decode( ChannelHandlerContext ctx, GamePacket msg, List<Object> out )
-	{
-		Event event = translator.decode( msg );
-		if( event != null ) {
-			out.add( event );
-		}
-	}
+    }
 
 }

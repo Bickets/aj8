@@ -1,37 +1,36 @@
-
 package org.apollo.game.interact;
 
 import org.apollo.game.model.Player;
 import org.apollo.game.model.Position;
 
-public final class InteractionHandler
-{
+public final class InteractionHandler {
 
-	private final ButtonEventDispatcher buttonDispatcher = new ButtonEventDispatcher();
-	private final ObjectActionEventDispatcher objectDispatcher = new ObjectActionEventDispatcher();
+    private final ButtonClickListenerDispatcher buttonDispatcher = new ButtonClickListenerDispatcher();
+    private final ObjectActionListenerDispatcher objectDispatcher = new ObjectActionListenerDispatcher();
+    private final ItemActionListenerDispatcher itemDispatcher = new ItemActionListenerDispatcher();
 
+    public void dispatch(int id, Player player) {
+	buttonDispatcher.dispatch(id, player);
+    }
 
-	public void dispatch( Player player, int id )
-	{
-		buttonDispatcher.dispatch( player, id );
-	}
+    public void dispatch(int id, int option, Player player, Position position) {
+	objectDispatcher.dispatch(id, option, player, position);
+    }
 
+    public void dispatch(int id, int slot, int option, int interfaceId, Player player) {
+	itemDispatcher.dispatch(id, slot, option, interfaceId, player);
+    }
 
-	public void dispatch( int id, int action, Player player, Position position )
-	{
-		objectDispatcher.dispatch( id, action, player, position );
-	}
+    public void bind(ButtonClickListener handler) {
+	buttonDispatcher.bind(handler);
+    }
 
+    public void bind(ObjectActionListener handler) {
+	objectDispatcher.bind(handler);
+    }
 
-	public void bind( ButtonEventHandler handler )
-	{
-		buttonDispatcher.bind( handler );
-	}
-
-
-	public void bind( ObjectActionEventHandler handler )
-	{
-		objectDispatcher.bind( handler );
-	}
+    public void bind(ItemActionListener handler) {
+	itemDispatcher.bind(handler);
+    }
 
 }

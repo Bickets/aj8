@@ -3195,6 +3195,7 @@ public class Game extends GameShell
 				child.animationDuration = 0;
 			}
 		} catch( RuntimeException runtimeexception ) {
+		    runtimeexception.printStackTrace();
 			SignLink.reportError( "61586, " + widgetId + ", " + runtimeexception.toString() );
 			throw new RuntimeException();
 		}
@@ -11964,14 +11965,14 @@ public class Game extends GameShell
 					return true;
 				}
 				if( opcode == 164 ) {
-					int i_1179_ = inBuffer.getUnsignedShort();
-					method60( i_1179_ );
+					int widgetId = inBuffer.getUnsignedShort();
+					method60( widgetId );
 					if( anInt1214 != - 1 ) {
 						anInt1214 = - 1;
 						redrawTab = true;
 						drawTabIcons = true;
 					}
-					chatboxWidgetId = i_1179_;
+					chatboxWidgetId = widgetId;
 					redrawChatbox = true;
 					openWidgetId = - 1;
 					aBoolean1174 = false;

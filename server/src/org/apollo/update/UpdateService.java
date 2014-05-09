@@ -1,101 +1,92 @@
-
 package org.apollo.update;
 
-import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.apollo.fs.IndexedFileSystem;
+import org.apollo.fs.FileSystem;
 import org.apollo.service.Service;
 
 /**
  * A class which services file requests.
+ * 
  * @author Graham
  */
-public final class UpdateService extends Service
-{
+public final class UpdateService extends Service {
 
-	/**
-	 * The number of threads per request type.
-	 */
-	private static final int THREADS_PER_REQUEST_TYPE = Runtime.getRuntime().availableProcessors();
+    /**
+     * The number of threads per request type.
+     */
+    private static final int THREADS_PER_REQUEST_TYPE = Runtime.getRuntime().availableProcessors();
 
-	/**
-	 * The number of request types.
-	 */
-	private static final int REQUEST_TYPES = 3;
+    /**
+     * The number of request types.
+     */
+    private static final int REQUEST_TYPES = 3;
 
-	/**
-	 * The executor service.
-	 */
-	private final ExecutorService service;
+    /**
+     * The executor service.
+     */
+    private final ExecutorService service;
 
-	/**
-	 * A list of request workers.
-	 */
-	private final List<RequestWorker< ? , ? >> workers = new ArrayList<RequestWorker< ? , ? >>();
+    /**
+     * A list of request workers.
+     */
+    private final List<RequestWorker<?, ?>> workers = new ArrayList<RequestWorker<?, ?>>();
 
-	/**
-	 * The update dispatcher.
-	 */
-	private final UpdateDispatcher dispatcher = new UpdateDispatcher();
+    /**
+     * The update dispatcher.
+     */
+    private final UpdateDispatcher dispatcher = new UpdateDispatcher();
 
+    /**
+     * Creates the update service.
+     */
+    public UpdateService() {
+	int totalThreads = REQUEST_TYPES * THREADS_PER_REQUEST_TYPE;
+	service = Executors.newFixedThreadPool(totalThreads);
+    }
 
-	/**
-	 * Creates the update service.
-	 */
-	public UpdateService()
-	{
-		int totalThreads = REQUEST_TYPES * THREADS_PER_REQUEST_TYPE;
-		service = Executors.newFixedThreadPool( totalThreads );
+    /**
+     * Gets the update dispatcher.
+     * 
+     * @return The update dispatcher.
+     */
+    public UpdateDispatcher getDispatcher() {
+	return dispatcher;
+    }
+
+    /**
+     * Starts the threads in the pool.
+     */
+    @Override
+    public void start() {
+	try {
+	    String base = "./data/fs/";
+	    for (int i = 0; i < THREADS_PER_REQUEST_TYPE; i++) {
+		workers.add(new JagGrabRequestWorker(dispatcher, FileSystem.create(base)));
+		workers.add(new OnDemandRequestWorker(dispatcher, FileSystem.create(base)));
+		workers.add(new HttpRequestWorker(dispatcher, FileSystem.create(base)));
+	    }
+
+	    for (RequestWorker<?, ?> worker : workers) {
+		service.submit(worker);
+	    }
+	} catch (Exception e) {
+	    e.printStackTrace();
+	}
+    }
+
+    /**
+     * Stops the threads in the pool.
+     */
+    public void stop() {
+	for (RequestWorker<?, ?> worker : workers) {
+	    worker.stop();
 	}
 
-
-	/**
-	 * Gets the update dispatcher.
-	 * @return The update dispatcher.
-	 */
-	public UpdateDispatcher getDispatcher()
-	{
-		return dispatcher;
-	}
-
-
-	/**
-	 * Starts the threads in the pool.
-	 */
-	@Override
-	public void start()
-	{
-		try {
-			File base = new File( "./data/fs/" );
-			for( int i = 0; i < THREADS_PER_REQUEST_TYPE; i ++ ) {
-				workers.add( new JagGrabRequestWorker( dispatcher, new IndexedFileSystem( base, true ) ) );
-				workers.add( new OnDemandRequestWorker( dispatcher, new IndexedFileSystem( base, true ) ) );
-				workers.add( new HttpRequestWorker( dispatcher, new IndexedFileSystem( base, true ) ) );
-			}
-
-			for( RequestWorker< ? , ? > worker: workers ) {
-				service.submit( worker );
-			}
-		} catch( Exception e ) {
-			e.printStackTrace();
-		}
-	}
-
-
-	/**
-	 * Stops the threads in the pool.
-	 */
-	public void stop()
-	{
-		for( RequestWorker< ? , ? > worker: workers ) {
-			worker.stop();
-		}
-
-		service.shutdownNow();
-	}
+	service.shutdownNow();
+    }
 
 }

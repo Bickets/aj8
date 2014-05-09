@@ -1,4 +1,3 @@
-
 package org.apollo.game.event.encoder;
 
 import org.apollo.game.event.EventEncoder;
@@ -11,19 +10,18 @@ import org.apollo.net.codec.game.GamePacketBuilder;
 
 /**
  * An {@link EventEncoder} for the {@link SwitchTabInterfaceEvent}.
+ * 
  * @author Graham
  */
-@EncodesEvent( SwitchTabInterfaceEvent.class )
-public final class SwitchTabInterfaceEventEncoder extends EventEncoder<SwitchTabInterfaceEvent>
-{
+@EncodesEvent(SwitchTabInterfaceEvent.class)
+public final class SwitchTabInterfaceEventEncoder extends EventEncoder<SwitchTabInterfaceEvent> {
 
-	@Override
-	public GamePacket encode( SwitchTabInterfaceEvent event )
-	{
-		GamePacketBuilder builder = new GamePacketBuilder( 71 );
-		builder.put( DataType.SHORT, event.getInterfaceId() );
-		builder.put( DataType.BYTE, DataTransformation.ADD, event.getTabId() );
-		return builder.toGamePacket();
-	}
+    @Override
+    public GamePacket encode(SwitchTabInterfaceEvent event) {
+	GamePacketBuilder builder = new GamePacketBuilder(71);
+	builder.put(DataType.SHORT, event.getInterfaceId());
+	builder.put(DataType.BYTE, DataTransformation.ADD, event.getTabId());
+	return builder.toGamePacket();
+    }
 
 }

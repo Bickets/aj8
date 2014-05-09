@@ -1,29 +1,48 @@
 import java.io.File
 import java.lang.reflect.Modifier
-import java.util.ArrayList
+import java.util.logging.Logger
+import mobs.InitialMobSpawns
 import org.apollo.game.command.CommandDispatcher
 import org.apollo.game.command.CommandListener
-import org.apollo.game.interact.ButtonEventHandler
-import org.apollo.game.interact.ObjectActionEventHandler
+import org.apollo.game.interact.ButtonClickListener
+import org.apollo.game.interact.ItemActionListener
+import org.apollo.game.interact.ObjectActionListener
 import org.apollo.game.model.World
 
-/* TODO: Should I rewrite this in Java? */
 class Bootstrap {
+
+	val logger = Logger::getLogger(Bootstrap.name)
 
 	def initObjects(World world) {
 		val classes = getClasses('objects')
 		classes.forEach [ clazz |
-			val handler = clazz.newInstance as ObjectActionEventHandler
+			val handler = clazz.newInstance as ObjectActionListener
 			world.interactionHandler.bind(handler)
 		]
+		logger.info('Loaded ' + classes.size + ' object plugins.')
 	}
 
 	def initButtons(World world) {
 		val classes = getClasses('buttons')
 		classes.forEach [ clazz |
-			val handler = clazz.newInstance as ButtonEventHandler
+			val handler = clazz.newInstance as ButtonClickListener
 			world.interactionHandler.bind(handler)
 		]
+		logger.info('Loaded ' + classes.size + ' button plugins.')
+	}
+
+	def initItems(World world) {
+		val classes = getClasses('items')
+		classes.forEach [ clazz |
+			val handler = clazz.newInstance as ItemActionListener
+			world.interactionHandler.bind(handler)
+		]
+		logger.info('Loaded ' + classes.size + ' item plugins.')
+	}
+
+	def initSpawns(World world) {
+		val spawns = new InitialMobSpawns(world)
+		spawns.init
 	}
 
 	def initCommands() {
@@ -32,40 +51,29 @@ class Bootstrap {
 			val listener = clazz.newInstance as CommandListener
 			CommandDispatcher::getInstance.bind(listener)
 		]
+		logger.info('Loaded ' + classes.size + ' command plugins.')
 	}
 
 	def getClasses(String dir) {
-
-		/* create an array of files in the specified {@code dir}, may be <code>null</code> */
 		val files = new File('bin/' + dir, '/').list
-
-		/* create a new {@link ArrayList}, used to store found classes */
 		val classes = newArrayList
 
-		/* <code>null</code>-safe for each loop, if {@code files} is <code>null</code> this loop will not happen */
 		files?.forEach [ file |
-			/* filter other files and classes containing illegal characters */
 			if (file.endsWith('.class') && !file.contains('$')) {
-
-				/* create a class instance from the directory and file name. */
 				val clazz = Class::forName(dir + '.' + file.substring(0, file.lastIndexOf('.')))
-
-				/*  if the class is abstract or an interface, don't continue */
 				if (!Modifier::isAbstract(clazz.modifiers) && !Modifier::isInterface(clazz.modifiers)) {
-
-					/* add the class to the {@code classes} list */
-					classes.add(clazz)
+					classes += clazz
 				}
 			}
 		]
-
-		/* return the classes. {@code return} is implicit, used for readability */
 		return classes
 	}
 
 	new(World world) {
 		world.initButtons
 		world.initObjects
+		world.initSpawns
+		world.initItems
 
 		initCommands
 	}

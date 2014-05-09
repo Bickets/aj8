@@ -1,144 +1,84 @@
-
 package org.apollo.net.codec.update;
-
-import org.apollo.fs.FileDescriptor;
 
 /**
  * Represents a single 'on-demand' request.
+ * 
  * @author Graham
  */
-public final class OnDemandRequest implements Comparable<OnDemandRequest>
-{
+public final class OnDemandRequest implements Comparable<OnDemandRequest> {
 
-	/**
-	 * An enumeration containing the different request priorities.
-	 * @author Graham
-	 */
-	public enum Priority {
+    /**
+     * High priority - used in-game when data is required immediately but has
+     * not yet been received.
+     */
+    public static final int HIGH_PRIORITY = 0;
 
-		/**
-		 * High priority - used in-game when data is required immediately but
-		 * has not yet been received.
-		 */
-		HIGH( 0 ),
+    /**
+     * Medium priority - used while loading the 'bare minimum' required to run
+     * the game.
+     */
+    public static final int MEDIUM_PRIORITY = 1;
 
-		/**
-		 * Medium priority - used while loading the 'bare minimum' required to
-		 * run the game.
-		 */
-		MEDIUM( 1 ),
+    /**
+     * Low priority - used when a file is not required urgently. The client
+     * login screen says "loading extra files.." when low priority loading is
+     * being performed.
+     */
+    public static final int LOW_PRIORITY = 2;
 
-		/**
-		 * Low priority - used when a file is not required urgently. The client
-		 * login screen says "loading extra files.." when low priority loading
-		 * is being performed.
-		 */
-		LOW( 2 );
+    /**
+     * The requested files index.
+     */
+    private final int index;
 
-		/**
-		 * Converts the integer value to a priority.
-		 * @param v The integer value.
-		 * @return The priority.
-		 * @throws IllegalArgumentException if the value is outside of the
-		 *             range 0-2 inclusive.
-		 */
-		public static Priority valueOf( int v )
-		{
-			switch( v ) {
-				case 0:
-					return HIGH;
-				case 1:
-					return MEDIUM;
-				case 2:
-					return LOW;
-				default:
-					throw new IllegalArgumentException( "priority " + v + " out of range" );
-			}
-		}
+    /**
+     * The requested files id.
+     */
+    private final int id;
 
-		/**
-		 * The integer value.
-		 */
-		private final int intValue;
+    /**
+     * The request priority.
+     */
+    private final int priority;
 
+    /**
+     * Creates the 'on-demand' request.
+     * 
+     * @param fileDescriptor The file descriptor.
+     * @param priority The priority.
+     */
+    public OnDemandRequest(int index, int id, int priority) {
+	this.index = index;
+	this.id = id;
+	this.priority = priority;
+    }
 
-		/**
-		 * Creates a priority.
-		 * @param intValue The integer value.
-		 */
-		private Priority( int intValue )
-		{
-			this.intValue = intValue;
-		}
+    /**
+     * Returns the requested files index.
+     */
+    public int getIndex() {
+	return index;
+    }
 
+    /**
+     * Returns the requested files id.
+     */
+    public int getId() {
+	return id;
+    }
 
-		/**
-		 * Converts the priority to an integer.
-		 * @return The integer value.
-		 */
-		public int toInteger()
-		{
-			return intValue;
-		}
+    /**
+     * Gets the priority.
+     * 
+     * @return The priority.
+     */
+    public int getPriority() {
+	return priority;
+    }
 
-	}
-
-	/**
-	 * The file descriptor.
-	 */
-	private final FileDescriptor fileDescriptor;
-
-	/**
-	 * The request priority.
-	 */
-	private final Priority priority;
-
-
-	/**
-	 * Creates the 'on-demand' request.
-	 * @param fileDescriptor The file descriptor.
-	 * @param priority The priority.
-	 */
-	public OnDemandRequest( FileDescriptor fileDescriptor, Priority priority )
-	{
-		this.fileDescriptor = fileDescriptor;
-		this.priority = priority;
-	}
-
-
-	/**
-	 * Gets the file descriptor.
-	 * @return The file descriptor.
-	 */
-	public FileDescriptor getFileDescriptor()
-	{
-		return fileDescriptor;
-	}
-
-
-	/**
-	 * Gets the priority.
-	 * @return The priority.
-	 */
-	public Priority getPriority()
-	{
-		return priority;
-	}
-
-
-	@Override
-	public int compareTo( OnDemandRequest o )
-	{
-		int thisPriority = priority.toInteger();
-		int otherPriority = o.priority.toInteger();
-
-		if( thisPriority < otherPriority ) {
-			return 1;
-		} else if( thisPriority == otherPriority ) {
-			return 0;
-		} else {
-			return - 1;
-		}
-	}
+    @Override
+    public int compareTo(OnDemandRequest o) {
+	return priority - o.priority;
+    }
 
 }

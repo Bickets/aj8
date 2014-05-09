@@ -1,71 +1,79 @@
-
 package org.apollo.fs;
 
-/**
- * An {@link Index} points to a file in the {@code main_file_cache.dat} file.
- * @author Graham
- */
-public final class Index
-{
+import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.nio.channels.SeekableByteChannel;
 
-	/**
-	 * Decodes a buffer into an index.
-	 * @param buffer The buffer.
-	 * @return The decoded {@link Index}.
-	 * @throws IllegalArgumentException if the buffer length is invalid.
-	 */
-	public static Index decode( byte[] buffer )
-	{
-		if( buffer.length != FileSystemConstants.INDEX_SIZE ) {
-			throw new IllegalArgumentException( "Incorrect buffer length." );
-		}
+import org.apollo.util.ByteBufferUtil;
 
-		int size = ( ( buffer[ 0 ] & 0xFF ) << 16 ) | ( ( buffer[ 1 ] & 0xFF ) << 8 ) | ( buffer[ 2 ] & 0xFF );
-		int block = ( ( buffer[ 3 ] & 0xFF ) << 16 ) | ( ( buffer[ 4 ] & 0xFF ) << 8 ) | ( buffer[ 5 ] & 0xFF );
+public final class Index implements FileIndex {
 
-		return new Index( size, block );
+    public static final int FILE_BLOCK_SIZE = 6;
+    public static final int DATA_BLOCK_HEADER_SIZE = 8;
+    public static final int DATA_BLOCK_SIZE = 520;
+
+    private final ByteBuffer buffer = ByteBuffer.allocate(DATA_BLOCK_SIZE);
+    private final SeekableByteChannel dataChannel;
+    private final SeekableByteChannel indexChannel;
+    private final int id;
+
+    public Index(SeekableByteChannel data, SeekableByteChannel index, int id) {
+	this.dataChannel = data;
+	this.indexChannel = index;
+	this.id = ++id;
+    }
+
+    public byte[] get(int file) throws IOException {
+	buffer.clear();
+
+	buffer.limit(FILE_BLOCK_SIZE);
+	indexChannel.position(file * (long) FILE_BLOCK_SIZE);
+	indexChannel.read(buffer);
+
+	buffer.flip();
+
+	int length = ByteBufferUtil.readMedium(buffer);
+	int block = ByteBufferUtil.readMedium(buffer);
+
+	if (length < 1) {
+	    return null;
 	}
 
-	/**
-	 * The size of the file.
-	 */
-	private final int size;
+	byte[] bytes = new byte[length];
+	int offset = 0;
+	int chunk = 0;
+	while (offset < length) {
 
-	/**
-	 * The first block of the file.
-	 */
-	private final int block;
+	    int dataLength = length - offset;
+	    if (dataLength > 512) {
+		dataLength = 512;
+	    }
 
+	    buffer.clear();
 
-	/**
-	 * Creates the index.
-	 * @param size The size of the file.
-	 * @param block The first block of the file.
-	 */
-	public Index( int size, int block )
-	{
-		this.size = size;
-		this.block = block;
+	    buffer.limit(dataLength + DATA_BLOCK_HEADER_SIZE);
+	    dataChannel.position(block * (long) DATA_BLOCK_SIZE);
+	    dataChannel.read(buffer);
+
+	    buffer.flip();
+
+	    int fileCheck = buffer.getShort() & 0xffff;
+	    int chunkCheck = buffer.getShort() & 0xffff;
+	    int nextBlock = ByteBufferUtil.readMedium(buffer);
+	    int idCheck = buffer.get() & 0xff;
+
+	    if (fileCheck != file || chunkCheck != chunk || idCheck != id) {
+		throw new IOException();
+	    }
+
+	    buffer.get(bytes, offset, dataLength);
+	    offset += dataLength;
+
+	    block = nextBlock;
+	    chunk++;
 	}
 
-
-	/**
-	 * Gets the size of the file.
-	 * @return The size of the file.
-	 */
-	public int getSize()
-	{
-		return size;
-	}
-
-
-	/**
-	 * Gets the first block of the file.
-	 * @return The first block of the file.
-	 */
-	public int getBlock()
-	{
-		return block;
-	}
+	return bytes;
+    }
 
 }

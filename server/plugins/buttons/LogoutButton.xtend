@@ -1,15 +1,15 @@
 package buttons
 
-import org.apollo.game.interact.ButtonEventHandler
 import org.apollo.game.model.Player
+import org.apollo.game.interact.ButtonClickListener
 
-class LogoutButton extends ButtonEventHandler {
+class LogoutButton extends ButtonClickListener {
 
 	new() {
 		super(2458)
 	}
 
-	override handle(Player player) {
+	override handle(int id, Player player) {
 		player.logout
 	}
 
