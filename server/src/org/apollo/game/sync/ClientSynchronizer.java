@@ -17,7 +17,7 @@ import org.apollo.game.sync.task.PostPlayerSynchronizationTask;
 import org.apollo.game.sync.task.PreMobSynchronizationTask;
 import org.apollo.game.sync.task.PrePlayerSynchronizationTask;
 import org.apollo.game.sync.task.SynchronizationTask;
-import org.apollo.util.CharacterRepository;
+import org.apollo.util.EntityRepository;
 import org.apollo.util.NamedThreadFactory;
 
 /**
@@ -65,8 +65,8 @@ public final class ClientSynchronizer {
     }
 
     public void synchronize() {
-	CharacterRepository<Player> players = world.getPlayerRepository();
-	CharacterRepository<Mob> mobs = world.getMobRepository();
+	EntityRepository<Player> players = world.getPlayerRepository();
+	EntityRepository<Mob> mobs = world.getMobRepository();
 
 	int playerCount = players.size();
 	int mobCount = mobs.size();

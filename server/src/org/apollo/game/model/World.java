@@ -15,7 +15,7 @@ import org.apollo.game.model.def.ItemDefinition;
 import org.apollo.game.model.def.MobDefinition;
 import org.apollo.io.EquipmentDefinitionParser;
 import org.apollo.service.Service;
-import org.apollo.util.CharacterRepository;
+import org.apollo.util.EntityRepository;
 
 /**
  * The world class is a singleton which contains objects like the
@@ -57,14 +57,14 @@ public final class World {
     }
 
     /**
-     * The {@link CharacterRepository} of {@link Mob}s.
+     * The {@link EntityRepository} of {@link Mob}s.
      */
-    private final CharacterRepository<Mob> mobRepository = new CharacterRepository<>(WorldConstants.MAXIMUM_MOBS);
+    private final EntityRepository<Mob> mobRepository = new EntityRepository<>(WorldConstants.MAXIMUM_MOBS);
 
     /**
-     * The {@link CharacterRepository} of {@link Player}s.
+     * The {@link EntityRepository} of {@link Player}s.
      */
-    private final CharacterRepository<Player> playerRepository = new CharacterRepository<>(WorldConstants.MAXIMUM_PLAYERS);
+    private final EntityRepository<Player> playerRepository = new EntityRepository<>(WorldConstants.MAXIMUM_PLAYERS);
 
     /**
      * The worlds interaction handler.
@@ -203,7 +203,7 @@ public final class World {
      * 
      * @return The character repository.
      */
-    public CharacterRepository<Player> getPlayerRepository() {
+    public EntityRepository<Player> getPlayerRepository() {
 	return playerRepository;
     }
 
@@ -212,7 +212,7 @@ public final class World {
      * 
      * @return The mob repository.
      */
-    public CharacterRepository<Mob> getMobRepository() {
+    public EntityRepository<Mob> getMobRepository() {
 	return mobRepository;
     }
 

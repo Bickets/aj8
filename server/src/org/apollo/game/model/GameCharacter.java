@@ -11,7 +11,6 @@ import org.apollo.game.sync.block.SynchronizationBlock;
 import org.apollo.game.sync.block.SynchronizationBlockSet;
 import org.apollo.game.task.TaskScheduler;
 import org.apollo.game.task.impl.SkillNormalizationTask;
-import org.apollo.util.CharacterRepository;
 
 /**
  * A {@link GameCharacter} is a living creature in the world, such as a player
@@ -19,13 +18,7 @@ import org.apollo.util.CharacterRepository;
  * 
  * @author Graham
  */
-public abstract class GameCharacter {
-
-    /**
-     * The index of this character in the {@link CharacterRepository} it belongs
-     * to.
-     */
-    private int index = -1;
+public abstract class GameCharacter extends Entity {
 
     /**
      * Teleportation flag.
@@ -323,37 +316,6 @@ public abstract class GameCharacter {
     }
 
     /**
-     * Checks if this character is active.
-     * 
-     * @return {@code true} if so, {@code false} if not.
-     */
-    public boolean isActive() {
-	return index != -1;
-    }
-
-    /**
-     * Gets the index of this character.
-     * 
-     * @return The index of this character.
-     */
-    public int getIndex() {
-	synchronized (this) {
-	    return index;
-	}
-    }
-
-    /**
-     * Sets the index of this character.
-     * 
-     * @param index The index of this character.
-     */
-    public void setIndex(int index) {
-	synchronized (this) {
-	    this.index = index;
-	}
-    }
-
-    /**
      * Gets the {@link SynchronizationBlockSet}.
      * 
      * @return The block set.
@@ -402,7 +364,7 @@ public abstract class GameCharacter {
     public void forceChat(String text) {
 	blockSet.add(SynchronizationBlock.createForceChatBlock(text));
     }
-
+    
     /**
      * Plays the specified animation.
      * 
@@ -434,6 +396,7 @@ public abstract class GameCharacter {
     public void stopGraphic() {
 	playGraphic(Graphic.STOP_GRAPHIC);
     }
+
 
     /**
      * Gets the character's skill set.

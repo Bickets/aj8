@@ -3,21 +3,21 @@ package org.apollo.util;
 import java.util.Iterator;
 import java.util.NoSuchElementException;
 
-import org.apollo.game.model.GameCharacter;
+import org.apollo.game.model.Entity;
 
 /**
- * A {@link CharacterRepository} is a repository of {@link GameCharacter}s that
+ * A {@link EntityRepository} is a repository of {@link Entity}s that
  * are currently active in the game world.
  * 
  * @author Graham
- * @param <T> The type of character.
+ * @param <T> The type of entity.
  */
-public final class CharacterRepository<T extends GameCharacter> implements Iterable<T> {
+public final class EntityRepository<T extends Entity> implements Iterable<T> {
 
     /**
-     * The array of gameCharacters in this repository.
+     * The array of entities in this repository.
      */
-    private final GameCharacter[] gameCharacters;
+    private final Entity[] entities;
 
     /**
      * The current size of this repository.
@@ -30,19 +30,19 @@ public final class CharacterRepository<T extends GameCharacter> implements Itera
     private int pointer = 0;
 
     /**
-     * Creates a new character repository with the specified capacity.
+     * Creates a new entity repository with the specified capacity.
      * 
-     * @param capacity The maximum number of gameCharacters that can be present
+     * @param capacity The maximum number of entities that can be present
      *            in the repository.
      */
-    public CharacterRepository(int capacity) {
-	this.gameCharacters = new GameCharacter[capacity];
+    public EntityRepository(int capacity) {
+	this.entities = new Entity[capacity];
     }
 
     /**
      * Gets the size of this repository.
      * 
-     * @return The number of gameCharacters in this repository.
+     * @return The number of entities in this repository.
      */
     public int size() {
 	return size;
@@ -54,30 +54,30 @@ public final class CharacterRepository<T extends GameCharacter> implements Itera
      * @return The maximum size of this repository.
      */
     public int capacity() {
-	return gameCharacters.length;
+	return entities.length;
     }
 
     /**
-     * Adds a character to the repository.
+     * Adds an entity to the repository.
      * 
-     * @param character The character to add.
-     * @return {@code true} if the character was added, {@code false} if the
+     * @param entity The entity to add.
+     * @return {@code true} if the entity was added, {@code false} if the
      *         size has reached the capacity of this repository.
      */
-    public boolean add(T character) {
-	if (size == gameCharacters.length) {
+    public boolean add(T entity) {
+	if (size == entities.length) {
 	    return false;
 	}
 	int index = -1;
-	for (int i = pointer; i < gameCharacters.length; i++) {
-	    if (gameCharacters[i] == null) {
+	for (int i = pointer; i < entities.length; i++) {
+	    if (entities[i] == null) {
 		index = i;
 		break;
 	    }
 	}
 	if (index == -1) {
 	    for (int i = 0; i < pointer; i++) {
-		if (gameCharacters[i] == null) {
+		if (entities[i] == null) {
 		    index = i;
 		    break;
 		}
@@ -86,9 +86,9 @@ public final class CharacterRepository<T extends GameCharacter> implements Itera
 	if (index == -1) {
 	    return false; // shouldn't happen, but just in case
 	}
-	gameCharacters[index] = character;
-	character.setIndex(index + 1);
-	if (index == (gameCharacters.length - 1)) {
+	entities[index] = entity;
+	entity.setIndex(index + 1);
+	if (index == (entities.length - 1)) {
 	    pointer = 0;
 	} else {
 	    pointer = index;
@@ -98,20 +98,20 @@ public final class CharacterRepository<T extends GameCharacter> implements Itera
     }
 
     /**
-     * Removes a character from the repository.
+     * Removes a entity from the repository.
      * 
-     * @param character The character to remove.
-     * @return {@code true} if the character was removed, {@code false} if it
+     * @param entity The entity to remove.
+     * @return {@code true} if the entity was removed, {@code false} if it
      *         was not (e.g. if it was never added or has been removed already).
      */
-    public boolean remove(T character) {
-	int index = character.getIndex() - 1;
-	if (index < 0 || index >= gameCharacters.length) {
+    public boolean remove(T entity) {
+	int index = entity.getIndex() - 1;
+	if (index < 0 || index >= entities.length) {
 	    return false;
 	}
-	if (gameCharacters[index] == character) {
-	    gameCharacters[index] = null;
-	    character.setIndex(-1);
+	if (entities[index] == entity) {
+	    entities[index] = null;
+	    entity.setIndex(-1);
 	    size--;
 	    return true;
 	} else {
@@ -125,7 +125,7 @@ public final class CharacterRepository<T extends GameCharacter> implements Itera
     }
 
     /**
-     * The {@link Iterator} implementation for the {@link CharacterRepository}
+     * The {@link Iterator} implementation for the {@link EntityRepository}
      * class.
      * 
      * @author Graham
@@ -144,8 +144,8 @@ public final class CharacterRepository<T extends GameCharacter> implements Itera
 
 	@Override
 	public boolean hasNext() {
-	    for (int i = index; i < gameCharacters.length; i++) {
-		if (gameCharacters[i] != null) {
+	    for (int i = index; i < entities.length; i++) {
+		if (entities[i] != null) {
 		    index = i;
 		    return true;
 		}
@@ -156,20 +156,20 @@ public final class CharacterRepository<T extends GameCharacter> implements Itera
 	@SuppressWarnings("unchecked")
 	@Override
 	public T next() {
-	    T character = null;
-	    for (int i = index; i < gameCharacters.length; i++) {
-		if (gameCharacters[i] != null) {
-		    character = (T) gameCharacters[i];
+	    T entity = null;
+	    for (int i = index; i < entities.length; i++) {
+		if (entities[i] != null) {
+		    entity = (T) entities[i];
 		    index = i;
 		    break;
 		}
 	    }
-	    if (character == null) {
+	    if (entity == null) {
 		throw new NoSuchElementException();
 	    }
 	    previousIndex = index;
 	    index++;
-	    return character;
+	    return entity;
 	}
 
 	@SuppressWarnings("unchecked")
@@ -178,7 +178,7 @@ public final class CharacterRepository<T extends GameCharacter> implements Itera
 	    if (previousIndex == -1) {
 		throw new IllegalStateException();
 	    }
-	    CharacterRepository.this.remove((T) gameCharacters[previousIndex]);
+	    EntityRepository.this.remove((T) entities[previousIndex]);
 	    previousIndex = -1;
 	}
 

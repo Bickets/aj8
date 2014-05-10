@@ -17,7 +17,7 @@ import org.apollo.game.sync.seg.MovementSegment;
 import org.apollo.game.sync.seg.RemoveCharacterSegment;
 import org.apollo.game.sync.seg.SynchronizationSegment;
 import org.apollo.game.sync.seg.TeleportSegment;
-import org.apollo.util.CharacterRepository;
+import org.apollo.util.EntityRepository;
 
 /**
  * A {@link SynchronizationTask} which synchronizes the specified {@link Player}
@@ -91,7 +91,7 @@ public final class PlayerSynchronizationTask extends SynchronizationTask {
 
 	int added = 0;
 
-	CharacterRepository<Player> repository = world.getPlayerRepository();
+	EntityRepository<Player> repository = world.getPlayerRepository();
 	// lambda does not work here
 	// due to variables needing to be final.
 	for (Player p : repository) {

@@ -76,4 +76,9 @@ public final class Mob extends GameCharacter {
 	throw new UnsupportedOperationException();
     }
 
+    @Override
+    public EntityType getType() {
+	return EntityType.MOB;
+    }
+
 }

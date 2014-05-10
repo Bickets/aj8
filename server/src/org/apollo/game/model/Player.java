@@ -487,4 +487,9 @@ public final class Player extends GameCharacter {
 	interfaceSet.close();
     }
 
+    @Override
+    public EntityType getType() {
+	return EntityType.PLAYER;
+    }
+
 }
