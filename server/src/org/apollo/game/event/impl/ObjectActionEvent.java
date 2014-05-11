@@ -1,6 +1,7 @@
 package org.apollo.game.event.impl;
 
 import org.apollo.game.event.Event;
+import org.apollo.game.model.InterfaceConstants.InterfaceOption;
 import org.apollo.game.model.Position;
 
 /**
@@ -11,9 +12,9 @@ import org.apollo.game.model.Position;
 public class ObjectActionEvent extends Event {
 
     /**
-     * The option number (1-3).
+     * The interface option.
      */
-    private final int option;
+    private final InterfaceOption option;
 
     /**
      * The object's id.
@@ -28,22 +29,22 @@ public class ObjectActionEvent extends Event {
     /**
      * Creates a new object action event.
      * 
-     * @param option The option number.
+     * @param option The interface option.
      * @param id The id of the object.
      * @param position The position of the object.
      */
-    public ObjectActionEvent(int option, int id, Position position) {
+    public ObjectActionEvent(InterfaceOption option, int id, Position position) {
 	this.option = option;
 	this.id = id;
 	this.position = position;
     }
 
     /**
-     * Gets the option number.
+     * Gets the interface option
      * 
-     * @return The option number.
+     * @return The interface option.
      */
-    public int getOption() {
+    public InterfaceOption getOption() {
 	return option;
     }
 

@@ -3,6 +3,7 @@ package org.apollo.game.interact;
 import java.util.HashMap;
 import java.util.Map;
 
+import org.apollo.game.model.InterfaceConstants.InterfaceOption;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.Position;
 
@@ -22,7 +23,7 @@ public final class ObjectActionListenerDispatcher {
 	}
     }
 
-    public void dispatch(int id, int option, Player player, Position position) {
+    public void dispatch(int id, InterfaceOption option, Player player, Position position) {
 	ObjectActionListener handler = handlers.get(id);
 	if (handler != null) {
 	    handler.handle(id, option, player, position);

@@ -1,7 +1,7 @@
 package items
 
 import org.apollo.game.interact.ItemActionListener
-import org.apollo.game.model.InterfaceConstants
+import org.apollo.game.model.InterfaceConstants.InterfaceOption
 import org.apollo.game.model.Player
 import org.apollo.game.model.inv.SynchronizationInventoryListener
 
@@ -11,8 +11,8 @@ class RemoveEquipmentPlugin extends ItemActionListener {
 		super(SynchronizationInventoryListener::EQUIPMENT_ID)
 	}
 
-	override handle(int id, int slot, int option, int interfaceId, Player player) {
-		if (option != InterfaceConstants::OPTION_ONE) {
+	override handle(int id, int slot, InterfaceOption option, int interfaceId, Player player) {
+		if (option != InterfaceOption::OPTION_ONE) {
 			return
 		}
 

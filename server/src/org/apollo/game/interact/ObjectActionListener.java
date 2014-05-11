@@ -1,5 +1,6 @@
 package org.apollo.game.interact;
 
+import org.apollo.game.model.InterfaceConstants.InterfaceOption;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.Position;
 
@@ -15,6 +16,6 @@ public abstract class ObjectActionListener {
 	return ids;
     }
 
-    public abstract void handle(int id, int option, Player player, Position position);
+    public abstract void handle(int id, InterfaceOption option, Player player, Position position);
 
 }

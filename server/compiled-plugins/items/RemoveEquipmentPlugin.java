@@ -2,7 +2,7 @@ package items;
 
 import com.google.common.base.Objects;
 import org.apollo.game.interact.ItemActionListener;
-import org.apollo.game.model.InterfaceConstants;
+import org.apollo.game.model.InterfaceConstants.InterfaceOption;
 import org.apollo.game.model.Inventory;
 import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
@@ -15,8 +15,8 @@ public class RemoveEquipmentPlugin extends ItemActionListener {
     super(SynchronizationInventoryListener.EQUIPMENT_ID);
   }
   
-  public void handle(final int id, final int slot, final int option, final int interfaceId, final Player player) {
-    boolean _notEquals = (option != InterfaceConstants.OPTION_ONE);
+  public void handle(final int id, final int slot, final InterfaceOption option, final int interfaceId, final Player player) {
+    boolean _notEquals = (!Objects.equal(option, InterfaceOption.OPTION_ONE));
     if (_notEquals) {
       return;
     }

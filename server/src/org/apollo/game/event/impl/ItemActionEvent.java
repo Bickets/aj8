@@ -1,6 +1,7 @@
 package org.apollo.game.event.impl;
 
 import org.apollo.game.event.Event;
+import org.apollo.game.model.InterfaceConstants.InterfaceOption;
 
 /**
  * An {@link Event} which represents some sort of action on an item.
@@ -10,9 +11,9 @@ import org.apollo.game.event.Event;
 public class ItemActionEvent extends Event {
 
     /**
-     * The option number (1-5).
+     * The interface option.
      */
-    private final int option;
+    private final InterfaceOption option;
 
     /**
      * The interface id.
@@ -32,12 +33,12 @@ public class ItemActionEvent extends Event {
     /**
      * Creates the item action event.
      * 
-     * @param option The option number.
+     * @param option The interface option.
      * @param interfaceId The interface id.
      * @param id The id.
      * @param slot The slot.
      */
-    public ItemActionEvent(int option, int interfaceId, int id, int slot) {
+    public ItemActionEvent(InterfaceOption option, int interfaceId, int id, int slot) {
 	this.option = option;
 	this.interfaceId = interfaceId;
 	this.id = id;
@@ -45,11 +46,11 @@ public class ItemActionEvent extends Event {
     }
 
     /**
-     * Gets the option number.
+     * Gets the interface option
      * 
-     * @return The option number.
+     * @return The interface option.
      */
-    public int getOption() {
+    public InterfaceOption getOption() {
 	return option;
     }
 

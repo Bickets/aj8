@@ -3,7 +3,7 @@ package org.apollo.game.event.decoder;
 import org.apollo.game.event.EventDecoder;
 import org.apollo.game.event.annotate.DecodesEvent;
 import org.apollo.game.event.impl.ObjectActionEvent;
-import org.apollo.game.model.InterfaceConstants;
+import org.apollo.game.model.InterfaceConstants.InterfaceOption;
 import org.apollo.game.model.Position;
 import org.apollo.net.codec.game.DataOrder;
 import org.apollo.net.codec.game.DataTransformation;
@@ -25,7 +25,7 @@ public final class SecondObjectActionEventDecoder extends EventDecoder<ObjectAct
 	int id = (int) reader.getUnsigned(DataType.SHORT, DataOrder.LITTLE, DataTransformation.ADD);
 	int y = (int) reader.getUnsigned(DataType.SHORT, DataOrder.LITTLE);
 	int x = (int) reader.getUnsigned(DataType.SHORT, DataTransformation.ADD);
-	return new ObjectActionEvent(InterfaceConstants.OPTION_TWO, id, new Position(x, y));
+	return new ObjectActionEvent(InterfaceOption.OPTION_TWO, id, new Position(x, y));
     }
 
 }

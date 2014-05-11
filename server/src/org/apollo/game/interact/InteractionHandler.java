@@ -1,5 +1,6 @@
 package org.apollo.game.interact;
 
+import org.apollo.game.model.InterfaceConstants.InterfaceOption;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.Position;
 
@@ -13,11 +14,11 @@ public final class InteractionHandler {
 	buttonDispatcher.dispatch(id, player);
     }
 
-    public void dispatch(int id, int option, Player player, Position position) {
+    public void dispatch(int id, InterfaceOption option, Player player, Position position) {
 	objectDispatcher.dispatch(id, option, player, position);
     }
 
-    public void dispatch(int id, int slot, int option, int interfaceId, Player player) {
+    public void dispatch(int id, int slot, InterfaceOption option, int interfaceId, Player player) {
 	itemDispatcher.dispatch(id, slot, option, interfaceId, player);
     }
 

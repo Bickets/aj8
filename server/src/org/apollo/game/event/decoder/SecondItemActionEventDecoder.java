@@ -3,7 +3,7 @@ package org.apollo.game.event.decoder;
 import org.apollo.game.event.EventDecoder;
 import org.apollo.game.event.annotate.DecodesEvent;
 import org.apollo.game.event.impl.ItemActionEvent;
-import org.apollo.game.model.InterfaceConstants;
+import org.apollo.game.model.InterfaceConstants.InterfaceOption;
 import org.apollo.net.codec.game.DataOrder;
 import org.apollo.net.codec.game.DataTransformation;
 import org.apollo.net.codec.game.DataType;
@@ -24,7 +24,7 @@ public final class SecondItemActionEventDecoder extends EventDecoder<ItemActionE
 	int interfaceId = (int) reader.getUnsigned(DataType.SHORT, DataOrder.LITTLE, DataTransformation.ADD);
 	int id = (int) reader.getUnsigned(DataType.SHORT, DataOrder.LITTLE, DataTransformation.ADD);
 	int slot = (int) reader.getUnsigned(DataType.SHORT, DataOrder.LITTLE);
-	return new ItemActionEvent(InterfaceConstants.OPTION_TWO, interfaceId, id, slot);
+	return new ItemActionEvent(InterfaceOption.OPTION_TWO, interfaceId, id, slot);
     }
 
 }

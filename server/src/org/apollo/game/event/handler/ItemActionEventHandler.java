@@ -3,6 +3,7 @@ package org.apollo.game.event.handler;
 import org.apollo.game.event.EventHandler;
 import org.apollo.game.event.annotate.HandlesEvent;
 import org.apollo.game.event.impl.ItemActionEvent;
+import org.apollo.game.model.InterfaceConstants.InterfaceOption;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.World;
 import org.apollo.game.model.inter.bank.BankConstants;
@@ -86,17 +87,17 @@ public final class ItemActionEventHandler extends EventHandler<ItemActionEvent> 
      * @return The amount.
      * @throws IllegalArgumentException if the option is not legal.
      */
-    private static int optionToAmount(int option) {
+    private static int optionToAmount(InterfaceOption option) {
 	switch (option) {
-	case 1:
+	case OPTION_ONE:
 	    return 1;
-	case 2:
+	case OPTION_TWO:
 	    return 5;
-	case 3:
+	case OPTION_THREE:
 	    return 10;
-	case 4:
+	case OPTION_FOUR:
 	    return Integer.MAX_VALUE;
-	case 5:
+	case OPTION_FIVE:
 	    return -1;
 	}
 	throw new IllegalArgumentException();

@@ -1,5 +1,6 @@
 package org.apollo.game.interact;
 
+import org.apollo.game.model.InterfaceConstants.InterfaceOption;
 import org.apollo.game.model.Player;
 
 public abstract class ItemActionListener {
@@ -10,7 +11,7 @@ public abstract class ItemActionListener {
 	this.interfaceId = interfaceId;
     }
 
-    public abstract void handle(int id, int slot, int option, int interfaceId, Player player);
+    public abstract void handle(int id, int slot, InterfaceOption option, int interfaceId, Player player);
 
     public final int getInterfaceId() {
 	return interfaceId;

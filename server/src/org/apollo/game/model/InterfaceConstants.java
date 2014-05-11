@@ -18,14 +18,13 @@ public final class InterfaceConstants {
      */
     public static final int[] TAB_INTERFACE_IDS = { 2423, 3917, 638, 3213,
 	    1644, 5608, 1151, -1, 5065, 5715, 2449, 904, 147, 962, };
+    
+    public enum InterfaceOption {
+	OPTION_ONE,
+	OPTION_TWO,
+	OPTION_THREE,
+	OPTION_FOUR,
+	OPTION_FIVE
+    }
 
-    public static final int OPTION_ONE = 1;
-
-    public static final int OPTION_TWO = 2;
-
-    public static final int OPTION_THREE = 3;
-
-    public static final int OPTION_FOUR = 4;
-
-    public static final int OPTION_FIVE = 5;
 }
