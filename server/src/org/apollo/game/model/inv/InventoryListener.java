@@ -15,7 +15,7 @@ public interface InventoryListener {
      * 
      * @param inventory The inventory.
      */
-    public void capacityExceeded(Inventory inventory);
+    void capacityExceeded(Inventory inventory);
 
     /**
      * Called when an item has been updated.
@@ -24,13 +24,13 @@ public interface InventoryListener {
      * @param slot The slot.
      * @param item The new item, or {@code null} if there is no new item.
      */
-    public void itemUpdated(Inventory inventory, int slot, Item item);
+    void itemUpdated(Inventory inventory, int slot, Item item);
 
     /**
      * Called when items have been updated in bulk.
      * 
      * @param inventory The inventory.
      */
-    public void itemsUpdated(Inventory inventory);
+    void itemsUpdated(Inventory inventory);
 
 }
