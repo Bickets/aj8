@@ -8,6 +8,7 @@ import org.apollo.game.event.impl.IdAssignmentEvent;
 import org.apollo.game.event.impl.LogoutEvent;
 import org.apollo.game.event.impl.SwitchTabInterfaceEvent;
 import org.apollo.game.model.inter.bank.BankConstants;
+import org.apollo.game.model.inter.dialog.MakeItemOptionDialogueListener;
 import org.apollo.game.model.inv.AppearanceInventoryListener;
 import org.apollo.game.model.inv.FullInventoryListener;
 import org.apollo.game.model.inv.InventoryListener;
@@ -402,6 +403,8 @@ public final class Player extends GameCharacter {
 
 	// force skills to update
 	getSkillSet().forceRefresh();
+
+	getInterfaceSet().openDialogue(new MakeItemOptionDialogueListener(new Item(4151), new Item(4151)));
     }
 
     @Override

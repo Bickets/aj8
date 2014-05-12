@@ -30,6 +30,7 @@ public final class ButtonEventHandler extends EventHandler<ButtonEvent> {
 
     @Override
     public void handle(Player player, ButtonEvent event) {
+	System.out.println(event.getInterfaceId());
 	world.getInteractionHandler().dispatch(event.getInterfaceId(), player);
     }
 

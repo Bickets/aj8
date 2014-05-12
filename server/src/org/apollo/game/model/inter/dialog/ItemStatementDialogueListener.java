@@ -9,12 +9,9 @@ import org.apollo.game.model.Player;
 
 public abstract class ItemStatementDialogueListener implements DialogueListener {
 
-    private final int modelZoom;
-
     private final Item item;
 
-    public ItemStatementDialogueListener(Item item, int modelZoom) {
-	this.modelZoom = modelZoom;
+    public ItemStatementDialogueListener(Item item) {
 	this.item = item;
     }
 
@@ -37,8 +34,9 @@ public abstract class ItemStatementDialogueListener implements DialogueListener 
     }
 
     @Override
-    public final int getModelZoom() {
-	return modelZoom;
+    public int getModelZoom() {
+	/* The default model zoom, may be overridden. */
+	return 210;
     }
 
     @Override

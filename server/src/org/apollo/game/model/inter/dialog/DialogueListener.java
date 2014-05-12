@@ -78,9 +78,9 @@ public interface DialogueListener extends InterfaceListener {
     }
 
     /**
-     * Returns an {@link Item} object used to display their model within the
-     * dialogue for only the type of {@link DialogueType#ITEM_STATEMENT}. The
-     * default item is {@code null}.
+     * Returns an {@link Item} array used to display their model within the
+     * dialogue for the types of {@link DialogueType#ITEM_STATEMENT} and
+     * {@link DialogueType#MAKE_ITEM}. The default item is {@code null}.
      */
     default Item getItem() {
 	/* Method intended to be overridden. */

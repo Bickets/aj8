@@ -40,6 +40,19 @@ final class DialogueConstants {
 	    2482, 2494, };
 
     /**
+     * This 2d array contains the child id's for item selection statements.
+     */
+    protected static final int[][] MAKE_ITEM_DIALOGUE_ID = {
+	    { 8866, 8874, 8878 }, { 8880, 8889, 8893, 8897 },
+	    { 8899, 8906, 8910, 8914, 8918 }, };
+
+    /**
+     * This 2d array contains the child id's for item selection statements.
+     */
+    protected static final int[][] MAKE_ITEM_MODEL_ID = { { 8870, 8869 },
+	    { 8884, 8883, 8885 }, { 8902, 8903, 8904, 8905 } };
+
+    /**
      * Suppresses the default-public constructor preventing this class from
      * being instantiated by other classes.
      * 
