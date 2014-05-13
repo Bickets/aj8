@@ -2,17 +2,34 @@ package org.apollo.game.model.inter.dialog;
 
 import static org.apollo.game.model.inter.dialog.DialogueConstants.MOB_DIALOGUE_ID;
 
+import java.util.Objects;
+
 import org.apollo.game.event.impl.InterfaceItemModelEvent;
 import org.apollo.game.event.impl.SetInterfaceTextEvent;
 import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
 
+/**
+ * A dialogue listener which manages the {@link DialogueType#ITEM_STATEMENT}
+ * dialogue type.
+ * 
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
+ */
 public abstract class ItemStatementDialogueListener implements DialogueListener {
 
+    /**
+     * The {@link Item} shown in the statement.
+     */
     private final Item item;
 
+    /**
+     * Constructs a new {@link ItemStatementDialogueListener}.
+     * 
+     * @param item The item to be shown in the statement.
+     * @throws NullPointerException If the specified item is null.
+     */
     public ItemStatementDialogueListener(Item item) {
-	this.item = item;
+	this.item = Objects.requireNonNull(item);
     }
 
     @Override
@@ -20,7 +37,7 @@ public abstract class ItemStatementDialogueListener implements DialogueListener 
 	String[] lines = lines();
 	int dialogueId = MOB_DIALOGUE_ID[lines.length - 1];
 	int headChildId = dialogueId - 2;
-	player.send(new InterfaceItemModelEvent(headChildId, getItem(), getModelZoom()));
+	player.send(new InterfaceItemModelEvent(headChildId, item, getModelZoom()));
 	player.send(new SetInterfaceTextEvent(dialogueId - 1, getTitle()));
 	for (int i = 0; i < lines.length; i++) {
 	    player.send(new SetInterfaceTextEvent(dialogueId + i, lines[i]));
@@ -33,30 +50,28 @@ public abstract class ItemStatementDialogueListener implements DialogueListener 
 	return DialogueType.ITEM_STATEMENT;
     }
 
-    @Override
+    /**
+     * Returns the title of this item statement. By default the items name is
+     * returned. This method may be overridden to provide a user specific
+     * functionality.
+     * 
+     * @see {@link ItemDefinition#getName()}
+     */
+    public String getTitle() {
+	return item.getDefinition().getName();
+    }
+
+    /**
+     * Returns the zoom of the items model upon this statement. The default zoom
+     * is <tt>210</tt>. This method may be overridden to provide a user specific
+     * functionality.
+     */
     public int getModelZoom() {
-	/* The default model zoom, may be overridden. */
 	return 210;
     }
 
-    @Override
-    public final Item getItem() {
-	return item;
-    }
-
     /* Do not allow method overriding for these methods. */
-    @Override
-    public final DialogueExpression expression() {
-	return null;
-    }
+    @Override public final DialogueExpression expression() { return null; }
+    @Override public final boolean optionClicked(Player player, DialogueOption option) { return false; }
 
-    @Override
-    public final boolean optionClicked(Player player, DialogueOption option) {
-	return false;
-    }
-
-    @Override
-    public final int getMobId() {
-	return -1;
-    }
 }

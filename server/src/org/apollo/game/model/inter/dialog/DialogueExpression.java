@@ -1,6 +1,8 @@
 package org.apollo.game.model.inter.dialog;
 
 import org.apollo.game.model.Animation;
+import org.apollo.game.model.Mob;
+import org.apollo.game.model.Player;
 
 /**
  * Represents an expression animation performed by a {@link Player} or

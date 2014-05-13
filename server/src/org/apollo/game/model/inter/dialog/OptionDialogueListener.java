@@ -3,9 +3,14 @@ package org.apollo.game.model.inter.dialog;
 import static org.apollo.game.model.inter.dialog.DialogueConstants.OPTION_DIALOGUE_ID;
 
 import org.apollo.game.event.impl.SetInterfaceTextEvent;
-import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
 
+/**
+ * A dialgoue listener which manages the {@link DialogueType#OPTION} dialogue
+ * type.
+ * 
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
+ */
 public abstract class OptionDialogueListener implements DialogueListener {
 
     @Override
@@ -22,29 +27,21 @@ public abstract class OptionDialogueListener implements DialogueListener {
 	return dialogueId - 2;
     }
 
+    /**
+     * Returns the title of this dialogue, by default <tt>Choose an option</tt>
+     * is returned. This method may be overridden to provide for a user specific
+     * functionality.
+     */
+    public String getTitle() {
+	return "Choose an option";
+    }
+
     @Override
     public final DialogueType type() {
-	return DialogueType.OPTIONS;
+	return DialogueType.OPTION;
     }
 
     /* Do not allow method overriding for these methods. */
-    @Override
-    public final DialogueExpression expression() {
-	return null;
-    }
+    @Override public final DialogueExpression expression() { return null; }
 
-    @Override
-    public final int getMobId() {
-	return -1;
-    }
-
-    @Override
-    public final Item getItem() {
-	return null;
-    }
-
-    @Override
-    public final int getModelZoom() {
-	return -1;
-    }
 }

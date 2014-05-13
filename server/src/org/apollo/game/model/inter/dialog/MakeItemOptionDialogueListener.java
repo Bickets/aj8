@@ -3,17 +3,34 @@ package org.apollo.game.model.inter.dialog;
 import static org.apollo.game.model.inter.dialog.DialogueConstants.MAKE_ITEM_DIALOGUE_ID;
 import static org.apollo.game.model.inter.dialog.DialogueConstants.MAKE_ITEM_MODEL_ID;
 
+import java.util.Objects;
+
 import org.apollo.game.event.impl.InterfaceItemModelEvent;
 import org.apollo.game.event.impl.SetInterfaceTextEvent;
 import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
 
-public final class MakeItemOptionDialogueListener implements DialogueListener {
+/**
+ * A dialogue listener which manages the {@link DialogueType#MAKE_ITEM_OPTION}
+ * dialogue type.
+ * 
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
+ */
+public class MakeItemOptionDialogueListener implements DialogueListener {
 
+    /**
+     * An array of {@link Item}'s shown in this make item option dialogue.
+     */
     private final Item[] items;
 
+    /**
+     * Constructs a new {@link MakeItemOptionDialogueListener}
+     * 
+     * @param items The items shown in this dialogue.
+     * @throws NullPointerException If the {@code items} are null.
+     */
     public MakeItemOptionDialogueListener(Item... items) {
-	this.items = items;
+	this.items = Objects.requireNonNull(items);
     }
 
     @Override
@@ -40,35 +57,16 @@ public final class MakeItemOptionDialogueListener implements DialogueListener {
 	return lines;
     }
 
-    @Override
+    /**
+     * Returns the zoom of the items model upon this statement. The default zoom
+     * is <tt>210</tt>. This method may be overridden to provide a user specific
+     * functionality.
+     */
     public int getModelZoom() {
-	/* Default model zoom, may be overridden. */
 	return 210;
     }
 
     /* Do not allow method overriding for these methods. */
-    @Override
-    public final DialogueExpression expression() {
-	return null;
-    }
+    @Override public final DialogueExpression expression() { return null; }
 
-    @Override
-    public final boolean optionClicked(Player player, DialogueOption option) {
-	return false;
-    }
-
-    @Override
-    public final int getMobId() {
-	return -1;
-    }
-
-    @Override
-    public final Item getItem() {
-	return null;
-    }
-
-    @Override
-    public final String getTitle() {
-	return null;
-    }
 }

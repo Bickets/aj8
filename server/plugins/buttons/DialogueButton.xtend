@@ -24,8 +24,8 @@ class DialogueButton extends ButtonClickListener {
 	override handle(int id, Player player) {
 		if (player.interfaceSet.contains(InterfaceType::DIALOGUE)) {
 			var option = DialogueOption::fromId(id)
-			/* I dislike this inverted boolean expression :( */
-			if (option == null || !player.interfaceSet.optionClicked(option)) {
+			val success = option != null && player.interfaceSet.optionClicked(option)
+			if (!success) {
 				player.interfaceSet.close
 				return
 			}

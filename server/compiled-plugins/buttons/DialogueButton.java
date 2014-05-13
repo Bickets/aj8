@@ -39,17 +39,18 @@ public class DialogueButton extends ButtonClickListener {
     boolean _contains = _interfaceSet.contains(InterfaceType.DIALOGUE);
     if (_contains) {
       DialogueOption option = DialogueOption.fromId(id);
-      boolean _or = false;
-      boolean _equals = Objects.equal(option, null);
-      if (_equals) {
-        _or = true;
+      boolean _and = false;
+      boolean _notEquals = (!Objects.equal(option, null));
+      if (!_notEquals) {
+        _and = false;
       } else {
         InterfaceSet _interfaceSet_1 = player.getInterfaceSet();
         boolean _optionClicked = _interfaceSet_1.optionClicked(option);
-        boolean _not = (!_optionClicked);
-        _or = (_equals || _not);
+        _and = (_notEquals && _optionClicked);
       }
-      if (_or) {
+      final boolean success = _and;
+      boolean _not = (!success);
+      if (_not) {
         InterfaceSet _interfaceSet_2 = player.getInterfaceSet();
         _interfaceSet_2.close();
         return;

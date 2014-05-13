@@ -1,6 +1,6 @@
 package org.apollo.game.model.inter.dialog;
 
-import org.apollo.game.model.Item;
+import org.apollo.game.model.Mob;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.inter.InterfaceListener;
 
@@ -46,16 +46,6 @@ public interface DialogueListener extends InterfaceListener {
     }
 
     /**
-     * Returns the title of this dialogue, this only applies to the types of
-     * {@link DialogueType#ITEM_STATEMENT} and {@link DialogueType#OPTIONS}, by
-     * default this method returns a value of <tt>"Choose an option"</tt>
-     */
-    default String getTitle() {
-	/* Method intended to be overridden. */
-	return "Choose an option";
-    }
-
-    /**
      * Returns the facial expression expressed by either a {@link Player} or
      * {@link Mob} from within a dialogue, this only applies to the types of
      * {@link DialogueType#MOB_STATEMENT} and
@@ -65,36 +55,6 @@ public interface DialogueListener extends InterfaceListener {
     default DialogueExpression expression() {
 	/* Method intended to be overridden. */
 	return DialogueExpression.NO_EXPRESSION;
-    }
-
-    /**
-     * Returns the mob id used for only the type of
-     * {@link DialogueType#MOB_STATEMENT}. The mob id is used to display the
-     * mobs model within the dialogue, the default mob id is <tt>-1</tt>
-     */
-    default int getMobId() {
-	/* Method intended to be overridden. */
-	return -1;
-    }
-
-    /**
-     * Returns an {@link Item} array used to display their model within the
-     * dialogue for the types of {@link DialogueType#ITEM_STATEMENT} and
-     * {@link DialogueType#MAKE_ITEM}. The default item is {@code null}.
-     */
-    default Item getItem() {
-	/* Method intended to be overridden. */
-	return null;
-    }
-
-    /**
-     * Returns the zoom of the specified {@link getItem()} for the type of
-     * {@link DialogueType#ITEM_STATEMENT}. The default model zoom is
-     * <tt>-1</tt>
-     */
-    default int getModelZoom() {
-	/* Method intended to be overridden. */
-	return -1;
     }
 
     /**
@@ -109,7 +69,7 @@ public interface DialogueListener extends InterfaceListener {
 
     /**
      * An event which is intended to be fired after an option was clicked during
-     * the dialogue type of {@link DialogueType#OPTIONS}
+     * the dialogue type of {@link DialogueType#OPTION}
      * 
      * @param player The player clicking the option.
      * @param option The option, only five option dialogues are supported.

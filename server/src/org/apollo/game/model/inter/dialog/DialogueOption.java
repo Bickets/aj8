@@ -32,7 +32,32 @@ public enum DialogueOption {
     /**
      * Represents the fifth option within a dialogue.
      */
-    FIFTH_OPTION(2498);
+    FIFTH_OPTION(2498),
+
+    /**
+     * Represents the make 1 option within a dialogue.
+     */
+    MAKE_1(8874, 8878, 2799, 8889, 8893, 8897, 8909, 8913, 8917, 8921),
+
+    /**
+     * Represents the make 5 option within a dialogue.
+     */
+    MAKE_5(8873, 8877, 2798, 8888, 8892, 8896, 8908, 8912, 8916, 8920),
+
+    /**
+     * Represents the make 10 option within a dialogue.
+     */
+    MAKE_10(8872, 8876, 8887, 8891, 8895, 8907, 8911, 8915, 8919),
+
+    /**
+     * Represents the make x option within a dialogue.
+     */
+    MAKE_X(8871, 8875, 1748, 8886, 8890, 8894, 8906, 8910, 8914, 8918),
+
+    /**
+     * Represents the make all option within a dialogue.
+     */
+    MAKE_ALL(1747);
 
     /**
      * The button click identifiers for each dialogue option.

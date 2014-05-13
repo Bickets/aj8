@@ -5,10 +5,24 @@ import org.apollo.game.event.impl.SetInterfaceTextEvent;
 import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
 
-public abstract class MakeItemDialogueListener implements DialogueListener {
+/**
+ * A dialogue listener which manages the {@link DialogueType#MAKE_ITEM} dialogue
+ * type.
+ * 
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
+ */
+public class MakeItemDialogueListener implements DialogueListener {
 
+    /**
+     * The {@link Item} shown in this make item statement.
+     */
     private final Item item;
 
+    /**
+     * Constructs a new {@link MakeItemDialogueListener}
+     * 
+     * @param item The item shown in this make item statement.
+     */
     public MakeItemDialogueListener(Item item) {
 	this.item = item;
     }
@@ -20,50 +34,33 @@ public abstract class MakeItemDialogueListener implements DialogueListener {
 
     @Override
     public final int execute(Player player) {
-	player.send(new InterfaceItemModelEvent(1746, getItem(), getModelZoom()));
-	/*
-	 * TODO: If required add a function which delimits more lines prior to
-	 * title.
-	 */
-	player.send(new SetInterfaceTextEvent(2799, "\\n\\n\\n\\n" + getTitle()));
+	player.send(new InterfaceItemModelEvent(1746, item, getModelZoom()));
+	player.send(new SetInterfaceTextEvent(2799, getTitle()));
 	return 4429;
     }
 
-    @Override
-    public final Item getItem() {
-	return item;
-    }
-
-    @Override
+    /**
+     * Returns the title of this item statement. By default the items name is
+     * returned. This method may be overridden to provide a user specific
+     * functionality.
+     * 
+     * @see {@link ItemDefinition#getName()}
+     */
     public String getTitle() {
-	/* Default title, may be overridden. */
 	return item.getDefinition().getName();
     }
 
-    @Override
+    /**
+     * Returns the zoom of the items model upon this statement. The default zoom
+     * is <tt>210</tt>. This method may be overridden to provide a user specific
+     * functionality.
+     */
     public int getModelZoom() {
-	/* Default model zoom, may be overridden. */
 	return 210;
     }
 
     /* Do not allow method overriding for these methods. */
-    @Override
-    public final DialogueExpression expression() {
-	return null;
-    }
+    @Override public final DialogueExpression expression() { return null; }
+    @Override public final String[] lines() { return null; }
 
-    @Override
-    public final boolean optionClicked(Player player, DialogueOption option) {
-	return false;
-    }
-
-    @Override
-    public final int getMobId() {
-	return -1;
-    }
-
-    @Override
-    public final String[] lines() {
-	return null;
-    }
 }

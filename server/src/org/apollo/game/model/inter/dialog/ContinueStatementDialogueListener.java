@@ -3,9 +3,13 @@ package org.apollo.game.model.inter.dialog;
 import static org.apollo.game.model.inter.dialog.DialogueConstants.CONTINUE_STATEMENT_DIALOGUE_ID;
 
 import org.apollo.game.event.impl.SetInterfaceTextEvent;
-import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
 
+/**
+ * A dialogue listener which manages the {@link DialogueType#CONTINUE_STATEMENT} dialogue type.
+ * 
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
+ */
 public abstract class ContinueStatementDialogueListener implements DialogueListener {
 
     @Override
@@ -23,33 +27,7 @@ public abstract class ContinueStatementDialogueListener implements DialogueListe
     }
 
     /* Do not allow method overriding for these methods. */
-    @Override
-    public final DialogueExpression expression() {
-	return null;
-    }
+    @Override public final DialogueExpression expression() { return null; }
+    @Override public final boolean optionClicked(Player player, DialogueOption option) { return false; }
 
-    @Override
-    public final int getMobId() {
-	return -1;
-    }
-
-    @Override
-    public final Item getItem() {
-	return null;
-    }
-
-    @Override
-    public final int getModelZoom() {
-	return -1;
-    }
-
-    @Override
-    public final boolean optionClicked(Player player, DialogueOption option) {
-	return false;
-    }
-
-    @Override
-    public final String getTitle() {
-	return null;
-    }
 }
