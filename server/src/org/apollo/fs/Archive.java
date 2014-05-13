@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Objects;
 
 import org.apollo.util.ByteBufferUtil;
 import org.apollo.util.CompressionUtil;
@@ -57,11 +58,8 @@ public final class Archive {
     }
 
     public byte[] get(String name) {
-	ArchiveEntry entry = entries.get(NameUtil.hash(name));
-	if (entry != null) {
-	    return entry.getBytes();
-	}
-	return null;
+	ArchiveEntry entry = Objects.requireNonNull(entries.get(NameUtil.hash(name)));
+	return entry.getBytes();
     }
 
     public boolean isPacked() {
