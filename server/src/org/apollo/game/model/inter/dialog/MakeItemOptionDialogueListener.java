@@ -16,7 +16,7 @@ import org.apollo.game.model.Player;
  * 
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public class MakeItemOptionDialogueListener implements DialogueListener {
+public abstract class MakeItemOptionDialogueListener implements DialogueListener {
 
     /**
      * An array of {@link Item}'s shown in this make item option dialogue.
@@ -32,6 +32,9 @@ public class MakeItemOptionDialogueListener implements DialogueListener {
     public MakeItemOptionDialogueListener(Item... items) {
 	this.items = Objects.requireNonNull(items);
     }
+
+    @Override
+    public abstract boolean optionClicked(Player player, DialogueOption option);
 
     @Override
     public final DialogueType type() {
