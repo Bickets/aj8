@@ -407,7 +407,7 @@ public final class Player extends GameCharacter {
 	
 	getInterfaceSet().openDialogue(new MakeItemDialogueListener(new Item(389)) {
 	    @Override
-	    public boolean optionClicked(Player player, DialogueOption option) {
+	    public boolean optionClicked(DialogueOption option) {
 		System.out.println("Option clicked: " + option);
 		return true;
 	    }

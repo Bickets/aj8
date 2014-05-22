@@ -14,7 +14,7 @@ import org.apollo.game.model.Player;
 public abstract class OptionDialogueListener implements DialogueListener {
 
     @Override
-    public abstract boolean optionClicked(Player player, DialogueOption option);
+    public abstract boolean optionClicked(DialogueOption option);
 
     @Override
     public final int execute(Player player) {

@@ -104,7 +104,7 @@ public final class InterfaceSet {
 
     public boolean optionClicked(DialogueOption option) {
 	if (dialogueListener != null) {
-	    return dialogueListener.optionClicked(player, option);
+	    return dialogueListener.optionClicked(option);
 	}
 	return false;
     }

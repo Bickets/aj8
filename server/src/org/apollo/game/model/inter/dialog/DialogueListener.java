@@ -71,12 +71,11 @@ public interface DialogueListener extends InterfaceListener {
      * An event which is intended to be fired after an option was clicked during
      * the dialogue type of {@link DialogueType#OPTION}
      * 
-     * @param player The player clicking the option.
      * @param option The option, only five option dialogues are supported.
      * @return A flag to determine whether or not the event was successful,
      *         {@code true} is so otherwise {@code false}.
      */
-    default boolean optionClicked(Player player, DialogueOption option) {
+    default boolean optionClicked(DialogueOption option) {
 	/* Method intended to be overridden. */
 	return false;
     }

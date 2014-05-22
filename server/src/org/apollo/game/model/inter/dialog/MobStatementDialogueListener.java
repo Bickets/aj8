@@ -50,6 +50,6 @@ public abstract class MobStatementDialogueListener implements DialogueListener {
     }
 
     /* Do not allow method overriding for these methods. */
-    @Override  public final boolean optionClicked(Player player, DialogueOption option) { return false; }
+    @Override  public final boolean optionClicked(DialogueOption option) { return false; }
 
 }

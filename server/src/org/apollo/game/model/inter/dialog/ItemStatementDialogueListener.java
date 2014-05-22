@@ -77,6 +77,6 @@ public abstract class ItemStatementDialogueListener implements DialogueListener 
 
     /* Do not allow method overriding for these methods. */
     @Override public final DialogueExpression expression() { return null; }
-    @Override public final boolean optionClicked(Player player, DialogueOption option) { return false; }
+    @Override public final boolean optionClicked(DialogueOption option) { return false; }
 
 }

@@ -14,7 +14,10 @@ class BankObject extends ObjectActionListener {
 
 	override handle(int id, InterfaceOption option, Player player, Position position) {
 		switch option {
-			case InterfaceOption.OPTION_ONE: player.startAction(new BankAction(player, position))
+			case OPTION_ONE:
+				player.startAction(new BankAction(player, position))
+			default:
+				throw new UnsupportedOperationException('Unhandled bank option: ' + option)
 		}
 	}
 

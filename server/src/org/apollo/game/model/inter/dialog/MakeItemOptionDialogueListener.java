@@ -37,7 +37,7 @@ public abstract class MakeItemOptionDialogueListener implements DialogueListener
     }
 
     @Override
-    public abstract boolean optionClicked(Player player, DialogueOption option);
+    public abstract boolean optionClicked(DialogueOption option);
 
     @Override
     public final DialogueType type() {
