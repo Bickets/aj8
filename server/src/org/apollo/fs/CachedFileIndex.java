@@ -3,13 +3,13 @@ package org.apollo.fs;
 import java.io.IOException;
 import java.util.concurrent.ExecutionException;
 
-import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;
 import com.google.common.cache.CacheLoader;
+import com.google.common.cache.LoadingCache;
 
 public final class CachedFileIndex implements FileIndex {
 
-    private Cache<Integer, byte[]> cache;
+    private LoadingCache<Integer, byte[]> cache;
 
     private final FileIndex index;
 
