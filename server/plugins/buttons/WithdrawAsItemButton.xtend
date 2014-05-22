@@ -1,7 +1,7 @@
 package buttons
 
-import org.apollo.game.model.Player
 import org.apollo.game.interact.ButtonClickListener
+import org.apollo.game.model.Player
 
 class WithdrawAsItemButton extends ButtonClickListener {
 

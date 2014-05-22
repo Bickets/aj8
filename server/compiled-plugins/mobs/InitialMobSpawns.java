@@ -1,7 +1,6 @@
 package mobs;
 
 import java.util.ArrayList;
-import java.util.function.Consumer;
 import java.util.logging.Logger;
 import org.apollo.game.model.Direction;
 import org.apollo.game.model.Mob;
@@ -9,6 +8,8 @@ import org.apollo.game.model.Position;
 import org.apollo.game.model.World;
 import org.eclipse.xtend.lib.Data;
 import org.eclipse.xtext.xbase.lib.Functions.Function0;
+import org.eclipse.xtext.xbase.lib.Functions.Function1;
+import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.eclipse.xtext.xbase.lib.util.ToStringHelper;
 
 @Data
@@ -33,9 +34,8 @@ public class InitialMobSpawns {
   
   private final Logger _logger = new Function0<Logger>() {
     public Logger apply() {
-      String _name = InitialMobSpawns.class.getName();
-      Logger _logger = Logger.getLogger(_name);
-      return _logger;
+      Logger _global = Logger.getGlobal();
+      return _global;
     }
   }.apply();
   
@@ -46,13 +46,14 @@ public class InitialMobSpawns {
   public void init() {
     this.addAll();
     ArrayList<Mob> _mobs = this.getMobs();
-    final Consumer<Mob> _function = new Consumer<Mob>() {
-      public void accept(final Mob mob) {
+    final Function1<Mob,Boolean> _function = new Function1<Mob,Boolean>() {
+      public Boolean apply(final Mob it) {
         World _world = InitialMobSpawns.this.getWorld();
-        _world.register(mob);
+        boolean _register = _world.register(it);
+        return Boolean.valueOf(_register);
       }
     };
-    _mobs.forEach(_function);
+    /* ListExtensions.<Mob, Boolean>map(_mobs, _function); */
     Logger _logger = this.getLogger();
     ArrayList<Mob> _mobs_1 = this.getMobs();
     int _size = _mobs_1.size();

@@ -10,12 +10,12 @@ import org.apollo.game.model.World
 @Data class InitialMobSpawns {
 	val World world
 	val mobs = new ArrayList<Mob>
-	val logger = Logger::getLogger(InitialMobSpawns.name)
+	val logger = Logger.getGlobal
 
 	def init() {
 		addAll
 
-		mobs.forEach[mob|world.register(mob)]
+		mobs.map[world.register(it)]
 		logger.info('Loaded ' + mobs.size + ' mob spawns.')
 	}
 

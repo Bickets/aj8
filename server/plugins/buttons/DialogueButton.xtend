@@ -8,12 +8,9 @@ import org.apollo.game.model.inter.dialog.DialogueOption
 class DialogueButton extends ButtonClickListener {
 
 	def static buildIds() {
-		var ids = newArrayList
-		for (option : DialogueOption::values) {
-			for (id : option.ids) {
-				ids += id
-			}
-		}
+		val ids = newArrayList
+		val vals = DialogueOption.values
+		vals.forEach[ it.ids.forEach[ids += it] ]
 		return ids
 	}
 
@@ -22,8 +19,8 @@ class DialogueButton extends ButtonClickListener {
 	}
 
 	override handle(int id, Player player) {
-		if (player.interfaceSet.contains(InterfaceType::DIALOGUE)) {
-			var option = DialogueOption::fromId(id)
+		if (player.interfaceSet.contains(InterfaceType.DIALOGUE)) {
+			val option = DialogueOption.fromId(id)
 			val success = option != null && player.interfaceSet.optionClicked(option)
 			if (!success) {
 				player.interfaceSet.close

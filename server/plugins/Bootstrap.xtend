@@ -1,6 +1,5 @@
 import java.io.File
 import java.lang.reflect.Modifier
-import java.util.logging.Logger
 import mobs.InitialMobSpawns
 import org.apollo.game.command.CommandDispatcher
 import org.apollo.game.command.CommandListener
@@ -11,61 +10,39 @@ import org.apollo.game.model.World
 
 class Bootstrap {
 
-	val logger = Logger::getLogger(Bootstrap.name)
-
 	def initObjects(World world) {
-		val classes = getClasses('objects')
-		classes.forEach [ clazz |
-			val handler = clazz.newInstance as ObjectActionListener
-			world.interactionHandler.bind(handler)
-		]
-		logger.info('Loaded ' + classes.size + ' object plugins.')
+		classes('objects').forEach[world.interactionHandler.bind(it.newInstance as ObjectActionListener)]
 	}
 
 	def initButtons(World world) {
-		val classes = getClasses('buttons')
-		classes.forEach [ clazz |
-			val handler = clazz.newInstance as ButtonClickListener
-			world.interactionHandler.bind(handler)
-		]
-		logger.info('Loaded ' + classes.size + ' button plugins.')
+		classes('buttons').forEach[world.interactionHandler.bind(it.newInstance as ButtonClickListener)]
 	}
 
 	def initItems(World world) {
-		val classes = getClasses('items')
-		classes.forEach [ clazz |
-			val handler = clazz.newInstance as ItemActionListener
-			world.interactionHandler.bind(handler)
-		]
-		logger.info('Loaded ' + classes.size + ' item plugins.')
+		classes('items').forEach[world.interactionHandler.bind(it.newInstance as ItemActionListener)]
 	}
 
 	def initSpawns(World world) {
-		val spawns = new InitialMobSpawns(world)
-		spawns.init
+		new InitialMobSpawns(world).init
 	}
 
 	def initCommands() {
-		val classes = getClasses('commands')
-		classes.forEach [ clazz |
-			val listener = clazz.newInstance as CommandListener
-			CommandDispatcher::getInstance.bind(listener)
-		]
-		logger.info('Loaded ' + classes.size + ' command plugins.')
+		classes('commands').forEach[CommandDispatcher.getInstance.bind(it.newInstance as CommandListener)]
 	}
 
-	def getClasses(String dir) {
+	def classes(String dir) {
 		val files = new File('bin/' + dir, '/').list
 		val classes = newArrayList
+		val filtered = files?.filter[it.endsWith('.class') && !it.contains('$')]
 
-		files?.forEach [ file |
-			if (file.endsWith('.class') && !file.contains('$')) {
-				val clazz = Class::forName(dir + '.' + file.substring(0, file.lastIndexOf('.')))
-				if (!Modifier::isAbstract(clazz.modifiers) && !Modifier::isInterface(clazz.modifiers)) {
-					classes += clazz
-				}
+		filtered.forEach [
+			val name = it.substring(0, it.indexOf('.'))
+			val clazz = Class.forName(dir + '.' + name)
+			if (!Modifier.isAbstract(clazz.modifiers) && !Modifier.isInterface(clazz.modifiers)) {
+				classes += clazz
 			}
 		]
+
 		return classes
 	}
 

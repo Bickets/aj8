@@ -8,11 +8,11 @@ import org.apollo.game.model.inv.SynchronizationInventoryListener
 class RemoveEquipmentPlugin extends ItemActionListener {
 
 	new() {
-		super(SynchronizationInventoryListener::EQUIPMENT_ID)
+		super(SynchronizationInventoryListener.EQUIPMENT_ID)
 	}
 
 	override handle(int id, int slot, InterfaceOption option, int interfaceId, Player player) {
-		if (option != InterfaceOption::OPTION_ONE) {
+		if (option != InterfaceOption.OPTION_ONE) {
 			return
 		}
 
