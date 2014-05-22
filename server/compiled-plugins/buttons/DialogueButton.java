@@ -11,7 +11,6 @@ import org.apollo.game.model.Player;
 import org.apollo.game.model.inter.dialog.DialogueOption;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
-import org.eclipse.xtext.xbase.lib.Functions.Function0;
 import org.eclipse.xtext.xbase.lib.IterableExtensions;
 import org.eclipse.xtext.xbase.lib.Procedures.Procedure1;
 
@@ -36,12 +35,7 @@ public class DialogueButton extends ButtonClickListener {
   }
   
   public DialogueButton() {
-    super(new Function0<int[]>() {
-      public int[] apply() {
-        ArrayList<Integer> _buildIds = DialogueButton.buildIds();
-        return ((int[])Conversions.unwrapArray(_buildIds, int.class));
-      }
-    }.apply());
+    super(((int[])Conversions.unwrapArray(DialogueButton.buildIds(), int.class)));
   }
   
   public void handle(final int id, final Player player) {
@@ -56,11 +50,10 @@ public class DialogueButton extends ButtonClickListener {
       } else {
         InterfaceSet _interfaceSet_1 = player.getInterfaceSet();
         boolean _optionClicked = _interfaceSet_1.optionClicked(option);
-        _and = (_notEquals && _optionClicked);
+        _and = _optionClicked;
       }
       final boolean success = _and;
-      boolean _not = (!success);
-      if (_not) {
+      if ((!success)) {
         InterfaceSet _interfaceSet_2 = player.getInterfaceSet();
         _interfaceSet_2.close();
         return;

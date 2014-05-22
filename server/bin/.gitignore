@@ -1,8 +1,4 @@
 /.Bootstrap.java._trace
-/buttons
-/commands
-/items
-/mobs
-/net
-/objects
 /org
+/objects
+/buttons

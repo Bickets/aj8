@@ -4,13 +4,12 @@ import org.apollo.game.command.Command;
 import org.apollo.game.command.PrivilegedCommandListener;
 import org.apollo.game.model.Inventory;
 import org.apollo.game.model.Player;
-import org.apollo.game.model.Player.PrivilegeLevel;
 import org.apollo.game.model.def.ItemDefinition;
 
 @SuppressWarnings("all")
 public class ItemCommand extends PrivilegedCommandListener {
   public ItemCommand() {
-    super(PrivilegeLevel.ADMINISTRATOR);
+    super(Player.PrivilegeLevel.ADMINISTRATOR);
   }
   
   public void executePrivileged(final Player player, final Command command) {
@@ -25,7 +24,7 @@ public class ItemCommand extends PrivilegedCommandListener {
       String _get_1 = args[1];
       boolean _isDigit_1 = this.isDigit(_get_1);
       boolean _not_1 = (!_isDigit_1);
-      _or = (_not || _not_1);
+      _or = _not_1;
     }
     if (_or) {
       String _name = this.getName();
@@ -46,20 +45,17 @@ public class ItemCommand extends PrivilegedCommandListener {
     if (_greaterThan) {
       _or_3 = true;
     } else {
-      boolean _lessEqualsThan = ((id).intValue() <= 0);
-      _or_3 = (_greaterThan || _lessEqualsThan);
+      _or_3 = ((id).intValue() <= 0);
     }
     if (_or_3) {
       _or_2 = true;
     } else {
-      boolean _lessEqualsThan_1 = ((amount).intValue() <= 0);
-      _or_2 = (_or_3 || _lessEqualsThan_1);
+      _or_2 = ((amount).intValue() <= 0);
     }
     if (_or_2) {
       _or_1 = true;
     } else {
-      boolean _greaterThan_1 = ((amount).intValue() > Integer.MAX_VALUE);
-      _or_1 = (_or_2 || _greaterThan_1);
+      _or_1 = ((amount).intValue() > Integer.MAX_VALUE);
     }
     if (_or_1) {
       String _name_1 = this.getName();
@@ -77,7 +73,6 @@ public class ItemCommand extends PrivilegedCommandListener {
   }
   
   public boolean isDigit(final String string) {
-    boolean _matches = string.matches("\\d+");
-    return _matches;
+    return string.matches("\\d+");
   }
 }

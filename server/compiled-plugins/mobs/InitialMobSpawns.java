@@ -7,7 +7,6 @@ import org.apollo.game.model.Mob;
 import org.apollo.game.model.Position;
 import org.apollo.game.model.World;
 import org.eclipse.xtend.lib.Data;
-import org.eclipse.xtext.xbase.lib.Functions.Function0;
 import org.eclipse.xtext.xbase.lib.Functions.Function1;
 import org.eclipse.xtext.xbase.lib.ListExtensions;
 import org.eclipse.xtext.xbase.lib.util.ToStringHelper;
@@ -21,23 +20,13 @@ public class InitialMobSpawns {
     return this._world;
   }
   
-  private final ArrayList<Mob> _mobs = new Function0<ArrayList<Mob>>() {
-    public ArrayList<Mob> apply() {
-      ArrayList<Mob> _arrayList = new ArrayList<Mob>();
-      return _arrayList;
-    }
-  }.apply();
+  private final ArrayList<Mob> _mobs = new ArrayList<Mob>();
   
   public ArrayList<Mob> getMobs() {
     return this._mobs;
   }
   
-  private final Logger _logger = new Function0<Logger>() {
-    public Logger apply() {
-      Logger _global = Logger.getGlobal();
-      return _global;
-    }
-  }.apply();
+  private final Logger _logger = Logger.getGlobal();
   
   public Logger getLogger() {
     return this._logger;
@@ -46,11 +35,10 @@ public class InitialMobSpawns {
   public void init() {
     this.addAll();
     ArrayList<Mob> _mobs = this.getMobs();
-    final Function1<Mob,Boolean> _function = new Function1<Mob,Boolean>() {
+    final Function1<Mob, Boolean> _function = new Function1<Mob, Boolean>() {
       public Boolean apply(final Mob it) {
         World _world = InitialMobSpawns.this.getWorld();
-        boolean _register = _world.register(it);
-        return Boolean.valueOf(_register);
+        return Boolean.valueOf(_world.register(it));
       }
     };
     /* ListExtensions.<Mob, Boolean>map(_mobs, _function); */
@@ -64,15 +52,13 @@ public class InitialMobSpawns {
   
   public boolean addAll() {
     Position _position = new Position(3222, 3222);
-    boolean _add = this.add(1, _position, Direction.EAST);
-    return _add;
+    return this.add(1, _position, Direction.EAST);
   }
   
   public boolean add(final int id, final Position position, final Direction direction) {
     ArrayList<Mob> _mobs = this.getMobs();
     Mob _mob = new Mob(id, position, direction);
-    boolean _add = _mobs.add(_mob);
-    return _add;
+    return _mobs.add(_mob);
   }
   
   public InitialMobSpawns(final World world) {

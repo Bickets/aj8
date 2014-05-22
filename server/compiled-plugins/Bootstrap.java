@@ -19,9 +19,9 @@ import org.eclipse.xtext.xbase.lib.IterableExtensions;
 @SuppressWarnings("all")
 public class Bootstrap {
   public void initObjects(final World world) {
-    ArrayList<Class<? extends Object>> _classes = this.classes("objects");
-    final Consumer<Class<? extends Object>> _function = new Consumer<Class<? extends Object>>() {
-      public void accept(final Class<? extends Object> it) {
+    ArrayList<Class<?>> _classes = this.classes("objects");
+    final Consumer<Class<?>> _function = new Consumer<Class<?>>() {
+      public void accept(final Class<?> it) {
         try {
           InteractionHandler _interactionHandler = world.getInteractionHandler();
           Object _newInstance = it.newInstance();
@@ -35,9 +35,9 @@ public class Bootstrap {
   }
   
   public void initButtons(final World world) {
-    ArrayList<Class<? extends Object>> _classes = this.classes("buttons");
-    final Consumer<Class<? extends Object>> _function = new Consumer<Class<? extends Object>>() {
-      public void accept(final Class<? extends Object> it) {
+    ArrayList<Class<?>> _classes = this.classes("buttons");
+    final Consumer<Class<?>> _function = new Consumer<Class<?>>() {
+      public void accept(final Class<?> it) {
         try {
           InteractionHandler _interactionHandler = world.getInteractionHandler();
           Object _newInstance = it.newInstance();
@@ -51,9 +51,9 @@ public class Bootstrap {
   }
   
   public void initItems(final World world) {
-    ArrayList<Class<? extends Object>> _classes = this.classes("items");
-    final Consumer<Class<? extends Object>> _function = new Consumer<Class<? extends Object>>() {
-      public void accept(final Class<? extends Object> it) {
+    ArrayList<Class<?>> _classes = this.classes("items");
+    final Consumer<Class<?>> _function = new Consumer<Class<?>>() {
+      public void accept(final Class<?> it) {
         try {
           InteractionHandler _interactionHandler = world.getInteractionHandler();
           Object _newInstance = it.newInstance();
@@ -72,9 +72,9 @@ public class Bootstrap {
   }
   
   public void initCommands() {
-    ArrayList<Class<? extends Object>> _classes = this.classes("commands");
-    final Consumer<Class<? extends Object>> _function = new Consumer<Class<? extends Object>>() {
-      public void accept(final Class<? extends Object> it) {
+    ArrayList<Class<?>> _classes = this.classes("commands");
+    final Consumer<Class<?>> _function = new Consumer<Class<?>>() {
+      public void accept(final Class<?> it) {
         try {
           CommandDispatcher _instance = CommandDispatcher.getInstance();
           Object _newInstance = it.newInstance();
@@ -87,14 +87,13 @@ public class Bootstrap {
     _classes.forEach(_function);
   }
   
-  public ArrayList<Class<? extends Object>> classes(final String dir) {
-    String _plus = ("bin/" + dir);
-    File _file = new File(_plus, "/");
+  public ArrayList<Class<?>> classes(final String dir) {
+    File _file = new File(("bin/" + dir), "/");
     final String[] files = _file.list();
-    final ArrayList<Class<? extends Object>> classes = CollectionLiterals.<Class<? extends Object>>newArrayList();
+    final ArrayList<Class<?>> classes = CollectionLiterals.<Class<?>>newArrayList();
     Iterable<String> _filter = null;
     if (((Iterable<String>)Conversions.doWrapArray(files))!=null) {
-      final Function1<String,Boolean> _function = new Function1<String,Boolean>() {
+      final Function1<String, Boolean> _function = new Function1<String, Boolean>() {
         public Boolean apply(final String it) {
           boolean _and = false;
           boolean _endsWith = it.endsWith(".class");
@@ -103,7 +102,7 @@ public class Bootstrap {
           } else {
             boolean _contains = it.contains("$");
             boolean _not = (!_contains);
-            _and = (_endsWith && _not);
+            _and = _not;
           }
           return Boolean.valueOf(_and);
         }
@@ -116,9 +115,7 @@ public class Bootstrap {
         try {
           int _indexOf = it.indexOf(".");
           final String name = it.substring(0, _indexOf);
-          String _plus = (dir + ".");
-          String _plus_1 = (_plus + name);
-          final Class<? extends Object> clazz = Class.forName(_plus_1);
+          final Class<?> clazz = Class.forName(((dir + ".") + name));
           boolean _and = false;
           int _modifiers = clazz.getModifiers();
           boolean _isAbstract = Modifier.isAbstract(_modifiers);
@@ -129,7 +126,7 @@ public class Bootstrap {
             int _modifiers_1 = clazz.getModifiers();
             boolean _isInterface = Modifier.isInterface(_modifiers_1);
             boolean _not_1 = (!_isInterface);
-            _and = (_not && _not_1);
+            _and = _not_1;
           }
           if (_and) {
             classes.add(clazz);

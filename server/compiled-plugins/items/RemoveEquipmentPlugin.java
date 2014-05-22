@@ -2,7 +2,7 @@ package items;
 
 import com.google.common.base.Objects;
 import org.apollo.game.interact.ItemActionListener;
-import org.apollo.game.model.InterfaceConstants.InterfaceOption;
+import org.apollo.game.model.InterfaceConstants;
 import org.apollo.game.model.Inventory;
 import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
@@ -15,8 +15,8 @@ public class RemoveEquipmentPlugin extends ItemActionListener {
     super(SynchronizationInventoryListener.EQUIPMENT_ID);
   }
   
-  public void handle(final int id, final int slot, final InterfaceOption option, final int interfaceId, final Player player) {
-    boolean _notEquals = (!Objects.equal(option, InterfaceOption.OPTION_ONE));
+  public void handle(final int id, final int slot, final InterfaceConstants.InterfaceOption option, final int interfaceId, final Player player) {
+    boolean _notEquals = (!Objects.equal(option, InterfaceConstants.InterfaceOption.OPTION_ONE));
     if (_notEquals) {
       return;
     }
@@ -34,7 +34,7 @@ public class RemoveEquipmentPlugin extends ItemActionListener {
       Item _get = inventory.get(slot);
       ItemDefinition _definition = _get.getDefinition();
       boolean _isStackable = _definition.isStackable();
-      _and = (_contains && _isStackable);
+      _and = _isStackable;
     }
     boolean hasRoomForStackable = _and;
     boolean _and_1 = false;
@@ -43,21 +43,19 @@ public class RemoveEquipmentPlugin extends ItemActionListener {
     if (!_lessThan) {
       _and_1 = false;
     } else {
-      boolean _not = (!hasRoomForStackable);
-      _and_1 = (_lessThan && _not);
+      _and_1 = (!hasRoomForStackable);
     }
     if (_and_1) {
       inventory.forceCapacityExceeded();
       return;
     }
     boolean _or = false;
-    boolean _lessThan_1 = (slot < 0);
-    if (_lessThan_1) {
+    if ((slot < 0)) {
       _or = true;
     } else {
       int _capacity = equipment.capacity();
       boolean _greaterEqualsThan = (slot >= _capacity);
-      _or = (_lessThan_1 || _greaterEqualsThan);
+      _or = _greaterEqualsThan;
     }
     if (_or) {
       return;
@@ -70,7 +68,7 @@ public class RemoveEquipmentPlugin extends ItemActionListener {
     } else {
       int _id = item.getId();
       boolean _notEquals = (_id != id);
-      _or_1 = (_equals || _notEquals);
+      _or_1 = _notEquals;
     }
     if (_or_1) {
       return;
