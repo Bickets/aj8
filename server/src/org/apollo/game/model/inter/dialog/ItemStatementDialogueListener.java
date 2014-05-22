@@ -34,12 +34,17 @@ public abstract class ItemStatementDialogueListener implements DialogueListener 
 
     @Override
     public final int execute(Player player) {
-	String[] lines = lines();
-	int dialogueId = MOB_DIALOGUE_ID[lines.length - 1];
+	String[] lines = Objects.requireNonNull(lines());
+	int length = lines.length;
+	if (length < 0 || length > MOB_DIALOGUE_ID.length) {
+	    throw new DialogueException("line length: (%d) - out of bounds", length);
+	}
+
+	int dialogueId = MOB_DIALOGUE_ID[length - 1];
 	int headChildId = dialogueId - 2;
 	player.send(new InterfaceItemModelEvent(headChildId, item, getModelZoom()));
 	player.send(new SetInterfaceTextEvent(dialogueId - 1, getTitle()));
-	for (int i = 0; i < lines.length; i++) {
+	for (int i = 0; i < length; i++) {
 	    player.send(new SetInterfaceTextEvent(dialogueId + i, lines[i]));
 	}
 	return dialogueId -= 3;

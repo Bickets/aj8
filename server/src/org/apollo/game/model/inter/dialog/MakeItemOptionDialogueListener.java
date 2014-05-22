@@ -31,6 +31,9 @@ public abstract class MakeItemOptionDialogueListener implements DialogueListener
      */
     public MakeItemOptionDialogueListener(Item... items) {
 	this.items = Objects.requireNonNull(items);
+	if (items.length < 2 || items.length > 4) {
+	    throw new DialogueException("length of items must be greater than 2 and less than 4, len: %d", items.length);
+	}
     }
 
     @Override

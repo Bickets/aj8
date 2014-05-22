@@ -2,11 +2,14 @@ package org.apollo.game.model.inter.dialog;
 
 import static org.apollo.game.model.inter.dialog.DialogueConstants.CONTINUE_STATEMENT_DIALOGUE_ID;
 
+import java.util.Objects;
+
 import org.apollo.game.event.impl.SetInterfaceTextEvent;
 import org.apollo.game.model.Player;
 
 /**
- * A dialogue listener which manages the {@link DialogueType#CONTINUE_STATEMENT} dialogue type.
+ * A dialogue listener which manages the {@link DialogueType#CONTINUE_STATEMENT}
+ * dialogue type.
  * 
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
@@ -14,11 +17,16 @@ public abstract class ContinueStatementDialogueListener implements DialogueListe
 
     @Override
     public final int execute(Player player) {
-	String[] lines = lines();
-	for (int i = 0; i < lines.length; i++) {
-	    player.send(new SetInterfaceTextEvent(CONTINUE_STATEMENT_DIALOGUE_ID[lines.length - 1][i + 1], lines[i]));
+	String[] lines = Objects.requireNonNull(lines());
+	int length = lines.length;
+	if (length < 0 || length > CONTINUE_STATEMENT_DIALOGUE_ID.length) {
+	    throw new DialogueException("line length: (%d) - out of bounds", length);
 	}
-	return CONTINUE_STATEMENT_DIALOGUE_ID[lines.length - 1][0];
+
+	for (int i = 0; i < length; i++) {
+	    player.send(new SetInterfaceTextEvent(CONTINUE_STATEMENT_DIALOGUE_ID[length - 1][i + 1], lines[i]));
+	}
+	return CONTINUE_STATEMENT_DIALOGUE_ID[length - 1][0];
     }
 
     @Override
