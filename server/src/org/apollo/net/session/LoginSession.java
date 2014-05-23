@@ -6,8 +6,13 @@ import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.util.Arrays;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import org.apollo.fs.FileSystem;
+import org.apollo.game.GameConstants;
 import org.apollo.game.GameService;
 import org.apollo.game.event.EventTranslator;
 import org.apollo.game.model.Player;
@@ -30,6 +35,11 @@ import org.apollo.security.IsaacRandomPair;
  * @author Graham
  */
 public final class LoginSession extends Session {
+
+    /**
+     * The regex pattern used to determine valid credentials.
+     */
+    private static final Pattern PATTERN = Pattern.compile("[A-Za-z0-9\\s]{2,}");
 
     /**
      * The event translator.
@@ -82,7 +92,87 @@ public final class LoginSession extends Session {
      * @throws IOException If some I/O error occurs.
      */
     private void handleLoginRequest(LoginRequest request) throws IOException {
-	playerSerializer.submitLoadRequest(this, request, fileSystem);
+	int code = LoginConstants.STATUS_OK;
+
+	if (requiresUpdate(request)) {
+	    code = LoginConstants.STATUS_GAME_UPDATED;
+	} else if (badCredentials(request)) {
+	    code = LoginConstants.STATUS_INVALID_CREDENTIALS;
+	}
+
+	if (code == LoginConstants.STATUS_OK) {
+	    playerSerializer.submitLoadRequest(this, request, fileSystem);
+	} else {
+	    handlePlayerLoaderResponse(request, new PlayerSerializerResponse(code));
+	}
+    }
+
+    /**
+     * Checks if an update is required whenever a {@link Player} submits a login
+     * request.
+     * 
+     * @param request The login request.
+     * @return {@code true} if an update is required, otherwise return
+     *         {@code false}.
+     * @throws IOException If some I/O exception occurs.
+     */
+    private boolean requiresUpdate(LoginRequest request) throws IOException {
+	if (GameConstants.VERSION != request.getCurrentVersion()) {
+	    return true;
+	}
+
+	ByteBuffer buffer = ByteBuffer.wrap(fileSystem.getArchiveHashes());
+
+	int[] clientCrcs = request.getArchiveCrcs();
+	int[] serverCrcs = new int[clientCrcs.length];
+
+	if (buffer.remaining() < clientCrcs.length) {
+	    return true;
+	}
+
+	for (int crc = 0, len = serverCrcs.length; crc < len; crc++) {
+	    serverCrcs[crc] = buffer.getInt();
+	}
+
+	if (Arrays.equals(clientCrcs, serverCrcs)) {
+	    return false;
+	}
+
+	return true;
+    }
+
+    /**
+     * Returns {@code true} if the credentials within the specified login
+     * request are invalid otherwise {@code false}.
+     * 
+     * @param request The login request.
+     */
+    private boolean badCredentials(LoginRequest request) {
+	String username = request.getCredentials().getUsername();
+	String password = request.getCredentials().getPassword();
+
+	if (username.length() == 0 || password.length() == 0) {
+	    return true;
+	}
+
+	if (username.length() > 12 || password.length() > 20) {
+	    return true;
+	}
+
+	/* Indicates username contains more than one piece of whitespace. */
+	String[] parts = username.split("\\s\\s+");
+	if (parts.length > 1) {
+	    return true;
+	}
+
+	Matcher usernameMatcher = PATTERN.matcher(username);
+	Matcher passwordMatcher = PATTERN.matcher(password);
+
+	if (usernameMatcher.matches() && passwordMatcher.matches()) {
+	    return false;
+	}
+
+	return true;
     }
 
     /**
