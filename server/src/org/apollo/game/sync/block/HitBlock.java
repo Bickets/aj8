@@ -7,7 +7,7 @@ import org.apollo.game.model.Player;
  * Represents the hit {@link SynchronizationBlock}. Both {@link Mob}'s and
  * {@link Player}'s can implement this block.
  * 
- * @author Ryley Kimmel <ryley.kimmel@live.com>
+ * @author Major
  */
 public final class HitBlock extends SynchronizationBlock {
 
