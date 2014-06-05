@@ -1,6 +1,7 @@
 package org.apollo.game.task.impl;
 
 import org.apollo.game.model.GameCharacter;
+import org.apollo.game.model.Entity.EntityType;
 import org.apollo.game.task.Task;
 
 /**
@@ -28,7 +29,7 @@ public final class SkillNormalizationTask extends Task {
 
     @Override
     public void execute() {
-	if (!gameCharacter.isActive()/* && ! gameCharacter.isMob() */) {
+	if (!gameCharacter.isActive() && gameCharacter.getType() != EntityType.MOB) {
 	    stop();
 	} else {
 	    gameCharacter.getSkillSet().normalize();
