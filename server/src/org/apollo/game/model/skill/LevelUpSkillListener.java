@@ -2,13 +2,14 @@ package org.apollo.game.model.skill;
 
 import java.util.List;
 
-import org.apollo.game.event.impl.OpenDialogueInterfaceEvent;
-import org.apollo.game.event.impl.SetInterfaceTextEvent;
 import org.apollo.game.model.Graphic;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.Skill;
 import org.apollo.game.model.SkillSet;
+import org.apollo.game.msg.impl.OpenDialogueInterfaceMessage;
+import org.apollo.game.msg.impl.SetInterfaceTextMessage;
 import org.apollo.util.LanguageUtil;
+
 import static java.util.Arrays.asList;
 
 /**
@@ -61,9 +62,9 @@ public final class LevelUpSkillListener extends SkillAdapter {
 	int level = skill.getMaximumLevel();
 	int interfaceId = LEVEL_UP_IDS[id];
 	List<Integer> children = getChildren(interfaceId);
-	player.send(new SetInterfaceTextEvent(children.get(0), "Congratulations! You've just advanced " + article + " " + name + " level!"));
-	player.send(new SetInterfaceTextEvent(children.get(1), "You have now reached level " + level + "!"));
-	player.send(new OpenDialogueInterfaceEvent(interfaceId));
+	player.send(new SetInterfaceTextMessage(children.get(0), "Congratulations! You've just advanced " + article + " " + name + " level!"));
+	player.send(new SetInterfaceTextMessage(children.get(1), "You have now reached level " + level + "!"));
+	player.send(new OpenDialogueInterfaceMessage(interfaceId));
 	player.sendMessage("You've just advanced " + article + " " + name + " level! You have reached level " + level + ".");
 	if (level == 99) {
 	    player.sendMessage("Well done! You've achieved the highest possible level in this skill.");

@@ -1,7 +1,7 @@
 package org.apollo.game.model;
 
-import org.apollo.game.event.Event;
 import org.apollo.game.model.def.MobDefinition;
+import org.apollo.game.msg.Message;
 
 /**
  * A {@link GameCharacter} that has AI and is not controlled by a {@link Player}
@@ -72,7 +72,7 @@ public final class Mob extends GameCharacter {
     }
 
     @Override
-    public void send(Event event) {
+    public void send(Message message) {
 	throw new UnsupportedOperationException();
     }
 

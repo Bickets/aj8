@@ -7,7 +7,7 @@ import org.apollo.game.model.def.ItemDefinition;
  * 
  * @author Graham
  */
-public final class Item extends Entity {
+public final class Item {
 
     /**
      * The item's id.
@@ -73,11 +73,6 @@ public final class Item extends Entity {
     @Override
     public String toString() {
 	return getClass().getName() + " [id=" + id + ", amount=" + amount + "]";
-    }
-
-    @Override
-    public EntityType getType() {
-	return EntityType.GAME_ITEM;
     }
 
 }

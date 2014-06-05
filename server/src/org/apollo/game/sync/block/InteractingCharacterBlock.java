@@ -3,10 +3,6 @@ package org.apollo.game.sync.block;
 /**
  * The InteractingCharacterBlock {@link SynchronizationBlock}.
  * 
- * @note As all Apollo events should be immutable (for more information as to
- *       why, see http://pastebin.com/MJLWqC5F and http://bit.ly/L5820k), this
- *       uses the index of the character rather than an actual {@link Character}
- *       field. This should not be changed.
  * @author Major
  */
 public class InteractingCharacterBlock extends SynchronizationBlock {

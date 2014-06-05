@@ -2,8 +2,8 @@ package org.apollo.game.model.inter.dialog;
 
 import static org.apollo.game.model.inter.dialog.DialogueConstants.OPTION_DIALOGUE_ID;
 
-import org.apollo.game.event.impl.SetInterfaceTextEvent;
 import org.apollo.game.model.Player;
+import org.apollo.game.msg.impl.SetInterfaceTextMessage;
 
 /**
  * A dialgoue listener which manages the {@link DialogueType#OPTION} dialogue
@@ -20,9 +20,9 @@ public abstract class OptionDialogueListener implements DialogueListener {
     public final int execute(Player player) {
 	String[] lines = lines();
 	int dialogueId = OPTION_DIALOGUE_ID[lines.length - 1];
-	player.send(new SetInterfaceTextEvent(dialogueId - 1, getTitle()));
+	player.send(new SetInterfaceTextMessage(dialogueId - 1, getTitle()));
 	for (int i = 0; i < lines.length; i++) {
-	    player.send(new SetInterfaceTextEvent(dialogueId + i, lines[i]));
+	    player.send(new SetInterfaceTextMessage(dialogueId + i, lines[i]));
 	}
 	return dialogueId - 2;
     }

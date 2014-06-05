@@ -12,7 +12,7 @@ import java.util.logging.Logger;
 
 import org.apollo.fs.FileSystem;
 import org.apollo.game.GameService;
-import org.apollo.game.event.EventTranslator;
+import org.apollo.game.msg.MessageTranslator;
 import org.apollo.io.player.PlayerSerializerWorker;
 import org.apollo.net.codec.handshake.HandshakeConstants;
 import org.apollo.net.codec.handshake.HandshakeMessage;
@@ -39,9 +39,9 @@ public final class ApolloHandler extends ChannelHandlerAdapter {
     private static final Logger logger = Logger.getLogger(ApolloHandler.class.getName());
 
     /**
-     * The event translator.
+     * The message translator.
      */
-    private final EventTranslator eventTranslator;
+    private final MessageTranslator messageTranslator;
 
     /**
      * The file system
@@ -66,14 +66,14 @@ public final class ApolloHandler extends ChannelHandlerAdapter {
     /**
      * Creates the Apollo event handler.
      * 
-     * @param eventTranslator The event translator.
+     * @param messageTranslator The message translator.
      * @param fileSystem The file system
      * @param playerSerializer The player serializer.
      * @param gameService The game service.
      * @param updateService The update service.
      */
-    public ApolloHandler(EventTranslator eventTranslator, FileSystem fileSystem, PlayerSerializerWorker playerSerializer, GameService gameService, UpdateService updateService) {
-	this.eventTranslator = eventTranslator;
+    public ApolloHandler(MessageTranslator messageTranslator, FileSystem fileSystem, PlayerSerializerWorker playerSerializer, GameService gameService, UpdateService updateService) {
+	this.messageTranslator = messageTranslator;
 	this.fileSystem = fileSystem;
 	this.playerSerializer = playerSerializer;
 	this.gameService = gameService;
@@ -107,7 +107,7 @@ public final class ApolloHandler extends ChannelHandlerAdapter {
 	HandshakeMessage handshakeMessage = (HandshakeMessage) msg;
 	switch (handshakeMessage.getServiceId()) {
 	case HandshakeConstants.SERVICE_GAME:
-	    attribute.set(new LoginSession(ctx, eventTranslator, fileSystem, playerSerializer, gameService));
+	    attribute.set(new LoginSession(ctx, messageTranslator, fileSystem, playerSerializer, gameService));
 	    break;
 	case HandshakeConstants.SERVICE_UPDATE:
 	    attribute.set(new UpdateSession(ctx, updateService));

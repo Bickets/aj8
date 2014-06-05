@@ -1,7 +1,7 @@
 package org.apollo.game.sync.block;
 
-import org.apollo.game.event.impl.ChatEvent;
 import org.apollo.game.model.Player.PrivilegeLevel;
+import org.apollo.game.msg.impl.ChatMessage;
 
 /**
  * The chat {@link SynchronizationBlock}.
@@ -16,16 +16,16 @@ public final class ChatBlock extends SynchronizationBlock {
     private final PrivilegeLevel privilegeLevel;
 
     /**
-     * The chat event.
+     * The chat message.
      */
-    private final ChatEvent chatEvent;
+    private final ChatMessage chatMessage;
 
     /**
      * Creates the chat block.
      */
-    ChatBlock(PrivilegeLevel privilegeLevel, ChatEvent chatEvent) {
+    ChatBlock(PrivilegeLevel privilegeLevel, ChatMessage chatMessage) {
 	this.privilegeLevel = privilegeLevel;
-	this.chatEvent = chatEvent;
+	this.chatMessage = chatMessage;
     }
 
     /**
@@ -43,7 +43,7 @@ public final class ChatBlock extends SynchronizationBlock {
      * @return The message.
      */
     public String getMessage() {
-	return chatEvent.getMessage();
+	return chatMessage.getMessage();
     }
 
     /**
@@ -52,7 +52,7 @@ public final class ChatBlock extends SynchronizationBlock {
      * @return The text color.
      */
     public int getTextColor() {
-	return chatEvent.getTextColor();
+	return chatMessage.getTextColor();
     }
 
     /**
@@ -61,7 +61,7 @@ public final class ChatBlock extends SynchronizationBlock {
      * @return The text effects.
      */
     public int getTextEffects() {
-	return chatEvent.getTextEffects();
+	return chatMessage.getTextEffects();
     }
 
     /**
@@ -70,7 +70,7 @@ public final class ChatBlock extends SynchronizationBlock {
      * @return The compressed message.
      */
     public byte[] getCompressedMessage() {
-	return chatEvent.getCompressedMessage();
+	return chatMessage.getCompressedMessage();
     }
 
 }

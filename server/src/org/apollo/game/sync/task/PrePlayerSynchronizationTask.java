@@ -1,8 +1,8 @@
 package org.apollo.game.sync.task;
 
-import org.apollo.game.event.impl.RegionChangeEvent;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.Position;
+import org.apollo.game.msg.impl.RegionChangeMessage;
 
 /**
  * A {@link SynchronizationTask} which does pre-synchronization work for the
@@ -48,7 +48,7 @@ public final class PrePlayerSynchronizationTask extends SynchronizationTask {
 	    Position position = player.getPosition();
 	    player.setLastKnownRegion(position);
 
-	    player.send(new RegionChangeEvent(position));
+	    player.send(new RegionChangeMessage(position));
 	}
     }
 

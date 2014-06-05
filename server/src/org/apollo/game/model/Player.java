@@ -3,10 +3,6 @@ package org.apollo.game.model;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
-import org.apollo.game.event.Event;
-import org.apollo.game.event.impl.IdAssignmentEvent;
-import org.apollo.game.event.impl.LogoutEvent;
-import org.apollo.game.event.impl.SwitchTabInterfaceEvent;
 import org.apollo.game.model.inter.bank.BankConstants;
 import org.apollo.game.model.inv.AppearanceInventoryListener;
 import org.apollo.game.model.inv.FullInventoryListener;
@@ -15,6 +11,10 @@ import org.apollo.game.model.inv.SynchronizationInventoryListener;
 import org.apollo.game.model.skill.LevelUpSkillListener;
 import org.apollo.game.model.skill.SkillListener;
 import org.apollo.game.model.skill.SynchronizationSkillListener;
+import org.apollo.game.msg.Message;
+import org.apollo.game.msg.impl.IdAssignmentMessage;
+import org.apollo.game.msg.impl.LogoutMessage;
+import org.apollo.game.msg.impl.SwitchTabInterfaceMessage;
 import org.apollo.game.sync.block.SynchronizationBlock;
 import org.apollo.net.session.GameSession;
 import org.apollo.security.PlayerCredentials;
@@ -90,9 +90,9 @@ public final class Player extends GameCharacter {
     }
 
     /**
-     * A temporary queue of events sent during the login process.
+     * A temporary queue of messages sent during the login process.
      */
-    private final Queue<Event> queuedEvents = new ArrayDeque<>();
+    private final Queue<Message> queuedMessages = new ArrayDeque<>();
 
     /**
      * The players credentials.
@@ -108,6 +108,11 @@ public final class Player extends GameCharacter {
      * The membership flag.
      */
     private boolean members = false;
+
+    /**
+     * The flagged flag.
+     */
+    private boolean flagged = false;
 
     /**
      * A flag indicating if the player has designed their character.
@@ -138,6 +143,12 @@ public final class Player extends GameCharacter {
      * A flag which indicates there are mobs that couldn't be added.
      */
     private boolean excessiveMobs = false;
+
+    /**
+     * The database entry id, cached during player load to later be used to
+     * identify where to save
+     */
+    private int databaseId;
 
     /**
      * This players interface set.
@@ -291,7 +302,7 @@ public final class Player extends GameCharacter {
     public void setSession(GameSession session, boolean reconnecting) {
 	this.session = session;
 	if (!reconnecting) {
-	    sendInitialEvents();
+	    sendInitialMessages();
 	}
 	getBlockSet().add(SynchronizationBlock.createAppearanceBlock(this));
     }
@@ -306,20 +317,20 @@ public final class Player extends GameCharacter {
     }
 
     @Override
-    public void send(Event event) {
+    public void send(Message message) {
 	if (!isActive()) {
-	    queuedEvents.add(event);
+	    queuedMessages.add(message);
 	    return;
 	}
 
-	if (!queuedEvents.isEmpty()) {
-	    for (Event evt : queuedEvents) {
-		session.dispatchEvent(evt);
+	if (!queuedMessages.isEmpty()) {
+	    for (Message evt : queuedMessages) {
+		session.dispatchMessage(evt);
 	    }
-	    queuedEvents.clear();
+	    queuedMessages.clear();
 	}
 
-	session.dispatchEvent(event);
+	session.dispatchMessage(message);
     }
 
     /**
@@ -379,11 +390,11 @@ public final class Player extends GameCharacter {
     }
 
     /**
-     * Sends the initial events.
+     * Sends the initial messages.
      */
-    private void sendInitialEvents() {
+    private void sendInitialMessages() {
 	// vital initial stuff
-	send(new IdAssignmentEvent(getIndex(), members));
+	send(new IdAssignmentMessage(getIndex(), members));
 	sendMessage("Welcome to RuneScape.");
 
 	// character design screen
@@ -392,7 +403,7 @@ public final class Player extends GameCharacter {
 	}
 
 	for (int i = 0; i < InterfaceConstants.TAB_INTERFACE_IDS.length; i++) {
-	    send(new SwitchTabInterfaceEvent(i, InterfaceConstants.TAB_INTERFACE_IDS[i]));
+	    send(new SwitchTabInterfaceMessage(i, InterfaceConstants.TAB_INTERFACE_IDS[i]));
 	}
 
 	// force inventories to update
@@ -438,6 +449,15 @@ public final class Player extends GameCharacter {
     }
 
     /**
+     * Gets the players password.
+     * 
+     * @return The players password.
+     */
+    public String getPassword() {
+	return credentials.getPassword();
+    }
+
+    /**
      * Gets the players name, encoded as a long.
      * 
      * @return The encoded player name.
@@ -450,7 +470,7 @@ public final class Player extends GameCharacter {
      * Logs the player out, if possible.
      */
     public void logout() {
-	send(new LogoutEvent());
+	send(new LogoutMessage());
     }
 
     /**
@@ -479,6 +499,42 @@ public final class Player extends GameCharacter {
      */
     public boolean hasDesignedCharacter() {
 	return designedCharacter;
+    }
+
+    /**
+     * Returns this players database id.
+     * 
+     * @return The database id.
+     */
+    public int getDatabaseId() {
+	return databaseId;
+    }
+
+    /**
+     * Sets this players database id.
+     * 
+     * @param databaseId The new database id.
+     */
+    public void setDatabaseId(int databaseId) {
+	this.databaseId = databaseId;
+    }
+
+    /**
+     * Returns the players flagged state.
+     * 
+     * @return Whether or not this player is flagged.
+     */
+    public boolean isFlagged() {
+	return flagged;
+    }
+
+    /**
+     * Sets this players flagged state.
+     * 
+     * @param flagged The new flagged state.
+     */
+    public void setFlagged(boolean flagged) {
+	this.flagged = flagged;
     }
 
     @Override

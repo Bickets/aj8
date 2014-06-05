@@ -13,6 +13,7 @@ import org.apollo.game.model.Inventory;
 import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.Player.PrivilegeLevel;
+import org.apollo.game.model.PlayerConstants;
 import org.apollo.game.model.Position;
 import org.apollo.game.model.Skill;
 import org.apollo.game.model.SkillSet;
@@ -94,16 +95,11 @@ public class BinaryPlayerSerializer implements PlayerSerializer {
 	}
     }
 
-    /**
-     * The default spawn position.
-     */
-    private static final Position SPAWN_POSITION = new Position(3222, 3222);
-
     @Override
     public PlayerSerializerResponse loadPlayer(PlayerCredentials credentials) throws IOException {
 	File f = BinaryPlayerUtil.getFile(credentials.getUsername());
 	if (!f.exists()) {
-	    return new PlayerSerializerResponse(LoginConstants.STATUS_OK, new Player(credentials, SPAWN_POSITION));
+	    return new PlayerSerializerResponse(LoginConstants.STATUS_OK, new Player(credentials, PlayerConstants.SPAWN_POSITION));
 	}
 
 	try (DataInputStream in = new DataInputStream(new FileInputStream(f))) {

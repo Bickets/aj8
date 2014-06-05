@@ -1,7 +1,9 @@
 /.Bootstrap.java._trace
-/org
-/objects
+/.gitignore
 /buttons
 /commands
 /items
 /mobs
+/objects
+/org
+/net

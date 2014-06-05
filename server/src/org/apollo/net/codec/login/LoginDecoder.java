@@ -3,6 +3,7 @@ package org.apollo.net.codec.login;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 
+import java.net.InetSocketAddress;
 import java.security.SecureRandom;
 import java.util.List;
 
@@ -174,6 +175,7 @@ public final class LoginDecoder extends StatefulByteToMessageDecoder<LoginDecode
 
 	String username = ByteBufUtil.readString(securePayload);
 	String password = ByteBufUtil.readString(securePayload);
+	String address = ((InetSocketAddress)ctx.channel().remoteAddress()).getHostName();
 
 	if (username.length() > 12 || password.length() > 20) {
 	    throw new IllegalStateException("Username or password too long.");
@@ -191,7 +193,7 @@ public final class LoginDecoder extends StatefulByteToMessageDecoder<LoginDecode
 	}
 	IsaacAlgorithm encodingRandom = new IsaacAlgorithm(seed);
 
-	PlayerCredentials credentials = new PlayerCredentials(username, password, usernameHash, uid);
+	PlayerCredentials credentials = new PlayerCredentials(username, password, usernameHash, uid, address);
 	IsaacRandomPair randomPair = new IsaacRandomPair(encodingRandom, decodingRandom);
 
 	LoginRequest request = new LoginRequest(credentials, randomPair, reconnecting, lowMemory, clientVersion, archiveCrcs);

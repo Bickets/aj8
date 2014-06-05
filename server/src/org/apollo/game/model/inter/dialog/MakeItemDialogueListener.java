@@ -1,9 +1,9 @@
 package org.apollo.game.model.inter.dialog;
 
-import org.apollo.game.event.impl.InterfaceItemModelEvent;
-import org.apollo.game.event.impl.SetInterfaceTextEvent;
 import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
+import org.apollo.game.msg.impl.InterfaceItemModelMessage;
+import org.apollo.game.msg.impl.SetInterfaceTextMessage;
 
 /**
  * A dialogue listener which manages the {@link DialogueType#MAKE_ITEM} dialogue
@@ -37,8 +37,8 @@ public abstract class MakeItemDialogueListener implements DialogueListener {
 
     @Override
     public final int execute(Player player) {
-	player.send(new InterfaceItemModelEvent(1746, item, getModelZoom()));
-	player.send(new SetInterfaceTextEvent(2799, getTitle()));
+	player.send(new InterfaceItemModelMessage(1746, item, getModelZoom()));
+	player.send(new SetInterfaceTextMessage(2799, getTitle()));
 	return 4429;
     }
 

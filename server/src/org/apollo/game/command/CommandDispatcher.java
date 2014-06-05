@@ -18,7 +18,7 @@ public final class CommandDispatcher {
     private static final CommandDispatcher INSTANCE = new CommandDispatcher();
 
     /**
-     * A map of event listeners.
+     * A map of command listeners.
      */
     private final Map<String, CommandListener> listeners = new HashMap<>();
 

@@ -148,10 +148,7 @@ public final class FileSystem {
 	buffer.putInt(hash);
 	buffer.flip();
 
-	byte[] bytes = new byte[buffer.capacity()];
-	buffer.get(bytes);
-
-	return archiveHashes = bytes;
+	return archiveHashes = buffer.array();
     }
 
 }

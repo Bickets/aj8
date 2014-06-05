@@ -1,9 +1,9 @@
 package org.apollo.game.model.inv;
 
-import org.apollo.game.event.Event;
-import org.apollo.game.event.impl.ServerMessageEvent;
 import org.apollo.game.model.Inventory;
 import org.apollo.game.model.Player;
+import org.apollo.game.msg.Message;
+import org.apollo.game.msg.impl.ServerMessageMessage;
 
 /**
  * An {@link InventoryListener} which sends a message to a player when an
@@ -26,10 +26,7 @@ public final class FullInventoryListener extends InventoryAdapter {
     /**
      * The equipment full message.
      */
-    public static final String FULL_EQUIPMENT_MESSAGE = "Not enough equipment space."; // TODO
-										       // confirm
-										       // if
-										       // possible
+    public static final String FULL_EQUIPMENT_MESSAGE = "Not enough equipment space.";
 
     /**
      * The player.
@@ -37,9 +34,9 @@ public final class FullInventoryListener extends InventoryAdapter {
     private final Player player;
 
     /**
-     * The event to send when the capacity has been exceeded.
+     * The message to send when the capacity has been exceeded.
      */
-    private final Event event;
+    private final Message message;
 
     /**
      * Creates the empty inventory listener.
@@ -49,12 +46,12 @@ public final class FullInventoryListener extends InventoryAdapter {
      */
     public FullInventoryListener(Player player, String message) {
 	this.player = player;
-	this.event = new ServerMessageEvent(message);
+	this.message = new ServerMessageMessage(message);
     }
 
     @Override
     public void capacityExceeded(Inventory inventory) {
-	player.send(event);
+	player.send(message);
     }
 
 }

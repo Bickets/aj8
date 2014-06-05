@@ -35,6 +35,11 @@ public final class PlayerCredentials {
     private final int uid;
 
     /**
+     * The connecting host address.
+     */
+    private final String address;
+
+    /**
      * Creates a new {@link PlayerCredentials} object with the specified name,
      * password and uid.
      * 
@@ -42,13 +47,15 @@ public final class PlayerCredentials {
      * @param password The players password.
      * @param usernameHash The hash of the players username.
      * @param uid The computer's uid.
+     * @param address The connection host address.
      */
-    public PlayerCredentials(String username, String password, int usernameHash, int uid) {
+    public PlayerCredentials(String username, String password, int usernameHash, int uid, String address) {
 	this.username = username;
 	this.encodedUsername = NameUtil.encodeBase37(username);
 	this.password = password;
 	this.usernameHash = usernameHash;
 	this.uid = uid;
+	this.address = address;
     }
 
     /**
@@ -94,6 +101,16 @@ public final class PlayerCredentials {
      */
     public int getUid() {
 	return uid;
+    }
+
+    /**
+     * Gets the connection host address.
+     * 
+     * @return The connecting host address.
+     * @return
+     */
+    public String getAddress() {
+	return address;
     }
 
 }

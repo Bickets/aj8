@@ -4,10 +4,10 @@ import static org.apollo.game.model.inter.dialog.DialogueConstants.MOB_DIALOGUE_
 
 import java.util.Objects;
 
-import org.apollo.game.event.impl.InterfaceItemModelEvent;
-import org.apollo.game.event.impl.SetInterfaceTextEvent;
 import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
+import org.apollo.game.msg.impl.InterfaceItemModelMessage;
+import org.apollo.game.msg.impl.SetInterfaceTextMessage;
 
 /**
  * A dialogue listener which manages the {@link DialogueType#ITEM_STATEMENT}
@@ -42,10 +42,10 @@ public abstract class ItemStatementDialogueListener implements DialogueListener 
 
 	int dialogueId = MOB_DIALOGUE_ID[length - 1];
 	int headChildId = dialogueId - 2;
-	player.send(new InterfaceItemModelEvent(headChildId, item, getModelZoom()));
-	player.send(new SetInterfaceTextEvent(dialogueId - 1, getTitle()));
+	player.send(new InterfaceItemModelMessage(headChildId, item, getModelZoom()));
+	player.send(new SetInterfaceTextMessage(dialogueId - 1, getTitle()));
 	for (int i = 0; i < length; i++) {
-	    player.send(new SetInterfaceTextEvent(dialogueId + i, lines[i]));
+	    player.send(new SetInterfaceTextMessage(dialogueId + i, lines[i]));
 	}
 	return dialogueId -= 3;
     }

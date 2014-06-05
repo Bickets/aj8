@@ -3,15 +3,15 @@ package org.apollo.game.model;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apollo.game.event.impl.CloseInterfaceEvent;
-import org.apollo.game.event.impl.EnterAmountEvent;
-import org.apollo.game.event.impl.OpenDialogueInterfaceEvent;
-import org.apollo.game.event.impl.OpenInterfaceEvent;
-import org.apollo.game.event.impl.OpenInterfaceSidebarEvent;
 import org.apollo.game.model.inter.EnterAmountListener;
 import org.apollo.game.model.inter.InterfaceListener;
 import org.apollo.game.model.inter.dialog.DialogueListener;
 import org.apollo.game.model.inter.dialog.DialogueOption;
+import org.apollo.game.msg.impl.CloseInterfaceMessage;
+import org.apollo.game.msg.impl.EnterAmountMessage;
+import org.apollo.game.msg.impl.OpenDialogueInterfaceMessage;
+import org.apollo.game.msg.impl.OpenInterfaceMessage;
+import org.apollo.game.msg.impl.OpenInterfaceSidebarMessage;
 
 /**
  * Represents the set of interfaces the player has open.
@@ -80,7 +80,7 @@ public final class InterfaceSet {
     public void close() {
 	closeAndNotify();
 
-	player.send(new CloseInterfaceEvent());
+	player.send(new CloseInterfaceMessage());
     }
 
     /**
@@ -99,7 +99,7 @@ public final class InterfaceSet {
 	int dialogueId = listener.execute(player);
 
 	interfaces.put(InterfaceType.DIALOGUE, dialogueId);
-	player.send(new OpenDialogueInterfaceEvent(dialogueId));
+	player.send(new OpenDialogueInterfaceMessage(dialogueId));
     }
 
     public boolean optionClicked(DialogueOption option) {
@@ -140,7 +140,7 @@ public final class InterfaceSet {
     public void openEnterAmountDialog(EnterAmountListener listener) {
 	this.amountListener = listener;
 
-	player.send(new EnterAmountEvent());
+	player.send(new EnterAmountMessage());
     }
 
     /**
@@ -167,7 +167,7 @@ public final class InterfaceSet {
 	interfaces.put(InterfaceType.WINDOW, windowId);
 	interfaces.put(InterfaceType.SIDEBAR, sidebarId);
 
-	player.send(new OpenInterfaceSidebarEvent(windowId, sidebarId));
+	player.send(new OpenInterfaceSidebarMessage(windowId, sidebarId));
     }
 
     /**
@@ -191,7 +191,7 @@ public final class InterfaceSet {
 
 	interfaces.put(InterfaceType.WINDOW, windowId);
 
-	player.send(new OpenInterfaceEvent(windowId));
+	player.send(new OpenInterfaceMessage(windowId));
     }
 
     /**

@@ -8,13 +8,15 @@ import io.netty.channel.socket.nio.NioServerSocketChannel;
 import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
+import java.sql.SQLException;
 import java.util.logging.Logger;
 
 import org.apollo.fs.FileSystem;
 import org.apollo.game.GameService;
-import org.apollo.game.event.EventTranslator;
 import org.apollo.game.model.World;
+import org.apollo.game.msg.MessageTranslator;
 import org.apollo.io.player.PlayerSerializerWorker;
+import org.apollo.io.player.jdbc.JdbcPlayerSerializer;
 import org.apollo.net.ApolloHandler;
 import org.apollo.net.HttpChannelHandler;
 import org.apollo.net.JagGrabChannelHandler;
@@ -52,7 +54,7 @@ final class Server {
 
 	    server.start();
 	    server.bind(service, http, jaggrab);
-	} catch (IOException e) {
+	} catch (IOException | SQLException e) {
 	    e.printStackTrace();
 	}
     }
@@ -60,65 +62,77 @@ final class Server {
     /**
      * The {@link ServerBootstrap} for the service listener.
      */
-    private final ServerBootstrap serviceBootstrap = new ServerBootstrap();
+    private final ServerBootstrap serviceBootstrap;
 
     /**
      * The {@link ServerBootstrap} for the HTTP listener.
      */
-    private final ServerBootstrap httpBootstrap = new ServerBootstrap();
+    private final ServerBootstrap httpBootstrap;
 
     /**
      * The {@link ServerBootstrap} for the JAGGRAB listener.
      */
-    private final ServerBootstrap jagGrabBootstrap = new ServerBootstrap();
+    private final ServerBootstrap jagGrabBootstrap;
 
     /**
      * The service manager.
      */
-    private final ServiceManager serviceManager = new ServiceManager();
+    private final ServiceManager serviceManager;
 
     /**
      * The world.
      */
-    private final World world = new World();
+    private final World world;
 
     /**
      * The player serializer.
      */
-    private final PlayerSerializerWorker playerSerializer = new PlayerSerializerWorker();
+    private final PlayerSerializerWorker playerSerializer;
 
     /**
      * The game service.
      */
-    private final GameService gameService = new GameService(world, playerSerializer);
+    private final GameService gameService;
 
     /**
      * The plugin service.
      */
-    private final PluginService pluginService = new PluginService(world);
+    private final PluginService pluginService;
 
     /**
      * The update service.
      */
-    private final UpdateService updateService = new UpdateService();
+    private final UpdateService updateService;
 
     /**
-     * The event translator.
+     * The message translator.
      */
-    private final EventTranslator eventTranslator = new EventTranslator(world);
+    private final MessageTranslator messageTranslator;
 
     /**
      * The file system.
      */
-    private FileSystem fileSystem;
+    private final FileSystem fileSystem;
 
     /**
      * Creates the Apollo server.
      * 
      * @throws IOException If some I/O error occurs.
+     * @throws SQLException If some database access error occurs.
      */
-    private Server() throws IOException {
+    private Server() throws IOException, SQLException {
 	logger.info("Starting Apollo...");
+
+	serviceBootstrap = new ServerBootstrap();
+	httpBootstrap = new ServerBootstrap();
+	jagGrabBootstrap = new ServerBootstrap();
+	serviceManager = new ServiceManager();
+	world = new World();
+	playerSerializer = new PlayerSerializerWorker(new JdbcPlayerSerializer("jdbc:mysql://127.0.0.1/game_server", "root", ""));
+	gameService = new GameService(world, playerSerializer);
+	pluginService = new PluginService(world);
+	updateService = new UpdateService();
+	messageTranslator = new MessageTranslator(world);
 	fileSystem = FileSystem.create("data/fs/");
     }
 
@@ -128,7 +142,7 @@ final class Server {
     public void init() {
 	logger.info("Initialized Apollo.");
 
-	ApolloHandler handler = new ApolloHandler(eventTranslator, fileSystem, playerSerializer, gameService, updateService);
+	ApolloHandler handler = new ApolloHandler(messageTranslator, fileSystem, playerSerializer, gameService, updateService);
 
 	bootstrap(serviceBootstrap, new ServiceChannelHandler(handler));
 	bootstrap(httpBootstrap, new HttpChannelHandler(handler));

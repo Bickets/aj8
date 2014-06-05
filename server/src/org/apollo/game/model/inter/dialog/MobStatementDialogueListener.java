@@ -2,11 +2,11 @@ package org.apollo.game.model.inter.dialog;
 
 import static org.apollo.game.model.inter.dialog.DialogueConstants.MOB_DIALOGUE_ID;
 
-import org.apollo.game.event.impl.InterfaceModelAnimationEvent;
-import org.apollo.game.event.impl.MobModelOnInterfaceEvent;
-import org.apollo.game.event.impl.SetInterfaceTextEvent;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.def.MobDefinition;
+import org.apollo.game.msg.impl.InterfaceModelAnimationMessage;
+import org.apollo.game.msg.impl.MobModelOnInterfaceMessage;
+import org.apollo.game.msg.impl.SetInterfaceTextMessage;
 
 /**
  * A dialogue listener which manages the {@link DialogueType#MOB_STATEMENT}
@@ -35,11 +35,11 @@ public abstract class MobStatementDialogueListener implements DialogueListener {
 	String[] lines = lines();
 	int dialogueId = MOB_DIALOGUE_ID[lines.length - 1];
 	int headChildId = dialogueId - 2;
-	player.send(new MobModelOnInterfaceEvent(mobId, headChildId));
-	player.send(new InterfaceModelAnimationEvent(expression().getAnimation(), headChildId));
-	player.send(new SetInterfaceTextEvent(dialogueId - 1, MobDefinition.forId(mobId).getName()));
+	player.send(new MobModelOnInterfaceMessage(mobId, headChildId));
+	player.send(new InterfaceModelAnimationMessage(expression().getAnimation(), headChildId));
+	player.send(new SetInterfaceTextMessage(dialogueId - 1, MobDefinition.forId(mobId).getName()));
 	for (int i = 0; i < lines.length; i++) {
-	    player.send(new SetInterfaceTextEvent(dialogueId + i, lines[i]));
+	    player.send(new SetInterfaceTextMessage(dialogueId + i, lines[i]));
 	}
 	return dialogueId -= 3;
     }

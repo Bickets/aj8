@@ -89,7 +89,7 @@ public final class GameService extends Service {
 	    for (Player p : world.getPlayerRepository()) {
 		GameSession session = p.getSession();
 		if (session != null) {
-		    session.handlePendingEvents();
+		    session.handlePendingMessages();
 		}
 	    }
 

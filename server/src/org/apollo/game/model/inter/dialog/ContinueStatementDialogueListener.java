@@ -4,8 +4,8 @@ import static org.apollo.game.model.inter.dialog.DialogueConstants.CONTINUE_STAT
 
 import java.util.Objects;
 
-import org.apollo.game.event.impl.SetInterfaceTextEvent;
 import org.apollo.game.model.Player;
+import org.apollo.game.msg.impl.SetInterfaceTextMessage;
 
 /**
  * A dialogue listener which manages the {@link DialogueType#CONTINUE_STATEMENT}
@@ -24,7 +24,7 @@ public abstract class ContinueStatementDialogueListener implements DialogueListe
 	}
 
 	for (int i = 0; i < length; i++) {
-	    player.send(new SetInterfaceTextEvent(CONTINUE_STATEMENT_DIALOGUE_ID[length - 1][i + 1], lines[i]));
+	    player.send(new SetInterfaceTextMessage(CONTINUE_STATEMENT_DIALOGUE_ID[length - 1][i + 1], lines[i]));
 	}
 	return CONTINUE_STATEMENT_DIALOGUE_ID[length - 1][0];
     }

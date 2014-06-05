@@ -3,7 +3,7 @@ package org.apollo.game.model;
 public abstract class Entity {
 
     public enum EntityType {
-	PLAYER, MOB, GAME_ITEM, GROUND_ITEM, GAME_OBJECT, PROJECTILE
+	PLAYER, MOB, GROUND_ITEM, GAME_OBJECT, PROJECTILE
     }
 
     /**

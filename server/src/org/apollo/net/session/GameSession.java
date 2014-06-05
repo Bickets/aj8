@@ -11,10 +11,10 @@ import java.util.logging.Logger;
 
 import org.apollo.game.GameConstants;
 import org.apollo.game.GameService;
-import org.apollo.game.event.Event;
-import org.apollo.game.event.EventTranslator;
-import org.apollo.game.event.impl.LogoutEvent;
 import org.apollo.game.model.Player;
+import org.apollo.game.msg.Message;
+import org.apollo.game.msg.MessageTranslator;
+import org.apollo.game.msg.impl.LogoutMessage;
 
 /**
  * A game session.
@@ -29,14 +29,14 @@ public final class GameSession extends Session {
     private static final Logger logger = Logger.getLogger(GameSession.class.getName());
 
     /**
-     * The event translator.
+     * The message translator.
      */
-    private final EventTranslator eventTranslator;
+    private final MessageTranslator messageTranslator;
 
     /**
-     * The queue of pending {@link Event}s.
+     * The queue of pending {@link Message}s.
      */
-    private final BlockingQueue<Event> eventQueue = new ArrayBlockingQueue<>(GameConstants.EVENTS_PER_PULSE);
+    private final BlockingQueue<Message> messageQueue = new ArrayBlockingQueue<>(GameConstants.MESSAGES_PER_PULSE);
 
     /**
      * The player.
@@ -52,49 +52,49 @@ public final class GameSession extends Session {
      * Creates a login session for the specified channel context.
      * 
      * @param ctx This sessions channels context.
-     * @param eventTranslator The event translator.
+     * @param messageTranslator The message translator.
      * @param player The player.
      * @param gameService The game service.
      */
-    public GameSession(ChannelHandlerContext ctx, EventTranslator eventTranslator, Player player, GameService gameService) {
+    public GameSession(ChannelHandlerContext ctx, MessageTranslator messageTranslator, Player player, GameService gameService) {
 	super(ctx);
-	this.eventTranslator = eventTranslator;
+	this.messageTranslator = messageTranslator;
 	this.player = player;
 	this.gameService = gameService;
     }
 
     @Override
-    public void messageReceived(Object message) {
-	Event event = (Event) message;
-	if (eventQueue.size() >= GameConstants.EVENTS_PER_PULSE) {
-	    logger.warning("Too many events in queue for game session, dropping...");
+    public void messageReceived(Object msg) {
+	Message message = (Message) msg;
+	if (messageQueue.size() >= GameConstants.MESSAGES_PER_PULSE) {
+	    logger.warning("Too many messages in queue for game session, dropping...");
 	} else {
-	    eventQueue.add(event);
+	    messageQueue.add(message);
 	}
     }
 
     /**
-     * Encodes and dispatches the specified event.
+     * Encodes and dispatches the specified message.
      * 
-     * @param event The event.
+     * @param message The message
      */
-    public void dispatchEvent(Event event) {
+    public void dispatchMessage(Message message) {
 	Channel channel = ctx().channel();
 	if (channel.isActive()) {
-	    ChannelFuture future = channel.writeAndFlush(event);
-	    if (event.getClass() == LogoutEvent.class) { // TODO: Better way?
+	    ChannelFuture future = channel.writeAndFlush(message);
+	    if (message.getClass() == LogoutMessage.class) { // TODO: Better way?
 		future.addListener(ChannelFutureListener.CLOSE);
 	    }
 	}
     }
 
     /**
-     * Handles pending events for this session.
+     * Handles pending messages for this session.
      */
-    public void handlePendingEvents() {
-	Event event;
-	while ((event = eventQueue.poll()) != null) {
-	    eventTranslator.handle(player, event);
+    public void handlePendingMessages() {
+	Message message;
+	while ((message = messageQueue.poll()) != null) {
+	    messageTranslator.handle(player, message);
 	}
     }
 

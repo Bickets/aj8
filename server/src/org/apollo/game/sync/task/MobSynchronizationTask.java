@@ -3,11 +3,12 @@ package org.apollo.game.sync.task;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
+import java.util.Set;
 
-import org.apollo.game.event.impl.MobSynchronizationEvent;
 import org.apollo.game.model.Mob;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.World;
+import org.apollo.game.msg.impl.MobSynchronizationMessage;
 import org.apollo.game.sync.block.SynchronizationBlockSet;
 import org.apollo.game.sync.seg.AddCharacterSegment;
 import org.apollo.game.sync.seg.MovementSegment;
@@ -54,7 +55,7 @@ public final class MobSynchronizationTask extends SynchronizationTask {
     @Override
     public void run() {
 	SynchronizationBlockSet blockSet = player.getBlockSet();
-	List<Mob> localMobs = player.getLocalMobs();
+	Set<Mob> localMobs = player.getLocalMobs();
 	int oldLocalMobs = localMobs.size();
 	List<SynchronizationSegment> segments = new ArrayList<>();
 
@@ -89,7 +90,7 @@ public final class MobSynchronizationTask extends SynchronizationTask {
 		segments.add(new AddCharacterSegment(blockSet, mob, mob.getIndex(), mob.getDefinition().getId(), mob.getPosition()));
 	    }
 	}
-	player.send(new MobSynchronizationEvent(player.getPosition(), segments, oldLocalMobs));
+	player.send(new MobSynchronizationMessage(player.getPosition(), segments, oldLocalMobs));
     }
 
 }

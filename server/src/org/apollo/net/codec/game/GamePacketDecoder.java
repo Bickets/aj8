@@ -7,7 +7,7 @@ import java.util.List;
 
 import net.burtleburtle.bob.rand.IsaacAlgorithm;
 
-import org.apollo.game.event.EventTranslator;
+import org.apollo.game.msg.MessageTranslator;
 import org.apollo.net.meta.PacketMetaData;
 import org.apollo.net.meta.PacketType;
 import org.apollo.util.StatefulByteToMessageDecoder;
@@ -40,17 +40,17 @@ public final class GamePacketDecoder extends StatefulByteToMessageDecoder<GameDe
     private int length;
 
     /**
-     * The event translator.
+     * The message translator.
      */
-    private final EventTranslator translator;
+    private final MessageTranslator translator;
 
     /**
      * Creates the {@link GamePacketDecoder}.
      * 
      * @param random The random number generator.
-     * @param translator The event translator.
+     * @param translator The message translator.
      */
-    public GamePacketDecoder(IsaacAlgorithm random, EventTranslator translator) {
+    public GamePacketDecoder(IsaacAlgorithm random, MessageTranslator translator) {
 	super(GameDecoderState.GAME_OPCODE);
 	this.random = random;
 	this.translator = translator;

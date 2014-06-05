@@ -7,6 +7,8 @@ import org.apollo.game.model.Mob
 import org.apollo.game.model.Position
 import org.apollo.game.model.World
 
+import static org.apollo.game.model.Direction.EAST
+
 @Data class InitialMobSpawns {
 	val World world
 	val mobs = new ArrayList<Mob>
@@ -20,7 +22,7 @@ import org.apollo.game.model.World
 	}
 
 	def addAll() {
-		add(1, new Position(3222, 3222), Direction::EAST)
+		add(1, new Position(3222, 3222), EAST)
 	}
 
 	def add(int id, Position position, Direction direction) {

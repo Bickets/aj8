@@ -1,12 +1,13 @@
 package org.apollo.game.model;
 
-import java.util.ArrayList;
+import java.util.LinkedHashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apollo.game.action.Action;
-import org.apollo.game.event.Event;
-import org.apollo.game.event.impl.ServerMessageEvent;
 import org.apollo.game.model.Inventory.StackMode;
+import org.apollo.game.msg.Message;
+import org.apollo.game.msg.impl.ServerMessageMessage;
 import org.apollo.game.sync.block.SynchronizationBlock;
 import org.apollo.game.sync.block.SynchronizationBlockSet;
 import org.apollo.game.task.TaskScheduler;
@@ -51,19 +52,14 @@ public abstract class GameCharacter extends Entity {
     private final GameCharacterFields fields = new GameCharacterFields();
 
     /**
-     * A list of local players.
+     * A set of local players.
      */
-    private final List<Player> localPlayers = new ArrayList<Player>(); // TODO
-								       // make a
-								       // specialized
-								       // collection?
+    private final Set<Player> localPlayers = new LinkedHashSet<Player>();
 
     /**
-     * A list of local mobs
+     * A set of local mobs
      */
-    private final List<Mob> localMobs = new ArrayList<Mob>(); // TODO make a
-							      // specialized
-							      // collection?
+    private final Set<Mob> localMobs = new LinkedHashSet<Mob>();
 
     /**
      * A set of {@link SynchronizationBlock}s.
@@ -159,20 +155,20 @@ public abstract class GameCharacter extends Entity {
     }
 
     /**
-     * Gets the local player list.
+     * Gets the local player set.
      * 
-     * @return The local player list.
+     * @return The local player set.
      */
-    public List<Player> getLocalPlayers() {
+    public Set<Player> getLocalPlayers() {
 	return localPlayers;
     }
 
     /**
-     * Gets the local mobs list.
+     * Gets the local mobs set.
      * 
-     * @return The local mobs list.
+     * @return The local mobs set.
      */
-    public List<Mob> getLocalMobs() {
+    public Set<Mob> getLocalMobs() {
 	return localMobs;
     }
 
@@ -332,15 +328,15 @@ public abstract class GameCharacter extends Entity {
     }
 
     /**
-     * Sends an {@link Event} to either:
+     * Sends an {@link Message} to either:
      * <ul>
      * <li>The client if this {@link GameCharacter} is a {@link Player}.</li>
      * <li>The AI routines if this {@link GameCharacter} is a {@link Mob}</li>
      * </ul>
      * 
-     * @param event The event.
+     * @param message The message.
      */
-    public abstract void send(Event event);
+    public abstract void send(Message message);
 
     /**
      * Teleports this character to the specified position, setting the
@@ -451,7 +447,7 @@ public abstract class GameCharacter extends Entity {
      * @param message The message.
      */
     public void sendMessage(String message) {
-	send(new ServerMessageEvent(message));
+	send(new ServerMessageMessage(message));
     }
 
 }

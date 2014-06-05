@@ -1,10 +1,10 @@
 package org.apollo.game.sync.block;
 
-import org.apollo.game.event.impl.ChatEvent;
 import org.apollo.game.model.Animation;
 import org.apollo.game.model.Graphic;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.Position;
+import org.apollo.game.msg.impl.ChatMessage;
 import org.apollo.game.sync.seg.SynchronizationSegment;
 
 /**
@@ -42,11 +42,11 @@ public abstract class SynchronizationBlock {
      * Creates a chat block for the specified player.
      * 
      * @param player The player.
-     * @param chatEvent The chat event.
+     * @param chatMessage The chat message.
      * @return The chat block.
      */
-    public static SynchronizationBlock createChatBlock(Player player, ChatEvent chatEvent) {
-	return new ChatBlock(player.getPrivilegeLevel(), chatEvent);
+    public static SynchronizationBlock createChatBlock(Player player, ChatMessage chatMessage) {
+	return new ChatBlock(player.getPrivilegeLevel(), chatMessage);
     }
 
     /**
@@ -86,7 +86,6 @@ public abstract class SynchronizationBlock {
     /**
      * Creates a hit update block with the specified damage.
      * 
-     * @param damage The damage.
      * @return The hit update block.
      */
     public static SynchronizationBlock createHitUpdateBlock(int damage, int type, int currentHealth, int maximumHealth) {
@@ -96,7 +95,6 @@ public abstract class SynchronizationBlock {
     /**
      * Creates a hit update block with the specified damage.
      * 
-     * @param event The damage.
      * @return The hit update block.
      */
     public static SynchronizationBlock createSecondHitUpdateBlock(int damage, int type, int currentHealth, int maximumHealth) {

@@ -5,10 +5,10 @@ import static org.apollo.game.model.inter.dialog.DialogueConstants.MAKE_ITEM_MOD
 
 import java.util.Objects;
 
-import org.apollo.game.event.impl.InterfaceItemModelEvent;
-import org.apollo.game.event.impl.SetInterfaceTextEvent;
 import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
+import org.apollo.game.msg.impl.InterfaceItemModelMessage;
+import org.apollo.game.msg.impl.SetInterfaceTextMessage;
 
 /**
  * A dialogue listener which manages the {@link DialogueType#MAKE_ITEM_OPTION}
@@ -48,8 +48,8 @@ public abstract class MakeItemOptionDialogueListener implements DialogueListener
     public final int execute(Player player) {
 	String[] lines = lines();
 	for (int i = 0; i < lines.length; i++) {
-	    player.send(new InterfaceItemModelEvent(MAKE_ITEM_MODEL_ID[items.length - 2][i], items[i], getModelZoom()));
-	    player.send(new SetInterfaceTextEvent(MAKE_ITEM_DIALOGUE_ID[lines.length - 2][i + 1], lines[i]));
+	    player.send(new InterfaceItemModelMessage(MAKE_ITEM_MODEL_ID[items.length - 2][i], items[i], getModelZoom()));
+	    player.send(new SetInterfaceTextMessage(MAKE_ITEM_DIALOGUE_ID[lines.length - 2][i + 1], lines[i]));
 	}
 	return MAKE_ITEM_DIALOGUE_ID[items.length - 2][0];
     }
