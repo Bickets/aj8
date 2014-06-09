@@ -1,8 +1,8 @@
 package buttons;
 
-import com.google.common.base.Objects;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Objects;
 import java.util.function.Consumer;
 import org.apollo.game.interact.ButtonClickListener;
 import org.apollo.game.model.InterfaceSet;
@@ -42,21 +42,13 @@ public class DialogueButton extends ButtonClickListener {
     InterfaceSet _interfaceSet = player.getInterfaceSet();
     boolean _contains = _interfaceSet.contains(InterfaceType.DIALOGUE);
     if (_contains) {
-      final DialogueOption option = DialogueOption.fromId(id);
-      boolean _and = false;
-      boolean _notEquals = (!Objects.equal(option, null));
-      if (!_notEquals) {
-        _and = false;
-      } else {
-        InterfaceSet _interfaceSet_1 = player.getInterfaceSet();
-        boolean _optionClicked = _interfaceSet_1.optionClicked(option);
-        _and = _optionClicked;
-      }
-      final boolean success = _and;
-      if ((!success)) {
+      DialogueOption _fromId = DialogueOption.fromId(id);
+      final DialogueOption option = Objects.<DialogueOption>requireNonNull(_fromId);
+      InterfaceSet _interfaceSet_1 = player.getInterfaceSet();
+      final boolean success = _interfaceSet_1.optionClicked(option);
+      if (success) {
         InterfaceSet _interfaceSet_2 = player.getInterfaceSet();
-        _interfaceSet_2.close();
-        return;
+        _interfaceSet_2.continueRequested();
       }
     }
   }
