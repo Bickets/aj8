@@ -1,0 +1,62 @@
+package org.apollo.game.attribute;
+
+import java.util.Objects;
+
+/**
+ * Represents a single attribute.
+ * 
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
+ *
+ * @param <T> The attributes values type reference.
+ */
+final class Attribute<T> {
+
+    /**
+     * Represents a default or empty attribute, used to control state instead of
+     * returning {@code null}.
+     */
+    protected static final Attribute<Boolean> EMPTY_ATTRIBUTE = new Attribute<Boolean>(AttributeKey.valueOf("empty"), true);
+
+    /**
+     * This attributes key. An attributes key is an identifier that encapsulates
+     * this attributes name. This key is used for representing an attribute
+     * through some collection.
+     */
+    private final AttributeKey<T> key;
+
+    /**
+     * The value of this attribute, the type of value of this attribute is as
+     * described by this classes parameter.
+     * 
+     * @see {@link T}
+     */
+    private final T value;
+
+    /**
+     * Constructs a new {@link Attribute<T>} with the specified key and value.
+     * 
+     * @param key This attributes key, may not be {@code null}.
+     * @param value This attributes value, may not be {@code null}.
+     * @throws NullPointerException If the specified key or value is
+     *             {@code null}.
+     */
+    protected Attribute(AttributeKey<T> key, T value) {
+	this.key = Objects.requireNonNull(key);
+	this.value = Objects.requireNonNull(value);
+    }
+
+    /**
+     * Returns this attributes key.
+     */
+    protected AttributeKey<T> getKey() {
+	return key;
+    }
+
+    /**
+     * Returns this attributes value.
+     */
+    protected T getValue() {
+	return value;
+    }
+
+}
