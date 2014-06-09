@@ -1,10 +1,10 @@
 package org.apollo.game.model;
 
 import java.util.LinkedHashSet;
-import java.util.List;
 import java.util.Set;
 
 import org.apollo.game.action.Action;
+import org.apollo.game.attribute.AttributeMap;
 import org.apollo.game.model.Inventory.StackMode;
 import org.apollo.game.msg.Message;
 import org.apollo.game.msg.impl.ServerMessageMessage;
@@ -60,6 +60,11 @@ public abstract class GameCharacter extends Entity {
      * A set of local mobs
      */
     private final Set<Mob> localMobs = new LinkedHashSet<Mob>();
+
+    /**
+     * A map of attributes.
+     */
+    private final AttributeMap attributes = new AttributeMap();
 
     /**
      * A set of {@link SynchronizationBlock}s.
@@ -179,6 +184,13 @@ public abstract class GameCharacter extends Entity {
      */
     public boolean isTeleporting() {
 	return teleporting;
+    }
+
+    /**
+     * Returns the attribute map.
+     */
+    public AttributeMap getAttributes() {
+	return attributes;
     }
 
     /**
@@ -360,7 +372,7 @@ public abstract class GameCharacter extends Entity {
     public void forceChat(String text) {
 	blockSet.add(SynchronizationBlock.createForceChatBlock(text));
     }
-    
+
     /**
      * Plays the specified animation.
      * 
@@ -392,7 +404,6 @@ public abstract class GameCharacter extends Entity {
     public void stopGraphic() {
 	playGraphic(Graphic.STOP_GRAPHIC);
     }
-
 
     /**
      * Gets the character's skill set.
