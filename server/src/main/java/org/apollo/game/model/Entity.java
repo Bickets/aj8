@@ -1,5 +1,7 @@
 package org.apollo.game.model;
 
+import org.apollo.util.EntityRepository;
+
 public abstract class Entity {
 
     public enum EntityType {

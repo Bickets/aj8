@@ -3,7 +3,8 @@ package org.apollo.game.msg.impl;
 import org.apollo.game.msg.Message;
 
 /**
- * A message which is periodically sent by the client to keep a connection alive.
+ * A message which is periodically sent by the client to keep a connection
+ * alive.
  * 
  * @author Graham
  */

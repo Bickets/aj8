@@ -110,7 +110,7 @@ public final class World {
 	MobDefinition[] mobDefs = MobDefinitionParser.parse(fileSystem);
 	MobDefinition.init(mobDefs);
 	logger.info("Done (loaded " + mobDefs.length + " mob definitions).");
-	
+
 	LevelUpDefinition.init();
     }
 

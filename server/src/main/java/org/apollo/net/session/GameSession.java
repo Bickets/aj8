@@ -82,7 +82,8 @@ public final class GameSession extends Session {
 	Channel channel = ctx().channel();
 	if (channel.isActive()) {
 	    ChannelFuture future = channel.writeAndFlush(message);
-	    if (message.getClass() == LogoutMessage.class) { // TODO: Better way?
+	    if (message.getClass() == LogoutMessage.class) { // TODO: Better
+							     // way?
 		future.addListener(ChannelFutureListener.CLOSE);
 	    }
 	}

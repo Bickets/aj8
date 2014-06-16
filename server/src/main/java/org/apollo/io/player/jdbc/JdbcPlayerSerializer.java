@@ -38,21 +38,21 @@ public final class JdbcPlayerSerializer implements Closeable, PlayerSerializer {
 	tables = new Table[] { new PlayersTable(connection),
 		new SkillsTable(connection), new AppearanceTable(connection),
 		new ItemsTable(connection, "inventory") {
-	    @Override
-	    public Inventory getInventory(Player player) {
-		return player.getInventory();
-	    }
-	}, new ItemsTable(connection, "equipment") {
-	    @Override
-	    public Inventory getInventory(Player player) {
-		return player.getEquipment();
-	    }
-	}, new ItemsTable(connection, "bank") {
-	    @Override
-	    public Inventory getInventory(Player player) {
-		return player.getBank();
-	    }
-	} };
+		    @Override
+		    public Inventory getInventory(Player player) {
+			return player.getInventory();
+		    }
+		}, new ItemsTable(connection, "equipment") {
+		    @Override
+		    public Inventory getInventory(Player player) {
+			return player.getEquipment();
+		    }
+		}, new ItemsTable(connection, "bank") {
+		    @Override
+		    public Inventory getInventory(Player player) {
+			return player.getBank();
+		    }
+		} };
     }
 
     @Override

@@ -175,7 +175,7 @@ public final class LoginDecoder extends StatefulByteToMessageDecoder<LoginDecode
 
 	String username = ByteBufUtil.readString(securePayload);
 	String password = ByteBufUtil.readString(securePayload);
-	String address = ((InetSocketAddress)ctx.channel().remoteAddress()).getHostName();
+	String address = ((InetSocketAddress) ctx.channel().remoteAddress()).getHostName();
 
 	if (username.length() > 12 || password.length() > 20) {
 	    throw new IllegalStateException("Username or password too long.");

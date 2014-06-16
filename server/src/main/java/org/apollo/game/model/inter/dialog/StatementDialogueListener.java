@@ -28,7 +28,14 @@ public abstract class StatementDialogueListener implements DialogueListener {
     }
 
     /* Do not allow method overriding for these methods. */
-    @Override public final DialogueExpression expression() { return null; }
-    @Override public final boolean optionClicked(DialogueOption option) { return false; }
+    @Override
+    public final DialogueExpression expression() {
+	return null;
+    }
+
+    @Override
+    public final boolean optionClicked(DialogueOption option) {
+	return false;
+    }
 
 }

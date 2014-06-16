@@ -41,11 +41,11 @@ public final class JdbcSanctionProvider implements PlayerSanctionProvider {
 		}
 
 		switch (type) {
-    		case "disabled":
-    		    return response = PlayerSanctionResponse.DISABLED;
-    		case "muted":
-    		    response = PlayerSanctionResponse.OK;
-    		    break;
+		case "disabled":
+		    return response = PlayerSanctionResponse.DISABLED;
+		case "muted":
+		    response = PlayerSanctionResponse.OK;
+		    break;
 		}
 	    }
 	}

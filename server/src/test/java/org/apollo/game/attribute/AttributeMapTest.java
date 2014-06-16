@@ -2,8 +2,6 @@ package org.apollo.game.attribute;
 
 import static org.junit.Assert.assertEquals;
 
-import org.apollo.game.attribute.AttributeKey;
-import org.apollo.game.attribute.AttributeMap;
 import org.junit.Test;
 
 public final class AttributeMapTest {

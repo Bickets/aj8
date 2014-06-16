@@ -1,7 +1,7 @@
 package org.apollo.game.task.impl;
 
-import org.apollo.game.model.GameCharacter;
 import org.apollo.game.model.Entity.EntityType;
+import org.apollo.game.model.GameCharacter;
 import org.apollo.game.task.Task;
 
 /**

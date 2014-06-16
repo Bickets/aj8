@@ -1,5 +1,6 @@
 package org.apollo.game.event;
 
+import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
 /**

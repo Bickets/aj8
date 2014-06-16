@@ -198,8 +198,8 @@ public abstract class GameCharacter extends Entity {
     /**
      * Sets the teleporting attribute.
      * 
-     * @param value {@code true} if the player is teleporting,
-     *            {@code false} if not.
+     * @param value {@code true} if the player is teleporting, {@code false} if
+     *            not.
      */
     public void setTeleporting(boolean value) {
 	attributes.set(TELEPORTING, value);

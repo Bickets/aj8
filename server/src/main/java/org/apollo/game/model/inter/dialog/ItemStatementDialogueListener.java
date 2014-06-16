@@ -6,6 +6,7 @@ import java.util.Objects;
 
 import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
+import org.apollo.game.model.def.ItemDefinition;
 import org.apollo.game.msg.impl.InterfaceItemModelMessage;
 import org.apollo.game.msg.impl.SetInterfaceTextMessage;
 
@@ -76,7 +77,14 @@ public abstract class ItemStatementDialogueListener implements DialogueListener 
     }
 
     /* Do not allow method overriding for these methods. */
-    @Override public final DialogueExpression expression() { return null; }
-    @Override public final boolean optionClicked(DialogueOption option) { return false; }
+    @Override
+    public final DialogueExpression expression() {
+	return null;
+    }
+
+    @Override
+    public final boolean optionClicked(DialogueOption option) {
+	return false;
+    }
 
 }

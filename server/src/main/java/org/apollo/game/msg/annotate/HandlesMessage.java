@@ -9,8 +9,8 @@ import java.lang.annotation.Target;
 import org.apollo.game.msg.Message;
 
 /**
- * Indicates that the annotated type handles the message specified by the value of
- * {@link #value()}.
+ * Indicates that the annotated type handles the message specified by the value
+ * of {@link #value()}.
  * 
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
@@ -20,8 +20,8 @@ import org.apollo.game.msg.Message;
 public @interface HandlesMessage {
 
     /**
-     * Returns some class that extends {@link Message}, which is the message to be
-     * handled.
+     * Returns some class that extends {@link Message}, which is the message to
+     * be handled.
      */
     Class<? extends Message> value();
 

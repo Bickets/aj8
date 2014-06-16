@@ -2,6 +2,7 @@ package org.apollo.game.model.inter.dialog;
 
 import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
+import org.apollo.game.model.def.ItemDefinition;
 import org.apollo.game.msg.impl.InterfaceItemModelMessage;
 import org.apollo.game.msg.impl.SetInterfaceTextMessage;
 
@@ -63,7 +64,14 @@ public abstract class MakeItemDialogueListener implements DialogueListener {
     }
 
     /* Do not allow method overriding for these methods. */
-    @Override public final DialogueExpression expression() { return null; }
-    @Override public final String[] lines() { return null; }
+    @Override
+    public final DialogueExpression expression() {
+	return null;
+    }
+
+    @Override
+    public final String[] lines() {
+	return null;
+    }
 
 }

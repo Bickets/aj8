@@ -6,8 +6,8 @@ import java.util.NoSuchElementException;
 import org.apollo.game.model.Entity;
 
 /**
- * A {@link EntityRepository} is a repository of {@link Entity}s that
- * are currently active in the game world.
+ * A {@link EntityRepository} is a repository of {@link Entity}s that are
+ * currently active in the game world.
  * 
  * @author Graham
  * @param <T> The type of entity.
@@ -32,8 +32,8 @@ public final class EntityRepository<T extends Entity> implements Iterable<T> {
     /**
      * Creates a new entity repository with the specified capacity.
      * 
-     * @param capacity The maximum number of entities that can be present
-     *            in the repository.
+     * @param capacity The maximum number of entities that can be present in the
+     *            repository.
      */
     public EntityRepository(int capacity) {
 	this.entities = new Entity[capacity];
@@ -61,8 +61,8 @@ public final class EntityRepository<T extends Entity> implements Iterable<T> {
      * Adds an entity to the repository.
      * 
      * @param entity The entity to add.
-     * @return {@code true} if the entity was added, {@code false} if the
-     *         size has reached the capacity of this repository.
+     * @return {@code true} if the entity was added, {@code false} if the size
+     *         has reached the capacity of this repository.
      */
     public boolean add(T entity) {
 	if (size == entities.length) {
@@ -101,8 +101,8 @@ public final class EntityRepository<T extends Entity> implements Iterable<T> {
      * Removes a entity from the repository.
      * 
      * @param entity The entity to remove.
-     * @return {@code true} if the entity was removed, {@code false} if it
-     *         was not (e.g. if it was never added or has been removed already).
+     * @return {@code true} if the entity was removed, {@code false} if it was
+     *         not (e.g. if it was never added or has been removed already).
      */
     public boolean remove(T entity) {
 	int index = entity.getIndex() - 1;
