@@ -12,6 +12,7 @@ import org.apollo.fs.parser.MobDefinitionParser;
 import org.apollo.game.interact.InteractionHandler;
 import org.apollo.game.model.def.EquipmentDefinition;
 import org.apollo.game.model.def.ItemDefinition;
+import org.apollo.game.model.def.LevelUpDefinition;
 import org.apollo.game.model.def.MobDefinition;
 import org.apollo.io.EquipmentDefinitionParser;
 import org.apollo.service.Service;
@@ -109,6 +110,8 @@ public final class World {
 	MobDefinition[] mobDefs = MobDefinitionParser.parse(fileSystem);
 	MobDefinition.init(mobDefs);
 	logger.info("Done (loaded " + mobDefs.length + " mob definitions).");
+	
+	LevelUpDefinition.init();
     }
 
     /**
