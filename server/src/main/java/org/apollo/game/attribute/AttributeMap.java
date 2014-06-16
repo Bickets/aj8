@@ -18,7 +18,8 @@ public final class AttributeMap {
 
     /**
      * Returns the value of the attribute which is represented by the specified
-     * {@link AttributeKey<T>}.
+     * {@link AttributeKey<T>}, if no key exists the initial value is returned
+     * and the key is added.
      * 
      * @param key The attribute key, may not be {@code null}.
      * @return The value of the attribute, never {@code null}.
@@ -31,8 +32,12 @@ public final class AttributeMap {
     public <T> T get(AttributeKey<T> key) {
 	Objects.requireNonNull(key);
 
+	if (!contains(key)) {
+	    return setAndGet(key, key.getInitial());
+	}
+
 	/* Will never be {@code null}. */
-	Attribute<T> attr = contains(key) ? (Attribute<T>) attrs.get(key) : (Attribute<T>) Attribute.EMPTY_ATTRIBUTE;
+	Attribute<T> attr = (Attribute<T>) attrs.get(key);
 	return attr.getValue();
     }
 

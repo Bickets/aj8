@@ -12,12 +12,6 @@ import java.util.Objects;
 final class Attribute<T> {
 
     /**
-     * Represents a default or empty attribute, used to control state instead of
-     * returning {@code null}.
-     */
-    protected static final Attribute<Boolean> EMPTY_ATTRIBUTE = new Attribute<Boolean>(AttributeKey.valueOf("empty"), true);
-
-    /**
      * This attributes key. An attributes key is an identifier that encapsulates
      * this attributes name. This key is used for representing an attribute
      * through some collection.

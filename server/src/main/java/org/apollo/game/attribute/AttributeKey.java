@@ -19,18 +19,27 @@ public final class AttributeKey<T> {
     private final String name;
 
     /**
+     * Returns the initial value of the specified type reference.
+     */
+    private final T initial;
+
+    /**
      * Constructs a new {@link AttributeKey<T>} with the specified name.
      * 
      * @param name The name of this attribute, may not be {@code null}.
-     * @throws NullPointerException If the specified name is {@code null}.
+     * @param initial The initial value of the specified type reference, may not
+     *            be {@code null}.
+     * @throws NullPointerException If the specified name or initial is
+     *             {@code null}.
      * 
      *             <p>
      *             This constructor should not be invoked directly, use
      *             {@link #valueOf(String)} instead!
      *             </p>
      */
-    private AttributeKey(String name) {
+    private AttributeKey(String name, T initial) {
 	this.name = Objects.requireNonNull(name);
+	this.initial = Objects.requireNonNull(initial);
     }
 
     /**
@@ -41,14 +50,22 @@ public final class AttributeKey<T> {
     }
 
     /**
+     * Returns the initial value of the specified type reference.
+     */
+    protected T getInitial() {
+	return initial;
+    }
+
+    /**
      * Constructs a new {@link AttributeKey<T>} with the specified name.
      * 
      * @param name The name of this attribute, may not be {@code null}.
+     * @param initial The initial value of the specified type reference.
      * @throws NullPointerException If the specified name is {@code null}.
-     * @see {@link AttributeKey<T>}
+     * @see {@link #AttributeKey(String)}
      */
-    public static <T> AttributeKey<T> valueOf(String name) {
-	return new AttributeKey<T>(name);
+    public static <T> AttributeKey<T> valueOf(String name, T initial) {
+	return new AttributeKey<T>(name, initial);
     }
 
 }
