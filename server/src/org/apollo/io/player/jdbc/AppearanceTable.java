@@ -6,15 +6,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apollo.game.model.Appearance;
 import org.apollo.game.model.Gender;
 import org.apollo.game.model.Player;
-import org.apollo.util.ArrayUtil;
 
 public final class AppearanceTable extends Table {
-
-    private static final char DELIMITER = ';';
 
     private final PreparedStatement loadStatement;
     private final PreparedStatement saveStatement;
@@ -35,13 +31,13 @@ public final class AppearanceTable extends Table {
 		int genderInt = set.getInt("gender");
 
 		Gender gender = Gender.valueOf(genderInt);
-		String[] _styles = StringUtils.split(style, DELIMITER);
-		String[] _colors = StringUtils.split(color, DELIMITER);
+//		String[] _styles = StringUtils.split(style, DELIMITER);
+//		String[] _colors = StringUtils.split(color, DELIMITER);
 
-		int[] styles = ArrayUtil.parseIntegerArray(_styles);
-		int[] colors = ArrayUtil.parseIntegerArray(_colors);
+//		int[] styles = ArrayUtil.parseIntegerArray(_styles);
+//		int[] colors = ArrayUtil.parseIntegerArray(_colors);
 
-		player.setAppearance(new Appearance(gender, styles, colors));
+//		player.setAppearance(new Appearance(gender, styles, colors));
 	    }
 	}
     }
@@ -54,11 +50,11 @@ public final class AppearanceTable extends Table {
 
 	saveStatement.setInt(2, appearance.getGender().toInteger());
 
-	String styles = StringUtils.join(appearance.getStyle(), DELIMITER);
-	String colors = StringUtils.join(appearance.getColors(), DELIMITER);
-
-	saveStatement.setString(3, styles);
-	saveStatement.setString(4, colors);
+//	String styles = StringUtils.join(appearance.getStyle(), DELIMITER);
+//	String colors = StringUtils.join(appearance.getColors(), DELIMITER);
+//
+//	saveStatement.setString(3, styles);
+//	saveStatement.setString(4, colors);
 
 	saveStatement.execute();
     }
