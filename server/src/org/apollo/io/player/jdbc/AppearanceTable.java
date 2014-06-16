@@ -12,51 +12,88 @@ import org.apollo.game.model.Player;
 
 public final class AppearanceTable extends Table {
 
-    private final PreparedStatement loadStatement;
-    private final PreparedStatement saveStatement;
+    private final PreparedStatement genderLoadStatement;
+    private final PreparedStatement styleLoadStatement;
+    private final PreparedStatement colorLoadStatement;
+
+    private final PreparedStatement genderSaveStatement;
+    private final PreparedStatement styleSaveStatement;
+    private final PreparedStatement colorSaveStatement;
 
     public AppearanceTable(Connection connection) throws SQLException {
-	loadStatement = connection.prepareStatement("SELECT * FROM appearance WHERE player_id = ?;");
-	saveStatement = connection.prepareStatement("INSERT INTO appearance (player_id, gender, style, color) VALUES (?, ?, ?, ?) ON DUPLICATE KEY UPDATE gender = VALUES(gender), style = VALUES(style), color = VALUES(color);");
+	genderLoadStatement = connection.prepareStatement("SELECT * FROM gender WHERE player_id = ?;");
+	styleLoadStatement = connection.prepareStatement("SELECT * FROM style WHERE player_id = ?;");
+	colorLoadStatement = connection.prepareStatement("SELECT * FROM color WHERE player_id = ?;");
+
+	genderSaveStatement = connection.prepareStatement("INSERT INTO gender (player_id, gender) VALUES (?, ?) ON DUPLICATE KEY UPDATE gender = VALUES(gender);");
+	styleSaveStatement = connection.prepareStatement("INSERT INTO style (player_id, style) VALUES (?, ?) ON DUPLICATE KEY UPDATE style = VALUES(style);");
+	colorSaveStatement = connection.prepareStatement("INSERT INTO color (player_id, color) VALUES (?, ?) ON DUPLICATE KEY UPDATE color = VALUES(color);");
     }
 
     @Override
     public void load(Player player) throws SQLException, IOException {
-	loadStatement.setInt(1, player.getDatabaseId());
+	genderLoadStatement.setInt(1, player.getDatabaseId());
+	styleLoadStatement.setInt(1, player.getDatabaseId());
+	colorLoadStatement.setInt(1, player.getDatabaseId());
 
-	try (ResultSet set = loadStatement.executeQuery()) {
+	Gender gender = Gender.MALE;
+
+	try (ResultSet set = genderLoadStatement.executeQuery()) {
 	    while (set.next()) {
-		String style = set.getString("style");
-		String color = set.getString("color");
 		int genderInt = set.getInt("gender");
 
-		Gender gender = Gender.valueOf(genderInt);
-//		String[] _styles = StringUtils.split(style, DELIMITER);
-//		String[] _colors = StringUtils.split(color, DELIMITER);
-
-//		int[] styles = ArrayUtil.parseIntegerArray(_styles);
-//		int[] colors = ArrayUtil.parseIntegerArray(_colors);
-
-//		player.setAppearance(new Appearance(gender, styles, colors));
+		gender = Gender.valueOf(genderInt);
 	    }
 	}
+
+	int[] styles = new int[7];
+
+	int index = 0;
+	try (ResultSet set = styleLoadStatement.executeQuery()) {
+	    while (set.next()) {
+		int style = set.getInt("style");
+
+		styles[index++] = style;
+	    }
+	}
+
+	int[] colors = new int[5];
+
+	index = 0;
+	try (ResultSet set = colorLoadStatement.executeQuery()) {
+	    while (set.next()) {
+		int color = set.getInt("color");
+
+		colors[index++] = color;
+	    }
+	}
+
+	player.setAppearance(new Appearance(gender, styles, colors));
     }
 
     @Override
     public void save(Player player) throws SQLException, IOException {
-	saveStatement.setInt(1, player.getDatabaseId());
+	genderSaveStatement.setInt(1, player.getDatabaseId());
+	styleSaveStatement.setInt(1, player.getDatabaseId());
+	colorSaveStatement.setInt(1, player.getDatabaseId());
 
 	Appearance appearance = player.getAppearance();
 
-	saveStatement.setInt(2, appearance.getGender().toInteger());
+	genderSaveStatement.setInt(2, appearance.getGender().toInteger());
 
-//	String styles = StringUtils.join(appearance.getStyle(), DELIMITER);
-//	String colors = StringUtils.join(appearance.getColors(), DELIMITER);
-//
-//	saveStatement.setString(3, styles);
-//	saveStatement.setString(4, colors);
+	for (int style : appearance.getStyle()) {
+	    styleSaveStatement.setInt(2, style);
+	    styleSaveStatement.addBatch();
+	}
 
-	saveStatement.execute();
+	for (int color : appearance.getColors()) {
+	    colorSaveStatement.setInt(2, color);
+	    colorSaveStatement.addBatch();
+	}
+
+	genderSaveStatement.execute();
+	styleSaveStatement.executeBatch();
+	colorSaveStatement.executeBatch();
     }
 
 }
