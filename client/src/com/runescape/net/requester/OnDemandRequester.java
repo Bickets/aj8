@@ -58,7 +58,7 @@ public class OnDemandRequester extends Requester implements Runnable {
     private int idleCycles;
 
     private final boolean verify(int expectedVersion, int expectedCrc, byte[] data) {
-	if ((data == null) || (data.length < 2)) {
+	if (data == null || data.length < 2) {
 	    return false;
 	}
 	int length = data.length - 2;
@@ -78,7 +78,7 @@ public class OnDemandRequester extends Requester implements Runnable {
     private final void handleResp() {
 	try {
 	    int available = inputStream.available();
-	    if ((toRead == 0) && (available >= 6)) {
+	    if (toRead == 0 && available >= 6) {
 		expectData = true;
 		for (int i = 0; i < 6; i += inputStream.read(inputBuffer, i, 6 - i)) {
 		    ;
@@ -89,7 +89,7 @@ public class OnDemandRequester extends Requester implements Runnable {
 		int part = inputBuffer[5] & 0xff;
 		onDemandNode = null;
 		for (OnDemandNode ondemandnode = (OnDemandNode) sentRequests.getBack(); ondemandnode != null; ondemandnode = (OnDemandNode) sentRequests.getPrevious()) {
-		    if ((ondemandnode.type == type) && (ondemandnode.id == id)) {
+		    if (ondemandnode.type == type && ondemandnode.id == id) {
 			onDemandNode = ondemandnode;
 		    }
 		    if (onDemandNode != null) {
@@ -110,21 +110,21 @@ public class OnDemandRequester extends Requester implements Runnable {
 			}
 			onDemandNode = null;
 		    } else {
-			if ((onDemandNode.buffer == null) && (part == 0)) {
+			if (onDemandNode.buffer == null && part == 0) {
 			    onDemandNode.buffer = new byte[size];
 			}
-			if ((onDemandNode.buffer == null) && (part != 0)) {
+			if (onDemandNode.buffer == null && part != 0) {
 			    throw new IOException("missing start of file");
 			}
 		    }
 		}
 		offset = part * 500;
 		toRead = 500;
-		if (toRead > (size - (part * 500))) {
-		    toRead = size - (part * 500);
+		if (toRead > size - part * 500) {
+		    toRead = size - part * 500;
 		}
 	    }
-	    if ((toRead <= 0) || (available < toRead)) {
+	    if (toRead <= 0 || available < toRead) {
 		return;
 	    }
 	    expectData = true;
@@ -137,11 +137,11 @@ public class OnDemandRequester extends Requester implements Runnable {
 	    for (int i = 0; i < toRead; i += inputStream.read(buffer, i + bufferOffset, toRead - i)) {
 		;
 	    }
-	    if (((toRead + offset) >= buffer.length) && (onDemandNode != null)) {
+	    if (toRead + offset >= buffer.length && onDemandNode != null) {
 		if (client.stores[0] != null) {
 		    client.stores[onDemandNode.type + 1].put(buffer.length, buffer, onDemandNode.id);
 		}
-		if (!onDemandNode.immediate && (onDemandNode.type == 3)) {
+		if (!onDemandNode.immediate && onDemandNode.type == 3) {
 		    onDemandNode.immediate = true;
 		    onDemandNode.type = 93;
 		}
@@ -244,7 +244,7 @@ public class OnDemandRequester extends Requester implements Runnable {
 
     public final void preloadRegions(boolean members) {
 	for (int reg = 0; reg < regHash.length; reg++) {
-	    if (members || (regShouldPreload[reg] != 0)) {
+	    if (members || regShouldPreload[reg] != 0) {
 		setPriority((byte) 2, 3, regLandIndex[reg]);
 		setPriority((byte) 2, 3, regMapIndex[reg]);
 	    }
@@ -259,7 +259,7 @@ public class OnDemandRequester extends Requester implements Runnable {
 	try {
 	    if (socket == null) {
 		long currentTime = System.currentTimeMillis();
-		if ((currentTime - lastSocketOpen) < 4000L) {
+		if (currentTime - lastSocketOpen < 4000L) {
 		    return;
 		}
 		lastSocketOpen = currentTime;
@@ -303,10 +303,10 @@ public class OnDemandRequester extends Requester implements Runnable {
     }
 
     public final void request(int type, int id) {
-	if ((type >= 0) && (type <= fileVersions.length) && (id >= 0) && (id <= fileVersions[type].length) && (fileVersions[type][id] != 0)) {
+	if (type >= 0 && type <= fileVersions.length && id >= 0 && id <= fileVersions[type].length && fileVersions[type][id] != 0) {
 	    synchronized (immediateRequests) {
 		for (OnDemandNode onDemandNode = (OnDemandNode) immediateRequests.reverseGetFirst(); onDemandNode != null; onDemandNode = (OnDemandNode) immediateRequests.reverseGetNext()) {
-		    if ((onDemandNode.type == type) && (onDemandNode.id == id)) {
+		    if (onDemandNode.type == type && onDemandNode.id == id) {
 			return;
 		    }
 		}
@@ -332,7 +332,7 @@ public class OnDemandRequester extends Requester implements Runnable {
 	    while (running) {
 		cycle++;
 		int toWait = 20;
-		if ((highestPriority == 0) && (client.stores[0] != null)) {
+		if (highestPriority == 0 && client.stores[0] != null) {
 		    toWait = 50;
 		}
 		Thread.sleep(toWait);
@@ -344,7 +344,7 @@ public class OnDemandRequester extends Requester implements Runnable {
 		    expectData = false;
 		    localComplete();
 		    remainingRequest();
-		    if ((immediateRequestsSent == 0) && (i >= 5)) {
+		    if (immediateRequestsSent == 0 && i >= 5) {
 			break;
 		    }
 		    passivesRequest();
@@ -386,7 +386,7 @@ public class OnDemandRequester extends Requester implements Runnable {
 		    idleCycles = 0;
 		    message = "";
 		}
-		if (client.loggedIn && (socket != null) && (outputStream != null) && ((highestPriority > 0) || (client.stores[0] == null))) {
+		if (client.loggedIn && socket != null && outputStream != null && (highestPriority > 0 || client.stores[0] == null)) {
 		    sinceKeepAlive++;
 		    if (sinceKeepAlive > 500) {
 			sinceKeepAlive = 0;
@@ -408,7 +408,7 @@ public class OnDemandRequester extends Requester implements Runnable {
     }
 
     public final void passiveRequest(int id, int type) {
-	if ((client.stores[0] != null) && (fileVersions[type][id] != 0) && (filePriorities[type][id] != 0) && (highestPriority != 0)) {
+	if (client.stores[0] != null && fileVersions[type][id] != 0 && filePriorities[type][id] != 0 && highestPriority != 0) {
 	    OnDemandNode onDemandNode = new OnDemandNode();
 	    onDemandNode.type = type;
 	    onDemandNode.id = id;
@@ -475,7 +475,7 @@ public class OnDemandRequester extends Requester implements Runnable {
     }
 
     public final void setPriority(byte priority, int type, int id) {
-	if ((client.stores[0] != null) && (fileVersions[type][id] != 0)) {
+	if (client.stores[0] != null && fileVersions[type][id] != 0) {
 	    byte[] data = client.stores[type + 1].get(id);
 	    if (!verify(fileVersions[type][id], fileCrc[type][id], data)) {
 		filePriorities[type][id] = priority;
@@ -580,7 +580,7 @@ public class OnDemandRequester extends Requester implements Runnable {
 		    if (extrasLoaded < extrasTotal) {
 			extrasLoaded++;
 		    }
-		    message = "Loading extra files - " + ((extrasLoaded * 100) / extrasTotal) + "%";
+		    message = "Loading extra files - " + extrasLoaded * 100 / extrasTotal + "%";
 		    passiveRequestsSent++;
 		    if (passiveRequestsSent == 10) {
 			return;
@@ -605,7 +605,7 @@ public class OnDemandRequester extends Requester implements Runnable {
 			if (extrasLoaded < extrasTotal) {
 			    extrasLoaded++;
 			}
-			message = "Loading extra files - " + ((extrasLoaded * 100) / extrasTotal) + "%";
+			message = "Loading extra files - " + extrasLoaded * 100 / extrasTotal + "%";
 			passiveRequestsSent++;
 			if (passiveRequestsSent == 10) {
 			    return;

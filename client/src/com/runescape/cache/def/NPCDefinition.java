@@ -105,11 +105,11 @@ public class NPCDefinition {
 	    int leastSignificantBit = varbit.leastSignificantBit;
 	    int mostSignificantBit = varbit.mostSignificantBit;
 	    int bit = Game.BITFIELD_MAX_VALUE[mostSignificantBit - leastSignificantBit];
-	    childId = (NPCDefinition.client.widgetSettings[configId] >> leastSignificantBit) & bit;
+	    childId = NPCDefinition.client.widgetSettings[configId] >> leastSignificantBit & bit;
 	} else if (settingId != -1) {
 	    childId = NPCDefinition.client.widgetSettings[settingId];
 	}
-	if ((childId < 0) || (childId >= childrenIds.length) || (childrenIds[childId] == -1)) {
+	if (childId < 0 || childId >= childrenIds.length || childrenIds[childId] == -1) {
 	    return null;
 	}
 	return NPCDefinition.getDefinition(childrenIds[childId]);
@@ -177,12 +177,12 @@ public class NPCDefinition {
 	}
 	Model childModel = Model.aModel1614;
 	childModel.replaceWithModel(childIdModel, Animation.exists(frameId) & Animation.exists(frameId2));
-	if ((frameId != -1) && (frameId2 != -1)) {
+	if (frameId != -1 && frameId2 != -1) {
 	    childModel.mixAnimationFrames(-20491, framesFrom2, frameId2, frameId);
 	} else if (frameId != -1) {
 	    childModel.applyTransform(frameId);
 	}
-	if ((sizeXZ != 128) || (sizeY != 128)) {
+	if (sizeXZ != 128 || sizeY != 128) {
 	    childModel.scaleT(sizeXZ, sizeXZ, sizeY);
 	}
 	childModel.calculateDiagonals();
@@ -221,7 +221,7 @@ public class NPCDefinition {
 		turnAroundAnimationId = buffer.getUnsignedLEShort();
 		turnRightAnimationId = buffer.getUnsignedLEShort();
 		turnLeftAnimationId = buffer.getUnsignedLEShort();
-	    } else if ((attributeId >= 30) && (attributeId < 40)) {
+	    } else if (attributeId >= 30 && attributeId < 40) {
 		if (actions == null) {
 		    actions = new String[5];
 		}

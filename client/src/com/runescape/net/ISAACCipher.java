@@ -20,7 +20,7 @@ public final class ISAACCipher {
     /**
      * A mask for pseudorandom lookup.
      */
-    private static int MASK = (ISAACCipher.SIZE - 1) << 2;
+    private static int MASK = ISAACCipher.SIZE - 1 << 2;
 
     /**
      * The count through the results in the results array.
@@ -63,7 +63,7 @@ public final class ISAACCipher {
 
     /**
      * Creates the random number generator with the specified seed.
-     * 
+     *
      * @param seed The seed.
      */
     public ISAACCipher(int[] seed) {
@@ -82,62 +82,62 @@ public final class ISAACCipher {
 	int i, j, x, y;
 
 	b += ++c;
-	for (i = 0, j = ISAACCipher.SIZE / 2; i < (ISAACCipher.SIZE / 2);) {
+	for (i = 0, j = ISAACCipher.SIZE / 2; i < ISAACCipher.SIZE / 2;) {
 	    x = mem[i];
 	    a ^= a << 13;
 	    a += mem[j++];
 	    mem[i] = y = mem[(x & ISAACCipher.MASK) >> 2] + a + b;
-	    rsl[i++] = b = mem[((y >> ISAACCipher.SIZEL) & ISAACCipher.MASK) >> 2] + x;
+	    rsl[i++] = b = mem[(y >> ISAACCipher.SIZEL & ISAACCipher.MASK) >> 2] + x;
 
 	    x = mem[i];
 	    a ^= a >>> 6;
 	    a += mem[j++];
 	    mem[i] = y = mem[(x & ISAACCipher.MASK) >> 2] + a + b;
-	    rsl[i++] = b = mem[((y >> ISAACCipher.SIZEL) & ISAACCipher.MASK) >> 2] + x;
+	    rsl[i++] = b = mem[(y >> ISAACCipher.SIZEL & ISAACCipher.MASK) >> 2] + x;
 
 	    x = mem[i];
 	    a ^= a << 2;
 	    a += mem[j++];
 	    mem[i] = y = mem[(x & ISAACCipher.MASK) >> 2] + a + b;
-	    rsl[i++] = b = mem[((y >> ISAACCipher.SIZEL) & ISAACCipher.MASK) >> 2] + x;
+	    rsl[i++] = b = mem[(y >> ISAACCipher.SIZEL & ISAACCipher.MASK) >> 2] + x;
 
 	    x = mem[i];
 	    a ^= a >>> 16;
 	    a += mem[j++];
 	    mem[i] = y = mem[(x & ISAACCipher.MASK) >> 2] + a + b;
-	    rsl[i++] = b = mem[((y >> ISAACCipher.SIZEL) & ISAACCipher.MASK) >> 2] + x;
+	    rsl[i++] = b = mem[(y >> ISAACCipher.SIZEL & ISAACCipher.MASK) >> 2] + x;
 	}
 
-	for (j = 0; j < (ISAACCipher.SIZE / 2);) {
+	for (j = 0; j < ISAACCipher.SIZE / 2;) {
 	    x = mem[i];
 	    a ^= a << 13;
 	    a += mem[j++];
 	    mem[i] = y = mem[(x & ISAACCipher.MASK) >> 2] + a + b;
-	    rsl[i++] = b = mem[((y >> ISAACCipher.SIZEL) & ISAACCipher.MASK) >> 2] + x;
+	    rsl[i++] = b = mem[(y >> ISAACCipher.SIZEL & ISAACCipher.MASK) >> 2] + x;
 
 	    x = mem[i];
 	    a ^= a >>> 6;
 	    a += mem[j++];
 	    mem[i] = y = mem[(x & ISAACCipher.MASK) >> 2] + a + b;
-	    rsl[i++] = b = mem[((y >> ISAACCipher.SIZEL) & ISAACCipher.MASK) >> 2] + x;
+	    rsl[i++] = b = mem[(y >> ISAACCipher.SIZEL & ISAACCipher.MASK) >> 2] + x;
 
 	    x = mem[i];
 	    a ^= a << 2;
 	    a += mem[j++];
 	    mem[i] = y = mem[(x & ISAACCipher.MASK) >> 2] + a + b;
-	    rsl[i++] = b = mem[((y >> ISAACCipher.SIZEL) & ISAACCipher.MASK) >> 2] + x;
+	    rsl[i++] = b = mem[(y >> ISAACCipher.SIZEL & ISAACCipher.MASK) >> 2] + x;
 
 	    x = mem[i];
 	    a ^= a >>> 16;
 	    a += mem[j++];
 	    mem[i] = y = mem[(x & ISAACCipher.MASK) >> 2] + a + b;
-	    rsl[i++] = b = mem[((y >> ISAACCipher.SIZEL) & ISAACCipher.MASK) >> 2] + x;
+	    rsl[i++] = b = mem[(y >> ISAACCipher.SIZEL & ISAACCipher.MASK) >> 2] + x;
 	}
     }
 
     /**
      * Initialises this random number generator.
-     * 
+     *
      * @param flag Set to {@code true} if a seed was passed to the constructor.
      */
     private void init(boolean flag) {
@@ -271,7 +271,7 @@ public final class ISAACCipher {
 
     /**
      * Gets the next random value.
-     * 
+     *
      * @return The next random value.
      */
     public int nextInt() {

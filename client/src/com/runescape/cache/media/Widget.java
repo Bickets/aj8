@@ -109,7 +109,7 @@ public class Widget {
 	    widget.alpha = (byte) buffer.getUnsignedByte();
 	    widget.hoveredPopup = buffer.getUnsignedByte();
 	    if (widget.hoveredPopup != 0) {
-		widget.hoveredPopup = ((widget.hoveredPopup - 1) << 8) + buffer.getUnsignedByte();
+		widget.hoveredPopup = (widget.hoveredPopup - 1 << 8) + buffer.getUnsignedByte();
 	    } else {
 		widget.hoveredPopup = -1;
 	    }
@@ -168,7 +168,7 @@ public class Widget {
 			widget.imageX[sprite] = buffer.getShort();
 			widget.imageY[sprite] = buffer.getShort();
 			String spriteName = buffer.getString();
-			if ((mediaArchive != null) && (spriteName.length() > 0)) {
+			if (mediaArchive != null && spriteName.length() > 0) {
 			    int spriteId = spriteName.lastIndexOf(",");
 			    widget.images[sprite] = Widget.getImage(Integer.parseInt(spriteName.substring(spriteId + 1)), mediaArchive, spriteName.substring(0, spriteId));
 			}
@@ -185,7 +185,7 @@ public class Widget {
 	    if (widget.type == 3) {
 		widget.filled = buffer.getUnsignedByte() == 1;
 	    }
-	    if ((widget.type == 4) || (widget.type == 1)) {
+	    if (widget.type == 4 || widget.type == 1) {
 		widget.typeFaceCentered = buffer.getUnsignedByte() == 1;
 		int typeFace = buffer.getUnsignedByte();
 		if (fonts != null) {
@@ -197,22 +197,22 @@ public class Widget {
 		widget.disabledText = buffer.getString();
 		widget.enabledText = buffer.getString();
 	    }
-	    if ((widget.type == 1) || (widget.type == 3) || (widget.type == 4)) {
+	    if (widget.type == 1 || widget.type == 3 || widget.type == 4) {
 		widget.disabledColor = buffer.getInt();
 	    }
-	    if ((widget.type == 3) || (widget.type == 4)) {
+	    if (widget.type == 3 || widget.type == 4) {
 		widget.enabledColor = buffer.getInt();
 		widget.disabledHoveredColor = buffer.getInt();
 		widget.enabledHoveredColor = buffer.getInt();
 	    }
 	    if (widget.type == 5) {
 		String spriteName = buffer.getString();
-		if ((mediaArchive != null) && (spriteName.length() > 0)) {
+		if (mediaArchive != null && spriteName.length() > 0) {
 		    int spriteId = spriteName.lastIndexOf(",");
 		    widget.disabledImage = Widget.getImage(Integer.parseInt(spriteName.substring(spriteId + 1)), mediaArchive, spriteName.substring(0, spriteId));
 		}
 		spriteName = buffer.getString();
-		if ((mediaArchive != null) && (spriteName.length() > 0)) {
+		if (mediaArchive != null && spriteName.length() > 0) {
 		    int spriteId = spriteName.lastIndexOf(",");
 		    widget.enabledImage = Widget.getImage(Integer.parseInt(spriteName.substring(spriteId + 1)), mediaArchive, spriteName.substring(0, spriteId));
 		}
@@ -221,22 +221,22 @@ public class Widget {
 		widgetIndex = buffer.getUnsignedByte();
 		if (widgetIndex != 0) {
 		    widget.modelType = 1;
-		    widget.modelId = ((widgetIndex - 1) << 8) + buffer.getUnsignedByte();
+		    widget.modelId = (widgetIndex - 1 << 8) + buffer.getUnsignedByte();
 		}
 		widgetIndex = buffer.getUnsignedByte();
 		if (widgetIndex != 0) {
 		    widget.enabledModelType = 1;
-		    widget.enabledModelId = ((widgetIndex - 1) << 8) + buffer.getUnsignedByte();
+		    widget.enabledModelId = (widgetIndex - 1 << 8) + buffer.getUnsignedByte();
 		}
 		widgetIndex = buffer.getUnsignedByte();
 		if (widgetIndex != 0) {
-		    widget.disabledAnimation = ((widgetIndex - 1) << 8) + buffer.getUnsignedByte();
+		    widget.disabledAnimation = (widgetIndex - 1 << 8) + buffer.getUnsignedByte();
 		} else {
 		    widget.disabledAnimation = -1;
 		}
 		widgetIndex = buffer.getUnsignedByte();
 		if (widgetIndex != 0) {
-		    widget.enabledAnimation = ((widgetIndex - 1) << 8) + buffer.getUnsignedByte();
+		    widget.enabledAnimation = (widgetIndex - 1 << 8) + buffer.getUnsignedByte();
 		} else {
 		    widget.enabledAnimation = -1;
 		}
@@ -265,7 +265,7 @@ public class Widget {
 		    }
 		}
 	    }
-	    if ((widget.actionType == 2) || (widget.type == 2)) {
+	    if (widget.actionType == 2 || widget.type == 2) {
 		widget.selectedActionName = buffer.getString();
 		widget.spellName = buffer.getString();
 		widget.spellUsableOn = buffer.getUnsignedLEShort();
@@ -273,7 +273,7 @@ public class Widget {
 	    if (widget.type == 8) {
 		widget.disabledText = buffer.getString();
 	    }
-	    if ((widget.actionType == 1) || (widget.actionType == 4) || (widget.actionType == 5) || (widget.actionType == 6)) {
+	    if (widget.actionType == 1 || widget.actionType == 4 || widget.actionType == 5 || widget.actionType == 6) {
 		widget.tooltip = buffer.getString();
 		if (widget.tooltip.length() == 0) {
 		    if (widget.actionType == 1) {
@@ -350,11 +350,11 @@ public class Widget {
 	if (model == null) {
 	    return null;
 	}
-	if ((frame2Id == -1) && (frame1Id == -1) && (model.triangleColorValues == null)) {
+	if (frame2Id == -1 && frame1Id == -1 && model.triangleColorValues == null) {
 	    return model;
 	}
 	Model animatedModel = new Model(true, Animation.exists(frame2Id) & Animation.exists(frame1Id), false, model);
-	if ((frame2Id != -1) || (frame1Id != -1)) {
+	if (frame2Id != -1 || frame1Id != -1) {
 	    animatedModel.createBones();
 	}
 	if (frame2Id != -1) {

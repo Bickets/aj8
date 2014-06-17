@@ -62,12 +62,12 @@ public class Mob extends Renderable {
     public int turnLeftAnimationId = -1;
 
     public final void setPosition(int x, int y) {
-	if ((animation != -1) && (AnimationSequence.cache[animation].priority == 1)) {
+	if (animation != -1 && AnimationSequence.cache[animation].priority == 1) {
 	    animation = -1;
 	}
 	int xOffset = x - pathX[0];
 	int yOffset = y - pathY[0];
-	if ((xOffset >= -8) && (xOffset <= 8) && (yOffset >= -8) && (yOffset <= 8)) {
+	if (xOffset >= -8 && xOffset <= 8 && yOffset >= -8 && yOffset <= 8) {
 	    if (pathLength < 9) {
 		pathLength++;
 	    }
@@ -86,8 +86,8 @@ public class Mob extends Renderable {
 	anInt1523 = 0;
 	pathX[0] = x;
 	pathY[0] = y;
-	xWithBoundary = (pathX[0] * 128) + (boundaryDimension * 64);
-	yWithBoundary = (pathY[0] * 128) + (boundaryDimension * 64);
+	xWithBoundary = pathX[0] * 128 + boundaryDimension * 64;
+	yWithBoundary = pathY[0] * 128 + boundaryDimension * 64;
     }
 
     public final void resetPath() {
@@ -137,7 +137,7 @@ public class Mob extends Renderable {
 	    x++;
 	    y--;
 	}
-	if ((animation != -1) && (AnimationSequence.cache[animation].priority == 1)) {
+	if (animation != -1 && AnimationSequence.cache[animation].priority == 1) {
 	    animation = -1;
 	}
 	if (pathLength < 9) {

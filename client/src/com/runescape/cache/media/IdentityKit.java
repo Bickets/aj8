@@ -45,11 +45,11 @@ public class IdentityKit {
 		}
 	    } else if (attributeId == 3) {
 		widgetDisplayed = true;
-	    } else if ((attributeId >= 40) && (attributeId < 50)) {
+	    } else if (attributeId >= 40 && attributeId < 50) {
 		originalModelColors[attributeId - 40] = buffer.getUnsignedLEShort();
-	    } else if ((attributeId >= 50) && (attributeId < 60)) {
+	    } else if (attributeId >= 50 && attributeId < 60) {
 		modifiedModelColors[attributeId - 50] = buffer.getUnsignedLEShort();
-	    } else if ((attributeId >= 60) && (attributeId < 70)) {
+	    } else if (attributeId >= 60 && attributeId < 70) {
 		headModelId[attributeId - 60] = buffer.getUnsignedLEShort();
 	    } else {
 		System.out.println("Error unrecognised config code: " + attributeId);
@@ -96,7 +96,7 @@ public class IdentityKit {
     public boolean isHeadModelCached() {
 	boolean cached = true;
 	for (int model = 0; model < 5; model++) {
-	    if ((headModelId[model] != -1) && !Model.isCached(headModelId[model])) {
+	    if (headModelId[model] != -1 && !Model.isCached(headModelId[model])) {
 		cached = false;
 	    }
 	}

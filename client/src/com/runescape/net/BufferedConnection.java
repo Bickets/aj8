@@ -91,7 +91,7 @@ public class BufferedConnection implements Runnable {
 		for (int position = 0; position < length; position++) {
 		    buffer[bufferPosition] = src[position + offset];
 		    bufferPosition = (bufferPosition + 1) % 5000;
-		    if (bufferPosition == ((writerPosition + 4900) % 5000)) {
+		    if (bufferPosition == (writerPosition + 4900) % 5000) {
 			throw new IOException("buffer overflow");
 		    }
 		}

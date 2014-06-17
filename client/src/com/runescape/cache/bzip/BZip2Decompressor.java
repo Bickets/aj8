@@ -178,11 +178,11 @@ public class BZip2Decompressor {
 	    }
 	    bzip2context.anInt114 = 0;
 	    int i_34_ = BZip2Decompressor.method167(bzip2context);
-	    bzip2context.anInt114 = (bzip2context.anInt114 << 8) | (i_34_ & 0xff);
+	    bzip2context.anInt114 = bzip2context.anInt114 << 8 | i_34_ & 0xff;
 	    i_34_ = BZip2Decompressor.method167(bzip2context);
-	    bzip2context.anInt114 = (bzip2context.anInt114 << 8) | (i_34_ & 0xff);
+	    bzip2context.anInt114 = bzip2context.anInt114 << 8 | i_34_ & 0xff;
 	    i_34_ = BZip2Decompressor.method167(bzip2context);
-	    bzip2context.anInt114 = (bzip2context.anInt114 << 8) | (i_34_ & 0xff);
+	    bzip2context.anInt114 = bzip2context.anInt114 << 8 | i_34_ & 0xff;
 	    for (int i_35_ = 0; i_35_ < 16; i_35_++) {
 		b = BZip2Decompressor.method168(bzip2context);
 		if (b == 1) {
@@ -199,7 +199,7 @@ public class BZip2Decompressor {
 		    for (int i_38_ = 0; i_38_ < 16; i_38_++) {
 			b = BZip2Decompressor.method168(bzip2context);
 			if (b == 1) {
-			    bzip2context.aBooleanArray123[(i_37_ * 16) + i_38_] = true;
+			    bzip2context.aBooleanArray123[i_37_ * 16 + i_38_] = true;
 			}
 		    }
 		}
@@ -273,7 +273,7 @@ public class BZip2Decompressor {
 	    int i_60_ = 4095;
 	    for (int i_61_ = 15; i_61_ >= 0; i_61_--) {
 		for (int i_62_ = 15; i_62_ >= 0; i_62_--) {
-		    bzip2context.aByteArray126[i_60_] = (byte) ((i_61_ * 16) + i_62_);
+		    bzip2context.aByteArray126[i_60_] = (byte) (i_61_ * 16 + i_62_);
 		    i_60_--;
 		}
 		bzip2context.anIntArray127[i_61_] = i_60_ + 1;
@@ -292,13 +292,13 @@ public class BZip2Decompressor {
 	    int i_65_ = i;
 	    int i_66_;
 	    int i_67_;
-	    for (i_67_ = BZip2Decompressor.method169(i_65_, bzip2context); i_67_ > is[i_65_]; i_67_ = (i_67_ << 1) | i_66_) {
+	    for (i_67_ = BZip2Decompressor.method169(i_65_, bzip2context); i_67_ > is[i_65_]; i_67_ = i_67_ << 1 | i_66_) {
 		i_65_++;
 		i_66_ = BZip2Decompressor.method168(bzip2context);
 	    }
 	    int i_68_ = is_32_[i_67_ - is_31_[i_65_]];
 	    while (i_68_ != i_55_) {
-		if ((i_68_ == 0) || (i_68_ == 1)) {
+		if (i_68_ == 0 || i_68_ == 1) {
 		    int i_69_ = -1;
 		    int i_70_ = 1;
 		    do {
@@ -319,12 +319,12 @@ public class BZip2Decompressor {
 			}
 			i_58_--;
 			i_65_ = i;
-			for (i_67_ = BZip2Decompressor.method169(i_65_, bzip2context); i_67_ > is[i_65_]; i_67_ = (i_67_ << 1) | i_66_) {
+			for (i_67_ = BZip2Decompressor.method169(i_65_, bzip2context); i_67_ > is[i_65_]; i_67_ = i_67_ << 1 | i_66_) {
 			    i_65_++;
 			    i_66_ = BZip2Decompressor.method168(bzip2context);
 			}
 			i_68_ = is_32_[i_67_ - is_31_[i_65_]];
-		    } while ((i_68_ == 0) || (i_68_ == 1));
+		    } while (i_68_ == 0 || i_68_ == 1);
 		    i_69_++;
 		    i_34_ = bzip2context.aByteArray125[bzip2context.aByteArray126[bzip2context.anIntArray127[0]] & 0xff];
 		    bzip2context.anIntArray117[i_34_ & 0xff] += i_69_;
@@ -345,7 +345,7 @@ public class BZip2Decompressor {
 			    bzip2context.aByteArray126[i_74_ - 3] = bzip2context.aByteArray126[i_74_ - 4];
 			}
 			for ( /**/; i_72_ > 0; i_72_--) {
-			    bzip2context.aByteArray126[i_73_ + i_72_] = bzip2context.aByteArray126[(i_73_ + i_72_) - 1];
+			    bzip2context.aByteArray126[i_73_ + i_72_] = bzip2context.aByteArray126[i_73_ + i_72_ - 1];
 			}
 			bzip2context.aByteArray126[i_73_] = b;
 		    } else {
@@ -359,7 +359,7 @@ public class BZip2Decompressor {
 			bzip2context.anIntArray127[i_75_]++;
 			for ( /**/; i_75_ > 0; i_75_--) {
 			    bzip2context.anIntArray127[i_75_]--;
-			    bzip2context.aByteArray126[bzip2context.anIntArray127[i_75_]] = bzip2context.aByteArray126[(bzip2context.anIntArray127[i_75_ - 1] + 16) - 1];
+			    bzip2context.aByteArray126[bzip2context.anIntArray127[i_75_]] = bzip2context.aByteArray126[bzip2context.anIntArray127[i_75_ - 1] + 16 - 1];
 			}
 			bzip2context.anIntArray127[0]--;
 			bzip2context.aByteArray126[bzip2context.anIntArray127[0]] = b;
@@ -388,7 +388,7 @@ public class BZip2Decompressor {
 		    }
 		    i_58_--;
 		    i_65_ = i;
-		    for (i_67_ = BZip2Decompressor.method169(i_65_, bzip2context); i_67_ > is[i_65_]; i_67_ = (i_67_ << 1) | i_66_) {
+		    for (i_67_ = BZip2Decompressor.method169(i_65_, bzip2context); i_67_ > is[i_65_]; i_67_ = i_67_ << 1 | i_66_) {
 			i_65_++;
 			i_66_ = BZip2Decompressor.method168(bzip2context);
 		    }
@@ -417,7 +417,7 @@ public class BZip2Decompressor {
 	    bzip2context.anInt118++;
 	    bzip2context.anInt135 = i_63_;
 	    BZip2Decompressor.method165(bzip2context);
-	    if ((bzip2context.anInt118 == (bzip2context.anInt135 + 1)) && (bzip2context.anInt108 == 0)) {
+	    if (bzip2context.anInt118 == bzip2context.anInt135 + 1 && bzip2context.anInt108 == 0) {
 		bool_33_ = true;
 	    } else {
 		bool_33_ = false;
@@ -437,12 +437,12 @@ public class BZip2Decompressor {
 	int i_85_;
 	for (;;) {
 	    if (bzip2context.anInt111 >= i) {
-		int i_86_ = (bzip2context.anInt110 >> (bzip2context.anInt111 - i)) & ((1 << i) - 1);
+		int i_86_ = bzip2context.anInt110 >> bzip2context.anInt111 - i & (1 << i) - 1;
 		bzip2context.anInt111 -= i;
 		i_85_ = i_86_;
 		break;
 	    }
-	    bzip2context.anInt110 = (bzip2context.anInt110 << 8) | (bzip2context.aByteArray97[bzip2context.anInt98] & 0xff);
+	    bzip2context.anInt110 = bzip2context.anInt110 << 8 | bzip2context.aByteArray97[bzip2context.anInt98] & 0xff;
 	    bzip2context.anInt111 += 8;
 	    bzip2context.anInt98++;
 	    bzip2context.anInt99--;
@@ -493,7 +493,7 @@ public class BZip2Decompressor {
 	    i_98_ <<= 1;
 	}
 	for (int i_100_ = i + 1; i_100_ <= i_89_; i_100_++) {
-	    is_87_[i_100_] = ((is[i_100_ - 1] + 1) << 1) - is_87_[i_100_];
+	    is_87_[i_100_] = (is[i_100_ - 1] + 1 << 1) - is_87_[i_100_];
 	}
     }
 }

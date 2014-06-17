@@ -39,11 +39,11 @@ public class TypeFace extends Rasterizer {
 	    } else if (characterType == 1) {
 		for (int characterX = 0; characterX < characterWidth; characterX++) {
 		    for (int characterY = 0; characterY < characterHeight; characterY++) {
-			characterPixels[character][characterX + (characterY * characterWidth)] = dataBuffer.get();
+			characterPixels[character][characterX + characterY * characterWidth] = dataBuffer.get();
 		    }
 		}
 	    }
-	    if ((characterHeight > characterDefaultHeight) && (character < 128)) {
+	    if (characterHeight > characterDefaultHeight && character < 128) {
 		characterDefaultHeight = characterHeight;
 	    }
 	    characterXOffsets[character] = 1;
@@ -52,15 +52,15 @@ public class TypeFace extends Rasterizer {
 	    for (int characterY = characterHeight / 7; characterY < characterHeight; characterY++) {
 		pixelCount += characterPixels[character][characterY * characterWidth];
 	    }
-	    if (pixelCount <= (characterHeight / 7)) {
+	    if (pixelCount <= characterHeight / 7) {
 		characterScreenWidths[character]--;
 		characterXOffsets[character] = 0;
 	    }
 	    pixelCount = 0;
 	    for (int characterY = characterHeight / 7; characterY < characterHeight; characterY++) {
-		pixelCount += characterPixels[character][(characterWidth - 1) + (characterY * characterWidth)];
+		pixelCount += characterPixels[character][characterWidth - 1 + characterY * characterWidth];
 	    }
-	    if (pixelCount <= (characterHeight / 7)) {
+	    if (pixelCount <= characterHeight / 7) {
 		characterScreenWidths[character]--;
 	    }
 	}
@@ -76,11 +76,11 @@ public class TypeFace extends Rasterizer {
     }
 
     public void drawStringLeft(String string, int x, int y, int color) {
-	drawString(string, x - (getStringWidth(string) / 2), y, color);
+	drawString(string, x - getStringWidth(string) / 2, y, color);
     }
 
     public void drawStringCenter(String string, int x, int y, int color, boolean shadowed) {
-	drawShadowedString(string, x - (getStringEffectWidth(string) / 2), y, shadowed, color);
+	drawShadowedString(string, x - getStringEffectWidth(string) / 2, y, shadowed, color);
     }
 
     public int getStringEffectWidth(String string) {
@@ -89,7 +89,7 @@ public class TypeFace extends Rasterizer {
 	}
 	int width = 0;
 	for (int character = 0; character < string.length(); character++) {
-	    if ((string.charAt(character) == '@') && ((character + 4) < string.length()) && (string.charAt(character + 4) == '@')) {
+	    if (string.charAt(character) == '@' && character + 4 < string.length() && string.charAt(character + 4) == '@') {
 		character += 4;
 	    } else {
 		width += characterScreenWidths[string.charAt(character)];
@@ -129,7 +129,7 @@ public class TypeFace extends Rasterizer {
 	    for (int index = 0; index < string.length(); index++) {
 		char character = string.charAt(index);
 		if (character != ' ') {
-		    drawCharacter(characterPixels[character], x + characterXOffsets[character], y + characterYOffsets[character] + (int) (Math.sin((index / 2.0) + (wave / 5.0)) * 5.0), characterWidths[character], characterHeights[character], color);
+		    drawCharacter(characterPixels[character], x + characterXOffsets[character], y + characterYOffsets[character] + (int) (Math.sin(index / 2.0 + wave / 5.0) * 5.0), characterWidths[character], characterHeights[character], color);
 		}
 		x += characterScreenWidths[character];
 	    }
@@ -143,7 +143,7 @@ public class TypeFace extends Rasterizer {
 	    for (int index = 0; index < string.length(); index++) {
 		char character = string.charAt(index);
 		if (character != ' ') {
-		    drawCharacter(characterPixels[character], x + characterXOffsets[character] + (int) (Math.sin((index / 5.0) + (wave / 5.0)) * 5.0), y + characterYOffsets[character] + (int) (Math.sin((index / 3.0) + (wave / 5.0)) * 5.0), characterWidths[character], characterHeights[character], color);
+		    drawCharacter(characterPixels[character], x + characterXOffsets[character] + (int) (Math.sin(index / 5.0 + wave / 5.0) * 5.0), y + characterYOffsets[character] + (int) (Math.sin(index / 3.0 + wave / 5.0) * 5.0), characterWidths[character], characterHeights[character], color);
 		}
 		x += characterScreenWidths[character];
 	    }
@@ -152,7 +152,7 @@ public class TypeFace extends Rasterizer {
 
     public void drawCenteredStringWaveXYMove(String string, int x, int y, int waveAmount, int waveSpeed, int color) {
 	if (string != null) {
-	    double speed = 7.0 - (waveSpeed / 8.0);
+	    double speed = 7.0 - waveSpeed / 8.0;
 	    if (speed < 0.0) {
 		speed = 0.0;
 	    }
@@ -161,7 +161,7 @@ public class TypeFace extends Rasterizer {
 	    for (int index = 0; index < string.length(); index++) {
 		char character = string.charAt(index);
 		if (character != ' ') {
-		    drawCharacter(characterPixels[character], x + characterXOffsets[character], y + characterYOffsets[character] + (int) (Math.sin((index / 1.5) + waveAmount) * speed), characterWidths[character], characterHeights[character], color);
+		    drawCharacter(characterPixels[character], x + characterXOffsets[character], y + characterYOffsets[character] + (int) (Math.sin(index / 1.5 + waveAmount) * speed), characterWidths[character], characterHeights[character], color);
 		}
 		x += characterScreenWidths[character];
 	    }
@@ -174,7 +174,7 @@ public class TypeFace extends Rasterizer {
 	if (string != null) {
 	    y -= characterDefaultHeight;
 	    for (int character = 0; character < string.length(); character++) {
-		if ((string.charAt(character) == '@') && ((character + 4) < string.length()) && (string.charAt(character + 4) == '@')) {
+		if (string.charAt(character) == '@' && character + 4 < string.length() && string.charAt(character + 4) == '@') {
 		    int stringColor = getColor(string.substring(character + 1, character + 4));
 		    if (stringColor != -1) {
 			color = stringColor;
@@ -204,7 +204,7 @@ public class TypeFace extends Rasterizer {
 	    int alpha = 192 + (random.nextInt() & 0x1f);
 	    y -= characterDefaultHeight;
 	    for (int index = 0; index < string.length(); index++) {
-		if ((string.charAt(index) == '@') && ((index + 4) < string.length()) && (string.charAt(index + 4) == '@')) {
+		if (string.charAt(index) == '@' && index + 4 < string.length() && string.charAt(index + 4) == '@') {
 		    int stringColor = getColor(string.substring(index + 1, index + 4));
 		    if (stringColor != -1) {
 			color = stringColor;
@@ -287,7 +287,7 @@ public class TypeFace extends Rasterizer {
     }
 
     private void drawCharacter(byte[] pixels, int x, int y, int width, int height, int color) {
-	int rasterizerPixel = x + (y * Rasterizer.width);
+	int rasterizerPixel = x + y * Rasterizer.width;
 	int remainingWidth = Rasterizer.width - width;
 	int characterPixelOffset = 0;
 	int characterPixel = 0;
@@ -298,8 +298,8 @@ public class TypeFace extends Rasterizer {
 	    characterPixel += offsetY * width;
 	    rasterizerPixel += offsetY * Rasterizer.width;
 	}
-	if ((y + height) >= Rasterizer.bottomY) {
-	    height -= ((y + height) - Rasterizer.bottomY) + 1;
+	if (y + height >= Rasterizer.bottomY) {
+	    height -= y + height - Rasterizer.bottomY + 1;
 	}
 	if (x < Rasterizer.topX) {
 	    int offsetX = Rasterizer.topX - x;
@@ -310,13 +310,13 @@ public class TypeFace extends Rasterizer {
 	    characterPixelOffset += offsetX;
 	    remainingWidth += offsetX;
 	}
-	if ((x + width) >= Rasterizer.bottomX) {
-	    int endOffsetX = ((x + width) - Rasterizer.bottomX) + 1;
+	if (x + width >= Rasterizer.bottomX) {
+	    int endOffsetX = x + width - Rasterizer.bottomX + 1;
 	    width -= endOffsetX;
 	    characterPixelOffset += endOffsetX;
 	    remainingWidth += endOffsetX;
 	}
-	if ((width > 0) && (height > 0)) {
+	if (width > 0 && height > 0) {
 	    drawCharacterPixels(pixels, Rasterizer.pixels, characterPixel, rasterizerPixel, characterPixelOffset, remainingWidth, width, height, color);
 	}
     }
@@ -360,7 +360,7 @@ public class TypeFace extends Rasterizer {
     }
 
     private void drawAlphaCharacter(int alpha, int x, byte[] characterPixels, int width, int y, int height, int color) {
-	int rasterizerPixel = x + (y * Rasterizer.width);
+	int rasterizerPixel = x + y * Rasterizer.width;
 	int rasterizerPixelOffset = Rasterizer.width - width;
 	int characterPixelOffset = 0;
 	int characterPixel = 0;
@@ -371,8 +371,8 @@ public class TypeFace extends Rasterizer {
 	    characterPixel += yOffset * width;
 	    rasterizerPixel += yOffset * Rasterizer.width;
 	}
-	if ((y + height) >= Rasterizer.bottomY) {
-	    height -= ((y + height) - Rasterizer.bottomY) + 1;
+	if (y + height >= Rasterizer.bottomY) {
+	    height -= y + height - Rasterizer.bottomY + 1;
 	}
 	if (x < Rasterizer.topX) {
 	    int xOffset = Rasterizer.topX - x;
@@ -383,25 +383,25 @@ public class TypeFace extends Rasterizer {
 	    characterPixelOffset += xOffset;
 	    rasterizerPixelOffset += xOffset;
 	}
-	if ((x + width) >= Rasterizer.bottomX) {
-	    int widthoffset = ((x + width) - Rasterizer.bottomX) + 1;
+	if (x + width >= Rasterizer.bottomX) {
+	    int widthoffset = x + width - Rasterizer.bottomX + 1;
 	    width -= widthoffset;
 	    characterPixelOffset += widthoffset;
 	    rasterizerPixelOffset += widthoffset;
 	}
-	if ((width > 0) && (height > 0)) {
+	if (width > 0 && height > 0) {
 	    drawCharacterPixelsAlpha(characterPixels, Rasterizer.pixels, characterPixel, rasterizerPixel, characterPixelOffset, rasterizerPixelOffset, width, height, color, alpha);
 	}
     }
 
     private void drawCharacterPixelsAlpha(byte[] characterPixels, int[] rasterizerPixels, int characterPixel, int rasterizerPixel, int characterPixelOffset, int rasterizerPixelOffset, int width, int height, int color, int alpha) {
-	color = ((((color & 0xff00ff) * alpha) & ~0xff00ff) + (((color & 0xff00) * alpha) & 0xff0000)) >> 8;
+	color = ((color & 0xff00ff) * alpha & ~0xff00ff) + ((color & 0xff00) * alpha & 0xff0000) >> 8;
 	alpha = 256 - alpha;
 	for (int heightCounter = -height; heightCounter < 0; heightCounter++) {
 	    for (int widthCounter = -width; widthCounter < 0; widthCounter++) {
 		if (characterPixels[characterPixel++] != 0) {
 		    int rasterizerPixelColor = rasterizerPixels[rasterizerPixel];
-		    rasterizerPixels[rasterizerPixel++] = (((((rasterizerPixelColor & 0xff00ff) * alpha) & ~0xff00ff) + (((rasterizerPixelColor & 0xff00) * alpha) & 0xff0000)) >> 8) + color;
+		    rasterizerPixels[rasterizerPixel++] = (((rasterizerPixelColor & 0xff00ff) * alpha & ~0xff00ff) + ((rasterizerPixelColor & 0xff00) * alpha & 0xff0000) >> 8) + color;
 		} else {
 		    rasterizerPixel++;
 		}

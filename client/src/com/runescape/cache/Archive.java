@@ -19,7 +19,7 @@ public class Archive {
 
     /**
      * Creates the archive.
-     * 
+     *
      * @param dataBuffer The buffer of the archive.
      */
     public Archive(byte[] dataBuffer) {
@@ -41,7 +41,7 @@ public class Archive {
 	uncompressedSizes = new int[dataSize];
 	compressedSizes = new int[dataSize];
 	startOffsets = new int[dataSize];
-	int offset = buffer.offset + (dataSize * 10);
+	int offset = buffer.offset + dataSize * 10;
 	for (int index = 0; index < dataSize; index++) {
 	    nameHashes[index] = buffer.getInt();
 	    uncompressedSizes[index] = buffer.get24BitInt();
@@ -53,7 +53,7 @@ public class Archive {
 
     /**
      * Gets a file by its name.
-     * 
+     *
      * @param file The file name.
      * @return The file contents.
      */

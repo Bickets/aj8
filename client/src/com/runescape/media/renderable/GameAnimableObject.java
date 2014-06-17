@@ -39,7 +39,7 @@ public class GameAnimableObject extends Renderable {
 	    animatedModel.triangleSkin = null;
 	    animatedModel.vectorSkin = null;
 	}
-	if ((animation.resizeXY != 128) || (animation.resizeZ != 128)) {
+	if (animation.resizeXY != 128 || animation.resizeZ != 128) {
 	    animatedModel.scaleT(animation.resizeXY, animation.resizeXY, animation.resizeZ);
 	}
 	if (animation.rotation != 0) {
@@ -65,7 +65,7 @@ public class GameAnimableObject extends Renderable {
 	while (duration > animation.sequences.getFrameLength(eclapsedFrames)) {
 	    duration -= animation.sequences.getFrameLength(eclapsedFrames) + 1;
 	    eclapsedFrames++;
-	    if ((eclapsedFrames >= animation.sequences.frameCount) && ((eclapsedFrames < 0) || (eclapsedFrames >= animation.sequences.frameCount))) {
+	    if (eclapsedFrames >= animation.sequences.frameCount && (eclapsedFrames < 0 || eclapsedFrames >= animation.sequences.frameCount)) {
 		eclapsedFrames = 0;
 		transformCompleted = true;
 	    }

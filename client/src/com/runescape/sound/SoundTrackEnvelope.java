@@ -47,13 +47,13 @@ public class SoundTrackEnvelope {
 	    if (phaseIndex >= numPhases) {
 		phaseIndex = numPhases - 1;
 	    }
-	    critical = (int) ((phaseDuration[phaseIndex] / 65536.0) * period);
+	    critical = (int) (phaseDuration[phaseIndex] / 65536.0 * period);
 	    if (critical > ticks) {
 		step = ((phasePeak[phaseIndex] << 15) - amplitude) / (critical - ticks);
 	    }
 	}
 	amplitude += step;
 	ticks++;
-	return (amplitude - step) >> 15;
+	return amplitude - step >> 15;
     }
 }

@@ -20,7 +20,7 @@ public class CollisionMap {
     public void reset() {
 	for (int x = 0; x < width; x++) {
 	    for (int y = 0; y < height; y++) {
-		if ((x == 0) || (y == 0) || (x == (width - 1)) || (y == (height - 1))) {
+		if (x == 0 || y == 0 || x == width - 1 || y == height - 1) {
 		    adjacency[x][y] = 0xffffff; /* fully closed */
 		} else {
 		    adjacency[x][y] = 0x1000000; /* uninitialized */
@@ -50,7 +50,7 @@ public class CollisionMap {
 		set(x, y - 1, 0x2); /* wall north */
 	    }
 	}
-	if ((position == 1) || (position == 3)) {
+	if (position == 1 || position == 3) {
 	    if (orientation == 0) {
 		set(x, y, 0x1); /* wall northwest */
 		set(x - 1, y + 1, 0x10); /* wall southeast */
@@ -109,7 +109,7 @@ public class CollisionMap {
 		    set(x, y - 1, 0x400); /* impenetrable wall north */
 		}
 	    }
-	    if ((position == 1) || (position == 3)) {
+	    if (position == 1 || position == 3) {
 		if (orientation == 0) {
 		    set(x, y, 0x200); /* impenetrable wall northwest */
 		    set(x - 1, y + 1, 0x2000); /* impenetrable wall southeast */
@@ -159,15 +159,15 @@ public class CollisionMap {
 	}
 	x -= insetX;
 	y -= insetY;
-	if ((orient == 1) || (orient == 3)) {
+	if (orient == 1 || orient == 3) {
 	    int tmp = w;
 	    w = h;
 	    h = tmp;
 	}
-	for (int l1 = x; l1 < (x + w); l1++) {
-	    if ((l1 >= 0) && (l1 < width)) {
-		for (int i2 = y; i2 < (y + h); i2++) {
-		    if ((i2 >= 0) && (i2 < height)) {
+	for (int l1 = x; l1 < x + w; l1++) {
+	    if (l1 >= 0 && l1 < width) {
+		for (int i2 = y; i2 < y + h; i2++) {
+		    if (i2 >= 0 && i2 < height) {
 			set(l1, i2, occupied);
 		    }
 		}
@@ -208,7 +208,7 @@ public class CollisionMap {
 		unset(x, y - 1, 0x2); /* wall north */
 	    }
 	}
-	if ((position == 1) || (position == 3)) {
+	if (position == 1 || position == 3) {
 	    if (orientation == 0) {
 		unset(x, y, 0x1); /* wall northwest */
 		unset(x - 1, y + 1, 0x10); /* wall southeast */
@@ -267,7 +267,7 @@ public class CollisionMap {
 		    unset(x, y - 1, 0x400); /* impenetrable wall north */
 		}
 	    }
-	    if ((position == 1) || (position == 3)) {
+	    if (position == 1 || position == 3) {
 		if (orientation == 0) {
 		    unset(x, y, 0x200); /* impenetrable wall northwest */
 		    unset(x - 1, y + 1, 0x2000); /* impenetrable wall southeast */
@@ -317,15 +317,15 @@ public class CollisionMap {
 	}
 	x -= insetX;
 	y -= insetY;
-	if ((orientation == 1) || (orientation == 3)) {
+	if (orientation == 1 || orientation == 3) {
 	    int originalWidth = width;
 	    width = height;
 	    height = originalWidth;
 	}
-	for (int xCounter = x; xCounter < (x + width); xCounter++) {
-	    if ((xCounter >= 0) && (xCounter < this.width)) {
-		for (int yCounter = y; yCounter < (y + height); yCounter++) {
-		    if ((yCounter >= 0) && (yCounter < this.height)) {
+	for (int xCounter = x; xCounter < x + width; xCounter++) {
+	    if (xCounter >= 0 && xCounter < this.width) {
+		for (int yCounter = y; yCounter < y + height; yCounter++) {
+		    if (yCounter >= 0 && yCounter < this.height) {
 			unset(xCounter, yCounter, occupied);
 		    }
 		}
@@ -344,7 +344,7 @@ public class CollisionMap {
     }
 
     public boolean reachedWall(int currentX, int currentY, int goalX, int goalY, int goalPosition, int goalOrientation) {
-	if ((currentX == goalX) && (currentY == goalY)) {
+	if (currentX == goalX && currentY == goalY) {
 	    return true;
 	}
 	currentX -= insetX;
@@ -353,161 +353,161 @@ public class CollisionMap {
 	goalY -= insetY;
 	if (goalPosition == 0) {
 	    if (goalOrientation == 0) {
-		if ((currentX == (goalX - 1)) && (currentY == goalY)) {
+		if (currentX == goalX - 1 && currentY == goalY) {
 		    return true; /*
 				  * uninitialized | blocked | ? | solid occupied
 				  * | wall south
 				  */
 		}
-		if ((currentX == goalX) && (currentY == (goalY + 1)) && ((adjacency[currentX][currentY] & 0x1280120) == 0)) {
+		if (currentX == goalX && currentY == goalY + 1 && (adjacency[currentX][currentY] & 0x1280120) == 0) {
 		    return true; /*
 				  * uninitialized | blocked | ? | solid occupied
 				  * | wall north
 				  */
 		}
-		if ((currentX == goalX) && (currentY == (goalY - 1)) && ((adjacency[currentX][currentY] & 0x1280102) == 0)) {
+		if (currentX == goalX && currentY == goalY - 1 && (adjacency[currentX][currentY] & 0x1280102) == 0) {
 		    return true;
 		}
 	    } else if (goalOrientation == 1) {
-		if ((currentX == goalX) && (currentY == (goalY + 1))) {
+		if (currentX == goalX && currentY == goalY + 1) {
 		    return true; /*
 				  * uninitialized | blocked | ? | solid occupied
 				  * | wall east
 				  */
 		}
-		if ((currentX == (goalX - 1)) && (currentY == goalY) && ((adjacency[currentX][currentY] & 0x1280108) == 0)) {
+		if (currentX == goalX - 1 && currentY == goalY && (adjacency[currentX][currentY] & 0x1280108) == 0) {
 		    return true; /*
 				  * uninitialized | blocked | ? | solid occupied
 				  * | wall west
 				  */
 		}
-		if ((currentX == (goalX + 1)) && (currentY == goalY) && ((adjacency[currentX][currentY] & 0x1280180) == 0)) {
+		if (currentX == goalX + 1 && currentY == goalY && (adjacency[currentX][currentY] & 0x1280180) == 0) {
 		    return true;
 		}
 	    } else if (goalOrientation == 2) {
-		if ((currentX == (goalX + 1)) && (currentY == goalY)) {
+		if (currentX == goalX + 1 && currentY == goalY) {
 		    return true; /*
 				  * uninitialized | blocked | ? | solid occupied
 				  * | wall south
 				  */
 		}
-		if ((currentX == goalX) && (currentY == (goalY + 1)) && ((adjacency[currentX][currentY] & 0x1280120) == 0)) {
+		if (currentX == goalX && currentY == goalY + 1 && (adjacency[currentX][currentY] & 0x1280120) == 0) {
 		    return true; /*
 				  * uninitialized | blocked | ? | solid occupied
 				  * | wall north
 				  */
 		}
-		if ((currentX == goalX) && (currentY == (goalY - 1)) && ((adjacency[currentX][currentY] & 0x1280102) == 0)) {
+		if (currentX == goalX && currentY == goalY - 1 && (adjacency[currentX][currentY] & 0x1280102) == 0) {
 		    return true;
 		}
 	    } else if (goalOrientation == 3) {
-		if ((currentX == goalX) && (currentY == (goalY - 1))) {
+		if (currentX == goalX && currentY == goalY - 1) {
 		    return true; /*
 				  * uninitialized | blocked | ? | solid occupied
 				  * | wall east
 				  */
 		}
-		if ((currentX == (goalX - 1)) && (currentY == goalY) && ((adjacency[currentX][currentY] & 0x1280108) == 0)) {
+		if (currentX == goalX - 1 && currentY == goalY && (adjacency[currentX][currentY] & 0x1280108) == 0) {
 		    return true; /*
 				  * uninitialized | blocked | ? | solid occupied
 				  * | wall west
 				  */
 		}
-		if ((currentX == (goalX + 1)) && (currentY == goalY) && ((adjacency[currentX][currentY] & 0x1280180) == 0)) {
+		if (currentX == goalX + 1 && currentY == goalY && (adjacency[currentX][currentY] & 0x1280180) == 0) {
 		    return true;
 		}
 	    }
 	}
 	if (goalPosition == 2) {
 	    if (goalOrientation == 0) {
-		if ((currentX == (goalX - 1)) && (currentY == goalY)) {
+		if (currentX == goalX - 1 && currentY == goalY) {
 		    return true;
 		}
-		if ((currentX == goalX) && (currentY == (goalY + 1))) {
+		if (currentX == goalX && currentY == goalY + 1) {
 		    return true; /*
 				  * uninitialized | blocked | ? | solid occupied
 				  * | wall west
 				  */
 		}
-		if ((currentX == (goalX + 1)) && (currentY == goalY) && ((adjacency[currentX][currentY] & 0x1280180) == 0)) {
+		if (currentX == goalX + 1 && currentY == goalY && (adjacency[currentX][currentY] & 0x1280180) == 0) {
 		    return true; /*
 				  * uninitialized | blocked | ? | solid occupied
 				  * | wall north
 				  */
 		}
-		if ((currentX == goalX) && (currentY == (goalY - 1)) && ((adjacency[currentX][currentY] & 0x1280102) == 0)) {
+		if (currentX == goalX && currentY == goalY - 1 && (adjacency[currentX][currentY] & 0x1280102) == 0) {
 		    return true;
 		}
 	    } else if (goalOrientation == 1) { /*
 					        * uninitialized | blocked | ? |
 					        * solid occupied | wall east
 					        */
-		if ((currentX == (goalX - 1)) && (currentY == goalY) && ((adjacency[currentX][currentY] & 0x1280108) == 0)) {
+		if (currentX == goalX - 1 && currentY == goalY && (adjacency[currentX][currentY] & 0x1280108) == 0) {
 		    return true;
 		}
-		if ((currentX == goalX) && (currentY == (goalY + 1))) {
+		if (currentX == goalX && currentY == goalY + 1) {
 		    return true;
 		}
-		if ((currentX == (goalX + 1)) && (currentY == goalY)) {
+		if (currentX == goalX + 1 && currentY == goalY) {
 		    return true; /*
 				  * uninitialized | blocked | ? | solid occupied
 				  * | wall north
 				  */
 		}
-		if ((currentX == goalX) && (currentY == (goalY - 1)) && ((adjacency[currentX][currentY] & 0x1280102) == 0)) {
+		if (currentX == goalX && currentY == goalY - 1 && (adjacency[currentX][currentY] & 0x1280102) == 0) {
 		    return true;
 		}
 	    } else if (goalOrientation == 2) { /*
 					        * uninitialized | blocked | ? |
 					        * solid occupied | wall east
 					        */
-		if ((currentX == (goalX - 1)) && (currentY == goalY) && ((adjacency[currentX][currentY] & 0x1280108) == 0)) {
+		if (currentX == goalX - 1 && currentY == goalY && (adjacency[currentX][currentY] & 0x1280108) == 0) {
 		    return true; /*
 				  * uninitialized | blocked | ? | solid occupied
 				  * | wall south
 				  */
 		}
-		if ((currentX == goalX) && (currentY == (goalY + 1)) && ((adjacency[currentX][currentY] & 0x1280120) == 0)) {
+		if (currentX == goalX && currentY == goalY + 1 && (adjacency[currentX][currentY] & 0x1280120) == 0) {
 		    return true;
 		}
-		if ((currentX == (goalX + 1)) && (currentY == goalY)) {
+		if (currentX == goalX + 1 && currentY == goalY) {
 		    return true;
 		}
-		if ((currentX == goalX) && (currentY == (goalY - 1))) {
+		if (currentX == goalX && currentY == goalY - 1) {
 		    return true;
 		}
 	    } else if (goalOrientation == 3) {
-		if ((currentX == (goalX - 1)) && (currentY == goalY)) {
+		if (currentX == goalX - 1 && currentY == goalY) {
 		    return true; /*
 				  * uninitialized | blocked | ? | solid occupied
 				  * | wall south
 				  */
 		}
-		if ((currentX == goalX) && (currentY == (goalY + 1)) && ((adjacency[currentX][currentY] & 0x1280120) == 0)) {
+		if (currentX == goalX && currentY == goalY + 1 && (adjacency[currentX][currentY] & 0x1280120) == 0) {
 		    return true; /*
 				  * uninitialized | blocked | ? | solid occupied
 				  * | wall west
 				  */
 		}
-		if ((currentX == (goalX + 1)) && (currentY == goalY) && ((adjacency[currentX][currentY] & 0x1280180) == 0)) {
+		if (currentX == goalX + 1 && currentY == goalY && (adjacency[currentX][currentY] & 0x1280180) == 0) {
 		    return true;
 		}
-		if ((currentX == goalX) && (currentY == (goalY - 1))) {
+		if (currentX == goalX && currentY == goalY - 1) {
 		    return true;
 		}
 	    }
 	}
 	if (goalPosition == 9) { /* wall south */
-	    if ((currentX == goalX) && (currentY == (goalY + 1)) && ((adjacency[currentX][currentY] & 0x20) == 0)) {
+	    if (currentX == goalX && currentY == goalY + 1 && (adjacency[currentX][currentY] & 0x20) == 0) {
 		return true; /* wall north */
 	    }
-	    if ((currentX == goalX) && (currentY == (goalY - 1)) && ((adjacency[currentX][currentY] & 0x2) == 0)) {
+	    if (currentX == goalX && currentY == goalY - 1 && (adjacency[currentX][currentY] & 0x2) == 0) {
 		return true; /* wall east */
 	    }
-	    if ((currentX == (goalX - 1)) && (currentY == goalY) && ((adjacency[currentX][currentY] & 0x8) == 0)) {
+	    if (currentX == goalX - 1 && currentY == goalY && (adjacency[currentX][currentY] & 0x8) == 0) {
 		return true; /* wall west */
 	    }
-	    if ((currentX == (goalX + 1)) && (currentY == goalY) && ((adjacency[currentX][currentY] & 0x80) == 0)) {
+	    if (currentX == goalX + 1 && currentY == goalY && (adjacency[currentX][currentY] & 0x80) == 0) {
 		return true;
 	    }
 	}
@@ -515,58 +515,58 @@ public class CollisionMap {
     }
 
     public boolean reachedWallDecoration(int currentX, int currentY, int goalX, int goalY, int goalPosition, int goalOrientation) {
-	if ((currentX == goalX) && (currentY == goalY)) {
+	if (currentX == goalX && currentY == goalY) {
 	    return true;
 	}
 	currentX -= insetX;
 	currentY -= insetY;
 	goalX -= insetX;
 	goalY -= insetY;
-	if ((goalPosition == 6) || (goalPosition == 7)) {
+	if (goalPosition == 6 || goalPosition == 7) {
 	    if (goalPosition == 7) {
-		goalOrientation = (goalOrientation + 2) & 3;
+		goalOrientation = goalOrientation + 2 & 3;
 	    }
 	    if (goalOrientation == 0) { /* wall west */
-		if ((currentX == (goalX + 1)) && (currentY == goalY) && ((adjacency[currentX][currentY] & 0x80) == 0)) {
+		if (currentX == goalX + 1 && currentY == goalY && (adjacency[currentX][currentY] & 0x80) == 0) {
 		    return true; /* wall north */
 		}
-		if ((currentX == goalX) && (currentY == (goalY - 1)) && ((adjacency[currentX][currentY] & 0x2) == 0)) {
+		if (currentX == goalX && currentY == goalY - 1 && (adjacency[currentX][currentY] & 0x2) == 0) {
 		    return true;
 		}
 	    } else if (goalOrientation == 1) { /* wall east */
-		if ((currentX == (goalX - 1)) && (currentY == goalY) && ((adjacency[currentX][currentY] & 0x8) == 0)) {
+		if (currentX == goalX - 1 && currentY == goalY && (adjacency[currentX][currentY] & 0x8) == 0) {
 		    return true; /* wall north */
 		}
-		if ((currentX == goalX) && (currentY == (goalY - 1)) && ((adjacency[currentX][currentY] & 0x2) == 0)) {
+		if (currentX == goalX && currentY == goalY - 1 && (adjacency[currentX][currentY] & 0x2) == 0) {
 		    return true;
 		}
 	    } else if (goalOrientation == 2) { /* wall east */
-		if ((currentX == (goalX - 1)) && (currentY == goalY) && ((adjacency[currentX][currentY] & 0x8) == 0)) {
+		if (currentX == goalX - 1 && currentY == goalY && (adjacency[currentX][currentY] & 0x8) == 0) {
 		    return true; /* wall south */
 		}
-		if ((currentX == goalX) && (currentY == (goalY + 1)) && ((adjacency[currentX][currentY] & 0x20) == 0)) {
+		if (currentX == goalX && currentY == goalY + 1 && (adjacency[currentX][currentY] & 0x20) == 0) {
 		    return true;
 		}
 	    } else if (goalOrientation == 3) { /* wall west */
-		if ((currentX == (goalX + 1)) && (currentY == goalY) && ((adjacency[currentX][currentY] & 0x80) == 0)) {
+		if (currentX == goalX + 1 && currentY == goalY && (adjacency[currentX][currentY] & 0x80) == 0) {
 		    return true; /* wall south */
 		}
-		if ((currentX == goalX) && (currentY == (goalY + 1)) && ((adjacency[currentX][currentY] & 0x20) == 0)) {
+		if (currentX == goalX && currentY == goalY + 1 && (adjacency[currentX][currentY] & 0x20) == 0) {
 		    return true;
 		}
 	    }
 	}
 	if (goalPosition == 8) { /* wall south */
-	    if ((currentX == goalX) && (currentY == (goalY + 1)) && ((adjacency[currentX][currentY] & 0x20) == 0)) {
+	    if (currentX == goalX && currentY == goalY + 1 && (adjacency[currentX][currentY] & 0x20) == 0) {
 		return true; /* wall north */
 	    }
-	    if ((currentX == goalX) && (currentY == (goalY - 1)) && ((adjacency[currentX][currentY] & 0x2) == 0)) {
+	    if (currentX == goalX && currentY == goalY - 1 && (adjacency[currentX][currentY] & 0x2) == 0) {
 		return true; /* wall east */
 	    }
-	    if ((currentX == (goalX - 1)) && (currentY == goalY) && ((adjacency[currentX][currentY] & 0x8) == 0)) {
+	    if (currentX == goalX - 1 && currentY == goalY && (adjacency[currentX][currentY] & 0x8) == 0) {
 		return true; /* wall west */
 	    }
-	    if ((currentX == (goalX + 1)) && (currentY == goalY) && ((adjacency[currentX][currentY] & 0x80) == 0)) {
+	    if (currentX == goalX + 1 && currentY == goalY && (adjacency[currentX][currentY] & 0x80) == 0) {
 		return true;
 	    }
 	}
@@ -574,28 +574,28 @@ public class CollisionMap {
     }
 
     public boolean reachedFacingObject(int currentX, int currentY, int goalX, int goalY, int goalDX, int goalDY, int surroundings) {
-	int goalX2 = (goalX + goalDX) - 1;
-	int goalY2 = (goalY + goalDY) - 1;
-	if ((currentX >= goalX) && (currentX <= goalX2) && (currentY >= goalY) && (currentY <= goalY2)) {
+	int goalX2 = goalX + goalDX - 1;
+	int goalY2 = goalY + goalDY - 1;
+	if (currentX >= goalX && currentX <= goalX2 && currentY >= goalY && currentY <= goalY2) {
 	    return true;
 	}
-	if ((currentX == (goalX - 1)) && (currentY >= goalY) && (currentY <= goalY2)
+	if (currentX == goalX - 1 && currentY >= goalY && currentY <= goalY2
 	/* wall east *//* surrounding blocked west */
-	&& ((adjacency[currentX - insetX][currentY - insetY] & 0x8) == 0) && ((surroundings & 8) == 0)) {
+	&& (adjacency[currentX - insetX][currentY - insetY] & 0x8) == 0 && (surroundings & 8) == 0) {
 	    return true;
 	}
-	if ((currentX == (goalX2 + 1)) && (currentY >= goalY) && (currentY <= goalY2)
+	if (currentX == goalX2 + 1 && currentY >= goalY && currentY <= goalY2
 	/* wall west *//* surrounding blocked east */
-	&& ((adjacency[currentX - insetX][currentY - insetY] & 0x80) == 0) && ((surroundings & 2) == 0)) {
+	&& (adjacency[currentX - insetX][currentY - insetY] & 0x80) == 0 && (surroundings & 2) == 0) {
 	    return true;
 	}
-	if ((currentY == (goalY - 1)) && (currentX >= goalX) && (currentX <= goalX2)
+	if (currentY == goalY - 1 && currentX >= goalX && currentX <= goalX2
 	/* wall north *//* surrounding blocked south */
-	&& ((adjacency[currentX - insetX][currentY - insetY] & 0x2) == 0) && ((surroundings & 4) == 0)) {
+	&& (adjacency[currentX - insetX][currentY - insetY] & 0x2) == 0 && (surroundings & 4) == 0) {
 	    return true;
 	}
-	return (currentY == (goalY2 + 1)) && (currentX >= goalX) && (currentX <= goalX2)
+	return currentY == goalY2 + 1 && currentX >= goalX && currentX <= goalX2
 	/* wall south *//* surrounding blocked north */
-	&& ((adjacency[currentX - insetX][currentY - insetY] & 0x20) == 0) && ((surroundings & 1) == 0);
+	&& (adjacency[currentX - insetX][currentY - insetY] & 0x20) == 0 && (surroundings & 1) == 0;
     }
 }

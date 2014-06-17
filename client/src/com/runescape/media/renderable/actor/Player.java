@@ -54,7 +54,7 @@ public class Player extends Mob {
 	if (aBoolean1719) {
 	    return model;
 	}
-	if ((spotAnimationId != -1) && (currentAnimationFrame != -1)) {
+	if (spotAnimationId != -1 && currentAnimationFrame != -1) {
 	    SpotAnimation spotAnimation = SpotAnimation.cache[spotAnimationId];
 	    Model spotAnimationModel = spotAnimation.getModel();
 	    if (spotAnimationModel != null) {
@@ -64,7 +64,7 @@ public class Player extends Mob {
 		spotAnimationModel2.applyTransform(spotAnimation.sequences.frame2Ids[currentAnimationFrame]);
 		spotAnimationModel2.triangleSkin = null;
 		spotAnimationModel2.vectorSkin = null;
-		if ((spotAnimation.resizeXY != 128) || (spotAnimation.resizeZ != 128)) {
+		if (spotAnimation.resizeXY != 128 || spotAnimation.resizeZ != 128) {
 		    spotAnimationModel2.scaleT(spotAnimation.resizeXY, spotAnimation.resizeXY, spotAnimation.resizeZ);
 		}
 		spotAnimationModel2.applyLighting(64 + spotAnimation.modelLightFalloff, 850 + spotAnimation.modelLightAmbient, -30, -50, -30, true);
@@ -76,7 +76,7 @@ public class Player extends Mob {
 	    if (Game.currentCycle >= anInt1728) {
 		playerModel = null;
 	    }
-	    if ((Game.currentCycle >= anInt1727) && (Game.currentCycle < anInt1728)) {
+	    if (Game.currentCycle >= anInt1727 && Game.currentCycle < anInt1728) {
 		Model model_2_ = playerModel;
 		model_2_.translate(anInt1731 - xWithBoundary, anInt1732 - anInt1729, anInt1733 - yWithBoundary);
 		if (anInt1530 == 512) {
@@ -121,11 +121,11 @@ public class Player extends Mob {
 	    } else {
 		int i_5_ = buffer.getUnsignedByte();
 		appearance[index] = (i_4_ << 8) + i_5_;
-		if ((index == 0) && (appearance[0] == 65535)) {
+		if (index == 0 && appearance[0] == 65535) {
 		    npcDefinition = NPCDefinition.getDefinition(buffer.getUnsignedLEShort());
 		    break;
 		}
-		if ((appearance[index] >= 512) && ((appearance[index] - 512) < ItemDefinition.itemCount)) {
+		if (appearance[index] >= 512 && appearance[index] - 512 < ItemDefinition.itemCount) {
 		    int teamId = ItemDefinition.getDefinition(appearance[index] - 512).teamId;
 		    if (teamId != 0) {
 			this.teamId = teamId;
@@ -135,7 +135,7 @@ public class Player extends Mob {
 	}
 	for (int i_7_ = 0; i_7_ < 5; i_7_++) {
 	    int i_8_ = buffer.getUnsignedByte();
-	    if ((i_8_ < 0) || (i_8_ >= Game.anIntArrayArray1028[i_7_].length)) {
+	    if (i_8_ < 0 || i_8_ >= Game.anIntArrayArray1028[i_7_].length) {
 		i_8_ = 0;
 	    }
 	    appearanceColors[i_7_] = i_8_;
@@ -180,10 +180,10 @@ public class Player extends Mob {
 	    }
 	}
 	if (appearance[0] >= 256) {
-	    appearanceOffset += (appearance[0] - 256) >> 4;
+	    appearanceOffset += appearance[0] - 256 >> 4;
 	}
 	if (appearance[1] >= 256) {
-	    appearanceOffset += (appearance[1] - 256) >> 8;
+	    appearanceOffset += appearance[1] - 256 >> 8;
 	}
 	for (int index = 0; index < 5; index++) {
 	    appearanceOffset <<= 3;
@@ -196,7 +196,7 @@ public class Player extends Mob {
     private final Model getAnimatedModel() {
 	if (npcDefinition != null) {
 	    int i_11_ = -1;
-	    if ((animation >= 0) && (aniomationDelay == 0)) {
+	    if (animation >= 0 && aniomationDelay == 0) {
 		i_11_ = AnimationSequence.cache[animation].frame2Ids[anInt1547];
 	    } else if (anInt1537 >= 0) {
 		i_11_ = AnimationSequence.cache[anInt1537].frame2Ids[anInt1538];
@@ -209,19 +209,19 @@ public class Player extends Mob {
 	int i_13_ = -1;
 	int i_14_ = -1;
 	int i_15_ = -1;
-	if ((animation >= 0) && (aniomationDelay == 0)) {
+	if (animation >= 0 && aniomationDelay == 0) {
 	    AnimationSequence animationsequence = AnimationSequence.cache[animation];
 	    i_12_ = animationsequence.frame2Ids[anInt1547];
-	    if ((anInt1537 >= 0) && (anInt1537 != standAnimationId)) {
+	    if (anInt1537 >= 0 && anInt1537 != standAnimationId) {
 		i_13_ = AnimationSequence.cache[anInt1537].frame2Ids[anInt1538];
 	    }
 	    if (animationsequence.anInt58 >= 0) {
 		i_14_ = animationsequence.anInt58;
-		l += (i_14_ - appearance[5]) << 8;
+		l += i_14_ - appearance[5] << 8;
 	    }
 	    if (animationsequence.anInt59 >= 0) {
 		i_15_ = animationsequence.anInt59;
-		l += (i_15_ - appearance[3]) << 16;
+		l += i_15_ - appearance[3] << 16;
 	    }
 	} else if (anInt1537 >= 0) {
 	    i_12_ = AnimationSequence.cache[anInt1537].frame2Ids[anInt1538];
@@ -231,16 +231,16 @@ public class Player extends Mob {
 	    boolean bool = false;
 	    for (int i_17_ = 0; i_17_ < 12; i_17_++) {
 		int i_18_ = appearance[i_17_];
-		if ((i_15_ >= 0) && (i_17_ == 3)) {
+		if (i_15_ >= 0 && i_17_ == 3) {
 		    i_18_ = i_15_;
 		}
-		if ((i_14_ >= 0) && (i_17_ == 5)) {
+		if (i_14_ >= 0 && i_17_ == 5) {
 		    i_18_ = i_14_;
 		}
-		if ((i_18_ >= 256) && (i_18_ < 512) && !IdentityKit.cache[i_18_ - 256].isBodyModelCached()) {
+		if (i_18_ >= 256 && i_18_ < 512 && !IdentityKit.cache[i_18_ - 256].isBodyModelCached()) {
 		    bool = true;
 		}
-		if ((i_18_ >= 512) && !ItemDefinition.getDefinition(i_18_ - 512).isEquipModelCached(gender)) {
+		if (i_18_ >= 512 && !ItemDefinition.getDefinition(i_18_ - 512).isEquipModelCached(gender)) {
 		    bool = true;
 		}
 	    }
@@ -258,13 +258,13 @@ public class Player extends Mob {
 	    int i_19_ = 0;
 	    for (int i_20_ = 0; i_20_ < 12; i_20_++) {
 		int i_21_ = appearance[i_20_];
-		if ((i_15_ >= 0) && (i_20_ == 3)) {
+		if (i_15_ >= 0 && i_20_ == 3) {
 		    i_21_ = i_15_;
 		}
-		if ((i_14_ >= 0) && (i_20_ == 5)) {
+		if (i_14_ >= 0 && i_20_ == 5) {
 		    i_21_ = i_14_;
 		}
-		if ((i_21_ >= 256) && (i_21_ < 512)) {
+		if (i_21_ >= 256 && i_21_ < 512) {
 		    Model model_22_ = IdentityKit.cache[i_21_ - 256].getBodyModel();
 		    if (model_22_ != null) {
 			models[i_19_++] = model_22_;
@@ -296,7 +296,7 @@ public class Player extends Mob {
 	}
 	Model model_25_ = Model.aModel1614;
 	model_25_.replaceWithModel(model, Animation.exists(i_12_) & Animation.exists(i_13_));
-	if ((i_12_ != -1) && (i_13_ != -1)) {
+	if (i_12_ != -1 && i_13_ != -1) {
 	    model_25_.mixAnimationFrames(-20491, AnimationSequence.cache[animation].flowControl, i_13_, i_12_);
 	} else if (i_12_ != -1) {
 	    model_25_.applyTransform(i_12_);
@@ -325,10 +325,10 @@ public class Player extends Mob {
 	boolean cached = false;
 	for (int index = 0; index < 12; index++) {
 	    int appearanceId = appearance[index];
-	    if ((appearanceId >= 256) && (appearanceId < 512) && !IdentityKit.cache[appearanceId - 256].isHeadModelCached()) {
+	    if (appearanceId >= 256 && appearanceId < 512 && !IdentityKit.cache[appearanceId - 256].isHeadModelCached()) {
 		cached = true;
 	    }
-	    if ((appearanceId >= 512) && !ItemDefinition.getDefinition(appearanceId - 512).isDialogueCached(gender)) {
+	    if (appearanceId >= 512 && !ItemDefinition.getDefinition(appearanceId - 512).isDialogueCached(gender)) {
 		cached = true;
 	    }
 	}
@@ -339,7 +339,7 @@ public class Player extends Mob {
 	int headModelsOffset = 0;
 	for (int modelIndex = 0; modelIndex < 12; modelIndex++) {
 	    int appearanceId = appearance[modelIndex];
-	    if ((appearanceId >= 256) && (appearanceId < 512)) {
+	    if (appearanceId >= 256 && appearanceId < 512) {
 		Model subModel = IdentityKit.cache[appearanceId - 256].getHeadModel();
 		if (subModel != null) {
 		    headModels[headModelsOffset++] = subModel;
