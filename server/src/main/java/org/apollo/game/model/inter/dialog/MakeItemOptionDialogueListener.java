@@ -31,8 +31,8 @@ public abstract class MakeItemOptionDialogueListener implements DialogueListener
      */
     public MakeItemOptionDialogueListener(Item... items) {
 	this.items = Objects.requireNonNull(items);
-	if (items.length < 2 || items.length > 4) {
-	    throw new DialogueException("length of items must be greater than 2 and less than 4, len: %d", items.length);
+	if (items.length < 2 || items.length > 5) {
+	    throw new DialogueException("length of items must be greater than 2 and less than 5, len: %d", items.length);
 	}
     }
 
@@ -69,7 +69,7 @@ public abstract class MakeItemOptionDialogueListener implements DialogueListener
      * functionality.
      */
     public int getModelZoom() {
-	return 210;
+	return 150;
     }
 
     /* Do not allow method overriding for these methods. */
