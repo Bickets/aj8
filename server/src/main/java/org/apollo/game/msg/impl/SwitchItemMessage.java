@@ -4,7 +4,7 @@ import org.apollo.game.msg.Message;
 
 /**
  * A message sent by the client when two items are switched.
- * 
+ *
  * @author Graham
  */
 public final class SwitchItemMessage extends Message {
@@ -31,7 +31,7 @@ public final class SwitchItemMessage extends Message {
 
     /**
      * Creates a new switch item message.
-     * 
+     *
      * @param interfaceId The interface id.
      * @param inserting A flag indicating if the interface is in 'insert' mode
      *            instead of swap mode.
@@ -47,7 +47,7 @@ public final class SwitchItemMessage extends Message {
 
     /**
      * Gets the interface id.
-     * 
+     *
      * @return The interface id.
      */
     public int getInterfaceId() {
@@ -56,7 +56,7 @@ public final class SwitchItemMessage extends Message {
 
     /**
      * Checks if this message is in insertion mode.
-     * 
+     *
      * @return The insertion flag.
      */
     public boolean isInserting() {
@@ -65,7 +65,7 @@ public final class SwitchItemMessage extends Message {
 
     /**
      * Checks if this message is in swap mode.
-     * 
+     *
      * @return The swap flag.
      */
     public boolean isSwapping() {
@@ -74,7 +74,7 @@ public final class SwitchItemMessage extends Message {
 
     /**
      * Gets the old slot.
-     * 
+     *
      * @return The old slot.
      */
     public int getOldSlot() {
@@ -83,7 +83,7 @@ public final class SwitchItemMessage extends Message {
 
     /**
      * Gets the new slot.
-     * 
+     *
      * @return The new slot.
      */
     public int getNewSlot() {

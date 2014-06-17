@@ -8,7 +8,7 @@ import org.apollo.game.msg.impl.ObjectActionMessage;
 
 /**
  * Handles an object action for the {@link ObjectActionMessage}.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @HandlesMessage(ObjectActionMessage.class)
@@ -21,7 +21,7 @@ public final class ObjectMessageHandler extends MessageHandler<ObjectActionMessa
 
     /**
      * Constructs a new {@link ButtonEvnetHandler}.
-     * 
+     *
      * @param world The world.
      */
     public ObjectMessageHandler(World world) {

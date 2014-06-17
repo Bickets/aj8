@@ -7,7 +7,7 @@ import org.apollo.fs.FileSystem;
 /**
  * A {@link ResourceProvider} which maps virtual resources (such as
  * {@code /media}) to files in an {@link FileSystem}.
- * 
+ *
  * @author Graham
  */
 public final class VirtualResourceProvider extends ResourceProvider {
@@ -26,7 +26,7 @@ public final class VirtualResourceProvider extends ResourceProvider {
 
     /**
      * Creates a new virtual resource provider with the specified file system.
-     * 
+     *
      * @param fs The file system.
      */
     public VirtualResourceProvider(FileSystem fs) {

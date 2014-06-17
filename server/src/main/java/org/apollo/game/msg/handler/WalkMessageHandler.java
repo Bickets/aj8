@@ -9,7 +9,7 @@ import org.apollo.game.msg.impl.WalkMessage;
 
 /**
  * A handler for the {@link WalkMessage}.
- * 
+ *
  * @author Graham
  */
 @HandlesMessage(WalkMessage.class)

@@ -14,7 +14,7 @@ import org.apollo.util.StatefulByteToMessageDecoder;
 
 /**
  * A {@link StatefulByteToMessageDecoder} which decodes game packets.
- * 
+ *
  * @author Graham
  */
 public final class GamePacketDecoder extends StatefulByteToMessageDecoder<GameDecoderState> {
@@ -46,7 +46,7 @@ public final class GamePacketDecoder extends StatefulByteToMessageDecoder<GameDe
 
     /**
      * Creates the {@link GamePacketDecoder}.
-     * 
+     *
      * @param random The random number generator.
      * @param translator The message translator.
      */
@@ -75,7 +75,7 @@ public final class GamePacketDecoder extends StatefulByteToMessageDecoder<GameDe
 
     /**
      * Decodes the opcode state.
-     * 
+     *
      * @param ctx The channels context.
      * @param in The input buffer.
      * @param out The {@link List} to which written data should be added to.
@@ -86,7 +86,7 @@ public final class GamePacketDecoder extends StatefulByteToMessageDecoder<GameDe
 	}
 
 	int encryptedOpcode = in.readUnsignedByte();
-	opcode = (encryptedOpcode - random.nextInt()) & 0xFF;
+	opcode = encryptedOpcode - random.nextInt() & 0xFF;
 
 	PacketMetaData metaData = translator.getIncomingPacketMetaData(opcode);
 	if (metaData == null) {
@@ -111,7 +111,7 @@ public final class GamePacketDecoder extends StatefulByteToMessageDecoder<GameDe
 
     /**
      * Decodes the length state.
-     * 
+     *
      * @param ctx The channels context.
      * @param in The input buffer.
      * @param out The {@link List} to which written data should be added to.
@@ -129,7 +129,7 @@ public final class GamePacketDecoder extends StatefulByteToMessageDecoder<GameDe
 
     /**
      * Decodes the payload state.
-     * 
+     *
      * @param ctx The channels context.
      * @param in The input buffer.
      * @param out The {@link List} to which written data should be added to.

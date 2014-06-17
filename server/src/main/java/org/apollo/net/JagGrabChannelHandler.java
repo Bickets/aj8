@@ -16,7 +16,7 @@ import org.apollo.net.codec.jaggrab.JagGrabResponseEncoder;
 
 /**
  * A {@link ChannelInitializer} for the JAGGRAB protocol.
- * 
+ *
  * @author Graham
  */
 public final class JagGrabChannelHandler extends ChannelInitializer<SocketChannel> {
@@ -50,7 +50,7 @@ public final class JagGrabChannelHandler extends ChannelInitializer<SocketChanne
 
     /**
      * Creates a {@code JAGGRAB} pipeline factory.
-     * 
+     *
      * @param handler The file server event handler.
      */
     public JagGrabChannelHandler(ApolloHandler handler) {

@@ -11,7 +11,7 @@ import org.apollo.game.msg.MessageTranslator;
 /**
  * A {@link MessageToMessageDecoder} that decodes {@link GamePacket}s into
  * {@link Message}s.
- * 
+ *
  * @author Graham
  */
 public final class GameMessageDecoder extends MessageToMessageDecoder<GamePacket> {
@@ -23,7 +23,7 @@ public final class GameMessageDecoder extends MessageToMessageDecoder<GamePacket
 
     /**
      * Constructs a new {@link GameMessageDecoder}.
-     * 
+     *
      * @param translator The messa translator.
      */
     public GameMessageDecoder(MessageTranslator translator) {

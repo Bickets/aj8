@@ -8,7 +8,7 @@ import org.apollo.game.sync.block.SynchronizationBlock;
 /**
  * An {@link InventoryListener} which updates the players appearance when any
  * items are updated.
- * 
+ *
  * @author Graham
  */
 public final class AppearanceInventoryListener extends InventoryAdapter {
@@ -20,7 +20,7 @@ public final class AppearanceInventoryListener extends InventoryAdapter {
 
     /**
      * Creates the appearance inventory listener.
-     * 
+     *
      * @param player The player.
      */
     public AppearanceInventoryListener(Player player) {

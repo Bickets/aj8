@@ -9,7 +9,7 @@ import com.google.gson.reflect.TypeToken;
 
 /**
  * A static utility container for Google JSON serialization.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class GsonUtil {
@@ -21,7 +21,7 @@ public final class GsonUtil {
 
     /**
      * Builds a {@link Gson} object that pretty-prints JSON output.
-     * 
+     *
      * @return An instance of {@link Gson}, never {@code null}.
      */
     public static Gson create() {
@@ -39,7 +39,7 @@ public final class GsonUtil {
 
     /**
      * Turns a {@link Object} into a JSON {@code String}.
-     * 
+     *
      * @param object The object.
      * @return The JSON <code>String</code>.
      */
@@ -49,7 +49,7 @@ public final class GsonUtil {
 
     /**
      * Returns a type reference from the specified JSON <code>String</code>.
-     * 
+     *
      * @param json The JSON <code>String</code>.
      * @param type The type reference class.
      * @return The normal output.
@@ -60,7 +60,7 @@ public final class GsonUtil {
 
     /**
      * Returns a type reference from the specified JSON <code>String</code>.
-     * 
+     *
      * @param json The JSON <code>String</code>.
      * @param type The type reference class.
      * @return The normal output.
@@ -71,7 +71,7 @@ public final class GsonUtil {
 
     /**
      * Returns a type reference from the specified {@link Reader}.
-     * 
+     *
      * @param reader The reader.
      * @param type The type reference class.
      * @return The normal output.
@@ -82,7 +82,7 @@ public final class GsonUtil {
 
     /**
      * Returns a type reference from the specified {@link Reader}.
-     * 
+     *
      * @param reader The reader.
      * @param type The type reference class.
      * @return The normal output.
@@ -96,7 +96,7 @@ public final class GsonUtil {
      * reference. It is under assumption that the specified type reference is
      * the 'from' type and will be used to create a {@link TypeToken} to return
      * this information from the {@link #fromJson(Reader, Type)} method.
-     * 
+     *
      * @param reader The reader.
      * @return The normal output.
      */
@@ -109,7 +109,7 @@ public final class GsonUtil {
     /**
      * Suppresses the default-public constructor preventing this class from
      * being instantiated by other classes.
-     * 
+     *
      * @throws InstantiationError If this class was instantiated from within
      *             itself.
      */

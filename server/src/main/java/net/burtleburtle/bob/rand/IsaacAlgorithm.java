@@ -6,7 +6,7 @@ package net.burtleburtle.bob.rand;
  * href="http://www.burtleburtle.net/bob/rand/isaacafa.html">ISAAC</a>
  * psuedorandom number generator.
  * </p>
- * 
+ *
  * <pre>
  * ------------------------------------------------------------------------------
  * Rand.java: By Bob Jenkins.  My random number generator, ISAAC.
@@ -22,7 +22,7 @@ package net.burtleburtle.bob.rand;
  * This class has been changed to be more conformant to Java and javadoc
  * conventions.
  * </p>
- * 
+ *
  * @author Bob Jenkins
  */
 public final class IsaacAlgorithm {
@@ -45,7 +45,7 @@ public final class IsaacAlgorithm {
     /**
      * A mask for pseudorandom lookup.
      */
-    private static int MASK = (SIZE - 1) << 2;
+    private static int MASK = SIZE - 1 << 2;
 
     /**
      * The count through the results in the results array.
@@ -55,12 +55,12 @@ public final class IsaacAlgorithm {
     /**
      * The results given to the user.
      */
-    private int[] rsl;
+    private final int[] rsl;
 
     /**
      * The internal state.
      */
-    private int[] mem;
+    private final int[] mem;
 
     /**
      * The accumulator.
@@ -79,13 +79,13 @@ public final class IsaacAlgorithm {
 
     /**
      * Creates the random number generator with the specified seed.
-     * 
+     *
      * @param seed The seed.
      */
     public IsaacAlgorithm(int[] seed) {
 	mem = new int[SIZE];
 	rsl = new int[SIZE];
-	System.arraycopy(seed, 0, rsl, 0, (seed.length <= rsl.length) ? seed.length : rsl.length);
+	System.arraycopy(seed, 0, rsl, 0, seed.length <= rsl.length ? seed.length : rsl.length);
 	init();
     }
 
@@ -101,25 +101,25 @@ public final class IsaacAlgorithm {
 	    a ^= a << 13;
 	    a += mem[j++];
 	    mem[i] = y = mem[(x & MASK) >> 2] + a + b;
-	    rsl[i++] = b = mem[((y >> SIZEL) & MASK) >> 2] + x;
+	    rsl[i++] = b = mem[(y >> SIZEL & MASK) >> 2] + x;
 
 	    x = mem[i];
 	    a ^= a >>> 6;
 	    a += mem[j++];
 	    mem[i] = y = mem[(x & MASK) >> 2] + a + b;
-	    rsl[i++] = b = mem[((y >> SIZEL) & MASK) >> 2] + x;
+	    rsl[i++] = b = mem[(y >> SIZEL & MASK) >> 2] + x;
 
 	    x = mem[i];
 	    a ^= a << 2;
 	    a += mem[j++];
 	    mem[i] = y = mem[(x & MASK) >> 2] + a + b;
-	    rsl[i++] = b = mem[((y >> SIZEL) & MASK) >> 2] + x;
+	    rsl[i++] = b = mem[(y >> SIZEL & MASK) >> 2] + x;
 
 	    x = mem[i];
 	    a ^= a >>> 16;
 	    a += mem[j++];
 	    mem[i] = y = mem[(x & MASK) >> 2] + a + b;
-	    rsl[i++] = b = mem[((y >> SIZEL) & MASK) >> 2] + x;
+	    rsl[i++] = b = mem[(y >> SIZEL & MASK) >> 2] + x;
 	}
 
 	for (j = 0; j < SIZE / 2;) {
@@ -127,25 +127,25 @@ public final class IsaacAlgorithm {
 	    a ^= a << 13;
 	    a += mem[j++];
 	    mem[i] = y = mem[(x & MASK) >> 2] + a + b;
-	    rsl[i++] = b = mem[((y >> SIZEL) & MASK) >> 2] + x;
+	    rsl[i++] = b = mem[(y >> SIZEL & MASK) >> 2] + x;
 
 	    x = mem[i];
 	    a ^= a >>> 6;
 	    a += mem[j++];
 	    mem[i] = y = mem[(x & MASK) >> 2] + a + b;
-	    rsl[i++] = b = mem[((y >> SIZEL) & MASK) >> 2] + x;
+	    rsl[i++] = b = mem[(y >> SIZEL & MASK) >> 2] + x;
 
 	    x = mem[i];
 	    a ^= a << 2;
 	    a += mem[j++];
 	    mem[i] = y = mem[(x & MASK) >> 2] + a + b;
-	    rsl[i++] = b = mem[((y >> SIZEL) & MASK) >> 2] + x;
+	    rsl[i++] = b = mem[(y >> SIZEL & MASK) >> 2] + x;
 
 	    x = mem[i];
 	    a ^= a >>> 16;
 	    a += mem[j++];
 	    mem[i] = y = mem[(x & MASK) >> 2] + a + b;
-	    rsl[i++] = b = mem[((y >> SIZEL) & MASK) >> 2] + x;
+	    rsl[i++] = b = mem[(y >> SIZEL & MASK) >> 2] + x;
 	}
     }
 
@@ -277,7 +277,7 @@ public final class IsaacAlgorithm {
 
     /**
      * Gets the next random value.
-     * 
+     *
      * @return The next random value.
      */
     public int nextInt() {

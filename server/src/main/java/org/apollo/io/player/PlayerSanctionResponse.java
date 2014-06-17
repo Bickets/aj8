@@ -5,7 +5,7 @@ import static org.apollo.net.codec.login.LoginConstants.STATUS_OK;
 
 /**
  * An enumeration representing the states of a players sanction.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public enum PlayerSanctionResponse {
@@ -35,7 +35,7 @@ public enum PlayerSanctionResponse {
     /**
      * Constructs a new {@link PlayerSanctionResponse} with the specified
      * integer value.
-     * 
+     *
      * @param status The integer value of the response.
      */
     private PlayerSanctionResponse(int status) {

@@ -8,7 +8,7 @@ import org.apollo.game.msg.impl.DialogueContinueMessage;
 
 /**
  * An {@link MessageHandler} for the {@link DialogueContinueMessage}.
- * 
+ *
  * @author Chris Fletcher
  */
 @HandlesMessage(DialogueContinueMessage.class)

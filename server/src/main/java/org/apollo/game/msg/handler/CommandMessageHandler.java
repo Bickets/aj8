@@ -9,7 +9,7 @@ import org.apollo.game.msg.impl.CommandMessage;
 
 /**
  * An {@link MessageHandler} which dispatches {@link CommandMessage}s.
- * 
+ *
  * @author Graham
  */
 @HandlesMessage(CommandMessage.class)

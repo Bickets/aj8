@@ -11,7 +11,7 @@ import org.apollo.game.task.Task;
  * identical: if they are, then the new action does not replace the old one (so
  * spam/accidental clicking won't cancel your action, and start another from
  * scratch).
- * 
+ *
  * @author Graham
  */
 public abstract class Action<T extends GameCharacter> extends Task {
@@ -28,7 +28,7 @@ public abstract class Action<T extends GameCharacter> extends Task {
 
     /**
      * Creates a new action.
-     * 
+     *
      * @param delay The delay in pulses.
      * @param immediate A flag indicating if the action should happen
      *            immediately.
@@ -41,7 +41,7 @@ public abstract class Action<T extends GameCharacter> extends Task {
 
     /**
      * Gets the character which performed the action.
-     * 
+     *
      * @return The character.
      */
     public T getCharacter() {

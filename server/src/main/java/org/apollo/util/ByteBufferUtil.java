@@ -6,7 +6,7 @@ import org.apollo.net.NetworkConstants;
 
 /**
  * A utility class which contains {@link ByteBuffer}-related methods.
- * 
+ *
  * @author Graham
  */
 public final class ByteBufferUtil {
@@ -14,7 +14,7 @@ public final class ByteBufferUtil {
     /**
      * Reads a 'smart' (either a {@code byte} or {@code short} depending on the
      * value) from the specified buffer.
-     * 
+     *
      * @param buffer The buffer.
      * @return The 'smart'.
      */
@@ -28,17 +28,17 @@ public final class ByteBufferUtil {
 
     /**
      * Reads an unsigned medium from the specified buffer.
-     * 
+     *
      * @param buffer The buffer.
      * @return The medium.
      */
     public static int readMedium(ByteBuffer buffer) {
-	return ((buffer.get() & 0xFF) << 16) | ((buffer.get() & 0xFF) << 8) | (buffer.get() & 0xFF);
+	return (buffer.get() & 0xFF) << 16 | (buffer.get() & 0xFF) << 8 | buffer.get() & 0xFF;
     }
 
     /**
      * Reads a string from the specified buffer.
-     * 
+     *
      * @param buffer The buffer.
      * @return The string.
      */

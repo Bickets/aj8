@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * A class which encodes login response messsages.
- * 
+ *
  * @author Graham
  */
 public final class LoginEncoder extends MessageToMessageEncoder<LoginResponse> {

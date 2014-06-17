@@ -9,7 +9,7 @@ import java.util.List;
 
 /**
  * A {@link OneToOneEncoder} for the 'on-demand' protocol.
- * 
+ *
  * @author Graham
  */
 public final class UpdateEncoder extends MessageToMessageEncoder<OnDemandResponse> {

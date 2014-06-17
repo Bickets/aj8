@@ -5,14 +5,14 @@ import org.apollo.game.model.SkillSet;
 
 /**
  * An interface which listens to events from a {@link SkillSet}.
- * 
+ *
  * @author Graham
  */
 public interface SkillListener {
 
     /**
      * Called when a single skill is updated.
-     * 
+     *
      * @param set The skill set.
      * @param id The skill's id.
      * @param skill The skill.
@@ -21,14 +21,14 @@ public interface SkillListener {
 
     /**
      * Called when all the skills are updated.
-     * 
+     *
      * @param set The skill set.
      */
     public void skillsUpdated(SkillSet set);
 
     /**
      * Called when a skill is leveled up.
-     * 
+     *
      * @param set The skill set.
      * @param id The skill's id.
      * @param skill The skill.

@@ -4,7 +4,7 @@ import org.apollo.game.msg.Message;
 
 /**
  * A message sent to the client to update an interface's text.
- * 
+ *
  * @author Graham
  */
 public final class SetInterfaceTextMessage extends Message {
@@ -21,7 +21,7 @@ public final class SetInterfaceTextMessage extends Message {
 
     /**
      * Creates the set interface text message.
-     * 
+     *
      * @param interfaceId The interface's id.
      * @param text The interface's text.
      */
@@ -32,7 +32,7 @@ public final class SetInterfaceTextMessage extends Message {
 
     /**
      * Gets the interface id.
-     * 
+     *
      * @return The interface id.
      */
     public int getInterfaceId() {
@@ -41,7 +41,7 @@ public final class SetInterfaceTextMessage extends Message {
 
     /**
      * Gets the interface's text.
-     * 
+     *
      * @return The interface's text.
      */
     public String getText() {

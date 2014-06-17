@@ -6,7 +6,7 @@ import org.apollo.game.model.Position;
 
 /**
  * An action which handles the clicking of a bank booth.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class BankAction extends DistancedAction<Player> {
@@ -23,7 +23,7 @@ public final class BankAction extends DistancedAction<Player> {
 
     /**
      * Constructs a new {@link BankAction}.
-     * 
+     *
      * @param player The player who is performing this bank action.
      * @param position The position of the bank booth.
      */

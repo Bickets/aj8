@@ -23,7 +23,7 @@ import org.apollo.update.resource.VirtualResourceProvider;
 
 /**
  * A worker which services HTTP requests.
- * 
+ *
  * @author Graham
  */
 public final class HttpRequestWorker extends RequestWorker<HttpRequest, ResourceProvider> {
@@ -45,7 +45,7 @@ public final class HttpRequestWorker extends RequestWorker<HttpRequest, Resource
 
     /**
      * Creates the HTTP request worker.
-     * 
+     *
      * @param dispatcher The dispatcher.
      * @param fs The file system.
      */
@@ -92,7 +92,7 @@ public final class HttpRequestWorker extends RequestWorker<HttpRequest, Resource
 
     /**
      * Gets the MIME type of a file by its name.
-     * 
+     *
      * @param name The file name.
      * @return The MIME type.
      */
@@ -120,7 +120,7 @@ public final class HttpRequestWorker extends RequestWorker<HttpRequest, Resource
 
     /**
      * Creates an error page.
-     * 
+     *
      * @param status The HTTP status.
      * @param description The error description.
      * @return The error page as a buffer.

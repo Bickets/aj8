@@ -10,7 +10,7 @@ import org.apollo.net.codec.game.GamePacketBuilder;
 
 /**
  * An {@link MessageEncoder} for the {@link OpenInterfaceSidebarMessage}.
- * 
+ *
  * @author Graham
  */
 @EncodesMessage(OpenInterfaceSidebarMessage.class)

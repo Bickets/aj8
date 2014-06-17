@@ -20,7 +20,7 @@ import java.util.List;
  * only set in the decode methods overridden. {@code null} states are not
  * permitted. If you do not need state management, the
  * {@link ByteToMessageDecoder} class should be used instead.
- * 
+ *
  * @author Graham
  * @param <T> The state enumeration.
  */
@@ -33,7 +33,7 @@ public abstract class StatefulByteToMessageDecoder<T extends Enum<T>> extends By
 
     /**
      * Creates the stateful frame decoder with the specified initial state.
-     * 
+     *
      * @param state The initial state.
      */
     public StatefulByteToMessageDecoder(T state) {
@@ -47,7 +47,7 @@ public abstract class StatefulByteToMessageDecoder<T extends Enum<T>> extends By
 
     /**
      * Decodes the received packets into a frame.
-     * 
+     *
      * @param ctx The current context of this handler.
      * @param in The cumulative buffer, which may contain zero or more bytes.
      * @param out The {@link List} to which decoded messages should be added
@@ -65,7 +65,7 @@ public abstract class StatefulByteToMessageDecoder<T extends Enum<T>> extends By
      * Decodes remaining data before the channel is closed into a frame. You may
      * override this method, but it is not required. If you do not, remaining
      * data will be discarded!
-     * 
+     *
      * @param ctx The current context of this handler.
      * @param in The cumulative buffer, which may contain zero or more bytes.
      * @param out The {@link List} to which decoded messages should be added
@@ -78,7 +78,7 @@ public abstract class StatefulByteToMessageDecoder<T extends Enum<T>> extends By
 
     /**
      * Sets a new state.
-     * 
+     *
      * @param state The new state.
      * @throws NullPointerException If the state is {@code null}.
      */

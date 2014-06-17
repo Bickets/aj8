@@ -12,7 +12,7 @@ import org.apollo.net.meta.PacketType;
 
 /**
  * An {@link MessageEncoder} for the {@link UpdateSlottedItemsMessage}.
- * 
+ *
  * @author Graham
  */
 @EncodesMessage(UpdateSlottedItemsMessage.class)

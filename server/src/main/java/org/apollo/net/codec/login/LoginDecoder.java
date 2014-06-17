@@ -17,7 +17,7 @@ import org.apollo.util.StatefulByteToMessageDecoder;
 /**
  * A {@link StatefulByteToMessageDecoder} which decodes the login request
  * frames.
- * 
+ *
  * @author Graham
  */
 public final class LoginDecoder extends StatefulByteToMessageDecoder<LoginDecoderState> {
@@ -73,7 +73,7 @@ public final class LoginDecoder extends StatefulByteToMessageDecoder<LoginDecode
 
     /**
      * Decodes the handshake state.
-     * 
+     *
      * @param ctx The channels context.
      * @param in The input buffer.
      * @param out The {@link List} to which written data should be added.
@@ -97,7 +97,7 @@ public final class LoginDecoder extends StatefulByteToMessageDecoder<LoginDecode
 
     /**
      * Decodes the header state.
-     * 
+     *
      * @param ctx The channels context.
      * @param in The input buffer.
      * @param out The {@link List} to which written data should be added.
@@ -121,7 +121,7 @@ public final class LoginDecoder extends StatefulByteToMessageDecoder<LoginDecode
 
     /**
      * Decodes the payload state.
-     * 
+     *
      * @param ctx The channels context.
      * @param in The input buffer.
      * @param out The {@link List} to which written data should be added.

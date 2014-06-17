@@ -9,7 +9,7 @@ import java.util.concurrent.atomic.AtomicInteger;
  * <p>
  * For example, if the name {@code MyThread} was given and a third thread was
  * created by the factory, the resulting name would be {@code MyThread [id=2]}.
- * 
+ *
  * @author Graham
  */
 public final class NamedThreadFactory implements ThreadFactory {
@@ -22,11 +22,11 @@ public final class NamedThreadFactory implements ThreadFactory {
     /**
      * The next id.
      */
-    private AtomicInteger id = new AtomicInteger(0);
+    private final AtomicInteger id = new AtomicInteger(0);
 
     /**
      * Creates the named thread factory.
-     * 
+     *
      * @param name The unique name.
      */
     public NamedThreadFactory(String name) {

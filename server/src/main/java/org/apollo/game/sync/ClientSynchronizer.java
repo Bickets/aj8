@@ -29,7 +29,7 @@ import org.apollo.util.NamedThreadFactory;
  * multiple cores/processors. The {@link SequentialClientSynchronizer} will work
  * better on machines with a single core/processor, however, both classes will
  * work.
- * 
+ *
  * @author Graham
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
@@ -54,7 +54,7 @@ public final class ClientSynchronizer {
      * Creates the parallel client synchronizer backed by a thread pool with a
      * number of threads equal to the number of processing cores available (this
      * is found by the {@link Runtime#availableProcessors()} method.
-     * 
+     *
      * @param world The world.
      */
     public ClientSynchronizer(World world) {

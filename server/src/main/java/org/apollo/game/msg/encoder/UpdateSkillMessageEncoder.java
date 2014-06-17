@@ -11,7 +11,7 @@ import org.apollo.net.codec.game.GamePacketBuilder;
 
 /**
  * An {@link MessageEncoder} for the {@link UpdateSkillMessage}.
- * 
+ *
  * @author Graham
  */
 @EncodesMessage(UpdateSkillMessage.class)

@@ -2,7 +2,7 @@ package org.apollo.game.model;
 
 /**
  * Holds {@link Inventory}-related constants.
- * 
+ *
  * @author Graham
  */
 public final class InventoryConstants {

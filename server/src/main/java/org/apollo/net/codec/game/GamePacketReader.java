@@ -6,7 +6,7 @@ import org.apollo.util.ByteBufUtil;
 
 /**
  * A utility class for reading {@link GamePacket}s.
- * 
+ *
  * @author Graham
  */
 public final class GamePacketReader {
@@ -28,7 +28,7 @@ public final class GamePacketReader {
 
     /**
      * Creates the reader.
-     * 
+     *
      * @param packet The packet.
      */
     public GamePacketReader(GamePacket packet) {
@@ -37,7 +37,7 @@ public final class GamePacketReader {
 
     /**
      * Gets the length of this reader.
-     * 
+     *
      * @return The length of this reader.
      */
     public int getLength() {
@@ -47,7 +47,7 @@ public final class GamePacketReader {
 
     /**
      * Switches this builder's mode to the byte access mode.
-     * 
+     *
      * @throws IllegalStateException if the builder is already in byte access
      *             mode.
      */
@@ -61,7 +61,7 @@ public final class GamePacketReader {
 
     /**
      * Switches this builder's mode to the bit access mode.
-     * 
+     *
      * @throws IllegalStateException if the builder is already in bit access
      *             mode.
      */
@@ -75,7 +75,7 @@ public final class GamePacketReader {
 
     /**
      * Gets a string from the buffer.
-     * 
+     *
      * @return The string.
      * @throws IllegalStateException if this reader is not in byte access mode.
      */
@@ -86,7 +86,7 @@ public final class GamePacketReader {
 
     /**
      * Gets a signed smart from the buffer.
-     * 
+     *
      * @return The smart.
      * @throws IllegalStateException if this reader is not in byte access mode.
      */
@@ -102,7 +102,7 @@ public final class GamePacketReader {
 
     /**
      * Gets an unsigned smart from the buffer.
-     * 
+     *
      * @return The smart.
      * @throws IllegalStateException if this reader is not in byte access mode.
      */
@@ -118,7 +118,7 @@ public final class GamePacketReader {
 
     /**
      * Gets a signed data type from the buffer.
-     * 
+     *
      * @param type The data type.
      * @return The value.
      * @throws IllegalStateException if this reader is not in byte access mode.
@@ -129,7 +129,7 @@ public final class GamePacketReader {
 
     /**
      * Gets a signed data type from the buffer with the specified order.
-     * 
+     *
      * @param type The data type.
      * @param order The byte order.
      * @return The value.
@@ -143,7 +143,7 @@ public final class GamePacketReader {
     /**
      * Gets a signed data type from the buffer with the specified
      * transformation.
-     * 
+     *
      * @param type The data type.
      * @param transformation The data transformation.
      * @return The value.
@@ -157,7 +157,7 @@ public final class GamePacketReader {
     /**
      * Gets a signed data type from the buffer with the specified order and
      * transformation.
-     * 
+     *
      * @param type The data type.
      * @param order The byte order.
      * @param transformation The data transformation.
@@ -178,7 +178,7 @@ public final class GamePacketReader {
 
     /**
      * Gets an unsigned data type from the buffer.
-     * 
+     *
      * @param type The data type.
      * @return The value.
      * @throws IllegalStateException if this reader is not in byte access mode.
@@ -189,7 +189,7 @@ public final class GamePacketReader {
 
     /**
      * Gets an unsigned data type from the buffer with the specified order.
-     * 
+     *
      * @param type The data type.
      * @param order The byte order.
      * @return The value.
@@ -203,7 +203,7 @@ public final class GamePacketReader {
     /**
      * Gets an unsigned data type from the buffer with the specified
      * transformation.
-     * 
+     *
      * @param type The data type.
      * @param transformation The data transformation.
      * @return The value.
@@ -217,7 +217,7 @@ public final class GamePacketReader {
     /**
      * Gets an unsigned data type from the buffer with the specified order and
      * transformation.
-     * 
+     *
      * @param type The data type.
      * @param order The byte order.
      * @param transformation The data transformation.
@@ -236,7 +236,7 @@ public final class GamePacketReader {
     /**
      * Reads a standard data type from the buffer with the specified order and
      * transformation.
-     * 
+     *
      * @param type The data type.
      * @param order The data order.
      * @param transformation The data transformation.
@@ -252,32 +252,32 @@ public final class GamePacketReader {
 	    for (int i = length - 1; i >= 0; i--) {
 		if (i == 0 && transformation != DataTransformation.NONE) {
 		    if (transformation == DataTransformation.ADD) {
-			longValue |= (buffer.readByte() - 128) & 0xFFL;
+			longValue |= buffer.readByte() - 128 & 0xFFL;
 		    } else if (transformation == DataTransformation.NEGATE) {
-			longValue |= (-buffer.readByte()) & 0xFFL;
+			longValue |= -buffer.readByte() & 0xFFL;
 		    } else if (transformation == DataTransformation.SUBTRACT) {
-			longValue |= (128 - buffer.readByte()) & 0xFFL;
+			longValue |= 128 - buffer.readByte() & 0xFFL;
 		    } else {
 			throw new IllegalArgumentException("unknown transformation");
 		    }
 		} else {
-		    longValue |= ((buffer.readByte() & 0xFFL) << (i * 8));
+		    longValue |= (buffer.readByte() & 0xFFL) << i * 8;
 		}
 	    }
 	} else if (order == DataOrder.LITTLE) {
 	    for (int i = 0; i < length; i++) {
 		if (i == 0 && transformation != DataTransformation.NONE) {
 		    if (transformation == DataTransformation.ADD) {
-			longValue |= (buffer.readByte() - 128) & 0xFFL;
+			longValue |= buffer.readByte() - 128 & 0xFFL;
 		    } else if (transformation == DataTransformation.NEGATE) {
-			longValue |= (-buffer.readByte()) & 0xFFL;
+			longValue |= -buffer.readByte() & 0xFFL;
 		    } else if (transformation == DataTransformation.SUBTRACT) {
-			longValue |= (128 - buffer.readByte()) & 0xFFL;
+			longValue |= 128 - buffer.readByte() & 0xFFL;
 		    } else {
 			throw new IllegalArgumentException("unknown transformation");
 		    }
 		} else {
-		    longValue |= ((buffer.readByte() & 0xFFL) << (i * 8));
+		    longValue |= (buffer.readByte() & 0xFFL) << i * 8;
 		}
 	    }
 	} else if (order == DataOrder.MIDDLE) {
@@ -310,7 +310,7 @@ public final class GamePacketReader {
 
     /**
      * Gets bytes.
-     * 
+     *
      * @param bytes The target byte array.
      * @throws IllegalStateException if this reader is not in byte access mode.
      */
@@ -323,7 +323,7 @@ public final class GamePacketReader {
 
     /**
      * Gets bytes with the specified transformation.
-     * 
+     *
      * @param transformation The transformation.
      * @param bytes The target byte array.
      * @throws IllegalStateException if this reader is not in byte access mode.
@@ -340,7 +340,7 @@ public final class GamePacketReader {
 
     /**
      * Gets bytes in reverse.
-     * 
+     *
      * @param bytes The target byte array.
      * @throws IllegalStateException if this reader is not in byte access mode.
      */
@@ -353,7 +353,7 @@ public final class GamePacketReader {
 
     /**
      * Gets bytes in reverse with the specified transformation.
-     * 
+     *
      * @param transformation The transformation.
      * @param bytes The target byte array.
      * @throws IllegalStateException if this reader is not in byte access mode.
@@ -370,7 +370,7 @@ public final class GamePacketReader {
 
     /**
      * Checks that this reader is in the byte access mode.
-     * 
+     *
      * @throws IllegalStateException if the reader is not in byte access mode.
      */
     private void checkByteAccess() {
@@ -381,7 +381,7 @@ public final class GamePacketReader {
 
     /**
      * Checks that this reader is in the bit access mode.
-     * 
+     *
      * @throws IllegalStateException if the reader is not in bit access mode.
      */
     private void checkBitAccess() {
@@ -392,7 +392,7 @@ public final class GamePacketReader {
 
     /**
      * Gets a bit from the buffer.
-     * 
+     *
      * @return The value.
      * @throws IllegalStateException if the reader is not in bit access mode.
      */
@@ -402,7 +402,7 @@ public final class GamePacketReader {
 
     /**
      * Gets {@code numBits} from the buffer.
-     * 
+     *
      * @param numBits The number of bits.
      * @return The value.
      * @throws IllegalStateException if the reader is not in bit access mode.

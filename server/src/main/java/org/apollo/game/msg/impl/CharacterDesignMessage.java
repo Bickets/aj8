@@ -6,7 +6,7 @@ import org.apollo.game.msg.Message;
 /**
  * A message sent by the client when the player modifies their character's
  * design.
- * 
+ *
  * @author Graham
  */
 public final class CharacterDesignMessage extends Message {
@@ -18,7 +18,7 @@ public final class CharacterDesignMessage extends Message {
 
     /**
      * Creates the character design message.
-     * 
+     *
      * @param appearance The appearance.
      */
     public CharacterDesignMessage(Appearance appearance) {
@@ -27,7 +27,7 @@ public final class CharacterDesignMessage extends Message {
 
     /**
      * Gets the appearance.
-     * 
+     *
      * @return The appearance.
      */
     public Appearance getAppearance() {

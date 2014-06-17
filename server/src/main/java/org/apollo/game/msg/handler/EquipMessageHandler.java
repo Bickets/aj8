@@ -15,7 +15,7 @@ import org.apollo.game.msg.impl.EquipMessage;
 
 /**
  * A message handler which equips items.
- * 
+ *
  * @author Graham
  */
 @HandlesMessage(EquipMessage.class)

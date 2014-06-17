@@ -11,7 +11,7 @@ import org.apollo.update.UpdateService;
 
 /**
  * An update session.
- * 
+ *
  * @author Graham
  */
 public final class UpdateSession extends Session {
@@ -23,7 +23,7 @@ public final class UpdateSession extends Session {
 
     /**
      * Creates an update session for the specified channel.
-     * 
+     *
      * @param service The update service.
      * @param ctx The channels context.
      */

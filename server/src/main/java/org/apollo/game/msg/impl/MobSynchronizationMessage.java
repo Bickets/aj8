@@ -9,7 +9,7 @@ import org.apollo.game.sync.seg.SynchronizationSegment;
 
 /**
  * A representation of a message used to synchronize mobs in the world.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public class MobSynchronizationMessage extends Message {
@@ -31,7 +31,7 @@ public class MobSynchronizationMessage extends Message {
 
     /**
      * Constructs a new {@link MobSynchronizationMessage}.
-     * 
+     *
      * @param position The position of the {@link Mob}.
      * @param segments The mobs list of synchronization segments.
      * @param localMobs The amount of local mobs.
@@ -44,7 +44,7 @@ public class MobSynchronizationMessage extends Message {
 
     /**
      * Returns the number of local mobs.
-     * 
+     *
      * @return The number of local mobs
      */
     public int getLocalMobs() {
@@ -53,7 +53,7 @@ public class MobSynchronizationMessage extends Message {
 
     /**
      * Returns the mobs position.
-     * 
+     *
      * @return The mobs position.
      */
     public Position getPosition() {
@@ -62,7 +62,7 @@ public class MobSynchronizationMessage extends Message {
 
     /**
      * Returns the mobs list of synchronization segments.
-     * 
+     *
      * @return The mobs list of synchronization segments.
      */
     public List<SynchronizationSegment> getSegments() {

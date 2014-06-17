@@ -7,7 +7,7 @@ import org.apollo.net.codec.game.GamePacket;
 
 /**
  * An {@link MessageDecoder} for the {@link ClosedInterfaceMessage}.
- * 
+ *
  * @author Graham
  */
 @DecodesMessage(130)

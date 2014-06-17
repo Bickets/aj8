@@ -13,14 +13,14 @@ import org.apollo.game.model.def.ItemDefinition;
 
 /**
  * A tool for updating the note data.
- * 
+ *
  * @author Graham
  */
 public final class NoteUpdater {
 
     /**
      * The entry point of the application.
-     * 
+     *
      * @param args The command line arguments.
      * @throws IOException If some I/O exception occurs.
      */

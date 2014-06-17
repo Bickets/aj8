@@ -9,7 +9,7 @@ import org.apollo.game.msg.impl.SetInterfaceTextMessage;
 /**
  * A dialogue listener which manages the {@link DialogueType#MAKE_ITEM} dialogue
  * type.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public abstract class MakeItemDialogueListener implements DialogueListener {
@@ -21,7 +21,7 @@ public abstract class MakeItemDialogueListener implements DialogueListener {
 
     /**
      * Constructs a new {@link MakeItemDialogueListener}
-     * 
+     *
      * @param item The item shown in this make item statement.
      */
     public MakeItemDialogueListener(Item item) {
@@ -47,7 +47,7 @@ public abstract class MakeItemDialogueListener implements DialogueListener {
      * Returns the title of this item statement. By default the items name is
      * returned. This method may be overridden to provide a user specific
      * functionality.
-     * 
+     *
      * @see {@link ItemDefinition#getName()}
      */
     public String getTitle() {

@@ -13,14 +13,14 @@ import org.apache.tools.bzip2.CBZip2OutputStream;
 
 /**
  * A utility class for performing compression/uncompression.
- * 
+ *
  * @author Graham
  */
 public final class CompressionUtil {
 
     /**
      * Compresses a GZIP file.
-     * 
+     *
      * @param bytes The uncompressed bytes.
      * @return The compressed bytes.
      * @throws IOException if an I/O error occurs.
@@ -51,7 +51,7 @@ public final class CompressionUtil {
 
     /**
      * Uncompresses a GZIP file.
-     * 
+     *
      * @param bytes The compressed bytes.
      * @return The uncompressed bytes.
      * @throws IOException if an I/O error occurs.
@@ -81,7 +81,7 @@ public final class CompressionUtil {
 
     /**
      * Compresses a BZIP2 file.
-     * 
+     *
      * @param bytes The uncompressed bytes.
      * @return The compressed bytes without the header.
      * @throws IOException if an I/O erorr occurs.
@@ -113,7 +113,7 @@ public final class CompressionUtil {
 
     /**
      * Uncompresses a BZIP2 file.
-     * 
+     *
      * @param bytes The compressed bytes without the header.
      * @return The uncompressed bytes.
      * @throws IOException if an I/O error occurs.

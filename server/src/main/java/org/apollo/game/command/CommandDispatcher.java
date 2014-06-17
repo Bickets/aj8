@@ -7,7 +7,7 @@ import org.apollo.game.model.Player;
 
 /**
  * A class which dispatches {@link Command}s to {@link CommandListener}s.
- * 
+ *
  * @author Graham
  */
 public final class CommandDispatcher {
@@ -32,7 +32,7 @@ public final class CommandDispatcher {
 
     /**
      * Binds a command listener to the map.
-     * 
+     *
      * @param listener The commands listener.
      */
     public void bind(CommandListener listener) {
@@ -41,7 +41,7 @@ public final class CommandDispatcher {
 
     /**
      * Unbinds a command listener from the map.
-     * 
+     *
      * @param listener The command listener
      */
     public void unbind(CommandListener listener) {
@@ -50,7 +50,7 @@ public final class CommandDispatcher {
 
     /**
      * Dispatches a command to the appropriate listener.
-     * 
+     *
      * @param player The player.
      * @param command The command.
      */
@@ -63,7 +63,7 @@ public final class CommandDispatcher {
 
     /**
      * Gets the singleton instance.
-     * 
+     *
      * @return the instance The singleton instance
      */
     public static CommandDispatcher getInstance() {

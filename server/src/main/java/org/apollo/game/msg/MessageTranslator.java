@@ -65,7 +65,7 @@ import org.apollo.net.meta.PacketMetaDataGroup;
 /**
  * The responsibility of this class is to translate registered {@link Message}'s
  * to their respective handler.
- * 
+ *
  * @author Graham
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
@@ -98,7 +98,7 @@ public final class MessageTranslator {
 
     /**
      * Constructs a new {@link MessageTranslator}.
-     * 
+     *
      * @param world The world used for world message handlers.
      */
     public MessageTranslator(World world) {
@@ -207,7 +207,7 @@ public final class MessageTranslator {
     /**
      * Returns a decoded {@link Message} or {@code null} if the
      * {@link MessageDecoder} does not exist for the specified packets opcode.
-     * 
+     *
      * @param packet The packet.
      */
     public Message decode(GamePacket packet) {
@@ -222,7 +222,7 @@ public final class MessageTranslator {
     /**
      * Returns an encoded {@link GamePacket} or {@code null} if the
      * {@link MessageEncoder} does not exist for the specified message's class.
-     * 
+     *
      * @param msg The message.
      */
     public GamePacket encode(Message msg) {
@@ -237,7 +237,7 @@ public final class MessageTranslator {
     /**
      * Handles a {@link Message} for a specified {@link Player} if it exists by
      * the message's class.
-     * 
+     *
      * @param player The player.
      * @param msg The message.
      */
@@ -252,7 +252,7 @@ public final class MessageTranslator {
 
     /**
      * Returns data about packet data for a specified opcode.
-     * 
+     *
      * @param opcode The opcode.
      */
     public PacketMetaData getIncomingPacketMetaData(int opcode) {

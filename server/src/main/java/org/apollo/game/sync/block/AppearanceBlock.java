@@ -5,7 +5,7 @@ import org.apollo.game.model.Inventory;
 
 /**
  * The appearance {@link SynchronizationBlock}.
- * 
+ *
  * @author Graham
  */
 public final class AppearanceBlock extends SynchronizationBlock {
@@ -39,7 +39,7 @@ public final class AppearanceBlock extends SynchronizationBlock {
 
     /**
      * Creates the appearance block.
-     * 
+     *
      * @param name The players name.
      * @param appearance The appearance.
      * @param combat The players combat.
@@ -56,7 +56,7 @@ public final class AppearanceBlock extends SynchronizationBlock {
 
     /**
      * Gets the players name.
-     * 
+     *
      * @return The players name.
      */
     public long getName() {
@@ -65,7 +65,7 @@ public final class AppearanceBlock extends SynchronizationBlock {
 
     /**
      * Gets the players appearance.
-     * 
+     *
      * @return The players appearance.
      */
     public Appearance getAppearance() {
@@ -74,7 +74,7 @@ public final class AppearanceBlock extends SynchronizationBlock {
 
     /**
      * Gets the players combat level.
-     * 
+     *
      * @return The players combat level.
      */
     public int getCombatLevel() {
@@ -83,7 +83,7 @@ public final class AppearanceBlock extends SynchronizationBlock {
 
     /**
      * Gets the players skill level.
-     * 
+     *
      * @return The players skill level.
      */
     public int getSkillLevel() {
@@ -92,7 +92,7 @@ public final class AppearanceBlock extends SynchronizationBlock {
 
     /**
      * Gets the players equipment.
-     * 
+     *
      * @return The players equipment.
      */
     public Inventory getEquipment() {

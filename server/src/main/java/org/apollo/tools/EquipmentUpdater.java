@@ -11,7 +11,7 @@ import org.apollo.game.model.def.ItemDefinition;
 
 /**
  * A tool for updating the equipment data.
- * 
+ *
  * @author Graham
  * @author Palidino76
  */
@@ -19,7 +19,7 @@ public final class EquipmentUpdater {
 
     /**
      * The entry point of the application.
-     * 
+     *
      * @param args The command line arguments.
      * @throws IOException If some I/O exception occurs.
      */
@@ -52,786 +52,1102 @@ public final class EquipmentUpdater {
 
     /**
      * Checks if the item is two handed.
-     * 
+     *
      * @param def The item.
      * @return {@code true} if so, {@code false} otherwise.
      */
     private static boolean isTwoHanded(ItemDefinition def) {
 	int id = def.getId();
 	String name = def.getName();
-	if (name == null)
+	if (name == null) {
 	    name = "null";
-	if (id == 4212)
+	}
+	if (id == 4212) {
 	    return true;
-	else if (id == 4214)
+	} else if (id == 4214) {
 	    return true;
-	else if (name.endsWith("2h sword"))
+	} else if (name.endsWith("2h sword")) {
 	    return true;
-	else if (name.endsWith("longbow"))
+	} else if (name.endsWith("longbow")) {
 	    return true;
-	else if (name.equals("Seercull"))
+	} else if (name.equals("Seercull")) {
 	    return true;
-	else if (name.endsWith("shortbow"))
+	} else if (name.endsWith("shortbow")) {
 	    return true;
-	else if (name.endsWith("Longbow"))
+	} else if (name.endsWith("Longbow")) {
 	    return true;
-	else if (name.endsWith("Shortbow"))
+	} else if (name.endsWith("Shortbow")) {
 	    return true;
-	else if (name.endsWith("bow full"))
+	} else if (name.endsWith("bow full")) {
 	    return true;
-	else if (name.endsWith("halberd"))
+	} else if (name.endsWith("halberd")) {
 	    return true;
-	else if (name.equals("Granite maul"))
+	} else if (name.equals("Granite maul")) {
 	    return true;
-	else if (name.equals("Karils crossbow"))
+	} else if (name.equals("Karils crossbow")) {
 	    return true;
-	else if (name.equals("Torags hammers"))
+	} else if (name.equals("Torags hammers")) {
 	    return true;
-	else if (name.equals("Veracs flail"))
+	} else if (name.equals("Veracs flail")) {
 	    return true;
-	else if (name.equals("Dharoks greataxe"))
+	} else if (name.equals("Dharoks greataxe")) {
 	    return true;
-	else if (name.equals("Guthans warspear"))
+	} else if (name.equals("Guthans warspear")) {
 	    return true;
-	else if (name.equals("Tzhaar-ket-om"))
+	} else if (name.equals("Tzhaar-ket-om")) {
 	    return true;
-	else if (name.endsWith("godsword"))
+	} else if (name.endsWith("godsword")) {
 	    return true;
-	else if (name.equals("Saradomin sword"))
+	} else if (name.equals("Saradomin sword")) {
 	    return true;
-	else
+	} else {
 	    return false;
+	}
     }
 
     /**
      * Gets the ranged requirement.
-     * 
+     *
      * @param def The item.
      * @return The required level.
      */
     private static int getRangedRequirement(ItemDefinition def) {
 	int id = def.getId();
 	String name = def.getName();
-	if (name == null)
+	if (name == null) {
 	    name = "null";
-	if (id == 2499)
+	}
+	if (id == 2499) {
 	    return 50;
-	if (id == 1135)
+	}
+	if (id == 1135) {
 	    return 40;
-	if (id == 1099)
+	}
+	if (id == 1099) {
 	    return 40;
-	if (id == 1065)
+	}
+	if (id == 1065) {
 	    return 40;
-	if (id == 2501)
+	}
+	if (id == 2501) {
 	    return 60;
-	if (id == 2503)
+	}
+	if (id == 2503) {
 	    return 70;
-	if (id == 2487)
+	}
+	if (id == 2487) {
 	    return 50;
-	if (id == 2489)
+	}
+	if (id == 2489) {
 	    return 60;
-	if (id == 2495)
+	}
+	if (id == 2495) {
 	    return 60;
-	if (id == 2491)
+	}
+	if (id == 2491) {
 	    return 70;
-	if (id == 2493)
+	}
+	if (id == 2493) {
 	    return 50;
-	if (id == 2505)
+	}
+	if (id == 2505) {
 	    return 60;
-	if (id == 2507)
+	}
+	if (id == 2507) {
 	    return 70;
-	if (id == 859)
+	}
+	if (id == 859) {
 	    return 40;
-	if (id == 861)
+	}
+	if (id == 861) {
 	    return 40;
-	if (id == 7370)
+	}
+	if (id == 7370) {
 	    return 40;
-	if (id == 7372)
+	}
+	if (id == 7372) {
 	    return 40;
-	if (id == 7378)
+	}
+	if (id == 7378) {
 	    return 40;
-	if (id == 7380)
+	}
+	if (id == 7380) {
 	    return 40;
-	if (id == 7374)
+	}
+	if (id == 7374) {
 	    return 50;
-	if (id == 7376)
+	}
+	if (id == 7376) {
 	    return 50;
-	if (id == 7382)
+	}
+	if (id == 7382) {
 	    return 50;
-	if (id == 7384)
+	}
+	if (id == 7384) {
 	    return 50;
-	if (name.equals("Coif"))
+	}
+	if (name.equals("Coif")) {
 	    return 20;
-	if (name.startsWith("Studded chaps"))
+	}
+	if (name.startsWith("Studded chaps")) {
 	    return 20;
-	if (name.startsWith("Studded"))
+	}
+	if (name.startsWith("Studded")) {
 	    return 20;
-	if (name.equals("Karils coif"))
+	}
+	if (name.equals("Karils coif")) {
 	    return 70;
-	if (name.equals("Karils leathertop"))
+	}
+	if (name.equals("Karils leathertop")) {
 	    return 70;
-	if (name.equals("Karils leatherskirt"))
+	}
+	if (name.equals("Karils leatherskirt")) {
 	    return 70;
-	if (name.equals("Robin hood hat"))
+	}
+	if (name.equals("Robin hood hat")) {
 	    return 40;
-	if (name.equals("Ranger boots"))
+	}
+	if (name.equals("Ranger boots")) {
 	    return 40;
-	if (name.equals("Crystal bow full"))
+	}
+	if (name.equals("Crystal bow full")) {
 	    return 70;
-	if (name.equals("New crystal bow"))
+	}
+	if (name.equals("New crystal bow")) {
 	    return 70;
-	if (name.equals("Karils crossbow"))
+	}
+	if (name.equals("Karils crossbow")) {
 	    return 70;
-	if (id == 2497)
+	}
+	if (id == 2497) {
 	    return 70;
-	if (name.equals("Rune thrownaxe"))
+	}
+	if (name.equals("Rune thrownaxe")) {
 	    return 40;
-	if (name.equals("Rune dart"))
+	}
+	if (name.equals("Rune dart")) {
 	    return 40;
-	if (name.equals("Rune javelin"))
+	}
+	if (name.equals("Rune javelin")) {
 	    return 40;
-	if (name.equals("Rune knife"))
+	}
+	if (name.equals("Rune knife")) {
 	    return 40;
-	if (name.equals("Adamant thrownaxe"))
+	}
+	if (name.equals("Adamant thrownaxe")) {
 	    return 30;
-	if (name.equals("Adamant dart"))
+	}
+	if (name.equals("Adamant dart")) {
 	    return 30;
-	if (name.equals("Adamant javelin"))
+	}
+	if (name.equals("Adamant javelin")) {
 	    return 30;
-	if (name.equals("Adamant knife"))
+	}
+	if (name.equals("Adamant knife")) {
 	    return 30;
-	if (name.equals("Toktz-xil-ul"))
+	}
+	if (name.equals("Toktz-xil-ul")) {
 	    return 60;
-	if (name.equals("Seercull"))
+	}
+	if (name.equals("Seercull")) {
 	    return 50;
-	if (name.equals("Bolt rack"))
+	}
+	if (name.equals("Bolt rack")) {
 	    return 70;
-	if (name.equals("Rune arrow"))
+	}
+	if (name.equals("Rune arrow")) {
 	    return 40;
-	if (name.equals("Adamant arrow"))
+	}
+	if (name.equals("Adamant arrow")) {
 	    return 30;
-	if (name.equals("Mithril arrow"))
+	}
+	if (name.equals("Mithril arrow")) {
 	    return 1;
-	else
+	} else {
 	    return 1;
+	}
     }
 
     /**
      * Gets the magic requirement.
-     * 
+     *
      * @param def The item.
      * @return The required level.
      */
     private static int getMagicRequirement(ItemDefinition def) {
 	String name = def.getName();
-	if (name == null)
+	if (name == null) {
 	    name = "null";
-	if (name.equals("Mystic hat"))
+	}
+	if (name.equals("Mystic hat")) {
 	    return 40;
-	if (name.equals("Mystic robe top"))
+	}
+	if (name.equals("Mystic robe top")) {
 	    return 40;
-	if (name.equals("Mystic robe bottom"))
+	}
+	if (name.equals("Mystic robe bottom")) {
 	    return 40;
-	if (name.equals("Mystic gloves"))
+	}
+	if (name.equals("Mystic gloves")) {
 	    return 40;
-	if (name.equals("Mystic boots"))
+	}
+	if (name.equals("Mystic boots")) {
 	    return 40;
-	if (name.equals("Slayer's staff"))
+	}
+	if (name.equals("Slayer's staff")) {
 	    return 50;
-	if (name.equals("Enchanted hat"))
+	}
+	if (name.equals("Enchanted hat")) {
 	    return 40;
-	if (name.equals("Enchanted top"))
+	}
+	if (name.equals("Enchanted top")) {
 	    return 40;
-	if (name.equals("Enchanted robe"))
+	}
+	if (name.equals("Enchanted robe")) {
 	    return 40;
-	if (name.equals("Splitbark helm"))
+	}
+	if (name.equals("Splitbark helm")) {
 	    return 40;
-	if (name.equals("Splitbark body"))
+	}
+	if (name.equals("Splitbark body")) {
 	    return 40;
-	if (name.equals("Splitbark gauntlets"))
+	}
+	if (name.equals("Splitbark gauntlets")) {
 	    return 40;
-	if (name.equals("Splitbark legs"))
+	}
+	if (name.equals("Splitbark legs")) {
 	    return 40;
-	if (name.equals("Splitbark greaves"))
+	}
+	if (name.equals("Splitbark greaves")) {
 	    return 40;
-	if (name.equals("Infinity gloves"))
+	}
+	if (name.equals("Infinity gloves")) {
 	    return 50;
-	if (name.equals("Infinity hat"))
+	}
+	if (name.equals("Infinity hat")) {
 	    return 50;
-	if (name.equals("Infinity top"))
+	}
+	if (name.equals("Infinity top")) {
 	    return 50;
-	if (name.equals("Infinity bottoms"))
+	}
+	if (name.equals("Infinity bottoms")) {
 	    return 50;
-	if (name.equals("Infinity boots"))
+	}
+	if (name.equals("Infinity boots")) {
 	    return 50;
-	if (name.equals("Ahrims hood"))
+	}
+	if (name.equals("Ahrims hood")) {
 	    return 70;
-	if (name.equals("Ahrims robetop"))
+	}
+	if (name.equals("Ahrims robetop")) {
 	    return 70;
-	if (name.equals("Ahrims robeskirt"))
+	}
+	if (name.equals("Ahrims robeskirt")) {
 	    return 70;
-	if (name.equals("Ahrims staff"))
+	}
+	if (name.equals("Ahrims staff")) {
 	    return 70;
-	if (name.equals("Saradomin cape"))
+	}
+	if (name.equals("Saradomin cape")) {
 	    return 60;
-	if (name.equals("Saradomin staff"))
+	}
+	if (name.equals("Saradomin staff")) {
 	    return 60;
-	if (name.equals("Zamorak cape"))
+	}
+	if (name.equals("Zamorak cape")) {
 	    return 60;
-	if (name.equals("Zamorak staff"))
+	}
+	if (name.equals("Zamorak staff")) {
 	    return 60;
-	if (name.equals("Guthix cape"))
+	}
+	if (name.equals("Guthix cape")) {
 	    return 60;
-	if (name.equals("Guthix staff"))
+	}
+	if (name.equals("Guthix staff")) {
 	    return 60;
-	if (name.equals("mud staff"))
+	}
+	if (name.equals("mud staff")) {
 	    return 30;
-	if (name.equals("Fire battlestaff"))
+	}
+	if (name.equals("Fire battlestaff")) {
 	    return 30;
+	}
 	return 1;
     }
 
     /**
      * Gets the strength requirement.
-     * 
+     *
      * @param def The item.
      * @return The required level.
      */
     private static int getStrengthRequirement(ItemDefinition def) {
 	String name = def.getName();
-	if (name == null)
+	if (name == null) {
 	    name = "null";
-	if (name.equals("Torags hammers"))
+	}
+	if (name.equals("Torags hammers")) {
 	    return 70;
-	if (name.equals("Dharoks greataxe"))
+	}
+	if (name.equals("Dharoks greataxe")) {
 	    return 70;
-	if (name.equals("Granite maul"))
+	}
+	if (name.equals("Granite maul")) {
 	    return 50;
-	if (name.equals("Granite legs"))
+	}
+	if (name.equals("Granite legs")) {
 	    return 99;
-	if (name.equals("Tzhaar-ket-om"))
+	}
+	if (name.equals("Tzhaar-ket-om")) {
 	    return 60;
-	if (name.equals("Granite shield"))
+	}
+	if (name.equals("Granite shield")) {
 	    return 50;
+	}
 	return 1;
     }
 
     /**
      * Gets the attack requirement.
-     * 
+     *
      * @param def The item.
      * @return The required level.
      */
     private static int getAttackRequirement(ItemDefinition def) {
 	String name = def.getName();
-	if (name == null)
+	if (name == null) {
 	    name = "null";
-	if (name.equals("Black sword"))
+	}
+	if (name.equals("Black sword")) {
 	    return 10;
-	if (name.equals("Black dagger"))
+	}
+	if (name.equals("Black dagger")) {
 	    return 10;
-	if (name.equals("Black spear"))
+	}
+	if (name.equals("Black spear")) {
 	    return 10;
-	if (name.equals("Black longsword"))
+	}
+	if (name.equals("Black longsword")) {
 	    return 10;
-	if (name.equals("Black scimitar"))
+	}
+	if (name.equals("Black scimitar")) {
 	    return 10;
-	if (name.equals("Black axe"))
+	}
+	if (name.equals("Black axe")) {
 	    return 10;
-	if (name.equals("Black battleaxe"))
+	}
+	if (name.equals("Black battleaxe")) {
 	    return 10;
-	if (name.equals("Black mace"))
+	}
+	if (name.equals("Black mace")) {
 	    return 10;
-	if (name.equals("Black halberd"))
+	}
+	if (name.equals("Black halberd")) {
 	    return 10;
-	if (name.equals("Mithril sword"))
+	}
+	if (name.equals("Mithril sword")) {
 	    return 20;
-	if (name.equals("Mithril dagger"))
+	}
+	if (name.equals("Mithril dagger")) {
 	    return 20;
-	if (name.equals("Mithril spear"))
+	}
+	if (name.equals("Mithril spear")) {
 	    return 20;
-	if (name.equals("Mihril longsword"))
+	}
+	if (name.equals("Mihril longsword")) {
 	    return 20;
-	if (name.equals("Mithril scimitar"))
+	}
+	if (name.equals("Mithril scimitar")) {
 	    return 20;
-	if (name.equals("Mithril axe"))
+	}
+	if (name.equals("Mithril axe")) {
 	    return 20;
-	if (name.equals("Mithril battleaxe"))
+	}
+	if (name.equals("Mithril battleaxe")) {
 	    return 20;
-	if (name.equals("Mithril mace"))
+	}
+	if (name.equals("Mithril mace")) {
 	    return 20;
-	if (name.equals("Mithril halberd"))
+	}
+	if (name.equals("Mithril halberd")) {
 	    return 20;
-	if (name.equals("Adamant sword"))
+	}
+	if (name.equals("Adamant sword")) {
 	    return 30;
-	if (name.equals("Adamant dagger"))
+	}
+	if (name.equals("Adamant dagger")) {
 	    return 30;
-	if (name.equals("Adamant spear"))
+	}
+	if (name.equals("Adamant spear")) {
 	    return 30;
-	if (name.equals("Adamant longsword"))
+	}
+	if (name.equals("Adamant longsword")) {
 	    return 30;
-	if (name.equals("Adamant scimitar"))
+	}
+	if (name.equals("Adamant scimitar")) {
 	    return 30;
-	if (name.equals("Adamant axe"))
+	}
+	if (name.equals("Adamant axe")) {
 	    return 30;
-	if (name.equals("Adamant battleaxe"))
+	}
+	if (name.equals("Adamant battleaxe")) {
 	    return 30;
-	if (name.equals("Adamant mace"))
+	}
+	if (name.equals("Adamant mace")) {
 	    return 30;
-	if (name.equals("Adamant halberd"))
+	}
+	if (name.equals("Adamant halberd")) {
 	    return 30;
-	if (name.equals("Rune sword"))
+	}
+	if (name.equals("Rune sword")) {
 	    return 40;
-	if (name.equals("Rune dagger"))
+	}
+	if (name.equals("Rune dagger")) {
 	    return 40;
-	if (name.equals("Rune spear"))
+	}
+	if (name.equals("Rune spear")) {
 	    return 40;
-	if (name.equals("Rune longsword"))
+	}
+	if (name.equals("Rune longsword")) {
 	    return 40;
-	if (name.equals("Rune scimitar"))
+	}
+	if (name.equals("Rune scimitar")) {
 	    return 40;
-	if (name.equals("Rune axe"))
+	}
+	if (name.equals("Rune axe")) {
 	    return 40;
-	if (name.equals("Rune battleaxe"))
+	}
+	if (name.equals("Rune battleaxe")) {
 	    return 40;
-	if (name.equals("Rune mace"))
+	}
+	if (name.equals("Rune mace")) {
 	    return 40;
-	if (name.equals("Rune halberd"))
+	}
+	if (name.equals("Rune halberd")) {
 	    return 40;
-	if (name.equals("Dragon sword"))
+	}
+	if (name.equals("Dragon sword")) {
 	    return 60;
-	if (name.equals("Dragon dagger(s)"))
+	}
+	if (name.equals("Dragon dagger(s)")) {
 	    return 60;
-	if (name.equals("Dragon dagger"))
+	}
+	if (name.equals("Dragon dagger")) {
 	    return 60;
-	if (name.startsWith("Dragon spear"))
+	}
+	if (name.startsWith("Dragon spear")) {
 	    return 60;
-	if (name.equals("Dragon longsword"))
+	}
+	if (name.equals("Dragon longsword")) {
 	    return 60;
-	if (name.equals("Dragon scimitar"))
+	}
+	if (name.equals("Dragon scimitar")) {
 	    return 60;
-	if (name.equals("Dragon axe"))
+	}
+	if (name.equals("Dragon axe")) {
 	    return 60;
-	if (name.equals("Dragon battleaxe"))
+	}
+	if (name.equals("Dragon battleaxe")) {
 	    return 60;
-	if (name.equals("Dragon mace"))
+	}
+	if (name.equals("Dragon mace")) {
 	    return 60;
-	if (name.equals("Dragon halberd"))
+	}
+	if (name.equals("Dragon halberd")) {
 	    return 60;
-	if (name.equals("Abyssal whip"))
+	}
+	if (name.equals("Abyssal whip")) {
 	    return 70;
-	if (name.equals("Veracs flail"))
+	}
+	if (name.equals("Veracs flail")) {
 	    return 70;
-	if (name.equals("Torags hammers"))
+	}
+	if (name.equals("Torags hammers")) {
 	    return 70;
-	if (name.equals("Dharoks greataxe"))
+	}
+	if (name.equals("Dharoks greataxe")) {
 	    return 70;
-	if (name.equals("Guthans warspear"))
+	}
+	if (name.equals("Guthans warspear")) {
 	    return 70;
-	if (name.equals("Ahrims staff"))
+	}
+	if (name.equals("Ahrims staff")) {
 	    return 70;
-	if (name.equals("Granite maul"))
+	}
+	if (name.equals("Granite maul")) {
 	    return 50;
-	if (name.equals("Toktz-xil-ak"))
+	}
+	if (name.equals("Toktz-xil-ak")) {
 	    return 60;
-	if (name.equals("Tzhaar-ket-em"))
+	}
+	if (name.equals("Tzhaar-ket-em")) {
 	    return 60;
-	if (name.equals("Toktz-xil-ek"))
+	}
+	if (name.equals("Toktz-xil-ek")) {
 	    return 60;
-	if (name.equals("Granite legs"))
+	}
+	if (name.equals("Granite legs")) {
 	    return 99;
-	if (name.equals("Mud staff"))
+	}
+	if (name.equals("Mud staff")) {
 	    return 30;
-	if (name.equals("Armadyl godsword"))
+	}
+	if (name.equals("Armadyl godsword")) {
 	    return 75;
-	if (name.equals("Bandos godsword"))
+	}
+	if (name.equals("Bandos godsword")) {
 	    return 75;
-	if (name.equals("Saradomin godsword"))
+	}
+	if (name.equals("Saradomin godsword")) {
 	    return 75;
-	if (name.equals("Zamorak godsword"))
+	}
+	if (name.equals("Zamorak godsword")) {
 	    return 75;
-	if (name.equals("Lava battlestaff"))
+	}
+	if (name.equals("Lava battlestaff")) {
 	    return 30;
-	if (name.equals("Toktz-mej-tal"))
+	}
+	if (name.equals("Toktz-mej-tal")) {
 	    return 60;
-	if (name.equals("Ancient staff"))
+	}
+	if (name.equals("Ancient staff")) {
 	    return 50;
+	}
 	return 1;
     }
 
     /**
      * Gets the defence requirement.
-     * 
+     *
      * @param def The item.
      * @return The required level.
      */
     private static int getDefenceRequirement(ItemDefinition def) {
 	int id = def.getId();
 	String name = def.getName();
-	if (name == null)
+	if (name == null) {
 	    name = "null";
-	if (name.equals("Rune boots"))
+	}
+	if (name.equals("Rune boots")) {
 	    return 40;
-	if (id == 2499)
+	}
+	if (id == 2499) {
 	    return 40;
-	if (id == 4123)
+	}
+	if (id == 4123) {
 	    return 5;
-	if (id == 4125)
+	}
+	if (id == 4125) {
 	    return 10;
-	if (id == 4127)
+	}
+	if (id == 4127) {
 	    return 20;
-	if (id == 4129)
+	}
+	if (id == 4129) {
 	    return 30;
-	if (id == 7990)
+	}
+	if (id == 7990) {
 	    return 60;
-	if (id == 2501)
+	}
+	if (id == 2501) {
 	    return 40;
-	if (id == 1131)
+	}
+	if (id == 1131) {
 	    return 10;
-	if (id == 2503)
+	}
+	if (id == 2503) {
 	    return 40;
-	if (id == 1135)
+	}
+	if (id == 1135) {
 	    return 40;
-	if (id == 7462)
+	}
+	if (id == 7462) {
 	    return 42;
-	if (id == 7461)
+	}
+	if (id == 7461) {
 	    return 42;
-	if (id == 7460)
+	}
+	if (id == 7460) {
 	    return 42;
-	if (id == 7459)
+	}
+	if (id == 7459) {
 	    return 20;
-	if (id == 7458)
+	}
+	if (id == 7458) {
 	    return 1;
-	if (id == 7457)
+	}
+	if (id == 7457) {
 	    return 1;
-	if (id == 7456)
+	}
+	if (id == 7456) {
 	    return 1;
-	if (name.equals("White med helm"))
+	}
+	if (name.equals("White med helm")) {
 	    return 10;
-	if (name.equals("White chainbody"))
+	}
+	if (name.equals("White chainbody")) {
 	    return 10;
-	if (name.startsWith("White full helm"))
+	}
+	if (name.startsWith("White full helm")) {
 	    return 10;
-	if (name.startsWith("White platebody"))
+	}
+	if (name.startsWith("White platebody")) {
 	    return 10;
-	if (name.startsWith("White plateskirt"))
+	}
+	if (name.startsWith("White plateskirt")) {
 	    return 10;
-	if (name.startsWith("White platelegs"))
+	}
+	if (name.startsWith("White platelegs")) {
 	    return 10;
-	if (name.startsWith("White kiteshield"))
+	}
+	if (name.startsWith("White kiteshield")) {
 	    return 10;
-	if (name.startsWith("White sq shield"))
+	}
+	if (name.startsWith("White sq shield")) {
 	    return 10;
-	if (name.startsWith("Studded chaps"))
+	}
+	if (name.startsWith("Studded chaps")) {
 	    return 1;
-	if (name.startsWith("Studded"))
+	}
+	if (name.startsWith("Studded")) {
 	    return 20;
-	if (name.startsWith("Black kiteshield(h)"))
+	}
+	if (name.startsWith("Black kiteshield(h)")) {
 	    return 10;
-	if (name.startsWith("Rune kiteshield(h)"))
+	}
+	if (name.startsWith("Rune kiteshield(h)")) {
 	    return 40;
-	if (name.equals("Black med helm"))
+	}
+	if (name.equals("Black med helm")) {
 	    return 10;
-	if (name.equals("Black chainbody"))
+	}
+	if (name.equals("Black chainbody")) {
 	    return 10;
-	if (name.startsWith("Black full helm"))
+	}
+	if (name.startsWith("Black full helm")) {
 	    return 10;
-	if (name.startsWith("Black platebody"))
+	}
+	if (name.startsWith("Black platebody")) {
 	    return 10;
-	if (name.startsWith("Black plateskirt"))
+	}
+	if (name.startsWith("Black plateskirt")) {
 	    return 10;
-	if (name.startsWith("Black platelegs"))
+	}
+	if (name.startsWith("Black platelegs")) {
 	    return 10;
-	if (name.startsWith("Black kiteshield"))
+	}
+	if (name.startsWith("Black kiteshield")) {
 	    return 10;
-	if (name.startsWith("Black sq shield"))
+	}
+	if (name.startsWith("Black sq shield")) {
 	    return 10;
-	if (name.equals("Mithril med helm"))
+	}
+	if (name.equals("Mithril med helm")) {
 	    return 20;
-	if (name.equals("Mithril chainbody"))
+	}
+	if (name.equals("Mithril chainbody")) {
 	    return 20;
-	if (name.startsWith("Mithril full helm"))
+	}
+	if (name.startsWith("Mithril full helm")) {
 	    return 20;
-	if (name.startsWith("Mithril platebody"))
+	}
+	if (name.startsWith("Mithril platebody")) {
 	    return 20;
-	if (name.startsWith("Mithril plateskirt"))
+	}
+	if (name.startsWith("Mithril plateskirt")) {
 	    return 20;
-	if (name.startsWith("Mithril platelegs"))
+	}
+	if (name.startsWith("Mithril platelegs")) {
 	    return 20;
-	if (name.startsWith("Mithril kiteshield"))
+	}
+	if (name.startsWith("Mithril kiteshield")) {
 	    return 20;
-	if (name.startsWith("Mithril sq shield"))
+	}
+	if (name.startsWith("Mithril sq shield")) {
 	    return 20;
-	if (name.equals("Adamant med helm"))
+	}
+	if (name.equals("Adamant med helm")) {
 	    return 30;
-	if (name.equals("Adamant chainbody"))
+	}
+	if (name.equals("Adamant chainbody")) {
 	    return 30;
-	if (name.startsWith("Adamant full helm"))
+	}
+	if (name.startsWith("Adamant full helm")) {
 	    return 30;
-	if (name.startsWith("Adamant platebody"))
+	}
+	if (name.startsWith("Adamant platebody")) {
 	    return 30;
-	if (name.startsWith("Adamant plateskirt"))
+	}
+	if (name.startsWith("Adamant plateskirt")) {
 	    return 30;
-	if (name.startsWith("Adamant platelegs"))
+	}
+	if (name.startsWith("Adamant platelegs")) {
 	    return 30;
-	if (name.startsWith("Adamant kiteshield"))
+	}
+	if (name.startsWith("Adamant kiteshield")) {
 	    return 30;
-	if (name.startsWith("Adamant sq shield"))
+	}
+	if (name.startsWith("Adamant sq shield")) {
 	    return 30;
-	if (name.startsWith("Adam full helm"))
+	}
+	if (name.startsWith("Adam full helm")) {
 	    return 30;
-	if (name.startsWith("Adam platebody"))
+	}
+	if (name.startsWith("Adam platebody")) {
 	    return 30;
-	if (name.startsWith("Adam plateskirt"))
+	}
+	if (name.startsWith("Adam plateskirt")) {
 	    return 30;
-	if (name.startsWith("Adam platelegs"))
+	}
+	if (name.startsWith("Adam platelegs")) {
 	    return 30;
-	if (name.startsWith("Adam kiteshield"))
+	}
+	if (name.startsWith("Adam kiteshield")) {
 	    return 30;
-	if (name.startsWith("Adam kiteshield(h)"))
+	}
+	if (name.startsWith("Adam kiteshield(h)")) {
 	    return 30;
-	if (name.startsWith("D-hide body(g)"))
+	}
+	if (name.startsWith("D-hide body(g)")) {
 	    return 40;
-	if (name.startsWith("D-hide body(t)"))
+	}
+	if (name.startsWith("D-hide body(t)")) {
 	    return 40;
-	if (name.equals("Dragon sq shield"))
+	}
+	if (name.equals("Dragon sq shield")) {
 	    return 60;
-	if (name.equals("Dragon med helm"))
+	}
+	if (name.equals("Dragon med helm")) {
 	    return 60;
-	if (name.equals("Dragon chainbody"))
+	}
+	if (name.equals("Dragon chainbody")) {
 	    return 60;
-	if (name.equals("Dragon plateskirt"))
+	}
+	if (name.equals("Dragon plateskirt")) {
 	    return 60;
-	if (name.equals("Dragon platelegs"))
+	}
+	if (name.equals("Dragon platelegs")) {
 	    return 60;
-	if (name.equals("Dragon sq shield"))
+	}
+	if (name.equals("Dragon sq shield")) {
 	    return 60;
-	if (name.equals("Rune med helm"))
+	}
+	if (name.equals("Rune med helm")) {
 	    return 40;
-	if (name.equals("Rune chainbody"))
+	}
+	if (name.equals("Rune chainbody")) {
 	    return 40;
-	if (name.startsWith("Rune full helm"))
+	}
+	if (name.startsWith("Rune full helm")) {
 	    return 40;
-	if (name.startsWith("Rune platebody"))
+	}
+	if (name.startsWith("Rune platebody")) {
 	    return 40;
-	if (name.startsWith("Rune plateskirt"))
+	}
+	if (name.startsWith("Rune plateskirt")) {
 	    return 40;
-	if (name.startsWith("Rune platelegs"))
+	}
+	if (name.startsWith("Rune platelegs")) {
 	    return 40;
-	if (name.startsWith("Rune kiteshield"))
+	}
+	if (name.startsWith("Rune kiteshield")) {
 	    return 40;
-	if (name.startsWith("Zamorak full helm"))
+	}
+	if (name.startsWith("Zamorak full helm")) {
 	    return 40;
-	if (name.startsWith("Zamorak platebody"))
+	}
+	if (name.startsWith("Zamorak platebody")) {
 	    return 40;
-	if (name.startsWith("Zamorak plateskirt"))
+	}
+	if (name.startsWith("Zamorak plateskirt")) {
 	    return 40;
-	if (name.startsWith("Zamorak platelegs"))
+	}
+	if (name.startsWith("Zamorak platelegs")) {
 	    return 40;
-	if (name.startsWith("Zamorak kiteshield"))
+	}
+	if (name.startsWith("Zamorak kiteshield")) {
 	    return 40;
-	if (name.startsWith("Guthix full helm"))
+	}
+	if (name.startsWith("Guthix full helm")) {
 	    return 40;
-	if (name.startsWith("Guthix platebody"))
+	}
+	if (name.startsWith("Guthix platebody")) {
 	    return 40;
-	if (name.startsWith("Guthix plateskirt"))
+	}
+	if (name.startsWith("Guthix plateskirt")) {
 	    return 40;
-	if (name.startsWith("Guthix platelegs"))
+	}
+	if (name.startsWith("Guthix platelegs")) {
 	    return 40;
-	if (name.startsWith("Guthix kiteshield"))
+	}
+	if (name.startsWith("Guthix kiteshield")) {
 	    return 40;
-	if (name.startsWith("Saradomin full"))
+	}
+	if (name.startsWith("Saradomin full")) {
 	    return 40;
-	if (name.startsWith("Saradomrangedin plate"))
+	}
+	if (name.startsWith("Saradomrangedin plate")) {
 	    return 40;
-	if (name.startsWith("Saradomin plateskirt"))
+	}
+	if (name.startsWith("Saradomin plateskirt")) {
 	    return 40;
-	if (name.startsWith("Saradomin legs"))
+	}
+	if (name.startsWith("Saradomin legs")) {
 	    return 40;
-	if (name.startsWith("Zamorak kiteshield"))
+	}
+	if (name.startsWith("Zamorak kiteshield")) {
 	    return 40;
-	if (name.startsWith("Rune sq shield"))
+	}
+	if (name.startsWith("Rune sq shield")) {
 	    return 40;
-	if (name.equals("Gilded full helm"))
+	}
+	if (name.equals("Gilded full helm")) {
 	    return 40;
-	if (name.equals("Gilded platebody"))
+	}
+	if (name.equals("Gilded platebody")) {
 	    return 40;
-	if (name.equals("Gilded plateskirt"))
+	}
+	if (name.equals("Gilded plateskirt")) {
 	    return 40;
-	if (name.equals("Gilded platelegs"))
+	}
+	if (name.equals("Gilded platelegs")) {
 	    return 40;
-	if (name.equals("Gilded kiteshield"))
+	}
+	if (name.equals("Gilded kiteshield")) {
 	    return 40;
-	if (name.equals("Fighter torso"))
+	}
+	if (name.equals("Fighter torso")) {
 	    return 40;
-	if (name.equals("Granite legs"))
+	}
+	if (name.equals("Granite legs")) {
 	    return 99;
-	if (name.equals("Toktz-ket-xil"))
+	}
+	if (name.equals("Toktz-ket-xil")) {
 	    return 60;
-	if (name.equals("Dharoks helm"))
+	}
+	if (name.equals("Dharoks helm")) {
 	    return 70;
-	if (name.equals("Dharoks platebody"))
+	}
+	if (name.equals("Dharoks platebody")) {
 	    return 70;
-	if (name.equals("Dharoks platelegs"))
+	}
+	if (name.equals("Dharoks platelegs")) {
 	    return 70;
-	if (name.equals("Guthans helm"))
+	}
+	if (name.equals("Guthans helm")) {
 	    return 70;
-	if (name.equals("Guthans platebody"))
+	}
+	if (name.equals("Guthans platebody")) {
 	    return 70;
-	if (name.equals("Guthans chainskirt"))
+	}
+	if (name.equals("Guthans chainskirt")) {
 	    return 70;
-	if (name.equals("Torags helm"))
+	}
+	if (name.equals("Torags helm")) {
 	    return 70;
-	if (name.equals("Torags platebody"))
+	}
+	if (name.equals("Torags platebody")) {
 	    return 70;
-	if (name.equals("Torags platelegs"))
+	}
+	if (name.equals("Torags platelegs")) {
 	    return 70;
-	if (name.equals("Veracs helm"))
+	}
+	if (name.equals("Veracs helm")) {
 	    return 70;
-	if (name.equals("Veracs brassard"))
+	}
+	if (name.equals("Veracs brassard")) {
 	    return 70;
-	if (name.equals("Veracs plateskirt"))
+	}
+	if (name.equals("Veracs plateskirt")) {
 	    return 70;
-	if (name.equals("Ahrims hood"))
+	}
+	if (name.equals("Ahrims hood")) {
 	    return 70;
-	if (name.equals("Ahrims robetop"))
+	}
+	if (name.equals("Ahrims robetop")) {
 	    return 70;
-	if (name.equals("Ahrims robeskirt"))
+	}
+	if (name.equals("Ahrims robeskirt")) {
 	    return 70;
-	if (name.equals("Karils coif"))
+	}
+	if (name.equals("Karils coif")) {
 	    return 70;
-	if (name.equals("Karils leathertop"))
+	}
+	if (name.equals("Karils leathertop")) {
 	    return 70;
-	if (name.equals("Karils leatherskirt"))
+	}
+	if (name.equals("Karils leatherskirt")) {
 	    return 70;
-	if (name.equals("Granite shield"))
+	}
+	if (name.equals("Granite shield")) {
 	    return 50;
-	if (name.equals("New crystal shield"))
+	}
+	if (name.equals("New crystal shield")) {
 	    return 70;
-	if (name.equals("Archer helm"))
+	}
+	if (name.equals("Archer helm")) {
 	    return 45;
-	if (name.equals("Berserker helm"))
+	}
+	if (name.equals("Berserker helm")) {
 	    return 45;
-	if (name.equals("Warrior helm"))
+	}
+	if (name.equals("Warrior helm")) {
 	    return 45;
-	if (name.equals("Farseer helm"))
+	}
+	if (name.equals("Farseer helm")) {
 	    return 45;
-	if (name.equals("Initiate helm"))
+	}
+	if (name.equals("Initiate helm")) {
 	    return 20;
-	if (name.equals("Initiate platemail"))
+	}
+	if (name.equals("Initiate platemail")) {
 	    return 20;
-	if (name.equals("Initiate platelegs"))
+	}
+	if (name.equals("Initiate platelegs")) {
 	    return 20;
-	if (name.equals("Dragonhide body"))
+	}
+	if (name.equals("Dragonhide body")) {
 	    return 40;
-	if (name.equals("Mystic hat"))
+	}
+	if (name.equals("Mystic hat")) {
 	    return 20;
-	if (name.equals("Mystic robe top"))
+	}
+	if (name.equals("Mystic robe top")) {
 	    return 20;
-	if (name.equals("Mystic robe bottom"))
+	}
+	if (name.equals("Mystic robe bottom")) {
 	    return 20;
-	if (name.equals("Mystic gloves"))
+	}
+	if (name.equals("Mystic gloves")) {
 	    return 20;
-	if (name.equals("Mystic boots"))
+	}
+	if (name.equals("Mystic boots")) {
 	    return 20;
-	if (name.equals("Enchanted hat"))
+	}
+	if (name.equals("Enchanted hat")) {
 	    return 20;
-	if (name.equals("Enchanted top"))
+	}
+	if (name.equals("Enchanted top")) {
 	    return 20;
-	if (name.equals("Enchanted robe"))
+	}
+	if (name.equals("Enchanted robe")) {
 	    return 20;
-	if (name.equals("Splitbark helm"))
+	}
+	if (name.equals("Splitbark helm")) {
 	    return 40;
-	if (name.equals("Splitbark body"))
+	}
+	if (name.equals("Splitbark body")) {
 	    return 40;
-	if (name.equals("Splitbark gauntlets"))
+	}
+	if (name.equals("Splitbark gauntlets")) {
 	    return 40;
-	if (name.equals("Splitbark legs"))
+	}
+	if (name.equals("Splitbark legs")) {
 	    return 40;
-	if (name.equals("Splitbark greaves"))
+	}
+	if (name.equals("Splitbark greaves")) {
 	    return 40;
-	if (name.equals("Infinity gloves"))
+	}
+	if (name.equals("Infinity gloves")) {
 	    return 25;
-	if (name.equals("Infinity hat"))
+	}
+	if (name.equals("Infinity hat")) {
 	    return 25;
-	if (name.equals("Infinity top"))
+	}
+	if (name.equals("Infinity top")) {
 	    return 25;
-	if (name.equals("Infinity bottoms"))
+	}
+	if (name.equals("Infinity bottoms")) {
 	    return 25;
-	if (name.equals("Infinity boots"))
+	}
+	if (name.equals("Infinity boots")) {
 	    return 25;
+	}
 	return 1;
     }
 
     /**
      * Gets the weapon type.
-     * 
+     *
      * @param def The item.
      * @return The weapon type, or {@code -1} if it is not a weapon.
      */
     private static int getWeaponType(ItemDefinition def) {
 	String name = def.getName();
-	if (name == null)
+	if (name == null) {
 	    name = "null";
-	for (int i = 0; i < EquipmentConstants.CAPES.length; i++) {
-	    if (name.contains(EquipmentConstants.CAPES[i]))
+	}
+	for (String element : EquipmentConstants.CAPES) {
+	    if (name.contains(element)) {
 		return 1;
+	    }
 	}
-	for (int i = 0; i < EquipmentConstants.HATS.length; i++) {
-	    if (name.contains(EquipmentConstants.HATS[i]))
+	for (String element : EquipmentConstants.HATS) {
+	    if (name.contains(element)) {
 		return 0;
+	    }
 	}
-	for (int i = 0; i < EquipmentConstants.BOOTS.length; i++) {
-	    if (name.endsWith(EquipmentConstants.BOOTS[i]) || name.startsWith(EquipmentConstants.BOOTS[i]))
+	for (String element : EquipmentConstants.BOOTS) {
+	    if (name.endsWith(element) || name.startsWith(element)) {
 		return 10;
+	    }
 	}
-	for (int i = 0; i < EquipmentConstants.GLOVES.length; i++) {
-	    if (name.endsWith(EquipmentConstants.GLOVES[i]) || name.startsWith(EquipmentConstants.GLOVES[i]))
+	for (String element : EquipmentConstants.GLOVES) {
+	    if (name.endsWith(element) || name.startsWith(element)) {
 		return 9;
+	    }
 	}
-	for (int i = 0; i < EquipmentConstants.SHIELDS.length; i++) {
-	    if (name.contains(EquipmentConstants.SHIELDS[i]))
+	for (String element : EquipmentConstants.SHIELDS) {
+	    if (name.contains(element)) {
 		return 5;
+	    }
 	}
-	for (int i = 0; i < EquipmentConstants.AMULETS.length; i++) {
-	    if (name.endsWith(EquipmentConstants.AMULETS[i]) || name.startsWith(EquipmentConstants.AMULETS[i]))
+	for (String element : EquipmentConstants.AMULETS) {
+	    if (name.endsWith(element) || name.startsWith(element)) {
 		return 2;
+	    }
 	}
-	for (int i = 0; i < EquipmentConstants.ARROWS.length; i++) {
-	    if (name.endsWith(EquipmentConstants.ARROWS[i]) || name.startsWith(EquipmentConstants.ARROWS[i]))
+	for (String element : EquipmentConstants.ARROWS) {
+	    if (name.endsWith(element) || name.startsWith(element)) {
 		return 13;
+	    }
 	}
-	for (int i = 0; i < EquipmentConstants.RINGS.length; i++) {
-	    if (name.endsWith(EquipmentConstants.RINGS[i]) || name.startsWith(EquipmentConstants.RINGS[i]))
+	for (String element : EquipmentConstants.RINGS) {
+	    if (name.endsWith(element) || name.startsWith(element)) {
 		return 12;
+	    }
 	}
-	for (int i = 0; i < EquipmentConstants.BODY.length; i++) {
-	    if (name.contains(EquipmentConstants.BODY[i]))
+	for (String element : EquipmentConstants.BODY) {
+	    if (name.contains(element)) {
 		return 4;
+	    }
 	}
-	for (int i = 0; i < EquipmentConstants.LEGS.length; i++) {
-	    if (name.contains(EquipmentConstants.LEGS[i]))
+	for (String element : EquipmentConstants.LEGS) {
+	    if (name.contains(element)) {
 		return 7;
+	    }
 	}
-	for (int i = 0; i < EquipmentConstants.WEAPONS.length; i++) {
-	    if (name.endsWith(EquipmentConstants.WEAPONS[i]) || name.startsWith(EquipmentConstants.WEAPONS[i]))
+	for (String element : EquipmentConstants.WEAPONS) {
+	    if (name.endsWith(element) || name.startsWith(element)) {
 		return 3;
+	    }
 	}
 	return -1;
     }
 
     /**
      * Checks if the item is a full body item.
-     * 
+     *
      * @param def The item.
      * @return {@code true} if so, {@code false} otherwise.
      */
     private static boolean isFullBody(ItemDefinition def) {
 	String name = def.getName();
-	if (name == null)
+	if (name == null) {
 	    name = "null";
-	for (int i = 0; i < EquipmentConstants.FULL_BODIES.length; i++) {
-	    if (name.contains(EquipmentConstants.FULL_BODIES[i])) {
+	}
+	for (String element : EquipmentConstants.FULL_BODIES) {
+	    if (name.contains(element)) {
 		return true;
 	    }
 	}
@@ -840,16 +1156,17 @@ public final class EquipmentUpdater {
 
     /**
      * Checks if the item is a full hat item.
-     * 
+     *
      * @param def The item.
      * @return {@code true} if so, {@code false} otherwise.
      */
     private static boolean isFullHat(ItemDefinition def) {
 	String name = def.getName();
-	if (name == null)
+	if (name == null) {
 	    name = "null";
-	for (int i = 0; i < EquipmentConstants.FULL_HATS.length; i++) {
-	    if (name.endsWith(EquipmentConstants.FULL_HATS[i])) {
+	}
+	for (String element : EquipmentConstants.FULL_HATS) {
+	    if (name.endsWith(element)) {
 		return true;
 	    }
 	}
@@ -858,16 +1175,17 @@ public final class EquipmentUpdater {
 
     /**
      * Checks if the item is a full mask item.
-     * 
+     *
      * @param def The item.
      * @return {@code true} if so, {@code false} otherwise.
      */
     private static boolean isFullMask(ItemDefinition def) {
 	String name = def.getName();
-	if (name == null)
+	if (name == null) {
 	    name = "null";
-	for (int i = 0; i < EquipmentConstants.FULL_MASKS.length; i++) {
-	    if (name.endsWith(EquipmentConstants.FULL_MASKS[i])) {
+	}
+	for (String element : EquipmentConstants.FULL_MASKS) {
+	    if (name.endsWith(element)) {
 		return true;
 	    }
 	}
@@ -883,7 +1201,7 @@ public final class EquipmentUpdater {
 
     /**
      * Contains equipment name constants.
-     * 
+     *
      * @author Graham
      * @author Palidino76
      */

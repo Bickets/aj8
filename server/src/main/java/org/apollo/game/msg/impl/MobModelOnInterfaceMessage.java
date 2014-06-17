@@ -6,7 +6,7 @@ import org.apollo.game.msg.Message;
 /**
  * Represents a message which sends a {@link Mob}'s model to a specified
  * interface.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class MobModelOnInterfaceMessage extends Message {
@@ -23,7 +23,7 @@ public final class MobModelOnInterfaceMessage extends Message {
 
     /**
      * Constructs a new {@link MobModelOnInterfaceMessage}.
-     * 
+     *
      * @param mobId The mob's id.
      * @param interfaceId The interface id.
      */

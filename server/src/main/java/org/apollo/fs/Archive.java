@@ -12,7 +12,7 @@ import org.apollo.util.NameUtil;
 
 public final class Archive {
 
-    private Map<Integer, ArchiveEntry> entries = new HashMap<>();
+    private final Map<Integer, ArchiveEntry> entries = new HashMap<>();
 
     private boolean packed;
 

@@ -2,7 +2,7 @@ package org.apollo.game.model.inter.quest;
 
 /**
  * Contains quest-related constants.
- * 
+ *
  * @author Graham
  */
 public final class QuestConstants {

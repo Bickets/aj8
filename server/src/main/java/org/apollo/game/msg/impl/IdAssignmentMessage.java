@@ -5,7 +5,7 @@ import org.apollo.game.msg.Message;
 /**
  * A message which specifies the local id and membership status of the current
  * player.
- * 
+ *
  * @author Graham
  */
 public final class IdAssignmentMessage extends Message {
@@ -22,7 +22,7 @@ public final class IdAssignmentMessage extends Message {
 
     /**
      * Creates the local id message.
-     * 
+     *
      * @param id The id.
      * @param members The membership flag.
      */
@@ -33,7 +33,7 @@ public final class IdAssignmentMessage extends Message {
 
     /**
      * Gets the id.
-     * 
+     *
      * @return The id.
      */
     public int getId() {
@@ -42,7 +42,7 @@ public final class IdAssignmentMessage extends Message {
 
     /**
      * Gets the membership flag.
-     * 
+     *
      * @return The membership flag.
      */
     public boolean isMembers() {

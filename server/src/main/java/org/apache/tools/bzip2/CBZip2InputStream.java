@@ -43,7 +43,7 @@ import java.io.InputStream;
  * the single byte {@link java.io.InputStream#read() read()} method exclusively.
  * Thus you should consider to use a buffered source stream.
  * </p>
- * 
+ *
  * <p>
  * Instances of this class are not threadsafe.
  * </p>
@@ -59,17 +59,18 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
     }
 
     private void makeMaps() {
-	final boolean[] inUse = this.data.inUse;
-	final byte[] seqToUnseq = this.data.seqToUnseq;
+	final boolean[] inUse = data.inUse;
+	final byte[] seqToUnseq = data.seqToUnseq;
 
 	int nInUseShadow = 0;
 
 	for (int i = 0; i < 256; i++) {
-	    if (inUse[i])
+	    if (inUse[i]) {
 		seqToUnseq[nInUseShadow++] = (byte) i;
+	    }
 	}
 
-	this.nInUse = nInUseShadow;
+	nInUse = nInUseShadow;
     }
 
     /**
@@ -153,14 +154,16 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 	init();
     }
 
+    @Override
     public int read() throws IOException {
-	if (this.in != null) {
+	if (in != null) {
 	    return read0();
 	} else {
 	    throw new IOException("stream closed");
 	}
     }
 
+    @Override
     public int read(final byte[] dest, final int offs, final int len) throws IOException {
 	if (offs < 0) {
 	    throw new IndexOutOfBoundsException("offs(" + offs + ") < 0.");
@@ -171,23 +174,23 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 	if (offs + len > dest.length) {
 	    throw new IndexOutOfBoundsException("offs(" + offs + ") + len(" + len + ") > dest.length(" + dest.length + ").");
 	}
-	if (this.in == null) {
+	if (in == null) {
 	    throw new IOException("stream closed");
 	}
 
 	final int hi = offs + len;
 	int destOffs = offs;
-	for (int b; (destOffs < hi) && ((b = read0()) >= 0);) {
+	for (int b; destOffs < hi && (b = read0()) >= 0;) {
 	    dest[destOffs++] = (byte) b;
 	}
 
-	return (destOffs == offs) ? -1 : (destOffs - offs);
+	return destOffs == offs ? -1 : destOffs - offs;
     }
 
     private int read0() throws IOException {
-	final int retChar = this.currentChar;
+	final int retChar = currentChar;
 
-	switch (this.currentState) {
+	switch (currentState) {
 	case EOF:
 	    return -1;
 
@@ -230,17 +233,17 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 	if (in.available() == 0) {
 	    throw new IOException("Empty InputStream");
 	}
-	int magic2 = this.in.read();
+	int magic2 = in.read();
 	if (magic2 != 'h') {
 	    throw new IOException("Stream is not BZip2 formatted: expected 'h'" + " as first byte but got '" + (char) magic2 + "'");
 	}
 
-	int blockSize = this.in.read();
-	if ((blockSize < '1') || (blockSize > '9')) {
+	int blockSize = in.read();
+	if (blockSize < '1' || blockSize > '9') {
 	    throw new IOException("Stream is not BZip2 formatted: illegal " + "blocksize " + (char) blockSize);
 	}
 
-	this.blockSize100k = blockSize - '0';
+	blockSize100k = blockSize - '0';
 
 	initBlock();
 	setupBlock();
@@ -263,75 +266,76 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 	magic4 != 0x53 || // 'S'
 	magic5 != 0x59 // 'Y'
 	) {
-	    this.currentState = EOF;
+	    currentState = EOF;
 	    throw new IOException("bad block header");
 	} else {
-	    this.storedBlockCRC = bsGetInt();
-	    this.blockRandomised = bsR(1) == 1;
+	    storedBlockCRC = bsGetInt();
+	    blockRandomised = bsR(1) == 1;
 
 	    /**
 	     * Allocate data here instead in constructor, so we do not allocate
 	     * it if the input file is empty.
 	     */
-	    if (this.data == null) {
-		this.data = new Data(this.blockSize100k);
+	    if (data == null) {
+		data = new Data(blockSize100k);
 	    }
 
 	    // currBlockNo++;
 	    getAndMoveToFrontDecode();
 
-	    this.crc.initialiseCRC();
-	    this.currentState = START_BLOCK_STATE;
+	    crc.initialiseCRC();
+	    currentState = START_BLOCK_STATE;
 	}
     }
 
     private void endBlock() throws IOException {
-	this.computedBlockCRC = this.crc.getFinalCRC();
+	computedBlockCRC = crc.getFinalCRC();
 
 	// A bad CRC is considered a fatal error.
-	if (this.storedBlockCRC != this.computedBlockCRC) {
+	if (storedBlockCRC != computedBlockCRC) {
 	    // make next blocks readable without error
 	    // (repair feature, not yet documented, not tested)
-	    this.computedCombinedCRC = (this.storedCombinedCRC << 1) | (this.storedCombinedCRC >>> 31);
-	    this.computedCombinedCRC ^= this.storedBlockCRC;
+	    computedCombinedCRC = storedCombinedCRC << 1 | storedCombinedCRC >>> 31;
+	    computedCombinedCRC ^= storedBlockCRC;
 
 	    reportCRCError();
 	}
 
-	this.computedCombinedCRC = (this.computedCombinedCRC << 1) | (this.computedCombinedCRC >>> 31);
-	this.computedCombinedCRC ^= this.computedBlockCRC;
+	computedCombinedCRC = computedCombinedCRC << 1 | computedCombinedCRC >>> 31;
+	computedCombinedCRC ^= computedBlockCRC;
     }
 
     private void complete() throws IOException {
-	this.storedCombinedCRC = bsGetInt();
-	this.currentState = EOF;
-	this.data = null;
+	storedCombinedCRC = bsGetInt();
+	currentState = EOF;
+	data = null;
 
-	if (this.storedCombinedCRC != this.computedCombinedCRC) {
+	if (storedCombinedCRC != computedCombinedCRC) {
 	    reportCRCError();
 	}
     }
 
+    @Override
     public void close() throws IOException {
-	InputStream inShadow = this.in;
+	InputStream inShadow = in;
 	if (inShadow != null) {
 	    try {
 		if (inShadow != System.in) {
 		    inShadow.close();
 		}
 	    } finally {
-		this.data = null;
-		this.in = null;
+		data = null;
+		in = null;
 	    }
 	}
     }
 
     private int bsR(final int n) throws IOException {
-	int bsLiveShadow = this.bsLive;
-	int bsBuffShadow = this.bsBuff;
+	int bsLiveShadow = bsLive;
+	int bsBuffShadow = bsBuff;
 
 	if (bsLiveShadow < n) {
-	    final InputStream inShadow = this.in;
+	    final InputStream inShadow = in;
 	    do {
 		int thech = inShadow.read();
 
@@ -339,35 +343,35 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 		    throw new IOException("unexpected end of stream");
 		}
 
-		bsBuffShadow = (bsBuffShadow << 8) | thech;
+		bsBuffShadow = bsBuffShadow << 8 | thech;
 		bsLiveShadow += 8;
 	    } while (bsLiveShadow < n);
 
-	    this.bsBuff = bsBuffShadow;
+	    bsBuff = bsBuffShadow;
 	}
 
-	this.bsLive = bsLiveShadow - n;
-	return (bsBuffShadow >> (bsLiveShadow - n)) & ((1 << n) - 1);
+	bsLive = bsLiveShadow - n;
+	return bsBuffShadow >> bsLiveShadow - n & (1 << n) - 1;
     }
 
     private boolean bsGetBit() throws IOException {
-	int bsLiveShadow = this.bsLive;
-	int bsBuffShadow = this.bsBuff;
+	int bsLiveShadow = bsLive;
+	int bsBuffShadow = bsBuff;
 
 	if (bsLiveShadow < 1) {
-	    int thech = this.in.read();
+	    int thech = in.read();
 
 	    if (thech < 0) {
 		throw new IOException("unexpected end of stream");
 	    }
 
-	    bsBuffShadow = (bsBuffShadow << 8) | thech;
+	    bsBuffShadow = bsBuffShadow << 8 | thech;
 	    bsLiveShadow += 8;
-	    this.bsBuff = bsBuffShadow;
+	    bsBuff = bsBuffShadow;
 	}
 
-	this.bsLive = bsLiveShadow - 1;
-	return ((bsBuffShadow >> (bsLiveShadow - 1)) & 1) != 0;
+	bsLive = bsLiveShadow - 1;
+	return (bsBuffShadow >> bsLiveShadow - 1 & 1) != 0;
     }
 
     private char bsGetUByte() throws IOException {
@@ -375,7 +379,7 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
     }
 
     private int bsGetInt() throws IOException {
-	return (((((bsR(8) << 8) | bsR(8)) << 8) | bsR(8)) << 8) | bsR(8);
+	return ((bsR(8) << 8 | bsR(8)) << 8 | bsR(8)) << 8 | bsR(8);
     }
 
     /**
@@ -413,12 +417,12 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 	}
 
 	for (int i = minLen + 1; i <= maxLen; i++) {
-	    base[i] = ((limit[i - 1] + 1) << 1) - base[i];
+	    base[i] = (limit[i - 1] + 1 << 1) - base[i];
 	}
     }
 
     private void recvDecodingTables() throws IOException {
-	final Data dataShadow = this.data;
+	final Data dataShadow = data;
 	final boolean[] inUse = dataShadow.inUse;
 	final byte[] pos = dataShadow.recvDecodingTables_pos;
 	final byte[] selector = dataShadow.selector;
@@ -438,7 +442,7 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 	}
 
 	for (int i = 0; i < 16; i++) {
-	    if ((inUse16 & (1 << i)) != 0) {
+	    if ((inUse16 & 1 << i) != 0) {
 		final int i16 = i << 4;
 		for (int j = 0; j < 16; j++) {
 		    if (bsGetBit()) {
@@ -449,7 +453,7 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 	}
 
 	makeMaps();
-	final int alphaSize = this.nInUse + 2;
+	final int alphaSize = nInUse + 2;
 
 	/* Now the selectors */
 	final int nGroups = bsR(3);
@@ -502,7 +506,7 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
      * Called by recvDecodingTables() exclusively.
      */
     private void createHuffmanDecodingTables(final int alphaSize, final int nGroups) {
-	final Data dataShadow = this.data;
+	final Data dataShadow = data;
 	final char[][] len = dataShadow.temp_charArray2d;
 	final int[] minLens = dataShadow.minLens;
 	final int[][] limit = dataShadow.limit;
@@ -528,11 +532,11 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
     }
 
     private void getAndMoveToFrontDecode() throws IOException {
-	this.origPtr = bsR(24);
+	origPtr = bsR(24);
 	recvDecodingTables();
 
-	final InputStream inShadow = this.in;
-	final Data dataShadow = this.data;
+	final InputStream inShadow = in;
+	final Data dataShadow = data;
 	final byte[] ll8 = dataShadow.ll8;
 	final int[] unzftab = dataShadow.unzftab;
 	final byte[] selector = dataShadow.selector;
@@ -542,7 +546,7 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 	final int[][] limit = dataShadow.limit;
 	final int[][] base = dataShadow.base;
 	final int[][] perm = dataShadow.perm;
-	final int limitLast = this.blockSize100k * 100000;
+	final int limitLast = blockSize100k * 100000;
 
 	/*
 	 * Setting up the unzftab entries here is not strictly necessary, but it
@@ -556,10 +560,10 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 
 	int groupNo = 0;
 	int groupPos = G_SIZE - 1;
-	final int eob = this.nInUse + 1;
+	final int eob = nInUse + 1;
 	int nextSym = getAndMoveToFrontDecode0(0);
-	int bsBuffShadow = this.bsBuff;
-	int bsLiveShadow = this.bsLive;
+	int bsBuffShadow = bsBuff;
+	int bsLiveShadow = bsLive;
 	int lastShadow = -1;
 	int zt = selector[groupNo] & 0xff;
 	int[] base_zt = base[zt];
@@ -568,7 +572,7 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 	int minLens_zt = minLens[zt];
 
 	while (nextSym != eob) {
-	    if ((nextSym == RUNA) || (nextSym == RUNB)) {
+	    if (nextSym == RUNA || nextSym == RUNB) {
 		int s = -1;
 
 		for (int n = 1; true; n <<= 1) {
@@ -598,14 +602,14 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 		    while (bsLiveShadow < zn) {
 			final int thech = inShadow.read();
 			if (thech >= 0) {
-			    bsBuffShadow = (bsBuffShadow << 8) | thech;
+			    bsBuffShadow = bsBuffShadow << 8 | thech;
 			    bsLiveShadow += 8;
 			    continue;
 			} else {
 			    throw new IOException("unexpected end of stream");
 			}
 		    }
-		    int zvec = (bsBuffShadow >> (bsLiveShadow - zn)) & ((1 << zn) - 1);
+		    int zvec = bsBuffShadow >> bsLiveShadow - zn & (1 << zn) - 1;
 		    bsLiveShadow -= zn;
 
 		    while (zvec > limit_zt[zn]) {
@@ -613,7 +617,7 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 			while (bsLiveShadow < 1) {
 			    final int thech = inShadow.read();
 			    if (thech >= 0) {
-				bsBuffShadow = (bsBuffShadow << 8) | thech;
+				bsBuffShadow = bsBuffShadow << 8 | thech;
 				bsLiveShadow += 8;
 				continue;
 			    } else {
@@ -621,7 +625,7 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 			    }
 			}
 			bsLiveShadow--;
-			zvec = (zvec << 1) | ((bsBuffShadow >> bsLiveShadow) & 1);
+			zvec = zvec << 1 | bsBuffShadow >> bsLiveShadow & 1;
 		    }
 		    nextSym = perm_zt[zvec - base_zt[zn]];
 		}
@@ -678,14 +682,14 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 		while (bsLiveShadow < zn) {
 		    final int thech = inShadow.read();
 		    if (thech >= 0) {
-			bsBuffShadow = (bsBuffShadow << 8) | thech;
+			bsBuffShadow = bsBuffShadow << 8 | thech;
 			bsLiveShadow += 8;
 			continue;
 		    } else {
 			throw new IOException("unexpected end of stream");
 		    }
 		}
-		int zvec = (bsBuffShadow >> (bsLiveShadow - zn)) & ((1 << zn) - 1);
+		int zvec = bsBuffShadow >> bsLiveShadow - zn & (1 << zn) - 1;
 		bsLiveShadow -= zn;
 
 		while (zvec > limit_zt[zn]) {
@@ -693,7 +697,7 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 		    while (bsLiveShadow < 1) {
 			final int thech = inShadow.read();
 			if (thech >= 0) {
-			    bsBuffShadow = (bsBuffShadow << 8) | thech;
+			    bsBuffShadow = bsBuffShadow << 8 | thech;
 			    bsLiveShadow += 8;
 			    continue;
 			} else {
@@ -701,26 +705,26 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 			}
 		    }
 		    bsLiveShadow--;
-		    zvec = (zvec << 1) | ((bsBuffShadow >> bsLiveShadow) & 1);
+		    zvec = zvec << 1 | bsBuffShadow >> bsLiveShadow & 1;
 		}
 		nextSym = perm_zt[zvec - base_zt[zn]];
 	    }
 	}
 
-	this.last = lastShadow;
-	this.bsLive = bsLiveShadow;
-	this.bsBuff = bsBuffShadow;
+	last = lastShadow;
+	bsLive = bsLiveShadow;
+	bsBuff = bsBuffShadow;
     }
 
     private int getAndMoveToFrontDecode0(final int groupNo) throws IOException {
-	final InputStream inShadow = this.in;
-	final Data dataShadow = this.data;
+	final InputStream inShadow = in;
+	final Data dataShadow = data;
 	final int zt = dataShadow.selector[groupNo] & 0xff;
 	final int[] limit_zt = dataShadow.limit[zt];
 	int zn = dataShadow.minLens[zt];
 	int zvec = bsR(zn);
-	int bsLiveShadow = this.bsLive;
-	int bsBuffShadow = this.bsBuff;
+	int bsLiveShadow = bsLive;
+	int bsBuffShadow = bsBuff;
 
 	while (zvec > limit_zt[zn]) {
 	    zn++;
@@ -728,7 +732,7 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 		final int thech = inShadow.read();
 
 		if (thech >= 0) {
-		    bsBuffShadow = (bsBuffShadow << 8) | thech;
+		    bsBuffShadow = bsBuffShadow << 8 | thech;
 		    bsLiveShadow += 8;
 		    continue;
 		} else {
@@ -736,47 +740,47 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 		}
 	    }
 	    bsLiveShadow--;
-	    zvec = (zvec << 1) | ((bsBuffShadow >> bsLiveShadow) & 1);
+	    zvec = zvec << 1 | bsBuffShadow >> bsLiveShadow & 1;
 	}
 
-	this.bsLive = bsLiveShadow;
-	this.bsBuff = bsBuffShadow;
+	bsLive = bsLiveShadow;
+	bsBuff = bsBuffShadow;
 
 	return dataShadow.perm[zt][zvec - dataShadow.base[zt][zn]];
     }
 
     private void setupBlock() throws IOException {
-	if (this.data == null) {
+	if (data == null) {
 	    return;
 	}
 
-	final int[] cftab = this.data.cftab;
-	final int[] tt = this.data.initTT(this.last + 1);
-	final byte[] ll8 = this.data.ll8;
+	final int[] cftab = data.cftab;
+	final int[] tt = data.initTT(last + 1);
+	final byte[] ll8 = data.ll8;
 	cftab[0] = 0;
-	System.arraycopy(this.data.unzftab, 0, cftab, 1, 256);
+	System.arraycopy(data.unzftab, 0, cftab, 1, 256);
 
 	for (int i = 1, c = cftab[0]; i <= 256; i++) {
 	    c += cftab[i];
 	    cftab[i] = c;
 	}
 
-	for (int i = 0, lastShadow = this.last; i <= lastShadow; i++) {
+	for (int i = 0, lastShadow = last; i <= lastShadow; i++) {
 	    tt[cftab[ll8[i] & 0xff]++] = i;
 	}
 
-	if ((this.origPtr < 0) || (this.origPtr >= tt.length)) {
+	if (origPtr < 0 || origPtr >= tt.length) {
 	    throw new IOException("stream corrupted");
 	}
 
-	this.su_tPos = tt[this.origPtr];
-	this.su_count = 0;
-	this.su_i2 = 0;
-	this.su_ch2 = 256; /* not a char and not EOF */
+	su_tPos = tt[origPtr];
+	su_count = 0;
+	su_i2 = 0;
+	su_ch2 = 256; /* not a char and not EOF */
 
-	if (this.blockRandomised) {
-	    this.su_rNToGo = 0;
-	    this.su_rTPos = 0;
+	if (blockRandomised) {
+	    su_rNToGo = 0;
+	    su_rTPos = 0;
 	    setupRandPartA();
 	} else {
 	    setupNoRandPartA();
@@ -784,23 +788,23 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
     }
 
     private void setupRandPartA() throws IOException {
-	if (this.su_i2 <= this.last) {
-	    this.su_chPrev = this.su_ch2;
-	    int su_ch2Shadow = this.data.ll8[this.su_tPos] & 0xff;
-	    this.su_tPos = this.data.tt[this.su_tPos];
-	    if (this.su_rNToGo == 0) {
-		this.su_rNToGo = BZip2Constants.rNums[this.su_rTPos] - 1;
-		if (++this.su_rTPos == 512) {
-		    this.su_rTPos = 0;
+	if (su_i2 <= last) {
+	    su_chPrev = su_ch2;
+	    int su_ch2Shadow = data.ll8[su_tPos] & 0xff;
+	    su_tPos = data.tt[su_tPos];
+	    if (su_rNToGo == 0) {
+		su_rNToGo = BZip2Constants.rNums[su_rTPos] - 1;
+		if (++su_rTPos == 512) {
+		    su_rTPos = 0;
 		}
 	    } else {
-		this.su_rNToGo--;
+		su_rNToGo--;
 	    }
-	    this.su_ch2 = su_ch2Shadow ^= (this.su_rNToGo == 1) ? 1 : 0;
-	    this.su_i2++;
-	    this.currentChar = su_ch2Shadow;
-	    this.currentState = RAND_PART_B_STATE;
-	    this.crc.updateCRC(su_ch2Shadow);
+	    su_ch2 = su_ch2Shadow ^= su_rNToGo == 1 ? 1 : 0;
+	    su_i2++;
+	    currentChar = su_ch2Shadow;
+	    currentState = RAND_PART_B_STATE;
+	    crc.updateCRC(su_ch2Shadow);
 	} else {
 	    endBlock();
 	    initBlock();
@@ -809,17 +813,17 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
     }
 
     private void setupNoRandPartA() throws IOException {
-	if (this.su_i2 <= this.last) {
-	    this.su_chPrev = this.su_ch2;
-	    int su_ch2Shadow = this.data.ll8[this.su_tPos] & 0xff;
-	    this.su_ch2 = su_ch2Shadow;
-	    this.su_tPos = this.data.tt[this.su_tPos];
-	    this.su_i2++;
-	    this.currentChar = su_ch2Shadow;
-	    this.currentState = NO_RAND_PART_B_STATE;
-	    this.crc.updateCRC(su_ch2Shadow);
+	if (su_i2 <= last) {
+	    su_chPrev = su_ch2;
+	    int su_ch2Shadow = data.ll8[su_tPos] & 0xff;
+	    su_ch2 = su_ch2Shadow;
+	    su_tPos = data.tt[su_tPos];
+	    su_i2++;
+	    currentChar = su_ch2Shadow;
+	    currentState = NO_RAND_PART_B_STATE;
+	    crc.updateCRC(su_ch2Shadow);
 	} else {
-	    this.currentState = NO_RAND_PART_A_STATE;
+	    currentState = NO_RAND_PART_A_STATE;
 	    endBlock();
 	    initBlock();
 	    setupBlock();
@@ -827,54 +831,54 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
     }
 
     private void setupRandPartB() throws IOException {
-	if (this.su_ch2 != this.su_chPrev) {
-	    this.currentState = RAND_PART_A_STATE;
-	    this.su_count = 1;
+	if (su_ch2 != su_chPrev) {
+	    currentState = RAND_PART_A_STATE;
+	    su_count = 1;
 	    setupRandPartA();
-	} else if (++this.su_count >= 4) {
-	    this.su_z = (char) (this.data.ll8[this.su_tPos] & 0xff);
-	    this.su_tPos = this.data.tt[this.su_tPos];
-	    if (this.su_rNToGo == 0) {
-		this.su_rNToGo = BZip2Constants.rNums[this.su_rTPos] - 1;
-		if (++this.su_rTPos == 512) {
-		    this.su_rTPos = 0;
+	} else if (++su_count >= 4) {
+	    su_z = (char) (data.ll8[su_tPos] & 0xff);
+	    su_tPos = data.tt[su_tPos];
+	    if (su_rNToGo == 0) {
+		su_rNToGo = BZip2Constants.rNums[su_rTPos] - 1;
+		if (++su_rTPos == 512) {
+		    su_rTPos = 0;
 		}
 	    } else {
-		this.su_rNToGo--;
+		su_rNToGo--;
 	    }
-	    this.su_j2 = 0;
-	    this.currentState = RAND_PART_C_STATE;
-	    if (this.su_rNToGo == 1) {
-		this.su_z ^= 1;
+	    su_j2 = 0;
+	    currentState = RAND_PART_C_STATE;
+	    if (su_rNToGo == 1) {
+		su_z ^= 1;
 	    }
 	    setupRandPartC();
 	} else {
-	    this.currentState = RAND_PART_A_STATE;
+	    currentState = RAND_PART_A_STATE;
 	    setupRandPartA();
 	}
     }
 
     private void setupRandPartC() throws IOException {
-	if (this.su_j2 < this.su_z) {
-	    this.currentChar = this.su_ch2;
-	    this.crc.updateCRC(this.su_ch2);
-	    this.su_j2++;
+	if (su_j2 < su_z) {
+	    currentChar = su_ch2;
+	    crc.updateCRC(su_ch2);
+	    su_j2++;
 	} else {
-	    this.currentState = RAND_PART_A_STATE;
-	    this.su_i2++;
-	    this.su_count = 0;
+	    currentState = RAND_PART_A_STATE;
+	    su_i2++;
+	    su_count = 0;
 	    setupRandPartA();
 	}
     }
 
     private void setupNoRandPartB() throws IOException {
-	if (this.su_ch2 != this.su_chPrev) {
-	    this.su_count = 1;
+	if (su_ch2 != su_chPrev) {
+	    su_count = 1;
 	    setupNoRandPartA();
-	} else if (++this.su_count >= 4) {
-	    this.su_z = (char) (this.data.ll8[this.su_tPos] & 0xff);
-	    this.su_tPos = this.data.tt[this.su_tPos];
-	    this.su_j2 = 0;
+	} else if (++su_count >= 4) {
+	    su_z = (char) (data.ll8[su_tPos] & 0xff);
+	    su_tPos = data.tt[su_tPos];
+	    su_j2 = 0;
 	    setupNoRandPartC();
 	} else {
 	    setupNoRandPartA();
@@ -882,15 +886,15 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
     }
 
     private void setupNoRandPartC() throws IOException {
-	if (this.su_j2 < this.su_z) {
-	    int su_ch2Shadow = this.su_ch2;
-	    this.currentChar = su_ch2Shadow;
-	    this.crc.updateCRC(su_ch2Shadow);
-	    this.su_j2++;
-	    this.currentState = NO_RAND_PART_C_STATE;
+	if (su_j2 < su_z) {
+	    int su_ch2Shadow = su_ch2;
+	    currentChar = su_ch2Shadow;
+	    crc.updateCRC(su_ch2Shadow);
+	    su_j2++;
+	    currentState = NO_RAND_PART_C_STATE;
 	} else {
-	    this.su_i2++;
-	    this.su_count = 0;
+	    su_i2++;
+	    su_count = 0;
 	    setupNoRandPartA();
 	}
     }
@@ -918,7 +922,7 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 	final int[] cftab = new int[257]; // 1028 byte
 	final char[] getAndMoveToFrontDecode_yy = new char[256]; // 512 byte
 	final char[][] temp_charArray2d = new char[N_GROUPS][MAX_ALPHA_SIZE]; // 3096
-									      // byte
+	// byte
 	final byte[] recvDecodingTables_pos = new byte[N_GROUPS]; // 6 byte
 	// ---------------
 	// 60798 byte
@@ -933,7 +937,7 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 	Data(int blockSize100k) {
 	    super();
 
-	    this.ll8 = new byte[blockSize100k * BZip2Constants.baseBlockSize];
+	    ll8 = new byte[blockSize100k * BZip2Constants.baseBlockSize];
 	}
 
 	/**
@@ -944,14 +948,14 @@ public class CBZip2InputStream extends InputStream implements BZip2Constants {
 	 * memory allocation when compressing small files.
 	 */
 	final int[] initTT(int length) {
-	    int[] ttShadow = this.tt;
+	    int[] ttShadow = tt;
 
 	    // tt.length should always be >= length, but theoretically
 	    // it can happen, if the compressor mixed small and large
 	    // blocks. Normally only the last block will be smaller
 	    // than others.
-	    if ((ttShadow == null) || (ttShadow.length < length)) {
-		this.tt = ttShadow = new int[length];
+	    if (ttShadow == null || ttShadow.length < length) {
+		tt = ttShadow = new int[length];
 	    }
 
 	    return ttShadow;

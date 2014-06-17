@@ -12,7 +12,7 @@ import org.apollo.service.Service;
  * "bootstraps" all of the other plugins together by providing necessary
  * functionality used throughout all of the plugins. It wraps Apollo's
  * Java-style API into an Xtend-style API
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class PluginService extends Service {
@@ -24,7 +24,7 @@ public final class PluginService extends Service {
 
     /**
      * Constructs a new {@link PluginService}.
-     * 
+     *
      * @param world The world.
      */
     public PluginService(World world) {

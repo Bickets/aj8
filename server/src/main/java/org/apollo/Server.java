@@ -28,7 +28,7 @@ import org.apollo.update.UpdateService;
 
 /**
  * The core class of the Apollo server.
- * 
+ *
  * @author Graham
  */
 final class Server {
@@ -40,7 +40,7 @@ final class Server {
 
     /**
      * The entry point of the Apollo server application.
-     * 
+     *
      * @param args The command-line arguments passed to the application.
      */
     public static void main(String[] args) {
@@ -116,7 +116,7 @@ final class Server {
 
     /**
      * Creates the Apollo server.
-     * 
+     *
      * @throws IOException If some I/O error occurs.
      * @throws SQLException If some database access error occurs.
      */
@@ -156,7 +156,7 @@ final class Server {
     /**
      * "Bootstrap"'s a specified {@link ServerBootstrap} to a
      * {@link ChannelHandler}.
-     * 
+     *
      * @param bootstrap The bootstrap.
      * @param handler The channel handler.
      */
@@ -168,7 +168,7 @@ final class Server {
 
     /**
      * Binds the server to the specified address.
-     * 
+     *
      * @param serviceAddress The service address to bind to.
      * @param httpAddress The HTTP address to bind to.
      * @param jagGrabAddress The JAGGRAB address to bind to.
@@ -188,7 +188,7 @@ final class Server {
 
     /**
      * Starts the server.
-     * 
+     *
      * @throws IOException If some I/O error occurs.
      */
     public void start() throws IOException {

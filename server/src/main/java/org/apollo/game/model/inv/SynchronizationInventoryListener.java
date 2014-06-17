@@ -10,7 +10,7 @@ import org.apollo.game.msg.impl.UpdateSlottedItemsMessage;
 /**
  * An {@link InventoryListener} which synchronizes the state of the server's
  * inventory with the client's.
- * 
+ *
  * @author Graham
  */
 public final class SynchronizationInventoryListener extends InventoryAdapter {
@@ -37,7 +37,7 @@ public final class SynchronizationInventoryListener extends InventoryAdapter {
 
     /**
      * Creates the syncrhonization inventory listener.
-     * 
+     *
      * @param player The player.
      * @param interfaceId The interface id.
      */

@@ -11,7 +11,7 @@ import org.apollo.game.msg.Message;
 /**
  * Indicates that the annotated type encodes the message specified by the value
  * of {@link #value()}.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @Documented

@@ -25,7 +25,7 @@ import org.apollo.update.UpdateService;
 /**
  * An implementation of {@link ChannelHandlerAdapter} which handles incoming
  * upstream events from Netty.
- * 
+ *
  * @author Graham
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  * @see {@link Sharable}
@@ -65,7 +65,7 @@ public final class ApolloHandler extends ChannelHandlerAdapter {
 
     /**
      * Creates the Apollo event handler.
-     * 
+     *
      * @param messageTranslator The message translator.
      * @param fileSystem The file system
      * @param playerSerializer The player serializer.

@@ -17,7 +17,7 @@ import org.apollo.game.task.impl.SkillNormalizationTask;
 /**
  * A {@link GameCharacter} is a living creature in the world, such as a player
  * or Mob.
- * 
+ *
  * @author Graham
  */
 public abstract class GameCharacter extends Entity {
@@ -110,7 +110,7 @@ public abstract class GameCharacter extends Entity {
 
     /**
      * Creates a new character with the specified initial position.
-     * 
+     *
      * @param position The initial position of this character.
      */
     public GameCharacter(Position position) {
@@ -127,7 +127,7 @@ public abstract class GameCharacter extends Entity {
 
     /**
      * Gets the character's inventory.
-     * 
+     *
      * @return The character's inventory.
      */
     public Inventory getInventory() {
@@ -136,7 +136,7 @@ public abstract class GameCharacter extends Entity {
 
     /**
      * Gets the character's equipment.
-     * 
+     *
      * @return The character's equipment.
      */
     public Inventory getEquipment() {
@@ -145,7 +145,7 @@ public abstract class GameCharacter extends Entity {
 
     /**
      * Gets the character's bank.
-     * 
+     *
      * @return The character's bank.
      */
     public Inventory getBank() {
@@ -154,7 +154,7 @@ public abstract class GameCharacter extends Entity {
 
     /**
      * Returns the game character fields instance.
-     * 
+     *
      * @return The instance of game character fields.
      */
     public GameCharacterFields getFields() {
@@ -163,7 +163,7 @@ public abstract class GameCharacter extends Entity {
 
     /**
      * Gets the local player set.
-     * 
+     *
      * @return The local player set.
      */
     public Set<Player> getLocalPlayers() {
@@ -172,7 +172,7 @@ public abstract class GameCharacter extends Entity {
 
     /**
      * Gets the local mobs set.
-     * 
+     *
      * @return The local mobs set.
      */
     public Set<Mob> getLocalMobs() {
@@ -181,7 +181,7 @@ public abstract class GameCharacter extends Entity {
 
     /**
      * Checks if this player is currently teleporting.
-     * 
+     *
      * @return {@code true} if so, {@code false} if not.
      */
     public boolean isTeleporting() {
@@ -197,7 +197,7 @@ public abstract class GameCharacter extends Entity {
 
     /**
      * Sets the teleporting attribute.
-     * 
+     *
      * @param value {@code true} if the player is teleporting, {@code false} if
      *            not.
      */
@@ -207,7 +207,7 @@ public abstract class GameCharacter extends Entity {
 
     /**
      * Gets the walking queue.
-     * 
+     *
      * @return The walking queue.
      */
     public WalkingQueue getWalkingQueue() {
@@ -216,18 +216,18 @@ public abstract class GameCharacter extends Entity {
 
     /**
      * Sets the next directions for this character.
-     * 
+     *
      * @param first The first direction.
      * @param second The second direction.
      */
     public void setDirections(Direction first, Direction second) {
-	this.firstDirection = first;
-	this.secondDirection = second;
+	firstDirection = first;
+	secondDirection = second;
     }
 
     /**
      * Gets the first direction.
-     * 
+     *
      * @return The first direction.
      */
     public Direction getFirstDirection() {
@@ -236,7 +236,7 @@ public abstract class GameCharacter extends Entity {
 
     /**
      * Gets the second direction.
-     * 
+     *
      * @return The second direction.
      */
     public Direction getSecondDirection() {
@@ -245,7 +245,7 @@ public abstract class GameCharacter extends Entity {
 
     /**
      * Gets the directions as an array.
-     * 
+     *
      * @return A zero, one or two element array containing the directions (in
      *         order).
      */
@@ -263,7 +263,7 @@ public abstract class GameCharacter extends Entity {
 
     /**
      * Gets the position of this character.
-     * 
+     *
      * @return The position of this character.
      */
     public Position getPosition() {
@@ -272,7 +272,7 @@ public abstract class GameCharacter extends Entity {
 
     /**
      * Sets the position of this character.
-     * 
+     *
      * @param position The position of this character.
      */
     public void setPosition(Position position) {
@@ -281,7 +281,7 @@ public abstract class GameCharacter extends Entity {
 
     /**
      * Checks if this player has ever known a region.
-     * 
+     *
      * @return {@code true} if so, {@code false} if not.
      */
     public boolean hasLastKnownRegion() {
@@ -290,7 +290,7 @@ public abstract class GameCharacter extends Entity {
 
     /**
      * Gets the last known region.
-     * 
+     *
      * @return The last known region, or {@code null} if the player has never
      *         known a region.
      */
@@ -300,7 +300,7 @@ public abstract class GameCharacter extends Entity {
 
     /**
      * Sets the last known region.
-     * 
+     *
      * @param lastKnownRegion The last known region.
      */
     public void setLastKnownRegion(Position lastKnownRegion) {
@@ -309,7 +309,7 @@ public abstract class GameCharacter extends Entity {
 
     /**
      * Sets the region changed flag.
-     * 
+     *
      * @param regionChanged A flag indicating if the region has changed.
      */
     public void setRegionChanged(boolean regionChanged) {
@@ -318,7 +318,7 @@ public abstract class GameCharacter extends Entity {
 
     /**
      * Checks if the region has changed.
-     * 
+     *
      * @return {@code true} if so, {@code false} if not.
      */
     public boolean hasRegionChanged() {
@@ -327,7 +327,7 @@ public abstract class GameCharacter extends Entity {
 
     /**
      * Gets the {@link SynchronizationBlockSet}.
-     * 
+     *
      * @return The block set.
      */
     public SynchronizationBlockSet getBlockSet() {
@@ -347,7 +347,7 @@ public abstract class GameCharacter extends Entity {
      * <li>The client if this {@link GameCharacter} is a {@link Player}.</li>
      * <li>The AI routines if this {@link GameCharacter} is a {@link Mob}</li>
      * </ul>
-     * 
+     *
      * @param message The message.
      */
     public abstract void send(Message message);
@@ -355,7 +355,7 @@ public abstract class GameCharacter extends Entity {
     /**
      * Teleports this character to the specified position, setting the
      * appropriate flags and clearing the walking queue.
-     * 
+     *
      * @param position The position.
      */
     public void teleport(Position position) {
@@ -368,7 +368,7 @@ public abstract class GameCharacter extends Entity {
 
     /**
      * Forces a game character to chat.
-     * 
+     *
      * @param text The text to chat.
      */
     public void forceChat(String text) {
@@ -377,7 +377,7 @@ public abstract class GameCharacter extends Entity {
 
     /**
      * Plays the specified animation.
-     * 
+     *
      * @param animation The animation.
      */
     public void playAnimation(Animation animation) {
@@ -393,7 +393,7 @@ public abstract class GameCharacter extends Entity {
 
     /**
      * Plays the specified graphic.
-     * 
+     *
      * @param graphic The graphic.
      */
     public void playGraphic(Graphic graphic) {
@@ -409,7 +409,7 @@ public abstract class GameCharacter extends Entity {
 
     /**
      * Gets the character's skill set.
-     * 
+     *
      * @return The character's skill set.
      */
     public SkillSet getSkillSet() {
@@ -418,7 +418,7 @@ public abstract class GameCharacter extends Entity {
 
     /**
      * Starts a new action, stopping the current one if it exists.
-     * 
+     *
      * @param action The new action.
      * @return A flag indicating if the action was started.
      */
@@ -432,7 +432,7 @@ public abstract class GameCharacter extends Entity {
 	this.action = action;
 	TaskScheduler.getInstance().schedule(action);
 	return true; // TODO maybe this should be incorporated into the action
-		     // class itself?
+	// class itself?
     }
 
     /**
@@ -447,7 +447,7 @@ public abstract class GameCharacter extends Entity {
 
     /**
      * Turns the character to face the specified position.
-     * 
+     *
      * @param position The position to face.
      */
     public void turnTo(Position position) {
@@ -456,7 +456,7 @@ public abstract class GameCharacter extends Entity {
 
     /**
      * Sends a message to the character.
-     * 
+     *
      * @param message The message.
      */
     public void sendMessage(String message) {

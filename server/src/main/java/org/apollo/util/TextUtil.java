@@ -5,7 +5,7 @@ import java.util.List;
 
 /**
  * A class which contains text-related utility methods.
- * 
+ *
  * @author Graham
  */
 public final class TextUtil {
@@ -24,7 +24,7 @@ public final class TextUtil {
     /**
      * Uncompresses the compressed data ({@code in}) with the length ({@code len}
      * ) and returns the uncompressed {@link String}.
-     * 
+     *
      * @param in The compressed input data.
      * @param len The length.
      * @return The uncompressed {@link String}.
@@ -34,8 +34,8 @@ public final class TextUtil {
 	int outPos = 0;
 	int carry = -1;
 
-	for (int i = 0; i < (len * 2); i++) {
-	    int tblPos = in[i / 2] >> (4 - 4 * (i % 2)) & 0xF;
+	for (int i = 0; i < len * 2; i++) {
+	    int tblPos = in[i / 2] >> 4 - 4 * (i % 2) & 0xF;
 	    if (carry == -1) {
 		if (tblPos < 13) {
 		    out[outPos++] = (byte) FREQUENCY_ORDERED_CHARS[tblPos];
@@ -43,7 +43,7 @@ public final class TextUtil {
 		    carry = tblPos;
 		}
 	    } else {
-		out[outPos++] = (byte) FREQUENCY_ORDERED_CHARS[((carry << 4) + tblPos) - 195];
+		out[outPos++] = (byte) FREQUENCY_ORDERED_CHARS[(carry << 4) + tblPos - 195];
 		carry = -1;
 	    }
 	}
@@ -53,7 +53,7 @@ public final class TextUtil {
     /**
      * Compresses the input text ({@code in}) and places the result in the
      * {@code out} array.
-     * 
+     *
      * @param in The input text.
      * @param out The output array.
      * @return The number of bytes written to the output array.
@@ -100,7 +100,7 @@ public final class TextUtil {
 
     /**
      * Filters invalid characters from the specified string.
-     * 
+     *
      * @param str The input string.
      * @return The filtered string.
      */
@@ -109,7 +109,7 @@ public final class TextUtil {
 	for (char c : str.toLowerCase().toCharArray()) {
 	    for (char validChar : FREQUENCY_ORDERED_CHARS) {
 		if (c == validChar) {
-		    bldr.append((char) c);
+		    bldr.append(c);
 		    break;
 		}
 	    }
@@ -119,7 +119,7 @@ public final class TextUtil {
 
     /**
      * Capitalizes the string correctly.
-     * 
+     *
      * @param str The input string.
      * @return The string with correct capitalization.
      */
@@ -149,11 +149,11 @@ public final class TextUtil {
 
     /**
      * Splits a {@code String} based on a delimiter of
-     * 
+     *
      * <pre>
      * '\&quot;'
      * </pre>
-     * 
+     *
      * @param source The source string.
      * @return A split up {@code String} array based on the specified source.
      */
@@ -163,7 +163,7 @@ public final class TextUtil {
 
     /**
      * Splits a {@code String} based on the specified delimiter.
-     * 
+     *
      * @param source The source string.
      * @param delim The delimiter.
      * @return A split up {@code String} array based on the specified source and

@@ -2,7 +2,7 @@ package org.apollo.net.codec.game;
 
 /**
  * A class holding data-related constants.
- * 
+ *
  * @author Graham
  */
 public final class DataConstants {
@@ -18,7 +18,7 @@ public final class DataConstants {
      */
     static {
 	for (int i = 0; i < BIT_MASK.length; i++) {
-	    BIT_MASK[i] = ((1 << i) - 1);
+	    BIT_MASK[i] = (1 << i) - 1;
 	}
     }
 

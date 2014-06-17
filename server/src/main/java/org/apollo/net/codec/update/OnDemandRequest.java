@@ -2,7 +2,7 @@ package org.apollo.net.codec.update;
 
 /**
  * Represents a single 'on-demand' request.
- * 
+ *
  * @author Graham
  */
 public final class OnDemandRequest implements Comparable<OnDemandRequest> {
@@ -43,7 +43,7 @@ public final class OnDemandRequest implements Comparable<OnDemandRequest> {
 
     /**
      * Creates the 'on-demand' request.
-     * 
+     *
      * @param fileDescriptor The file descriptor.
      * @param priority The priority.
      */
@@ -69,7 +69,7 @@ public final class OnDemandRequest implements Comparable<OnDemandRequest> {
 
     /**
      * Gets the priority.
-     * 
+     *
      * @return The priority.
      */
     public int getPriority() {

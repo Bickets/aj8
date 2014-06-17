@@ -8,7 +8,7 @@ import org.apollo.game.model.Entity;
 /**
  * A {@link EntityRepository} is a repository of {@link Entity}s that are
  * currently active in the game world.
- * 
+ *
  * @author Graham
  * @param <T> The type of entity.
  */
@@ -31,7 +31,7 @@ public final class EntityRepository<T extends Entity> implements Iterable<T> {
 
     /**
      * Creates a new entity repository with the specified capacity.
-     * 
+     *
      * @param capacity The maximum number of entities that can be present in the
      *            repository.
      */
@@ -41,7 +41,7 @@ public final class EntityRepository<T extends Entity> implements Iterable<T> {
 
     /**
      * Gets the size of this repository.
-     * 
+     *
      * @return The number of entities in this repository.
      */
     public int size() {
@@ -50,7 +50,7 @@ public final class EntityRepository<T extends Entity> implements Iterable<T> {
 
     /**
      * Gets the capacity of this repository.
-     * 
+     *
      * @return The maximum size of this repository.
      */
     public int capacity() {
@@ -59,7 +59,7 @@ public final class EntityRepository<T extends Entity> implements Iterable<T> {
 
     /**
      * Adds an entity to the repository.
-     * 
+     *
      * @param entity The entity to add.
      * @return {@code true} if the entity was added, {@code false} if the size
      *         has reached the capacity of this repository.
@@ -88,7 +88,7 @@ public final class EntityRepository<T extends Entity> implements Iterable<T> {
 	}
 	entities[index] = entity;
 	entity.setIndex(index + 1);
-	if (index == (entities.length - 1)) {
+	if (index == entities.length - 1) {
 	    pointer = 0;
 	} else {
 	    pointer = index;
@@ -99,7 +99,7 @@ public final class EntityRepository<T extends Entity> implements Iterable<T> {
 
     /**
      * Removes a entity from the repository.
-     * 
+     *
      * @param entity The entity to remove.
      * @return {@code true} if the entity was removed, {@code false} if it was
      *         not (e.g. if it was never added or has been removed already).
@@ -127,7 +127,7 @@ public final class EntityRepository<T extends Entity> implements Iterable<T> {
     /**
      * The {@link Iterator} implementation for the {@link EntityRepository}
      * class.
-     * 
+     *
      * @author Graham
      */
     private final class CharacterRepositoryIterator implements Iterator<T> {

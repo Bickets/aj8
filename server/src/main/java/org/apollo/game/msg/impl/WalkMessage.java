@@ -5,7 +5,7 @@ import org.apollo.game.msg.Message;
 
 /**
  * A message which the client sends to request that the player walks somewhere.
- * 
+ *
  * @author Graham
  */
 public final class WalkMessage extends Message {
@@ -18,11 +18,11 @@ public final class WalkMessage extends Message {
     /**
      * The running flag.
      */
-    private boolean run;
+    private final boolean run;
 
     /**
      * Creates the message.
-     * 
+     *
      * @param steps The steps array.
      * @param run The run flag.
      */
@@ -36,7 +36,7 @@ public final class WalkMessage extends Message {
 
     /**
      * Gets the steps array.
-     * 
+     *
      * @return An array of steps.
      */
     public Position[] getSteps() {
@@ -45,7 +45,7 @@ public final class WalkMessage extends Message {
 
     /**
      * Checks if the steps should be ran (ctrl+click).
-     * 
+     *
      * @return {@code true} if so, {@code false} otherwise.
      */
     public boolean isRunning() {

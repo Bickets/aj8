@@ -9,7 +9,7 @@ import org.apollo.net.codec.game.GamePacketReader;
 
 /**
  * An {@link MessageDecoder} for the {@link ButtonMessage}.
- * 
+ *
  * @author Graham
  */
 @DecodesMessage(185)

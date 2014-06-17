@@ -4,7 +4,7 @@ import java.util.Objects;
 
 /**
  * Represents a single attribute.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  *
  * @param <T> The attributes values type reference.
@@ -21,14 +21,14 @@ final class Attribute<T> {
     /**
      * The value of this attribute, the type of value of this attribute is as
      * described by this classes parameter.
-     * 
+     *
      * @see {@link T}
      */
     private final T value;
 
     /**
      * Constructs a new {@link Attribute<T>} with the specified key and value.
-     * 
+     *
      * @param key This attributes key, may not be {@code null}.
      * @param value This attributes value, may not be {@code null}.
      * @throws NullPointerException If the specified key or value is

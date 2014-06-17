@@ -6,7 +6,7 @@ import java.util.LinkedList;
 
 /**
  * A class which manages {@link Task}s.
- * 
+ *
  * @author Graham
  */
 public final class TaskScheduler {
@@ -23,7 +23,7 @@ public final class TaskScheduler {
 
     /**
      * Schedules a new task.
-     * 
+     *
      * @param task The task to schedule.
      */
     public void schedule(Task task) {

@@ -6,7 +6,7 @@ import org.apollo.game.msg.Message;
 
 /**
  * A {@link Message} which represents some sort of action at an object.
- * 
+ *
  * @author Graham
  */
 public class ObjectActionMessage extends Message {
@@ -28,7 +28,7 @@ public class ObjectActionMessage extends Message {
 
     /**
      * Creates a new object action message.
-     * 
+     *
      * @param option The interface option.
      * @param id The id of the object.
      * @param position The position of the object.
@@ -41,7 +41,7 @@ public class ObjectActionMessage extends Message {
 
     /**
      * Gets the interface option
-     * 
+     *
      * @return The interface option.
      */
     public InterfaceOption getOption() {
@@ -50,7 +50,7 @@ public class ObjectActionMessage extends Message {
 
     /**
      * Gets the id of the object.
-     * 
+     *
      * @return The id of the object.
      */
     public int getId() {
@@ -59,7 +59,7 @@ public class ObjectActionMessage extends Message {
 
     /**
      * Gets the position of the object.
-     * 
+     *
      * @return The position of the object.
      */
     public Position getPosition() {

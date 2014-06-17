@@ -7,7 +7,7 @@ import org.apollo.net.codec.game.GamePacket;
 
 /**
  * A {@link MessageDecoder} for the {@link KeepAliveMessage}.
- * 
+ *
  * @author Graham
  */
 @DecodesMessage(0)

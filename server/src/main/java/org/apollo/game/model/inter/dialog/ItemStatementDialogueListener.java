@@ -13,7 +13,7 @@ import org.apollo.game.msg.impl.SetInterfaceTextMessage;
 /**
  * A dialogue listener which manages the {@link DialogueType#ITEM_STATEMENT}
  * dialogue type.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public abstract class ItemStatementDialogueListener implements DialogueListener {
@@ -25,7 +25,7 @@ public abstract class ItemStatementDialogueListener implements DialogueListener 
 
     /**
      * Constructs a new {@link ItemStatementDialogueListener}.
-     * 
+     *
      * @param item The item to be shown in the statement.
      * @throws NullPointerException If the specified item is null.
      */
@@ -60,7 +60,7 @@ public abstract class ItemStatementDialogueListener implements DialogueListener 
      * Returns the title of this item statement. By default the items name is
      * returned. This method may be overridden to provide a user specific
      * functionality.
-     * 
+     *
      * @see {@link ItemDefinition#getName()}
      */
     public String getTitle() {

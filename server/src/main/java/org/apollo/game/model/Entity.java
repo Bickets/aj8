@@ -15,7 +15,7 @@ public abstract class Entity {
 
     /**
      * Checks if this entity is active.
-     * 
+     *
      * @return {@code true} if so, {@code false} if not.
      */
     public boolean isActive() {
@@ -24,7 +24,7 @@ public abstract class Entity {
 
     /**
      * Gets the index of this entity.
-     * 
+     *
      * @return The index of this entity.
      */
     public int getIndex() {
@@ -35,7 +35,7 @@ public abstract class Entity {
 
     /**
      * Sets the index of this entity.
-     * 
+     *
      * @param index The index of this entity.
      */
     public void setIndex(int index) {

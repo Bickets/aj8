@@ -13,7 +13,7 @@ import org.apollo.net.meta.PacketType;
 
 /**
  * A {@link OneToOneEncoder} which encodes in-game packets.
- * 
+ *
  * @author Graham
  */
 public final class GamePacketEncoder extends MessageToMessageEncoder<GamePacket> {
@@ -25,7 +25,7 @@ public final class GamePacketEncoder extends MessageToMessageEncoder<GamePacket>
 
     /**
      * Creates the {@link GamePacketEncoder}.
-     * 
+     *
      * @param random The random number generator.
      */
     public GamePacketEncoder(IsaacAlgorithm random) {
@@ -51,7 +51,7 @@ public final class GamePacketEncoder extends MessageToMessageEncoder<GamePacket>
 	}
 
 	ByteBuf buffer = Unpooled.buffer(headerLength + payloadLength);
-	buffer.writeByte((msg.getOpcode() + random.nextInt()) & 0xFF);
+	buffer.writeByte(msg.getOpcode() + random.nextInt() & 0xFF);
 
 	if (type == PacketType.VARIABLE_BYTE) {
 	    buffer.writeByte(payloadLength);

@@ -5,7 +5,7 @@ import org.apollo.game.model.Player;
 
 /**
  * Represents the type of dialogue we are managing.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public enum DialogueType {

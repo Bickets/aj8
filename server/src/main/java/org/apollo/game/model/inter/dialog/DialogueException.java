@@ -3,7 +3,7 @@ package org.apollo.game.model.inter.dialog;
 /**
  * An exception which is thrown during the execution of a
  * {@link DialogueListener}.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class DialogueException extends RuntimeException {
@@ -17,7 +17,7 @@ public final class DialogueException extends RuntimeException {
 
     /**
      * Constructs a new {@link DialogueException}.
-     * 
+     *
      * @param msg The detail message, which is a format <code>String</code> as
      *            specified by {@link String#format(String, Object...)} The
      *            detail message is cached and can be retrieved by

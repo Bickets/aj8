@@ -2,14 +2,14 @@ package org.apollo.net.meta;
 
 /**
  * A class which contains meta data for a single type of packet.
- * 
+ *
  * @author Graham
  */
 public final class PacketMetaData {
 
     /**
      * Creates a {@link PacketMetaData} object for a fixed-length packet.
-     * 
+     *
      * @param length The length of the packet.
      * @return The {@link PacketMetaData} object.
      * @throws IllegalArgumentException if length is less than 0.
@@ -24,7 +24,7 @@ public final class PacketMetaData {
     /**
      * Creates a {@link PacketMetaData} object for a variable byte length
      * packet.
-     * 
+     *
      * @return The {@link PacketMetaData} object.
      */
     public static PacketMetaData createVariableByte() {
@@ -34,7 +34,7 @@ public final class PacketMetaData {
     /**
      * Creates a {@link PacketMetaData} object for a variable short length
      * packet.
-     * 
+     *
      * @return The {@link PacketMetaData} object.
      */
     public static PacketMetaData createVariableShort() {
@@ -55,7 +55,7 @@ public final class PacketMetaData {
      * Creates the packet meta data object. This should not be called directy.
      * Use the {@link #createFixed(int)}, {@link #createVariableByte()} and
      * {@link #createVariableShort()} methods instead!
-     * 
+     *
      * @param type The type of packet.
      * @param length The length of the packet.
      */
@@ -66,7 +66,7 @@ public final class PacketMetaData {
 
     /**
      * Gets the type of packet.
-     * 
+     *
      * @return The type of packet.
      */
     public PacketType getType() {
@@ -75,7 +75,7 @@ public final class PacketMetaData {
 
     /**
      * Gets the length of this packet.
-     * 
+     *
      * @return The length of this packet.
      * @throws IllegalStateException if the packet is not a fixed-size packet.
      */

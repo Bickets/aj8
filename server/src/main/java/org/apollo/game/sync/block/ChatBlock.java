@@ -5,7 +5,7 @@ import org.apollo.game.msg.impl.ChatMessage;
 
 /**
  * The chat {@link SynchronizationBlock}.
- * 
+ *
  * @author Graham
  */
 public final class ChatBlock extends SynchronizationBlock {
@@ -30,7 +30,7 @@ public final class ChatBlock extends SynchronizationBlock {
 
     /**
      * Gets the privilege level of the player who said the message.
-     * 
+     *
      * @return The privilege level.
      */
     public PrivilegeLevel getPrivilegeLevel() {
@@ -39,7 +39,7 @@ public final class ChatBlock extends SynchronizationBlock {
 
     /**
      * Gets the message.
-     * 
+     *
      * @return The message.
      */
     public String getMessage() {
@@ -48,7 +48,7 @@ public final class ChatBlock extends SynchronizationBlock {
 
     /**
      * Gets the text color.
-     * 
+     *
      * @return The text color.
      */
     public int getTextColor() {
@@ -57,7 +57,7 @@ public final class ChatBlock extends SynchronizationBlock {
 
     /**
      * Gets the text effects.
-     * 
+     *
      * @return The text effects.
      */
     public int getTextEffects() {
@@ -66,7 +66,7 @@ public final class ChatBlock extends SynchronizationBlock {
 
     /**
      * Gets the compressed message.
-     * 
+     *
      * @return The compressed message.
      */
     public byte[] getCompressedMessage() {

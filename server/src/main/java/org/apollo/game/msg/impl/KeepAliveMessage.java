@@ -5,7 +5,7 @@ import org.apollo.game.msg.Message;
 /**
  * A message which is periodically sent by the client to keep a connection
  * alive.
- * 
+ *
  * @author Graham
  */
 public final class KeepAliveMessage extends Message {
@@ -24,7 +24,7 @@ public final class KeepAliveMessage extends Message {
 
     /**
      * Gets the time when this message was created.
-     * 
+     *
      * @return The time when this message was created.
      */
     public long getCreatedAt() {

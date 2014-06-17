@@ -5,7 +5,7 @@ import org.apollo.game.model.Player;
 /**
  * A {@link SynchronizationTask} which does post-synchronization work for the
  * specified {@link Player}.
- * 
+ *
  * @author Graham
  */
 public final class PostPlayerSynchronizationTask extends SynchronizationTask {
@@ -18,7 +18,7 @@ public final class PostPlayerSynchronizationTask extends SynchronizationTask {
     /**
      * Creates the {@link PostPlayerSynchronizationTask} for the specified
      * player.
-     * 
+     *
      * @param player The player.
      */
     public PostPlayerSynchronizationTask(Player player) {

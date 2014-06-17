@@ -6,7 +6,7 @@ import java.util.logging.Logger;
 
 /**
  * A class which manages {@link Service}s.
- * 
+ *
  * @author Graham
  */
 public final class ServiceManager {
@@ -30,7 +30,7 @@ public final class ServiceManager {
 
     /**
      * Registers a service.
-     * 
+     *
      * @param service The service to register.
      */
     public void register(Service service) {

@@ -11,7 +11,7 @@ import org.apollo.game.msg.impl.SetInterfaceTextMessage;
 /**
  * A dialogue listener which manages the {@link DialogueType#MOB_STATEMENT}
  * dialogue.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public abstract class MobStatementDialogueListener implements DialogueListener {
@@ -23,7 +23,7 @@ public abstract class MobStatementDialogueListener implements DialogueListener {
 
     /**
      * Constructs a new {@link MobStatementDialogueListener}.
-     * 
+     *
      * @param mobId The mobs identifier.
      */
     public MobStatementDialogueListener(int mobId) {

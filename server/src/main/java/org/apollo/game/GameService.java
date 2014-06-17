@@ -19,7 +19,7 @@ import org.apollo.util.NamedThreadFactory;
 /**
  * The {@link GameService} class schedules and manages the execution of the
  * {@link GamePulseHandler} class.
- * 
+ *
  * @author Graham
  */
 public final class GameService extends Service {
@@ -58,7 +58,7 @@ public final class GameService extends Service {
 
     /**
      * Constructs a new {@link GameService}.
-     * 
+     *
      * @param world The world.
      * @param playerSerializer The player serializer
      */
@@ -101,7 +101,7 @@ public final class GameService extends Service {
 
     /**
      * Registers a player (may block!).
-     * 
+     *
      * @param player The player.
      * @return A {@link RegistrationStatus}.
      */
@@ -114,7 +114,7 @@ public final class GameService extends Service {
     /**
      * Unregisters a player. Returns immediately. The player is unregistered at
      * the start of the next cycle.
-     * 
+     *
      * @param player The player.
      */
     public void unregisterPlayer(Player player) {
@@ -123,7 +123,7 @@ public final class GameService extends Service {
 
     /**
      * Finalizes the unregistration of a player.
-     * 
+     *
      * @param player The player.
      */
     public void finalizePlayerUnregistration(Player player) {

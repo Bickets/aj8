@@ -2,7 +2,7 @@ package org.apollo.util;
 
 /**
  * A class which contains name-related utility methods.
- * 
+ *
  * @author Graham
  */
 public final class NameUtil {
@@ -19,7 +19,7 @@ public final class NameUtil {
 
     /**
      * Converts a player name to a long.
-     * 
+     *
      * @param name The player name.
      * @return The long.
      */
@@ -32,21 +32,22 @@ public final class NameUtil {
 	    char c = name.charAt(i);
 	    l *= 37L;
 	    if (c >= 'A' && c <= 'Z') {
-		l += (1 + c) - 65;
+		l += 1 + c - 65;
 	    } else if (c >= 'a' && c <= 'z') {
-		l += (1 + c) - 97;
+		l += 1 + c - 97;
 	    } else if (c >= '0' && c <= '9') {
-		l += (27 + c) - 48;
+		l += 27 + c - 48;
 	    }
 	}
-	for (; l % 37L == 0L && l != 0L; l /= 37L)
+	for (; l % 37L == 0L && l != 0L; l /= 37L) {
 	    ;
+	}
 	return l;
     }
 
     /**
      * Converts a long to a player name.
-     * 
+     *
      * @param name The long.
      * @return The player name.
      */
@@ -63,14 +64,14 @@ public final class NameUtil {
 
     /**
      * Returns a hashed version the specified <code>name</code>
-     * 
+     *
      * @param name The name to hash.
      */
     public static int hash(String name) {
 	int hash = 0;
 	name = name.toUpperCase();
 	for (int index = 0; index < name.length(); index++) {
-	    hash = (hash * 61 + name.charAt(index)) - 32;
+	    hash = hash * 61 + name.charAt(index) - 32;
 	}
 	return hash;
     }

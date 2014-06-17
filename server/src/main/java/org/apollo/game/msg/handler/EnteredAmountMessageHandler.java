@@ -7,7 +7,7 @@ import org.apollo.game.msg.impl.EnteredAmountMessage;
 
 /**
  * An {@link MessageHandler} for the {@link EnteredAmountMessage}.
- * 
+ *
  * @author Graham
  */
 @HandlesMessage(EnteredAmountMessage.class)

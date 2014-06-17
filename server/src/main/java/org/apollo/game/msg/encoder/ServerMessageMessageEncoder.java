@@ -9,7 +9,7 @@ import org.apollo.net.meta.PacketType;
 
 /**
  * An {@link MessageEncoder} for the {@link ServerMessageMessage}.
- * 
+ *
  * @author Graham
  */
 @EncodesMessage(ServerMessageMessage.class)

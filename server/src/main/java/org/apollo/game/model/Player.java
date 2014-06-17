@@ -21,14 +21,14 @@ import org.apollo.security.PlayerCredentials;
 
 /**
  * A {@link Player} is a {@link GameCharacter} that a user is controlling.
- * 
+ *
  * @author Graham
  */
 public final class Player extends GameCharacter {
 
     /**
      * An enumeration with the different privilege levels a player can have.
-     * 
+     *
      * @author Graham
      */
     public enum PrivilegeLevel {
@@ -50,7 +50,7 @@ public final class Player extends GameCharacter {
 
 	/**
 	 * Gets the privilege level for the specified numerical level.
-	 * 
+	 *
 	 * @param numericalLevel The numerical level.
 	 * @return The privilege level.
 	 * @throws IllegalArgumentException if the numerical level is invalid.
@@ -71,7 +71,7 @@ public final class Player extends GameCharacter {
 
 	/**
 	 * Creates a privilege level.
-	 * 
+	 *
 	 * @param numericalLevel The numerical level.
 	 */
 	private PrivilegeLevel(int numericalLevel) {
@@ -80,7 +80,7 @@ public final class Player extends GameCharacter {
 
 	/**
 	 * Gets the numerical level.
-	 * 
+	 *
 	 * @return The numerical level used in the protocol.
 	 */
 	public int toInteger() {
@@ -157,7 +157,7 @@ public final class Player extends GameCharacter {
 
     /**
      * Creates the {@link Player}.
-     * 
+     *
      * @param credentials The players credentials.
      * @param position The initial position.
      */
@@ -169,7 +169,7 @@ public final class Player extends GameCharacter {
 
     /**
      * Gets this players interface set.
-     * 
+     *
      * @return The interface set for this player.
      */
     public InterfaceSet getInterfaceSet() {
@@ -178,7 +178,7 @@ public final class Player extends GameCharacter {
 
     /**
      * Checks if there are excessive players.
-     * 
+     *
      * @return {@code true} if so, {@code false} if not.
      */
     public boolean isExcessivePlayersSet() {
@@ -187,7 +187,7 @@ public final class Player extends GameCharacter {
 
     /**
      * Checks if there are excessive mobs.
-     * 
+     *
      * @return {@code true} if so, {@code false} if not.
      */
     public boolean isExcessivemMobsSet() {
@@ -231,7 +231,7 @@ public final class Player extends GameCharacter {
 
     /**
      * Gets this players viewing distance.
-     * 
+     *
      * @return The viewing distance.
      */
     public int getViewingDistance() {
@@ -259,7 +259,7 @@ public final class Player extends GameCharacter {
 
     /**
      * Gets the privilege level.
-     * 
+     *
      * @return The privilege level.
      */
     public PrivilegeLevel getPrivilegeLevel() {
@@ -268,7 +268,7 @@ public final class Player extends GameCharacter {
 
     /**
      * Sets the privilege level.
-     * 
+     *
      * @param privilegeLevel The privilege level.
      */
     public void setPrivilegeLevel(PrivilegeLevel privilegeLevel) {
@@ -277,7 +277,7 @@ public final class Player extends GameCharacter {
 
     /**
      * Checks if this player account has membership.
-     * 
+     *
      * @return {@code true} if so, {@code false} if not.
      */
     public boolean isMembers() {
@@ -286,7 +286,7 @@ public final class Player extends GameCharacter {
 
     /**
      * Changes the membership status of this player.
-     * 
+     *
      * @param members The new membership flag.
      */
     public void setMembers(boolean members) {
@@ -295,7 +295,7 @@ public final class Player extends GameCharacter {
 
     /**
      * Sets the players {@link GameSession}.
-     * 
+     *
      * @param session The players {@link GameSession}.
      * @param reconnecting The reconnecting flag.
      */
@@ -309,7 +309,7 @@ public final class Player extends GameCharacter {
 
     /**
      * Gets the players credentials.
-     * 
+     *
      * @return The players credentials.
      */
     public PlayerCredentials getCredentials() {
@@ -422,7 +422,7 @@ public final class Player extends GameCharacter {
 
     /**
      * Gets the players appearance.
-     * 
+     *
      * @return The appearance.
      */
     public Appearance getAppearance() {
@@ -431,7 +431,7 @@ public final class Player extends GameCharacter {
 
     /**
      * Sets the players appearance.
-     * 
+     *
      * @param appearance The new appearance.
      */
     public void setAppearance(Appearance appearance) {
@@ -441,7 +441,7 @@ public final class Player extends GameCharacter {
 
     /**
      * Gets the players name.
-     * 
+     *
      * @return The players name.
      */
     public String getName() {
@@ -450,7 +450,7 @@ public final class Player extends GameCharacter {
 
     /**
      * Gets the players password.
-     * 
+     *
      * @return The players password.
      */
     public String getPassword() {
@@ -459,7 +459,7 @@ public final class Player extends GameCharacter {
 
     /**
      * Gets the players name, encoded as a long.
-     * 
+     *
      * @return The encoded player name.
      */
     public long getEncodedName() {
@@ -475,7 +475,7 @@ public final class Player extends GameCharacter {
 
     /**
      * Gets the game session.
-     * 
+     *
      * @return The game session.
      */
     public GameSession getSession() {
@@ -484,7 +484,7 @@ public final class Player extends GameCharacter {
 
     /**
      * Sets the character design flag.
-     * 
+     *
      * @param designedCharacter A flag indicating if the character has been
      *            designed.
      */
@@ -494,7 +494,7 @@ public final class Player extends GameCharacter {
 
     /**
      * Checks if the player has designed their character.
-     * 
+     *
      * @return A flag indicating if the player has designed their character.
      */
     public boolean hasDesignedCharacter() {
@@ -503,7 +503,7 @@ public final class Player extends GameCharacter {
 
     /**
      * Returns this players database id.
-     * 
+     *
      * @return The database id.
      */
     public int getDatabaseId() {
@@ -512,7 +512,7 @@ public final class Player extends GameCharacter {
 
     /**
      * Sets this players database id.
-     * 
+     *
      * @param databaseId The new database id.
      */
     public void setDatabaseId(int databaseId) {
@@ -521,7 +521,7 @@ public final class Player extends GameCharacter {
 
     /**
      * Returns the players flagged state.
-     * 
+     *
      * @return Whether or not this player is flagged.
      */
     public boolean isFlagged() {
@@ -530,7 +530,7 @@ public final class Player extends GameCharacter {
 
     /**
      * Sets this players flagged state.
-     * 
+     *
      * @param flagged The new flagged state.
      */
     public void setFlagged(boolean flagged) {

@@ -5,7 +5,7 @@ import org.apollo.game.model.Mob;
 /**
  * A {@link SynchronizationTask} which does post-synchronization work for the
  * specified {@link Mob}.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class PostMobSynchronizationTask extends SynchronizationTask {
@@ -17,7 +17,7 @@ public final class PostMobSynchronizationTask extends SynchronizationTask {
 
     /**
      * Constructs a new {@link PostMobSynchronizationTask}.
-     * 
+     *
      * @param mob The mob.
      */
     public PostMobSynchronizationTask(Mob mob) {

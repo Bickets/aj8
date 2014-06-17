@@ -13,7 +13,7 @@ import org.apollo.game.msg.impl.SetInterfaceTextMessage;
 /**
  * A dialogue listener which manages the {@link DialogueType#MAKE_ITEM_OPTION}
  * dialogue type.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public abstract class MakeItemOptionDialogueListener implements DialogueListener {
@@ -25,7 +25,7 @@ public abstract class MakeItemOptionDialogueListener implements DialogueListener
 
     /**
      * Constructs a new {@link MakeItemOptionDialogueListener}
-     * 
+     *
      * @param items The items shown in this dialogue.
      * @throws NullPointerException If the {@code items} are null.
      */

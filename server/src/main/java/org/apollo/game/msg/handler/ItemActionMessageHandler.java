@@ -13,7 +13,7 @@ import org.apollo.game.msg.impl.ItemActionMessage;
 
 /**
  * A message handler which handles item actions.
- * 
+ *
  * @author Graham
  */
 @HandlesMessage(ItemActionMessage.class)
@@ -26,7 +26,7 @@ public final class ItemActionMessageHandler extends MessageHandler<ItemActionMes
 
     /**
      * Constructs a new {@link ItemActionMessageHandler}.
-     * 
+     *
      * @param world The world.
      */
     public ItemActionMessageHandler(World world) {
@@ -46,7 +46,7 @@ public final class ItemActionMessageHandler extends MessageHandler<ItemActionMes
 
     /**
      * Handles a withdraw action.
-     * 
+     *
      * @param player The player.
      * @param message The message.
      */
@@ -63,7 +63,7 @@ public final class ItemActionMessageHandler extends MessageHandler<ItemActionMes
 
     /**
      * Handles a deposit action.
-     * 
+     *
      * @param player The player.
      * @param message The message.
      */
@@ -80,7 +80,7 @@ public final class ItemActionMessageHandler extends MessageHandler<ItemActionMes
 
     /**
      * Converts an option to an amount.
-     * 
+     *
      * @param option The option.
      * @return The amount.
      * @throws IllegalArgumentException if the option is not legal.

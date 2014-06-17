@@ -4,7 +4,7 @@ import org.apollo.game.msg.Message;
 
 /**
  * A message sent by the client to send a public chat message to other players.
- * 
+ *
  * @author Graham
  */
 public final class ChatMessage extends Message {
@@ -31,7 +31,7 @@ public final class ChatMessage extends Message {
 
     /**
      * Creates a new chat message.
-     * 
+     *
      * @param message The message.
      * @param compressedMessage The compressed message.
      * @param color The text color.
@@ -46,7 +46,7 @@ public final class ChatMessage extends Message {
 
     /**
      * Gets the message.
-     * 
+     *
      * @return The message.
      */
     public String getMessage() {
@@ -55,7 +55,7 @@ public final class ChatMessage extends Message {
 
     /**
      * Gets the text color.
-     * 
+     *
      * @return The text color.
      */
     public int getTextColor() {
@@ -64,7 +64,7 @@ public final class ChatMessage extends Message {
 
     /**
      * Gets the text effects.
-     * 
+     *
      * @return The text effects.
      */
     public int getTextEffects() {
@@ -73,7 +73,7 @@ public final class ChatMessage extends Message {
 
     /**
      * Gets the compressed message.
-     * 
+     *
      * @return The compressed message.
      */
     public byte[] getCompressedMessage() {

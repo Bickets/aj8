@@ -6,7 +6,7 @@ import org.apollo.game.model.inter.InterfaceListener;
 
 /**
  * An {@link InterfaceListener} which listens for dialogue events.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public interface DialogueListener extends InterfaceListener {
@@ -26,7 +26,7 @@ public interface DialogueListener extends InterfaceListener {
     /**
      * Executes any prerequisite logic for this dialogue listener, returns the
      * id of this dialogue, for tracking.
-     * 
+     *
      * @param player The player who owns this dialogue listener.
      * @return The id of this dialogue, for tracking.
      */
@@ -70,7 +70,7 @@ public interface DialogueListener extends InterfaceListener {
     /**
      * An event which is intended to be fired after an option was clicked during
      * the dialogue type of {@link DialogueType#OPTION}
-     * 
+     *
      * @param option The option, only five option dialogues are supported.
      * @return A flag to determine whether or not the event was successful,
      *         {@code true} is so otherwise {@code false}.

@@ -5,7 +5,7 @@ import java.util.Set;
 
 /**
  * Represents an option within a dialogue.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public enum DialogueOption {
@@ -67,7 +67,7 @@ public enum DialogueOption {
     /**
      * Constructs a new {@link DialogueOption} with the specified button click
      * identifiers.
-     * 
+     *
      * @param ids The dialogue option button identifiers.
      */
     private DialogueOption(int... ids) {
@@ -90,7 +90,7 @@ public enum DialogueOption {
     /**
      * Returns an instance of {@link DialogueOption} from the specified id if
      * the id exists within some dialogue option's {@link #ids}
-     * 
+     *
      * @param _id The id.
      * @return The dialogue option.
      * @throws IllegalArgumentException If the specified id does not have a

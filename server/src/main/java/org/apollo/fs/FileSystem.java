@@ -140,9 +140,9 @@ public final class FileSystem {
 
 	int hash = 1234;
 	ByteBuffer buffer = ByteBuffer.allocate(archiveData.length * 4 + 4);
-	for (int index = 0; index < archiveData.length; index++) {
-	    hash = (hash << 1) + archiveData[index];
-	    buffer.putInt(archiveData[index]);
+	for (int element : archiveData) {
+	    hash = (hash << 1) + element;
+	    buffer.putInt(element);
 	}
 
 	buffer.putInt(hash);

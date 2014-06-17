@@ -6,7 +6,7 @@ import org.apollo.net.session.Session;
 
 /**
  * Holds various network-related constants such as port numbers.
- * 
+ *
  * @author Graham
  */
 public final class NetworkConstants {

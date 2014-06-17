@@ -8,7 +8,7 @@ import org.apollo.game.model.Player;
  * Synchronization tasks, and will cause the {@link Character} to shout the
  * specified text. It is not possible to add colour or effect (e.g. wave or
  * scroll) to this block.
- * 
+ *
  * @author Major
  */
 public class ForceChatBlock extends SynchronizationBlock {
@@ -20,7 +20,7 @@ public class ForceChatBlock extends SynchronizationBlock {
 
     /**
      * Creates a new Force Chat [@link SynchronizationBlock}.
-     * 
+     *
      * @param message The message the {@link Character} will say.
      */
     public ForceChatBlock(String message) {
@@ -29,7 +29,7 @@ public class ForceChatBlock extends SynchronizationBlock {
 
     /**
      * Gets the message being sent by this Force Chat block.
-     * 
+     *
      * @return The message.
      */
     public String getMessage() {

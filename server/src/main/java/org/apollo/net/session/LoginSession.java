@@ -31,7 +31,7 @@ import org.apollo.security.IsaacRandomPair;
 
 /**
  * A login session.
- * 
+ *
  * @author Graham
  */
 public final class LoginSession extends Session {
@@ -63,7 +63,7 @@ public final class LoginSession extends Session {
 
     /**
      * Creates a login session for the specified channel.
-     * 
+     *
      * @param ctx The channels context.
      * @param messageTranslator The message translator.
      * @param fileSystem The file system
@@ -87,7 +87,7 @@ public final class LoginSession extends Session {
 
     /**
      * Handles a login request.
-     * 
+     *
      * @param request The login request.
      * @throws IOException If some I/O error occurs.
      */
@@ -110,7 +110,7 @@ public final class LoginSession extends Session {
     /**
      * Checks if an update is required whenever a {@link Player} submits a login
      * request.
-     * 
+     *
      * @param request The login request.
      * @return {@code true} if an update is required, otherwise return
      *         {@code false}.
@@ -144,7 +144,7 @@ public final class LoginSession extends Session {
     /**
      * Returns {@code true} if the credentials within the specified login
      * request are invalid otherwise {@code false}.
-     * 
+     *
      * @param request The login request.
      */
     private boolean badCredentials(LoginRequest request) {
@@ -163,7 +163,7 @@ public final class LoginSession extends Session {
 
     /**
      * Handles a response from the login service.
-     * 
+     *
      * @param request The request this response corresponds to.
      * @param response The response.
      */

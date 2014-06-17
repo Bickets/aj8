@@ -13,14 +13,14 @@ import org.apollo.game.sync.seg.SynchronizationSegment;
  * <p>
  * This class also has static factory methods for creating
  * {@link SynchronizationBlock}s.
- * 
+ *
  * @author Graham
  */
 public abstract class SynchronizationBlock {
 
     /**
      * Creates an animation block with the specified animation.
-     * 
+     *
      * @param animation The animation.
      * @return The animation block.
      */
@@ -30,7 +30,7 @@ public abstract class SynchronizationBlock {
 
     /**
      * Creates an appearance block for the specified player.
-     * 
+     *
      * @param player The player.
      * @return The appearance block.
      */
@@ -40,7 +40,7 @@ public abstract class SynchronizationBlock {
 
     /**
      * Creates a chat block for the specified player.
-     * 
+     *
      * @param player The player.
      * @param chatMessage The chat message.
      * @return The chat block.
@@ -51,7 +51,7 @@ public abstract class SynchronizationBlock {
 
     /**
      * Creates a force chat block.
-     * 
+     *
      * @param text The text to force.
      * @return The force chat block.
      */
@@ -61,7 +61,7 @@ public abstract class SynchronizationBlock {
 
     /**
      * Creates a force movement block.
-     * 
+     *
      * @param currentPosition The position we are currently at.
      * @param position The position to walk too.
      * @param firstSpeed The speed of the X coordinate.
@@ -75,7 +75,7 @@ public abstract class SynchronizationBlock {
 
     /**
      * Creates a graphic block with the specified graphic.
-     * 
+     *
      * @param graphic The graphic.
      * @return The graphic block.
      */
@@ -85,7 +85,7 @@ public abstract class SynchronizationBlock {
 
     /**
      * Creates a hit update block with the specified damage.
-     * 
+     *
      * @return The hit update block.
      */
     public static SynchronizationBlock createHitUpdateBlock(int damage, int type, int currentHealth, int maximumHealth) {
@@ -94,7 +94,7 @@ public abstract class SynchronizationBlock {
 
     /**
      * Creates a hit update block with the specified damage.
-     * 
+     *
      * @return The hit update block.
      */
     public static SynchronizationBlock createSecondHitUpdateBlock(int damage, int type, int currentHealth, int maximumHealth) {
@@ -103,7 +103,7 @@ public abstract class SynchronizationBlock {
 
     /**
      * Creates a transform npc block.
-     * 
+     *
      * @param npc The npc to transform into.
      * @return The transform npc block.
      */
@@ -113,7 +113,7 @@ public abstract class SynchronizationBlock {
 
     /**
      * Creates a turn to entity block.
-     * 
+     *
      * @param id The entity id to turn to.
      * @return The turn to entity block.
      */
@@ -123,7 +123,7 @@ public abstract class SynchronizationBlock {
 
     /**
      * Creates a turn to position block with the specified position.
-     * 
+     *
      * @param position The position.
      * @return The turn to position block.
      */

@@ -5,7 +5,7 @@ import org.apollo.game.msg.Message;
 
 /**
  * A {@link Message} which represents some sort of action on an item.
- * 
+ *
  * @author Graham
  */
 public class ItemActionMessage extends Message {
@@ -32,7 +32,7 @@ public class ItemActionMessage extends Message {
 
     /**
      * Creates the item action message.
-     * 
+     *
      * @param option The interface option.
      * @param interfaceId The interface id.
      * @param id The id.
@@ -47,7 +47,7 @@ public class ItemActionMessage extends Message {
 
     /**
      * Gets the interface option
-     * 
+     *
      * @return The interface option.
      */
     public InterfaceOption getOption() {
@@ -56,7 +56,7 @@ public class ItemActionMessage extends Message {
 
     /**
      * Gets the interface id.
-     * 
+     *
      * @return The interface id.
      */
     public int getInterfaceId() {
@@ -65,7 +65,7 @@ public class ItemActionMessage extends Message {
 
     /**
      * Gets the item id.
-     * 
+     *
      * @return The item id.
      */
     public int getId() {
@@ -74,7 +74,7 @@ public class ItemActionMessage extends Message {
 
     /**
      * Gets the slot.
-     * 
+     *
      * @return The slot.
      */
     public int getSlot() {

@@ -7,7 +7,7 @@ import org.apollo.game.model.Player;
  * used for when multiple attacks happen at once (for example, the DDS-special
  * attack). This block can be implemented by both {@link Player}'s and
  * {@link Npc}'s.
- * 
+ *
  * @author Major
  */
 public class SecondHitBlock extends SynchronizationBlock {
@@ -34,7 +34,7 @@ public class SecondHitBlock extends SynchronizationBlock {
 
     /**
      * Creates a new Second Hit Update block.
-     * 
+     *
      * @param hitDamage The damage dealt by the hit.
      * @param hitType The type of hit.
      * @param currentHealth The current health of the
@@ -43,15 +43,15 @@ public class SecondHitBlock extends SynchronizationBlock {
      *            {@link org.apollo.game.model.Character}.
      */
     public SecondHitBlock(int hitDamage, int hitType, int currentHealth, int maximumHealth) {
-	this.damage = hitDamage;
-	this.type = hitType;
+	damage = hitDamage;
+	type = hitType;
 	this.currentHealth = currentHealth;
 	this.maximumHealth = maximumHealth;
     }
 
     /**
      * Gets the damage done by the hit.
-     * 
+     *
      * @return The damage.
      */
     public int getDamage() {
@@ -60,7 +60,7 @@ public class SecondHitBlock extends SynchronizationBlock {
 
     /**
      * Gets the hit type.
-     * 
+     *
      * @return The type.
      */
     public int getType() {
@@ -69,7 +69,7 @@ public class SecondHitBlock extends SynchronizationBlock {
 
     /**
      * Gets the current health of the {@link org.apollo.game.model.Character}.
-     * 
+     *
      * @return The current health;
      */
     public int getCurrentHealth() {
@@ -78,7 +78,7 @@ public class SecondHitBlock extends SynchronizationBlock {
 
     /**
      * Gets the maximum health of the {@link org.apollo.game.model.Character}.
-     * 
+     *
      * @return The maximum health.
      */
     public int getMaximumHealth() {

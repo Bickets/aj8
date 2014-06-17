@@ -8,7 +8,7 @@ import org.apollo.net.codec.game.GamePacketBuilder;
 
 /**
  * An {@link MessageEncoder} for the {@link CloseInterfaceMessage}.
- * 
+ *
  * @author Graham
  */
 @EncodesMessage(CloseInterfaceMessage.class)

@@ -8,7 +8,7 @@ import org.apollo.game.msg.impl.ButtonMessage;
 
 /**
  * An {@link MessageHandler} which responds to {@link ButtonMessage}'s
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @HandlesMessage(ButtonMessage.class)
@@ -21,7 +21,7 @@ public final class ButtonMessageHandler extends MessageHandler<ButtonMessage> {
 
     /**
      * Constructs a new {@link ButtonEvnetHandler}.
-     * 
+     *
      * @param world The world.
      */
     public ButtonMessageHandler(World world) {

@@ -10,7 +10,7 @@ import org.apollo.service.Service;
 
 /**
  * A class which services file requests.
- * 
+ *
  * @author Graham
  */
 public final class UpdateService extends Service {
@@ -50,7 +50,7 @@ public final class UpdateService extends Service {
 
     /**
      * Gets the update dispatcher.
-     * 
+     *
      * @return The update dispatcher.
      */
     public UpdateDispatcher getDispatcher() {

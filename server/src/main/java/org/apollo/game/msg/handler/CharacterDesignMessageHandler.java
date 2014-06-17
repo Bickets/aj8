@@ -10,7 +10,7 @@ import org.apollo.game.msg.impl.CloseInterfaceMessage;
 
 /**
  * A handler which handles {@link CharacterDesignMessage}s.
- * 
+ *
  * @author Graham
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
@@ -59,7 +59,7 @@ public final class CharacterDesignMessageHandler extends MessageHandler<Characte
 
     /**
      * Checks if an appearance combination is valid.
-     * 
+     *
      * @param appearance The appearance combination.
      * @return {@code true} if so, {@code false} if not.
      */
@@ -83,7 +83,7 @@ public final class CharacterDesignMessageHandler extends MessageHandler<Characte
 
     /**
      * Checks if a {@link Gender#MALE} style combination is valid.
-     * 
+     *
      * @param appearance The appearance combination.
      * @return {@code true} if so, {@code false} if not.
      */
@@ -99,7 +99,7 @@ public final class CharacterDesignMessageHandler extends MessageHandler<Characte
 
     /**
      * Checks if a {@link Gender#FEMALE} style combination is valid.
-     * 
+     *
      * @param appearance The appearance combination.
      * @return {@code true} if so, {@code false} if not.
      */

@@ -2,7 +2,7 @@ package org.apollo.game.model;
 
 /**
  * Represents constant values specified to interfaces.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class InterfaceConstants {

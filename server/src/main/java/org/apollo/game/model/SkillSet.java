@@ -7,7 +7,7 @@ import org.apollo.game.model.skill.SkillListener;
 
 /**
  * Represents the set of the players skills.
- * 
+ *
  * @author Graham
  */
 public final class SkillSet {
@@ -46,7 +46,7 @@ public final class SkillSet {
 
     /**
      * Gets the number of skills.
-     * 
+     *
      * @return The number of skills.
      */
     public int size() {
@@ -69,7 +69,7 @@ public final class SkillSet {
 
     /**
      * Gets a skill by its id.
-     * 
+     *
      * @param id The id.
      * @return The skill.
      * @throws IndexOutOfBoundsException if the id is out of bounds.
@@ -81,7 +81,7 @@ public final class SkillSet {
 
     /**
      * Adds experience to the specified skill.
-     * 
+     *
      * @param id The skill id.
      * @param experience The amount of experience.
      */
@@ -114,20 +114,20 @@ public final class SkillSet {
 
     /**
      * Gets the total level for this skill set.
-     * 
+     *
      * @return The total level.
      */
     public int getTotalLevel() {
 	int total = 0;
-	for (int i = 0; i < skills.length; i++) {
-	    total += skills[i].getMaximumLevel();
+	for (Skill skill : skills) {
+	    total += skill.getMaximumLevel();
 	}
 	return total;
     }
 
     /**
      * Gets the combat level for this skill set.
-     * 
+     *
      * @return The combat level.
      */
     public int getCombatLevel() {
@@ -152,7 +152,7 @@ public final class SkillSet {
 
     /**
      * Gets the minimum experience required for the specified level.
-     * 
+     *
      * @param level The level.
      * @return The minimum experience.
      */
@@ -171,7 +171,7 @@ public final class SkillSet {
 
     /**
      * Gets the minimum level to get the specified experience.
-     * 
+     *
      * @param experience The experience.
      * @return The minimum level.
      */
@@ -181,7 +181,7 @@ public final class SkillSet {
 	for (int lvl = 1; lvl <= 99; lvl++) {
 	    points += Math.floor(lvl + 300.0 * Math.pow(2.0, lvl / 7.0));
 	    output = (int) Math.floor(points / 4);
-	    if (output >= (experience + 1)) {
+	    if (output >= experience + 1) {
 		return lvl;
 	    }
 	}
@@ -217,7 +217,7 @@ public final class SkillSet {
 
     /**
      * Sets a skill.
-     * 
+     *
      * @param id The id.
      * @param skill The skill.
      * @throws IndexOutOfBoundsException if the id is out of bounds.
@@ -230,7 +230,7 @@ public final class SkillSet {
 
     /**
      * Checks the bounds of the id.
-     * 
+     *
      * @param id The id.
      * @throws IndexOutOfBoundsException if the id is out of bounds.
      */
@@ -242,7 +242,7 @@ public final class SkillSet {
 
     /**
      * Notifies listeners that a skill has been levelled up.
-     * 
+     *
      * @param id The skill's id.
      * @throws IndexOutOfBoundsException if the id is out of bounds.
      */
@@ -257,7 +257,7 @@ public final class SkillSet {
 
     /**
      * Notifies listeners that a skill has been updated.
-     * 
+     *
      * @param id The skill's id.
      * @throws IndexOutOfBoundsException if the id is out of bounds.
      */
@@ -304,7 +304,7 @@ public final class SkillSet {
 
     /**
      * Adds a listener.
-     * 
+     *
      * @param listener The listener to add.
      */
     public void addListener(SkillListener listener) {
@@ -313,7 +313,7 @@ public final class SkillSet {
 
     /**
      * Removes a listener.
-     * 
+     *
      * @param listener The listener to remove.
      */
     public void removeListener(SkillListener listener) {

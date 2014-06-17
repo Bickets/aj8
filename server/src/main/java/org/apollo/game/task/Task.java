@@ -2,7 +2,7 @@ package org.apollo.game.task;
 
 /**
  * A game-related task that is scheduled to run in the future.
- * 
+ *
  * @author Graham
  */
 public abstract class Task {
@@ -24,7 +24,7 @@ public abstract class Task {
 
     /**
      * Creates a new scheduled task.
-     * 
+     *
      * @param delay The delay between executions of the task, in pulses.
      * @param immediate A flag indicating if this task should (for the first
      *            execution) be ran immediately, or after the {@code delay}.
@@ -33,12 +33,12 @@ public abstract class Task {
      */
     public Task(int delay, boolean immediate) {
 	setDelay(delay);
-	this.pulses = immediate ? 0 : delay;
+	pulses = immediate ? 0 : delay;
     }
 
     /**
      * Checks if this task is running.
-     * 
+     *
      * @return {@code true} if so, {@code false} if not.
      */
     public final boolean isRunning() {
@@ -47,7 +47,7 @@ public abstract class Task {
 
     /**
      * Sets the delay.
-     * 
+     *
      * @param delay The delay.
      * @throws IllegalArgumentException if the delay is less than or equal to
      *             zero.

@@ -6,7 +6,7 @@ import java.util.Objects;
 
 /**
  * Represents a map of {@link AttributeKey<T>}s to {@link Attribute<T>}s.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class AttributeMap {
@@ -20,7 +20,7 @@ public final class AttributeMap {
      * Returns the value of the attribute which is represented by the specified
      * {@link AttributeKey<T>}, if no key exists the initial value is returned
      * and the key is added.
-     * 
+     *
      * @param key The attribute key, may not be {@code null}.
      * @return The value of the attribute, never {@code null}.
      * @unchecked This method declares unchecked as the cast from
@@ -44,7 +44,7 @@ public final class AttributeMap {
     /**
      * Sets a specified attribute key to a specified value and returns the
      * value.
-     * 
+     *
      * @param key The attribute key, may not be {@code null}.
      * @param value The value of the attribute, may not be {@code null}.
      * @return The value of the attribute, will never be {@code null}.
@@ -61,7 +61,7 @@ public final class AttributeMap {
 
     /**
      * Sets a specified attribute key to a specified value.
-     * 
+     *
      * @param key The attribute key, may not be {@code null}.
      * @param value The value of the attribute, may not be {@code null}.
      * @throws NullPointerException If the specified key or value is
@@ -74,7 +74,7 @@ public final class AttributeMap {
     /**
      * Returns a flag which denotes whether or not an attribute key exists
      * within the {@link #attrs} map.
-     * 
+     *
      * @param key The attribute key, may not be {@code null}.
      * @return {@code true} if and only if the specified key exists within the
      *         attribute map, otherwise {@code false}.

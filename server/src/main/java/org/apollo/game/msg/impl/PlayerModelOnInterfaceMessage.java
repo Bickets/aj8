@@ -4,7 +4,7 @@ import org.apollo.game.msg.Message;
 
 /**
  * Represents a message which your player model is displayed on an interface.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class PlayerModelOnInterfaceMessage extends Message {
@@ -16,7 +16,7 @@ public final class PlayerModelOnInterfaceMessage extends Message {
 
     /**
      * Constructs a new {@link PlayerModelOnInterfaceMessage}.
-     * 
+     *
      * @param interfaceId The interface id.
      */
     public PlayerModelOnInterfaceMessage(int interfaceId) {

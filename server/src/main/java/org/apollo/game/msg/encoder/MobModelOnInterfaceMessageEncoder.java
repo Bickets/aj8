@@ -11,7 +11,7 @@ import org.apollo.net.codec.game.GamePacketBuilder;
 
 /**
  * Encodes the {@link MobModelOnInterfaceMessage}.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @EncodesMessage(MobModelOnInterfaceMessage.class)

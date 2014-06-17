@@ -18,11 +18,12 @@ public final class Index implements FileIndex {
     private final int id;
 
     public Index(SeekableByteChannel data, SeekableByteChannel index, int id) {
-	this.dataChannel = data;
-	this.indexChannel = index;
+	dataChannel = data;
+	indexChannel = index;
 	this.id = ++id;
     }
 
+    @Override
     public byte[] get(int file) throws IOException {
 	buffer.clear();
 

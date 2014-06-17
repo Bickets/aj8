@@ -4,7 +4,7 @@ import org.apollo.game.msg.Message;
 
 /**
  * This message is used to open an overlay over the chatbox.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class OpenDialogueInterfaceMessage extends Message {
@@ -16,7 +16,7 @@ public final class OpenDialogueInterfaceMessage extends Message {
 
     /**
      * Constructs a new {@link OpenDialogueInterfaceMessage}.
-     * 
+     *
      * @param interfaceId The id of the interface.
      */
     public OpenDialogueInterfaceMessage(int interfaceId) {

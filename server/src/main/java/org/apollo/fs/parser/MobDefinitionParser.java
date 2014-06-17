@@ -10,7 +10,7 @@ import org.apollo.util.ByteBufferUtil;
 
 /**
  * A class which parses mob definitions.
- * 
+ *
  * @author Chris Fletcher
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
@@ -19,7 +19,7 @@ public final class MobDefinitionParser {
     /**
      * Parses and returns an array of mob definitions from the specified file
      * system.
-     * 
+     *
      * @param fs The file system in which to read the mob data from.
      * @throws IOException If some I/O exception occurs.
      */
@@ -47,7 +47,7 @@ public final class MobDefinitionParser {
 
     /**
      * Parses and returns a single mob definition.
-     * 
+     *
      * @param id The id of the mob.
      * @param buffer The buffer in which to read the mob data from.
      */
@@ -103,31 +103,21 @@ public final class MobDefinitionParser {
 	    } else if (code == 92) {
 		buffer.getShort(); // Dummy
 	    } else if (code == 93) {
-		@SuppressWarnings("unused")
-		boolean unknown = false; // Initial = true
 	    } else if (code == 95) {
 		def.setCombatLevel(buffer.getShort());
 	    } else if (code == 97) {
-		@SuppressWarnings("unused")
-		int unknown = buffer.getShort(); // Initial = 128
+		buffer.getShort();
 	    } else if (code == 98) {
-		@SuppressWarnings("unused")
-		int unknown = buffer.getShort(); // Initial = 128
+		buffer.getShort();
 	    } else if (code == 99) {
-		@SuppressWarnings("unused")
-		boolean unknown = true; // Initial = false
 	    } else if (code == 100) {
-		@SuppressWarnings("unused")
-		int unknown = buffer.get(); // Initial = 0
+		buffer.get();
 	    } else if (code == 101) {
-		@SuppressWarnings("unused")
-		int unknown = buffer.get() * 5; // Initial = 0
+		buffer.get();
 	    } else if (code == 102) {
-		@SuppressWarnings("unused")
-		int unknown = buffer.getShort(); // Initial = -1
+		buffer.getShort();
 	    } else if (code == 103) {
-		@SuppressWarnings("unused")
-		int unknown = buffer.getShort(); // Initial = 32
+		buffer.getShort();
 	    } else if (code == 106) {
 		int unknown1 = buffer.getShort(); // Initial = -1
 		if (unknown1 == 65535) {
@@ -148,8 +138,6 @@ public final class MobDefinitionParser {
 		    unknown[i] = unknown3;
 		}
 	    } else if (code == 107) {
-		@SuppressWarnings("unused")
-		boolean unknown = false; // Initial = true
 	    }
 	}
     }

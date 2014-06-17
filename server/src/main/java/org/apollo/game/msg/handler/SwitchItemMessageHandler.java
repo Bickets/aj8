@@ -11,7 +11,7 @@ import org.apollo.game.msg.impl.SwitchItemMessage;
 /**
  * An {@link MessageHandler} which updates an {@link Inventory} when the client
  * sends a {@link SwitchItemMessage} to the server.
- * 
+ *
  * @author Graham
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
@@ -34,7 +34,7 @@ public final class SwitchItemMessageHandler extends MessageHandler<SwitchItemMes
 
     /**
      * Returns an {@link Inventory} for the specified interface id.
-     * 
+     *
      * @param player The player who owns the inventory.
      * @param id The interface id.
      * @return The inventory for the specified interface id, {@code null} if not
@@ -58,7 +58,7 @@ public final class SwitchItemMessageHandler extends MessageHandler<SwitchItemMes
     /**
      * Returns {@code true} if the insert option is permitted for the specified
      * interface id.
-     * 
+     *
      * @param id The interface id.
      * @return {@code true} if inserting is permitted for the specified
      *         interface id, otherwise return {@code false}.

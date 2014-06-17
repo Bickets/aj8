@@ -4,7 +4,7 @@ import org.apollo.game.model.Position;
 
 /**
  * Represents a static object in the game world.
- * 
+ *
  * @author Graham
  */
 public final class StaticObject {
@@ -31,7 +31,7 @@ public final class StaticObject {
 
     /**
      * Creates a new static object.
-     * 
+     *
      * @param id The object's id.
      * @param position The position.
      * @param type The type code of the object.
@@ -46,7 +46,7 @@ public final class StaticObject {
 
     /**
      * Gets the id of the object.
-     * 
+     *
      * @return The object id.
      */
     public int getId() {
@@ -55,7 +55,7 @@ public final class StaticObject {
 
     /**
      * Gets the position of this object.
-     * 
+     *
      * @return The object's position.
      */
     public Position getPosition() {
@@ -64,7 +64,7 @@ public final class StaticObject {
 
     /**
      * Gets the object's rotation.
-     * 
+     *
      * @return The rotation.
      */
     public int getRotation() {
@@ -73,7 +73,7 @@ public final class StaticObject {
 
     /**
      * Gets the type code of the object.
-     * 
+     *
      * @return The type.
      */
     public int getType() {

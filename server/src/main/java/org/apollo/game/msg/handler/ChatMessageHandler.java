@@ -8,7 +8,7 @@ import org.apollo.game.sync.block.SynchronizationBlock;
 
 /**
  * A message handler which broadcasts public chat messages.
- * 
+ *
  * @author Graham
  */
 @HandlesMessage(ChatMessage.class)

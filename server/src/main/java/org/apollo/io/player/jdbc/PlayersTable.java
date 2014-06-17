@@ -17,8 +17,8 @@ public final class PlayersTable extends Table {
     private final PreparedStatement saveStatement;
 
     public PlayersTable(Connection connection) throws SQLException {
-	this.loadStatement = connection.prepareStatement("SELECT * FROM players WHERE id = ?");
-	this.saveStatement = connection.prepareStatement("REPLACE INTO players (id, username, password, rights, members, x, y, height) VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
+	loadStatement = connection.prepareStatement("SELECT * FROM players WHERE id = ?");
+	saveStatement = connection.prepareStatement("REPLACE INTO players (id, username, password, rights, members, x, y, height) VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
     }
 
     @Override
@@ -26,8 +26,9 @@ public final class PlayersTable extends Table {
 	loadStatement.setInt(1, player.getDatabaseId());
 
 	try (ResultSet set = loadStatement.executeQuery()) {
-	    if (!set.first())
+	    if (!set.first()) {
 		throw new IOException();
+	    }
 
 	    boolean members = set.getBoolean("members");
 	    player.setMembers(members);

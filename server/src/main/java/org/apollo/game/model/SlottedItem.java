@@ -2,7 +2,7 @@ package org.apollo.game.model;
 
 /**
  * A class which contains an {@link Item} and its corresponding slot.
- * 
+ *
  * @author Graham
  */
 public final class SlottedItem {
@@ -19,7 +19,7 @@ public final class SlottedItem {
 
     /**
      * Creates a new slotted item.
-     * 
+     *
      * @param slot The slot.
      * @param item The item.
      */
@@ -30,7 +30,7 @@ public final class SlottedItem {
 
     /**
      * Gets the slot.
-     * 
+     *
      * @return The slot.
      */
     public int getSlot() {
@@ -39,7 +39,7 @@ public final class SlottedItem {
 
     /**
      * Gets the item.
-     * 
+     *
      * @return The item.
      */
     public Item getItem() {

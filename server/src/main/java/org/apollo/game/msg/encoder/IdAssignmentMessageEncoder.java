@@ -11,7 +11,7 @@ import org.apollo.net.codec.game.GamePacketBuilder;
 
 /**
  * An {@link MessageEncoder} for the {@link IdAssignmentMessage}.
- * 
+ *
  * @author Graham
  */
 @EncodesMessage(IdAssignmentMessage.class)

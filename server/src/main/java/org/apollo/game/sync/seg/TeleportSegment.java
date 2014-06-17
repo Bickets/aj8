@@ -6,7 +6,7 @@ import org.apollo.game.sync.block.SynchronizationBlockSet;
 /**
  * A {@link SynchronizationSegment} where the character is teleported to a new
  * location.
- * 
+ *
  * @author Graham
  */
 public final class TeleportSegment extends SynchronizationSegment {
@@ -18,7 +18,7 @@ public final class TeleportSegment extends SynchronizationSegment {
 
     /**
      * Creates the teleport segment.
-     * 
+     *
      * @param blockSet The block set.
      * @param destination The destination.
      */
@@ -29,7 +29,7 @@ public final class TeleportSegment extends SynchronizationSegment {
 
     /**
      * Gets the destination.
-     * 
+     *
      * @return The destination.
      */
     public Position getDestination() {

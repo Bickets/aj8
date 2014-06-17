@@ -6,7 +6,7 @@ import org.apollo.game.sync.block.SynchronizationBlockSet;
 
 /**
  * A {@link SynchronizationSegment} which adds a gameCharacter.
- * 
+ *
  * @author Graham
  */
 public final class AddCharacterSegment extends SynchronizationSegment {
@@ -33,7 +33,7 @@ public final class AddCharacterSegment extends SynchronizationSegment {
 
     /**
      * Creates the add gameCharacter segment.
-     * 
+     *
      * @param blockSet The block set.
      * @param index The characters's index.
      * @param id The characters id.
@@ -49,7 +49,7 @@ public final class AddCharacterSegment extends SynchronizationSegment {
 
     /**
      * Returns the gameCharacter.
-     * 
+     *
      * @return The gameCharacter.
      */
     public GameCharacter getCharacter() {
@@ -58,7 +58,7 @@ public final class AddCharacterSegment extends SynchronizationSegment {
 
     /**
      * Gets the gameCharacter's index.
-     * 
+     *
      * @return The index.
      */
     public int getIndex() {
@@ -67,7 +67,7 @@ public final class AddCharacterSegment extends SynchronizationSegment {
 
     /**
      * Returns the id of this character.
-     * 
+     *
      * @return The id
      */
     public int getId() {
@@ -76,7 +76,7 @@ public final class AddCharacterSegment extends SynchronizationSegment {
 
     /**
      * Gets the position.
-     * 
+     *
      * @return The position.
      */
     public Position getPosition() {

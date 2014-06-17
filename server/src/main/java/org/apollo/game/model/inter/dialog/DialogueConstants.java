@@ -2,7 +2,7 @@ package org.apollo.game.model.inter.dialog;
 
 /**
  * Contains dialogue-related information.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 final class DialogueConstants {
@@ -55,7 +55,7 @@ final class DialogueConstants {
     /**
      * Suppresses the default-public constructor preventing this class from
      * being instantiated by other classes.
-     * 
+     *
      * @throws InstantiationError If this class is instantiated within itself.
      */
     private DialogueConstants() {

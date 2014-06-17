@@ -19,7 +19,7 @@ import org.apollo.util.EntityRepository;
 /**
  * A {@link SynchronizationTask} which synchronizes the specified {@link Mob}
  * for a {@link Player}.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class MobSynchronizationTask extends SynchronizationTask {
@@ -43,7 +43,7 @@ public final class MobSynchronizationTask extends SynchronizationTask {
 
     /**
      * Constructs a new {@link MobSynchronizationTask}.
-     * 
+     *
      * @param player The player.
      * @param world The world.
      */

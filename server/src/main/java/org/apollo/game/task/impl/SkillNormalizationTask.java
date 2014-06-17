@@ -7,7 +7,7 @@ import org.apollo.game.task.Task;
 /**
  * A {@link Task} which normalizes the skills of a player: gradually brings them
  * back to their normal value as specified by the experience.
- * 
+ *
  * @author Graham
  */
 public final class SkillNormalizationTask extends Task {
@@ -19,7 +19,7 @@ public final class SkillNormalizationTask extends Task {
 
     /**
      * Creates the skill normalization task.
-     * 
+     *
      * @param gameCharacter The gameCharacter.
      */
     public SkillNormalizationTask(GameCharacter gameCharacter) {

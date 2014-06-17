@@ -8,7 +8,7 @@ import java.util.List;
 
 /**
  * A {@link ByteToMessageDecoder} for the 'on-demand' protocol.
- * 
+ *
  * @author Graham
  */
 public final class UpdateDecoder extends ByteToMessageDecoder {

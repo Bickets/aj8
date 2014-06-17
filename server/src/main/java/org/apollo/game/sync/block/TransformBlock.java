@@ -3,7 +3,7 @@ package org.apollo.game.sync.block;
 /**
  * Represents the transform {@link SynchronizationBlock}. This synchronization
  * block transforms a mob into that of another mob.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class TransformBlock extends SynchronizationBlock {
@@ -15,7 +15,7 @@ public final class TransformBlock extends SynchronizationBlock {
 
     /**
      * Constructs a new {@link TransformBlock}.
-     * 
+     *
      * @param id The id of the mob to transform into.
      */
     public TransformBlock(int id) {
@@ -24,7 +24,7 @@ public final class TransformBlock extends SynchronizationBlock {
 
     /**
      * Returns the transform id.
-     * 
+     *
      * @return The transform id.
      */
     public int getId() {

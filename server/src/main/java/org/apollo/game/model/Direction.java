@@ -2,7 +2,7 @@ package org.apollo.game.model;
 
 /**
  * Represents a single movement direction.
- * 
+ *
  * @author Graham
  */
 public enum Direction {
@@ -60,7 +60,7 @@ public enum Direction {
     /**
      * Checks if the direction represented by the two delta values can connect
      * two points together in a single direction.
-     * 
+     *
      * @param deltaX The difference in X coordinates.
      * @param deltaY The difference in X coordinates.
      * @return {@code true} if so, {@code false} if not.
@@ -71,7 +71,7 @@ public enum Direction {
 
     /**
      * Creates a direction from the differences between X and Y.
-     * 
+     *
      * @param deltaX The difference between two X coordinates.
      * @param deltaY The difference between two Y coordinates.
      * @return The direction.
@@ -110,7 +110,7 @@ public enum Direction {
 
     /**
      * Creates the direction.
-     * 
+     *
      * @param intValue The direction as an integer.
      */
     private Direction(int intValue) {
@@ -119,7 +119,7 @@ public enum Direction {
 
     /**
      * Gets the direction as an integer which the client can understand.
-     * 
+     *
      * @return The movement as an integer.
      */
     public int toInteger() {

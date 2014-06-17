@@ -13,7 +13,7 @@ import org.apollo.net.codec.game.GamePacketReader;
 
 /**
  * An {@link MessageDecoder} for the {@link ObjectActionMessage}.
- * 
+ *
  * @author Graham
  */
 @DecodesMessage(252)

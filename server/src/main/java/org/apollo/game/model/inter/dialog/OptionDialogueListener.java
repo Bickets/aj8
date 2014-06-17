@@ -8,7 +8,7 @@ import org.apollo.game.msg.impl.SetInterfaceTextMessage;
 /**
  * A dialgoue listener which manages the {@link DialogueType#OPTION} dialogue
  * type.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public abstract class OptionDialogueListener implements DialogueListener {

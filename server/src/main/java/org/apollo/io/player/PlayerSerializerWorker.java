@@ -19,7 +19,7 @@ import org.apollo.util.NamedThreadFactory;
  * Manages load and save requests from the specified {@link PlayerSerializer}
  * also any verification required is done here before any serialization has
  * taken place.
- * 
+ *
  * @author Graham
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
@@ -43,7 +43,7 @@ public final class PlayerSerializerWorker {
     /**
      * Constructs a new {@link PlayerSerializerWorker} with the default
      * serializer.
-     * 
+     *
      * @see {@link #DEFAULT_SERIALIZER}.
      */
     public PlayerSerializerWorker() {
@@ -53,7 +53,7 @@ public final class PlayerSerializerWorker {
     /**
      * Constructs a new {@link PlayerSerializerWorker} with specified
      * serializer.
-     * 
+     *
      * @param serializer The player serializer.
      */
     public PlayerSerializerWorker(PlayerSerializer serializer) {
@@ -67,7 +67,7 @@ public final class PlayerSerializerWorker {
 
     /**
      * Submits a login request.
-     * 
+     *
      * @param session The session submitting this request.
      * @param request The login request.
      * @param fileSystem The file system
@@ -87,7 +87,7 @@ public final class PlayerSerializerWorker {
 
     /**
      * Submits a save request.
-     * 
+     *
      * @param session The session submitting this request.
      * @param player The player to save.
      */

@@ -7,7 +7,7 @@ import org.apollo.game.msg.impl.ClosedInterfaceMessage;
 
 /**
  * An {@link MessageHandler} for the {@link ClosedInterfaceMessage}.
- * 
+ *
  * @author Graham
  */
 @HandlesMessage(ClosedInterfaceMessage.class)

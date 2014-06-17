@@ -12,7 +12,7 @@ import org.apollo.net.codec.game.GamePacketReader;
 
 /**
  * An {@link MessageDecoder} for the {@link WalkMessage}.
- * 
+ *
  * @author Graham
  */
 @DecodesMessage({ 98, 164, 248 })

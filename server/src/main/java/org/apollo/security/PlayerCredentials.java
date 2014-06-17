@@ -4,7 +4,7 @@ import org.apollo.util.NameUtil;
 
 /**
  * Holds the credentials for a player.
- * 
+ *
  * @author Graham
  */
 public final class PlayerCredentials {
@@ -42,7 +42,7 @@ public final class PlayerCredentials {
     /**
      * Creates a new {@link PlayerCredentials} object with the specified name,
      * password and uid.
-     * 
+     *
      * @param username The players username.
      * @param password The players password.
      * @param usernameHash The hash of the players username.
@@ -51,7 +51,7 @@ public final class PlayerCredentials {
      */
     public PlayerCredentials(String username, String password, int usernameHash, int uid, String address) {
 	this.username = username;
-	this.encodedUsername = NameUtil.encodeBase37(username);
+	encodedUsername = NameUtil.encodeBase37(username);
 	this.password = password;
 	this.usernameHash = usernameHash;
 	this.uid = uid;
@@ -60,7 +60,7 @@ public final class PlayerCredentials {
 
     /**
      * Gets the players username.
-     * 
+     *
      * @return The players username.
      */
     public String getUsername() {
@@ -69,7 +69,7 @@ public final class PlayerCredentials {
 
     /**
      * Gets the players username encoded as a long.
-     * 
+     *
      * @return The username as encoded by {@link NameUtil#encodeBase37(String)}.
      */
     public long getEncodedUsername() {
@@ -78,7 +78,7 @@ public final class PlayerCredentials {
 
     /**
      * Gets the players password.
-     * 
+     *
      * @return The players password.
      */
     public String getPassword() {
@@ -87,7 +87,7 @@ public final class PlayerCredentials {
 
     /**
      * Gets the username hash.
-     * 
+     *
      * @return The username hash.
      */
     public int getUsernameHash() {
@@ -96,7 +96,7 @@ public final class PlayerCredentials {
 
     /**
      * Gets the computer's uid.
-     * 
+     *
      * @return The computer's uid.
      */
     public int getUid() {
@@ -105,7 +105,7 @@ public final class PlayerCredentials {
 
     /**
      * Gets the connection host address.
-     * 
+     *
      * @return The connecting host address.
      * @return
      */

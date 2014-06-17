@@ -18,7 +18,7 @@ import org.apollo.game.msg.impl.LogoutMessage;
 
 /**
  * A game session.
- * 
+ *
  * @author Graham
  */
 public final class GameSession extends Session {
@@ -50,7 +50,7 @@ public final class GameSession extends Session {
 
     /**
      * Creates a login session for the specified channel context.
-     * 
+     *
      * @param ctx This sessions channels context.
      * @param messageTranslator The message translator.
      * @param player The player.
@@ -75,7 +75,7 @@ public final class GameSession extends Session {
 
     /**
      * Encodes and dispatches the specified message.
-     * 
+     *
      * @param message The message
      */
     public void dispatchMessage(Message message) {
@@ -83,7 +83,7 @@ public final class GameSession extends Session {
 	if (channel.isActive()) {
 	    ChannelFuture future = channel.writeAndFlush(message);
 	    if (message.getClass() == LogoutMessage.class) { // TODO: Better
-							     // way?
+		// way?
 		future.addListener(ChannelFutureListener.CLOSE);
 	    }
 	}

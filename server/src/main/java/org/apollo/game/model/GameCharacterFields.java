@@ -5,7 +5,7 @@ package org.apollo.game.model;
  * {@link GameCharacters}. <b> Please do not use this class to store character
  * specific methods as that is not what this class is intended for. We don't
  * want this to turn into the next client.java </b>
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class GameCharacterFields {
@@ -17,7 +17,7 @@ public final class GameCharacterFields {
 
     /**
      * Gets the withdrawing notes flag.
-     * 
+     *
      * @return The flag.
      */
     public boolean isWithdrawingNotes() {
@@ -26,7 +26,7 @@ public final class GameCharacterFields {
 
     /**
      * Sets the withdrawing notes flag.
-     * 
+     *
      * @param withdrawingNotes The flag.
      */
     public void setWithdrawingNotes(boolean withdrawingNotes) {

@@ -5,7 +5,7 @@ import org.apollo.game.msg.Message;
 
 /**
  * Represents an animation performed by a model on some interface.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class InterfaceModelAnimationMessage extends Message {
@@ -22,7 +22,7 @@ public final class InterfaceModelAnimationMessage extends Message {
 
     /**
      * Constructs a new {@link InterfaceModelAnimationMessage}.
-     * 
+     *
      * @param animation The animation to perform.
      * @param interfaceId The interface to perform the animation on.
      */

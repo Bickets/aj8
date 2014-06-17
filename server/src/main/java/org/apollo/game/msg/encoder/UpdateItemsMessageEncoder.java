@@ -13,7 +13,7 @@ import org.apollo.net.meta.PacketType;
 
 /**
  * An {@link MessageEncoder} for the {@link UpdateItemsMessage}.
- * 
+ *
  * @author Graham
  */
 @EncodesMessage(UpdateItemsMessage.class)
@@ -28,8 +28,7 @@ public final class UpdateItemsMessageEncoder extends MessageEncoder<UpdateItemsM
 	builder.put(DataType.SHORT, message.getInterfaceId());
 	builder.put(DataType.SHORT, items.length);
 
-	for (int i = 0; i < items.length; i++) {
-	    Item item = items[i];
+	for (Item item : items) {
 	    int id = item == null ? -1 : item.getId();
 	    int amount = item == null ? 0 : item.getAmount();
 

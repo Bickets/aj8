@@ -10,7 +10,7 @@ import org.apollo.util.GsonUtil;
 
 /**
  * Represents a level up definition.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class LevelUpDefinition {
@@ -37,7 +37,7 @@ public final class LevelUpDefinition {
 
     /**
      * Constructs a new {@link LevelUpDefinition}.
-     * 
+     *
      * @param interfaceId The interface id.
      * @param firstChildId The first child id.
      * @param secondChildId The second child if.
@@ -71,7 +71,7 @@ public final class LevelUpDefinition {
 
     /**
      * Initializes the definitions.
-     * 
+     *
      * @throws IOException If some I/O exception occurs.
      */
     public static void init() throws IOException {
@@ -84,7 +84,7 @@ public final class LevelUpDefinition {
     /**
      * Returns a single level up definition from the specified id if such
      * definition exists.
-     * 
+     *
      * @param id The id of the definition.
      * @return A single level up definition if and only if the specified
      *         definition from the id exists, otherwise {@code null}.

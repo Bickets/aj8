@@ -16,8 +16,8 @@ public final class SkillsTable extends Table {
     private final PreparedStatement saveStatement;
 
     public SkillsTable(Connection connection) throws SQLException {
-	this.loadStatement = connection.prepareStatement("SELECT * FROM skills WHERE player_id = ?;");
-	this.saveStatement = connection.prepareStatement("INSERT INTO skills (player_id, current_level, experience) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE current_level = VALUES(current_level), experience = VALUES(experience);");
+	loadStatement = connection.prepareStatement("SELECT * FROM skills WHERE player_id = ?;");
+	saveStatement = connection.prepareStatement("INSERT INTO skills (player_id, current_level, experience) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE current_level = VALUES(current_level), experience = VALUES(experience);");
     }
 
     @Override

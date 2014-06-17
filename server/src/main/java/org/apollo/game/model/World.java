@@ -24,7 +24,7 @@ import org.apollo.util.EntityRepository;
  * things relevant to the in-game world and not classes which deal with I/O and
  * such (these may be better off inside some custom {@link Service} or other
  * code, however, the circumstances are rare).
- * 
+ *
  * @author Graham
  */
 public final class World {
@@ -36,7 +36,7 @@ public final class World {
 
     /**
      * Represents the different status codes for registering a player.
-     * 
+     *
      * @author Graham
      */
     public enum RegistrationStatus {
@@ -82,7 +82,7 @@ public final class World {
     /**
      * Initialises the world by loading definitions from the specified file
      * system.
-     * 
+     *
      * @param fileSystem The file system.
      * @throws IOException if an I/O error occurs.
      */
@@ -116,7 +116,7 @@ public final class World {
 
     /**
      * Registers the specified player.
-     * 
+     *
      * @param player The player.
      * @return A {@link RegistrationStatus}.
      */
@@ -137,7 +137,7 @@ public final class World {
 
     /**
      * Registers the specified mob.
-     * 
+     *
      * @param mob The mob.
      * @return {@code true} if the mob registered successfully, otherwise
      *         {@code false}.
@@ -154,7 +154,7 @@ public final class World {
 
     /**
      * Checks if the specified player is online.
-     * 
+     *
      * @param name The players name, as a long
      * @return {@code true} if so, {@code false} if not.
      */
@@ -169,7 +169,7 @@ public final class World {
 
     /**
      * Unregisters the specified player.
-     * 
+     *
      * @param player The player.
      */
     public void unregister(Player player) {
@@ -182,7 +182,7 @@ public final class World {
 
     /**
      * Unregisters the specified {@link Mob}.
-     * 
+     *
      * @param mob The mob.
      */
     public void unregister(Mob mob) {
@@ -203,7 +203,7 @@ public final class World {
      * Instead, use the {@link World#register(Player)} and
      * {@link World#unregister(Player)} methods which do the same thing and will
      * continue to work as normal in future releases.
-     * 
+     *
      * @return The character repository.
      */
     public EntityRepository<Player> getPlayerRepository() {
@@ -212,7 +212,7 @@ public final class World {
 
     /**
      * Gets the mob repository.
-     * 
+     *
      * @return The mob repository.
      */
     public EntityRepository<Mob> getMobRepository() {

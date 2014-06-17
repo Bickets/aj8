@@ -47,12 +47,12 @@ public class BinaryPlayerSerializer implements PlayerSerializer {
 	    Appearance appearance = player.getAppearance();
 	    out.writeByte(appearance.getGender().toInteger());
 	    int[] style = appearance.getStyle();
-	    for (int i = 0; i < style.length; i++) {
-		out.writeByte(style[i]);
+	    for (int element : style) {
+		out.writeByte(element);
 	    }
 	    int[] colors = appearance.getColors();
-	    for (int i = 0; i < colors.length; i++) {
-		out.writeByte(colors[i]);
+	    for (int color : colors) {
+		out.writeByte(color);
 	    }
 	    out.flush();
 
@@ -74,7 +74,7 @@ public class BinaryPlayerSerializer implements PlayerSerializer {
 
     /**
      * Writes an inventory to the specified output stream.
-     * 
+     *
      * @param out The output stream.
      * @param inventory The inventory.
      * @throws IOException if an I/O error occurs.
@@ -164,7 +164,7 @@ public class BinaryPlayerSerializer implements PlayerSerializer {
 
     /**
      * Reads an inventory from the input stream.
-     * 
+     *
      * @param in The input stream.
      * @param inventory The inventory.
      * @throws IOException if an I/O error occurs.

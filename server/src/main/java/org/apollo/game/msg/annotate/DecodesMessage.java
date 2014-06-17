@@ -9,7 +9,7 @@ import java.lang.annotation.Target;
 /**
  * Indicates that the annotated type decodes the message specified by the value
  * of {@link #value()}.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @Documented

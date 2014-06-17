@@ -7,7 +7,7 @@ import org.apollo.net.codec.login.LoginConstants;
  * A response for the
  * {@link PlayerSerializer#loadPlayer(org.apollo.security.PlayerCredentials)}
  * call.
- * 
+ *
  * @author Graham
  */
 public final class PlayerSerializerResponse {
@@ -24,7 +24,7 @@ public final class PlayerSerializerResponse {
 
     /**
      * Creates a {@link PlayerSerializerResponse} with only a status code.
-     * 
+     *
      * @param status The status code.
      * @throws IllegalArgumentException if the status code needs a
      *             {@link Player}.
@@ -34,12 +34,12 @@ public final class PlayerSerializerResponse {
 	    throw new IllegalArgumentException("player required for this status code");
 	}
 	this.status = status;
-	this.player = null;
+	player = null;
     }
 
     /**
      * Creates a {@link PlayerSerializerResponse} with a status code and player.
-     * 
+     *
      * @param status The status code.
      * @param player The player.
      * @throws IllegalArgumentException if the status code does not need
@@ -55,7 +55,7 @@ public final class PlayerSerializerResponse {
 
     /**
      * Gets the status code.
-     * 
+     *
      * @return The status code.
      */
     public int getStatus() {
@@ -64,7 +64,7 @@ public final class PlayerSerializerResponse {
 
     /**
      * Gets the player.
-     * 
+     *
      * @return The player, or {@code null} if there is no player in this
      *         response.
      */

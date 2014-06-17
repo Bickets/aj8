@@ -7,7 +7,7 @@ import org.apollo.game.model.Player;
 /**
  * Represents an expression animation performed by a {@link Player} or
  * {@link Mob} during a player or mob statement dialogue.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public enum DialogueExpression {
@@ -49,7 +49,7 @@ public enum DialogueExpression {
     /**
      * Constructs a new {@link DialogueExpression} with the specified animtaion
      * id.
-     * 
+     *
      * @param animationId The animation id.
      */
     private DialogueExpression(int animationId) {

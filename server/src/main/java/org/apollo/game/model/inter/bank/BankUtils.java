@@ -10,14 +10,14 @@ import org.apollo.game.model.inv.SynchronizationInventoryListener;
 
 /**
  * Contains bank-related utility methods.
- * 
+ *
  * @author Graham
  */
 public final class BankUtils {
 
     /**
      * Opens a players bank.
-     * 
+     *
      * @param player The player.
      */
     public static void openBank(Player player) {
@@ -37,7 +37,7 @@ public final class BankUtils {
 
     /**
      * Deposits an item into the players bank.
-     * 
+     *
      * @param player The player.
      * @param slot The slot.
      * @param id The id.
@@ -89,7 +89,7 @@ public final class BankUtils {
 
     /**
      * Withdraws an item from a players bank.
-     * 
+     *
      * @param player The player.
      * @param slot The slot.
      * @param id The id.

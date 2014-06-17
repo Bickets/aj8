@@ -5,7 +5,7 @@ import org.apollo.game.msg.Message;
 
 /**
  * Represents a message which an item model is displayed on an interface.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class InterfaceItemModelMessage extends Message {
@@ -27,7 +27,7 @@ public final class InterfaceItemModelMessage extends Message {
 
     /**
      * Constructs a new {@link InterfaceItemModelMessage}.
-     * 
+     *
      * @param interfaceId The interface id.
      * @param item The item.
      * @param zoom The zoom.

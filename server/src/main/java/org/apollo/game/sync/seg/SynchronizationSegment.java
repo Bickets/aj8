@@ -9,7 +9,7 @@ import org.apollo.game.sync.block.SynchronizationBlockSet;
  * A segment contains a set of {@link SynchronizationBlock}s, {@link Direction}s
  * (or teleport {@link Position}s) and any other things required for the update
  * of a single player.
- * 
+ *
  * @author Graham
  */
 public abstract class SynchronizationSegment {
@@ -21,7 +21,7 @@ public abstract class SynchronizationSegment {
 
     /**
      * Creates the segment.
-     * 
+     *
      * @param blockSet The block set.
      */
     public SynchronizationSegment(SynchronizationBlockSet blockSet) {
@@ -30,7 +30,7 @@ public abstract class SynchronizationSegment {
 
     /**
      * Gets the block set.
-     * 
+     *
      * @return The block set.
      */
     public final SynchronizationBlockSet getBlockSet() {
@@ -39,7 +39,7 @@ public abstract class SynchronizationSegment {
 
     /**
      * Gets the type of segment.
-     * 
+     *
      * @return The type of segment.
      */
     public abstract SegmentType getType();

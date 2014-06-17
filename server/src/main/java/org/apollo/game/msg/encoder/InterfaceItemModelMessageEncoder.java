@@ -10,7 +10,7 @@ import org.apollo.net.codec.game.GamePacketBuilder;
 
 /**
  * Encodes the {@link InterfaceItemModelMessage}.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @EncodesMessage(InterfaceItemModelMessage.class)

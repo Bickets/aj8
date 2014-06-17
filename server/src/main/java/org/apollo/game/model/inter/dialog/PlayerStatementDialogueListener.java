@@ -10,7 +10,7 @@ import org.apollo.game.msg.impl.SetInterfaceTextMessage;
 /**
  * A dialogue listener which manages the {@link DialogueType#PLAYER_STATEMENT}
  * dialogue type.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public abstract class PlayerStatementDialogueListener implements DialogueListener {

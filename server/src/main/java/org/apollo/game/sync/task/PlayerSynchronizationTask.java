@@ -23,7 +23,7 @@ import org.apollo.util.EntityRepository;
 /**
  * A {@link SynchronizationTask} which synchronizes the specified {@link Player}
  * .
- * 
+ *
  * @author Graham
  */
 public final class PlayerSynchronizationTask extends SynchronizationTask {
@@ -47,7 +47,7 @@ public final class PlayerSynchronizationTask extends SynchronizationTask {
 
     /**
      * Creates the {@link PlayerSynchronizationTask} for the specified player.
-     * 
+     *
      * @param player The player.
      * @param world The world.
      */

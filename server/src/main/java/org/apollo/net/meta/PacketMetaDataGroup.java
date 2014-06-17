@@ -2,7 +2,7 @@ package org.apollo.net.meta;
 
 /**
  * A class which contains a group of {@link PacketMetaData} objects.
- * 
+ *
  * @author Graham
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
@@ -41,7 +41,7 @@ public final class PacketMetaDataGroup {
 
     /**
      * Creates a {@link PacketMetaDataGroup} from the packet length array.
-     * 
+     *
      * @param lengthArray The packet length array.
      * @return The {@link PacketMetaDataGroup} object.
      * @throws IllegalArgumentException if the array length is not 256 or if
@@ -84,7 +84,7 @@ public final class PacketMetaDataGroup {
 
     /**
      * Gets the meta data for the specified packet.
-     * 
+     *
      * @param opcode The opcode of the packet.
      * @return The {@link PacketMetaData}, or {@code null} if the packet does
      *         not exist.

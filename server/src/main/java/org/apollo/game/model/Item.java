@@ -4,7 +4,7 @@ import org.apollo.game.model.def.ItemDefinition;
 
 /**
  * Represents a single item.
- * 
+ *
  * @author Graham
  */
 public final class Item {
@@ -21,7 +21,7 @@ public final class Item {
 
     /**
      * Creates an item with an amount of {@code 1}.
-     * 
+     *
      * @param id The item's id.
      */
     public Item(int id) {
@@ -30,7 +30,7 @@ public final class Item {
 
     /**
      * Creates an item with the specified the amount.
-     * 
+     *
      * @param id The item's id.
      * @param amount The amount.
      * @throws IllegalArgumentException if the amount is negative.
@@ -45,7 +45,7 @@ public final class Item {
 
     /**
      * Gets the id.
-     * 
+     *
      * @return The id.
      */
     public int getId() {
@@ -54,7 +54,7 @@ public final class Item {
 
     /**
      * Gets the amount.
-     * 
+     *
      * @return The amount.
      */
     public int getAmount() {
@@ -63,7 +63,7 @@ public final class Item {
 
     /**
      * Gets the {@link ItemDefinition} which describes this item.
-     * 
+     *
      * @return The definition.
      */
     public ItemDefinition getDefinition() {

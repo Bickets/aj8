@@ -2,7 +2,7 @@ package org.apollo.game.model;
 
 /**
  * Contains constants related to {@link Player}'s
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class PlayerConstants {
@@ -15,7 +15,7 @@ public final class PlayerConstants {
     /**
      * Suppresses the default public constructor preventing this class from
      * being instantiated by other classes.
-     * 
+     *
      * @throws InstantiationError If this class is instantiated within itself.
      */
     private PlayerConstants() {

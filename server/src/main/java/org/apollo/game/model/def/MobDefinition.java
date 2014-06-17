@@ -2,7 +2,7 @@ package org.apollo.game.model.def;
 
 /**
  * Represents a type of {@link mob}.
- * 
+ *
  * @author Chris Fletcher
  */
 public final class MobDefinition {
@@ -14,7 +14,7 @@ public final class MobDefinition {
 
     /**
      * Initialises the class with the specified set of definitions.
-     * 
+     *
      * @param definitions The definitions.
      * @throws RuntimeException if there is an id mismatch.
      */
@@ -30,7 +30,7 @@ public final class MobDefinition {
 
     /**
      * Gets the total number of mobs.
-     * 
+     *
      * @return The total number of mobs.
      */
     public static int count() {
@@ -39,7 +39,7 @@ public final class MobDefinition {
 
     /**
      * Gets the mob definition for the specified id.
-     * 
+     *
      * @param The id.
      * @return The definition.
      * @throws IndexOutOfBoundsException if the id is out of bounds.
@@ -80,7 +80,7 @@ public final class MobDefinition {
     /**
      * An array of interaction options.
      */
-    private String[] interactions = new String[5];
+    private final String[] interactions = new String[5];
 
     /**
      * The combat level of the mob.
@@ -89,7 +89,7 @@ public final class MobDefinition {
 
     /**
      * Creates a new mob definition.
-     * 
+     *
      * @param id The mob id.
      */
     public MobDefinition(int id) {
@@ -98,7 +98,7 @@ public final class MobDefinition {
 
     /**
      * Gets the mob id.
-     * 
+     *
      * @return The mob id.
      */
     public int getId() {
@@ -107,7 +107,7 @@ public final class MobDefinition {
 
     /**
      * Gets the name of the mob.
-     * 
+     *
      * @return The name of the mob.
      */
     public String getName() {
@@ -116,7 +116,7 @@ public final class MobDefinition {
 
     /**
      * Gets the description of the mob.
-     * 
+     *
      * @return The description.
      */
     public String getDescription() {
@@ -125,7 +125,7 @@ public final class MobDefinition {
 
     /**
      * Gets the mobs size, in tiles.
-     * 
+     *
      * @return The size.
      */
     public int getSize() {
@@ -134,7 +134,7 @@ public final class MobDefinition {
 
     /**
      * Gets the id of the mobs standing animation.
-     * 
+     *
      * @return The stand animation id, or -1 if it doesn't have one.
      */
     public int getStandAnimation() {
@@ -143,7 +143,7 @@ public final class MobDefinition {
 
     /**
      * Gets the walking animation of the mob.
-     * 
+     *
      * @return The walking animation.
      */
     public int getWalkAnimation() {
@@ -152,7 +152,7 @@ public final class MobDefinition {
 
     /**
      * Gets the walk-back animation of the mob.
-     * 
+     *
      * @return The walk-back animation.
      */
     public int getWalkBackAnimation() {
@@ -161,7 +161,7 @@ public final class MobDefinition {
 
     /**
      * Gets the walk-left animation of the mob.
-     * 
+     *
      * @return The walk-left animation.
      */
     public int getWalkLeftAnimation() {
@@ -170,7 +170,7 @@ public final class MobDefinition {
 
     /**
      * Gets the walk-right animation of the mob.
-     * 
+     *
      * @return The walk-right animation.
      */
     public int getWalkRightAnimation() {
@@ -179,7 +179,7 @@ public final class MobDefinition {
 
     /**
      * Gets an interaction option.
-     * 
+     *
      * @param slot The slot of the option.
      * @return The option, or {@code null} if there isn't any at the specified
      *         slot.
@@ -194,7 +194,7 @@ public final class MobDefinition {
 
     /**
      * Gets the array of interaction options.
-     * 
+     *
      * @return The interaction options.
      */
     public String[] getInteractions() {
@@ -203,7 +203,7 @@ public final class MobDefinition {
 
     /**
      * Gets the mobs combat level.
-     * 
+     *
      * @return The combat level, or -1 if it doesn't have one.
      */
     public int getCombatLevel() {
@@ -212,7 +212,7 @@ public final class MobDefinition {
 
     /**
      * Checks if the mob has a standing animation id.
-     * 
+     *
      * @return {@code true} if so, {@code false} if not.
      */
     public boolean hasStandAnimation() {
@@ -221,7 +221,7 @@ public final class MobDefinition {
 
     /**
      * Checks if the mob has a walking animation.
-     * 
+     *
      * @return {@code true} if so, {@code false} if not.
      */
     public boolean hasWalkAnimation() {
@@ -230,7 +230,7 @@ public final class MobDefinition {
 
     /**
      * Checks if the mob has a walk-back animation.
-     * 
+     *
      * @return {@code true} if so, {@code false} if not.
      */
     public boolean hasWalkBackAnimation() {
@@ -239,7 +239,7 @@ public final class MobDefinition {
 
     /**
      * Checks if the mob has a walk-left animation.
-     * 
+     *
      * @return {@code true} if so, {@code false} if not.
      */
     public boolean hasWalkLeftAnimation() {
@@ -248,7 +248,7 @@ public final class MobDefinition {
 
     /**
      * Checks if the mob has a walk-right animation.
-     * 
+     *
      * @return {@code true} if so, {@code false} if not.
      */
     public boolean hasWalkRightAnimation() {
@@ -257,7 +257,7 @@ public final class MobDefinition {
 
     /**
      * Checks if there is an interaction option present.
-     * 
+     *
      * @param slot The slot to check.
      * @return {@code true} if so, {@code false} if not.
      * @throws IndexOutOfBoundsException if the slot is out of bounds.
@@ -271,7 +271,7 @@ public final class MobDefinition {
 
     /**
      * Checks if the mob has a combat level.
-     * 
+     *
      * @return {@code true} if so, {@code false} if not.
      */
     public boolean hasCombatLevel() {
@@ -280,7 +280,7 @@ public final class MobDefinition {
 
     /**
      * Sets the name of the mob.
-     * 
+     *
      * @param name The name.
      */
     public void setName(String name) {
@@ -289,7 +289,7 @@ public final class MobDefinition {
 
     /**
      * Sets the description of the mob.
-     * 
+     *
      * @param description The description.
      */
     public void setDescription(String description) {
@@ -298,7 +298,7 @@ public final class MobDefinition {
 
     /**
      * Sets the size of the mob, in tiles.
-     * 
+     *
      * @param size The size.
      */
     public void setSize(int size) {
@@ -307,7 +307,7 @@ public final class MobDefinition {
 
     /**
      * Sets the id of the mobs standing animation.
-     * 
+     *
      * @param standAnim The stand animation id.
      */
     public void setStandAnimation(int standAnim) {
@@ -316,7 +316,7 @@ public final class MobDefinition {
 
     /**
      * Sets the walking animation of the mob.
-     * 
+     *
      * @param walkAnim The walking animation.
      */
     public void setWalkAnimation(int walkAnim) {
@@ -325,7 +325,7 @@ public final class MobDefinition {
 
     /**
      * Sets the various walking animations of the mob.
-     * 
+     *
      * @param walkAnim The walking animation.
      * @param walkBackAnim The walk-back animation.
      * @param walkLeftAnim The walk-left animation.
@@ -340,7 +340,7 @@ public final class MobDefinition {
 
     /**
      * Sets an interaction option.
-     * 
+     *
      * @param slot The slot of the option.
      * @param interaction The interaction options.
      * @throws IndexOutOfBoundsException if the slot is out of bounds.
@@ -354,7 +354,7 @@ public final class MobDefinition {
 
     /**
      * Sets the mobs combat level.
-     * 
+     *
      * @param combatLevel The combat level.
      */
     public void setCombatLevel(int combatLevel) {

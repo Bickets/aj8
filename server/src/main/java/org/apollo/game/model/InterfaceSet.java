@@ -34,7 +34,7 @@ import org.apollo.game.msg.impl.OpenInterfaceSidebarMessage;
  * <li><strong>Fullscreen background:</strong> an interface displayed behind the
  * fullscreen window, typically a blank, black screen.</li>
  * </ul>
- * 
+ *
  * @author Graham
  */
 public final class InterfaceSet {
@@ -43,12 +43,12 @@ public final class InterfaceSet {
      * The player whose interfaces are being managed.
      */
     private final Player player; // TODO: maybe switch to a listener system like
-				 // the inventory?
+    // the inventory?
 
     /**
      * A map of open interfaces.
      */
-    private Map<InterfaceType, Integer> interfaces = new HashMap<InterfaceType, Integer>();
+    private final Map<InterfaceType, Integer> interfaces = new HashMap<InterfaceType, Integer>();
 
     /**
      * The current listener.
@@ -67,7 +67,7 @@ public final class InterfaceSet {
 
     /**
      * Creates an interface set.
-     * 
+     *
      * @param player The player.
      */
     public InterfaceSet(Player player) {
@@ -93,7 +93,7 @@ public final class InterfaceSet {
     public void openDialogue(DialogueListener listener) {
 	closeAndNotify();
 
-	this.dialogueListener = listener;
+	dialogueListener = listener;
 	this.listener = listener;
 
 	int dialogueId = listener.execute(player);
@@ -134,18 +134,18 @@ public final class InterfaceSet {
 
     /**
      * Opens the enter amount dialog.
-     * 
+     *
      * @param listener The enter amount listener.
      */
     public void openEnterAmountDialog(EnterAmountListener listener) {
-	this.amountListener = listener;
+	amountListener = listener;
 
 	player.send(new EnterAmountMessage());
     }
 
     /**
      * Opens a window and inventory sidebar.
-     * 
+     *
      * @param windowId The window's id.
      * @param sidebarId The sidebar's id.
      */
@@ -155,7 +155,7 @@ public final class InterfaceSet {
 
     /**
      * Opens a window and inventory sidebar with the specified listener.
-     * 
+     *
      * @param listener The listener for this interface.
      * @param windowId The window's id.
      * @param sidebarId The sidebar's id.
@@ -172,7 +172,7 @@ public final class InterfaceSet {
 
     /**
      * Opens a window.
-     * 
+     *
      * @param windowId The window's id.
      */
     public void openWindow(int windowId) {
@@ -181,7 +181,7 @@ public final class InterfaceSet {
 
     /**
      * Opens a window with the specified listener.
-     * 
+     *
      * @param listener The listener for this interface.
      * @param windowId The window's id.
      */
@@ -196,7 +196,7 @@ public final class InterfaceSet {
 
     /**
      * Checks if this interface sets contains the specified interface.
-     * 
+     *
      * @param id The interface's id.
      * @return {@code true} if so, {@code false} if not.
      */
@@ -206,7 +206,7 @@ public final class InterfaceSet {
 
     /**
      * Checks if this interface set contains the specified interface type.
-     * 
+     *
      * @param type The interface's type.
      * @return {@code true} if so, {@code false} if not.
      */
@@ -232,7 +232,7 @@ public final class InterfaceSet {
     /**
      * Called when the client has entered the specified amount. Notifies the
      * current listener.
-     * 
+     *
      * @param amount The amount.
      */
     public void enteredAmount(int amount) {

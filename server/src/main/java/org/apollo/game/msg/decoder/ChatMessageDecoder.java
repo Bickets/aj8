@@ -11,7 +11,7 @@ import org.apollo.util.TextUtil;
 
 /**
  * An {@link MessageDecoder} for the {@link ChatMessage}.
- * 
+ *
  * @author Graham
  */
 @DecodesMessage(4)

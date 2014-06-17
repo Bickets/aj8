@@ -4,7 +4,7 @@ import org.apollo.game.msg.Message;
 
 /**
  * A {@link Message} sent to open an interface and temporary sidebar overlay.
- * 
+ *
  * @author Graham
  */
 public final class OpenInterfaceSidebarMessage extends Message {
@@ -21,7 +21,7 @@ public final class OpenInterfaceSidebarMessage extends Message {
 
     /**
      * Creates the open interface sidebar message.
-     * 
+     *
      * @param interfaceId The interface id.
      * @param sidebarId The sidebar id.
      */
@@ -32,7 +32,7 @@ public final class OpenInterfaceSidebarMessage extends Message {
 
     /**
      * Gets the interface id.
-     * 
+     *
      * @return The interface id.
      */
     public int getInterfaceId() {
@@ -41,7 +41,7 @@ public final class OpenInterfaceSidebarMessage extends Message {
 
     /**
      * Gets the sidebar id.
-     * 
+     *
      * @return The sidebar id.
      */
     public int getSidebarId() {

@@ -6,7 +6,7 @@ import org.apollo.game.msg.Message;
 /**
  * A {@link GameCharacter} that has AI and is not controlled by a {@link Player}
  * .
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class Mob extends GameCharacter {
@@ -23,7 +23,7 @@ public final class Mob extends GameCharacter {
 
     /**
      * Constructs a new {@link Mob}
-     * 
+     *
      * @param id The id of the mob.
      * @param position The position of the mob.
      */
@@ -33,7 +33,7 @@ public final class Mob extends GameCharacter {
 
     /**
      * Constructs a new {@link Mob}
-     * 
+     *
      * @param id The id of the mob.
      * @param position The position of the mob.
      * @param direction The initial facing direction of this mob.
@@ -44,7 +44,7 @@ public final class Mob extends GameCharacter {
 
     /**
      * Constructs a new {@link Mob}.
-     * 
+     *
      * @param definition The mobs definitions.
      * @param position The position of the mob.
      * @param initialFaceDirection The initial facing direction of this mob.
@@ -57,7 +57,7 @@ public final class Mob extends GameCharacter {
 
     /**
      * Returns the mobs definitions.
-     * 
+     *
      * @return The definition of this mob.
      */
     public MobDefinition getDefinition() {

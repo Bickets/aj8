@@ -18,8 +18,8 @@ public abstract class ItemsTable extends Table {
     private final String type;
 
     public ItemsTable(Connection connection, String type) throws SQLException {
-	this.loadStatement = connection.prepareStatement("SELECT * FROM items WHERE player_id = ? AND type = ?;");
-	this.saveStatement = connection.prepareStatement("INSERT INTO items (player_id, type, slot, item, amount) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE item = VALUES(item), amount = VALUES(amount);");
+	loadStatement = connection.prepareStatement("SELECT * FROM items WHERE player_id = ? AND type = ?;");
+	saveStatement = connection.prepareStatement("INSERT INTO items (player_id, type, slot, item, amount) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE item = VALUES(item), amount = VALUES(amount);");
 	this.type = type;
     }
 

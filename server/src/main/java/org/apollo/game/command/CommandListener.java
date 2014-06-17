@@ -5,14 +5,14 @@ import org.apollo.game.model.Player;
 /**
  * An interface which should be implemented by classes to listen to
  * {@link Command}s.
- * 
+ *
  * @author Graham
  */
 public interface CommandListener {
 
     /**
      * Executes the action for this command.
-     * 
+     *
      * @param player The player.
      * @param command The command.
      */
@@ -20,7 +20,7 @@ public interface CommandListener {
 
     /**
      * Returns the commands name
-     * 
+     *
      * @return The commands name.
      */
     public String getName();

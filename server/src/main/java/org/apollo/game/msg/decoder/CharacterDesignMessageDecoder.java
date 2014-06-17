@@ -11,7 +11,7 @@ import org.apollo.net.codec.game.GamePacketReader;
 
 /**
  * An {@link MessageDecoder} for the {@link CharacterDesignMessage}.
- * 
+ *
  * @author Graham
  */
 @DecodesMessage(101)

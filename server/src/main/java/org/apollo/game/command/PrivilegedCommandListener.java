@@ -6,7 +6,7 @@ import org.apollo.game.model.Player.PrivilegeLevel;
 /**
  * A {@link CommandListener} which checks the {@link PrivilegeLevel} of the
  * {@link Player} executing the command.
- * 
+ *
  * @author Graham
  */
 public abstract class PrivilegedCommandListener implements CommandListener {
@@ -18,7 +18,7 @@ public abstract class PrivilegedCommandListener implements CommandListener {
 
     /**
      * Creates the privileged command listener with the specified minimum level.
-     * 
+     *
      * @param level The minimum privilege level.
      */
     public PrivilegedCommandListener(PrivilegeLevel level) {
@@ -27,7 +27,7 @@ public abstract class PrivilegedCommandListener implements CommandListener {
 
     /**
      * Executes a privileged command.
-     * 
+     *
      * @param player The player.
      * @param command The command.
      */
