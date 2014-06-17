@@ -2,34 +2,34 @@ package com.runescape.sound;
 
 import com.runescape.net.Buffer;
 
-public class SoundTrack {
+public class Track {
 
-    private static SoundTrack[] tracks = new SoundTrack[5000];
+    private static Track[] tracks = new Track[5000];
     public static int[] trackDelays = new int[5000];
     private static byte[] _buffer;
     private static Buffer buffer;
-    private final SoundTrackInstrument[] instruments = new SoundTrackInstrument[10];
+    private final Instrument[] instruments = new Instrument[10];
     private int loopBegin;
     private int loopEnd;
 
     public static final void load(Buffer buffer) {
-	SoundTrack._buffer = new byte[441000];
-	SoundTrack.buffer = new Buffer(SoundTrack._buffer);
-	SoundTrackInstrument.initialize();
+	Track._buffer = new byte[441000];
+	Track.buffer = new Buffer(Track._buffer);
+	Instrument.initialize();
 	while (true) {
 	    int trackId = buffer.getUnsignedLEShort();
 	    if (trackId == 65535) {
 		break;
 	    }
-	    SoundTrack.tracks[trackId] = new SoundTrack();
-	    SoundTrack.tracks[trackId].decode(buffer);
-	    SoundTrack.trackDelays[trackId] = SoundTrack.tracks[trackId].delay();
+	    Track.tracks[trackId] = new Track();
+	    Track.tracks[trackId].decode(buffer);
+	    Track.trackDelays[trackId] = Track.tracks[trackId].delay();
 	}
     }
 
     public static final Buffer data(int trackId, int loops) {
-	if (SoundTrack.tracks[trackId] != null) {
-	    SoundTrack soundtrack = SoundTrack.tracks[trackId];
+	if (Track.tracks[trackId] != null) {
+	    Track soundtrack = Track.tracks[trackId];
 	    return soundtrack.encode(loops);
 	}
 	return null;
@@ -40,7 +40,7 @@ public class SoundTrack {
 	    int active = buffer.getUnsignedByte();
 	    if (active != 0) {
 		buffer.offset--;
-		instruments[instrument] = new SoundTrackInstrument();
+		instruments[instrument] = new Instrument();
 		instruments[instrument].decode(buffer);
 	    }
 	}
@@ -75,22 +75,22 @@ public class SoundTrack {
 
     private final Buffer encode(int loops) {
 	int size = mix(loops);
-	SoundTrack.buffer.offset = 0;
-	SoundTrack.buffer.putInt(1380533830);
-	SoundTrack.buffer.putLEInt(36 + size);
-	SoundTrack.buffer.putInt(1463899717);
-	SoundTrack.buffer.putInt(1718449184);
-	SoundTrack.buffer.putLEInt(16);
-	SoundTrack.buffer.putLEShort(1);
-	SoundTrack.buffer.putLEShort(1);
-	SoundTrack.buffer.putLEInt(22050);
-	SoundTrack.buffer.putLEInt(22050);
-	SoundTrack.buffer.putLEShort(1);
-	SoundTrack.buffer.putLEShort(8);
-	SoundTrack.buffer.putInt(1684108385);
-	SoundTrack.buffer.putLEInt(size);
-	SoundTrack.buffer.offset += size;
-	return SoundTrack.buffer;
+	Track.buffer.offset = 0;
+	Track.buffer.putInt(1380533830);
+	Track.buffer.putLEInt(36 + size);
+	Track.buffer.putInt(1463899717);
+	Track.buffer.putInt(1718449184);
+	Track.buffer.putLEInt(16);
+	Track.buffer.putLEShort(1);
+	Track.buffer.putLEShort(1);
+	Track.buffer.putLEInt(22050);
+	Track.buffer.putLEInt(22050);
+	Track.buffer.putLEShort(1);
+	Track.buffer.putLEShort(8);
+	Track.buffer.putInt(1684108385);
+	Track.buffer.putLEInt(size);
+	Track.buffer.offset += size;
+	return Track.buffer;
     }
 
     private final int mix(int loops) {
@@ -111,7 +111,7 @@ public class SoundTrack {
 	}
 	int length = nS + (loopEnd - loopBegin) * (loops - 1);
 	for (int position = 44; position < length + 44; position++) {
-	    SoundTrack._buffer[position] = (byte) -128;
+	    Track._buffer[position] = (byte) -128;
 	}
 	for (int instrument = 0; instrument < 10; instrument++) {
 	    if (instruments[instrument] != null) {
@@ -119,7 +119,7 @@ public class SoundTrack {
 		int offset = instruments[instrument].begin * 22050 / 1000;
 		int[] samples = instruments[instrument].synthesize(dur, instruments[instrument].duration);
 		for (int position = 0; position < dur; position++) {
-		    SoundTrack._buffer[position + offset + 44] += (byte) (samples[position] >> 8);
+		    Track._buffer[position + offset + 44] += (byte) (samples[position] >> 8);
 		}
 	    }
 	}
@@ -130,12 +130,12 @@ public class SoundTrack {
 	    length += 44;
 	    int offset = length - nS;
 	    for (int position = nS - 1; position >= loopEnd; position--) {
-		SoundTrack._buffer[position + offset] = SoundTrack._buffer[position];
+		Track._buffer[position + offset] = Track._buffer[position];
 	    }
 	    for (int loopCounter = 1; loopCounter < loops; loopCounter++) {
 		offset = (loopEnd - loopBegin) * loopCounter;
 		for (int position = loopBegin; position < loopEnd; position++) {
-		    SoundTrack._buffer[position + offset] = SoundTrack._buffer[position];
+		    Track._buffer[position + offset] = Track._buffer[position];
 		}
 	    }
 	    length -= 44;

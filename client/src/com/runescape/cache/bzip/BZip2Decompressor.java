@@ -410,10 +410,10 @@ public class BZip2Decompressor {
 		bzip2context.anIntArray119[i_34_ & 0xff]++;
 	    }
 	    bzip2context.anInt115 = BZip2Context.anIntArray121[bzip2context.anInt114] >> 8;
-	    bzip2context.anInt118 = 0;
-	    bzip2context.anInt115 = BZip2Context.anIntArray121[bzip2context.anInt115];
-	    bzip2context.anInt116 = (byte) (bzip2context.anInt115 & 0xff);
-	    bzip2context.anInt115 >>= 8;
+		bzip2context.anInt118 = 0;
+		bzip2context.anInt115 = BZip2Context.anIntArray121[bzip2context.anInt115];
+		bzip2context.anInt116 = (byte) (bzip2context.anInt115 & 0xff);
+		bzip2context.anInt115 >>= 8;
 	    bzip2context.anInt118++;
 	    bzip2context.anInt135 = i_63_;
 	    BZip2Decompressor.method165(bzip2context);
@@ -438,9 +438,9 @@ public class BZip2Decompressor {
 	for (;;) {
 	    if (bzip2context.anInt111 >= i) {
 		int i_86_ = bzip2context.anInt110 >> bzip2context.anInt111 - i & (1 << i) - 1;
-		bzip2context.anInt111 -= i;
-		i_85_ = i_86_;
-		break;
+		    bzip2context.anInt111 -= i;
+		    i_85_ = i_86_;
+		    break;
 	    }
 	    bzip2context.anInt110 = bzip2context.anInt110 << 8 | bzip2context.aByteArray97[bzip2context.anInt98] & 0xff;
 	    bzip2context.anInt111 += 8;

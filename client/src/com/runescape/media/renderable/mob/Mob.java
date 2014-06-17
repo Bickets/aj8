@@ -1,4 +1,4 @@
-package com.runescape.media.renderable.actor;
+package com.runescape.media.renderable.mob;
 
 import com.runescape.cache.media.AnimationSequence;
 import com.runescape.media.renderable.Renderable;

@@ -1,7 +1,7 @@
 package com.runescape.media;
 
 import com.runescape.net.Buffer;
-import com.runescape.util.SignLink;
+import com.runescape.util.Signlink;
 
 public class Animation {
 
@@ -120,7 +120,7 @@ public class Animation {
 		}
 	    }
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("72235, " + bs + ", " + bool + ", " + runtimeexception.toString());
+	    Signlink.reportError("72235, " + bs + ", " + bool + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }

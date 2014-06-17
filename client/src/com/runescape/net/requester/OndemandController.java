@@ -13,9 +13,9 @@ import com.runescape.cache.Archive;
 import com.runescape.collection.LinkedList;
 import com.runescape.collection.Queue;
 import com.runescape.net.Buffer;
-import com.runescape.util.SignLink;
+import com.runescape.util.Signlink;
 
-public class OnDemandRequester extends Requester implements Runnable {
+public class OndemandController extends Requester implements Runnable {
 
     private int extrasTotal;
     private final LinkedList sentRequests = new LinkedList();
@@ -51,7 +51,7 @@ public class OnDemandRequester extends Requester implements Runnable {
     private int immediateRequestsSent;
     private int passiveRequestsSent;
     private final LinkedList toRequest = new LinkedList();
-    private OnDemandNode onDemandNode;
+    private ArchiveRequest onDemandNode;
     private final LinkedList wanted = new LinkedList();
     private int[] regHash;
     private byte[] modelIndex;
@@ -88,7 +88,7 @@ public class OnDemandRequester extends Requester implements Runnable {
 		int size = ((inputBuffer[3] & 0xff) << 8) + (inputBuffer[4] & 0xff);
 		int part = inputBuffer[5] & 0xff;
 		onDemandNode = null;
-		for (OnDemandNode ondemandnode = (OnDemandNode) sentRequests.getBack(); ondemandnode != null; ondemandnode = (OnDemandNode) sentRequests.getPrevious()) {
+		for (ArchiveRequest ondemandnode = (ArchiveRequest) sentRequests.getBack(); ondemandnode != null; ondemandnode = (ArchiveRequest) sentRequests.getPrevious()) {
 		    if (ondemandnode.type == type && ondemandnode.id == id) {
 			onDemandNode = ondemandnode;
 		    }
@@ -99,7 +99,7 @@ public class OnDemandRequester extends Requester implements Runnable {
 		if (onDemandNode != null) {
 		    idleCycles = 0;
 		    if (size == 0) {
-			SignLink.reportError("Rej: " + type + "," + id);
+			Signlink.reportError("Rej: " + type + "," + id);
 			onDemandNode.buffer = null;
 			if (onDemandNode.immediate) {
 			    synchronized (completed) {
@@ -255,7 +255,7 @@ public class OnDemandRequester extends Requester implements Runnable {
 	return fileVersions[file].length;
     }
 
-    private final void sendRequest(OnDemandNode onDemandNode) {
+    private final void sendRequest(ArchiveRequest onDemandNode) {
 	try {
 	    if (socket == null) {
 		long currentTime = System.currentTimeMillis();
@@ -305,12 +305,12 @@ public class OnDemandRequester extends Requester implements Runnable {
     public final void request(int type, int id) {
 	if (type >= 0 && type <= fileVersions.length && id >= 0 && id <= fileVersions[type].length && fileVersions[type][id] != 0) {
 	    synchronized (immediateRequests) {
-		for (OnDemandNode onDemandNode = (OnDemandNode) immediateRequests.reverseGetFirst(); onDemandNode != null; onDemandNode = (OnDemandNode) immediateRequests.reverseGetNext()) {
+		for (ArchiveRequest onDemandNode = (ArchiveRequest) immediateRequests.reverseGetFirst(); onDemandNode != null; onDemandNode = (ArchiveRequest) immediateRequests.reverseGetNext()) {
 		    if (onDemandNode.type == type && onDemandNode.id == id) {
 			return;
 		    }
 		}
-		OnDemandNode ondemandnode = new OnDemandNode();
+		ArchiveRequest ondemandnode = new ArchiveRequest();
 		ondemandnode.type = type;
 		ondemandnode.id = id;
 		ondemandnode.immediate = true;
@@ -353,7 +353,7 @@ public class OnDemandRequester extends Requester implements Runnable {
 		    }
 		}
 		boolean idle = false;
-		for (OnDemandNode onDemandNode = (OnDemandNode) sentRequests.getBack(); onDemandNode != null; onDemandNode = (OnDemandNode) sentRequests.getPrevious()) {
+		for (ArchiveRequest onDemandNode = (ArchiveRequest) sentRequests.getBack(); onDemandNode != null; onDemandNode = (ArchiveRequest) sentRequests.getPrevious()) {
 		    if (onDemandNode.immediate) {
 			idle = true;
 			onDemandNode.cyclesSinceSend++;
@@ -364,7 +364,7 @@ public class OnDemandRequester extends Requester implements Runnable {
 		    }
 		}
 		if (!idle) {
-		    for (OnDemandNode onDemandNode = (OnDemandNode) sentRequests.getBack(); onDemandNode != null; onDemandNode = (OnDemandNode) sentRequests.getPrevious()) {
+		    for (ArchiveRequest onDemandNode = (ArchiveRequest) sentRequests.getBack(); onDemandNode != null; onDemandNode = (ArchiveRequest) sentRequests.getPrevious()) {
 			idle = true;
 			onDemandNode.cyclesSinceSend++;
 			if (onDemandNode.cyclesSinceSend > 50) {
@@ -403,13 +403,13 @@ public class OnDemandRequester extends Requester implements Runnable {
 		}
 	    }
 	} catch (Exception exception) {
-	    SignLink.reportError("od_ex " + exception);
+	    Signlink.reportError("od_ex " + exception);
 	}
     }
 
     public final void passiveRequest(int id, int type) {
 	if (client.stores[0] != null && fileVersions[type][id] != 0 && filePriorities[type][id] != 0 && highestPriority != 0) {
-	    OnDemandNode onDemandNode = new OnDemandNode();
+	    ArchiveRequest onDemandNode = new ArchiveRequest();
 	    onDemandNode.type = type;
 	    onDemandNode.id = id;
 	    onDemandNode.immediate = false;
@@ -419,10 +419,10 @@ public class OnDemandRequester extends Requester implements Runnable {
 	}
     }
 
-    public final OnDemandNode next() {
-	OnDemandNode onDemandNode;
+    public final ArchiveRequest next() {
+	ArchiveRequest onDemandNode;
 	synchronized (completed) {
-	    onDemandNode = (OnDemandNode) completed.popTail();
+	    onDemandNode = (ArchiveRequest) completed.popTail();
 	}
 	if (onDemandNode == null) {
 	    return null;
@@ -499,7 +499,7 @@ public class OnDemandRequester extends Requester implements Runnable {
     private final void remainingRequest() {
 	immediateRequestsSent = 0;
 	passiveRequestsSent = 0;
-	for (OnDemandNode onDemandNode = (OnDemandNode) sentRequests.getBack(); onDemandNode != null; onDemandNode = (OnDemandNode) sentRequests.getPrevious()) {
+	for (ArchiveRequest onDemandNode = (ArchiveRequest) sentRequests.getBack(); onDemandNode != null; onDemandNode = (ArchiveRequest) sentRequests.getPrevious()) {
 	    if (onDemandNode.immediate) {
 		immediateRequestsSent++;
 	    } else {
@@ -507,7 +507,7 @@ public class OnDemandRequester extends Requester implements Runnable {
 	    }
 	}
 	while (immediateRequestsSent < 10) {
-	    OnDemandNode onDemandNode = (OnDemandNode) toRequest.popTail();
+	    ArchiveRequest onDemandNode = (ArchiveRequest) toRequest.popTail();
 	    if (onDemandNode == null) {
 		break;
 	    }
@@ -529,9 +529,9 @@ public class OnDemandRequester extends Requester implements Runnable {
     }
 
     private final void localComplete() {
-	OnDemandNode onDemandNode;
+	ArchiveRequest onDemandNode;
 	synchronized (wanted) {
-	    onDemandNode = (OnDemandNode) wanted.popTail();
+	    onDemandNode = (ArchiveRequest) wanted.popTail();
 	}
 	while (onDemandNode != null) {
 	    expectData = true;
@@ -551,7 +551,7 @@ public class OnDemandRequester extends Requester implements Runnable {
 			completed.insertBack(onDemandNode);
 		    }
 		}
-		onDemandNode = (OnDemandNode) wanted.popTail();
+		onDemandNode = (ArchiveRequest) wanted.popTail();
 	    }
 	}
     }
@@ -567,9 +567,9 @@ public class OnDemandRequester extends Requester implements Runnable {
 	    if (highestPriority == 0) {
 		break;
 	    }
-	    OnDemandNode onDemandNode;
+	    ArchiveRequest onDemandNode;
 	    synchronized (passiveRequests) {
-		onDemandNode = (OnDemandNode) passiveRequests.popTail();
+		onDemandNode = (ArchiveRequest) passiveRequests.popTail();
 	    }
 	    while (onDemandNode != null) {
 		if (filePriorities[onDemandNode.type][onDemandNode.id] != 0) {
@@ -587,7 +587,7 @@ public class OnDemandRequester extends Requester implements Runnable {
 		    }
 		}
 		synchronized (passiveRequests) {
-		    onDemandNode = (OnDemandNode) passiveRequests.popTail();
+		    onDemandNode = (ArchiveRequest) passiveRequests.popTail();
 		}
 	    }
 	    for (int type = 0; type < 4; type++) {
@@ -595,7 +595,7 @@ public class OnDemandRequester extends Requester implements Runnable {
 		for (int id = 0; id < priority.length; id++) {
 		    if (priority[id] == highestPriority) {
 			priority[id] = (byte) 0;
-			onDemandNode = new OnDemandNode();
+			onDemandNode = new ArchiveRequest();
 			onDemandNode.type = type;
 			onDemandNode.id = id;
 			onDemandNode.immediate = false;

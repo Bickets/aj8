@@ -1,6 +1,6 @@
-package com.runescape.media.renderable.actor;
+package com.runescape.media.renderable.mob;
 
-import com.runescape.cache.def.NPCDefinition;
+import com.runescape.cache.def.NpcDefinition;
 import com.runescape.cache.media.AnimationSequence;
 import com.runescape.cache.media.SpotAnimation;
 import com.runescape.media.Animation;
@@ -8,7 +8,7 @@ import com.runescape.media.renderable.Model;
 
 public class Npc extends Mob {
 
-    public NPCDefinition npcDefinition;
+    public NpcDefinition npcDefinition;
 
     private final Model getChildModel() {
 	if (animation >= 0 && aniomationDelay == 0) {

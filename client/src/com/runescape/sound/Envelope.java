@@ -2,7 +2,7 @@ package com.runescape.sound;
 
 import com.runescape.net.Buffer;
 
-public class SoundTrackEnvelope {
+public class Envelope {
 
     private int numPhases;
     private int[] phaseDuration;

@@ -7,7 +7,7 @@ import java.net.Socket;
 
 import com.runescape.GameShell;
 
-public class BufferedConnection implements Runnable {
+public class SocketBuffer implements Runnable {
 
     private final InputStream inputStream;
     private final OutputStream outputStream;
@@ -20,7 +20,7 @@ public class BufferedConnection implements Runnable {
     private boolean writing = false;
     private boolean ioError = false;
 
-    public BufferedConnection(GameShell gameStub, Socket socket) throws IOException {
+    public SocketBuffer(GameShell gameStub, Socket socket) throws IOException {
 	this.gameStub = gameStub;
 	this.socket = socket;
 	this.socket.setSoTimeout(30000);

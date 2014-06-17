@@ -1,6 +1,6 @@
 package com.runescape.scene.util;
 
-public class TiledUtils {
+public class PlacementUtils {
 
     public static int getRotatedMapChunkX(int x, int y, int rotation) {
 	rotation &= 0x3;

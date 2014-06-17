@@ -2,7 +2,7 @@ package com.runescape.cache.cfg;
 
 import com.runescape.cache.Archive;
 import com.runescape.net.Buffer;
-import com.runescape.util.SignLink;
+import com.runescape.util.Signlink;
 
 /* ChatCensor - Decompiled by JODE
  * Visit http://jode.sourceforge.net/
@@ -26,7 +26,7 @@ public class ChatCensor {
     private static char[][] topLevelDomains;
     private static int[] topLevelDomainsType;
     private static final String[] aStringArray175 = { "cook", "cook's",
-	    "cooks", "seeks", "sheet", "woop", "woops", "faq", "noob", "noobs" };
+	"cooks", "seeks", "sheet", "woop", "woops", "faq", "noob", "noobs" };
 
     public static final void load(Archive archive) {
 	Buffer fragmentsEnc = new Buffer(archive.getFile("fragmentsenc.txt"));
@@ -164,7 +164,7 @@ public class ChatCensor {
 		return;
 	    }
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("66493, " + new String(cs) + ", " + i + ", " + new String(cs_25_) + ", " + runtimeexception.toString());
+	    Signlink.reportError("66493, " + new String(cs) + ", " + i + ", " + new String(cs_25_) + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -190,7 +190,7 @@ public class ChatCensor {
 		return;
 	    }
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("29891, " + i + ", " + new String(cs) + ", " + runtimeexception.toString());
+	    Signlink.reportError("29891, " + i + ", " + new String(cs) + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -205,7 +205,7 @@ public class ChatCensor {
 		}
 	    }
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("1109, " + new String(cs) + ", " + bool + ", " + runtimeexception.toString());
+	    Signlink.reportError("1109, " + new String(cs) + ", " + bool + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -225,7 +225,7 @@ public class ChatCensor {
 		return;
 	    }
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("73832, " + b + ", " + new String(cs) + ", " + runtimeexception.toString());
+	    Signlink.reportError("73832, " + b + ", " + new String(cs) + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -281,7 +281,7 @@ public class ChatCensor {
 		}
 	    }
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("48695, " + i + ", " + new String(cs) + ", " + new String(cs_33_) + ", " + new String(cs_34_) + ", " + new String(cs_35_) + ", " + runtimeexception.toString());
+	    Signlink.reportError("48695, " + i + ", " + new String(cs) + ", " + new String(cs_33_) + ", " + new String(cs_34_) + ", " + new String(cs_35_) + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -319,7 +319,7 @@ public class ChatCensor {
 	    }
 	    return 0;
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("87152, " + new String(cs) + ", " + i + ", " + new String(cs_47_) + ", " + i_48_ + ", " + runtimeexception.toString());
+	    Signlink.reportError("87152, " + new String(cs) + ", " + i + ", " + new String(cs_47_) + ", " + i_48_ + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -357,7 +357,7 @@ public class ChatCensor {
 	    }
 	    return 0;
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("50081, " + b + ", " + new String(cs) + ", " + i + ", " + new String(cs_52_) + ", " + runtimeexception.toString());
+	    Signlink.reportError("50081, " + b + ", " + new String(cs) + ", " + i + ", " + new String(cs_52_) + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -376,7 +376,7 @@ public class ChatCensor {
 		}
 	    }
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("41909, " + bool + ", " + new String(cs) + ", " + runtimeexception.toString());
+	    Signlink.reportError("41909, " + bool + ", " + new String(cs) + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -504,7 +504,7 @@ public class ChatCensor {
 		    ChatCensor.aBoolean168 = !ChatCensor.aBoolean168;
 		}
 	    } catch (RuntimeException runtimeexception) {
-		SignLink.reportError("17314, " + new String(cs) + ", " + new String(cs_60_) + ", " + i + ", " + b + ", " + new String(cs_61_) + ", " + new String(cs_62_) + ", " + runtimeexception.toString());
+		Signlink.reportError("17314, " + new String(cs) + ", " + new String(cs_60_) + ", " + i + ", " + b + ", " + new String(cs_61_) + ", " + new String(cs_62_) + ", " + runtimeexception.toString());
 		throw new RuntimeException();
 	    }
 	    break;
@@ -544,7 +544,7 @@ public class ChatCensor {
 	    }
 	    return 0;
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("50325, " + i + ", " + new String(cs) + ", " + i_84_ + ", " + new String(cs_85_) + ", " + runtimeexception.toString());
+	    Signlink.reportError("50325, " + i + ", " + new String(cs) + ", " + i_84_ + ", " + new String(cs_85_) + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -582,7 +582,7 @@ public class ChatCensor {
 	    }
 	    return 0;
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("27208, " + bool + ", " + new String(cs) + ", " + new String(cs_89_) + ", " + i + ", " + runtimeexception.toString());
+	    Signlink.reportError("27208, " + bool + ", " + new String(cs) + ", " + new String(cs_89_) + ", " + i + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -726,7 +726,7 @@ public class ChatCensor {
 		}
 	    }
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("25459, " + bs + ", " + new String(cs) + ", " + i + ", " + new String(cs_93_) + ", " + runtimeexception.toString());
+	    Signlink.reportError("25459, " + bs + ", " + new String(cs) + ", " + i + ", " + new String(cs_93_) + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -757,7 +757,7 @@ public class ChatCensor {
 	    } while (i != i_122_ && i + 1 != i_122_);
 	    return false;
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("67276, " + b + ", " + b_120_ + ", " + bs + ", " + b_121_ + ", " + runtimeexception.toString());
+	    Signlink.reportError("67276, " + b + ", " + b_120_ + ", " + bs + ", " + b_121_ + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -790,7 +790,7 @@ public class ChatCensor {
 	    }
 	    return 0;
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("60577, " + i + ", " + c + ", " + c_124_ + ", " + c_125_ + ", " + runtimeexception.toString());
+	    Signlink.reportError("60577, " + i + ", " + c + ", " + c_124_ + ", " + c_125_ + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -989,7 +989,7 @@ public class ChatCensor {
 	    }
 	    return 0;
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("9538, " + c + ", " + c_126_ + ", " + bool + ", " + c_127_ + ", " + runtimeexception.toString());
+	    Signlink.reportError("9538, " + c + ", " + c_126_ + ", " + bool + ", " + c_127_ + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -1009,7 +1009,7 @@ public class ChatCensor {
 	    }
 	    return (byte) 27;
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("52349, " + c + ", " + i + ", " + runtimeexception.toString());
+	    Signlink.reportError("52349, " + c + ", " + i + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -1054,7 +1054,7 @@ public class ChatCensor {
 		}
 	    }
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("38921, " + new String(cs) + ", " + i + ", " + runtimeexception.toString());
+	    Signlink.reportError("38921, " + new String(cs) + ", " + i + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -1069,7 +1069,7 @@ public class ChatCensor {
 	    }
 	    return -1;
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("27983, " + new String(cs) + ", " + i + ", " + i_137_ + ", " + runtimeexception.toString());
+	    Signlink.reportError("27983, " + new String(cs) + ", " + i + ", " + i_137_ + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -1086,7 +1086,7 @@ public class ChatCensor {
 	    }
 	    return cs.length;
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("1466, " + new String(cs) + ", " + i + ", " + i_139_ + ", " + runtimeexception.toString());
+	    Signlink.reportError("1466, " + new String(cs) + ", " + i + ", " + i_139_ + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -1101,7 +1101,7 @@ public class ChatCensor {
 	    }
 	    return true;
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("18641, " + i + ", " + c + ", " + runtimeexception.toString());
+	    Signlink.reportError("18641, " + i + ", " + c + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -1119,7 +1119,7 @@ public class ChatCensor {
 	    }
 	    return false;
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("32846, " + bool + ", " + c + ", " + runtimeexception.toString());
+	    Signlink.reportError("32846, " + bool + ", " + c + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -1136,7 +1136,7 @@ public class ChatCensor {
 	    }
 	    return true;
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("61160, " + c + ", " + i + ", " + runtimeexception.toString());
+	    Signlink.reportError("61160, " + c + ", " + i + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -1151,7 +1151,7 @@ public class ChatCensor {
 	    }
 	    return true;
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("30488, " + c + ", " + i + ", " + runtimeexception.toString());
+	    Signlink.reportError("30488, " + c + ", " + i + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -1168,7 +1168,7 @@ public class ChatCensor {
 	    }
 	    return true;
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("25533, " + c + ", " + i + ", " + runtimeexception.toString());
+	    Signlink.reportError("25533, " + c + ", " + i + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -1183,7 +1183,7 @@ public class ChatCensor {
 	    }
 	    return true;
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("1272, " + bool + ", " + c + ", " + runtimeexception.toString());
+	    Signlink.reportError("1272, " + bool + ", " + c + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -1223,7 +1223,7 @@ public class ChatCensor {
 	    } while (i_143_ != i_144_ && i_143_ + 1 != i_144_);
 	    return false;
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("62482, " + new String(cs) + ", " + b + ", " + runtimeexception.toString());
+	    Signlink.reportError("62482, " + new String(cs) + ", " + b + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -1253,7 +1253,7 @@ public class ChatCensor {
 	    }
 	    return i_147_;
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("67682, " + new String(cs) + ", " + i + ", " + runtimeexception.toString());
+	    Signlink.reportError("67682, " + new String(cs) + ", " + i + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }

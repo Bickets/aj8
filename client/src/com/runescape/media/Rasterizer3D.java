@@ -5,7 +5,7 @@ package com.runescape.media;
  */
 import com.runescape.cache.Archive;
 import com.runescape.cache.media.IndexedImage;
-import com.runescape.util.SignLink;
+import com.runescape.util.Signlink;
 
 public class Rasterizer3D extends Rasterizer {
 
@@ -69,7 +69,7 @@ public class Rasterizer3D extends Rasterizer {
 		Rasterizer3D.centerY = i_2_ / 2;
 	    }
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("8612, " + i + ", " + i_1_ + ", " + i_2_ + ", " + runtimeexception.toString());
+	    Signlink.reportError("8612, " + i + ", " + i_1_ + ", " + i_2_ + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -83,7 +83,7 @@ public class Rasterizer3D extends Rasterizer {
 		}
 	    }
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("84003, " + i + ", " + runtimeexception.toString());
+	    Signlink.reportError("84003, " + i + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -109,7 +109,7 @@ public class Rasterizer3D extends Rasterizer {
 		    Rasterizer3D.anIntArrayArray1499[i_6_] = null;
 		}
 	    } catch (RuntimeException runtimeexception) {
-		SignLink.reportError("54075, " + i + ", " + bool + ", " + runtimeexception.toString());
+		Signlink.reportError("54075, " + i + ", " + bool + ", " + runtimeexception.toString());
 		throw new RuntimeException();
 	    }
 	    break;
@@ -143,7 +143,7 @@ public class Rasterizer3D extends Rasterizer {
 	    int i_12_ = Rasterizer3D.anIntArrayArray1503[i].length;
 	    for (int i_13_ = 0; i_13_ < i_12_; i_13_++) {
 		i_9_ += Rasterizer3D.anIntArrayArray1503[i][i_13_] >> 16 & 0xff;
-		i_10_ += Rasterizer3D.anIntArrayArray1503[i][i_13_] >> 8 & 0xff;
+	    i_10_ += Rasterizer3D.anIntArrayArray1503[i][i_13_] >> 8 & 0xff;
 		i_11_ += Rasterizer3D.anIntArrayArray1503[i][i_13_] & 0xff;
 	    }
 	    int i_14_ = (i_9_ / i_12_ << 16) + (i_10_ / i_12_ << 8) + i_11_ / i_12_;
@@ -154,7 +154,7 @@ public class Rasterizer3D extends Rasterizer {
 	    Rasterizer3D.anIntArray1496[i] = i_14_;
 	    return i_14_;
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("10237, " + i + ", " + i_8_ + ", " + runtimeexception.toString());
+	    Signlink.reportError("10237, " + i + ", " + i_8_ + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -168,7 +168,7 @@ public class Rasterizer3D extends Rasterizer {
 		Rasterizer3D.anIntArrayArray1499[i] = null;
 	    }
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("64331, " + i + ", " + i_15_ + ", " + runtimeexception.toString());
+	    Signlink.reportError("64331, " + i + ", " + i_15_ + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -319,7 +319,7 @@ public class Rasterizer3D extends Rasterizer {
 		Rasterizer3D.method367(i_46_, -477);
 	    }
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("71578, " + d + ", " + runtimeexception.toString());
+	    Signlink.reportError("71578, " + d + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -1166,32 +1166,32 @@ public class Rasterizer3D extends Rasterizer {
 	if (i_90_ < i_91_) {
 	    i += i_90_;
 	    i_89_ = i_91_ - i_90_ >> 2;
-	    if (Rasterizer3D.anInt1485 == 0) {
-		while (--i_89_ >= 0) {
-		    is[i++] = i_88_;
-		    is[i++] = i_88_;
-		    is[i++] = i_88_;
-		    is[i++] = i_88_;
-		}
-		i_89_ = i_91_ - i_90_ & 0x3;
-		while (--i_89_ >= 0) {
-		    is[i++] = i_88_;
-		}
-	    } else {
-		int i_92_ = Rasterizer3D.anInt1485;
-		int i_93_ = 256 - Rasterizer3D.anInt1485;
-		i_88_ = ((i_88_ & 0xff00ff) * i_93_ >> 8 & 0xff00ff) + ((i_88_ & 0xff00) * i_93_ >> 8 & 0xff00);
-		while (--i_89_ >= 0) {
-		    is[i++] = i_88_ + ((is[i] & 0xff00ff) * i_92_ >> 8 & 0xff00ff) + ((is[i] & 0xff00) * i_92_ >> 8 & 0xff00);
-		    is[i++] = i_88_ + ((is[i] & 0xff00ff) * i_92_ >> 8 & 0xff00ff) + ((is[i] & 0xff00) * i_92_ >> 8 & 0xff00);
-		    is[i++] = i_88_ + ((is[i] & 0xff00ff) * i_92_ >> 8 & 0xff00ff) + ((is[i] & 0xff00) * i_92_ >> 8 & 0xff00);
-		    is[i++] = i_88_ + ((is[i] & 0xff00ff) * i_92_ >> 8 & 0xff00ff) + ((is[i] & 0xff00) * i_92_ >> 8 & 0xff00);
-		}
-		i_89_ = i_91_ - i_90_ & 0x3;
-		while (--i_89_ >= 0) {
-		    is[i++] = i_88_ + ((is[i] & 0xff00ff) * i_92_ >> 8 & 0xff00ff) + ((is[i] & 0xff00) * i_92_ >> 8 & 0xff00);
-		}
+	if (Rasterizer3D.anInt1485 == 0) {
+	    while (--i_89_ >= 0) {
+		is[i++] = i_88_;
+		is[i++] = i_88_;
+		is[i++] = i_88_;
+		is[i++] = i_88_;
 	    }
+	    i_89_ = i_91_ - i_90_ & 0x3;
+	    while (--i_89_ >= 0) {
+		is[i++] = i_88_;
+	    }
+	} else {
+	    int i_92_ = Rasterizer3D.anInt1485;
+	    int i_93_ = 256 - Rasterizer3D.anInt1485;
+	    i_88_ = ((i_88_ & 0xff00ff) * i_93_ >> 8 & 0xff00ff) + ((i_88_ & 0xff00) * i_93_ >> 8 & 0xff00);
+	    while (--i_89_ >= 0) {
+		is[i++] = i_88_ + ((is[i] & 0xff00ff) * i_92_ >> 8 & 0xff00ff) + ((is[i] & 0xff00) * i_92_ >> 8 & 0xff00);
+		is[i++] = i_88_ + ((is[i] & 0xff00ff) * i_92_ >> 8 & 0xff00ff) + ((is[i] & 0xff00) * i_92_ >> 8 & 0xff00);
+		is[i++] = i_88_ + ((is[i] & 0xff00ff) * i_92_ >> 8 & 0xff00ff) + ((is[i] & 0xff00) * i_92_ >> 8 & 0xff00);
+		is[i++] = i_88_ + ((is[i] & 0xff00ff) * i_92_ >> 8 & 0xff00ff) + ((is[i] & 0xff00) * i_92_ >> 8 & 0xff00);
+	    }
+	    i_89_ = i_91_ - i_90_ & 0x3;
+	    while (--i_89_ >= 0) {
+		is[i++] = i_88_ + ((is[i] & 0xff00ff) * i_92_ >> 8 & 0xff00ff) + ((is[i] & 0xff00) * i_92_ >> 8 & 0xff00);
+	    }
+	}
 	}
     }
 
@@ -1728,7 +1728,7 @@ public class Rasterizer3D extends Rasterizer {
 	    } else {
 		if (i_137_ - i_136_ > 7) {
 		    i_146_ = i_137_ - i_136_ >> 3;
-		    i_147_ = (i_139_ - i_138_) * Rasterizer3D.shadowDecay[i_146_] >> 6;
+		i_147_ = (i_139_ - i_138_) * Rasterizer3D.shadowDecay[i_146_] >> 6;
 		} else {
 		    i_146_ = 0;
 		    i_147_ = 0;

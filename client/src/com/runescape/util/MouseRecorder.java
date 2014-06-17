@@ -2,7 +2,7 @@ package com.runescape.util;
 
 import com.runescape.Game;
 
-public class MouseCapturer implements Runnable {
+public class MouseRecorder implements Runnable {
 
     public Game client;
     public Object objectLock = new Object();
@@ -28,7 +28,7 @@ public class MouseCapturer implements Runnable {
 	}
     }
 
-    public MouseCapturer(Game client) {
+    public MouseRecorder(Game client) {
 	this.client = client;
     }
 }

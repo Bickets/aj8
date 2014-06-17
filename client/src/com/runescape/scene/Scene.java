@@ -12,7 +12,7 @@ import com.runescape.scene.tile.GenericTile;
 import com.runescape.scene.tile.SceneTile;
 import com.runescape.scene.tile.Wall;
 import com.runescape.scene.tile.WallDecoration;
-import com.runescape.util.SignLink;
+import com.runescape.util.Signlink;
 
 public class Scene {
 
@@ -63,7 +63,7 @@ public class Scene {
     static SceneCluster[] aSceneClusterArray556 = new SceneCluster[500];
     static LinkedList aLinkedList557 = new LinkedList();
     static final int[] anIntArray558 = { 19, 55, 38, 155, 255, 110, 137, 205,
-	    76 };
+	76 };
     static final int[] anIntArray559 = { 160, 192, 80, 96, 0, 144, 80, 48, 160 };
     static final int[] anIntArray560 = { 76, 8, 137, 4, 0, 1, 38, 2, 19 };
     static final int[] anIntArray561 = { 0, 0, 2, 0, 0, 2, 1, 1, 0 };
@@ -71,9 +71,9 @@ public class Scene {
     static final int[] anIntArray563 = { 0, 4, 4, 8, 0, 0, 8, 0, 0 };
     static final int[] anIntArray564 = { 1, 1, 0, 0, 0, 8, 0, 0, 8 };
     static final int[] anIntArray565 = { 41, 39248, 41, 4643, 41, 41, 41, 41,
-	    41, 41, 41, 41, 41, 41, 41, 43086, 41, 41, 41, 41, 41, 41, 41,
-	    8602, 41, 28992, 41, 41, 41, 41, 41, 5056, 41, 41, 41, 7079, 41,
-	    41, 41, 41, 41, 41, 41, 41, 41, 41, 3131, 41, 41, 41 };
+	41, 41, 41, 41, 41, 41, 41, 43086, 41, 41, 41, 41, 41, 41, 41,
+	8602, 41, 28992, 41, 41, 41, 41, 41, 5056, 41, 41, 41, 7079, 41,
+	41, 41, 41, 41, 41, 41, 41, 41, 41, 3131, 41, 41, 41 };
     protected int[] anIntArray566 = new int[10000];
     protected int[] anIntArray567 = new int[10000];
     protected int anInt568;
@@ -117,7 +117,7 @@ public class Scene {
 	    anIntArrayArrayArray520 = is;
 	    method496(619);
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("29434, " + i + ", " + b + ", " + i_0_ + ", " + is + ", " + i_1_ + ", " + runtimeexception.toString());
+	    Signlink.reportError("29434, " + i + ", " + b + ", " + i_0_ + ", " + is + ", " + i_1_ + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -133,7 +133,7 @@ public class Scene {
 	    Scene.aBooleanArrayArrayArrayArray571 = null;
 	    Scene.aBooleanArrayArray572 = null;
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("40481, " + i + ", " + runtimeexception.toString());
+	    Signlink.reportError("40481, " + i + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -162,7 +162,7 @@ public class Scene {
 		Scene.aSceneSpawnRequestArray542[i_8_] = null;
 	    }
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("83723, " + i + ", " + runtimeexception.toString());
+	    Signlink.reportError("83723, " + i + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -180,7 +180,7 @@ public class Scene {
 		}
 	    }
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("44284, " + i + ", " + i_9_ + ", " + runtimeexception.toString());
+	    Signlink.reportError("44284, " + i + ", " + i_9_ + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -211,7 +211,7 @@ public class Scene {
 	    tiles[0][i_12_][i].sceneTile = scenetile;
 	    tiles[3][i_12_][i] = null;
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("63341, " + i + ", " + i_12_ + ", " + i_13_ + ", " + runtimeexception.toString());
+	    Signlink.reportError("63341, " + i + ", " + i_12_ + ", " + i_13_ + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -234,7 +234,7 @@ public class Scene {
 	    scenecluster.anInt589 = i_19_;
 	    Scene.aSceneClusterArrayArray554[i][Scene.anIntArray553[i]++] = scenecluster;
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("14863, " + i + ", " + i_18_ + ", " + i_19_ + ", " + i_20_ + ", " + i_21_ + ", " + i_22_ + ", " + i_23_ + ", " + i_24_ + ", " + i_25_ + ", " + runtimeexception.toString());
+	    Signlink.reportError("14863, " + i + ", " + i_18_ + ", " + i_19_ + ", " + i_20_ + ", " + i_21_ + ", " + i_22_ + ", " + i_23_ + ", " + i_24_ + ", " + i_25_ + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -293,7 +293,7 @@ public class Scene {
 		tiles[i][i_55_][i_52_].floorDecoration = floordecoration;
 	    }
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("11891, " + i + ", " + i_51_ + ", " + i_52_ + ", " + i_53_ + ", " + renderable + ", " + b + ", " + i_54_ + ", " + i_55_ + ", " + runtimeexception.toString());
+	    Signlink.reportError("11891, " + i + ", " + i_51_ + ", " + i_52_ + ", " + i_53_ + ", " + renderable + ", " + b + ", " + i_54_ + ", " + i_55_ + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -328,7 +328,7 @@ public class Scene {
 		tiles[plane][x][y].cameraAngle = cameraAngle;
 	    }
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("4061, " + b + ", " + x + ", " + i_56_ + ", " + renderable + ", " + i_57_ + ", " + renderable_58_ + ", " + renderable_59_ + ", " + plane + ", " + y + ", " + runtimeexception.toString());
+	    Signlink.reportError("4061, " + b + ", " + x + ", " + i_56_ + ", " + renderable + ", " + i_57_ + ", " + renderable_58_ + ", " + renderable_59_ + ", " + plane + ", " + y + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -357,7 +357,7 @@ public class Scene {
 		tiles[i_71_][x][y].wall = wall;
 	    }
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("65870, " + faceUnknown + ", " + renderable + ", " + bool + ", " + hash + ", " + y + ", " + config + ", " + x + ", " + renderable_68_ + ", " + plane + ", " + face + ", " + i_71_ + ", " + runtimeexception.toString());
+	    Signlink.reportError("65870, " + faceUnknown + ", " + renderable + ", " + bool + ", " + hash + ", " + y + ", " + config + ", " + x + ", " + renderable_68_ + ", " + plane + ", " + face + ", " + i_71_ + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -393,7 +393,7 @@ public class Scene {
 	    int i_92_ = i_89_ * 128 + 64 * i_84_;
 	    return method509(i_86_, i_90_, i_89_, i_85_, i_84_, i_91_, i_92_, i_83_, renderable, i_87_, false, i, b);
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("94021, " + i + ", " + b + ", " + i_83_ + ", " + i_84_ + ", " + renderable + ", " + i_85_ + ", " + i_86_ + ", " + i_87_ + ", " + b_88_ + ", " + i_89_ + ", " + i_90_ + ", " + runtimeexception.toString());
+	    Signlink.reportError("94021, " + i + ", " + b + ", " + i_83_ + ", " + i_84_ + ", " + renderable + ", " + i_85_ + ", " + i_86_ + ", " + i_87_ + ", " + b_88_ + ", " + i_89_ + ", " + i_90_ + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -432,7 +432,7 @@ public class Scene {
 	    i_102_ /= 128;
 	    return method509(i, i_99_, i_100_, i_101_ - i_99_ + 1, i_102_ - i_100_ + 1, i_98_, i_96_, i_94_, renderable, i_93_, true, i_95_, (byte) 0);
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("2234, " + i + ", " + i_93_ + ", " + b + ", " + i_94_ + ", " + i_95_ + ", " + i_96_ + ", " + i_97_ + ", " + i_98_ + ", " + renderable + ", " + bool + ", " + runtimeexception.toString());
+	    Signlink.reportError("2234, " + i + ", " + i_93_ + ", " + b + ", " + i_94_ + ", " + i_95_ + ", " + i_96_ + ", " + i_97_ + ", " + i_98_ + ", " + renderable + ", " + bool + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -449,7 +449,7 @@ public class Scene {
 	    }
 	    return method509(i_103_, i_109_, i_112_, i_110_ - i_109_ + 1, i_106_ - i_112_ + 1, i_107_, i_104_, i_108_, renderable, i_105_, true, i_111_, (byte) 0);
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("43595, " + i + ", " + i_103_ + ", " + i_104_ + ", " + renderable + ", " + i_105_ + ", " + i_106_ + ", " + i_107_ + ", " + i_108_ + ", " + i_109_ + ", " + i_110_ + ", " + i_111_ + ", " + i_112_ + ", " + b + ", " + runtimeexception.toString());
+	    Signlink.reportError("43595, " + i + ", " + i_103_ + ", " + i_104_ + ", " + renderable + ", " + i_105_ + ", " + i_106_ + ", " + i_107_ + ", " + i_108_ + ", " + i_109_ + ", " + i_110_ + ", " + i_111_ + ", " + i_112_ + ", " + b + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -524,7 +524,7 @@ public class Scene {
 	    }
 	    anInt523 = 0;
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("28445, " + b + ", " + runtimeexception.toString());
+	    Signlink.reportError("28445, " + b + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -556,7 +556,7 @@ public class Scene {
 		}
 	    }
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("43159, " + i + ", " + scenespawnrequest + ", " + runtimeexception.toString());
+	    Signlink.reportError("43159, " + i + ", " + scenespawnrequest + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -577,7 +577,7 @@ public class Scene {
 		}
 	    }
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("49418, " + i + ", " + i_134_ + ", " + i_135_ + ", " + i_136_ + ", " + i_137_ + ", " + runtimeexception.toString());
+	    Signlink.reportError("49418, " + i + ", " + i_134_ + ", " + i_135_ + ", " + i_136_ + ", " + i_137_ + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -592,7 +592,7 @@ public class Scene {
 		scenetile.wall = null;
 	    }
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("67055, " + i + ", " + i_140_ + ", " + i_141_ + ", " + b + ", " + runtimeexception.toString());
+	    Signlink.reportError("67055, " + i + ", " + i_140_ + ", " + i_141_ + ", " + b + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -607,7 +607,7 @@ public class Scene {
 		}
 	    }
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("18618, " + i + ", " + i_142_ + ", " + i_143_ + ", " + i_144_ + ", " + runtimeexception.toString());
+	    Signlink.reportError("18618, " + i + ", " + i_142_ + ", " + i_143_ + ", " + i_144_ + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -630,7 +630,7 @@ public class Scene {
 		}
 	    }
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("59016, " + i + ", " + i_145_ + ", " + i_146_ + ", " + i_147_ + ", " + runtimeexception.toString());
+	    Signlink.reportError("59016, " + i + ", " + i_145_ + ", " + i_146_ + ", " + i_147_ + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -645,7 +645,7 @@ public class Scene {
 		}
 	    }
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("33570, " + b + ", " + i + ", " + i_150_ + ", " + i_151_ + ", " + runtimeexception.toString());
+	    Signlink.reportError("33570, " + b + ", " + i + ", " + i_150_ + ", " + i_151_ + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -759,42 +759,42 @@ public class Scene {
 	try {
 	    int i_184_ = (int) Math.sqrt(i_181_ * i_181_ + i * i + i_183_ * i_183_);
 	    int i_185_ = i_182_ * i_184_ >> 8;
-	    if (b != 3) {
-		aBoolean514 = !aBoolean514;
-	    }
-	    for (int i_186_ = 0; i_186_ < anInt517; i_186_++) {
-		for (int i_187_ = 0; i_187_ < anInt518; i_187_++) {
-		    for (int i_188_ = 0; i_188_ < anInt519; i_188_++) {
-			SceneTile scenetile = tiles[i_186_][i_187_][i_188_];
-			if (scenetile != null) {
-			    Wall wall = scenetile.wall;
-			    if (wall != null && wall.aRenderable769 != null && wall.aRenderable769.verticesNormal != null) {
-				method529(i_186_, 1, 1, i_187_, (byte) 115, i_188_, (Model) wall.aRenderable769);
-				if (wall.aRenderable770 != null && wall.aRenderable770.verticesNormal != null) {
-				    method529(i_186_, 1, 1, i_187_, (byte) 115, i_188_, (Model) wall.aRenderable770);
-				    method530((Model) wall.aRenderable769, (Model) wall.aRenderable770, 0, 0, 0, false);
-				    ((Model) wall.aRenderable770).method428(i_180_, i_185_, i_181_, i, i_183_);
-				}
-				((Model) wall.aRenderable769).method428(i_180_, i_185_, i_181_, i, i_183_);
+	if (b != 3) {
+	    aBoolean514 = !aBoolean514;
+	}
+	for (int i_186_ = 0; i_186_ < anInt517; i_186_++) {
+	    for (int i_187_ = 0; i_187_ < anInt518; i_187_++) {
+		for (int i_188_ = 0; i_188_ < anInt519; i_188_++) {
+		    SceneTile scenetile = tiles[i_186_][i_187_][i_188_];
+		    if (scenetile != null) {
+			Wall wall = scenetile.wall;
+			if (wall != null && wall.aRenderable769 != null && wall.aRenderable769.verticesNormal != null) {
+			    method529(i_186_, 1, 1, i_187_, (byte) 115, i_188_, (Model) wall.aRenderable769);
+			    if (wall.aRenderable770 != null && wall.aRenderable770.verticesNormal != null) {
+				method529(i_186_, 1, 1, i_187_, (byte) 115, i_188_, (Model) wall.aRenderable770);
+				method530((Model) wall.aRenderable769, (Model) wall.aRenderable770, 0, 0, 0, false);
+				((Model) wall.aRenderable770).method428(i_180_, i_185_, i_181_, i, i_183_);
 			    }
-			    for (int i_189_ = 0; i_189_ < scenetile.sceneSpawnRequestCount; i_189_++) {
-				SceneSpawnRequest scenespawnrequest = scenetile.sceneSpawnRequests[i_189_];
-				if (scenespawnrequest != null && scenespawnrequest.aRenderable601 != null && scenespawnrequest.aRenderable601.verticesNormal != null) {
-				    method529(i_186_, scenespawnrequest.anInt604 - scenespawnrequest.x + 1, scenespawnrequest.anInt606 - scenespawnrequest.y + 1, i_187_, (byte) 115, i_188_, (Model) scenespawnrequest.aRenderable601);
-				    ((Model) scenespawnrequest.aRenderable601).method428(i_180_, i_185_, i_181_, i, i_183_);
-				}
+			    ((Model) wall.aRenderable769).method428(i_180_, i_185_, i_181_, i, i_183_);
+			}
+			for (int i_189_ = 0; i_189_ < scenetile.sceneSpawnRequestCount; i_189_++) {
+			    SceneSpawnRequest scenespawnrequest = scenetile.sceneSpawnRequests[i_189_];
+			    if (scenespawnrequest != null && scenespawnrequest.aRenderable601 != null && scenespawnrequest.aRenderable601.verticesNormal != null) {
+				method529(i_186_, scenespawnrequest.anInt604 - scenespawnrequest.x + 1, scenespawnrequest.anInt606 - scenespawnrequest.y + 1, i_187_, (byte) 115, i_188_, (Model) scenespawnrequest.aRenderable601);
+				((Model) scenespawnrequest.aRenderable601).method428(i_180_, i_185_, i_181_, i, i_183_);
 			    }
-			    FloorDecoration floordecoration = scenetile.floorDecoration;
-			    if (floordecoration != null && floordecoration.renderable.verticesNormal != null) {
-				method528(i_187_, i_186_, (Model) floordecoration.renderable, (byte) 37, i_188_);
-				((Model) floordecoration.renderable).method428(i_180_, i_185_, i_181_, i, i_183_);
-			    }
+			}
+			FloorDecoration floordecoration = scenetile.floorDecoration;
+			if (floordecoration != null && floordecoration.renderable.verticesNormal != null) {
+			    method528(i_187_, i_186_, (Model) floordecoration.renderable, (byte) 37, i_188_);
+			    ((Model) floordecoration.renderable).method428(i_180_, i_185_, i_181_, i, i_183_);
 			}
 		    }
 		}
 	    }
+	}
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("77749, " + i + ", " + b + ", " + i_180_ + ", " + i_181_ + ", " + i_182_ + ", " + i_183_ + ", " + runtimeexception.toString());
+	    Signlink.reportError("77749, " + i + ", " + b + ", " + i_180_ + ", " + i_181_ + ", " + i_182_ + ", " + i_183_ + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -834,7 +834,7 @@ public class Scene {
 		}
 		method530(model, (Model) scenetile.floorDecoration.renderable, 128, 0, -128, true);
 	    } catch (RuntimeException runtimeexception) {
-		SignLink.reportError("40901, " + i + ", " + i_190_ + ", " + model + ", " + b + ", " + i_191_ + ", " + runtimeexception.toString());
+		Signlink.reportError("40901, " + i + ", " + i_190_ + ", " + model + ", " + b + ", " + i_191_ + ", " + runtimeexception.toString());
 		throw new RuntimeException();
 	    }
 	    break;
@@ -884,7 +884,7 @@ public class Scene {
 		}
 	    }
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("11529, " + i + ", " + i_193_ + ", " + i_194_ + ", " + i_195_ + ", " + b + ", " + i_196_ + ", " + model + ", " + runtimeexception.toString());
+	    Signlink.reportError("11529, " + i + ", " + i_193_ + ", " + i_194_ + ", " + i_195_ + ", " + b + ", " + i_196_ + ", " + model + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -1061,7 +1061,7 @@ public class Scene {
 		}
 	    }
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("5468, " + i + ", " + i_238_ + ", " + i_239_ + ", " + i_240_ + ", " + is + ", " + bool + ", " + runtimeexception.toString());
+	    Signlink.reportError("5468, " + i + ", " + i_238_ + ", " + i_239_ + ", " + i_240_ + ", " + is + ", " + bool + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -1069,22 +1069,22 @@ public class Scene {
     public static boolean method533(byte b, int i, int i_258_, int i_259_) {
 	try {
 	    int i_260_ = i_258_ * Scene.anInt540 + i_259_ * Scene.anInt541 >> 16;
-	    int i_261_ = i_258_ * Scene.anInt541 - i_259_ * Scene.anInt540 >> 16;
-	    if (b != 9) {
-	    }
-	    int i_262_ = i * Scene.anInt538 + i_261_ * Scene.anInt539 >> 16;
-	    int i_263_ = i * Scene.anInt539 - i_261_ * Scene.anInt538 >> 16;
-	    if (i_262_ < 50 || i_262_ > 3500) {
-		return false;
-	    }
-	    int i_264_ = Scene.anInt573 + (i_260_ << 9) / i_262_;
-	    int i_265_ = Scene.anInt574 + (i_263_ << 9) / i_262_;
-	    if (i_264_ < Scene.anInt575 || i_264_ > Scene.anInt577 || i_265_ < Scene.anInt576 || i_265_ > Scene.anInt578) {
-		return false;
-	    }
-	    return true;
+				int i_261_ = i_258_ * Scene.anInt541 - i_259_ * Scene.anInt540 >> 16;
+			if (b != 9) {
+			}
+			int i_262_ = i * Scene.anInt538 + i_261_ * Scene.anInt539 >> 16;
+		int i_263_ = i * Scene.anInt539 - i_261_ * Scene.anInt538 >> 16;
+			    if (i_262_ < 50 || i_262_ > 3500) {
+				return false;
+			    }
+			    int i_264_ = Scene.anInt573 + (i_260_ << 9) / i_262_;
+			    int i_265_ = Scene.anInt574 + (i_263_ << 9) / i_262_;
+			    if (i_264_ < Scene.anInt575 || i_264_ > Scene.anInt577 || i_265_ < Scene.anInt576 || i_265_ > Scene.anInt578) {
+				return false;
+			    }
+			    return true;
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("3265, " + b + ", " + i + ", " + i_258_ + ", " + i_259_ + ", " + runtimeexception.toString());
+	    Signlink.reportError("3265, " + b + ", " + i + ", " + i_258_ + ", " + i_259_ + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -1104,7 +1104,7 @@ public class Scene {
 		    /* empty */
 		}
 	    } catch (RuntimeException runtimeexception) {
-		SignLink.reportError("24272, " + bool + ", " + i + ", " + i_266_ + ", " + runtimeexception.toString());
+		Signlink.reportError("24272, " + bool + ", " + i + ", " + i_266_ + ", " + runtimeexception.toString());
 		throw new RuntimeException();
 	    }
 	    break;
@@ -1271,7 +1271,7 @@ public class Scene {
 		Scene.aBoolean547 = false;
 	    }
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("93114, " + i + ", " + i_268_ + ", " + i_269_ + ", " + i_270_ + ", " + i_271_ + ", " + i_272_ + ", " + bool + ", " + runtimeexception.toString());
+	    Signlink.reportError("93114, " + i + ", " + i_268_ + ", " + i_269_ + ", " + i_270_ + ", " + i_271_ + ", " + i_272_ + ", " + bool + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -1728,87 +1728,87 @@ public class Scene {
 	i_369_ = i_369_ * i_364_ - i_367_ * i_363_ >> 16;
 	i_367_ = i_379_;
 	i_379_ = i_375_ * i_362_ - i_369_ * i_361_ >> 16;
-	i_369_ = i_375_ * i_361_ + i_369_ * i_362_ >> 16;
-	i_375_ = i_379_;
-	if (i_369_ >= 50) {
-	    i_379_ = i_370_ * i_363_ + i_371_ * i_364_ >> 16;
-	    i_370_ = i_370_ * i_364_ - i_371_ * i_363_ >> 16;
-	    i_371_ = i_379_;
-	    i_379_ = i_376_ * i_362_ - i_370_ * i_361_ >> 16;
-	    i_370_ = i_376_ * i_361_ + i_370_ * i_362_ >> 16;
-	    i_376_ = i_379_;
-	    if (i_370_ >= 50) {
-		i_379_ = i_373_ * i_363_ + i_372_ * i_364_ >> 16;
-		i_373_ = i_373_ * i_364_ - i_372_ * i_363_ >> 16;
-		i_372_ = i_379_;
-		i_379_ = i_377_ * i_362_ - i_373_ * i_361_ >> 16;
-		i_373_ = i_377_ * i_361_ + i_373_ * i_362_ >> 16;
-		i_377_ = i_379_;
-		if (i_373_ >= 50) {
-		    i_379_ = i_374_ * i_363_ + i_368_ * i_364_ >> 16;
-		    i_374_ = i_374_ * i_364_ - i_368_ * i_363_ >> 16;
-		    i_368_ = i_379_;
-		    i_379_ = i_378_ * i_362_ - i_374_ * i_361_ >> 16;
-		    i_374_ = i_378_ * i_361_ + i_374_ * i_362_ >> 16;
-		    i_378_ = i_379_;
-		    if (i_374_ >= 50) {
-			int i_380_ = Rasterizer3D.centerX + (i_367_ << 9) / i_369_;
-			int i_381_ = Rasterizer3D.centerY + (i_375_ << 9) / i_369_;
-			int i_382_ = Rasterizer3D.centerX + (i_371_ << 9) / i_370_;
-			int i_383_ = Rasterizer3D.centerY + (i_376_ << 9) / i_370_;
-			int i_384_ = Rasterizer3D.centerX + (i_372_ << 9) / i_373_;
-			int i_385_ = Rasterizer3D.centerY + (i_377_ << 9) / i_373_;
-			int i_386_ = Rasterizer3D.centerX + (i_368_ << 9) / i_374_;
-			int i_387_ = Rasterizer3D.centerY + (i_378_ << 9) / i_374_;
-			Rasterizer3D.anInt1485 = 0;
-			if ((i_384_ - i_386_) * (i_383_ - i_387_) - (i_385_ - i_387_) * (i_382_ - i_386_) > 0) {
-			    Rasterizer3D.aBoolean1482 = false;
-			    if (i_384_ < 0 || i_386_ < 0 || i_382_ < 0 || i_384_ > Rasterizer.virtualBottomX || i_386_ > Rasterizer.virtualBottomX || i_382_ > Rasterizer.virtualBottomX) {
-				Rasterizer3D.aBoolean1482 = true;
-			    }
-			    if (Scene.aBoolean547 && method540(Scene.anInt548, Scene.anInt549, i_385_, i_387_, i_383_, i_384_, i_386_, i_382_)) {
-				Scene.anInt550 = i_365_;
-				Scene.anInt551 = i_366_;
-			    }
-			    if (generictile.texture == -1) {
-				if (generictile.anInt294 != 12345678) {
-				    Rasterizer3D.method371(i_385_, i_387_, i_383_, i_384_, i_386_, i_382_, generictile.anInt294, generictile.anInt295, generictile.anInt293);
-				}
-			    } else if (!Scene.lowMemory) {
-				if (generictile.flat) {
-				    Rasterizer3D.method375(i_385_, i_387_, i_383_, i_384_, i_386_, i_382_, generictile.anInt294, generictile.anInt295, generictile.anInt293, i_367_, i_371_, i_368_, i_375_, i_376_, i_378_, i_369_, i_370_, i_374_, generictile.texture);
-				} else {
-				    Rasterizer3D.method375(i_385_, i_387_, i_383_, i_384_, i_386_, i_382_, generictile.anInt294, generictile.anInt295, generictile.anInt293, i_372_, i_368_, i_371_, i_377_, i_378_, i_376_, i_373_, i_374_, i_370_, generictile.texture);
-				}
-			    } else {
-				int i_388_ = Scene.anIntArray565[generictile.texture];
-				Rasterizer3D.method371(i_385_, i_387_, i_383_, i_384_, i_386_, i_382_, method539(-361, i_388_, generictile.anInt294), method539(-361, i_388_, generictile.anInt295), method539(-361, i_388_, generictile.anInt293));
-			    }
+		    i_369_ = i_375_ * i_361_ + i_369_ * i_362_ >> 16;
+			    i_375_ = i_379_;
+			    if (i_369_ >= 50) {
+				i_379_ = i_370_ * i_363_ + i_371_ * i_364_ >> 16;
+		i_370_ = i_370_ * i_364_ - i_371_ * i_363_ >> 16;
+				    i_371_ = i_379_;
+				    i_379_ = i_376_ * i_362_ - i_370_ * i_361_ >> 16;
+		    i_370_ = i_376_ * i_361_ + i_370_ * i_362_ >> 16;
+			    i_376_ = i_379_;
+			    if (i_370_ >= 50) {
+				i_379_ = i_373_ * i_363_ + i_372_ * i_364_ >> 16;
+		    i_373_ = i_373_ * i_364_ - i_372_ * i_363_ >> 16;
+	    i_372_ = i_379_;
+	    i_379_ = i_377_ * i_362_ - i_373_ * i_361_ >> 16;
+			i_373_ = i_377_ * i_361_ + i_373_ * i_362_ >> 16;
+	    i_377_ = i_379_;
+	    if (i_373_ >= 50) {
+		i_379_ = i_374_ * i_363_ + i_368_ * i_364_ >> 16;
+	i_374_ = i_374_ * i_364_ - i_368_ * i_363_ >> 16;
+				i_368_ = i_379_;
+				i_379_ = i_378_ * i_362_ - i_374_ * i_361_ >> 16;
+		i_374_ = i_378_ * i_361_ + i_374_ * i_362_ >> 16;
+		i_378_ = i_379_;
+		if (i_374_ >= 50) {
+		    int i_380_ = Rasterizer3D.centerX + (i_367_ << 9) / i_369_;
+		    int i_381_ = Rasterizer3D.centerY + (i_375_ << 9) / i_369_;
+		    int i_382_ = Rasterizer3D.centerX + (i_371_ << 9) / i_370_;
+		    int i_383_ = Rasterizer3D.centerY + (i_376_ << 9) / i_370_;
+		    int i_384_ = Rasterizer3D.centerX + (i_372_ << 9) / i_373_;
+		    int i_385_ = Rasterizer3D.centerY + (i_377_ << 9) / i_373_;
+		    int i_386_ = Rasterizer3D.centerX + (i_368_ << 9) / i_374_;
+		    int i_387_ = Rasterizer3D.centerY + (i_378_ << 9) / i_374_;
+		    Rasterizer3D.anInt1485 = 0;
+		    if ((i_384_ - i_386_) * (i_383_ - i_387_) - (i_385_ - i_387_) * (i_382_ - i_386_) > 0) {
+			Rasterizer3D.aBoolean1482 = false;
+			if (i_384_ < 0 || i_386_ < 0 || i_382_ < 0 || i_384_ > Rasterizer.virtualBottomX || i_386_ > Rasterizer.virtualBottomX || i_382_ > Rasterizer.virtualBottomX) {
+			    Rasterizer3D.aBoolean1482 = true;
 			}
-			if ((i_380_ - i_382_) * (i_387_ - i_383_) - (i_381_ - i_383_) * (i_386_ - i_382_) > 0) {
-			    Rasterizer3D.aBoolean1482 = false;
-			    if (i_380_ < 0 || i_382_ < 0 || i_386_ < 0 || i_380_ > Rasterizer.virtualBottomX || i_382_ > Rasterizer.virtualBottomX || i_386_ > Rasterizer.virtualBottomX) {
-				Rasterizer3D.aBoolean1482 = true;
+			if (Scene.aBoolean547 && method540(Scene.anInt548, Scene.anInt549, i_385_, i_387_, i_383_, i_384_, i_386_, i_382_)) {
+			    Scene.anInt550 = i_365_;
+			    Scene.anInt551 = i_366_;
+			}
+			if (generictile.texture == -1) {
+			    if (generictile.anInt294 != 12345678) {
+				Rasterizer3D.method371(i_385_, i_387_, i_383_, i_384_, i_386_, i_382_, generictile.anInt294, generictile.anInt295, generictile.anInt293);
 			    }
-			    if (Scene.aBoolean547 && method540(Scene.anInt548, Scene.anInt549, i_381_, i_383_, i_387_, i_380_, i_382_, i_386_)) {
-				Scene.anInt550 = i_365_;
-				Scene.anInt551 = i_366_;
-			    }
-			    if (generictile.texture == -1) {
-				if (generictile.anInt292 != 12345678) {
-				    Rasterizer3D.method371(i_381_, i_383_, i_387_, i_380_, i_382_, i_386_, generictile.anInt292, generictile.anInt293, generictile.anInt295);
-				}
-			    } else if (!Scene.lowMemory) {
-				Rasterizer3D.method375(i_381_, i_383_, i_387_, i_380_, i_382_, i_386_, generictile.anInt292, generictile.anInt293, generictile.anInt295, i_367_, i_371_, i_368_, i_375_, i_376_, i_378_, i_369_, i_370_, i_374_, generictile.texture);
+			} else if (!Scene.lowMemory) {
+			    if (generictile.flat) {
+				Rasterizer3D.method375(i_385_, i_387_, i_383_, i_384_, i_386_, i_382_, generictile.anInt294, generictile.anInt295, generictile.anInt293, i_367_, i_371_, i_368_, i_375_, i_376_, i_378_, i_369_, i_370_, i_374_, generictile.texture);
 			    } else {
-				int i_389_ = Scene.anIntArray565[generictile.texture];
-				Rasterizer3D.method371(i_381_, i_383_, i_387_, i_380_, i_382_, i_386_, method539(-361, i_389_, generictile.anInt292), method539(-361, i_389_, generictile.anInt293), method539(-361, i_389_, generictile.anInt295));
+				Rasterizer3D.method375(i_385_, i_387_, i_383_, i_384_, i_386_, i_382_, generictile.anInt294, generictile.anInt295, generictile.anInt293, i_372_, i_368_, i_371_, i_377_, i_378_, i_376_, i_373_, i_374_, i_370_, generictile.texture);
 			    }
+			} else {
+			    int i_388_ = Scene.anIntArray565[generictile.texture];
+			    Rasterizer3D.method371(i_385_, i_387_, i_383_, i_384_, i_386_, i_382_, method539(-361, i_388_, generictile.anInt294), method539(-361, i_388_, generictile.anInt295), method539(-361, i_388_, generictile.anInt293));
+			}
+		    }
+		    if ((i_380_ - i_382_) * (i_387_ - i_383_) - (i_381_ - i_383_) * (i_386_ - i_382_) > 0) {
+			Rasterizer3D.aBoolean1482 = false;
+			if (i_380_ < 0 || i_382_ < 0 || i_386_ < 0 || i_380_ > Rasterizer.virtualBottomX || i_382_ > Rasterizer.virtualBottomX || i_386_ > Rasterizer.virtualBottomX) {
+			    Rasterizer3D.aBoolean1482 = true;
+			}
+			if (Scene.aBoolean547 && method540(Scene.anInt548, Scene.anInt549, i_381_, i_383_, i_387_, i_380_, i_382_, i_386_)) {
+			    Scene.anInt550 = i_365_;
+			    Scene.anInt551 = i_366_;
+			}
+			if (generictile.texture == -1) {
+			    if (generictile.anInt292 != 12345678) {
+				Rasterizer3D.method371(i_381_, i_383_, i_387_, i_380_, i_382_, i_386_, generictile.anInt292, generictile.anInt293, generictile.anInt295);
+			    }
+			} else if (!Scene.lowMemory) {
+			    Rasterizer3D.method375(i_381_, i_383_, i_387_, i_380_, i_382_, i_386_, generictile.anInt292, generictile.anInt293, generictile.anInt295, i_367_, i_371_, i_368_, i_375_, i_376_, i_378_, i_369_, i_370_, i_374_, generictile.texture);
+			} else {
+			    int i_389_ = Scene.anIntArray565[generictile.texture];
+			    Rasterizer3D.method371(i_381_, i_383_, i_387_, i_380_, i_382_, i_386_, method539(-361, i_389_, generictile.anInt292), method539(-361, i_389_, generictile.anInt293), method539(-361, i_389_, generictile.anInt295));
 			}
 		    }
 		}
 	    }
-	}
+			    }
+			    }
     }
 
     public void method538(int i, byte b, int i_390_, int i_391_, ComplexTile complextile, int i_392_, int i_393_, int i_394_) {
@@ -1820,7 +1820,7 @@ public class Scene {
 		    int i_398_ = complextile.anIntArray196[i_396_] - Scene.anInt536;
 		    int i_399_ = complextile.anIntArray197[i_396_] - Scene.anInt537;
 		    int i_400_ = i_399_ * i_391_ + i_397_ * i_394_ >> 16;
-		    i_399_ = i_399_ * i_394_ - i_397_ * i_391_ >> 16;
+		i_399_ = i_399_ * i_394_ - i_397_ * i_391_ >> 16;
 		    i_397_ = i_400_;
 		    i_400_ = i_398_ * i_392_ - i_399_ * i_390_ >> 16;
 		    i_399_ = i_398_ * i_390_ + i_399_ * i_392_ >> 16;
@@ -1875,7 +1875,7 @@ public class Scene {
 		}
 	    }
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("37932, " + i + ", " + b + ", " + i_390_ + ", " + i_391_ + ", " + complextile + ", " + i_392_ + ", " + i_393_ + ", " + i_394_ + ", " + runtimeexception.toString());
+	    Signlink.reportError("37932, " + i + ", " + b + ", " + i_390_ + ", " + i_391_ + ", " + complextile + ", " + i_392_ + ", " + i_393_ + ", " + i_394_ + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -1894,7 +1894,7 @@ public class Scene {
 	    }
 	    return (i_412_ & 0xff80) + i_413_;
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("11440, " + i + ", " + i_412_ + ", " + i_413_ + ", " + runtimeexception.toString());
+	    Signlink.reportError("11440, " + i + ", " + i_412_ + ", " + i_413_ + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -2045,7 +2045,7 @@ public class Scene {
 		}
 	    }
 	} catch (RuntimeException runtimeexception) {
-	    SignLink.reportError("66730, " + i + ", " + runtimeexception.toString());
+	    Signlink.reportError("66730, " + i + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }

@@ -91,21 +91,21 @@ public final class ISAACCipher {
 
 	    x = mem[i];
 	    a ^= a >>> 6;
-	    a += mem[j++];
-	    mem[i] = y = mem[(x & ISAACCipher.MASK) >> 2] + a + b;
-	    rsl[i++] = b = mem[(y >> ISAACCipher.SIZEL & ISAACCipher.MASK) >> 2] + x;
+    a += mem[j++];
+    mem[i] = y = mem[(x & ISAACCipher.MASK) >> 2] + a + b;
+    rsl[i++] = b = mem[(y >> ISAACCipher.SIZEL & ISAACCipher.MASK) >> 2] + x;
 
-	    x = mem[i];
-	    a ^= a << 2;
-	    a += mem[j++];
-	    mem[i] = y = mem[(x & ISAACCipher.MASK) >> 2] + a + b;
-	    rsl[i++] = b = mem[(y >> ISAACCipher.SIZEL & ISAACCipher.MASK) >> 2] + x;
+    x = mem[i];
+    a ^= a << 2;
+    a += mem[j++];
+    mem[i] = y = mem[(x & ISAACCipher.MASK) >> 2] + a + b;
+    rsl[i++] = b = mem[(y >> ISAACCipher.SIZEL & ISAACCipher.MASK) >> 2] + x;
 
-	    x = mem[i];
-	    a ^= a >>> 16;
-	    a += mem[j++];
-	    mem[i] = y = mem[(x & ISAACCipher.MASK) >> 2] + a + b;
-	    rsl[i++] = b = mem[(y >> ISAACCipher.SIZEL & ISAACCipher.MASK) >> 2] + x;
+    x = mem[i];
+    a ^= a >>> 16;
+    a += mem[j++];
+    mem[i] = y = mem[(x & ISAACCipher.MASK) >> 2] + a + b;
+    rsl[i++] = b = mem[(y >> ISAACCipher.SIZEL & ISAACCipher.MASK) >> 2] + x;
 	}
 
 	for (j = 0; j < ISAACCipher.SIZE / 2;) {
@@ -173,9 +173,9 @@ public final class ISAACCipher {
 	}
 
 	for (i = 0; i < ISAACCipher.SIZE; i += 8) { /*
-						     * fill in mem[] with messy
-						     * stuff
-						     */
+	 * fill in mem[] with messy
+	 * stuff
+	 */
 	    if (flag) {
 		a += rsl[i];
 		b += rsl[i + 1];

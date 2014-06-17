@@ -12,7 +12,7 @@ import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URL;
 
-public class SignLink implements Runnable {
+public class Signlink implements Runnable {
 
     public static int uid;
     public static int storeId = 32;
@@ -45,24 +45,24 @@ public class SignLink implements Runnable {
     public static String errorName = "";
 
     public static final void initialize(InetAddress inetAddress) {
-	if (SignLink.active) {
+	if (Signlink.active) {
 	    try {
 		Thread.sleep(500L);
 	    } catch (Exception exception) {
 		/* empty */
 	    }
-	    SignLink.active = false;
+	    Signlink.active = false;
 	}
-	SignLink.socketRequest = 0;
-	SignLink.threadRequest = null;
-	SignLink.dnsRequest = null;
-	SignLink.saveRequest = null;
-	SignLink.urlRequest = null;
-	SignLink.inetAddress = inetAddress;
-	Thread thread = new Thread(new SignLink());
+	Signlink.socketRequest = 0;
+	Signlink.threadRequest = null;
+	Signlink.dnsRequest = null;
+	Signlink.saveRequest = null;
+	Signlink.urlRequest = null;
+	Signlink.inetAddress = inetAddress;
+	Thread thread = new Thread(new Signlink());
 	thread.setDaemon(true);
 	thread.start();
-	while (!SignLink.active) {
+	while (!Signlink.active) {
 	    try {
 		Thread.sleep(50L);
 	    } catch (Exception exception) {
@@ -82,61 +82,61 @@ public class SignLink implements Runnable {
 	    if (file.exists() && file.length() > 0x3200000) {
 		file.delete();
 	    }
-	    SignLink.cacheDat = new RandomAccessFile(directory + "main_file_cache.dat", "rw");
+	    Signlink.cacheDat = new RandomAccessFile(directory + "main_file_cache.dat", "rw");
 	    for (int idx = 0; idx < 5; idx++) {
-		SignLink.cacheIdx[idx] = new RandomAccessFile(directory + "main_file_cache.idx" + idx, "rw");
+		Signlink.cacheIdx[idx] = new RandomAccessFile(directory + "main_file_cache.idx" + idx, "rw");
 	    }
 	} catch (Exception exception) {
 	    exception.printStackTrace();
 	}
 
 	while (true) {
-	    if (SignLink.socketRequest != 0) {
+	    if (Signlink.socketRequest != 0) {
 		try {
-		    SignLink.socket = new Socket(SignLink.inetAddress, SignLink.socketRequest);
+		    Signlink.socket = new Socket(Signlink.inetAddress, Signlink.socketRequest);
 		} catch (Exception exception) {
-		    SignLink.socket = null;
+		    Signlink.socket = null;
 		}
-		SignLink.socketRequest = 0;
-	    } else if (SignLink.threadRequest != null) {
-		Thread thread = new Thread(SignLink.threadRequest);
+		Signlink.socketRequest = 0;
+	    } else if (Signlink.threadRequest != null) {
+		Thread thread = new Thread(Signlink.threadRequest);
 		thread.setDaemon(true);
 		thread.start();
-		thread.setPriority(SignLink.threadRequestPriority);
-		SignLink.threadRequest = null;
-	    } else if (SignLink.dnsRequest != null) {
+		thread.setPriority(Signlink.threadRequestPriority);
+		Signlink.threadRequest = null;
+	    } else if (Signlink.dnsRequest != null) {
 		try {
-		    SignLink.dns = InetAddress.getByName(SignLink.dnsRequest).getHostName();
+		    Signlink.dns = InetAddress.getByName(Signlink.dnsRequest).getHostName();
 		} catch (Exception exception) {
-		    SignLink.dns = "unknown";
+		    Signlink.dns = "unknown";
 		}
-		SignLink.dnsRequest = null;
-	    } else if (SignLink.saveRequest != null) {
-		if (SignLink.saveBuffer != null) {
+		Signlink.dnsRequest = null;
+	    } else if (Signlink.saveRequest != null) {
+		if (Signlink.saveBuffer != null) {
 		    try {
-			FileOutputStream out = new FileOutputStream(directory + SignLink.saveRequest);
-			out.write(SignLink.saveBuffer, 0, SignLink.saveLength);
+			FileOutputStream out = new FileOutputStream(directory + Signlink.saveRequest);
+			out.write(Signlink.saveBuffer, 0, Signlink.saveLength);
 			out.close();
 		    } catch (Exception exception) {
 			/* empty */
 		    }
 		}
-		if (SignLink.wavePlay) {
-		    SignLink.wave = directory + SignLink.saveRequest;
-		    SignLink.wavePlay = false;
+		if (Signlink.wavePlay) {
+		    Signlink.wave = directory + Signlink.saveRequest;
+		    Signlink.wavePlay = false;
 		}
-		if (SignLink.midiPlay) {
-		    SignLink.midi = directory + SignLink.saveRequest;
-		    SignLink.midiPlay = false;
+		if (Signlink.midiPlay) {
+		    Signlink.midi = directory + Signlink.saveRequest;
+		    Signlink.midiPlay = false;
 		}
-		SignLink.saveRequest = null;
-	    } else if (SignLink.urlRequest != null) {
+		Signlink.saveRequest = null;
+	    } else if (Signlink.urlRequest != null) {
 		try {
-		    SignLink.nextURLStream = new DataInputStream(new URL(SignLink.applet.getCodeBase(), SignLink.urlRequest).openStream());
+		    Signlink.nextURLStream = new DataInputStream(new URL(Signlink.applet.getCodeBase(), Signlink.urlRequest).openStream());
 		} catch (Exception exception) {
-		    SignLink.nextURLStream = null;
+		    Signlink.nextURLStream = null;
 		}
-		SignLink.urlRequest = null;
+		Signlink.urlRequest = null;
 	    }
 	    try {
 		Thread.sleep(50L);
@@ -195,89 +195,89 @@ public class SignLink implements Runnable {
     }
 
     public static final synchronized Socket openSocket(int port) throws IOException {
-	SignLink.socketRequest = port;
-	while (SignLink.socketRequest != 0) {
+	Signlink.socketRequest = port;
+	while (Signlink.socketRequest != 0) {
 	    try {
 		Thread.sleep(50L);
 	    } catch (Exception exception) {
 		/* empty */
 	    }
 	}
-	if (SignLink.socket == null) {
+	if (Signlink.socket == null) {
 	    throw new IOException("could not open socket");
 	}
-	return SignLink.socket;
+	return Signlink.socket;
     }
 
     public static final synchronized DataInputStream openURL(String url) throws IOException {
-	SignLink.urlRequest = url;
-	while (SignLink.urlRequest != null) {
+	Signlink.urlRequest = url;
+	while (Signlink.urlRequest != null) {
 	    try {
 		Thread.sleep(50L);
 	    } catch (Exception exception) {
 		/* empty */
 	    }
 	}
-	if (SignLink.nextURLStream == null) {
+	if (Signlink.nextURLStream == null) {
 	    throw new IOException("could not open: " + url);
 	}
-	return SignLink.nextURLStream;
+	return Signlink.nextURLStream;
     }
 
     public static final synchronized void dnsLookup(String dns) {
-	SignLink.dns = dns;
-	SignLink.dnsRequest = dns;
+	Signlink.dns = dns;
+	Signlink.dnsRequest = dns;
     }
 
     public static final synchronized void startRunnable(Runnable runnable, int priority) {
-	SignLink.threadRequestPriority = priority;
-	SignLink.threadRequest = runnable;
+	Signlink.threadRequestPriority = priority;
+	Signlink.threadRequest = runnable;
     }
 
     public static final synchronized boolean waveSave(byte[] buffer, int length) {
 	if (length > 0x1E8480) {
 	    return false;
 	}
-	if (SignLink.saveRequest != null) {
+	if (Signlink.saveRequest != null) {
 	    return false;
 	}
-	SignLink.wavePosition = (SignLink.wavePosition + 1) % 5;
-	SignLink.saveLength = length;
-	SignLink.saveBuffer = buffer;
-	SignLink.wavePlay = true;
-	SignLink.saveRequest = "sound" + SignLink.wavePosition + ".wav";
+	Signlink.wavePosition = (Signlink.wavePosition + 1) % 5;
+	Signlink.saveLength = length;
+	Signlink.saveBuffer = buffer;
+	Signlink.wavePlay = true;
+	Signlink.saveRequest = "sound" + Signlink.wavePosition + ".wav";
 	return true;
     }
 
     public static final synchronized boolean waveReplay() {
-	if (SignLink.saveRequest != null) {
+	if (Signlink.saveRequest != null) {
 	    return false;
 	}
-	SignLink.saveBuffer = null;
-	SignLink.wavePlay = true;
-	SignLink.saveRequest = "sound" + SignLink.wavePosition + ".wav";
+	Signlink.saveBuffer = null;
+	Signlink.wavePlay = true;
+	Signlink.saveRequest = "sound" + Signlink.wavePosition + ".wav";
 	return true;
     }
 
     public static final synchronized void midiSave(byte[] buffer, int length) {
-	if (length <= 0x1E8480 && SignLink.saveRequest == null) {
-	    SignLink.midiPosition = (SignLink.midiPosition + 1) % 5;
-	    SignLink.saveLength = length;
-	    SignLink.saveBuffer = buffer;
-	    SignLink.midiPlay = true;
-	    SignLink.saveRequest = "jingle" + SignLink.midiPosition + ".mid";
+	if (length <= 0x1E8480 && Signlink.saveRequest == null) {
+	    Signlink.midiPosition = (Signlink.midiPosition + 1) % 5;
+	    Signlink.saveLength = length;
+	    Signlink.saveBuffer = buffer;
+	    Signlink.midiPlay = true;
+	    Signlink.saveRequest = "jingle" + Signlink.midiPosition + ".mid";
 	}
     }
 
     public static final void reportError(String error) {
-	if (SignLink.reportError && SignLink.active) {
+	if (Signlink.reportError && Signlink.active) {
 	    System.out.println("Error: " + error);
 	    try {
 		error = error.replace(':', '_');
 		error = error.replace('@', '_');
 		error = error.replace('&', '_');
 		error = error.replace('#', '_');
-		DataInputStream in = SignLink.openURL("reporterror" + 317 + ".cgi?error=" + SignLink.errorName + " " + error);
+		DataInputStream in = Signlink.openURL("reporterror" + 317 + ".cgi?error=" + Signlink.errorName + " " + error);
 		in.readUTF();
 		in.close();
 	    } catch (IOException ioexception) {

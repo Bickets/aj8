@@ -112,13 +112,13 @@ public class IndexedImage extends Rasterizer {
     public void mixPalette(int red, int green, int blue) {
 	for (int index = 0; index < palette.length; index++) {
 	    int r = palette[index] >> 16 & 0xff;
-	    r += red;
-	    if (r < 0) {
-		r = 0;
-	    } else if (r > 255) {
-		r = 255;
-	    }
-	    int g = palette[index] >> 8 & 0xff;
+	r += red;
+	if (r < 0) {
+	    r = 0;
+	} else if (r > 255) {
+	    r = 255;
+	}
+	int g = palette[index] >> 8 & 0xff;
 	    g += green;
 	    if (g < 0) {
 		g = 0;
