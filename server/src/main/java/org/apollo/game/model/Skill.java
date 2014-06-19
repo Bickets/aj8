@@ -132,17 +132,17 @@ public final class Skill {
     }
 
     /**
-     * The experience.
+     * This skills experience.
      */
     private final double experience;
 
     /**
-     * The current level.
+     * This skills current level.
      */
     private final int currentLevel;
 
     /**
-     * The maximum level.
+     * This skills maximum level.
      */
     private final int maximumLevel;
 

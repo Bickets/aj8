@@ -8,12 +8,12 @@ package org.apollo.game.model;
 public final class SlottedItem {
 
     /**
-     * The slot.
+     * The slot of this item.
      */
     private final int slot;
 
     /**
-     * The item.
+     * The actual {@link Item} this slot represents.
      */
     private final Item item;
 

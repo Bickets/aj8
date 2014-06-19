@@ -63,9 +63,10 @@ public final class NameUtil {
     }
 
     /**
-     * Returns a hashed version the specified <code>name</code>
+     * Returns a hashed version the specified <code>name</code>.
      *
      * @param name The name to hash.
+     * @return The hashed name.
      */
     public static int hash(String name) {
 	int hash = 0;

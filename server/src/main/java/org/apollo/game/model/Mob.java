@@ -22,7 +22,7 @@ public final class Mob extends GameCharacter {
     private final Direction initialFaceDirection;
 
     /**
-     * Constructs a new {@link Mob}
+     * Constructs a new {@link Mob}.
      *
      * @param id The id of the mob.
      * @param position The position of the mob.
@@ -32,7 +32,7 @@ public final class Mob extends GameCharacter {
     }
 
     /**
-     * Constructs a new {@link Mob}
+     * Constructs a new {@link Mob}.
      *
      * @param id The id of the mob.
      * @param position The position of the mob.

@@ -19,9 +19,7 @@ public interface CommandListener {
     public void execute(Player player, Command command);
 
     /**
-     * Returns the commands name
-     *
-     * @return The commands name.
+     * Returns the commands name.
      */
     public String getName();
 

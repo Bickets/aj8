@@ -153,12 +153,12 @@ public final class Animation {
     public static final Animation GOBLIN_DANCE = new Animation(2128);
 
     /**
-     * The id.
+     * The id of this animation.
      */
     private final int id;
 
     /**
-     * The delay.
+     * The delay of this animation.
      */
     private final int delay;
 

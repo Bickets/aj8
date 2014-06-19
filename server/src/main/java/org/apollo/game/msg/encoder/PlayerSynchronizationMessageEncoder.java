@@ -439,7 +439,7 @@ public final class PlayerSynchronizationMessageEncoder extends MessageEncoder<Pl
     /**
      * Puts a Force Movement block in the specified builder.
      *
-     * @param forceMovementBlock The block.
+     * @param block The block.
      * @param builder The builder.
      */
     private void putForceMovementBlock(ForceMovementBlock block, GamePacketBuilder builder) {

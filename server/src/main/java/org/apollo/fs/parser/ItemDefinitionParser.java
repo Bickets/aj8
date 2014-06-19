@@ -21,6 +21,7 @@ public final class ItemDefinitionParser {
      *
      * @param fs The file system to parse from.
      * @throws IOException If some I/O exception occurs.
+     * @return An array of parsed item definitions.
      */
     public static ItemDefinition[] parse(FileSystem fs) throws IOException {
 	Archive archive = fs.getArchive(FileSystem.CONFIG_ARCHIVE);
@@ -45,10 +46,11 @@ public final class ItemDefinitionParser {
     }
 
     /**
-     * Parses and returns a single item definition/
+     * Parses and returns a single item definition.
      *
      * @param id The items id.
      * @param buffer The buffer in which to read the item data from.
+     * @return A single parsed item definition.
      */
     private static ItemDefinition parseDefinition(int id, ByteBuffer buffer) {
 	ItemDefinition def = new ItemDefinition(id);

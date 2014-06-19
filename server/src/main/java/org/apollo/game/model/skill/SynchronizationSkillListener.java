@@ -15,7 +15,7 @@ import org.apollo.game.sync.block.SynchronizationBlock;
 public final class SynchronizationSkillListener extends SkillAdapter {
 
     /**
-     * The player.
+     * The player who we are synchronization their skill set for.
      */
     private final Player player;
 

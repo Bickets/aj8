@@ -90,6 +90,11 @@ public final class InterfaceSet {
 	closeAndNotify();
     }
 
+    /**
+     * Opens a dialogue listener.
+     * 
+     * @param listener The dialogue listener to open.
+     */
     public void openDialogue(DialogueListener listener) {
 	closeAndNotify();
 
@@ -102,6 +107,13 @@ public final class InterfaceSet {
 	player.send(new OpenDialogueInterfaceMessage(dialogueId));
     }
 
+    /**
+     * Fires the dialogue listener option clicked event.
+     * 
+     * @param option The dialogue option clicked.
+     * @return {@code true} if and only if the event fired successfully,
+     *         otherwise {@code false}.
+     */
     public boolean optionClicked(DialogueOption option) {
 	if (dialogueListener != null) {
 	    return dialogueListener.optionClicked(option);

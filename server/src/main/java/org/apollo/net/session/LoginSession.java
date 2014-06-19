@@ -68,7 +68,7 @@ public final class LoginSession extends Session {
      * @param messageTranslator The message translator.
      * @param fileSystem The file system
      * @param playerSerializer The player serializer.
-     * @param gameSession The game session.
+     * @param gameService The game service.
      */
     public LoginSession(ChannelHandlerContext ctx, MessageTranslator messageTranslator, FileSystem fileSystem, PlayerSerializerWorker playerSerializer, GameService gameService) {
 	super(ctx);
@@ -146,6 +146,8 @@ public final class LoginSession extends Session {
      * request are invalid otherwise {@code false}.
      *
      * @param request The login request.
+     * @return {@code true} if and only if the specified login requests'
+     *         credentials were invalid, otherwise {@code false}.
      */
     private boolean badCredentials(LoginRequest request) {
 	String username = request.getCredentials().getUsername();

@@ -3,7 +3,7 @@ package org.apollo.game.msg.impl;
 import org.apollo.game.msg.Message;
 
 /**
- * A message issued by the client to send a {@code ::} command/
+ * A message issued by the client to send a {@code ::} command.
  *
  * @author Graham
  */

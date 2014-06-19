@@ -13,17 +13,17 @@ public final class Graphic {
     public static final Graphic STOP_GRAPHIC = new Graphic(-1);
 
     /**
-     * The id.
+     * The id of this graphic.
      */
     private final int id;
 
     /**
-     * The delay.
+     * The delay of this graphic.
      */
     private final int delay;
 
     /**
-     * The height.
+     * The height of this graphic.
      */
     private final int height;
 

@@ -24,7 +24,7 @@ public abstract class MakeItemOptionDialogueListener implements DialogueListener
     private final Item[] items;
 
     /**
-     * Constructs a new {@link MakeItemOptionDialogueListener}
+     * Constructs a new {@link MakeItemOptionDialogueListener}.
      *
      * @param items The items shown in this dialogue.
      * @throws NullPointerException If the {@code items} are null.

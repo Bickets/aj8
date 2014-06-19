@@ -7,7 +7,7 @@ import org.apollo.game.msg.annotate.HandlesMessage;
 import org.apollo.game.msg.impl.ButtonMessage;
 
 /**
- * An {@link MessageHandler} which responds to {@link ButtonMessage}'s
+ * An {@link MessageHandler} which responds to {@link ButtonMessage}'s.
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
@@ -15,7 +15,7 @@ import org.apollo.game.msg.impl.ButtonMessage;
 public final class ButtonMessageHandler extends MessageHandler<ButtonMessage> {
 
     /**
-     * The world
+     * The world used to get this worlds interaction handler.
      */
     private final World world;
 

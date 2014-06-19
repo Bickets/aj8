@@ -75,42 +75,42 @@ final class Server {
     private final ServerBootstrap jagGrabBootstrap;
 
     /**
-     * The service manager.
+     * The {@link ServiceManager} for initiating services.
      */
     private final ServiceManager serviceManager;
 
     /**
-     * The world.
+     * The {@link World} for the game service.
      */
     private final World world;
 
     /**
-     * The player serializer.
+     * The {@link PlayerSerializer} for managing save/load requests.
      */
     private final PlayerSerializerWorker playerSerializer;
 
     /**
-     * The game service.
+     * The {@link GameService} for managing the games pulse handler.
      */
     private final GameService gameService;
 
     /**
-     * The plugin service.
+     * The {@link PluginService} used to register all plugins.
      */
     private final PluginService pluginService;
 
     /**
-     * The update service.
+     * The {@link UpdateService} for managing file requests.
      */
     private final UpdateService updateService;
 
     /**
-     * The message translator.
+     * The {@link MessageTranslator} for translating messages to their handlers.
      */
     private final MessageTranslator messageTranslator;
 
     /**
-     * The file system.
+     * The {@link FileSystem} for building the servers file system.
      */
     private final FileSystem fileSystem;
 

@@ -148,11 +148,7 @@ public final class TextUtil {
     }
 
     /**
-     * Splits a {@code String} based on a delimiter of
-     *
-     * <pre>
-     * '\&quot;'
-     * </pre>
+     * Splits a {@code String} with a delimiter of ({@code "}).
      *
      * @param source The source string.
      * @return A split up {@code String} array based on the specified source.

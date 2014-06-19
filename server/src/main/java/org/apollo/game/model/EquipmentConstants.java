@@ -63,7 +63,7 @@ public final class EquipmentConstants {
     public static final int ARROWS = 13;
 
     /**
-     * Default private constructor to prevent instantiation;
+     * Default private constructor to prevent instantiation.
      */
     private EquipmentConstants() {
 

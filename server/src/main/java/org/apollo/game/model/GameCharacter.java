@@ -28,18 +28,19 @@ public abstract class GameCharacter extends Entity {
      */
     private static final AttributeKey<Boolean> TELEPORTING = AttributeKey.valueOf("teleporting", false);
 
+
     /**
-     * The walking queue.
+     * This characters walking queue.
      */
     private final WalkingQueue walkingQueue = new WalkingQueue(this);
 
     /**
-     * The first direction.
+     * This characters first direction.
      */
     private Direction firstDirection = Direction.NONE;
 
     /**
-     * The second direction.
+     * This characters second direction.
      */
     private Direction secondDirection = Direction.NONE;
 
@@ -59,7 +60,7 @@ public abstract class GameCharacter extends Entity {
     private final Set<Player> localPlayers = new LinkedHashSet<Player>();
 
     /**
-     * A set of local mobs
+     * A set of local mobs.
      */
     private final Set<Mob> localMobs = new LinkedHashSet<Mob>();
 

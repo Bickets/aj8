@@ -14,7 +14,7 @@ import org.apollo.game.sync.block.SynchronizationBlock;
 public final class AppearanceInventoryListener extends InventoryAdapter {
 
     /**
-     * The player.
+     * The player who is having their appearance updated.
      */
     private final Player player;
 

@@ -29,14 +29,14 @@ public final class FullInventoryListener extends InventoryAdapter {
     public static final String FULL_EQUIPMENT_MESSAGE = "Not enough equipment space.";
 
     /**
-     * The player.
+     * The player who we are notifying of a full inventory.
      */
     private final Player player;
 
     /**
      * The message to send when the capacity has been exceeded.
      */
-    private final Message message;
+    private final String message;
 
     /**
      * Creates the empty inventory listener.
@@ -46,12 +46,12 @@ public final class FullInventoryListener extends InventoryAdapter {
      */
     public FullInventoryListener(Player player, String message) {
 	this.player = player;
-	this.message = new ServerMessageMessage(message);
+	this.message = message;
     }
 
     @Override
     public void capacityExceeded(Inventory inventory) {
-	player.send(message);
+	player.sendMessage(message);
     }
 
 }

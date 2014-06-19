@@ -18,7 +18,7 @@ import org.apollo.util.LanguageUtil;
 public final class LevelUpSkillListener extends SkillAdapter {
 
     /**
-     * The player.
+     * The player who we are notifying of leveling up.
      */
     private final Player player;
 

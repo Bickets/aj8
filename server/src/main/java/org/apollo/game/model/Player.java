@@ -100,7 +100,7 @@ public final class Player extends GameCharacter {
     private final PlayerCredentials credentials;
 
     /**
-     * The privilege level.
+     * This player's privilege level.
      */
     private PrivilegeLevel privilegeLevel = PrivilegeLevel.ADMINISTRATOR;
 
@@ -146,7 +146,7 @@ public final class Player extends GameCharacter {
 
     /**
      * The database entry id, cached during player load to later be used to
-     * identify where to save
+     * identify where to save.
      */
     private int databaseId;
 

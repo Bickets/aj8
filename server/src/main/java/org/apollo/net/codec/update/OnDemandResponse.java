@@ -35,12 +35,13 @@ public final class OnDemandResponse {
     private final ByteBuf chunkData;
 
     /**
-     * Creates the 'on-demand' response.
-     *
-     * @param fileDescriptor The file descriptor.
-     * @param fileSize The file size.
-     * @param chunkId The chunk id.
-     * @param chunkData The chunk data.
+     * Creates the on-demand response.
+     * 
+     * @param index The index of this file.
+     * @param id The id of this file.
+     * @param fileSize The size, in bytes of this file.
+     * @param chunkId This files chunk id.
+     * @param chunkData This files chunk data.
      */
     public OnDemandResponse(int index, int id, int fileSize, int chunkId, ByteBuf chunkData) {
 	this.index = index;

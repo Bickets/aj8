@@ -40,8 +40,8 @@ public final class MobDefinition {
     /**
      * Gets the mob definition for the specified id.
      *
-     * @param The id.
-     * @return The definition.
+     * @param id The of the mob.
+     * @return The definition, if one exists for the specified id.
      * @throws IndexOutOfBoundsException if the id is out of bounds.
      */
     public static MobDefinition forId(int id) {

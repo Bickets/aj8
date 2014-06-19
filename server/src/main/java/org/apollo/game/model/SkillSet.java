@@ -28,7 +28,7 @@ public final class SkillSet {
     private final List<SkillListener> listeners = new ArrayList<>();
 
     /**
-     * The skills.
+     * A array of {@code Skill[]}s which represents each skill.
      */
     private final Skill[] skills = new Skill[SKILL_COUNT];
 

@@ -21,6 +21,7 @@ public final class AttributeMap {
      * {@link AttributeKey<T>}, if no key exists the initial value is returned
      * and the key is added.
      *
+     * @param <T> The attributes value type reference.
      * @param key The attribute key, may not be {@code null}.
      * @return The value of the attribute, never {@code null}.
      * @unchecked This method declares unchecked as the cast from
@@ -45,6 +46,7 @@ public final class AttributeMap {
      * Sets a specified attribute key to a specified value and returns the
      * value.
      *
+     * @param <T> The attributes value type reference.
      * @param key The attribute key, may not be {@code null}.
      * @param value The value of the attribute, may not be {@code null}.
      * @return The value of the attribute, will never be {@code null}.
@@ -62,6 +64,7 @@ public final class AttributeMap {
     /**
      * Sets a specified attribute key to a specified value.
      *
+     * @param <T> The attributes value type reference.
      * @param key The attribute key, may not be {@code null}.
      * @param value The value of the attribute, may not be {@code null}.
      * @throws NullPointerException If the specified key or value is
@@ -75,6 +78,7 @@ public final class AttributeMap {
      * Returns a flag which denotes whether or not an attribute key exists
      * within the {@link #attrs} map.
      *
+     * @param <T> The attributes value type reference.
      * @param key The attribute key, may not be {@code null}.
      * @return {@code true} if and only if the specified key exists within the
      *         attribute map, otherwise {@code false}.

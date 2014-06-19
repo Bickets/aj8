@@ -84,18 +84,26 @@ public abstract class SynchronizationBlock {
     }
 
     /**
-     * Creates a hit update block with the specified damage.
-     *
-     * @return The hit update block.
+     * Creates a hit update block.
+     * 
+     * @param damage The damage dealt.
+     * @param type The type of hit.
+     * @param currentHealth The current health.
+     * @param maximumHealth The maximum health.
+     * @return A new instance of {@link HitBlock}, never {@code null}.
      */
     public static SynchronizationBlock createHitUpdateBlock(int damage, int type, int currentHealth, int maximumHealth) {
 	return new HitBlock(damage, type, currentHealth, maximumHealth);
     }
 
     /**
-     * Creates a hit update block with the specified damage.
-     *
-     * @return The hit update block.
+     * Creates a second hit update block.
+     * 
+     * @param damage The damage dealt.
+     * @param type The type of hit.
+     * @param currentHealth The current health.
+     * @param maximumHealth The maximum health.
+     * @return A new instance of {@link SecondHitBlock}, never {@code null}.
      */
     public static SynchronizationBlock createSecondHitUpdateBlock(int damage, int type, int currentHealth, int maximumHealth) {
 	return new SecondHitBlock(damage, type, currentHealth, maximumHealth);

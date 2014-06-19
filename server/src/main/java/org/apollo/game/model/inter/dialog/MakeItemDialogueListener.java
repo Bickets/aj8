@@ -20,7 +20,7 @@ public abstract class MakeItemDialogueListener implements DialogueListener {
     private final Item item;
 
     /**
-     * Constructs a new {@link MakeItemDialogueListener}
+     * Constructs a new {@link MakeItemDialogueListener}.
      *
      * @param item The item shown in this make item statement.
      */

@@ -26,17 +26,17 @@ public final class SynchronizationInventoryListener extends InventoryAdapter {
     public static final int EQUIPMENT_ID = 1688;
 
     /**
-     * The player.
+     * The player who we are synchronization their inventory for.
      */
     private final Player player;
 
     /**
-     * The interface id.
+     * The interface id of the inventory to synchronize.
      */
     private final int interfaceId;
 
     /**
-     * Creates the syncrhonization inventory listener.
+     * Creates the synchronization inventory listener.
      *
      * @param player The player.
      * @param interfaceId The interface id.

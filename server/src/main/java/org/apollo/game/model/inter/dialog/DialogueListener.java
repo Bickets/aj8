@@ -13,7 +13,7 @@ public interface DialogueListener extends InterfaceListener {
 
     /**
      * Returns the type of this dialogue specified by some {@code enum} constant
-     * within {@link DialogueType}
+     * within {@link DialogueType}.
      */
     DialogueType type();
 
@@ -69,7 +69,7 @@ public interface DialogueListener extends InterfaceListener {
 
     /**
      * An event which is intended to be fired after an option was clicked during
-     * the dialogue type of {@link DialogueType#OPTION}
+     * the dialogue type of {@link DialogueType#OPTION}.
      *
      * @param option The option, only five option dialogues are supported.
      * @return A flag to determine whether or not the event was successful,

@@ -13,17 +13,17 @@ import org.apollo.game.model.inv.InventoryListener;
 public final class BankInterfaceListener implements InterfaceListener {
 
     /**
-     * The player.
+     * The player who is interacting with the bank.
      */
     private final Player player;
 
     /**
-     * The inventory listener.
+     * The inventory's inventory listener.
      */
     private final InventoryListener invListener;
 
     /**
-     * The bank listener.
+     * The bank's inventory listener.
      */
     private final InventoryListener bankListener;
 

@@ -11,9 +11,9 @@ import java.util.Map;
 public final class SynchronizationBlockSet implements Cloneable {
 
     /**
-     * The blocks.
+     * A map of synchronization block classes to synchronization block types.
      */
-    private final Map<Class<? extends SynchronizationBlock>, SynchronizationBlock> blocks = new HashMap<Class<? extends SynchronizationBlock>, SynchronizationBlock>();
+    private final Map<Class<? extends SynchronizationBlock>, SynchronizationBlock> blocks = new HashMap<>();
 
     /**
      * Adds a {@link SynchronizationBlock}.
@@ -22,8 +22,8 @@ public final class SynchronizationBlockSet implements Cloneable {
      */
     public void add(SynchronizationBlock block) {
 	Class<? extends SynchronizationBlock> clazz = block.getClass();
-	blocks.put(clazz, block); // this will overwrite old updates. best thing
-	// to do?
+	blocks.put(clazz, block);
+	// TODO: Cache old blocks!!!
     }
 
     @Override

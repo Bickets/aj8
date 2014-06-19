@@ -75,7 +75,7 @@ public enum DialogueOption {
     }
 
     /**
-     * Returns the dialogue option button identifiers
+     * Returns the dialogue option button identifiers.
      */
     public final int[] getIds() {
 	return ids;
@@ -89,7 +89,7 @@ public enum DialogueOption {
 
     /**
      * Returns an instance of {@link DialogueOption} from the specified id if
-     * the id exists within some dialogue option's {@link #ids}
+     * the id exists within some dialogue option's {@link #ids}.
      *
      * @param _id The id.
      * @return The dialogue option.

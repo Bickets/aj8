@@ -40,7 +40,7 @@ public class ObjectActionMessage extends Message {
     }
 
     /**
-     * Gets the interface option
+     * Gets the interface option.
      *
      * @return The interface option.
      */

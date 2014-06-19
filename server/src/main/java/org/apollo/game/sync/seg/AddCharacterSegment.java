@@ -35,6 +35,7 @@ public final class AddCharacterSegment extends SynchronizationSegment {
      * Creates the add gameCharacter segment.
      *
      * @param blockSet The block set.
+     * @param gameCharacter The game character we are adding.
      * @param index The characters's index.
      * @param id The characters id.
      * @param position The position.

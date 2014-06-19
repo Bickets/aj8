@@ -72,17 +72,17 @@ import org.apollo.net.meta.PacketMetaDataGroup;
 public final class MessageTranslator {
 
     /**
-     * A {@link Map} of {@link Integer}s to {@link MessageDecoder}s
+     * A {@link Map} of {@link Integer}s to {@link MessageDecoder}s.
      */
     private final Map<Integer, MessageDecoder<?>> decoders = new HashMap<>();
 
     /**
-     * A {@link Map} of {@link Class}' to {@link MessageEncoder}s
+     * A {@link Map} of {@link Class}' to {@link MessageEncoder}s.
      */
     private final Map<Class<?>, MessageEncoder<?>> encoders = new HashMap<>();
 
     /**
-     * A {@link Map} of {@link Class}' to {@link MessageHandler}s
+     * A {@link Map} of {@link Class}' to {@link MessageHandler}s.
      */
     private final Map<Class<?>, MessageHandler<?>> handlers = new HashMap<>();
 
@@ -92,7 +92,7 @@ public final class MessageTranslator {
     private final PacketMetaDataGroup incomingPacketMetaData = PacketMetaDataGroup.create();
 
     /**
-     * The world used for world message handlers
+     * The world used for world message handlers.
      */
     private final World world;
 
@@ -171,6 +171,8 @@ public final class MessageTranslator {
 
     /**
      * Registers an {@link MessageDecoder} to its respective map.
+     * 
+     * @param decoder The message decoder to register.
      */
     private void register(MessageDecoder<?> decoder) {
 	DecodesMessage annotation = decoder.getClass().getAnnotation(DecodesMessage.class);
@@ -184,6 +186,8 @@ public final class MessageTranslator {
 
     /**
      * Registers an {@link MessageEncoder} to its respective map.
+     * 
+     * @param encoder The message encoder to register.
      */
     private void register(MessageEncoder<?> encoder) {
 	EncodesMessage annotation = encoder.getClass().getAnnotation(EncodesMessage.class);
@@ -195,6 +199,8 @@ public final class MessageTranslator {
 
     /**
      * Registers an {@link MessageHandler} to its respective map.
+     * 
+     * @param handler The message handler to register.
      */
     private void register(MessageHandler<?> handler) {
 	HandlesMessage annotation = handler.getClass().getAnnotation(HandlesMessage.class);
@@ -205,10 +211,11 @@ public final class MessageTranslator {
     }
 
     /**
-     * Returns a decoded {@link Message} or {@code null} if the
-     * {@link MessageDecoder} does not exist for the specified packets opcode.
+     * Attempts to decode the specified {@code packet} into a {@link Message}.
      *
      * @param packet The packet.
+     * @return The decoded message if and only if it was decoded successfully,
+     *         otherwise {@code null}.
      */
     public Message decode(GamePacket packet) {
 	@SuppressWarnings("unchecked")
@@ -220,10 +227,11 @@ public final class MessageTranslator {
     }
 
     /**
-     * Returns an encoded {@link GamePacket} or {@code null} if the
-     * {@link MessageEncoder} does not exist for the specified message's class.
+     * Attempts to encode the specified {@code msg} into a {@link GamePacket}.
      *
      * @param msg The message.
+     * @return The encoded game packet, if and only if it was encoded
+     *         successfully, otherwise {@code null}.
      */
     public GamePacket encode(Message msg) {
 	@SuppressWarnings("unchecked")

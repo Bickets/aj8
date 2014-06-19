@@ -13,6 +13,7 @@ import org.apollo.game.task.Task;
  * scratch).
  *
  * @author Graham
+ * @param <T> The type of character performing this action.
  */
 public abstract class Action<T extends GameCharacter> extends Task {
 

@@ -115,6 +115,8 @@ public final class CompressionUtil {
      * Uncompresses a BZIP2 file.
      *
      * @param bytes The compressed bytes without the header.
+     * @param off The offset.
+     * @param length The length.
      * @return The uncompressed bytes.
      * @throws IOException if an I/O error occurs.
      */

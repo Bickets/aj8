@@ -20,7 +20,7 @@ import org.apollo.game.msg.impl.ItemActionMessage;
 public final class ItemActionMessageHandler extends MessageHandler<ItemActionMessage> {
 
     /**
-     * The world
+     * The world used to get this worlds interaction handler.
      */
     private final World world;
 

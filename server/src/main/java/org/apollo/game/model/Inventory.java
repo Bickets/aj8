@@ -216,7 +216,7 @@ public final class Inventory implements Cloneable {
     /**
      * Removes the item (if any) that is in the specified slot.
      *
-     * @param slot
+     * @param slot The slot to reset.
      * @return The item that was in the slot.
      * @throws IndexOutOfBoundsException if the slot is out of bounds.
      */

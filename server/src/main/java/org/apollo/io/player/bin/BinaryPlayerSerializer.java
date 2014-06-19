@@ -23,7 +23,14 @@ import org.apollo.net.codec.login.LoginConstants;
 import org.apollo.security.PlayerCredentials;
 import org.apollo.util.StreamUtil;
 
-public class BinaryPlayerSerializer implements PlayerSerializer {
+/**
+ * An implementation of {@link PlayerSerializer} used to save
+ * <code>Player</code>s as binary objects.
+ * 
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
+ * @author Graham Edgecombe
+ */
+public final class BinaryPlayerSerializer implements PlayerSerializer {
 
     @Override
     public void savePlayer(Player player) throws IOException {

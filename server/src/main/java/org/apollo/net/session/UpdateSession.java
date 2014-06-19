@@ -24,7 +24,7 @@ public final class UpdateSession extends Session {
     /**
      * Creates an update session for the specified channel.
      *
-     * @param service The update service.
+     * @param updateService The update service.
      * @param ctx The channels context.
      */
     public UpdateSession(ChannelHandlerContext ctx, UpdateService updateService) {

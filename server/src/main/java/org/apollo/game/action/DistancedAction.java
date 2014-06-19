@@ -8,6 +8,7 @@ import org.apollo.game.model.Position;
  *
  * @author Blake
  * @author Graham
+ * @param <T> The type of character performing this action.
  */
 public abstract class DistancedAction<T extends GameCharacter> extends Action<T> {
 

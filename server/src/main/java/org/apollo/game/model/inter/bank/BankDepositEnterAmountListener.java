@@ -11,7 +11,7 @@ import org.apollo.game.model.inter.EnterAmountListener;
 public final class BankDepositEnterAmountListener implements EnterAmountListener {
 
     /**
-     * The player.
+     * The player who is interacting with the bank.
      */
     private final Player player;
 

@@ -21,17 +21,17 @@ public final class LevelUpDefinition {
     private static LevelUpDefinition[] definitions;
 
     /**
-     * The interface id.
+     * The interface id of this definition.
      */
     private final int interfaceId;
 
     /**
-     * The first child id.
+     * The first child id of this definition.
      */
     private final int firstChildId;
 
     /**
-     * The second child id.
+     * The second child id of this definition.
      */
     private final int secondChildId;
 

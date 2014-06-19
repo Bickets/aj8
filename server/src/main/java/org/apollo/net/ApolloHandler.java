@@ -44,7 +44,7 @@ public final class ApolloHandler extends ChannelHandlerAdapter {
     private final MessageTranslator messageTranslator;
 
     /**
-     * The file system
+     * The file system.
      */
     private final FileSystem fileSystem;
 

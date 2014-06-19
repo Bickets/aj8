@@ -20,7 +20,7 @@ public final class EventDispatcher {
      * Registers the specified event subscriber.
      *
      * @param subscriber The event subscriber to register.
-     * @param E The type of event attached to the event subscriber.
+     * @param <E> The type of event attached to the event subscriber.
      */
     public <E extends Event> void register(EventSubscriber<E> subscriber) {
 	eventBus.register(subscriber);
@@ -30,7 +30,7 @@ public final class EventDispatcher {
      * Unregisters the specified event subscriber.
      *
      * @param subscriber The event subscriber to unregister.
-     * @param E The type of event attached to the event subscriber.
+     * @param <E> The type of event attached to the event subscriber.
      */
     public <E extends Event> void deregister(EventSubscriber<E> subscriber) {
 	eventBus.unregister(subscriber);

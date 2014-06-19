@@ -22,6 +22,7 @@ public final class MobDefinitionParser {
      *
      * @param fs The file system in which to read the mob data from.
      * @throws IOException If some I/O exception occurs.
+     * @return An array of parsed mob definitions.
      */
     public static MobDefinition[] parse(FileSystem fs) throws IOException {
 	Archive archive = fs.getArchive(FileSystem.CONFIG_ARCHIVE);
@@ -50,6 +51,7 @@ public final class MobDefinitionParser {
      *
      * @param id The id of the mob.
      * @param buffer The buffer in which to read the mob data from.
+     * @return A single parsed mob definition.
      */
     private static MobDefinition parseDefinition(int id, ByteBuffer buffer) {
 	MobDefinition def = new MobDefinition(id);

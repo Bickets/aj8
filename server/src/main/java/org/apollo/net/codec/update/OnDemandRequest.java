@@ -42,10 +42,11 @@ public final class OnDemandRequest implements Comparable<OnDemandRequest> {
     private final int priority;
 
     /**
-     * Creates the 'on-demand' request.
-     *
-     * @param fileDescriptor The file descriptor.
-     * @param priority The priority.
+     * Creates an on-demand request.
+     * 
+     * @param index The requested files index.
+     * @param id The requested files id.
+     * @param priority The priority of this file.
      */
     public OnDemandRequest(int index, int id, int priority) {
 	this.index = index;
