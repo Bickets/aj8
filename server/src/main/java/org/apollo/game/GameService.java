@@ -14,7 +14,8 @@ import org.apollo.game.task.TaskScheduler;
 import org.apollo.io.player.PlayerSerializerWorker;
 import org.apollo.net.session.GameSession;
 import org.apollo.service.Service;
-import org.apollo.util.NamedThreadFactory;
+
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 /**
  * The {@link GameService} class schedules and manages the execution of the
@@ -34,7 +35,7 @@ public final class GameService extends Service {
     /**
      * The scheduled executor service.
      */
-    private final ScheduledExecutorService scheduledExecutor = Executors.newSingleThreadScheduledExecutor(new NamedThreadFactory("GameService"));
+    private final ScheduledExecutorService scheduledExecutor = Executors.newSingleThreadScheduledExecutor(new ThreadFactoryBuilder().setNameFormat("GameService").build());
 
     /**
      * A queue of players to remove.
@@ -42,17 +43,17 @@ public final class GameService extends Service {
     private final Queue<Player> oldPlayers = new ConcurrentLinkedQueue<>();
 
     /**
-     * The client synchronizer.
+     * The {@link ClientSynchronizer} which manages the update sequence.
      */
     private final ClientSynchronizer clientSynchronizer;
 
     /**
-     * The player serializer.
+     * The {@link PlayerSerializerWorker} for managing save and load requests.
      */
-    private final PlayerSerializerWorker playerSerializer;
+    private final PlayerSerializerWorker serializerWorker;
 
     /**
-     * The world.
+     * The {@link World} for managing world events.
      */
     private final World world;
 
@@ -60,11 +61,11 @@ public final class GameService extends Service {
      * Constructs a new {@link GameService}.
      *
      * @param world The world.
-     * @param playerSerializer The player serializer
+     * @param serializerWorker The serializer worker.
      */
-    public GameService(World world, PlayerSerializerWorker playerSerializer) {
+    public GameService(World world, PlayerSerializerWorker serializerWorker) {
 	this.world = world;
-	this.playerSerializer = playerSerializer;
+	this.serializerWorker = serializerWorker;
 
 	clientSynchronizer = new ClientSynchronizer(world);
     }
@@ -82,7 +83,7 @@ public final class GameService extends Service {
 	    int unregistered = 0;
 	    Player old;
 	    while (unregistered < UNREGISTERS_PER_CYCLE && (old = oldPlayers.poll()) != null) {
-		playerSerializer.submitSaveRequest(old.getSession(), old);
+		serializerWorker.submitSaveRequest(old.getSession(), old);
 		unregistered++;
 	    }
 
@@ -132,6 +133,9 @@ public final class GameService extends Service {
 	}
     }
 
+    /**
+     * Returns the world instance.
+     */
     public World getWorld() {
 	return world;
     }

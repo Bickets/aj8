@@ -3,7 +3,6 @@ package org.apollo.game.sync;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Phaser;
-import java.util.concurrent.ThreadFactory;
 
 import org.apollo.game.GameService;
 import org.apollo.game.model.Mob;
@@ -18,7 +17,8 @@ import org.apollo.game.sync.task.PreMobSynchronizationTask;
 import org.apollo.game.sync.task.PrePlayerSynchronizationTask;
 import org.apollo.game.sync.task.SynchronizationTask;
 import org.apollo.util.EntityRepository;
-import org.apollo.util.NamedThreadFactory;
+
+import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 /**
  * The {@link ClientSynchronizer} manages the update sequence which keeps
@@ -34,19 +34,19 @@ import org.apollo.util.NamedThreadFactory;
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class ClientSynchronizer {
-
+    
     /**
      * The executor service.
      */
     private final ExecutorService executor;
 
     /**
-     * The phaser.
+     * The phaser, used as a concurrent lock when synchronizing the world.
      */
     private final Phaser phaser = new Phaser(1);
 
     /**
-     * The world.
+     * The world to synchronize.
      */
     private final World world;
 
@@ -60,10 +60,12 @@ public final class ClientSynchronizer {
     public ClientSynchronizer(World world) {
 	this.world = world;
 	int processors = Runtime.getRuntime().availableProcessors();
-	ThreadFactory factory = new NamedThreadFactory("ClientSynchronizer");
-	executor = Executors.newFixedThreadPool(processors, factory);
+	executor = Executors.newFixedThreadPool(processors, new ThreadFactoryBuilder().setNameFormat("Client-Synchronizer").build());
     }
 
+    /**
+     * Synchronizes the specified {@code world}, this method is thread-safe.
+     */
     public void synchronize() {
 	EntityRepository<Player> players = world.getPlayerRepository();
 	EntityRepository<Mob> mobs = world.getMobRepository();
