@@ -1,4 +1,4 @@
-package com.runescape.net.requester;
+package com.runescape.net.ondemand;
 
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
@@ -15,7 +15,7 @@ import com.runescape.collection.Queue;
 import com.runescape.net.Buffer;
 import com.runescape.util.Signlink;
 
-public class OndemandController extends Requester implements Runnable {
+public class OnDemandController extends Requester implements Runnable {
 
     private int extrasTotal;
     private final LinkedList sentRequests = new LinkedList();

@@ -7,7 +7,7 @@ import com.runescape.media.renderable.GameObject;
 import com.runescape.media.renderable.Model;
 import com.runescape.media.renderable.Renderable;
 import com.runescape.net.Buffer;
-import com.runescape.net.requester.OndemandController;
+import com.runescape.net.ondemand.OnDemandController;
 import com.runescape.scene.util.PlacementUtils;
 import com.runescape.scene.util.TraversalMap;
 import com.runescape.util.Signlink;
@@ -422,7 +422,7 @@ public class Region {
 	return mapHeight;
     }
 
-    public static final void passiveRequestGameObjectModels(Buffer buffer, OndemandController onDemandRequester) {
+    public static final void passiveRequestGameObjectModels(Buffer buffer, OnDemandController onDemandRequester) {
 	int gameObjectId = -1;
 	while (true) {
 	    int gameObjectIdOffset = buffer.getSmartB();

@@ -1,4 +1,4 @@
-package com.runescape.net.requester;
+package com.runescape.net.ondemand;
 
 import com.runescape.collection.CacheableNode;
 

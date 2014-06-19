@@ -48,8 +48,8 @@ import com.runescape.media.renderable.mob.Player;
 import com.runescape.net.Buffer;
 import com.runescape.net.ISAACCipher;
 import com.runescape.net.SocketBuffer;
-import com.runescape.net.requester.ArchiveRequest;
-import com.runescape.net.requester.OndemandController;
+import com.runescape.net.ondemand.ArchiveRequest;
+import com.runescape.net.ondemand.OnDemandController;
 import com.runescape.scene.Region;
 import com.runescape.scene.Scene;
 import com.runescape.scene.SceneSpawnRequest;
@@ -301,7 +301,7 @@ public class Game extends GameShell {
     private final int[] characterEditIdentityKits = new int[7];
     private int anInt1091;
     private int anInt1092;
-    private OndemandController onDemandRequester;
+    private OnDemandController onDemandRequester;
     private int anInt1094;
     private int anInt1095;
     private int minimapHintCount;
@@ -6751,7 +6751,7 @@ public class Game extends GameShell {
 	    minimapImage = new ImageRGB(512, 512);
 	    Archive archiveCRC = requestArchive(5, "update list", "versionlist", crcValues[5], 60);
 	    drawLoadingText(60, "Connecting to update server");
-	    onDemandRequester = new OndemandController();
+	    onDemandRequester = new OnDemandController();
 	    onDemandRequester.init(archiveCRC, this);
 	    Animation.method148(onDemandRequester.animCount());
 	    Model.init(onDemandRequester.fileCount(0), onDemandRequester);

@@ -6,7 +6,7 @@ import com.runescape.media.Rasterizer3D;
 import com.runescape.media.Skins;
 import com.runescape.media.VertexNormal;
 import com.runescape.net.Buffer;
-import com.runescape.net.requester.Requester;
+import com.runescape.net.ondemand.Requester;
 import com.runescape.util.Signlink;
 
 public class Model extends Renderable {

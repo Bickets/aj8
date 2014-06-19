@@ -7,7 +7,7 @@ import com.runescape.collection.Cache;
 import com.runescape.media.Animation;
 import com.runescape.media.renderable.Model;
 import com.runescape.net.Buffer;
-import com.runescape.net.requester.OndemandController;
+import com.runescape.net.ondemand.OnDemandController;
 
 public class GameObjectDefinition {
 
@@ -113,7 +113,7 @@ public class GameObjectDefinition {
 	childrenIds = null;
     }
 
-    public final void passiveRequestModels(OndemandController onDemandRequester) {
+    public final void passiveRequestModels(OnDemandController onDemandRequester) {
 	if (modelIds != null) {
 	    for (int modelId : modelIds) {
 		onDemandRequester.passiveRequest(modelId & 0xffff, 0);
