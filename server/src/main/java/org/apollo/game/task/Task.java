@@ -32,7 +32,7 @@ public abstract class Task {
      *             zero.
      */
     public Task(int delay, boolean immediate) {
-	setDelay(delay);
+	this.delay = delay;
 	pulses = immediate ? 0 : delay;
     }
 

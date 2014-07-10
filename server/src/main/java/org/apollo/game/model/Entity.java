@@ -2,8 +2,18 @@ package org.apollo.game.model;
 
 import org.apollo.util.EntityRepository;
 
+/**
+ * Represents an entity within the game world.
+ * 
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
+ */
 public abstract class Entity {
 
+    /**
+     * Represents the type of this entity.
+     * 
+     * @author Ryley Kimmel <ryley.kimmel@live.com>
+     */
     public enum EntityType {
 	PLAYER, MOB, GROUND_ITEM, GAME_OBJECT, PROJECTILE
     }
@@ -44,6 +54,19 @@ public abstract class Entity {
 	}
     }
 
+    /**
+     * Resets the index of this entity, freeing it within its
+     * {@link EntityRepository}.
+     */
+    public void resetIndex() {
+	synchronized (this) {
+	    index = -1;
+	}
+    }
+
+    /**
+     * Returns the type of this entity.
+     */
     public abstract EntityType getType();
 
 }

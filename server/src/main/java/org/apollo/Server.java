@@ -15,6 +15,7 @@ import org.apollo.fs.FileSystem;
 import org.apollo.game.GameService;
 import org.apollo.game.model.World;
 import org.apollo.game.msg.MessageTranslator;
+import org.apollo.io.player.PlayerSerializer;
 import org.apollo.io.player.PlayerSerializerWorker;
 import org.apollo.io.player.jdbc.JdbcPlayerSerializer;
 import org.apollo.net.ApolloHandler;

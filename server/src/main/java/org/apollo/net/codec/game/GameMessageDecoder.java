@@ -24,7 +24,7 @@ public final class GameMessageDecoder extends MessageToMessageDecoder<GamePacket
     /**
      * Constructs a new {@link GameMessageDecoder}.
      *
-     * @param translator The messa translator.
+     * @param translator The message translator.
      */
     public GameMessageDecoder(MessageTranslator translator) {
 	this.translator = translator;

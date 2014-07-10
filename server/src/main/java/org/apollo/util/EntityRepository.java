@@ -65,11 +65,11 @@ public final class EntityRepository<T extends Entity> implements Iterable<T> {
      *         has reached the capacity of this repository.
      */
     public boolean add(T entity) {
-	if (size == entities.length) {
+	if (size == capacity()) {
 	    return false;
 	}
 	int index = -1;
-	for (int i = pointer; i < entities.length; i++) {
+	for (int i = pointer; i < capacity(); i++) {
 	    if (entities[i] == null) {
 		index = i;
 		break;
@@ -88,7 +88,7 @@ public final class EntityRepository<T extends Entity> implements Iterable<T> {
 	}
 	entities[index] = entity;
 	entity.setIndex(index + 1);
-	if (index == entities.length - 1) {
+	if (index == capacity() - 1) {
 	    pointer = 0;
 	} else {
 	    pointer = index;
@@ -106,17 +106,16 @@ public final class EntityRepository<T extends Entity> implements Iterable<T> {
      */
     public boolean remove(T entity) {
 	int index = entity.getIndex() - 1;
-	if (index < 0 || index >= entities.length) {
+	if (index < 0 || index >= capacity()) {
 	    return false;
 	}
 	if (entities[index] == entity) {
 	    entities[index] = null;
-	    entity.setIndex(-1);
+	    entity.resetIndex();
 	    size--;
 	    return true;
-	} else {
-	    return false;
 	}
+	return false;
     }
 
     @Override
@@ -144,7 +143,7 @@ public final class EntityRepository<T extends Entity> implements Iterable<T> {
 
 	@Override
 	public boolean hasNext() {
-	    for (int i = index; i < entities.length; i++) {
+	    for (int i = index; i < capacity(); i++) {
 		if (entities[i] != null) {
 		    index = i;
 		    return true;
@@ -157,7 +156,7 @@ public final class EntityRepository<T extends Entity> implements Iterable<T> {
 	@Override
 	public T next() {
 	    T entity = null;
-	    for (int i = index; i < entities.length; i++) {
+	    for (int i = index; i < capacity(); i++) {
 		if (entities[i] != null) {
 		    entity = (T) entities[i];
 		    index = i;

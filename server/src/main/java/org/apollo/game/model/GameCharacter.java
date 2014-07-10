@@ -28,7 +28,6 @@ public abstract class GameCharacter extends Entity {
      */
     private static final AttributeKey<Boolean> TELEPORTING = AttributeKey.valueOf("teleporting", false);
 
-
     /**
      * This characters walking queue.
      */

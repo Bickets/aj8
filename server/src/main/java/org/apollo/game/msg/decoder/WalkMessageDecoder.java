@@ -23,8 +23,10 @@ public final class WalkMessageDecoder extends MessageDecoder<WalkMessage> {
 	GamePacketReader reader = new GamePacketReader(packet);
 
 	int length = packet.getLength();
+
+	/* The force walk packet has an extra unused 14 bytes, let's get rid of them. */
 	if (packet.getOpcode() == 248) {
-	    length -= 14; // strip off anti-cheat data
+	    length -= 14;
 	}
 
 	int steps = (length - 5) / 2;

@@ -10,7 +10,7 @@ import org.apollo.game.model.inter.InterfaceListener;
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public interface DialogueListener extends InterfaceListener {
-
+    
     /**
      * Returns the type of this dialogue specified by some {@code enum} constant
      * within {@link DialogueType}.

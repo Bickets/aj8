@@ -12,9 +12,4 @@ public abstract class Service {
      */
     public abstract void start();
 
-    @Override
-    public final String toString() {
-	return getClass().getSimpleName();
-    }
-
 }

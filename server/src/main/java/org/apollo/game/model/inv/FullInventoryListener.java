@@ -2,8 +2,6 @@ package org.apollo.game.model.inv;
 
 import org.apollo.game.model.Inventory;
 import org.apollo.game.model.Player;
-import org.apollo.game.msg.Message;
-import org.apollo.game.msg.impl.ServerMessageMessage;
 
 /**
  * An {@link InventoryListener} which sends a message to a player when an
