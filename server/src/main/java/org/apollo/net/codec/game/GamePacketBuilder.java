@@ -4,7 +4,6 @@ import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 
 import org.apollo.net.NetworkConstants;
-import org.apollo.net.meta.PacketType;
 
 /**
  * A class which assists in creating a {@link GamePacket}.
@@ -19,9 +18,9 @@ public final class GamePacketBuilder {
     private final int opcode;
 
     /**
-     * The {@link PacketType}.
+     * The {@link GamePacketType}.
      */
-    private final PacketType type;
+    private final GamePacketType type;
 
     /**
      * The buffer.
@@ -43,17 +42,17 @@ public final class GamePacketBuilder {
      */
     public GamePacketBuilder() {
 	opcode = -1;
-	type = PacketType.RAW;
+	type = GamePacketType.RAW;
     }
 
     /**
-     * Creates the {@link GamePacketBuilder} for a {@link PacketType#FIXED}
+     * Creates the {@link GamePacketBuilder} for a {@link GamePacketType#FIXED}
      * packet with the specified opcode.
      *
      * @param opcode The opcode.
      */
     public GamePacketBuilder(int opcode) {
-	this(opcode, PacketType.FIXED);
+	this(opcode, GamePacketType.FIXED);
     }
 
     /**
@@ -63,7 +62,7 @@ public final class GamePacketBuilder {
      * @param opcode The opcode.
      * @param type The packet type.
      */
-    public GamePacketBuilder(int opcode, PacketType type) {
+    public GamePacketBuilder(int opcode, GamePacketType type) {
 	this.opcode = opcode;
 	this.type = type;
     }
@@ -77,7 +76,7 @@ public final class GamePacketBuilder {
      *             or if the packet is raw.
      */
     public GamePacket toGamePacket() {
-	if (type == PacketType.RAW) {
+	if (type == GamePacketType.RAW) {
 	    throw new IllegalStateException("Raw packets cannot be converted to a game packet");
 	}
 	if (mode != AccessMode.BYTE_ACCESS) {
@@ -133,7 +132,7 @@ public final class GamePacketBuilder {
      */
     public void putRawBuilder(GamePacketBuilder builder) {
 	checkByteAccess();
-	if (builder.type != PacketType.RAW) {
+	if (builder.type != GamePacketType.RAW) {
 	    throw new IllegalArgumentException("Builder must be raw!");
 	}
 	builder.checkByteAccess();
@@ -148,7 +147,7 @@ public final class GamePacketBuilder {
      */
     public void putRawBuilderReverse(GamePacketBuilder builder) {
 	checkByteAccess();
-	if (builder.type != PacketType.RAW) {
+	if (builder.type != GamePacketType.RAW) {
 	    throw new IllegalArgumentException("Builder must be raw!");
 	}
 	builder.checkByteAccess();

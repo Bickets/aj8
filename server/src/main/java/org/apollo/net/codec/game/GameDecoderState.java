@@ -26,6 +26,6 @@ public enum GameDecoderState {
      * will pass a {@link GamePacket} object to Netty and reset the state back
      * to the game opcode state, ready for the next packet.
      */
-    GAME_PAYLOAD;
+    GAME_PAYLOAD
 
 }

@@ -6,7 +6,7 @@ import org.apollo.game.msg.MessageEncoder;
 import org.apollo.game.msg.annotate.EncodesMessage;
 import org.apollo.game.msg.impl.EnterAmountMessage;
 import org.apollo.net.codec.game.GamePacket;
-import org.apollo.net.meta.PacketType;
+import org.apollo.net.codec.game.GamePacketType;
 
 /**
  * An {@link MessageEncoder} for the {@link EnterAmountMessage}.
@@ -18,7 +18,7 @@ public final class EnterAmountMessageEncoder extends MessageEncoder<EnterAmountM
 
     @Override
     public GamePacket encode(EnterAmountMessage message) {
-	return new GamePacket(27, PacketType.FIXED, Unpooled.EMPTY_BUFFER);
+	return new GamePacket(27, GamePacketType.FIXED, Unpooled.EMPTY_BUFFER);
     }
 
 }

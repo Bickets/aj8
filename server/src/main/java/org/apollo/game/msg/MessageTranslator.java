@@ -59,8 +59,6 @@ import org.apollo.game.msg.handler.ObjectMessageHandler;
 import org.apollo.game.msg.handler.SwitchItemMessageHandler;
 import org.apollo.game.msg.handler.WalkMessageHandler;
 import org.apollo.net.codec.game.GamePacket;
-import org.apollo.net.meta.PacketMetaData;
-import org.apollo.net.meta.PacketMetaDataGroup;
 
 /**
  * The responsibility of this class is to translate registered {@link Message}'s
@@ -85,11 +83,6 @@ public final class MessageTranslator {
      * A {@link Map} of {@link Class}' to {@link MessageHandler}s.
      */
     private final Map<Class<?>, MessageHandler<?>> handlers = new HashMap<>();
-
-    /**
-     * The incoming packet meta data.
-     */
-    private final PacketMetaDataGroup incomingPacketMetaData = PacketMetaDataGroup.create();
 
     /**
      * The world used for world message handlers.
@@ -256,15 +249,6 @@ public final class MessageTranslator {
 	    return;
 	}
 	handler.handle(player, msg);
-    }
-
-    /**
-     * Returns data about packet data for a specified opcode.
-     *
-     * @param opcode The opcode.
-     */
-    public PacketMetaData getIncomingPacketMetaData(int opcode) {
-	return incomingPacketMetaData.getMetaData(opcode);
     }
 
 }

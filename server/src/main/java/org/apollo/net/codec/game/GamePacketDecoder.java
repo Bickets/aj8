@@ -1,23 +1,26 @@
 package org.apollo.net.codec.game;
 
+import static org.apollo.game.model.def.GamePacketDefinition.VAR_BYTE;
+import static org.apollo.game.model.def.GamePacketDefinition.incomingDefinition;
+import static org.apollo.net.codec.game.GameDecoderState.GAME_LENGTH;
+import static org.apollo.net.codec.game.GameDecoderState.GAME_OPCODE;
+import static org.apollo.net.codec.game.GameDecoderState.GAME_PAYLOAD;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.ByteToMessageDecoder;
 
 import java.util.List;
 
 import net.burtleburtle.bob.rand.IsaacAlgorithm;
 
-import org.apollo.game.msg.MessageTranslator;
-import org.apollo.net.meta.PacketMetaData;
-import org.apollo.net.meta.PacketType;
-import org.apollo.util.StatefulByteToMessageDecoder;
+import org.apollo.game.model.def.GamePacketDefinition;
 
 /**
  * A {@link StatefulByteToMessageDecoder} which decodes game packets.
  *
  * @author Graham
  */
-public final class GamePacketDecoder extends StatefulByteToMessageDecoder<GameDecoderState> {
+public final class GamePacketDecoder extends ByteToMessageDecoder {
 
     /**
      * The random number generator.
@@ -32,7 +35,7 @@ public final class GamePacketDecoder extends StatefulByteToMessageDecoder<GameDe
     /**
      * The packet type.
      */
-    private PacketType type;
+    private GamePacketType type;
 
     /**
      * The current length.
@@ -40,108 +43,70 @@ public final class GamePacketDecoder extends StatefulByteToMessageDecoder<GameDe
     private int length;
 
     /**
-     * The message translator.
+     * The actual length.
      */
-    private final MessageTranslator translator;
+    private int actualLength;
+
+    /**
+     * The current decode state.
+     */
+    private GameDecoderState state = GAME_OPCODE;
 
     /**
      * Creates the {@link GamePacketDecoder}.
      *
      * @param random The random number generator.
-     * @param translator The message translator.
      */
-    public GamePacketDecoder(IsaacAlgorithm random, MessageTranslator translator) {
-	super(GameDecoderState.GAME_OPCODE);
+    public GamePacketDecoder(IsaacAlgorithm random) {
 	this.random = random;
-	this.translator = translator;
     }
 
     @Override
-    protected void decode(ChannelHandlerContext ctx, ByteBuf buffer, List<Object> out, GameDecoderState state) {
-	switch (state) {
-	case GAME_OPCODE:
-	    decodeOpcode(ctx, buffer, out);
-	    break;
-	case GAME_LENGTH:
-	    decodeLength(ctx, buffer, out);
-	    break;
-	case GAME_PAYLOAD:
-	    decodePayload(ctx, buffer, out);
-	    break;
-	default:
-	    throw new IllegalStateException("Invalid game decoder state");
-	}
-    }
+    protected void decode(ChannelHandlerContext ctx, ByteBuf buffer, List<Object> out) {
+	while (buffer.isReadable()) {
+	    if (state == GAME_OPCODE) {
 
-    /**
-     * Decodes the opcode state.
-     *
-     * @param ctx The channels context.
-     * @param in The input buffer.
-     * @param out The {@link List} to which written data should be added to.
-     */
-    private void decodeOpcode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
-	if (!in.isReadable()) {
-	    return;
-	}
+		opcode = buffer.readByte() - random.nextInt() & 0xFF;
 
-	int encryptedOpcode = in.readUnsignedByte();
-	opcode = encryptedOpcode - random.nextInt() & 0xFF;
+		GamePacketDefinition def = incomingDefinition(opcode);
+		if (def == null) {
+		    throw new RuntimeException("Illegal opcode: " + opcode);
+		}
 
-	PacketMetaData metaData = translator.getIncomingPacketMetaData(opcode);
-	if (metaData == null) {
-	    throw new IllegalStateException("Illegal opcode: " + opcode);
-	}
+		length = actualLength = def.getLength();
+		type = def.getType();
 
-	type = metaData.getType();
-	switch (type) {
-	case FIXED:
-	    length = metaData.getLength();
-	    if (length != 0) {
-		setState(GameDecoderState.GAME_PAYLOAD);
+		state = length >= 0 ? GAME_PAYLOAD : GAME_LENGTH;
 	    }
-	    break;
-	case VARIABLE_BYTE:
-	    setState(GameDecoderState.GAME_LENGTH);
-	    break;
-	default:
-	    throw new IllegalStateException("Illegal packet type: " + type);
-	}
-    }
 
-    /**
-     * Decodes the length state.
-     *
-     * @param ctx The channels context.
-     * @param in The input buffer.
-     * @param out The {@link List} to which written data should be added to.
-     */
-    private void decodeLength(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
-	if (!in.isReadable()) {
-	    return;
-	}
+	    if (state == GAME_LENGTH) {
 
-	length = in.readUnsignedByte();
-	if (length != 0) {
-	    setState(GameDecoderState.GAME_PAYLOAD);
-	}
-    }
+		int check = length == VAR_BYTE ? 1 : 2;
+		if (!buffer.isReadable(check)) {
+		    return;
+		}
 
-    /**
-     * Decodes the payload state.
-     *
-     * @param ctx The channels context.
-     * @param in The input buffer.
-     * @param out The {@link List} to which written data should be added to.
-     */
-    private void decodePayload(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
-	if (in.readableBytes() < length) {
-	    return;
-	}
+		actualLength = 0;
+		for (int i = 0; i < check; i++) {
+		    actualLength |= (buffer.readByte() & 0xFF) << 8 * ((check - 1) - i);
+		}
 
-	ByteBuf payload = in.readBytes(length);
-	setState(GameDecoderState.GAME_OPCODE);
-	out.add(new GamePacket(opcode, type, payload));
+		state = GAME_PAYLOAD;
+	    }
+
+	    if (state == GAME_PAYLOAD) {
+
+		if (!buffer.isReadable(actualLength)) {
+		    return;
+		}
+
+		ByteBuf packetBuf = buffer.readBytes(actualLength);
+
+		out.add(new GamePacket(opcode, type, packetBuf));
+
+		state = GAME_OPCODE;
+	    }
+	}
     }
 
 }

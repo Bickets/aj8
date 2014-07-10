@@ -5,7 +5,7 @@ import org.apollo.game.msg.annotate.EncodesMessage;
 import org.apollo.game.msg.impl.ServerMessageMessage;
 import org.apollo.net.codec.game.GamePacket;
 import org.apollo.net.codec.game.GamePacketBuilder;
-import org.apollo.net.meta.PacketType;
+import org.apollo.net.codec.game.GamePacketType;
 
 /**
  * An {@link MessageEncoder} for the {@link ServerMessageMessage}.
@@ -17,7 +17,7 @@ public final class ServerMessageMessageEncoder extends MessageEncoder<ServerMess
 
     @Override
     public GamePacket encode(ServerMessageMessage message) {
-	GamePacketBuilder builder = new GamePacketBuilder(253, PacketType.VARIABLE_BYTE);
+	GamePacketBuilder builder = new GamePacketBuilder(253, GamePacketType.VARIABLE_BYTE);
 	builder.putString(message.getMessage());
 	return builder.toGamePacket();
     }

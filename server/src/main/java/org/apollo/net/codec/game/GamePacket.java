@@ -2,8 +2,6 @@ package org.apollo.net.codec.game;
 
 import io.netty.buffer.ByteBuf;
 
-import org.apollo.net.meta.PacketType;
-
 /**
  * Represents a single packet used in the in-game protocol.
  *
@@ -19,7 +17,7 @@ public final class GamePacket {
     /**
      * The packet type.
      */
-    private final PacketType type;
+    private final GamePacketType type;
 
     /**
      * The length.
@@ -38,10 +36,10 @@ public final class GamePacket {
      * @param type The packet type.
      * @param payload The payload.
      */
-    public GamePacket(int opcode, PacketType type, ByteBuf payload) {
+    public GamePacket(int opcode, GamePacketType type, ByteBuf payload) {
 	this.opcode = opcode;
 	this.type = type;
-	length = payload.readableBytes();
+	length = payload.writerIndex();
 	this.payload = payload;
     }
 
@@ -77,7 +75,7 @@ public final class GamePacket {
      *
      * @return The packet type.
      */
-    public PacketType getType() {
+    public GamePacketType getType() {
 	return type;
     }
 

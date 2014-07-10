@@ -7,7 +7,7 @@ import org.apollo.net.codec.game.DataTransformation;
 import org.apollo.net.codec.game.DataType;
 import org.apollo.net.codec.game.GamePacket;
 import org.apollo.net.codec.game.GamePacketBuilder;
-import org.apollo.net.meta.PacketType;
+import org.apollo.net.codec.game.GamePacketType;
 
 /**
  * An {@link MessageEncoder} for the {@link SetInterfaceTextMessage}.
@@ -19,7 +19,7 @@ public final class SetInterfaceTextMessageEncoder extends MessageEncoder<SetInte
 
     @Override
     public GamePacket encode(SetInterfaceTextMessage message) {
-	GamePacketBuilder builder = new GamePacketBuilder(126, PacketType.VARIABLE_SHORT);
+	GamePacketBuilder builder = new GamePacketBuilder(126, GamePacketType.VARIABLE_SHORT);
 	builder.putString(message.getText());
 	builder.put(DataType.SHORT, DataTransformation.ADD, message.getInterfaceId());
 

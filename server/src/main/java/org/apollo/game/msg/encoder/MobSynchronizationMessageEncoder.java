@@ -25,7 +25,7 @@ import org.apollo.net.codec.game.DataTransformation;
 import org.apollo.net.codec.game.DataType;
 import org.apollo.net.codec.game.GamePacket;
 import org.apollo.net.codec.game.GamePacketBuilder;
-import org.apollo.net.meta.PacketType;
+import org.apollo.net.codec.game.GamePacketType;
 
 /**
  * Encodes the {@link MobSynchronizationMessage}.
@@ -37,7 +37,7 @@ public final class MobSynchronizationMessageEncoder extends MessageEncoder<MobSy
 
     @Override
     public GamePacket encode(MobSynchronizationMessage message) {
-	GamePacketBuilder builder = new GamePacketBuilder(65, PacketType.VARIABLE_SHORT);
+	GamePacketBuilder builder = new GamePacketBuilder(65, GamePacketType.VARIABLE_SHORT);
 	builder.switchToBitAccess();
 
 	GamePacketBuilder blockBuilder = new GamePacketBuilder();

@@ -202,7 +202,7 @@ public final class LoginSession extends Session {
 	    channel.pipeline().addFirst("messageEncoder", new GameMessageEncoder(messageTranslator));
 	    channel.pipeline().addBefore("messageEncoder", "gameEncoder", new GamePacketEncoder(randomPair.getEncodingRandom()));
 
-	    channel.pipeline().addBefore("handler", "gameDecoder", new GamePacketDecoder(randomPair.getDecodingRandom(), messageTranslator));
+	    channel.pipeline().addBefore("handler", "gameDecoder", new GamePacketDecoder(randomPair.getDecodingRandom()));
 	    channel.pipeline().addAfter("gameDecoder", "messageDecoder", new GameMessageDecoder(messageTranslator));
 
 	    channel.pipeline().remove("loginDecoder");

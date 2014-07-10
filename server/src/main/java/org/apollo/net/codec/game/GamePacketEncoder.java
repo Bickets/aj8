@@ -1,22 +1,16 @@
 package org.apollo.net.codec.game;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
-import io.netty.handler.codec.MessageToMessageEncoder;
-
-import java.util.List;
-
+import io.netty.handler.codec.MessageToByteEncoder;
 import net.burtleburtle.bob.rand.IsaacAlgorithm;
-
-import org.apollo.net.meta.PacketType;
 
 /**
  * A {@link OneToOneEncoder} which encodes in-game packets.
  *
  * @author Graham
  */
-public final class GamePacketEncoder extends MessageToMessageEncoder<GamePacket> {
+public final class GamePacketEncoder extends MessageToByteEncoder<GamePacket> {
 
     /**
      * The random number generator.
@@ -33,33 +27,21 @@ public final class GamePacketEncoder extends MessageToMessageEncoder<GamePacket>
     }
 
     @Override
-    protected void encode(ChannelHandlerContext ctx, GamePacket msg, List<Object> out) {
-	PacketType type = msg.getType();
-	int headerLength = 1;
-	int payloadLength = msg.getLength();
+    protected void encode(ChannelHandlerContext ctx, GamePacket msg, ByteBuf out) throws Exception {
+	out.writeByte(msg.getOpcode() + random.nextInt() & 0xFF);
 
-	if (type == PacketType.VARIABLE_BYTE) {
-	    headerLength++;
-	    if (payloadLength >= 256) {
-		throw new IllegalStateException("Payload too long for variable byte packet");
-	    }
-	} else if (type == PacketType.VARIABLE_SHORT) {
-	    headerLength += 2;
-	    if (payloadLength >= 65536) {
-		throw new IllegalStateException("Payload too long for variable short packet");
-	    }
+	switch (msg.getType()) {
+	case VARIABLE_BYTE:
+	    out.writeByte(msg.getLength());
+	    break;
+	case VARIABLE_SHORT:
+	    out.writeShort(msg.getLength());
+	    break;
+	default:
+	    break;
 	}
 
-	ByteBuf buffer = Unpooled.buffer(headerLength + payloadLength);
-	buffer.writeByte(msg.getOpcode() + random.nextInt() & 0xFF);
-
-	if (type == PacketType.VARIABLE_BYTE) {
-	    buffer.writeByte(payloadLength);
-	} else if (type == PacketType.VARIABLE_SHORT) {
-	    buffer.writeShort(payloadLength);
-	}
-
-	out.add(buffer.writeBytes(msg.getPayload()));
+	out.writeBytes(msg.getPayload());
     }
 
 }

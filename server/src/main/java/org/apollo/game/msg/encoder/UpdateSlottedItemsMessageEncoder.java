@@ -8,7 +8,7 @@ import org.apollo.game.msg.impl.UpdateSlottedItemsMessage;
 import org.apollo.net.codec.game.DataType;
 import org.apollo.net.codec.game.GamePacket;
 import org.apollo.net.codec.game.GamePacketBuilder;
-import org.apollo.net.meta.PacketType;
+import org.apollo.net.codec.game.GamePacketType;
 
 /**
  * An {@link MessageEncoder} for the {@link UpdateSlottedItemsMessage}.
@@ -20,7 +20,7 @@ public final class UpdateSlottedItemsMessageEncoder extends MessageEncoder<Updat
 
     @Override
     public GamePacket encode(UpdateSlottedItemsMessage message) {
-	GamePacketBuilder builder = new GamePacketBuilder(34, PacketType.VARIABLE_SHORT);
+	GamePacketBuilder builder = new GamePacketBuilder(34, GamePacketType.VARIABLE_SHORT);
 	SlottedItem[] items = message.getSlottedItems();
 
 	builder.put(DataType.SHORT, message.getInterfaceId());

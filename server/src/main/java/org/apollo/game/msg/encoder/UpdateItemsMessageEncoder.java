@@ -9,7 +9,7 @@ import org.apollo.net.codec.game.DataTransformation;
 import org.apollo.net.codec.game.DataType;
 import org.apollo.net.codec.game.GamePacket;
 import org.apollo.net.codec.game.GamePacketBuilder;
-import org.apollo.net.meta.PacketType;
+import org.apollo.net.codec.game.GamePacketType;
 
 /**
  * An {@link MessageEncoder} for the {@link UpdateItemsMessage}.
@@ -21,7 +21,7 @@ public final class UpdateItemsMessageEncoder extends MessageEncoder<UpdateItemsM
 
     @Override
     public GamePacket encode(UpdateItemsMessage message) {
-	GamePacketBuilder builder = new GamePacketBuilder(53, PacketType.VARIABLE_SHORT);
+	GamePacketBuilder builder = new GamePacketBuilder(53, GamePacketType.VARIABLE_SHORT);
 
 	Item[] items = message.getItems();
 

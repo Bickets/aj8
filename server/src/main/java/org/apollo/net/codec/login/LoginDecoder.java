@@ -2,6 +2,7 @@ package org.apollo.net.codec.login;
 
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.handler.codec.ByteToMessageDecoder;
 
 import java.net.InetSocketAddress;
 import java.security.SecureRandom;
@@ -12,15 +13,13 @@ import net.burtleburtle.bob.rand.IsaacAlgorithm;
 import org.apollo.security.IsaacRandomPair;
 import org.apollo.security.PlayerCredentials;
 import org.apollo.util.ByteBufUtil;
-import org.apollo.util.StatefulByteToMessageDecoder;
 
 /**
- * A {@link StatefulByteToMessageDecoder} which decodes the login request
- * frames.
+ * A {@link ByteToMessageDecoder} which decodes the login request frames.
  *
  * @author Graham
  */
-public final class LoginDecoder extends StatefulByteToMessageDecoder<LoginDecoderState> {
+public final class LoginDecoder extends ByteToMessageDecoder {
 
     /**
      * The secure random number generator.
@@ -48,14 +47,12 @@ public final class LoginDecoder extends StatefulByteToMessageDecoder<LoginDecode
     private int usernameHash;
 
     /**
-     * Creates the login decoder with the default initial state.
+     * The current login decoder state
      */
-    public LoginDecoder() {
-	super(LoginDecoderState.LOGIN_HANDSHAKE);
-    }
+    private LoginDecoderState state = LoginDecoderState.LOGIN_HANDSHAKE;
 
     @Override
-    protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out, LoginDecoderState state) {
+    protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
 	switch (state) {
 	case LOGIN_HANDSHAKE:
 	    decodeHandshake(ctx, in, out);
@@ -92,7 +89,7 @@ public final class LoginDecoder extends StatefulByteToMessageDecoder<LoginDecode
 	resp.writeLong(serverSeed);
 	ctx.channel().writeAndFlush(resp);
 
-	setState(LoginDecoderState.LOGIN_HEADER);
+	state = LoginDecoderState.LOGIN_HEADER;
     }
 
     /**
@@ -116,7 +113,7 @@ public final class LoginDecoder extends StatefulByteToMessageDecoder<LoginDecode
 	reconnecting = loginType == LoginConstants.TYPE_RECONNECTION;
 	loginLength = in.readUnsignedByte();
 
-	setState(LoginDecoderState.LOGIN_PAYLOAD);
+	state = LoginDecoderState.LOGIN_PAYLOAD;
     }
 
     /**

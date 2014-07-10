@@ -11,6 +11,7 @@ import org.apollo.fs.parser.ItemDefinitionParser;
 import org.apollo.fs.parser.MobDefinitionParser;
 import org.apollo.game.interact.InteractionHandler;
 import org.apollo.game.model.def.EquipmentDefinition;
+import org.apollo.game.model.def.GamePacketDefinition;
 import org.apollo.game.model.def.ItemDefinition;
 import org.apollo.game.model.def.LevelUpDefinition;
 import org.apollo.game.model.def.MobDefinition;
@@ -112,6 +113,7 @@ public final class World {
 	logger.info("Done (loaded " + mobDefs.length + " mob definitions).");
 
 	LevelUpDefinition.init();
+	GamePacketDefinition.init();
     }
 
     /**

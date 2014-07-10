@@ -34,7 +34,7 @@ import org.apollo.net.codec.game.DataTransformation;
 import org.apollo.net.codec.game.DataType;
 import org.apollo.net.codec.game.GamePacket;
 import org.apollo.net.codec.game.GamePacketBuilder;
-import org.apollo.net.meta.PacketType;
+import org.apollo.net.codec.game.GamePacketType;
 
 /**
  * An {@link MessageEncoder} for the {@link PlayerSynchronizationMessage}.
@@ -46,7 +46,7 @@ public final class PlayerSynchronizationMessageEncoder extends MessageEncoder<Pl
 
     @Override
     public GamePacket encode(PlayerSynchronizationMessage message) {
-	GamePacketBuilder builder = new GamePacketBuilder(81, PacketType.VARIABLE_SHORT);
+	GamePacketBuilder builder = new GamePacketBuilder(81, GamePacketType.VARIABLE_SHORT);
 	builder.switchToBitAccess();
 
 	GamePacketBuilder blockBuilder = new GamePacketBuilder();
