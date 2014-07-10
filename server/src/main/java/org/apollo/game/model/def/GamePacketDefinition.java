@@ -16,20 +16,53 @@ import org.apollo.util.GsonUtil;
  */
 public final class GamePacketDefinition {
 
+    /**
+     * The length of a packet used to denote a variable byte header.
+     */
     public static final int VAR_BYTE = -1;
+
+    /**
+     * The length of a packet used to denote a variable short header.
+     */
     public static final int VAR_SHORT = -2;
 
+    /**
+     * Represents the opcode of this packet definition.
+     */
     private final int opcode;
+
+    /**
+     * Represents the length of this packet definition.
+     */
     private final int length;
 
+    /**
+     * Constructs a new {@link GamePacketDefinition} with the specified opcode
+     * and length.
+     * 
+     * @param opcode The opcode of this game packet definition.
+     * @param length The length of this game packet definition.
+     */
     protected GamePacketDefinition(int opcode, int length) {
 	this.opcode = opcode;
 	this.length = length;
     }
 
+    /**
+     * Represents the incoming game packet definitions.
+     */
     private static GamePacketDefinition[] incomingDefinitions;
+
+    /**
+     * Represents the outgoing game packet definitions.
+     */
     private static GamePacketDefinition[] outgoingDefinitions;
 
+    /**
+     * Initializes the definitions.
+     * 
+     * @throws IOException If some I/O error occurs.
+     */
     public static void init() throws IOException {
 	Path path = Paths.get("data/io", "incoming_packet_meta.json");
 	try (BufferedReader reader = Files.newBufferedReader(path)) {
@@ -42,6 +75,14 @@ public final class GamePacketDefinition {
 	}
     }
 
+    /**
+     * Returns the incoming game packet definition for the specified opcode if
+     * it is within bounds otherwise a {@link IndexOutOfBoundsException} is
+     * thrown.
+     * 
+     * @param opcode The opcode.
+     * @return The incoming game packet definition.
+     */
     public static GamePacketDefinition incomingDefinition(int opcode) {
 	if (opcode < 0 || opcode > incomingDefinitions.length) {
 	    throw new IndexOutOfBoundsException();
@@ -50,6 +91,14 @@ public final class GamePacketDefinition {
 	return incomingDefinitions[opcode];
     }
 
+    /**
+     * Returns the outgoing game packet definition for the specified opcode if
+     * it is within bounds otherwise a {@link IndexOutOfBoundsException} is
+     * thrown.
+     * 
+     * @param opcode The opcode.
+     * @return The outgoing game packet definition.
+     */
     public static GamePacketDefinition outgoingDefinition(int opcode) {
 	if (opcode < 0 || opcode > outgoingDefinitions.length) {
 	    throw new IndexOutOfBoundsException();
@@ -58,6 +107,10 @@ public final class GamePacketDefinition {
 	return outgoingDefinitions[opcode];
     }
 
+    /**
+     * Returns the type of this game packet definition as specified by its
+     * length.
+     */
     public GamePacketType getType() {
 	switch (length) {
 	case VAR_BYTE:
@@ -69,10 +122,16 @@ public final class GamePacketDefinition {
 	}
     }
 
+    /**
+     * Returns this game packet definitions opcode.
+     */
     public int getOpcode() {
 	return opcode;
     }
 
+    /**
+     * Returns this game packet definitions length.
+     */
     public int getLength() {
 	return length;
     }
