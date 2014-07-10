@@ -33,20 +33,12 @@ public final class GamePacketDefinition {
     public static void init() throws IOException {
 	Path path = Paths.get("data/io", "incoming_packet_meta.json");
 	try (BufferedReader reader = Files.newBufferedReader(path)) {
-	    int[] values = GsonUtil.fromJson(reader, int[].class);
-	    incomingDefinitions = new GamePacketDefinition[values.length];
-	    for (int opcode = 0; opcode < values.length; opcode++) {
-		incomingDefinitions[opcode] = new GamePacketDefinition(opcode, values[opcode]);
-	    }
+	    incomingDefinitions = GsonUtil.fromJson(reader, GamePacketDefinition[].class);
 	}
 
 	path = Paths.get("data/io", "outgoing_packet_meta.json");
 	try (BufferedReader reader = Files.newBufferedReader(path)) {
-	    int[] values = GsonUtil.fromJson(reader, int[].class);
-	    outgoingDefinitions = new GamePacketDefinition[values.length];
-	    for (int opcode = 0; opcode < values.length; opcode++) {
-		outgoingDefinitions[opcode] = new GamePacketDefinition(opcode, values[opcode]);
-	    }
+	    outgoingDefinitions = GsonUtil.fromJson(reader, GamePacketDefinition[].class);
 	}
     }
 
