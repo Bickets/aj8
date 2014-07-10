@@ -1,23 +1,34 @@
 package org.apollo.game.event;
 
-import com.google.common.eventbus.EventBus;
 import com.google.common.eventbus.Subscribe;
 
 /**
- * Manages internal logic for a specified {@link Event}.
- *
+ * Represents a single subscriber for some {@link Event}.
+ * 
+ * This is a functional interface whose functional method is
+ * {@link #subscribe(Event)}
+ * 
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  *
- * @param <E> The {@link Event} we are subscribing.
+ * @param <E> The type of event to the subscriber.
  */
+@FunctionalInterface
 public interface EventSubscriber<E extends Event> {
 
     /**
-     * Manages the logic for the specified event.
-     *
-     * @param event The event to manage.
-     * @see {@link Subscribe} Marks a method as an event handler as used by some
-     *      {@link EventBus}.
+     * A handler method for the specified event. Handler methods are denoted by
+     * being marked with the {@link Subscribe} annotation, having the
+     * {@code public} visibility modifier and return the type of {@code void}.
+     * Handler methods may not contain more than one argument due to the use of
+     * reflection for invoking some handler method after an event has been
+     * posted.
+     * 
+     * <p>
+     * It is not recommended to create explicit subscribe-able methods for
+     * non-event types.
+     * </p>
+     * 
+     * @param event The event to subscribe.
      */
     @Subscribe
     void subscribe(E event);

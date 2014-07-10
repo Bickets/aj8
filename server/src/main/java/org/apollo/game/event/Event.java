@@ -11,5 +11,5 @@ package org.apollo.game.event;
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public interface Event {
-
+    
 }
