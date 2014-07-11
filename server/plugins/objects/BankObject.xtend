@@ -1,23 +1,19 @@
 package objects
 
-import org.apollo.game.interact.ObjectActionListener
+import org.apollo.game.event.EventSubscriber
+import org.apollo.game.interact.ObjectActionEvent
 import org.apollo.game.model.InterfaceConstants.InterfaceOption
-import org.apollo.game.model.Player
-import org.apollo.game.model.Position
 import org.apollo.game.model.inter.bank.BankAction
 
-class BankObject extends ObjectActionListener {
+class BankObject implements EventSubscriber<ObjectActionEvent> {
 
-	new() {
-		super(2213)
-	}
+	override subscribe(ObjectActionEvent event) {
+		if (event.id != 2213) {
+			return
+		}
 
-	override handle(int id, InterfaceOption option, Player player, Position position) {
-		switch option {
-			case OPTION_ONE:
-				player.startAction(new BankAction(player, position))
-			default:
-				throw new UnsupportedOperationException('Unhandled bank option: ' + option)
+		if (event.option == InterfaceOption.OPTION_ONE) {
+			event.player.startAction(new BankAction(event.player, event.position))
 		}
 	}
 

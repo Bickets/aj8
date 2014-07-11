@@ -5,10 +5,10 @@ import java.util.function.Consumer;
 import mobs.InitialMobSpawns;
 import org.apollo.game.command.CommandDispatcher;
 import org.apollo.game.command.CommandListener;
-import org.apollo.game.interact.ButtonClickListener;
-import org.apollo.game.interact.InteractionHandler;
-import org.apollo.game.interact.ItemActionListener;
-import org.apollo.game.interact.ObjectActionListener;
+import org.apollo.game.event.EventSubscriber;
+import org.apollo.game.interact.ButtonActionEvent;
+import org.apollo.game.interact.ItemActionEvent;
+import org.apollo.game.interact.ObjectActionEvent;
 import org.apollo.game.model.World;
 import org.eclipse.xtext.xbase.lib.CollectionLiterals;
 import org.eclipse.xtext.xbase.lib.Conversions;
@@ -23,9 +23,8 @@ public class Bootstrap {
     final Consumer<Class<?>> _function = new Consumer<Class<?>>() {
       public void accept(final Class<?> it) {
         try {
-          InteractionHandler _interactionHandler = world.getInteractionHandler();
           Object _newInstance = it.newInstance();
-          _interactionHandler.bind(((ObjectActionListener) _newInstance));
+          world.<ObjectActionEvent>provideSubscriber(((EventSubscriber<ObjectActionEvent>) _newInstance));
         } catch (Throwable _e) {
           throw Exceptions.sneakyThrow(_e);
         }
@@ -39,9 +38,8 @@ public class Bootstrap {
     final Consumer<Class<?>> _function = new Consumer<Class<?>>() {
       public void accept(final Class<?> it) {
         try {
-          InteractionHandler _interactionHandler = world.getInteractionHandler();
           Object _newInstance = it.newInstance();
-          _interactionHandler.bind(((ButtonClickListener) _newInstance));
+          world.<ButtonActionEvent>provideSubscriber(((EventSubscriber<ButtonActionEvent>) _newInstance));
         } catch (Throwable _e) {
           throw Exceptions.sneakyThrow(_e);
         }
@@ -55,9 +53,8 @@ public class Bootstrap {
     final Consumer<Class<?>> _function = new Consumer<Class<?>>() {
       public void accept(final Class<?> it) {
         try {
-          InteractionHandler _interactionHandler = world.getInteractionHandler();
           Object _newInstance = it.newInstance();
-          _interactionHandler.bind(((ItemActionListener) _newInstance));
+          world.<ItemActionEvent>provideSubscriber(((EventSubscriber<ItemActionEvent>) _newInstance));
         } catch (Throwable _e) {
           throw Exceptions.sneakyThrow(_e);
         }
@@ -142,9 +139,9 @@ public class Bootstrap {
   
   public Bootstrap(final World world) {
     this.initButtons(world);
-    this.initObjects(world);
     this.initSpawns(world);
     this.initItems(world);
+    this.initObjects(world);
     this.initCommands();
   }
 }

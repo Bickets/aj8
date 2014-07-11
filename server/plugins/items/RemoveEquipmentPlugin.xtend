@@ -1,23 +1,12 @@
 package items
 
-import org.apollo.game.interact.ItemActionListener
+import org.apollo.game.event.EventSubscriber
+import org.apollo.game.interact.ItemActionEvent
 import org.apollo.game.model.InterfaceConstants.InterfaceOption
 import org.apollo.game.model.Player
 import org.apollo.game.model.inv.SynchronizationInventoryListener
 
-class RemoveEquipmentPlugin extends ItemActionListener {
-
-	new() {
-		super(SynchronizationInventoryListener.EQUIPMENT_ID)
-	}
-
-	override handle(int id, int slot, InterfaceOption option, int interfaceId, Player player) {
-		if (option != InterfaceOption.OPTION_ONE) {
-			return
-		}
-
-		player.remove(id, slot)
-	}
+class RemoveEquipmentPlugin implements EventSubscriber<ItemActionEvent> {
 
 	def remove(Player player, int id, int slot) {
 		val inventory = player.inventory
@@ -62,6 +51,17 @@ class RemoveEquipmentPlugin extends ItemActionListener {
 		} else {
 			inventory.forceCapacityExceeded
 		}
+	}
+
+	override subscribe(ItemActionEvent event) {
+		if (event.interfaceId != SynchronizationInventoryListener.EQUIPMENT_ID) {
+			return
+		}
+		if (event.option != InterfaceOption.OPTION_ONE) {
+			return
+		}
+
+		remove(event.player, event.id, event.slot)
 	}
 
 }

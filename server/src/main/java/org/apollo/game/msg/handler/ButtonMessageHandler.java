@@ -1,5 +1,6 @@
 package org.apollo.game.msg.handler;
 
+import org.apollo.game.interact.ButtonActionEvent;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.World;
 import org.apollo.game.msg.MessageHandler;
@@ -30,7 +31,7 @@ public final class ButtonMessageHandler extends MessageHandler<ButtonMessage> {
 
     @Override
     public void handle(Player player, ButtonMessage message) {
-	world.getInteractionHandler().dispatch(message.getInterfaceId(), player);
+	world.post(new ButtonActionEvent(player, message.getInterfaceId()));
     }
 
 }

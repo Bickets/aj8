@@ -1,16 +1,15 @@
 package buttons
 
-import org.apollo.game.model.Player
-import org.apollo.game.interact.ButtonClickListener
+import org.apollo.game.event.EventSubscriber
+import org.apollo.game.interact.ButtonActionEvent
 
-class LogoutButton extends ButtonClickListener {
+class LogoutButton implements EventSubscriber<ButtonActionEvent> {
 
-	new() {
-		super(2458)
-	}
-
-	override handle(int id, Player player) {
-		player.logout
+	override subscribe(ButtonActionEvent event) {
+		println(event.getId)
+		if (event.getId == 2458) {
+			event.getPlayer.logout
+		}
 	}
 
 }

@@ -1,7 +1,8 @@
 package items;
 
 import com.google.common.base.Objects;
-import org.apollo.game.interact.ItemActionListener;
+import org.apollo.game.event.EventSubscriber;
+import org.apollo.game.interact.ItemActionEvent;
 import org.apollo.game.model.InterfaceConstants;
 import org.apollo.game.model.Inventory;
 import org.apollo.game.model.Item;
@@ -10,19 +11,7 @@ import org.apollo.game.model.def.ItemDefinition;
 import org.apollo.game.model.inv.SynchronizationInventoryListener;
 
 @SuppressWarnings("all")
-public class RemoveEquipmentPlugin extends ItemActionListener {
-  public RemoveEquipmentPlugin() {
-    super(SynchronizationInventoryListener.EQUIPMENT_ID);
-  }
-  
-  public void handle(final int id, final int slot, final InterfaceConstants.InterfaceOption option, final int interfaceId, final Player player) {
-    boolean _notEquals = (!Objects.equal(option, InterfaceConstants.InterfaceOption.OPTION_ONE));
-    if (_notEquals) {
-      return;
-    }
-    this.remove(player, id, slot);
-  }
-  
+public class RemoveEquipmentPlugin implements EventSubscriber<ItemActionEvent> {
   public void remove(final Player player, final int id, final int slot) {
     final Inventory inventory = player.getInventory();
     final Inventory equipment = player.getEquipment();
@@ -97,5 +86,22 @@ public class RemoveEquipmentPlugin extends ItemActionListener {
     } else {
       inventory.forceCapacityExceeded();
     }
+  }
+  
+  public void subscribe(final ItemActionEvent event) {
+    int _interfaceId = event.getInterfaceId();
+    boolean _notEquals = (_interfaceId != SynchronizationInventoryListener.EQUIPMENT_ID);
+    if (_notEquals) {
+      return;
+    }
+    InterfaceConstants.InterfaceOption _option = event.getOption();
+    boolean _notEquals_1 = (!Objects.equal(_option, InterfaceConstants.InterfaceOption.OPTION_ONE));
+    if (_notEquals_1) {
+      return;
+    }
+    Player _player = event.getPlayer();
+    int _id = event.getId();
+    int _slot = event.getSlot();
+    this.remove(_player, _id, _slot);
   }
 }

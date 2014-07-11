@@ -1,5 +1,6 @@
 package org.apollo.game.msg.handler;
 
+import org.apollo.game.interact.ItemActionEvent;
 import org.apollo.game.model.InterfaceConstants.InterfaceOption;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.World;
@@ -35,7 +36,7 @@ public final class ItemActionMessageHandler extends MessageHandler<ItemActionMes
 
     @Override
     public void handle(Player player, ItemActionMessage message) {
-	world.getInteractionHandler().dispatch(message.getId(), message.getSlot(), message.getOption(), message.getInterfaceId(), player);
+	world.post(new ItemActionEvent(player, message.getInterfaceId(), message.getId(), message.getSlot(), message.getOption()));
 
 	if (message.getInterfaceId() == BankConstants.SIDEBAR_INVENTORY_ID) {
 	    deposit(player, message);

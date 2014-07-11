@@ -3,23 +3,24 @@ import java.lang.reflect.Modifier
 import mobs.InitialMobSpawns
 import org.apollo.game.command.CommandDispatcher
 import org.apollo.game.command.CommandListener
-import org.apollo.game.interact.ButtonClickListener
-import org.apollo.game.interact.ItemActionListener
-import org.apollo.game.interact.ObjectActionListener
+import org.apollo.game.event.EventSubscriber
+import org.apollo.game.interact.ItemActionEvent
+import org.apollo.game.interact.ObjectActionEvent
 import org.apollo.game.model.World
+import org.apollo.game.interact.ButtonActionEvent
 
 class Bootstrap {
 
 	def initObjects(World world) {
-		classes('objects').forEach[world.interactionHandler.bind(it.newInstance as ObjectActionListener)]
+		classes('objects').forEach[world.provideSubscriber(it.newInstance as EventSubscriber<ObjectActionEvent>)]
 	}
 
 	def initButtons(World world) {
-		classes('buttons').forEach[world.interactionHandler.bind(it.newInstance as ButtonClickListener)]
+		classes('buttons').forEach[world.provideSubscriber(it.newInstance as EventSubscriber<ButtonActionEvent>)]
 	}
 
 	def initItems(World world) {
-		classes('items').forEach[world.interactionHandler.bind(it.newInstance as ItemActionListener)]
+		classes('items').forEach[world.provideSubscriber(it.newInstance as EventSubscriber<ItemActionEvent>)]
 	}
 
 	def initSpawns(World world) {
@@ -48,9 +49,9 @@ class Bootstrap {
 
 	new(World world) {
 		world.initButtons
-		world.initObjects
 		world.initSpawns
 		world.initItems
+		world.initObjects
 
 		initCommands
 	}

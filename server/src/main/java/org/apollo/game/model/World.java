@@ -9,7 +9,11 @@ import java.util.logging.Logger;
 import org.apollo.fs.FileSystem;
 import org.apollo.fs.parser.ItemDefinitionParser;
 import org.apollo.fs.parser.MobDefinitionParser;
-import org.apollo.game.interact.InteractionHandler;
+import org.apollo.game.event.Event;
+import org.apollo.game.event.EventPredicate;
+import org.apollo.game.event.EventProvider;
+import org.apollo.game.event.EventSubscriber;
+import org.apollo.game.event.UniversalEventProvider;
 import org.apollo.game.model.def.EquipmentDefinition;
 import org.apollo.game.model.def.GamePacketDefinition;
 import org.apollo.game.model.def.ItemDefinition;
@@ -69,9 +73,9 @@ public final class World {
     private final EntityRepository<Player> playerRepository = new EntityRepository<>(WorldConstants.MAXIMUM_PLAYERS);
 
     /**
-     * The worlds interaction handler.
+     * This worlds event provider.
      */
-    private final InteractionHandler interactionHandler = new InteractionHandler();
+    private final EventProvider eventProvider = new UniversalEventProvider();
 
     /**
      * Creates the world.
@@ -81,7 +85,7 @@ public final class World {
     }
 
     /**
-     * Initialises the world by loading definitions from the specified file
+     * Initializes the world by loading definitions from the specified file
      * system.
      *
      * @param fileSystem The file system.
@@ -112,7 +116,10 @@ public final class World {
 	MobDefinition.init(mobDefs);
 	logger.info("Done (loaded " + mobDefs.length + " mob definitions).");
 
+	logger.info("Loading skill level up definitions...");
 	LevelUpDefinition.init();
+
+	logger.info("Loading game packet definitions...");
 	GamePacketDefinition.init();
     }
 
@@ -196,6 +203,43 @@ public final class World {
     }
 
     /**
+     * Posts an event to this worlds event provider.
+     * 
+     * @param event The event to post.
+     */
+    public <E extends Event> void post(E event) {
+	eventProvider.post(event);
+    }
+
+    /**
+     * Posts an event to this world event provider with a specified predicate.
+     * 
+     * @param event The event to post.
+     * @param predicate The events predicate.
+     */
+    public <E extends Event> void post(E event, EventPredicate<E> predicate) {
+	eventProvider.post(event, predicate);
+    }
+
+    /**
+     * Provides an event subscriber to this worlds event provider.
+     * 
+     * @param subscriber The event subscriber.
+     */
+    public <E extends Event> void provideSubscriber(EventSubscriber<E> subscriber) {
+	eventProvider.provideSubscriber(subscriber);
+    }
+
+    /**
+     * Deprives an event subscriber to this worlds event provider.
+     * 
+     * @param subscriber The event subscriber.
+     */
+    public <E extends Event> void depriveSubscriber(EventSubscriber<E> subscriber) {
+	eventProvider.depriveSubscriber(subscriber);
+    }
+
+    /**
      * Gets the character repository. NOTE:
      * {@link CharacterRepository#add(GameCharacter)} and
      * {@link CharacterRepository#remove(GameCharacter)} should not be called
@@ -219,13 +263,6 @@ public final class World {
      */
     public EntityRepository<Mob> getMobRepository() {
 	return mobRepository;
-    }
-
-    /**
-     * Returns the world interaction handler.
-     */
-    public InteractionHandler getInteractionHandler() {
-	return interactionHandler;
     }
 
 }
