@@ -17,14 +17,14 @@ public interface SkillListener {
      * @param id The skill's id.
      * @param skill The skill.
      */
-    public void skillUpdated(SkillSet set, int id, Skill skill);
+    void skillUpdated(SkillSet set, int id, Skill skill);
 
     /**
      * Called when all the skills are updated.
      *
      * @param set The skill set.
      */
-    public void skillsUpdated(SkillSet set);
+    void skillsUpdated(SkillSet set);
 
     /**
      * Called when a skill is leveled up.
@@ -33,6 +33,6 @@ public interface SkillListener {
      * @param id The skill's id.
      * @param skill The skill.
      */
-    public void leveledUp(SkillSet set, int id, Skill skill);
+    void leveledUp(SkillSet set, int id, Skill skill);
 
 }
