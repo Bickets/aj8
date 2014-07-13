@@ -10,27 +10,21 @@ import com.google.common.eventbus.EventBus;
  * 
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public final class UniversalEventProvider implements EventProvider {
-
-    /**
-     * The default event bus, used to provide and deprive
-     * {@link EventSubscriber}s as well as post {@link Event}s
-     */
-    private final EventBus eventBus = new EventBus();
+public final class UniversalEventProvider extends EventBus implements EventProvider {
 
     @Override
     public <E extends Event> void provideSubscriber(EventSubscriber<E> subscriber) {
-	eventBus.register(checkNotNull(subscriber));
+	register(checkNotNull(subscriber));
     }
 
     @Override
     public <E extends Event> void depriveSubscriber(EventSubscriber<E> subscriber) {
-	eventBus.unregister(checkNotNull(subscriber));
+	unregister(checkNotNull(subscriber));
     }
 
     @Override
     public <E extends Event> void post(E event) {
-	eventBus.post(checkNotNull(event));
+	post(checkNotNull(event));
     }
 
 }

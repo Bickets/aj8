@@ -16,7 +16,7 @@ import org.apollo.game.msg.impl.ButtonMessage;
 public final class ButtonMessageHandler extends MessageHandler<ButtonMessage> {
 
     /**
-     * The world used to get this worlds interaction handler.
+     * The world used to post button action events to this worlds event provider.
      */
     private final World world;
 

@@ -4,8 +4,8 @@ import net.burtleburtle.bob.rand.IsaacAlgorithm;
 
 /**
  * A pair of two {@link IsaacAlgorithm} random number generators used as a
- * stream cipher. One takes the role of an encoder for this endpoint, the other
- * takes the role of a decoder for this endpoint.
+ * stream cipher. One takes the role of an encoder for this end point, the other
+ * takes the role of a decoder for this end point.
  *
  * @author Graham
  */

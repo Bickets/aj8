@@ -33,19 +33,11 @@ public final class PluginService extends Service {
 
     @Override
     public void start() {
-	/*
-	 * This may make some people go "what" in their heads, so let me explain
-	 * exactly what's going on: Xtend is a flexible and expressive dialect
-	 * of Java, which compiles into Java 5 compatible source code. After our
-	 * plugins are compiled we compile the Java plugin into Java byte code
-	 * which gets added to the main class path. Therefore this call is
-	 * perfectly legal.
-	 */
 	try {
 	    Class<?> clazz = Class.forName("Bootstrap");
 	    Constructor<?> bootstrap = clazz.getConstructor(World.class);
 	    bootstrap.newInstance(world);
-	} catch (ClassNotFoundException | NoSuchMethodException | SecurityException | InstantiationException | IllegalAccessException | IllegalArgumentException | InvocationTargetException e) {
+	} catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
 	    e.printStackTrace();
 	}
     }

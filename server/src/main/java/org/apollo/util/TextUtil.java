@@ -154,7 +154,7 @@ public final class TextUtil {
      * @return A split up {@code String} array based on the specified source.
      */
     public static String[] split(String source) {
-	return split(source, '\"');
+	return split(source, '"');
     }
 
     /**

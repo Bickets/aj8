@@ -20,6 +20,10 @@ public final class SwitchItemMessageHandler extends MessageHandler<SwitchItemMes
 
     @Override
     public void handle(Player player, SwitchItemMessage message) {
+	if (message.getOldSlot() < 0 || message.getNewSlot() < 0) {
+	    return;
+	}
+
 	Inventory inventory = getInventoryForInterface(player, message.getInterfaceId());
 
 	// Should never happen
@@ -27,7 +31,7 @@ public final class SwitchItemMessageHandler extends MessageHandler<SwitchItemMes
 	    return;
 	}
 
-	if (message.getOldSlot() >= 0 && message.getNewSlot() >= 0 && message.getOldSlot() < inventory.capacity() && message.getNewSlot() < inventory.capacity()) {
+	if (message.getOldSlot() < inventory.capacity() && message.getNewSlot() < inventory.capacity()) {
 	    inventory.swap(message.isInserting() && insertPermitted(message.getInterfaceId()), message.getOldSlot(), message.getNewSlot());
 	}
     }

@@ -24,7 +24,10 @@ public final class WalkMessageDecoder extends MessageDecoder<WalkMessage> {
 
 	int length = packet.getLength();
 
-	/* The force walk packet has an extra unused 14 bytes, let's get rid of them. */
+	/*
+	 * The force walk packet has an extra unused 14 bytes, let's get rid of
+	 * them.
+	 */
 	if (packet.getOpcode() == 248) {
 	    length -= 14;
 	}

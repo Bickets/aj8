@@ -16,7 +16,7 @@ import org.apollo.game.msg.impl.ObjectActionMessage;
 public final class ObjectMessageHandler extends MessageHandler<ObjectActionMessage> {
 
     /**
-     * The world used to get this worlds interaction handler.
+     * The world used to post object action events to this worlds event provider.
      */
     private final World world;
 

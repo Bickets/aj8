@@ -34,7 +34,7 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class ClientSynchronizer {
-    
+
     /**
      * The executor service.
      */
