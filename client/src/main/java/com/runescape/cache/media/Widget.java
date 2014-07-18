@@ -3,7 +3,7 @@ package com.runescape.cache.media;
 import com.runescape.Game;
 import com.runescape.cache.Archive;
 import com.runescape.cache.def.ItemDefinition;
-import com.runescape.cache.def.NpcDefinition;
+import com.runescape.cache.def.MobDefinition;
 import com.runescape.collection.Cache;
 import com.runescape.media.Animation;
 import com.runescape.media.renderable.Model;
@@ -303,7 +303,7 @@ public class Widget {
 	    model = Model.getModel(modelId);
 	}
 	if (modelType == 2) {
-	    model = NpcDefinition.getDefinition(modelId).getHeadModel();
+	    model = MobDefinition.getDefinition(modelId).getHeadModel();
 	}
 	if (modelType == 3) {
 	    model = Game.localPlayer.getHeadModel();

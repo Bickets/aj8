@@ -1,9 +1,8 @@
-package com.runescape.media.renderable.mob;
+package com.runescape.media.renderable;
 
 import com.runescape.cache.media.AnimationSequence;
-import com.runescape.media.renderable.Renderable;
 
-public class Mob extends Renderable {
+public class GameCharacter extends Renderable {
 
     public int[] pathX = new int[10];
     public int[] pathY = new int[10];

@@ -1,21 +1,20 @@
-package com.runescape.media.renderable.mob;
+package com.runescape.media.renderable;
 
 import com.runescape.Game;
 import com.runescape.cache.def.ItemDefinition;
-import com.runescape.cache.def.NpcDefinition;
+import com.runescape.cache.def.MobDefinition;
 import com.runescape.cache.media.AnimationSequence;
 import com.runescape.cache.media.IdentityKit;
 import com.runescape.cache.media.SpotAnimation;
 import com.runescape.collection.Cache;
 import com.runescape.media.Animation;
-import com.runescape.media.renderable.Model;
 import com.runescape.net.Buffer;
 import com.runescape.util.TextUtils;
 
-public class Player extends Mob {
+public class Player extends GameCharacter {
 
     public long cachedModel = -1L;
-    public NpcDefinition npcDefinition;
+    public MobDefinition npcDefinition;
     public boolean aBoolean1719 = false;
     public int[] appearanceColors = new int[5];
     public int teamId;
@@ -122,7 +121,7 @@ public class Player extends Mob {
 		int i_5_ = buffer.getUnsignedByte();
 		appearance[index] = (i_4_ << 8) + i_5_;
 		if (index == 0 && appearance[0] == 65535) {
-		    npcDefinition = NpcDefinition.getDefinition(buffer.getUnsignedLEShort());
+		    npcDefinition = MobDefinition.getDefinition(buffer.getUnsignedLEShort());
 		    break;
 		}
 		if (appearance[index] >= 512 && appearance[index] - 512 < ItemDefinition.itemCount) {

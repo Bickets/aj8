@@ -8,7 +8,7 @@ import com.runescape.media.Animation;
 import com.runescape.media.renderable.Model;
 import com.runescape.net.Buffer;
 
-public class NpcDefinition {
+public class MobDefinition {
 
     public int turnLeftAnimationId = -1;
     private static int bufferIndex;
@@ -30,7 +30,7 @@ public class NpcDefinition {
     public int standAnimationId = -1;
     public long id = -1;
     public int degreesToTurn = 32;
-    private static NpcDefinition[] cache;
+    private static MobDefinition[] cache;
     public static Game client;
     public int turnRightAnimationId = -1;
     public boolean clickable = true;
@@ -45,23 +45,23 @@ public class NpcDefinition {
     private int[] modelIds;
     public static Cache modelCache = new Cache(30);
 
-    public static final NpcDefinition getDefinition(int id) {
+    public static final MobDefinition getDefinition(int id) {
 	for (int i = 0; i < 20; i++) {
-	    if (NpcDefinition.cache[i].id == id) {
-		return NpcDefinition.cache[i];
+	    if (MobDefinition.cache[i].id == id) {
+		return MobDefinition.cache[i];
 	    }
 	}
-	NpcDefinition.bufferIndex = (NpcDefinition.bufferIndex + 1) % 20;
-	NpcDefinition definition = NpcDefinition.cache[NpcDefinition.bufferIndex] = new NpcDefinition();
-	NpcDefinition.buffer.offset = NpcDefinition.bufferOffsets[id];
+	MobDefinition.bufferIndex = (MobDefinition.bufferIndex + 1) % 20;
+	MobDefinition definition = MobDefinition.cache[MobDefinition.bufferIndex] = new MobDefinition();
+	MobDefinition.buffer.offset = MobDefinition.bufferOffsets[id];
 	definition.id = id;
-	definition.loadDefinition(true, NpcDefinition.buffer);
+	definition.loadDefinition(true, MobDefinition.buffer);
 	return definition;
     }
 
     public final Model getHeadModel() {
 	if (childrenIds != null) {
-	    NpcDefinition definition = getChildDefinition();
+	    MobDefinition definition = getChildDefinition();
 	    if (definition == null) {
 		return null;
 	    }
@@ -97,7 +97,7 @@ public class NpcDefinition {
 	return headModel;
     }
 
-    public final NpcDefinition getChildDefinition() {
+    public final MobDefinition getChildDefinition() {
 	int childId = -1;
 	if (varBitId != -1) {
 	    VarBit varbit = VarBit.cache[varBitId];
@@ -105,48 +105,48 @@ public class NpcDefinition {
 	    int leastSignificantBit = varbit.leastSignificantBit;
 	    int mostSignificantBit = varbit.mostSignificantBit;
 	    int bit = Game.BITFIELD_MAX_VALUE[mostSignificantBit - leastSignificantBit];
-	    childId = NpcDefinition.client.widgetSettings[configId] >> leastSignificantBit & bit;
+	    childId = MobDefinition.client.widgetSettings[configId] >> leastSignificantBit & bit;
 	} else if (settingId != -1) {
-	    childId = NpcDefinition.client.widgetSettings[settingId];
+	    childId = MobDefinition.client.widgetSettings[settingId];
 	}
 	if (childId < 0 || childId >= childrenIds.length || childrenIds[childId] == -1) {
 	    return null;
 	}
-	return NpcDefinition.getDefinition(childrenIds[childId]);
+	return MobDefinition.getDefinition(childrenIds[childId]);
     }
 
     public static final void load(Archive archive) {
-	NpcDefinition.buffer = new Buffer(archive.getFile("npc.dat"));
+	MobDefinition.buffer = new Buffer(archive.getFile("npc.dat"));
 	Buffer buffer = new Buffer(archive.getFile("npc.idx"));
-	NpcDefinition.size = buffer.getUnsignedLEShort();
-	NpcDefinition.bufferOffsets = new int[NpcDefinition.size];
+	MobDefinition.size = buffer.getUnsignedLEShort();
+	MobDefinition.bufferOffsets = new int[MobDefinition.size];
 	int offset = 2;
-	for (int bufferIndex = 0; bufferIndex < NpcDefinition.size; bufferIndex++) {
-	    NpcDefinition.bufferOffsets[bufferIndex] = offset;
+	for (int bufferIndex = 0; bufferIndex < MobDefinition.size; bufferIndex++) {
+	    MobDefinition.bufferOffsets[bufferIndex] = offset;
 	    offset += buffer.getUnsignedLEShort();
 	}
-	NpcDefinition.cache = new NpcDefinition[20];
+	MobDefinition.cache = new MobDefinition[20];
 	for (int cacheIndex = 0; cacheIndex < 20; cacheIndex++) {
-	    NpcDefinition.cache[cacheIndex] = new NpcDefinition();
+	    MobDefinition.cache[cacheIndex] = new MobDefinition();
 	}
     }
 
     public static final void reset() {
-	NpcDefinition.modelCache = null;
-	NpcDefinition.bufferOffsets = null;
-	NpcDefinition.cache = null;
-	NpcDefinition.buffer = null;
+	MobDefinition.modelCache = null;
+	MobDefinition.bufferOffsets = null;
+	MobDefinition.cache = null;
+	MobDefinition.buffer = null;
     }
 
     public final Model getChildModel(int frameId2, int frameId, int[] framesFrom2) {
 	if (childrenIds != null) {
-	    NpcDefinition childDefinition = getChildDefinition();
+	    MobDefinition childDefinition = getChildDefinition();
 	    if (childDefinition == null) {
 		return null;
 	    }
 	    return childDefinition.getChildModel(frameId2, frameId, framesFrom2);
 	}
-	Model childIdModel = (Model) NpcDefinition.modelCache.get(id);
+	Model childIdModel = (Model) MobDefinition.modelCache.get(id);
 	if (childIdModel == null) {
 	    boolean cached = false;
 	    for (int modelId : modelIds) {
@@ -173,7 +173,7 @@ public class NpcDefinition {
 	    }
 	    childIdModel.createBones();
 	    childIdModel.applyLighting(64 + brightness, 850 + contrast, -30, -50, -30, true);
-	    NpcDefinition.modelCache.put(childIdModel, id);
+	    MobDefinition.modelCache.put(childIdModel, id);
 	}
 	Model childModel = Model.aModel1614;
 	childModel.replaceWithModel(childIdModel, Animation.exists(frameId) & Animation.exists(frameId2));

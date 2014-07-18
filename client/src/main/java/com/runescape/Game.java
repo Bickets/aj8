@@ -24,7 +24,7 @@ import com.runescape.cache.cfg.Varp;
 import com.runescape.cache.def.FloorDefinition;
 import com.runescape.cache.def.GameObjectDefinition;
 import com.runescape.cache.def.ItemDefinition;
-import com.runescape.cache.def.NpcDefinition;
+import com.runescape.cache.def.MobDefinition;
 import com.runescape.cache.media.AnimationSequence;
 import com.runescape.cache.media.IdentityKit;
 import com.runescape.cache.media.ImageRGB;
@@ -38,13 +38,13 @@ import com.runescape.media.ProducingGraphicsBuffer;
 import com.runescape.media.Rasterizer;
 import com.runescape.media.Rasterizer3D;
 import com.runescape.media.renderable.GameAnimableObject;
+import com.runescape.media.renderable.GameCharacter;
 import com.runescape.media.renderable.GameObject;
 import com.runescape.media.renderable.Item;
+import com.runescape.media.renderable.Mob;
 import com.runescape.media.renderable.Model;
+import com.runescape.media.renderable.Player;
 import com.runescape.media.renderable.Projectile;
-import com.runescape.media.renderable.mob.Mob;
-import com.runescape.media.renderable.mob.Npc;
-import com.runescape.media.renderable.mob.Player;
 import com.runescape.net.Buffer;
 import com.runescape.net.ISAACCipher;
 import com.runescape.net.SocketBuffer;
@@ -80,7 +80,7 @@ public class Game extends GameShell {
     private Socket jaggrabSocket;
     private int loginScreenState;
     private Buffer aBuffer859 = new Buffer(new byte[5000]);
-    private Npc[] localNpcs = new Npc[16384];
+    private Mob[] localNpcs = new Mob[16384];
     private int actorCount;
     protected int[] anIntArray862 = new int[16384];
     private int anInt864;
@@ -1076,7 +1076,7 @@ public class Game extends GameShell {
     public final void resetModelCaches() {
 	GameObjectDefinition.modelCache.removeAll();
 	GameObjectDefinition.animatedModelCache.removeAll();
-	NpcDefinition.modelCache.removeAll();
+	MobDefinition.modelCache.removeAll();
 	ItemDefinition.modelCache.removeAll();
 	ItemDefinition.rgbImageCache.removeAll();
 	Player.modelCache.removeAll();
@@ -1193,7 +1193,7 @@ public class Game extends GameShell {
     public final void method26(boolean bool) {
 	try {
 	    for (int index = 0; index < actorCount; index++) {
-		Npc npc = localNpcs[anIntArray862[index]];
+		Mob npc = localNpcs[anIntArray862[index]];
 		int i_108_ = 536870912 + (anIntArray862[index] << 14);
 		if (npc != null && npc.isVisibile() && npc.npcDefinition.visible == bool) {
 		    int i_109_ = npc.xWithBoundary >> 7;
@@ -1624,7 +1624,7 @@ public class Game extends GameShell {
 	try {
 	    anInt999 = 0;
 	    for (int i_143_ = -1; i_143_ < playerCount + actorCount; i_143_++) {
-		Mob mob;
+		GameCharacter mob;
 		if (i_143_ == -1) {
 		    mob = Game.localPlayer;
 		} else if (i_143_ < playerCount) {
@@ -1633,8 +1633,8 @@ public class Game extends GameShell {
 		    mob = localNpcs[anIntArray862[i_143_ - playerCount]];
 		}
 		if (mob != null && mob.isVisibile()) {
-		    if (mob instanceof Npc) {
-			NpcDefinition npcdefinition = ((Npc) mob).npcDefinition;
+		    if (mob instanceof Mob) {
+			MobDefinition npcdefinition = ((Mob) mob).npcDefinition;
 			if (npcdefinition.childrenIds != null) {
 			    npcdefinition = npcdefinition.getChildDefinition();
 			}
@@ -1663,7 +1663,7 @@ public class Game extends GameShell {
 			    }
 			}
 		    } else {
-			NpcDefinition npcdefinition = ((Npc) mob).npcDefinition;
+			MobDefinition npcdefinition = ((Mob) mob).npcDefinition;
 			if (npcdefinition.headIcon >= 0 && npcdefinition.headIcon < anImageRGBArray1120.length) {
 			    method127(true, mob, mob.modelHeight + 15);
 			    if (anInt988 > -1) {
@@ -1989,7 +1989,7 @@ public class Game extends GameShell {
 	    }
 	    for (int i = 0; i < actorCount; i++) {
 		int i_178_ = anIntArray862[i];
-		Npc npc = localNpcs[i_178_];
+		Mob npc = localNpcs[i_178_];
 		if (npc != null && npc.anInt1555 > 0) {
 		    npc.anInt1555--;
 		    if (npc.anInt1555 == 0) {
@@ -2291,9 +2291,9 @@ public class Game extends GameShell {
 		    break;
 		}
 		if (localNpcs[i_211_] == null) {
-		    localNpcs[i_211_] = new Npc();
+		    localNpcs[i_211_] = new Mob();
 		}
-		Npc npc = localNpcs[i_211_];
+		Mob npc = localNpcs[i_211_];
 		anIntArray862[actorCount++] = i_211_;
 		npc.anInt1557 = Game.currentCycle;
 		int i_212_ = buffer.getBits(5);
@@ -2305,7 +2305,7 @@ public class Game extends GameShell {
 		    i_213_ -= 32;
 		}
 		buffer.getBits(1);
-		npc.npcDefinition = NpcDefinition.getDefinition(buffer.getBits(12));
+		npc.npcDefinition = MobDefinition.getDefinition(buffer.getBits(12));
 		int i_215_ = buffer.getBits(1);
 		if (i_215_ == 1) {
 		    anIntArray919[anInt918++] = i_211_;
@@ -2852,7 +2852,7 @@ public class Game extends GameShell {
 		    projectile.remove();
 		} else if (Game.currentCycle >= projectile.delay) {
 		    if (projectile.targetedEntityId > 0) {
-			Npc npc = localNpcs[projectile.targetedEntityId - 1];
+			Mob npc = localNpcs[projectile.targetedEntityId - 1];
 			if (npc != null && npc.xWithBoundary >= 0 && npc.xWithBoundary < 13312 && npc.yWithBoundary >= 0 && npc.yWithBoundary < 13312) {
 			    projectile.trackTarget(Game.currentCycle, npc.yWithBoundary, method42(projectile.sceneId, npc.yWithBoundary, true, npc.xWithBoundary) - projectile.endHeight, npc.xWithBoundary);
 			}
@@ -3807,7 +3807,7 @@ public class Game extends GameShell {
 		    menuActionId -= 2000;
 		}
 		if (menuActionId == 582) {
-		    Npc npc = localNpcs[itemId];
+		    Mob npc = localNpcs[itemId];
 		    if (npc != null) {
 			calculatePath(2, 0, 1, 0, Game.localPlayer.pathY[0], 1, 0, npc.pathY[0], Game.localPlayer.pathX[0], false, npc.pathX[0]);
 			lastClickX = clickX;
@@ -3906,7 +3906,7 @@ public class Game extends GameShell {
 		    }
 		}
 		if (menuActionId == 20) {
-		    Npc npc = localNpcs[itemId];
+		    Mob npc = localNpcs[itemId];
 		    if (npc != null) {
 			calculatePath(2, 0, 1, 0, Game.localPlayer.pathY[0], 1, 0, npc.pathY[0], Game.localPlayer.pathX[0], false, npc.pathX[0]);
 			lastClickX = clickX;
@@ -4234,7 +4234,7 @@ public class Game extends GameShell {
 			}
 		    }
 		    if (menuActionId == 225) {
-			Npc npc = localNpcs[itemId];
+			Mob npc = localNpcs[itemId];
 			if (npc != null) {
 			    calculatePath(2, 0, 1, 0, Game.localPlayer.pathY[0], 1, 0, npc.pathY[0], Game.localPlayer.pathX[0], false, npc.pathX[0]);
 			    lastClickX = clickX;
@@ -4252,7 +4252,7 @@ public class Game extends GameShell {
 			}
 		    }
 		    if (menuActionId == 965) {
-			Npc npc = localNpcs[itemId];
+			Mob npc = localNpcs[itemId];
 			if (npc != null) {
 			    calculatePath(2, 0, 1, 0, Game.localPlayer.pathY[0], 1, 0, npc.pathY[0], Game.localPlayer.pathX[0], false, npc.pathX[0]);
 			    lastClickX = clickX;
@@ -4270,7 +4270,7 @@ public class Game extends GameShell {
 			}
 		    }
 		    if (menuActionId == 413) {
-			Npc npc = localNpcs[itemId];
+			Mob npc = localNpcs[itemId];
 			if (npc != null) {
 			    calculatePath(2, 0, 1, 0, Game.localPlayer.pathY[0], 1, 0, npc.pathY[0], Game.localPlayer.pathX[0], false, npc.pathX[0]);
 			    lastClickX = clickX;
@@ -4286,9 +4286,9 @@ public class Game extends GameShell {
 			closeWidgets();
 		    }
 		    if (menuActionId == 1025) {
-			Npc npc = localNpcs[itemId];
+			Mob npc = localNpcs[itemId];
 			if (npc != null) {
-			    NpcDefinition npcdefinition = npc.npcDefinition;
+			    MobDefinition npcdefinition = npc.npcDefinition;
 			    if (npcdefinition.childrenIds != null) {
 				npcdefinition = npcdefinition.getChildDefinition();
 			    }
@@ -4311,7 +4311,7 @@ public class Game extends GameShell {
 			outBuffer.putShortA(itemSlotId + regionAbsoluteBaseX);
 		    }
 		    if (menuActionId == 412) {
-			Npc npc = localNpcs[itemId];
+			Mob npc = localNpcs[itemId];
 			if (npc != null) {
 			    calculatePath(2, 0, 1, 0, Game.localPlayer.pathY[0], 1, 0, npc.pathY[0], Game.localPlayer.pathX[0], false, npc.pathX[0]);
 			    lastClickX = clickX;
@@ -4495,7 +4495,7 @@ public class Game extends GameShell {
 			}
 		    }
 		    if (menuActionId == 478) {
-			Npc npc = localNpcs[itemId];
+			Mob npc = localNpcs[itemId];
 			if (npc != null) {
 			    calculatePath(2, 0, 1, 0, Game.localPlayer.pathY[0], 1, 0, npc.pathY[0], Game.localPlayer.pathX[0], false, npc.pathX[0]);
 			    lastClickX = clickX;
@@ -4731,10 +4731,10 @@ public class Game extends GameShell {
 		}
 	    }
 	    if (i_404_ == 1) {
-		Npc npc = localNpcs[i_405_];
+		Mob npc = localNpcs[i_405_];
 		if (npc.npcDefinition.boundaryDimension == 1 && (npc.xWithBoundary & 0x7f) == 64 && (npc.yWithBoundary & 0x7f) == 64) {
 		    for (int i_407_ = 0; i_407_ < actorCount; i_407_++) {
-			Npc npc_408_ = localNpcs[anIntArray862[i_407_]];
+			Mob npc_408_ = localNpcs[anIntArray862[i_407_]];
 			if (npc_408_ != null && npc_408_ != npc && npc_408_.npcDefinition.boundaryDimension == 1 && npc_408_.xWithBoundary == npc.xWithBoundary && npc_408_.yWithBoundary == npc.yWithBoundary) {
 			    method87(npc_408_.npcDefinition, anIntArray862[i_407_], false, i_403_, i_402_);
 			}
@@ -4752,7 +4752,7 @@ public class Game extends GameShell {
 		Player player = players[i_405_];
 		if ((player.xWithBoundary & 0x7f) == 64 && (player.yWithBoundary & 0x7f) == 64) {
 		    for (int i_410_ = 0; i_410_ < actorCount; i_410_++) {
-			Npc npc = localNpcs[anIntArray862[i_410_]];
+			Mob npc = localNpcs[anIntArray862[i_410_]];
 			if (npc != null && npc.npcDefinition.boundaryDimension == 1 && npc.xWithBoundary == player.xWithBoundary && npc.yWithBoundary == player.yWithBoundary) {
 			    method87(npc.npcDefinition, anIntArray862[i_410_], false, i_403_, i_402_);
 			}
@@ -4955,7 +4955,7 @@ public class Game extends GameShell {
 	aProducingGraphicsBuffer1140 = null;
 	method118();
 	GameObjectDefinition.reset();
-	NpcDefinition.reset();
+	MobDefinition.reset();
 	ItemDefinition.reset();
 	FloorDefinition.cache = null;
 	IdentityKit.cache = null;
@@ -6357,7 +6357,7 @@ public class Game extends GameShell {
 	try {
 	    for (int i_512_ = 0; i_512_ < anInt918; i_512_++) {
 		int i_513_ = anIntArray919[i_512_];
-		Npc npc = localNpcs[i_513_];
+		Mob npc = localNpcs[i_513_];
 		int i_514_ = buffer.getUnsignedByte();
 		if ((i_514_ & 0x10) != 0) {
 		    int i_515_ = buffer.getUnsignedShort();
@@ -6426,7 +6426,7 @@ public class Game extends GameShell {
 		    npc.currentHealth = buffer.getUnsignedByteC();
 		}
 		if ((i_514_ & 0x2) != 0) {
-		    npc.npcDefinition = NpcDefinition.getDefinition(buffer.getUnsignedShortA());
+		    npc.npcDefinition = MobDefinition.getDefinition(buffer.getUnsignedShortA());
 		    npc.boundaryDimension = npc.npcDefinition.boundaryDimension;
 		    npc.anInt1524 = npc.npcDefinition.degreesToTurn;
 		    npc.walkAnimationId = npc.npcDefinition.walkAnimationId;
@@ -6447,7 +6447,7 @@ public class Game extends GameShell {
 	}
     }
 
-    public final void method87(NpcDefinition npcdefinition, int i, boolean bool, int i_523_, int i_524_) {
+    public final void method87(MobDefinition npcdefinition, int i, boolean bool, int i_523_, int i_524_) {
 	try {
 	    if (menuActionRow < 400) {
 		if (npcdefinition.childrenIds != null) {
@@ -7001,7 +7001,7 @@ public class Game extends GameShell {
 	    GameObjectDefinition.load(archiveConfig);
 	    FloorDefinition.load(archiveConfig);
 	    ItemDefinition.load(archiveConfig);
-	    NpcDefinition.load(archiveConfig);
+	    MobDefinition.load(archiveConfig);
 	    IdentityKit.load(archiveConfig);
 	    SpotAnimation.load(archiveConfig);
 	    Varp.load(archiveConfig);
@@ -7068,7 +7068,7 @@ public class Game extends GameShell {
 	    startRunnable(mouseCapturer, 10);
 	    GameObject.client = this;
 	    GameObjectDefinition.client = this;
-	    NpcDefinition.client = this;
+	    MobDefinition.client = this;
 	} catch (Exception exception) {
 	    Signlink.reportError("loaderror " + aString1074 + " " + anInt1104);
 	    aBoolean951 = true;
@@ -7286,7 +7286,7 @@ public class Game extends GameShell {
 	    try {
 		for (int i = 0; i < actorCount; i++) {
 		    int actorId = anIntArray862[i];
-		    Npc npc = localNpcs[actorId];
+		    Mob npc = localNpcs[actorId];
 		    if (npc != null) {
 			method96(npc);
 		    }
@@ -7299,7 +7299,7 @@ public class Game extends GameShell {
 	} while (false);
     }
 
-    public final void method96(Mob mob) {
+    public final void method96(GameCharacter mob) {
 	try {
 	    if (mob.xWithBoundary < 128 || mob.yWithBoundary < 128 || mob.xWithBoundary >= 13184 || mob.yWithBoundary >= 13184) {
 		mob.animation = -1;
@@ -7334,7 +7334,7 @@ public class Game extends GameShell {
 	}
     }
 
-    public final void method97(Mob mob, boolean bool) {
+    public final void method97(GameCharacter mob, boolean bool) {
 	do {
 	    try {
 		int cycle = mob.anInt1567 - Game.currentCycle;
@@ -7366,7 +7366,7 @@ public class Game extends GameShell {
 	} while (false);
     }
 
-    public final void method98(Mob mob, byte b) {
+    public final void method98(GameCharacter mob, byte b) {
 	do {
 	    try {
 		if (mob.anInt1568 == Game.currentCycle || mob.animation == -1 || mob.aniomationDelay != 0 || mob.anInt1548 + 1 > AnimationSequence.cache[mob.animation].getFrameLength(mob.anInt1547)) {
@@ -7404,7 +7404,7 @@ public class Game extends GameShell {
 	} while (false);
     }
 
-    public final void method99(byte b, Mob mob) {
+    public final void method99(byte b, GameCharacter mob) {
 	do {
 	    try {
 		mob.anInt1537 = mob.standAnimationId;
@@ -7527,12 +7527,12 @@ public class Game extends GameShell {
 	} while (false);
     }
 
-    public final void method100(Mob mob) {
+    public final void method100(GameCharacter mob) {
 	do {
 	    try {
 		if (mob.anInt1524 != 0) {
 		    if (mob.interactingEntity != -1 && mob.interactingEntity < 32768) {
-			Npc npc = localNpcs[mob.interactingEntity];
+			Mob npc = localNpcs[mob.interactingEntity];
 			if (npc != null) {
 			    int i_614_ = mob.xWithBoundary - npc.xWithBoundary;
 			    int i_615_ = mob.yWithBoundary - npc.yWithBoundary;
@@ -7593,7 +7593,7 @@ public class Game extends GameShell {
 	} while (false);
     }
 
-    public final void method101(Mob mob) {
+    public final void method101(GameCharacter mob) {
 	do {
 	    try {
 		mob.aBoolean1561 = false;
@@ -9345,9 +9345,9 @@ public class Game extends GameShell {
 
 		/* Actors */
 		for (int i = 0; i < actorCount; i++) {
-		    Npc npc = localNpcs[anIntArray862[i]];
+		    Mob npc = localNpcs[anIntArray862[i]];
 		    if (npc != null && npc.isVisibile()) {
-			NpcDefinition definition = npc.npcDefinition;
+			MobDefinition definition = npc.npcDefinition;
 			if (definition.childrenIds != null) {
 			    definition = definition.getChildDefinition();
 			}
@@ -9390,7 +9390,7 @@ public class Game extends GameShell {
 		/* Hints */
 		if (hintIconType != 0 && Game.currentCycle % 20 < 10) {
 		    if (hintIconType == 1 && hintIconActorId >= 0 && hintIconActorId < localNpcs.length) {
-			Npc npc = localNpcs[hintIconActorId];
+			Mob npc = localNpcs[hintIconActorId];
 			if (npc != null) {
 			    mapX = npc.xWithBoundary / 32 - Game.localPlayer.xWithBoundary / 32;
 			    mapY = npc.yWithBoundary / 32 - Game.localPlayer.yWithBoundary / 32;
@@ -9428,7 +9428,7 @@ public class Game extends GameShell {
 	}
     }
 
-    public final void method127(boolean bool, Mob mob, int i) {
+    public final void method127(boolean bool, GameCharacter mob, int i) {
 	try {
 	    if (!bool) {
 		opcode = inBuffer.getUnsignedByte();
@@ -10160,7 +10160,7 @@ public class Game extends GameShell {
 	    actorCount = 0;
 	    for (int i_971_ = 0; i_971_ < i_969_; i_971_++) {
 		int i_972_ = anIntArray862[i_971_];
-		Npc npc = localNpcs[i_972_];
+		Mob npc = localNpcs[i_972_];
 		int i_973_ = buffer.getBits(1);
 		if (i_973_ == 0) {
 		    anIntArray862[actorCount++] = i_972_;
@@ -10851,7 +10851,7 @@ public class Game extends GameShell {
 		    anInt1061 = regionAbsoluteBaseX;
 		    anInt1062 = regionAbsoluteBaseY;
 		    for (int i_1080_ = 0; i_1080_ < 16384; i_1080_++) {
-			Npc npc = localNpcs[i_1080_];
+			Mob npc = localNpcs[i_1080_];
 			if (npc != null) {
 			    for (int i_1081_ = 0; i_1081_ < 10; i_1081_++) {
 				npc.pathX[i_1081_] -= i_1078_;
