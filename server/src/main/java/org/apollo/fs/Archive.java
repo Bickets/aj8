@@ -14,13 +14,15 @@ public final class Archive {
 
     private final Map<Integer, ArchiveEntry> entries = new HashMap<>();
 
+    private final byte[] bytes;
+
     private boolean packed;
 
-    public Archive(byte[] bytes) throws IOException {
-	decode(bytes);
+    public Archive(byte[] bytes) {
+	this.bytes = bytes;
     }
 
-    public void decode(byte[] bytes) throws IOException {
+    public Archive decode() throws IOException {
 	ByteBuffer buffer = ByteBuffer.wrap(bytes);
 	int unpackedSize = ByteBufferUtil.readMedium(buffer);
 	int packedSize = ByteBufferUtil.readMedium(buffer);
@@ -55,6 +57,8 @@ public final class Archive {
 
 	    entries.put(name, new ArchiveEntry(entryBytes, name));
 	}
+
+	return this;
     }
 
     public byte[] get(String name) {

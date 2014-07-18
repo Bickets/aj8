@@ -74,7 +74,7 @@ public final class FileSystem {
 		return null;
 	    }
 	    archive = new Archive(bytes);
-	    archives.put(id, archive);
+	    archives.put(id, archive.decode());
 	}
 	return archive;
     }
