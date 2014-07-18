@@ -1,16 +1,16 @@
-//package buttons
-//
-//import org.apollo.game.interact.ButtonClickListener
-//import org.apollo.game.model.Player
-//
-//class WithdrawAsItemButton extends ButtonClickListener {
-//
-//	new() {
-//		super(5387)
-//	}
-//
-//	override handle(int id, Player player) {
-//		player.fields.withdrawingNotes = false
-//	}
-//
-//}
+package buttons
+
+import org.apollo.game.event.EventSubscriber
+import org.apollo.game.interact.ButtonActionEvent
+
+class WithdrawAsItemButton implements EventSubscriber<ButtonActionEvent> {
+
+	override subscribe(ButtonActionEvent event) {
+		event.player.fields.withdrawingNotes = false
+	}
+
+	override test(ButtonActionEvent event) {
+		event.id == 5387
+	}
+
+}
