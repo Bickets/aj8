@@ -13,7 +13,7 @@ import org.apollo.service.Service;
  *
  * @author Graham
  */
-public final class UpdateService extends Service {
+public final class UpdateService implements Service {
 
     /**
      * The number of threads per request type.

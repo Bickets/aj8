@@ -34,7 +34,6 @@ public final class ServiceManager {
      * @param service The service to register.
      */
     public void register(Service service) {
-	logger.fine("Registering service: " + service + "...");
 	services.add(service);
     }
 
@@ -42,11 +41,8 @@ public final class ServiceManager {
      * Starts all the services.
      */
     public void startAll() {
-	logger.info("Starting services...");
-	for (Service service : services) {
-	    logger.fine("Starting service: " + service + "...");
-	    service.start();
-	}
+	services.forEach((s) -> s.start());
+	logger.info("Started " + services.size() + " services!");
     }
 
 }

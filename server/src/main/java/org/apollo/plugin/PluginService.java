@@ -15,7 +15,7 @@ import org.apollo.service.Service;
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public final class PluginService extends Service {
+public final class PluginService implements Service {
 
     /**
      * The world.

@@ -23,7 +23,7 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
  *
  * @author Graham
  */
-public final class GameService extends Service {
+public final class GameService implements Service {
 
     /**
      * The number of times to unregister players per cycle. This is to ensure
