@@ -194,7 +194,7 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 	LoginRequest request = new LoginRequest(credentials, randomPair, reconnecting, lowMemory, clientVersion, archiveCrcs);
 
 	out.add(request);
-	
+
 	// TODO: Necessary?
 	if (in.isReadable()) {
 	    out.add(in.readBytes(in.readableBytes()));

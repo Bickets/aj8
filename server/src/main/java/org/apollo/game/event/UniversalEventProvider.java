@@ -58,7 +58,8 @@ public final class UniversalEventProvider extends EventBus implements EventProvi
     @Override
     public <E extends Event> void post(E event) {
 	// FIXME: This method is a temporary workaround to unregistering
-	// subscribers if their predicates (if applicable) exist and test {@code false}.
+	// subscribers if their predicates (if applicable) exist and test {@code
+	// false}.
 
 	Collection<EventSubscriber> subscribers = events.get(event.getClass());
 	Set<EventSubscriber<E>> tested = new HashSet<>();

@@ -25,26 +25,26 @@ public final class CharacterDesignMessageHandler implements MessageHandler<Chara
     /**
      * The minimum amount of valid style combinations for males.
      */
-    private static final int[] MINIMUM_MALE_STYLES = { 0, 10, 18, 26,
-	    33, 36, 42 };
+    private static final int[] MINIMUM_MALE_STYLES = { 0, 10, 18, 26, 33, 36,
+	    42 };
 
     /**
      * The maximum amount of valid style combinations for males.
      */
-    private static final int[] MAXIMUM_MALE_STYLES = { 8, 17, 25, 31,
-	    34, 40, 43 };
+    private static final int[] MAXIMUM_MALE_STYLES = { 8, 17, 25, 31, 34, 40,
+	    43 };
 
     /**
      * The minimum amount of valid style combinations for females.
      */
-    private static final int[] MINIMUM_FEMALE_STYLES = { 45, 255, 56,
-	    61, 67, 70, 79 };
+    private static final int[] MINIMUM_FEMALE_STYLES = { 45, 255, 56, 61, 67,
+	    70, 79 };
 
     /**
      * The maximum amount of valid style combinations for females.
      */
-    private static final int[] MAXIMUM_FEMALE_STYLES = { 54, 255, 60,
-	    65, 68, 77, 80 };
+    private static final int[] MAXIMUM_FEMALE_STYLES = { 54, 255, 60, 65, 68,
+	    77, 80 };
 
     @Override
     public void handle(Player player, CharacterDesignMessage message) {

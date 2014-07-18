@@ -1,6 +1,5 @@
 package org.apollo.game.model;
 
-
 /**
  * Represents an entity within the game world.
  * 
