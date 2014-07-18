@@ -5918,9 +5918,6 @@ public class Game extends GameShell {
 	    outBuffer.put(14);
 	    outBuffer.put(i);
 	    bufferedConnection.write(2, outBuffer.payload, 0);
-	    for (int i_467_ = 0; i_467_ < 8; i_467_++) {
-		bufferedConnection.read();
-	    }
 	    int loginResponse = bufferedConnection.read();
 	    int i_469_ = loginResponse;
 	    if (loginResponse == 0) {

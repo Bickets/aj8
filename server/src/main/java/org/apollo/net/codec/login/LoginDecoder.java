@@ -55,10 +55,10 @@ public final class LoginDecoder extends ByteToMessageDecoder {
     protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
 	switch (state) {
 	case LOGIN_HANDSHAKE:
-	    decodeHandshake(ctx, in, out);
+	    decodeHandshake(ctx, in);
 	    break;
 	case LOGIN_HEADER:
-	    decodeHeader(ctx, in, out);
+	    decodeHeader(in);
 	    break;
 	case LOGIN_PAYLOAD:
 	    decodePayload(ctx, in, out);
@@ -73,9 +73,8 @@ public final class LoginDecoder extends ByteToMessageDecoder {
      *
      * @param ctx The channels context.
      * @param in The input buffer.
-     * @param out The {@link List} to which written data should be added.
      */
-    private void decodeHandshake(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
+    private void decodeHandshake(ChannelHandlerContext ctx, ByteBuf in) {
 	if (!in.isReadable()) {
 	    return;
 	}
@@ -83,9 +82,8 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 	usernameHash = in.readUnsignedByte();
 	serverSeed = RANDOM.nextLong();
 
-	ByteBuf resp = ctx.alloc().buffer(17);
+	ByteBuf resp = ctx.alloc().buffer(9);
 	resp.writeByte(LoginConstants.STATUS_EXCHANGE_DATA);
-	resp.writeLong(0);
 	resp.writeLong(serverSeed);
 	ctx.channel().writeAndFlush(resp);
 
@@ -95,11 +93,9 @@ public final class LoginDecoder extends ByteToMessageDecoder {
     /**
      * Decodes the header state.
      *
-     * @param ctx The channels context.
      * @param in The input buffer.
-     * @param out The {@link List} to which written data should be added.
      */
-    private void decodeHeader(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
+    private void decodeHeader(ByteBuf in) {
 	if (in.readableBytes() < 2) {
 	    return;
 	}
