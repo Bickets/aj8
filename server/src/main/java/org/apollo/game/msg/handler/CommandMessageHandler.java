@@ -16,7 +16,7 @@ import org.apollo.util.TextUtil;
  * @author Graham
  */
 @HandlesMessage(CommandMessage.class)
-public final class CommandMessageHandler extends MessageHandler<CommandMessage> {
+public final class CommandMessageHandler implements MessageHandler<CommandMessage> {
 
     /**
      * The world used to post command events to this worlds event provider.

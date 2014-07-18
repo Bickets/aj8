@@ -42,7 +42,7 @@ import org.apollo.net.codec.game.GamePacketType;
  * @author Graham
  */
 @EncodesMessage(PlayerSynchronizationMessage.class)
-public final class PlayerSynchronizationMessageEncoder extends MessageEncoder<PlayerSynchronizationMessage> {
+public final class PlayerSynchronizationMessageEncoder implements MessageEncoder<PlayerSynchronizationMessage> {
 
     @Override
     public GamePacket encode(PlayerSynchronizationMessage message) {

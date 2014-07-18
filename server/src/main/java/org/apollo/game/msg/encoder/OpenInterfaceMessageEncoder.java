@@ -13,7 +13,7 @@ import org.apollo.net.codec.game.GamePacketBuilder;
  * @author Graham
  */
 @EncodesMessage(OpenInterfaceMessage.class)
-public final class OpenInterfaceMessageEncoder extends MessageEncoder<OpenInterfaceMessage> {
+public final class OpenInterfaceMessageEncoder implements MessageEncoder<OpenInterfaceMessage> {
 
     @Override
     public GamePacket encode(OpenInterfaceMessage message) {

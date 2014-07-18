@@ -15,7 +15,7 @@ import org.apollo.game.msg.impl.CloseInterfaceMessage;
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @HandlesMessage(CharacterDesignMessage.class)
-public final class CharacterDesignMessageHandler extends MessageHandler<CharacterDesignMessage> {
+public final class CharacterDesignMessageHandler implements MessageHandler<CharacterDesignMessage> {
 
     /**
      * The maximum amount of colors for each feature.

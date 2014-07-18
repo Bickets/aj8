@@ -14,7 +14,7 @@ import org.apollo.net.codec.game.GamePacketBuilder;
  * @author Graham
  */
 @EncodesMessage(OpenInterfaceSidebarMessage.class)
-public final class OpenInterfaceSidebarMessageEncoder extends MessageEncoder<OpenInterfaceSidebarMessage> {
+public final class OpenInterfaceSidebarMessageEncoder implements MessageEncoder<OpenInterfaceSidebarMessage> {
 
     @Override
     public GamePacket encode(OpenInterfaceSidebarMessage message) {

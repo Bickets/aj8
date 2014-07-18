@@ -12,7 +12,7 @@ import org.apollo.net.codec.game.GamePacketBuilder;
  * @author Graham
  */
 @EncodesMessage(LogoutMessage.class)
-public final class LogoutMessageEncoder extends MessageEncoder<LogoutMessage> {
+public final class LogoutMessageEncoder implements MessageEncoder<LogoutMessage> {
 
     @Override
     public GamePacket encode(LogoutMessage message) {

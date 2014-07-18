@@ -12,7 +12,7 @@ import org.apollo.game.sync.block.SynchronizationBlock;
  * @author Graham
  */
 @HandlesMessage(ChatMessage.class)
-public final class ChatMessageHandler extends MessageHandler<ChatMessage> {
+public final class ChatMessageHandler implements MessageHandler<ChatMessage> {
 
     @Override
     public void handle(Player player, ChatMessage message) {

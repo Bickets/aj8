@@ -13,7 +13,7 @@ import org.apollo.net.codec.game.GamePacketReader;
  * @author Graham
  */
 @DecodesMessage(185)
-public final class ButtonMessageDecoder extends MessageDecoder<ButtonMessage> {
+public final class ButtonMessageDecoder implements MessageDecoder<ButtonMessage> {
 
     @Override
     public ButtonMessage decode(GamePacket packet) {

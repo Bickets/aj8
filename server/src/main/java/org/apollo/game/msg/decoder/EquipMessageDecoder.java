@@ -14,7 +14,7 @@ import org.apollo.net.codec.game.GamePacketReader;
  * @author Graham
  */
 @DecodesMessage(41)
-public final class EquipMessageDecoder extends MessageDecoder<EquipMessage> {
+public final class EquipMessageDecoder implements MessageDecoder<EquipMessage> {
 
     @Override
     public EquipMessage decode(GamePacket packet) {

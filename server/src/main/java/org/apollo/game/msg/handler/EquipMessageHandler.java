@@ -19,7 +19,7 @@ import org.apollo.game.msg.impl.EquipMessage;
  * @author Graham
  */
 @HandlesMessage(EquipMessage.class)
-public final class EquipMessageHandler extends MessageHandler<EquipMessage> {
+public final class EquipMessageHandler implements MessageHandler<EquipMessage> {
 
     @Override
     public void handle(Player player, EquipMessage message) {

@@ -5,12 +5,17 @@ import org.apollo.net.codec.game.GamePacket;
 /**
  * An {@link MessageDecoder} decodes a {@link GamePacket} into a {@link Message}
  * object which can be processed by the server.
+ * 
+ * <p>
+ * This is a functional interface whose functional method is
+ * {@link #decode(GamePacket)}
  *
  * @author Graham
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  * @param <E> The type of {@link Message}.
  */
-public abstract class MessageDecoder<E extends Message> {
+@FunctionalInterface
+public interface MessageDecoder<E extends Message> {
 
     /**
      * Decodes the specified packet into a message.
@@ -18,6 +23,6 @@ public abstract class MessageDecoder<E extends Message> {
      * @param packet The packet.
      * @return The message.
      */
-    public abstract E decode(GamePacket packet);
+    E decode(GamePacket packet);
 
 }

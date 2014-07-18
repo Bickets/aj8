@@ -17,7 +17,7 @@ import org.apollo.net.codec.game.GamePacketReader;
  * @author Graham
  */
 @DecodesMessage(70)
-public final class ThirdObjectActionMessageDecoder extends MessageDecoder<ObjectActionMessage> {
+public final class ThirdObjectActionMessageDecoder implements MessageDecoder<ObjectActionMessage> {
 
     @Override
     public ObjectActionMessage decode(GamePacket packet) {

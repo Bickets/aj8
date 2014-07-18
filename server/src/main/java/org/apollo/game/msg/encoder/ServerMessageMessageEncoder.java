@@ -13,7 +13,7 @@ import org.apollo.net.codec.game.GamePacketType;
  * @author Graham
  */
 @EncodesMessage(ServerMessageMessage.class)
-public final class ServerMessageMessageEncoder extends MessageEncoder<ServerMessageMessage> {
+public final class ServerMessageMessageEncoder implements MessageEncoder<ServerMessageMessage> {
 
     @Override
     public GamePacket encode(ServerMessageMessage message) {

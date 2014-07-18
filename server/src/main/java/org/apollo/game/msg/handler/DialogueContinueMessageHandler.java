@@ -12,7 +12,7 @@ import org.apollo.game.msg.impl.DialogueContinueMessage;
  * @author Chris Fletcher
  */
 @HandlesMessage(DialogueContinueMessage.class)
-public final class DialogueContinueMessageHandler extends MessageHandler<DialogueContinueMessage> {
+public final class DialogueContinueMessageHandler implements MessageHandler<DialogueContinueMessage> {
 
     @Override
     public void handle(Player player, DialogueContinueMessage message) {

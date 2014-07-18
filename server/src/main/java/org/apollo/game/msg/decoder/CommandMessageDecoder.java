@@ -12,7 +12,7 @@ import org.apollo.net.codec.game.GamePacketReader;
  * @author Graham
  */
 @DecodesMessage(103)
-public final class CommandMessageDecoder extends MessageDecoder<CommandMessage> {
+public final class CommandMessageDecoder implements MessageDecoder<CommandMessage> {
 
     @Override
     public CommandMessage decode(GamePacket packet) {

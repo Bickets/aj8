@@ -15,7 +15,7 @@ import org.apollo.net.codec.game.GamePacketBuilder;
  * @author Graham
  */
 @EncodesMessage(IdAssignmentMessage.class)
-public final class IdAssignmentMessageEncoder extends MessageEncoder<IdAssignmentMessage> {
+public final class IdAssignmentMessageEncoder implements MessageEncoder<IdAssignmentMessage> {
 
     @Override
     public GamePacket encode(IdAssignmentMessage message) {

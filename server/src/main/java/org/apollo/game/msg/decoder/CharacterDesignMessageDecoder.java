@@ -15,7 +15,7 @@ import org.apollo.net.codec.game.GamePacketReader;
  * @author Graham
  */
 @DecodesMessage(101)
-public final class CharacterDesignMessageDecoder extends MessageDecoder<CharacterDesignMessage> {
+public final class CharacterDesignMessageDecoder implements MessageDecoder<CharacterDesignMessage> {
 
     @Override
     public CharacterDesignMessage decode(GamePacket packet) {

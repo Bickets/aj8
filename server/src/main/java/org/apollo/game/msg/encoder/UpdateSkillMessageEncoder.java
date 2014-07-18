@@ -15,7 +15,7 @@ import org.apollo.net.codec.game.GamePacketBuilder;
  * @author Graham
  */
 @EncodesMessage(UpdateSkillMessage.class)
-public final class UpdateSkillMessageEncoder extends MessageEncoder<UpdateSkillMessage> {
+public final class UpdateSkillMessageEncoder implements MessageEncoder<UpdateSkillMessage> {
 
     @Override
     public GamePacket encode(UpdateSkillMessage message) {

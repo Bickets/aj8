@@ -15,7 +15,7 @@ import org.apollo.util.TextUtil;
  * @author Graham
  */
 @DecodesMessage(4)
-public final class ChatMessageDecoder extends MessageDecoder<ChatMessage> {
+public final class ChatMessageDecoder implements MessageDecoder<ChatMessage> {
 
     @Override
     public ChatMessage decode(GamePacket packet) {

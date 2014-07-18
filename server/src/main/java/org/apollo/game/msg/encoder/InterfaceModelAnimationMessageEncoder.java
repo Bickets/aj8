@@ -13,7 +13,7 @@ import org.apollo.net.codec.game.GamePacketBuilder;
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @EncodesMessage(InterfaceModelAnimationMessage.class)
-public class InterfaceModelAnimationMessageEncoder extends MessageEncoder<InterfaceModelAnimationMessage> {
+public class InterfaceModelAnimationMessageEncoder implements MessageEncoder<InterfaceModelAnimationMessage> {
 
     @Override
     public GamePacket encode(InterfaceModelAnimationMessage message) {

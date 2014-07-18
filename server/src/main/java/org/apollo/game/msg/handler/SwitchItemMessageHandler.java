@@ -15,7 +15,7 @@ import org.apollo.game.msg.impl.SwitchItemMessage;
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @HandlesMessage(SwitchItemMessage.class)
-public final class SwitchItemMessageHandler extends MessageHandler<SwitchItemMessage> {
+public final class SwitchItemMessageHandler implements MessageHandler<SwitchItemMessage> {
 
     @Override
     public void handle(Player player, SwitchItemMessage message) {

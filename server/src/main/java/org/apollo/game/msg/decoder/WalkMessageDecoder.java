@@ -16,7 +16,7 @@ import org.apollo.net.codec.game.GamePacketReader;
  * @author Graham
  */
 @DecodesMessage({ 98, 164, 248 })
-public final class WalkMessageDecoder extends MessageDecoder<WalkMessage> {
+public final class WalkMessageDecoder implements MessageDecoder<WalkMessage> {
 
     @Override
     public WalkMessage decode(GamePacket packet) {

@@ -16,7 +16,7 @@ import org.apollo.net.codec.game.GamePacketType;
  * @author Graham
  */
 @EncodesMessage(UpdateSlottedItemsMessage.class)
-public final class UpdateSlottedItemsMessageEncoder extends MessageEncoder<UpdateSlottedItemsMessage> {
+public final class UpdateSlottedItemsMessageEncoder implements MessageEncoder<UpdateSlottedItemsMessage> {
 
     @Override
     public GamePacket encode(UpdateSlottedItemsMessage message) {

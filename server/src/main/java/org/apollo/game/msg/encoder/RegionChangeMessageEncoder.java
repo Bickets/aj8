@@ -14,7 +14,7 @@ import org.apollo.net.codec.game.GamePacketBuilder;
  * @author Graham
  */
 @EncodesMessage(RegionChangeMessage.class)
-public final class RegionChangeMessageEncoder extends MessageEncoder<RegionChangeMessage> {
+public final class RegionChangeMessageEncoder implements MessageEncoder<RegionChangeMessage> {
 
     @Override
     public GamePacket encode(RegionChangeMessage message) {

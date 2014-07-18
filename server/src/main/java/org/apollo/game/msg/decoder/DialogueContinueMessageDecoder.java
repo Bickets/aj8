@@ -13,7 +13,7 @@ import org.apollo.net.codec.game.GamePacketReader;
  * @author Chris Fletcher
  */
 @DecodesMessage(40)
-public final class DialogueContinueMessageDecoder extends MessageDecoder<DialogueContinueMessage> {
+public final class DialogueContinueMessageDecoder implements MessageDecoder<DialogueContinueMessage> {
 
     @Override
     public DialogueContinueMessage decode(GamePacket packet) {

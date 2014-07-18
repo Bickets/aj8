@@ -13,7 +13,7 @@ import org.apollo.game.msg.impl.ButtonMessage;
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @HandlesMessage(ButtonMessage.class)
-public final class ButtonMessageHandler extends MessageHandler<ButtonMessage> {
+public final class ButtonMessageHandler implements MessageHandler<ButtonMessage> {
 
     /**
      * The world used to post button action events to this worlds event provider.

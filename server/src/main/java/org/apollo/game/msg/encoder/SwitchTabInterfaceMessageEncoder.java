@@ -14,7 +14,7 @@ import org.apollo.net.codec.game.GamePacketBuilder;
  * @author Graham
  */
 @EncodesMessage(SwitchTabInterfaceMessage.class)
-public final class SwitchTabInterfaceMessageEncoder extends MessageEncoder<SwitchTabInterfaceMessage> {
+public final class SwitchTabInterfaceMessageEncoder implements MessageEncoder<SwitchTabInterfaceMessage> {
 
     @Override
     public GamePacket encode(SwitchTabInterfaceMessage message) {

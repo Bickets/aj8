@@ -11,7 +11,7 @@ import org.apollo.game.msg.impl.EnteredAmountMessage;
  * @author Graham
  */
 @HandlesMessage(EnteredAmountMessage.class)
-public final class EnteredAmountMessageHandler extends MessageHandler<EnteredAmountMessage> {
+public final class EnteredAmountMessageHandler implements MessageHandler<EnteredAmountMessage> {
 
     @Override
     public void handle(Player player, EnteredAmountMessage message) {

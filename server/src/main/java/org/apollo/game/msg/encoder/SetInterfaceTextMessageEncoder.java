@@ -15,7 +15,7 @@ import org.apollo.net.codec.game.GamePacketType;
  * @author The Wanderer
  */
 @EncodesMessage(SetInterfaceTextMessage.class)
-public final class SetInterfaceTextMessageEncoder extends MessageEncoder<SetInterfaceTextMessage> {
+public final class SetInterfaceTextMessageEncoder implements MessageEncoder<SetInterfaceTextMessage> {
 
     @Override
     public GamePacket encode(SetInterfaceTextMessage message) {

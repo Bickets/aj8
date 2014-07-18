@@ -5,7 +5,7 @@ import java.util.function.Predicate;
 /**
  * Represents an {@link Event} predicate (a {@code boolean} valued function).
  * 
- * This is a functional interface whose functional method is
+ * <p>This is a functional interface whose functional method is
  * {@link #test(Event)}
  * 
  * @author Ryley Kimmel <ryley.kimmel@live.com>

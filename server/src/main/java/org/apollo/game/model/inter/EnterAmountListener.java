@@ -2,6 +2,10 @@ package org.apollo.game.model.inter;
 
 /**
  * A listener for the enter amount dialog.
+ * 
+ * <p>
+ * This is a functional interface whose functional method is
+ * {@link #amountEntered(int)}
  *
  * @author Graham
  */

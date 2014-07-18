@@ -15,7 +15,7 @@ import org.apollo.net.codec.game.GamePacketBuilder;
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @EncodesMessage(MobModelOnInterfaceMessage.class)
-public final class MobModelOnInterfaceMessageEncoder extends MessageEncoder<MobModelOnInterfaceMessage> {
+public final class MobModelOnInterfaceMessageEncoder implements MessageEncoder<MobModelOnInterfaceMessage> {
 
     @Override
     public GamePacket encode(MobModelOnInterfaceMessage message) {

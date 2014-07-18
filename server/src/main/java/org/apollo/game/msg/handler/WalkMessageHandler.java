@@ -13,7 +13,7 @@ import org.apollo.game.msg.impl.WalkMessage;
  * @author Graham
  */
 @HandlesMessage(WalkMessage.class)
-public final class WalkMessageHandler extends MessageHandler<WalkMessage> {
+public final class WalkMessageHandler implements MessageHandler<WalkMessage> {
 
     @Override
     public void handle(Player player, WalkMessage message) {

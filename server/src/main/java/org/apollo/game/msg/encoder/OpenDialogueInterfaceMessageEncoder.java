@@ -14,7 +14,7 @@ import org.apollo.net.codec.game.GamePacketBuilder;
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @EncodesMessage(OpenDialogueInterfaceMessage.class)
-public final class OpenDialogueInterfaceMessageEncoder extends MessageEncoder<OpenDialogueInterfaceMessage> {
+public final class OpenDialogueInterfaceMessageEncoder implements MessageEncoder<OpenDialogueInterfaceMessage> {
 
     @Override
     public GamePacket encode(OpenDialogueInterfaceMessage message) {

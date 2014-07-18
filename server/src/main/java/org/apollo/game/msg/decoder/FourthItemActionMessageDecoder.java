@@ -15,7 +15,7 @@ import org.apollo.net.codec.game.GamePacketReader;
  * @author Graham
  */
 @DecodesMessage(129)
-public final class FourthItemActionMessageDecoder extends MessageDecoder<ItemActionMessage> {
+public final class FourthItemActionMessageDecoder implements MessageDecoder<ItemActionMessage> {
 
     @Override
     public ItemActionMessage decode(GamePacket packet) {

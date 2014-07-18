@@ -15,7 +15,7 @@ import org.apollo.net.codec.game.GamePacketReader;
  * @author Graham
  */
 @DecodesMessage(214)
-public final class SwitchItemMessageDecoder extends MessageDecoder<SwitchItemMessage> {
+public final class SwitchItemMessageDecoder implements MessageDecoder<SwitchItemMessage> {
 
     @Override
     public SwitchItemMessage decode(GamePacket packet) {

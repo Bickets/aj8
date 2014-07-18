@@ -12,7 +12,7 @@ import org.apollo.net.codec.game.GamePacketBuilder;
  * @author Graham
  */
 @EncodesMessage(CloseInterfaceMessage.class)
-public final class CloseInterfaceMessageEncoder extends MessageEncoder<CloseInterfaceMessage> {
+public final class CloseInterfaceMessageEncoder implements MessageEncoder<CloseInterfaceMessage> {
 
     @Override
     public GamePacket encode(CloseInterfaceMessage message) {
