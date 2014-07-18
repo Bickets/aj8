@@ -1,7 +1,5 @@
 package org.apollo.game.event;
 
-import static com.google.common.base.Preconditions.checkNotNull;
-
 /**
  * An event provider provides support for dynamic {@link Event} posting,
  * depriving and providing {@link EventSubscriber}s
@@ -30,20 +28,5 @@ public interface EventProvider {
      * @param event The event to post.
      */
     <E extends Event> void post(E event);
-
-    /**
-     * Posts an {@link Event}, if and only if the specified predicate tests
-     * {@code true}, notifying all provided subscribers.
-     * 
-     * @param event The event to post, may not be {@code null}.
-     * @param predicate The events predicate, may not be {@code null}.
-     */
-    default <E extends Event> void post(E event, EventPredicate<E> predicate) {
-	checkNotNull(predicate);
-
-	if (predicate.test(event)) {
-	    post(event);
-	}
-    }
 
 }

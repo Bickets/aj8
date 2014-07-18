@@ -3,8 +3,7 @@ import java.lang.reflect.Modifier;
 import java.util.ArrayList;
 import java.util.function.Consumer;
 import mobs.InitialMobSpawns;
-import org.apollo.game.command.CommandDispatcher;
-import org.apollo.game.command.CommandListener;
+import org.apollo.game.command.CommandEvent;
 import org.apollo.game.event.EventSubscriber;
 import org.apollo.game.interact.ButtonActionEvent;
 import org.apollo.game.interact.ItemActionEvent;
@@ -68,14 +67,13 @@ public class Bootstrap {
     _initialMobSpawns.init();
   }
   
-  public void initCommands() {
+  public void initCommands(final World world) {
     ArrayList<Class<?>> _classes = this.classes("commands");
     final Consumer<Class<?>> _function = new Consumer<Class<?>>() {
       public void accept(final Class<?> it) {
         try {
-          CommandDispatcher _instance = CommandDispatcher.getInstance();
           Object _newInstance = it.newInstance();
-          _instance.bind(((CommandListener) _newInstance));
+          world.<CommandEvent>provideSubscriber(((EventSubscriber<CommandEvent>) _newInstance));
         } catch (Throwable _e) {
           throw Exceptions.sneakyThrow(_e);
         }
@@ -142,6 +140,6 @@ public class Bootstrap {
     this.initSpawns(world);
     this.initItems(world);
     this.initObjects(world);
-    this.initCommands();
+    this.initCommands(world);
   }
 }

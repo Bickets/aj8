@@ -2,12 +2,12 @@ package mobs
 
 import java.util.ArrayList
 import java.util.logging.Logger
-import org.apollo.game.model.Direction
 import org.apollo.game.model.Mob
 import org.apollo.game.model.Position
 import org.apollo.game.model.World
 
-import static org.apollo.game.model.Direction.EAST
+import static org.apollo.game.common.Direction.EAST
+import org.apollo.game.common.Direction
 
 @Data class InitialMobSpawns {
 	val World world

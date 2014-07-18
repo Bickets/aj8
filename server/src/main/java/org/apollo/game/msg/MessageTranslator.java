@@ -149,7 +149,6 @@ public final class MessageTranslator {
 	register(new CharacterDesignMessageHandler());
 	register(new WalkMessageHandler());
 	register(new ChatMessageHandler());
-	register(new CommandMessageHandler());
 	register(new SwitchItemMessageHandler());
 	register(new EquipMessageHandler());
 	register(new ClosedInterfaceMessageHandler());
@@ -160,6 +159,7 @@ public final class MessageTranslator {
 	register(new ObjectMessageHandler(world));
 	register(new ButtonMessageHandler(world));
 	register(new ItemActionMessageHandler(world));
+	register(new CommandMessageHandler(world));
     }
 
     /**

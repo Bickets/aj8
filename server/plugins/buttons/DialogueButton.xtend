@@ -11,19 +11,13 @@ class DialogueButton implements EventSubscriber<ButtonActionEvent> {
 	val static ids = buildIds;
 
 	override subscribe(ButtonActionEvent event) {
-		ids.forEach [
-			if (it == event.getId) {
-				var player = event.getPlayer();
+		var player = event.player
 
-				if (player.interfaceSet.contains(InterfaceType.DIALOGUE)) {
-					val option = Objects.requireNonNull(DialogueOption.fromId(it))
-					val success = player.interfaceSet.optionClicked(option)
-					if (success) {
-						player.interfaceSet.continueRequested
-					}
-				}
-			}
-		]
+		val option = Objects.requireNonNull(DialogueOption.fromId(event.id))
+		val success = player.interfaceSet.optionClicked(option)
+		if (success) {
+			player.interfaceSet.continueRequested
+		}
 	}
 
 	def static buildIds() {
@@ -31,6 +25,19 @@ class DialogueButton implements EventSubscriber<ButtonActionEvent> {
 		val vals = DialogueOption.values
 		vals.forEach[it.ids.forEach[ids += it]]
 		return ids
+	}
+
+	override test(ButtonActionEvent event) {
+		val player = event.player
+		var hasId = false
+
+		for (id : ids) {
+			if (id == event.id) {
+				hasId = true
+			}
+		}
+
+		player.interfaceSet.contains(InterfaceType.DIALOGUE) && hasId
 	}
 
 }

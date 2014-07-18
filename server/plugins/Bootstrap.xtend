@@ -1,13 +1,12 @@
 import java.io.File
 import java.lang.reflect.Modifier
 import mobs.InitialMobSpawns
-import org.apollo.game.command.CommandDispatcher
-import org.apollo.game.command.CommandListener
+import org.apollo.game.command.CommandEvent
 import org.apollo.game.event.EventSubscriber
+import org.apollo.game.interact.ButtonActionEvent
 import org.apollo.game.interact.ItemActionEvent
 import org.apollo.game.interact.ObjectActionEvent
 import org.apollo.game.model.World
-import org.apollo.game.interact.ButtonActionEvent
 
 class Bootstrap {
 
@@ -27,8 +26,8 @@ class Bootstrap {
 		new InitialMobSpawns(world).init
 	}
 
-	def initCommands() {
-		classes('commands').forEach[CommandDispatcher.getInstance.bind(it.newInstance as CommandListener)]
+	def initCommands(World world) {
+		classes('commands').forEach[world.provideSubscriber(it.newInstance as EventSubscriber<CommandEvent>)]
 	}
 
 	def classes(String dir) {
@@ -52,8 +51,7 @@ class Bootstrap {
 		world.initSpawns
 		world.initItems
 		world.initObjects
-
-		initCommands
+		world.initCommands
 	}
 
 }

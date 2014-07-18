@@ -20,28 +20,16 @@ public class DialogueButton implements EventSubscriber<ButtonActionEvent> {
   private final static ArrayList<Integer> ids = DialogueButton.buildIds();
   
   public void subscribe(final ButtonActionEvent event) {
-    final Consumer<Integer> _function = new Consumer<Integer>() {
-      public void accept(final Integer it) {
-        int _id = event.getId();
-        boolean _equals = ((it).intValue() == _id);
-        if (_equals) {
-          Player player = event.getPlayer();
-          InterfaceSet _interfaceSet = player.getInterfaceSet();
-          boolean _contains = _interfaceSet.contains(InterfaceType.DIALOGUE);
-          if (_contains) {
-            DialogueOption _fromId = DialogueOption.fromId((it).intValue());
-            final DialogueOption option = Objects.<DialogueOption>requireNonNull(_fromId);
-            InterfaceSet _interfaceSet_1 = player.getInterfaceSet();
-            final boolean success = _interfaceSet_1.optionClicked(option);
-            if (success) {
-              InterfaceSet _interfaceSet_2 = player.getInterfaceSet();
-              _interfaceSet_2.continueRequested();
-            }
-          }
-        }
-      }
-    };
-    DialogueButton.ids.forEach(_function);
+    Player player = event.getPlayer();
+    int _id = event.getId();
+    DialogueOption _fromId = DialogueOption.fromId(_id);
+    final DialogueOption option = Objects.<DialogueOption>requireNonNull(_fromId);
+    InterfaceSet _interfaceSet = player.getInterfaceSet();
+    final boolean success = _interfaceSet.optionClicked(option);
+    if (success) {
+      InterfaceSet _interfaceSet_1 = player.getInterfaceSet();
+      _interfaceSet_1.continueRequested();
+    }
   }
   
   public static ArrayList<Integer> buildIds() {
@@ -60,5 +48,30 @@ public class DialogueButton implements EventSubscriber<ButtonActionEvent> {
     };
     ((List<DialogueOption>)Conversions.doWrapArray(vals)).forEach(_function);
     return ids;
+  }
+  
+  public boolean test(final ButtonActionEvent event) {
+    boolean _xblockexpression = false;
+    {
+      final Player player = event.getPlayer();
+      boolean hasId = false;
+      for (final Integer id : DialogueButton.ids) {
+        int _id = event.getId();
+        boolean _equals = ((id).intValue() == _id);
+        if (_equals) {
+          hasId = true;
+        }
+      }
+      boolean _and = false;
+      InterfaceSet _interfaceSet = player.getInterfaceSet();
+      boolean _contains = _interfaceSet.contains(InterfaceType.DIALOGUE);
+      if (!_contains) {
+        _and = false;
+      } else {
+        _and = hasId;
+      }
+      _xblockexpression = _and;
+    }
+    return _xblockexpression;
   }
 }

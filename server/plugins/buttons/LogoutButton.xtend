@@ -6,10 +6,11 @@ import org.apollo.game.interact.ButtonActionEvent
 class LogoutButton implements EventSubscriber<ButtonActionEvent> {
 
 	override subscribe(ButtonActionEvent event) {
-		println(event.getId)
-		if (event.getId == 2458) {
-			event.getPlayer.logout
-		}
+		event.player.logout
+	}
+
+	override test(ButtonActionEvent event) {
+		event.id == 2458
 	}
 
 }

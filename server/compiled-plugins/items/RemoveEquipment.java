@@ -1,9 +1,9 @@
 package items;
 
 import com.google.common.base.Objects;
+import org.apollo.game.common.Interfaces;
 import org.apollo.game.event.EventSubscriber;
 import org.apollo.game.interact.ItemActionEvent;
-import org.apollo.game.model.InterfaceConstants;
 import org.apollo.game.model.Inventory;
 import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
@@ -11,7 +11,7 @@ import org.apollo.game.model.def.ItemDefinition;
 import org.apollo.game.model.inv.SynchronizationInventoryListener;
 
 @SuppressWarnings("all")
-public class RemoveEquipmentPlugin implements EventSubscriber<ItemActionEvent> {
+public class RemoveEquipment implements EventSubscriber<ItemActionEvent> {
   public void remove(final Player player, final int id, final int slot) {
     final Inventory inventory = player.getInventory();
     final Inventory equipment = player.getEquipment();
@@ -89,19 +89,23 @@ public class RemoveEquipmentPlugin implements EventSubscriber<ItemActionEvent> {
   }
   
   public void subscribe(final ItemActionEvent event) {
-    int _interfaceId = event.getInterfaceId();
-    boolean _notEquals = (_interfaceId != SynchronizationInventoryListener.EQUIPMENT_ID);
-    if (_notEquals) {
-      return;
-    }
-    InterfaceConstants.InterfaceOption _option = event.getOption();
-    boolean _notEquals_1 = (!Objects.equal(_option, InterfaceConstants.InterfaceOption.OPTION_ONE));
-    if (_notEquals_1) {
-      return;
-    }
     Player _player = event.getPlayer();
     int _id = event.getId();
     int _slot = event.getSlot();
     this.remove(_player, _id, _slot);
+  }
+  
+  public boolean test(final ItemActionEvent event) {
+    boolean _and = false;
+    int _interfaceId = event.getInterfaceId();
+    boolean _equals = (_interfaceId == SynchronizationInventoryListener.EQUIPMENT_ID);
+    if (!_equals) {
+      _and = false;
+    } else {
+      Interfaces.InterfaceOption _option = event.getOption();
+      boolean _equals_1 = Objects.equal(_option, Interfaces.InterfaceOption.OPTION_ONE);
+      _and = _equals_1;
+    }
+    return _and;
   }
 }

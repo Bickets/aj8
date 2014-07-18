@@ -1,7 +1,7 @@
 package org.apollo.game.interact;
 
+import org.apollo.game.common.Interfaces.InterfaceOption;
 import org.apollo.game.event.Event;
-import org.apollo.game.model.InterfaceConstants.InterfaceOption;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.Position;
 
