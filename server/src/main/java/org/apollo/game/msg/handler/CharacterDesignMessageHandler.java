@@ -20,30 +20,30 @@ public final class CharacterDesignMessageHandler extends MessageHandler<Characte
     /**
      * The maximum amount of colors for each feature.
      */
-    private static final int[] MAXIMUM_COLORS = new int[] { 11, 15, 15, 5, 7 };
+    private static final int[] MAXIMUM_COLORS = { 11, 15, 15, 5, 7 };
 
     /**
      * The minimum amount of valid style combinations for males.
      */
-    private static final int[] MINIMUM_MALE_STYLES = new int[] { 0, 10, 18, 26,
+    private static final int[] MINIMUM_MALE_STYLES = { 0, 10, 18, 26,
 	    33, 36, 42 };
 
     /**
      * The maximum amount of valid style combinations for males.
      */
-    private static final int[] MAXIMUM_MALE_STYLES = new int[] { 8, 17, 25, 31,
+    private static final int[] MAXIMUM_MALE_STYLES = { 8, 17, 25, 31,
 	    34, 40, 43 };
 
     /**
      * The minimum amount of valid style combinations for females.
      */
-    private static final int[] MINIMUM_FEMALE_STYLES = new int[] { 45, 255, 56,
+    private static final int[] MINIMUM_FEMALE_STYLES = { 45, 255, 56,
 	    61, 67, 70, 79 };
 
     /**
      * The maximum amount of valid style combinations for females.
      */
-    private static final int[] MAXIMUM_FEMALE_STYLES = new int[] { 54, 255, 60,
+    private static final int[] MAXIMUM_FEMALE_STYLES = { 54, 255, 60,
 	    65, 68, 77, 80 };
 
     @Override

@@ -31,6 +31,7 @@ public final class ObjectMessageHandler extends MessageHandler<ObjectActionMessa
 
     @Override
     public void handle(Player player, ObjectActionMessage message) {
+	// TODO: Distance checks, validity checks
 	world.post(new ObjectActionEvent(player, message.getId(), message.getOption(), message.getPosition()));
     }
 

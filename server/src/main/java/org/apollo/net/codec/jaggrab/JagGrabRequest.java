@@ -8,6 +8,11 @@ package org.apollo.net.codec.jaggrab;
 public final class JagGrabRequest {
 
     /**
+     * Represents the root of a jaggrab protocol request.
+     */
+    protected static final String JAGGRAB_ROOT = "JAGGRAB /";
+
+    /**
      * The path to the file.
      */
     private final String filePath;

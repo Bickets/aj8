@@ -1,7 +1,8 @@
 package org.apollo.game.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Arrays;
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apollo.game.model.def.ItemDefinition;
 import org.apollo.game.model.inv.InventoryListener;
@@ -42,9 +43,9 @@ public final class Inventory implements Cloneable {
     }
 
     /**
-     * A list of inventory listeners.
+     * A set of inventory listeners.
      */
-    private final List<InventoryListener> listeners = new ArrayList<>();
+    private final Set<InventoryListener> listeners = new HashSet<>();
 
     /**
      * The capacity of this inventory.
@@ -69,7 +70,7 @@ public final class Inventory implements Cloneable {
     /**
      * A flag indicating if events are being fired.
      */
-    private volatile boolean firingEvents = true;
+    private boolean firingEvents = true;
 
     /**
      * Creates an inventory.
@@ -109,7 +110,7 @@ public final class Inventory implements Cloneable {
     @Override
     public Inventory clone() {
 	Inventory copy = new Inventory(capacity, mode);
-	System.arraycopy(items, 0, copy.items, 0, capacity);
+	copy.items = Arrays.copyOf(items, capacity);
 	copy.size = size;
 	return copy;
     }

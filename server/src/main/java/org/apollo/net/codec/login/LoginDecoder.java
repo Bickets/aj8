@@ -172,7 +172,9 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 
 	String username = ByteBufUtil.readString(securePayload);
 	String password = ByteBufUtil.readString(securePayload);
-	String address = ((InetSocketAddress) ctx.channel().remoteAddress()).getHostName();
+
+	InetSocketAddress socketAddress = (InetSocketAddress) ctx.channel().remoteAddress();
+	String address = socketAddress.getHostName();
 
 	if (username.length() > 12 || password.length() > 20) {
 	    throw new IllegalStateException("Username or password too long.");
@@ -196,6 +198,8 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 	LoginRequest request = new LoginRequest(credentials, randomPair, reconnecting, lowMemory, clientVersion, archiveCrcs);
 
 	out.add(request);
+	
+	// TODO: Necessary?
 	if (in.isReadable()) {
 	    out.add(in.readBytes(in.readableBytes()));
 	}

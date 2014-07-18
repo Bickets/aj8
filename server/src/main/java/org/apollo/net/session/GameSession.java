@@ -82,8 +82,7 @@ public final class GameSession extends Session {
 	Channel channel = ctx().channel();
 	if (channel.isActive()) {
 	    ChannelFuture future = channel.writeAndFlush(message);
-	    if (message.getClass() == LogoutMessage.class) { // TODO: Better
-		// way?
+	    if (message.getClass() == LogoutMessage.class) {
 		future.addListener(ChannelFutureListener.CLOSE);
 	    }
 	}
@@ -93,8 +92,7 @@ public final class GameSession extends Session {
      * Handles pending messages for this session.
      */
     public void handlePendingMessages() {
-	Message message;
-	while ((message = messageQueue.poll()) != null) {
+	for (Message message = messageQueue.poll(); message != null;) {
 	    messageTranslator.handle(player, message);
 	}
     }
