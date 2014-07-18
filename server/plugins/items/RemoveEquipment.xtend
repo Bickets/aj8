@@ -4,7 +4,7 @@ import org.apollo.game.event.EventSubscriber
 import org.apollo.game.interact.ItemActionEvent
 import org.apollo.game.model.Player
 import org.apollo.game.model.inv.SynchronizationInventoryListener
-import org.apollo.game.common.Interfaces.InterfaceOption
+import org.apollo.game.model.Interfaces.InterfaceOption
 
 class RemoveEquipment implements EventSubscriber<ItemActionEvent> {
 

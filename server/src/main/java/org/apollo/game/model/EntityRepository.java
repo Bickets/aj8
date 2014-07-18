@@ -1,9 +1,7 @@
-package org.apollo.util;
+package org.apollo.game.model;
 
 import java.util.Iterator;
 import java.util.NoSuchElementException;
-
-import org.apollo.game.model.Entity;
 
 /**
  * A {@link EntityRepository} is a repository of {@link Entity}s that are

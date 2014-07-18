@@ -10,6 +10,7 @@ import java.sql.SQLException;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import org.apollo.game.crypto.BCrypt;
 import org.apollo.game.model.Inventory;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.PlayerConstants;
@@ -19,7 +20,6 @@ import org.apollo.io.player.PlayerSerializer;
 import org.apollo.io.player.PlayerSerializerResponse;
 import org.apollo.net.codec.login.LoginConstants;
 import org.apollo.security.PlayerCredentials;
-import org.apollo.util.BCrypt;
 
 public final class JdbcPlayerSerializer implements Closeable, PlayerSerializer {
 

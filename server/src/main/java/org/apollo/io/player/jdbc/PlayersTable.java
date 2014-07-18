@@ -6,10 +6,10 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+import org.apollo.game.crypto.BCrypt;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.Player.PrivilegeLevel;
 import org.apollo.game.model.Position;
-import org.apollo.util.BCrypt;
 
 public final class PlayersTable extends Table {
 

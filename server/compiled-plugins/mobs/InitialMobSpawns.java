@@ -2,7 +2,7 @@ package mobs;
 
 import java.util.ArrayList;
 import java.util.logging.Logger;
-import org.apollo.game.common.Direction;
+import org.apollo.game.model.Direction;
 import org.apollo.game.model.Mob;
 import org.apollo.game.model.Position;
 import org.apollo.game.model.World;

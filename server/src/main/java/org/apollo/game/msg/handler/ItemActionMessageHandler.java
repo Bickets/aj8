@@ -1,9 +1,9 @@
 package org.apollo.game.msg.handler;
 
 import org.apollo.game.interact.ItemActionEvent;
-import org.apollo.game.model.InterfaceConstants.InterfaceOption;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.World;
+import org.apollo.game.model.Interfaces.InterfaceOption;
 import org.apollo.game.model.inter.bank.BankConstants;
 import org.apollo.game.model.inter.bank.BankDepositEnterAmountListener;
 import org.apollo.game.model.inter.bank.BankUtils;
@@ -52,7 +52,7 @@ public final class ItemActionMessageHandler extends MessageHandler<ItemActionMes
      * @param message The message.
      */
     private void withdraw(Player player, ItemActionMessage message) {
-	int amount = optionToAmount(message.getOption());
+	int amount = InterfaceOption.optionToAmount(message.getOption());
 	if (amount == -1) {
 	    player.getInterfaceSet().openEnterAmountDialog(new BankWithdrawEnterAmountListener(player, message.getSlot(), message.getId()));
 	} else {
@@ -69,7 +69,7 @@ public final class ItemActionMessageHandler extends MessageHandler<ItemActionMes
      * @param message The message.
      */
     private void deposit(Player player, ItemActionMessage message) {
-	int amount = optionToAmount(message.getOption());
+	int amount = InterfaceOption.optionToAmount(message.getOption());
 	if (amount == -1) {
 	    player.getInterfaceSet().openEnterAmountDialog(new BankDepositEnterAmountListener(player, message.getSlot(), message.getId()));
 	} else {
@@ -77,29 +77,6 @@ public final class ItemActionMessageHandler extends MessageHandler<ItemActionMes
 		return;
 	    }
 	}
-    }
-
-    /**
-     * Converts an option to an amount.
-     *
-     * @param option The option.
-     * @return The amount.
-     * @throws IllegalArgumentException if the option is not legal.
-     */
-    private static int optionToAmount(InterfaceOption option) {
-	switch (option) {
-	case OPTION_ONE:
-	    return 1;
-	case OPTION_TWO:
-	    return 5;
-	case OPTION_THREE:
-	    return 10;
-	case OPTION_FOUR:
-	    return Integer.MAX_VALUE;
-	case OPTION_FIVE:
-	    return -1;
-	}
-	throw new IllegalArgumentException();
     }
 
 }

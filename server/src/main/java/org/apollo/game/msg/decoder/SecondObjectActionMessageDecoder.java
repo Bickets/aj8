@@ -1,7 +1,7 @@
 package org.apollo.game.msg.decoder;
 
-import org.apollo.game.model.InterfaceConstants.InterfaceOption;
 import org.apollo.game.model.Position;
+import org.apollo.game.model.Interfaces.InterfaceOption;
 import org.apollo.game.msg.MessageDecoder;
 import org.apollo.game.msg.annotate.DecodesMessage;
 import org.apollo.game.msg.impl.ObjectActionMessage;

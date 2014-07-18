@@ -1,9 +1,9 @@
 package objects;
 
 import com.google.common.base.Objects;
-import org.apollo.game.common.Interfaces;
 import org.apollo.game.event.EventSubscriber;
 import org.apollo.game.interact.ObjectActionEvent;
+import org.apollo.game.model.Interfaces;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.Position;
 import org.apollo.game.model.inter.bank.BankAction;

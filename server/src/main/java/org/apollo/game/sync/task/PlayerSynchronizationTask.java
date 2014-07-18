@@ -5,6 +5,7 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 
+import org.apollo.game.model.EntityRepository;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.Position;
 import org.apollo.game.model.World;
@@ -18,7 +19,6 @@ import org.apollo.game.sync.seg.MovementSegment;
 import org.apollo.game.sync.seg.RemoveCharacterSegment;
 import org.apollo.game.sync.seg.SynchronizationSegment;
 import org.apollo.game.sync.seg.TeleportSegment;
-import org.apollo.util.EntityRepository;
 
 /**
  * A {@link SynchronizationTask} which synchronizes the specified {@link Player}

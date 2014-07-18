@@ -1,9 +1,9 @@
 package items;
 
 import com.google.common.base.Objects;
-import org.apollo.game.common.Interfaces;
 import org.apollo.game.event.EventSubscriber;
 import org.apollo.game.interact.ItemActionEvent;
+import org.apollo.game.model.Interfaces;
 import org.apollo.game.model.Inventory;
 import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;

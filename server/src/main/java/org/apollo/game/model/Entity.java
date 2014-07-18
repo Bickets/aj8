@@ -1,6 +1,5 @@
 package org.apollo.game.model;
 
-import org.apollo.util.EntityRepository;
 
 /**
  * Represents an entity within the game world.

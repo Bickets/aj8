@@ -3,7 +3,7 @@ package objects
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.interact.ObjectActionEvent
 import org.apollo.game.model.inter.bank.BankAction
-import org.apollo.game.common.Interfaces.InterfaceOption
+import org.apollo.game.model.Interfaces.InterfaceOption
 
 class BankObject implements EventSubscriber<ObjectActionEvent> {
 

@@ -21,7 +21,6 @@ import org.apollo.game.model.def.LevelUpDefinition;
 import org.apollo.game.model.def.MobDefinition;
 import org.apollo.io.EquipmentDefinitionParser;
 import org.apollo.service.Service;
-import org.apollo.util.EntityRepository;
 
 /**
  * The world class is a singleton which contains objects like the
@@ -209,16 +208,6 @@ public final class World {
      */
     public <E extends Event> void post(E event) {
 	eventProvider.post(event);
-    }
-
-    /**
-     * Posts an event to this world event provider with a specified predicate.
-     * 
-     * @param event The event to post.
-     * @param predicate The events predicate.
-     */
-    public <E extends Event> void post(E event, EventPredicate<E> predicate) {
-	eventProvider.post(event, predicate);
     }
 
     /**

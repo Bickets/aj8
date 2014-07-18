@@ -399,11 +399,11 @@ public final class Player extends GameCharacter {
 
 	// character design screen
 	if (!designedCharacter) {
-	    interfaceSet.openWindow(InterfaceConstants.CHARACTER_DESIGN_INTERFACE_ID);
+	    interfaceSet.openWindow(Interfaces.CHARACTER_DESIGN_INTERFACE_ID);
 	}
 
-	for (int i = 0; i < InterfaceConstants.TAB_INTERFACE_IDS.length; i++) {
-	    send(new SwitchTabInterfaceMessage(i, InterfaceConstants.TAB_INTERFACE_IDS[i]));
+	for (int i = 0; i < Interfaces.TAB_INTERFACE_IDS.length; i++) {
+	    send(new SwitchTabInterfaceMessage(i, Interfaces.TAB_INTERFACE_IDS[i]));
 	}
 
 	// force inventories to update

@@ -5,6 +5,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Phaser;
 
 import org.apollo.game.GameService;
+import org.apollo.game.model.EntityRepository;
 import org.apollo.game.model.Mob;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.World;
@@ -16,7 +17,6 @@ import org.apollo.game.sync.task.PostPlayerSynchronizationTask;
 import org.apollo.game.sync.task.PreMobSynchronizationTask;
 import org.apollo.game.sync.task.PrePlayerSynchronizationTask;
 import org.apollo.game.sync.task.SynchronizationTask;
-import org.apollo.util.EntityRepository;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 

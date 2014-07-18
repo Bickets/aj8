@@ -6,8 +6,8 @@ import org.apollo.game.model.Mob
 import org.apollo.game.model.Position
 import org.apollo.game.model.World
 
-import static org.apollo.game.common.Direction.EAST
-import org.apollo.game.common.Direction
+import static org.apollo.game.model.Direction.EAST
+import org.apollo.game.model.Direction
 
 @Data class InitialMobSpawns {
 	val World world
