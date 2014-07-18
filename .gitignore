@@ -21,4 +21,5 @@
 /data/savedGames
 
 # Plugins #
-/compiled-plugins
+server/compiled-plugins
+server/bin
