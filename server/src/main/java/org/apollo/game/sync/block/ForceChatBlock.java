@@ -1,10 +1,11 @@
 package org.apollo.game.sync.block;
 
+import org.apollo.game.model.Mob;
 import org.apollo.game.model.Player;
 
 /**
  * The Force Chat {@link SynchronizationBlock}. This is a block that can be
- * implemented in both {@link Player} Synchronization tasks and {@link Npc}
+ * implemented in both {@link Player} Synchronization tasks and {@link Mob}
  * Synchronization tasks, and will cause the {@link Character} to shout the
  * specified text. It is not possible to add colour or effect (e.g. wave or
  * scroll) to this block.

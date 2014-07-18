@@ -10,7 +10,6 @@ import org.apollo.fs.FileSystem;
 import org.apollo.fs.parser.ItemDefinitionParser;
 import org.apollo.fs.parser.MobDefinitionParser;
 import org.apollo.game.event.Event;
-import org.apollo.game.event.EventPredicate;
 import org.apollo.game.event.EventProvider;
 import org.apollo.game.event.EventSubscriber;
 import org.apollo.game.event.UniversalEventProvider;

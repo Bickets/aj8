@@ -8,6 +8,8 @@ import java.lang.annotation.Retention;
 import java.lang.annotation.Target;
 
 import org.apollo.game.event.Event;
+import org.apollo.game.event.EventProvider;
+import org.apollo.game.event.EventSubscriber;
 
 /**
  * Indicates that types annotated are an {@link EventSubscriber} and subscribe

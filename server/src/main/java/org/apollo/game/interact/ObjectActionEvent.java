@@ -1,9 +1,9 @@
 package org.apollo.game.interact;
 
 import org.apollo.game.event.Event;
+import org.apollo.game.model.Interfaces.InterfaceOption;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.Position;
-import org.apollo.game.model.Interfaces.InterfaceOption;
 
 public final class ObjectActionEvent implements Event {
 
