@@ -96,27 +96,27 @@ public class ImageRGB extends Rasterizer {
 	    int originalColor = pixels[pixel];
 	    if (originalColor != 0) {
 		int red = originalColor >> 16 & 0xff;
-	red += redOffset;
-	if (red < 1) {
-	    red = 1;
-	} else if (red > 255) {
-	    red = 255;
-	}
-	int green = originalColor >> 8 & 0xff;
-	    green += greenOffset;
-	    if (green < 1) {
-		green = 1;
-	    } else if (green > 255) {
-		green = 255;
-	    }
-	    int blue = originalColor & 0xff;
-	    blue += blueOffset;
-	    if (blue < 1) {
-		blue = 1;
-	    } else if (blue > 255) {
-		blue = 255;
-	    }
-	    pixels[pixel] = (red << 16) + (green << 8) + blue;
+		red += redOffset;
+		if (red < 1) {
+		    red = 1;
+		} else if (red > 255) {
+		    red = 255;
+		}
+		int green = originalColor >> 8 & 0xff;
+		green += greenOffset;
+		if (green < 1) {
+		    green = 1;
+		} else if (green > 255) {
+		    green = 255;
+		}
+		int blue = originalColor & 0xff;
+		blue += blueOffset;
+		if (blue < 1) {
+		    blue = 1;
+		} else if (blue > 255) {
+		    blue = 255;
+		}
+		pixels[pixel] = (red << 16) + (green << 8) + blue;
 	    }
 	}
     }
@@ -365,28 +365,28 @@ public class ImageRGB extends Rasterizer {
 		    int i_118_ = (int) (Math.sin(d) * 65536.0);
 		    int i_119_ = (int) (Math.cos(d) * 65536.0);
 		    i_118_ = i_118_ * i_113_ >> 8;
-	i_119_ = i_119_ * i_113_ >> 8;
-	int i_120_ = (i_111_ << 16) + i_117_ * i_118_ + i_116_ * i_119_;
-	int i_121_ = (i_109_ << 16) + i_117_ * i_119_ - i_116_ * i_118_;
-	int i_122_ = i_115_ + i * Rasterizer.width;
-	for (i = 0; i < i_114_; i++) {
-	    int i_123_ = i_122_;
-	    int i_124_ = i_120_;
-	    int i_125_ = i_121_;
-	    for (i_115_ = -i_110_; i_115_ < 0; i_115_++) {
-		int i_126_ = pixels[(i_124_ >> 16) + (i_125_ >> 16) * width];
-		if (i_126_ != 0) {
-		    Rasterizer.pixels[i_123_++] = i_126_;
-		} else {
-		    i_123_++;
-		}
-		i_124_ += i_119_;
-		i_125_ -= i_118_;
-	    }
-	    i_120_ += i_118_;
-	    i_121_ += i_119_;
-	    i_122_ += Rasterizer.width;
-	}
+		    i_119_ = i_119_ * i_113_ >> 8;
+		    int i_120_ = (i_111_ << 16) + i_117_ * i_118_ + i_116_ * i_119_;
+		    int i_121_ = (i_109_ << 16) + i_117_ * i_119_ - i_116_ * i_118_;
+		    int i_122_ = i_115_ + i * Rasterizer.width;
+		    for (i = 0; i < i_114_; i++) {
+			int i_123_ = i_122_;
+			int i_124_ = i_120_;
+			int i_125_ = i_121_;
+			for (i_115_ = -i_110_; i_115_ < 0; i_115_++) {
+			    int i_126_ = pixels[(i_124_ >> 16) + (i_125_ >> 16) * width];
+			    if (i_126_ != 0) {
+				Rasterizer.pixels[i_123_++] = i_126_;
+			    } else {
+				i_123_++;
+			    }
+			    i_124_ += i_119_;
+			    i_125_ -= i_118_;
+			}
+			i_120_ += i_118_;
+			i_121_ += i_119_;
+			i_122_ += Rasterizer.width;
+		    }
 		} catch (Exception exception) {
 		    /* empty */
 		}

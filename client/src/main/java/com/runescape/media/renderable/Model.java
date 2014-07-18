@@ -1068,22 +1068,22 @@ public class Model extends Renderable {
 			    int i_146_ = Model.SINE[i_145_];
 			    int i_147_ = Model.COSINE[i_145_];
 			    int i_148_ = verticesY[i_142_] * i_146_ + verticesX[i_142_] * i_147_ >> 16;
-		verticesY[i_142_] = verticesY[i_142_] * i_147_ - verticesX[i_142_] * i_146_ >> 16;
-		verticesX[i_142_] = i_148_;
+			    verticesY[i_142_] = verticesY[i_142_] * i_147_ - verticesX[i_142_] * i_146_ >> 16;
+			    verticesX[i_142_] = i_148_;
 			}
 			if (i_143_ != 0) {
 			    int i_149_ = Model.SINE[i_143_];
 			    int i_150_ = Model.COSINE[i_143_];
 			    int i_151_ = verticesY[i_142_] * i_150_ - verticesZ[i_142_] * i_149_ >> 16;
-	    verticesZ[i_142_] = verticesY[i_142_] * i_149_ + verticesZ[i_142_] * i_150_ >> 16;
-	verticesY[i_142_] = i_151_;
+			    verticesZ[i_142_] = verticesY[i_142_] * i_149_ + verticesZ[i_142_] * i_150_ >> 16;
+			    verticesY[i_142_] = i_151_;
 			}
 			if (i_144_ != 0) {
 			    int i_152_ = Model.SINE[i_144_];
 			    int i_153_ = Model.COSINE[i_144_];
 			    int i_154_ = verticesZ[i_142_] * i_152_ + verticesX[i_142_] * i_153_ >> 16;
-	    verticesZ[i_142_] = verticesZ[i_142_] * i_153_ - verticesX[i_142_] * i_152_ >> 16;
-	verticesX[i_142_] = i_154_;
+			    verticesZ[i_142_] = verticesZ[i_142_] * i_153_ - verticesX[i_142_] * i_152_ >> 16;
+			    verticesX[i_142_] = i_154_;
 			}
 			verticesX[i_142_] += Model.vertexXModifier;
 			verticesY[i_142_] += Model.vertexYModifier;
@@ -1151,8 +1151,8 @@ public class Model extends Renderable {
 	    int i_169_ = Model.COSINE[i];
 	    for (int i_170_ = 0; i_170_ < vertexCount; i_170_++) {
 		int i_171_ = verticesY[i_170_] * i_169_ - verticesZ[i_170_] * i_168_ >> 16;
-	    verticesZ[i_170_] = verticesY[i_170_] * i_168_ + verticesZ[i_170_] * i_169_ >> 16;
-	    verticesY[i_170_] = i_171_;
+		verticesZ[i_170_] = verticesY[i_170_] * i_168_ + verticesZ[i_170_] * i_169_ >> 16;
+		verticesY[i_170_] = i_171_;
 	    }
 	    if (i_167_ < anInt1610 || i_167_ > anInt1610) {
 		anInt1610 = 324;
@@ -1251,7 +1251,7 @@ public class Model extends Renderable {
 	    int i_204_;
 	    for (i_204_ = i_196_ * i_200_ - i_199_ * i_197_; i_202_ > 8192 || i_203_ > 8192 || i_204_ > 8192 || i_202_ < -8192 || i_203_ < -8192 || i_204_ < -8192; i_204_ >>= 1) {
 		i_202_ >>= 1;
-	    i_203_ >>= 1;
+		i_203_ >>= 1;
 	    }
 	    int i_205_ = (int) Math.sqrt(i_202_ * i_202_ + i_203_ * i_203_ + i_204_ * i_204_);
 	    if (i_205_ <= 0) {
@@ -1356,12 +1356,12 @@ public class Model extends Renderable {
 	    return i_223_;
 	}
 	i_223_ = i_223_ * (i & 0x7f) >> 7;
-	    if (i_223_ < 2) {
-		i_223_ = 2;
-	    } else if (i_223_ > 126) {
-		i_223_ = 126;
-	    }
-	    return (i & 0xff80) + i_223_;
+	if (i_223_ < 2) {
+	    i_223_ = 2;
+	} else if (i_223_ > 126) {
+	    i_223_ = 126;
+	}
+	return (i & 0xff80) + i_223_;
     }
 
     public final void method430(int i, int i_225_, int i_226_, int i_227_, int i_228_, int i_229_, int i_230_) {
@@ -1376,30 +1376,30 @@ public class Model extends Renderable {
 	int i_239_ = Model.SINE[i_227_];
 	int i_240_ = Model.COSINE[i_227_];
 	int i_241_ = i_229_ * i_239_ + i_230_ * i_240_ >> 16;
-	    for (int i_242_ = 0; i_242_ < vertexCount; i_242_++) {
-		int i_243_ = verticesX[i_242_];
-		int i_244_ = verticesY[i_242_];
-		int i_245_ = verticesZ[i_242_];
-		if (i_226_ != 0) {
-		    int i_246_ = i_244_ * i_237_ + i_243_ * i_238_ >> 16;
-	    i_244_ = i_244_ * i_238_ - i_243_ * i_237_ >> 16;
-		    i_243_ = i_246_;
-		}
-		if (i != 0) {
-		    int i_247_ = i_244_ * i_234_ - i_245_ * i_233_ >> 16;
+	for (int i_242_ = 0; i_242_ < vertexCount; i_242_++) {
+	    int i_243_ = verticesX[i_242_];
+	    int i_244_ = verticesY[i_242_];
+	    int i_245_ = verticesZ[i_242_];
+	    if (i_226_ != 0) {
+		int i_246_ = i_244_ * i_237_ + i_243_ * i_238_ >> 16;
+		i_244_ = i_244_ * i_238_ - i_243_ * i_237_ >> 16;
+		i_243_ = i_246_;
+	    }
+	    if (i != 0) {
+		int i_247_ = i_244_ * i_234_ - i_245_ * i_233_ >> 16;
 		i_245_ = i_244_ * i_233_ + i_245_ * i_234_ >> 16;
 		i_244_ = i_247_;
-		}
-		if (i_225_ != 0) {
-		    int i_248_ = i_245_ * i_235_ + i_243_ * i_236_ >> 16;
-	    i_245_ = i_245_ * i_236_ - i_243_ * i_235_ >> 16;
-				    i_243_ = i_248_;
-		}
-		i_243_ += i_228_;
-		i_244_ += i_229_;
-		i_245_ += i_230_;
-		int i_249_ = i_244_ * i_240_ - i_245_ * i_239_ >> 16;
-		    i_245_ = i_244_ * i_239_ + i_245_ * i_240_ >> 16;
+	    }
+	    if (i_225_ != 0) {
+		int i_248_ = i_245_ * i_235_ + i_243_ * i_236_ >> 16;
+		i_245_ = i_245_ * i_236_ - i_243_ * i_235_ >> 16;
+		i_243_ = i_248_;
+	    }
+	    i_243_ += i_228_;
+	    i_244_ += i_229_;
+	    i_245_ += i_230_;
+	    int i_249_ = i_244_ * i_240_ - i_245_ * i_239_ >> 16;
+	    i_245_ = i_244_ * i_239_ + i_245_ * i_240_ >> 16;
 	    i_244_ = i_249_;
 	    Model.anIntArray1660[i_242_] = i_245_ - i_241_;
 	    Model.anIntArray1658[i_242_] = i_231_ + (i_243_ << 9) / i_245_;
@@ -1409,118 +1409,118 @@ public class Model extends Renderable {
 		Model.anIntArray1662[i_242_] = i_244_;
 		Model.anIntArray1663[i_242_] = i_245_;
 	    }
-	    }
-	    try {
-		method431(false, false, 0);
-	    } catch (Exception exception) {
-		/* empty */
-	    }
+	}
+	try {
+	    method431(false, false, 0);
+	} catch (Exception exception) {
+	    /* empty */
+	}
     }
 
     @Override
     public final void renderAtPoint(int i, int i_250_, int i_251_, int i_252_, int i_253_, int i_254_, int i_255_, int i_256_, int i_257_) {
 	int i_258_ = i_256_ * i_253_ - i_254_ * i_252_ >> 16;
-	    int i_259_ = i_255_ * i_250_ + i_258_ * i_251_ >> 16;
-	    int i_260_ = shadowIntensity * i_251_ >> 16;
-		int i_261_ = i_259_ + i_260_;
-		if (i_261_ > 50 && i_259_ < 3500) {
-		    int i_262_ = i_256_ * i_252_ + i_254_ * i_253_ >> 16;
-		int i_263_ = i_262_ - shadowIntensity << 9;
-		if (i_263_ / i_261_ < Rasterizer.centerX) {
-		    int i_264_ = i_262_ + shadowIntensity << 9;
-		    if (i_264_ / i_261_ > -Rasterizer.centerX) {
-			int i_265_ = i_255_ * i_251_ - i_258_ * i_250_ >> 16;
+	int i_259_ = i_255_ * i_250_ + i_258_ * i_251_ >> 16;
+	int i_260_ = shadowIntensity * i_251_ >> 16;
+	int i_261_ = i_259_ + i_260_;
+	if (i_261_ > 50 && i_259_ < 3500) {
+	    int i_262_ = i_256_ * i_252_ + i_254_ * i_253_ >> 16;
+	    int i_263_ = i_262_ - shadowIntensity << 9;
+	    if (i_263_ / i_261_ < Rasterizer.centerX) {
+		int i_264_ = i_262_ + shadowIntensity << 9;
+		if (i_264_ / i_261_ > -Rasterizer.centerX) {
+		    int i_265_ = i_255_ * i_251_ - i_258_ * i_250_ >> 16;
 		    int i_266_ = shadowIntensity * i_250_ >> 16;
-		int i_267_ = i_265_ + i_266_ << 9;
-		if (i_267_ / i_261_ > -Rasterizer.centerY) {
-		    int i_268_ = i_266_ + (modelHeight * i_251_ >> 16);
-		    int i_269_ = i_265_ - i_268_ << 9;
-		    if (i_269_ / i_261_ < Rasterizer.centerY) {
-			int i_270_ = i_260_ + (modelHeight * i_250_ >> 16);
-			boolean bool = false;
-			if (i_259_ - i_270_ <= 50) {
-			    bool = true;
-			}
-			boolean bool_271_ = false;
-			if (i_257_ > 0 && Model.aBoolean1677) {
-			    int i_272_ = i_259_ - i_260_;
-			    if (i_272_ <= 50) {
-				i_272_ = 50;
-			    }
-			    if (i_262_ > 0) {
-				i_263_ /= i_261_;
-				i_264_ /= i_272_;
-			    } else {
-				i_264_ /= i_261_;
-				i_263_ /= i_272_;
-			    }
-			    if (i_265_ > 0) {
-				i_269_ /= i_261_;
-				i_267_ /= i_272_;
-			    } else {
-				i_267_ /= i_261_;
-				i_269_ /= i_272_;
-			    }
-			    int i_273_ = Model.anInt1678 - Rasterizer3D.centerX;
-			    int i_274_ = Model.anInt1679 - Rasterizer3D.centerY;
-			    if (i_273_ > i_263_ && i_273_ < i_264_ && i_274_ > i_269_ && i_274_ < i_267_) {
-				if (oneSquareModel) {
-				    Model.anIntArray1681[Model.anInt1680++] = i_257_;
-				} else {
-				    bool_271_ = true;
-				}
-			    }
-			}
-			int i_275_ = Rasterizer3D.centerX;
-			int i_276_ = Rasterizer3D.centerY;
-			int i_277_ = 0;
-			int i_278_ = 0;
-			if (i != 0) {
-			    i_277_ = Model.SINE[i];
-			    i_278_ = Model.COSINE[i];
-			}
-			for (int i_279_ = 0; i_279_ < vertexCount; i_279_++) {
-			    int i_280_ = verticesX[i_279_];
-			    int i_281_ = verticesY[i_279_];
-			    int i_282_ = verticesZ[i_279_];
-			    if (i != 0) {
-				int i_283_ = i_282_ * i_277_ + i_280_ * i_278_ >> 16;
-			i_282_ = i_282_ * i_278_ - i_280_ * i_277_ >> 16;
-	i_280_ = i_283_;
-			    }
-			    i_280_ += i_254_;
-			    i_281_ += i_255_;
-			    i_282_ += i_256_;
-			    int i_284_ = i_282_ * i_252_ + i_280_ * i_253_ >> 16;
-			    i_282_ = i_282_ * i_253_ - i_280_ * i_252_ >> 16;
-			    i_280_ = i_284_;
-			    i_284_ = i_281_ * i_251_ - i_282_ * i_250_ >> 16;
-			    i_282_ = i_281_ * i_250_ + i_282_ * i_251_ >> 16;
-			    i_281_ = i_284_;
-			    Model.anIntArray1660[i_279_] = i_282_ - i_259_;
-			    if (i_282_ >= 50) {
-				Model.anIntArray1658[i_279_] = i_275_ + (i_280_ << 9) / i_282_;
-				Model.anIntArray1659[i_279_] = i_276_ + (i_281_ << 9) / i_282_;
-			    } else {
-				Model.anIntArray1658[i_279_] = -5000;
+		    int i_267_ = i_265_ + i_266_ << 9;
+		    if (i_267_ / i_261_ > -Rasterizer.centerY) {
+			int i_268_ = i_266_ + (modelHeight * i_251_ >> 16);
+			int i_269_ = i_265_ - i_268_ << 9;
+			if (i_269_ / i_261_ < Rasterizer.centerY) {
+			    int i_270_ = i_260_ + (modelHeight * i_250_ >> 16);
+			    boolean bool = false;
+			    if (i_259_ - i_270_ <= 50) {
 				bool = true;
 			    }
-			    if (bool || texturedTriangleCount > 0) {
-				Model.anIntArray1661[i_279_] = i_280_;
-				Model.anIntArray1662[i_279_] = i_281_;
-				Model.anIntArray1663[i_279_] = i_282_;
+			    boolean bool_271_ = false;
+			    if (i_257_ > 0 && Model.aBoolean1677) {
+				int i_272_ = i_259_ - i_260_;
+				if (i_272_ <= 50) {
+				    i_272_ = 50;
+				}
+				if (i_262_ > 0) {
+				    i_263_ /= i_261_;
+				    i_264_ /= i_272_;
+				} else {
+				    i_264_ /= i_261_;
+				    i_263_ /= i_272_;
+				}
+				if (i_265_ > 0) {
+				    i_269_ /= i_261_;
+				    i_267_ /= i_272_;
+				} else {
+				    i_267_ /= i_261_;
+				    i_269_ /= i_272_;
+				}
+				int i_273_ = Model.anInt1678 - Rasterizer3D.centerX;
+				int i_274_ = Model.anInt1679 - Rasterizer3D.centerY;
+				if (i_273_ > i_263_ && i_273_ < i_264_ && i_274_ > i_269_ && i_274_ < i_267_) {
+				    if (oneSquareModel) {
+					Model.anIntArray1681[Model.anInt1680++] = i_257_;
+				    } else {
+					bool_271_ = true;
+				    }
+				}
+			    }
+			    int i_275_ = Rasterizer3D.centerX;
+			    int i_276_ = Rasterizer3D.centerY;
+			    int i_277_ = 0;
+			    int i_278_ = 0;
+			    if (i != 0) {
+				i_277_ = Model.SINE[i];
+				i_278_ = Model.COSINE[i];
+			    }
+			    for (int i_279_ = 0; i_279_ < vertexCount; i_279_++) {
+				int i_280_ = verticesX[i_279_];
+				int i_281_ = verticesY[i_279_];
+				int i_282_ = verticesZ[i_279_];
+				if (i != 0) {
+				    int i_283_ = i_282_ * i_277_ + i_280_ * i_278_ >> 16;
+				    i_282_ = i_282_ * i_278_ - i_280_ * i_277_ >> 16;
+				    i_280_ = i_283_;
+				}
+				i_280_ += i_254_;
+				i_281_ += i_255_;
+				i_282_ += i_256_;
+				int i_284_ = i_282_ * i_252_ + i_280_ * i_253_ >> 16;
+				i_282_ = i_282_ * i_253_ - i_280_ * i_252_ >> 16;
+				i_280_ = i_284_;
+				i_284_ = i_281_ * i_251_ - i_282_ * i_250_ >> 16;
+				i_282_ = i_281_ * i_250_ + i_282_ * i_251_ >> 16;
+				i_281_ = i_284_;
+				Model.anIntArray1660[i_279_] = i_282_ - i_259_;
+				if (i_282_ >= 50) {
+				    Model.anIntArray1658[i_279_] = i_275_ + (i_280_ << 9) / i_282_;
+				    Model.anIntArray1659[i_279_] = i_276_ + (i_281_ << 9) / i_282_;
+				} else {
+				    Model.anIntArray1658[i_279_] = -5000;
+				    bool = true;
+				}
+				if (bool || texturedTriangleCount > 0) {
+				    Model.anIntArray1661[i_279_] = i_280_;
+				    Model.anIntArray1662[i_279_] = i_281_;
+				    Model.anIntArray1663[i_279_] = i_282_;
+				}
+			    }
+			    try {
+				method431(bool, bool_271_, i_257_);
+			    } catch (Exception exception) {
+				/* empty */
 			    }
 			}
-			try {
-			    method431(bool, bool_271_, i_257_);
-			} catch (Exception exception) {
-			    /* empty */
-			}
 		    }
 		}
-		    }
-		}
-		}
+	    }
+	}
     }
 
     private final void method431(boolean bool, boolean bool_285_, int i) {
@@ -1722,10 +1722,10 @@ public class Model extends Renderable {
 		Rasterizer3D.method375(Model.anIntArray1659[i_317_], Model.anIntArray1659[i_318_], Model.anIntArray1659[i_319_], Model.anIntArray1658[i_317_], Model.anIntArray1658[i_318_], Model.anIntArray1658[i_319_], anIntArray1627[i], anIntArray1628[i], anIntArray1629[i], Model.anIntArray1661[i_322_], Model.anIntArray1661[i_323_], Model.anIntArray1661[i_324_], Model.anIntArray1662[i_322_], Model.anIntArray1662[i_323_], Model.anIntArray1662[i_324_], Model.anIntArray1663[i_322_], Model.anIntArray1663[i_323_], Model.anIntArray1663[i_324_], triangleColorValues[i]);
 	    } else if (i_320_ == 3) {
 		int i_325_ = texturePoints[i] >> 2;
-		    int i_326_ = texturedTrianglePointsX[i_325_];
-		    int i_327_ = texturedTrianglePointsY[i_325_];
-		    int i_328_ = texturedTrianglePointsZ[i_325_];
-		    Rasterizer3D.method375(Model.anIntArray1659[i_317_], Model.anIntArray1659[i_318_], Model.anIntArray1659[i_319_], Model.anIntArray1658[i_317_], Model.anIntArray1658[i_318_], Model.anIntArray1658[i_319_], anIntArray1627[i], anIntArray1627[i], anIntArray1627[i], Model.anIntArray1661[i_326_], Model.anIntArray1661[i_327_], Model.anIntArray1661[i_328_], Model.anIntArray1662[i_326_], Model.anIntArray1662[i_327_], Model.anIntArray1662[i_328_], Model.anIntArray1663[i_326_], Model.anIntArray1663[i_327_], Model.anIntArray1663[i_328_], triangleColorValues[i]);
+		int i_326_ = texturedTrianglePointsX[i_325_];
+		int i_327_ = texturedTrianglePointsY[i_325_];
+		int i_328_ = texturedTrianglePointsZ[i_325_];
+		Rasterizer3D.method375(Model.anIntArray1659[i_317_], Model.anIntArray1659[i_318_], Model.anIntArray1659[i_319_], Model.anIntArray1658[i_317_], Model.anIntArray1658[i_318_], Model.anIntArray1658[i_319_], anIntArray1627[i], anIntArray1627[i], anIntArray1627[i], Model.anIntArray1661[i_326_], Model.anIntArray1661[i_327_], Model.anIntArray1661[i_328_], Model.anIntArray1662[i_326_], Model.anIntArray1662[i_327_], Model.anIntArray1662[i_328_], Model.anIntArray1663[i_326_], Model.anIntArray1663[i_327_], Model.anIntArray1663[i_328_], triangleColorValues[i]);
 	    }
 	}
     }

@@ -7,11 +7,11 @@ public class TextCompressor {
     public static char[] message = new char[100];
     private static Buffer messageBuffer = new Buffer(new byte[100]);
     private static final char[] VALID_CHARACTERS = { ' ', 'e', 't', 'a', 'o',
-	'i', 'h', 'n', 's', 'r', 'd', 'l', 'u', 'm', 'w', 'c', 'y', 'f',
-	'g', 'p', 'b', 'v', 'k', 'x', 'j', 'q', 'z', '0', '1', '2', '3',
-	'4', '5', '6', '7', '8', '9', ' ', '!', '?', '.', ',', ':', ';',
-	'(', ')', '-', '&', '*', '\\', '\'', '@', '#', '+', '=', '\u00a3',
-	'$', '%', '\"', '[', ']' };
+	    'i', 'h', 'n', 's', 'r', 'd', 'l', 'u', 'm', 'w', 'c', 'y', 'f',
+	    'g', 'p', 'b', 'v', 'k', 'x', 'j', 'q', 'z', '0', '1', '2', '3',
+	    '4', '5', '6', '7', '8', '9', ' ', '!', '?', '.', ',', ':', ';',
+	    '(', ')', '-', '&', '*', '\\', '\'', '@', '#', '+', '=', '\u00a3',
+	    '$', '%', '\"', '[', ']' };
 
     public static String get(int length, Buffer buffer) {
 	int count = 0;
@@ -19,27 +19,27 @@ public class TextCompressor {
 	for (int lengthCounter = 0; lengthCounter < length; lengthCounter++) {
 	    int character = buffer.getUnsignedByte();
 	    int characterBit = character >> 4 & 0xf;
-	if (validCharacterIndex == -1) {
-	    if (characterBit < 13) {
-		TextCompressor.message[count++] = TextCompressor.VALID_CHARACTERS[characterBit];
+	    if (validCharacterIndex == -1) {
+		if (characterBit < 13) {
+		    TextCompressor.message[count++] = TextCompressor.VALID_CHARACTERS[characterBit];
+		} else {
+		    validCharacterIndex = characterBit;
+		}
 	    } else {
-		validCharacterIndex = characterBit;
+		TextCompressor.message[count++] = TextCompressor.VALID_CHARACTERS[(validCharacterIndex << 4) + characterBit - 195];
+		validCharacterIndex = -1;
 	    }
-	} else {
-	    TextCompressor.message[count++] = TextCompressor.VALID_CHARACTERS[(validCharacterIndex << 4) + characterBit - 195];
-	    validCharacterIndex = -1;
-	}
-	characterBit = character & 0xf;
-	if (validCharacterIndex == -1) {
-	    if (characterBit < 13) {
-		TextCompressor.message[count++] = TextCompressor.VALID_CHARACTERS[characterBit];
+	    characterBit = character & 0xf;
+	    if (validCharacterIndex == -1) {
+		if (characterBit < 13) {
+		    TextCompressor.message[count++] = TextCompressor.VALID_CHARACTERS[characterBit];
+		} else {
+		    validCharacterIndex = characterBit;
+		}
 	    } else {
-		validCharacterIndex = characterBit;
+		TextCompressor.message[count++] = TextCompressor.VALID_CHARACTERS[(validCharacterIndex << 4) + characterBit - 195];
+		validCharacterIndex = -1;
 	    }
-	} else {
-	    TextCompressor.message[count++] = TextCompressor.VALID_CHARACTERS[(validCharacterIndex << 4) + characterBit - 195];
-	    validCharacterIndex = -1;
-	}
 	}
 	boolean isSymbol = true;
 	for (int messageIndex = 0; messageIndex < count; messageIndex++) {

@@ -63,7 +63,7 @@ public class Scene {
     static SceneCluster[] aSceneClusterArray556 = new SceneCluster[500];
     static LinkedList aLinkedList557 = new LinkedList();
     static final int[] anIntArray558 = { 19, 55, 38, 155, 255, 110, 137, 205,
-	76 };
+	    76 };
     static final int[] anIntArray559 = { 160, 192, 80, 96, 0, 144, 80, 48, 160 };
     static final int[] anIntArray560 = { 76, 8, 137, 4, 0, 1, 38, 2, 19 };
     static final int[] anIntArray561 = { 0, 0, 2, 0, 0, 2, 1, 1, 0 };
@@ -71,9 +71,9 @@ public class Scene {
     static final int[] anIntArray563 = { 0, 4, 4, 8, 0, 0, 8, 0, 0 };
     static final int[] anIntArray564 = { 1, 1, 0, 0, 0, 8, 0, 0, 8 };
     static final int[] anIntArray565 = { 41, 39248, 41, 4643, 41, 41, 41, 41,
-	41, 41, 41, 41, 41, 41, 41, 43086, 41, 41, 41, 41, 41, 41, 41,
-	8602, 41, 28992, 41, 41, 41, 41, 41, 5056, 41, 41, 41, 7079, 41,
-	41, 41, 41, 41, 41, 41, 41, 41, 41, 3131, 41, 41, 41 };
+	    41, 41, 41, 41, 41, 41, 41, 43086, 41, 41, 41, 41, 41, 41, 41,
+	    8602, 41, 28992, 41, 41, 41, 41, 41, 5056, 41, 41, 41, 7079, 41,
+	    41, 41, 41, 41, 41, 41, 41, 41, 41, 3131, 41, 41, 41 };
     protected int[] anIntArray566 = new int[10000];
     protected int[] anIntArray567 = new int[10000];
     protected int anInt568;
@@ -759,40 +759,40 @@ public class Scene {
 	try {
 	    int i_184_ = (int) Math.sqrt(i_181_ * i_181_ + i * i + i_183_ * i_183_);
 	    int i_185_ = i_182_ * i_184_ >> 8;
-	if (b != 3) {
-	    aBoolean514 = !aBoolean514;
-	}
-	for (int i_186_ = 0; i_186_ < anInt517; i_186_++) {
-	    for (int i_187_ = 0; i_187_ < anInt518; i_187_++) {
-		for (int i_188_ = 0; i_188_ < anInt519; i_188_++) {
-		    SceneTile scenetile = tiles[i_186_][i_187_][i_188_];
-		    if (scenetile != null) {
-			Wall wall = scenetile.wall;
-			if (wall != null && wall.aRenderable769 != null && wall.aRenderable769.verticesNormal != null) {
-			    method529(i_186_, 1, 1, i_187_, (byte) 115, i_188_, (Model) wall.aRenderable769);
-			    if (wall.aRenderable770 != null && wall.aRenderable770.verticesNormal != null) {
-				method529(i_186_, 1, 1, i_187_, (byte) 115, i_188_, (Model) wall.aRenderable770);
-				method530((Model) wall.aRenderable769, (Model) wall.aRenderable770, 0, 0, 0, false);
-				((Model) wall.aRenderable770).method428(i_180_, i_185_, i_181_, i, i_183_);
+	    if (b != 3) {
+		aBoolean514 = !aBoolean514;
+	    }
+	    for (int i_186_ = 0; i_186_ < anInt517; i_186_++) {
+		for (int i_187_ = 0; i_187_ < anInt518; i_187_++) {
+		    for (int i_188_ = 0; i_188_ < anInt519; i_188_++) {
+			SceneTile scenetile = tiles[i_186_][i_187_][i_188_];
+			if (scenetile != null) {
+			    Wall wall = scenetile.wall;
+			    if (wall != null && wall.aRenderable769 != null && wall.aRenderable769.verticesNormal != null) {
+				method529(i_186_, 1, 1, i_187_, (byte) 115, i_188_, (Model) wall.aRenderable769);
+				if (wall.aRenderable770 != null && wall.aRenderable770.verticesNormal != null) {
+				    method529(i_186_, 1, 1, i_187_, (byte) 115, i_188_, (Model) wall.aRenderable770);
+				    method530((Model) wall.aRenderable769, (Model) wall.aRenderable770, 0, 0, 0, false);
+				    ((Model) wall.aRenderable770).method428(i_180_, i_185_, i_181_, i, i_183_);
+				}
+				((Model) wall.aRenderable769).method428(i_180_, i_185_, i_181_, i, i_183_);
 			    }
-			    ((Model) wall.aRenderable769).method428(i_180_, i_185_, i_181_, i, i_183_);
-			}
-			for (int i_189_ = 0; i_189_ < scenetile.sceneSpawnRequestCount; i_189_++) {
-			    SceneSpawnRequest scenespawnrequest = scenetile.sceneSpawnRequests[i_189_];
-			    if (scenespawnrequest != null && scenespawnrequest.aRenderable601 != null && scenespawnrequest.aRenderable601.verticesNormal != null) {
-				method529(i_186_, scenespawnrequest.anInt604 - scenespawnrequest.x + 1, scenespawnrequest.anInt606 - scenespawnrequest.y + 1, i_187_, (byte) 115, i_188_, (Model) scenespawnrequest.aRenderable601);
-				((Model) scenespawnrequest.aRenderable601).method428(i_180_, i_185_, i_181_, i, i_183_);
+			    for (int i_189_ = 0; i_189_ < scenetile.sceneSpawnRequestCount; i_189_++) {
+				SceneSpawnRequest scenespawnrequest = scenetile.sceneSpawnRequests[i_189_];
+				if (scenespawnrequest != null && scenespawnrequest.aRenderable601 != null && scenespawnrequest.aRenderable601.verticesNormal != null) {
+				    method529(i_186_, scenespawnrequest.anInt604 - scenespawnrequest.x + 1, scenespawnrequest.anInt606 - scenespawnrequest.y + 1, i_187_, (byte) 115, i_188_, (Model) scenespawnrequest.aRenderable601);
+				    ((Model) scenespawnrequest.aRenderable601).method428(i_180_, i_185_, i_181_, i, i_183_);
+				}
 			    }
-			}
-			FloorDecoration floordecoration = scenetile.floorDecoration;
-			if (floordecoration != null && floordecoration.renderable.verticesNormal != null) {
-			    method528(i_187_, i_186_, (Model) floordecoration.renderable, (byte) 37, i_188_);
-			    ((Model) floordecoration.renderable).method428(i_180_, i_185_, i_181_, i, i_183_);
+			    FloorDecoration floordecoration = scenetile.floorDecoration;
+			    if (floordecoration != null && floordecoration.renderable.verticesNormal != null) {
+				method528(i_187_, i_186_, (Model) floordecoration.renderable, (byte) 37, i_188_);
+				((Model) floordecoration.renderable).method428(i_180_, i_185_, i_181_, i, i_183_);
+			    }
 			}
 		    }
 		}
 	    }
-	}
 	} catch (RuntimeException runtimeexception) {
 	    Signlink.reportError("77749, " + i + ", " + b + ", " + i_180_ + ", " + i_181_ + ", " + i_182_ + ", " + i_183_ + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
@@ -1069,20 +1069,20 @@ public class Scene {
     public static boolean method533(byte b, int i, int i_258_, int i_259_) {
 	try {
 	    int i_260_ = i_258_ * Scene.anInt540 + i_259_ * Scene.anInt541 >> 16;
-				int i_261_ = i_258_ * Scene.anInt541 - i_259_ * Scene.anInt540 >> 16;
-			if (b != 9) {
-			}
-			int i_262_ = i * Scene.anInt538 + i_261_ * Scene.anInt539 >> 16;
-		int i_263_ = i * Scene.anInt539 - i_261_ * Scene.anInt538 >> 16;
-			    if (i_262_ < 50 || i_262_ > 3500) {
-				return false;
-			    }
-			    int i_264_ = Scene.anInt573 + (i_260_ << 9) / i_262_;
-			    int i_265_ = Scene.anInt574 + (i_263_ << 9) / i_262_;
-			    if (i_264_ < Scene.anInt575 || i_264_ > Scene.anInt577 || i_265_ < Scene.anInt576 || i_265_ > Scene.anInt578) {
-				return false;
-			    }
-			    return true;
+	    int i_261_ = i_258_ * Scene.anInt541 - i_259_ * Scene.anInt540 >> 16;
+	    if (b != 9) {
+	    }
+	    int i_262_ = i * Scene.anInt538 + i_261_ * Scene.anInt539 >> 16;
+	    int i_263_ = i * Scene.anInt539 - i_261_ * Scene.anInt538 >> 16;
+	    if (i_262_ < 50 || i_262_ > 3500) {
+		return false;
+	    }
+	    int i_264_ = Scene.anInt573 + (i_260_ << 9) / i_262_;
+	    int i_265_ = Scene.anInt574 + (i_263_ << 9) / i_262_;
+	    if (i_264_ < Scene.anInt575 || i_264_ > Scene.anInt577 || i_265_ < Scene.anInt576 || i_265_ > Scene.anInt578) {
+		return false;
+	    }
+	    return true;
 	} catch (RuntimeException runtimeexception) {
 	    Signlink.reportError("3265, " + b + ", " + i + ", " + i_258_ + ", " + i_259_ + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
@@ -1728,87 +1728,87 @@ public class Scene {
 	i_369_ = i_369_ * i_364_ - i_367_ * i_363_ >> 16;
 	i_367_ = i_379_;
 	i_379_ = i_375_ * i_362_ - i_369_ * i_361_ >> 16;
-		    i_369_ = i_375_ * i_361_ + i_369_ * i_362_ >> 16;
-			    i_375_ = i_379_;
-			    if (i_369_ >= 50) {
-				i_379_ = i_370_ * i_363_ + i_371_ * i_364_ >> 16;
-		i_370_ = i_370_ * i_364_ - i_371_ * i_363_ >> 16;
-				    i_371_ = i_379_;
-				    i_379_ = i_376_ * i_362_ - i_370_ * i_361_ >> 16;
-		    i_370_ = i_376_ * i_361_ + i_370_ * i_362_ >> 16;
-			    i_376_ = i_379_;
-			    if (i_370_ >= 50) {
-				i_379_ = i_373_ * i_363_ + i_372_ * i_364_ >> 16;
-		    i_373_ = i_373_ * i_364_ - i_372_ * i_363_ >> 16;
-	    i_372_ = i_379_;
-	    i_379_ = i_377_ * i_362_ - i_373_ * i_361_ >> 16;
-			i_373_ = i_377_ * i_361_ + i_373_ * i_362_ >> 16;
-	    i_377_ = i_379_;
-	    if (i_373_ >= 50) {
-		i_379_ = i_374_ * i_363_ + i_368_ * i_364_ >> 16;
-	i_374_ = i_374_ * i_364_ - i_368_ * i_363_ >> 16;
-				i_368_ = i_379_;
-				i_379_ = i_378_ * i_362_ - i_374_ * i_361_ >> 16;
-		i_374_ = i_378_ * i_361_ + i_374_ * i_362_ >> 16;
-		i_378_ = i_379_;
-		if (i_374_ >= 50) {
-		    int i_380_ = Rasterizer3D.centerX + (i_367_ << 9) / i_369_;
-		    int i_381_ = Rasterizer3D.centerY + (i_375_ << 9) / i_369_;
-		    int i_382_ = Rasterizer3D.centerX + (i_371_ << 9) / i_370_;
-		    int i_383_ = Rasterizer3D.centerY + (i_376_ << 9) / i_370_;
-		    int i_384_ = Rasterizer3D.centerX + (i_372_ << 9) / i_373_;
-		    int i_385_ = Rasterizer3D.centerY + (i_377_ << 9) / i_373_;
-		    int i_386_ = Rasterizer3D.centerX + (i_368_ << 9) / i_374_;
-		    int i_387_ = Rasterizer3D.centerY + (i_378_ << 9) / i_374_;
-		    Rasterizer3D.anInt1485 = 0;
-		    if ((i_384_ - i_386_) * (i_383_ - i_387_) - (i_385_ - i_387_) * (i_382_ - i_386_) > 0) {
-			Rasterizer3D.aBoolean1482 = false;
-			if (i_384_ < 0 || i_386_ < 0 || i_382_ < 0 || i_384_ > Rasterizer.virtualBottomX || i_386_ > Rasterizer.virtualBottomX || i_382_ > Rasterizer.virtualBottomX) {
-			    Rasterizer3D.aBoolean1482 = true;
-			}
-			if (Scene.aBoolean547 && method540(Scene.anInt548, Scene.anInt549, i_385_, i_387_, i_383_, i_384_, i_386_, i_382_)) {
-			    Scene.anInt550 = i_365_;
-			    Scene.anInt551 = i_366_;
-			}
-			if (generictile.texture == -1) {
-			    if (generictile.anInt294 != 12345678) {
-				Rasterizer3D.method371(i_385_, i_387_, i_383_, i_384_, i_386_, i_382_, generictile.anInt294, generictile.anInt295, generictile.anInt293);
+	i_369_ = i_375_ * i_361_ + i_369_ * i_362_ >> 16;
+	i_375_ = i_379_;
+	if (i_369_ >= 50) {
+	    i_379_ = i_370_ * i_363_ + i_371_ * i_364_ >> 16;
+	    i_370_ = i_370_ * i_364_ - i_371_ * i_363_ >> 16;
+	    i_371_ = i_379_;
+	    i_379_ = i_376_ * i_362_ - i_370_ * i_361_ >> 16;
+	    i_370_ = i_376_ * i_361_ + i_370_ * i_362_ >> 16;
+	    i_376_ = i_379_;
+	    if (i_370_ >= 50) {
+		i_379_ = i_373_ * i_363_ + i_372_ * i_364_ >> 16;
+		i_373_ = i_373_ * i_364_ - i_372_ * i_363_ >> 16;
+		i_372_ = i_379_;
+		i_379_ = i_377_ * i_362_ - i_373_ * i_361_ >> 16;
+		i_373_ = i_377_ * i_361_ + i_373_ * i_362_ >> 16;
+		i_377_ = i_379_;
+		if (i_373_ >= 50) {
+		    i_379_ = i_374_ * i_363_ + i_368_ * i_364_ >> 16;
+		    i_374_ = i_374_ * i_364_ - i_368_ * i_363_ >> 16;
+		    i_368_ = i_379_;
+		    i_379_ = i_378_ * i_362_ - i_374_ * i_361_ >> 16;
+		    i_374_ = i_378_ * i_361_ + i_374_ * i_362_ >> 16;
+		    i_378_ = i_379_;
+		    if (i_374_ >= 50) {
+			int i_380_ = Rasterizer3D.centerX + (i_367_ << 9) / i_369_;
+			int i_381_ = Rasterizer3D.centerY + (i_375_ << 9) / i_369_;
+			int i_382_ = Rasterizer3D.centerX + (i_371_ << 9) / i_370_;
+			int i_383_ = Rasterizer3D.centerY + (i_376_ << 9) / i_370_;
+			int i_384_ = Rasterizer3D.centerX + (i_372_ << 9) / i_373_;
+			int i_385_ = Rasterizer3D.centerY + (i_377_ << 9) / i_373_;
+			int i_386_ = Rasterizer3D.centerX + (i_368_ << 9) / i_374_;
+			int i_387_ = Rasterizer3D.centerY + (i_378_ << 9) / i_374_;
+			Rasterizer3D.anInt1485 = 0;
+			if ((i_384_ - i_386_) * (i_383_ - i_387_) - (i_385_ - i_387_) * (i_382_ - i_386_) > 0) {
+			    Rasterizer3D.aBoolean1482 = false;
+			    if (i_384_ < 0 || i_386_ < 0 || i_382_ < 0 || i_384_ > Rasterizer.virtualBottomX || i_386_ > Rasterizer.virtualBottomX || i_382_ > Rasterizer.virtualBottomX) {
+				Rasterizer3D.aBoolean1482 = true;
 			    }
-			} else if (!Scene.lowMemory) {
-			    if (generictile.flat) {
-				Rasterizer3D.method375(i_385_, i_387_, i_383_, i_384_, i_386_, i_382_, generictile.anInt294, generictile.anInt295, generictile.anInt293, i_367_, i_371_, i_368_, i_375_, i_376_, i_378_, i_369_, i_370_, i_374_, generictile.texture);
+			    if (Scene.aBoolean547 && method540(Scene.anInt548, Scene.anInt549, i_385_, i_387_, i_383_, i_384_, i_386_, i_382_)) {
+				Scene.anInt550 = i_365_;
+				Scene.anInt551 = i_366_;
+			    }
+			    if (generictile.texture == -1) {
+				if (generictile.anInt294 != 12345678) {
+				    Rasterizer3D.method371(i_385_, i_387_, i_383_, i_384_, i_386_, i_382_, generictile.anInt294, generictile.anInt295, generictile.anInt293);
+				}
+			    } else if (!Scene.lowMemory) {
+				if (generictile.flat) {
+				    Rasterizer3D.method375(i_385_, i_387_, i_383_, i_384_, i_386_, i_382_, generictile.anInt294, generictile.anInt295, generictile.anInt293, i_367_, i_371_, i_368_, i_375_, i_376_, i_378_, i_369_, i_370_, i_374_, generictile.texture);
+				} else {
+				    Rasterizer3D.method375(i_385_, i_387_, i_383_, i_384_, i_386_, i_382_, generictile.anInt294, generictile.anInt295, generictile.anInt293, i_372_, i_368_, i_371_, i_377_, i_378_, i_376_, i_373_, i_374_, i_370_, generictile.texture);
+				}
 			    } else {
-				Rasterizer3D.method375(i_385_, i_387_, i_383_, i_384_, i_386_, i_382_, generictile.anInt294, generictile.anInt295, generictile.anInt293, i_372_, i_368_, i_371_, i_377_, i_378_, i_376_, i_373_, i_374_, i_370_, generictile.texture);
+				int i_388_ = Scene.anIntArray565[generictile.texture];
+				Rasterizer3D.method371(i_385_, i_387_, i_383_, i_384_, i_386_, i_382_, method539(-361, i_388_, generictile.anInt294), method539(-361, i_388_, generictile.anInt295), method539(-361, i_388_, generictile.anInt293));
 			    }
-			} else {
-			    int i_388_ = Scene.anIntArray565[generictile.texture];
-			    Rasterizer3D.method371(i_385_, i_387_, i_383_, i_384_, i_386_, i_382_, method539(-361, i_388_, generictile.anInt294), method539(-361, i_388_, generictile.anInt295), method539(-361, i_388_, generictile.anInt293));
 			}
-		    }
-		    if ((i_380_ - i_382_) * (i_387_ - i_383_) - (i_381_ - i_383_) * (i_386_ - i_382_) > 0) {
-			Rasterizer3D.aBoolean1482 = false;
-			if (i_380_ < 0 || i_382_ < 0 || i_386_ < 0 || i_380_ > Rasterizer.virtualBottomX || i_382_ > Rasterizer.virtualBottomX || i_386_ > Rasterizer.virtualBottomX) {
-			    Rasterizer3D.aBoolean1482 = true;
-			}
-			if (Scene.aBoolean547 && method540(Scene.anInt548, Scene.anInt549, i_381_, i_383_, i_387_, i_380_, i_382_, i_386_)) {
-			    Scene.anInt550 = i_365_;
-			    Scene.anInt551 = i_366_;
-			}
-			if (generictile.texture == -1) {
-			    if (generictile.anInt292 != 12345678) {
-				Rasterizer3D.method371(i_381_, i_383_, i_387_, i_380_, i_382_, i_386_, generictile.anInt292, generictile.anInt293, generictile.anInt295);
+			if ((i_380_ - i_382_) * (i_387_ - i_383_) - (i_381_ - i_383_) * (i_386_ - i_382_) > 0) {
+			    Rasterizer3D.aBoolean1482 = false;
+			    if (i_380_ < 0 || i_382_ < 0 || i_386_ < 0 || i_380_ > Rasterizer.virtualBottomX || i_382_ > Rasterizer.virtualBottomX || i_386_ > Rasterizer.virtualBottomX) {
+				Rasterizer3D.aBoolean1482 = true;
 			    }
-			} else if (!Scene.lowMemory) {
-			    Rasterizer3D.method375(i_381_, i_383_, i_387_, i_380_, i_382_, i_386_, generictile.anInt292, generictile.anInt293, generictile.anInt295, i_367_, i_371_, i_368_, i_375_, i_376_, i_378_, i_369_, i_370_, i_374_, generictile.texture);
-			} else {
-			    int i_389_ = Scene.anIntArray565[generictile.texture];
-			    Rasterizer3D.method371(i_381_, i_383_, i_387_, i_380_, i_382_, i_386_, method539(-361, i_389_, generictile.anInt292), method539(-361, i_389_, generictile.anInt293), method539(-361, i_389_, generictile.anInt295));
+			    if (Scene.aBoolean547 && method540(Scene.anInt548, Scene.anInt549, i_381_, i_383_, i_387_, i_380_, i_382_, i_386_)) {
+				Scene.anInt550 = i_365_;
+				Scene.anInt551 = i_366_;
+			    }
+			    if (generictile.texture == -1) {
+				if (generictile.anInt292 != 12345678) {
+				    Rasterizer3D.method371(i_381_, i_383_, i_387_, i_380_, i_382_, i_386_, generictile.anInt292, generictile.anInt293, generictile.anInt295);
+				}
+			    } else if (!Scene.lowMemory) {
+				Rasterizer3D.method375(i_381_, i_383_, i_387_, i_380_, i_382_, i_386_, generictile.anInt292, generictile.anInt293, generictile.anInt295, i_367_, i_371_, i_368_, i_375_, i_376_, i_378_, i_369_, i_370_, i_374_, generictile.texture);
+			    } else {
+				int i_389_ = Scene.anIntArray565[generictile.texture];
+				Rasterizer3D.method371(i_381_, i_383_, i_387_, i_380_, i_382_, i_386_, method539(-361, i_389_, generictile.anInt292), method539(-361, i_389_, generictile.anInt293), method539(-361, i_389_, generictile.anInt295));
+			    }
 			}
 		    }
 		}
 	    }
-			    }
-			    }
+	}
     }
 
     public void method538(int i, byte b, int i_390_, int i_391_, ComplexTile complextile, int i_392_, int i_393_, int i_394_) {
@@ -1820,7 +1820,7 @@ public class Scene {
 		    int i_398_ = complextile.anIntArray196[i_396_] - Scene.anInt536;
 		    int i_399_ = complextile.anIntArray197[i_396_] - Scene.anInt537;
 		    int i_400_ = i_399_ * i_391_ + i_397_ * i_394_ >> 16;
-		i_399_ = i_399_ * i_394_ - i_397_ * i_391_ >> 16;
+		    i_399_ = i_399_ * i_394_ - i_397_ * i_391_ >> 16;
 		    i_397_ = i_400_;
 		    i_400_ = i_398_ * i_392_ - i_399_ * i_390_ >> 16;
 		    i_399_ = i_398_ * i_390_ + i_399_ * i_392_ >> 16;

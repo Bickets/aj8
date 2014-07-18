@@ -26,7 +26,7 @@ public class ChatCensor {
     private static char[][] topLevelDomains;
     private static int[] topLevelDomainsType;
     private static final String[] aStringArray175 = { "cook", "cook's",
-	"cooks", "seeks", "sheet", "woop", "woops", "faq", "noob", "noobs" };
+	    "cooks", "seeks", "sheet", "woop", "woops", "faq", "noob", "noobs" };
 
     public static final void load(Archive archive) {
 	Buffer fragmentsEnc = new Buffer(archive.getFile("fragmentsenc.txt"));

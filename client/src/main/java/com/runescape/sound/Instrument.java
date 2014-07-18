@@ -90,13 +90,13 @@ public class Instrument {
 		int mod = pitchModEnvelope.step(nS);
 		int modAmp = pitchModAmpEnvelope.step(nS);
 		pitchChange += evaluateWave(modAmp, pitchModPhase, pitchModEnvelope.form) >> 1;
-	pitchModPhase += (mod * pitchModStep >> 16) + pitchModBaseStep;
+		pitchModPhase += (mod * pitchModStep >> 16) + pitchModBaseStep;
 	    }
 	    if (volumeModEnvelope != null) {
 		int mod = volumeModEnvelope.step(nS);
 		int modAmp = volumeModAmpEnvelope.step(nS);
 		volumeChange = volumeChange * ((evaluateWave(modAmp, volumeModPhase, volumeModEnvelope.form) >> 1) + 32768) >> 15;
-	volumeModPhase += (mod * volumeModStep >> 16) + volumeModBaseStep;
+		volumeModPhase += (mod * volumeModStep >> 16) + volumeModBaseStep;
 	    }
 	    for (int oscillVolumeId = 0; oscillVolumeId < 5; oscillVolumeId++) {
 		if (oscillVolume[oscillVolumeId] != 0) {
