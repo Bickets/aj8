@@ -3,22 +3,18 @@ package org.apollo.game.event;
 import static com.google.common.base.Preconditions.checkNotNull;
 
 import java.util.Collection;
-import java.util.HashSet;
-import java.util.Set;
 
 import org.apollo.game.event.annotate.SubscribesTo;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
-import com.google.common.eventbus.EventBus;
 
 /**
- * A universal event provider which provides using Google Guava's
- * {@link EventBus}.
+ * A universal event provider which posts, provides and deprives subscribers.
  * 
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public final class UniversalEventProvider extends EventBus implements EventProvider {
+public final class UniversalEventProvider implements EventProvider {
 
     /**
      * A {@link Multimap} of {@link Event} classes to subscribers.
@@ -35,9 +31,6 @@ public final class UniversalEventProvider extends EventBus implements EventProvi
 
 	/* Cache the event */
 	events.put(annotation.value(), subscriber);
-
-	/* Register the subscriber */
-	register(subscriber);
     }
 
     @Override
@@ -49,32 +42,18 @@ public final class UniversalEventProvider extends EventBus implements EventProvi
 
 	/* Removed the cached event */
 	events.remove(annotation.value(), subscriber);
-
-	/* Unregister the subscriber */
-	unregister(subscriber);
     }
 
     @SuppressWarnings({ "unchecked", "rawtypes" })
     @Override
     public <E extends Event> void post(E event) {
-	// FIXME: This method is a temporary workaround to unregistering
-	// subscribers if their predicates (if applicable) exist and test {@code
-	// false}.
-
 	Collection<EventSubscriber> subscribers = events.get(event.getClass());
-	Set<EventSubscriber<E>> tested = new HashSet<>();
 
 	subscribers.forEach(subscriber -> {
-	    if (!subscriber.test(event)) {
-		unregister(subscriber);
+	    if (subscriber.test(event)) {
+		subscriber.subscribe(event);
 	    }
 	});
-
-	if (subscribers.size() > 0) {
-	    super.post(event);
-	}
-
-	tested.forEach(subscriber -> register(subscriber));
     }
 
 }
