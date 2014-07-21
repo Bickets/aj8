@@ -92,7 +92,7 @@ public final class GameSession extends Session {
      * Handles pending messages for this session.
      */
     public void handlePendingMessages() {
-	for (Message message = null; (message = messageQueue.poll()) != null;) {
+	for (Message message; (message = messageQueue.poll()) != null;) {
 	    messageTranslator.handle(player, message);
 	}
     }
