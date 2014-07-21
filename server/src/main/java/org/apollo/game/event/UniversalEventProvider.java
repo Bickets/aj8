@@ -70,7 +70,9 @@ public final class UniversalEventProvider extends EventBus implements EventProvi
 	    }
 	});
 
-	super.post(event);
+	if (subscribers.size() > 0) {
+	    super.post(event);
+	}
 
 	tested.forEach(subscriber -> register(subscriber));
     }

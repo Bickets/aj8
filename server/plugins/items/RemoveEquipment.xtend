@@ -1,11 +1,13 @@
 package items
 
 import org.apollo.game.event.EventSubscriber
+import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ItemActionEvent
+import org.apollo.game.model.Interfaces.InterfaceOption
 import org.apollo.game.model.Player
 import org.apollo.game.model.inv.SynchronizationInventoryListener
-import org.apollo.game.model.Interfaces.InterfaceOption
 
+@SubscribesTo(ItemActionEvent)
 class RemoveEquipment implements EventSubscriber<ItemActionEvent> {
 
 	def remove(Player player, int id, int slot) {
