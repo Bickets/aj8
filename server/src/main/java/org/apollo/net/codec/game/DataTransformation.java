@@ -26,6 +26,6 @@ public enum DataTransformation {
     /**
      * Subtracts the value from 128 (also known as type-S).
      */
-    SUBTRACT;
+    SUBTRACT
 
 }

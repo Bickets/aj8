@@ -16,6 +16,6 @@ public enum AccessMode {
     /**
      * When in bit access mode, bits can be written and packed into bytes.
      */
-    BIT_ACCESS;
+    BIT_ACCESS
 
 }

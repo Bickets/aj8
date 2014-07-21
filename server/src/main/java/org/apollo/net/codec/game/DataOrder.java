@@ -26,6 +26,6 @@ public enum DataOrder {
     /**
      * Most significant byte to least significant byte.
      */
-    BIG;
+    BIG
 
 }

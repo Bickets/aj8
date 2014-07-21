@@ -36,6 +36,6 @@ public enum InterfaceType {
     /**
      * An interface which is shown behind a fullscreen window.
      */
-    FULLSCREEN_BACKGROUND;
+    FULLSCREEN_BACKGROUND
 
 }
