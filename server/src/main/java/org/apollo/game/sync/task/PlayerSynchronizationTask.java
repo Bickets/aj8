@@ -1,11 +1,11 @@
 package org.apollo.game.sync.task;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
-import org.apollo.game.model.EntityRepository;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.Position;
 import org.apollo.game.model.World;
@@ -26,7 +26,7 @@ import org.apollo.game.sync.seg.TeleportSegment;
  *
  * @author Graham
  */
-public final class PlayerSynchronizationTask extends SynchronizationTask {
+public final class PlayerSynchronizationTask extends SynchronizationTask implements Predicate<Player> {
 
     /**
      * The maximum number of players to load per cycle. This prevents the update
@@ -76,26 +76,18 @@ public final class PlayerSynchronizationTask extends SynchronizationTask {
 	}
 
 	Set<Player> localPlayers = player.getLocalPlayers();
-	int oldLocalPlayers = localPlayers.size();
 	List<SynchronizationSegment> segments = new ArrayList<>();
+	int oldLocalPlayers = localPlayers.size();
 
-	Iterator<Player> it = localPlayers.iterator();
-	while (it.hasNext()) {
-	    Player p = it.next();
-	    if (!p.isActive() || p.isTeleporting() || p.getPosition().getLongestDelta(player.getPosition()) > player.getViewingDistance()) {
-		it.remove();
-		segments.add(new RemoveCharacterSegment());
-	    } else {
-		segments.add(new MovementSegment(p.getBlockSet(), p.getDirections()));
-	    }
-	}
+	Stream<Player> stream = localPlayers.stream().filter(this);
+	stream.forEach((Player p) -> segments.add(new RemoveCharacterSegment()));
+
+	stream = localPlayers.stream().filter(negate());
+	stream.forEach((Player p) -> segments.add(new MovementSegment(p.getBlockSet(), p.getDirections())));
 
 	int added = 0;
 
-	EntityRepository<Player> repository = world.getPlayerRepository();
-	// lambda does not work here
-	// due to variables needing to be final.
-	for (Player p : repository) {
+	for (Player p : world.getPlayerRepository()) {
 	    if (localPlayers.size() >= 255) {
 		player.flagExcessivePlayers();
 		break;
@@ -103,8 +95,6 @@ public final class PlayerSynchronizationTask extends SynchronizationTask {
 		break;
 	    }
 
-	    // we do not check p.isActive() here, since if they are active they
-	    // must be in the repository
 	    if (p != player && p.getPosition().isWithinDistance(player.getPosition(), player.getViewingDistance()) && !localPlayers.contains(p)) {
 		localPlayers.add(p);
 		added++;
@@ -120,8 +110,12 @@ public final class PlayerSynchronizationTask extends SynchronizationTask {
 	    }
 	}
 
-	PlayerSynchronizationMessage message = new PlayerSynchronizationMessage(lastKnownRegion, player.getPosition(), regionChanged, segment, oldLocalPlayers, segments);
-	player.send(message);
+	player.send(new PlayerSynchronizationMessage(lastKnownRegion, player.getPosition(), regionChanged, segment, oldLocalPlayers, segments));
+    }
+
+    @Override
+    public boolean test(Player p) {
+	return !p.isActive() || p.isTeleporting() || p.getPosition().getLongestDelta(player.getPosition()) > player.getViewingDistance();
     }
 
 }

@@ -1,16 +1,15 @@
 package org.apollo.game.sync.task;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
+import java.util.function.Predicate;
+import java.util.stream.Stream;
 
-import org.apollo.game.model.EntityRepository;
 import org.apollo.game.model.Mob;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.World;
 import org.apollo.game.msg.impl.MobSynchronizationMessage;
-import org.apollo.game.sync.block.SynchronizationBlockSet;
 import org.apollo.game.sync.seg.AddCharacterSegment;
 import org.apollo.game.sync.seg.MovementSegment;
 import org.apollo.game.sync.seg.RemoveCharacterSegment;
@@ -22,7 +21,7 @@ import org.apollo.game.sync.seg.SynchronizationSegment;
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public final class MobSynchronizationTask extends SynchronizationTask {
+public final class MobSynchronizationTask extends SynchronizationTask implements Predicate<Mob> {
 
     /**
      * The maximum number of mobs to load per cycle. This prevents the update
@@ -54,28 +53,19 @@ public final class MobSynchronizationTask extends SynchronizationTask {
 
     @Override
     public void run() {
-	SynchronizationBlockSet blockSet = player.getBlockSet();
 	Set<Mob> localMobs = player.getLocalMobs();
-	int oldLocalMobs = localMobs.size();
 	List<SynchronizationSegment> segments = new ArrayList<>();
+	int oldLocalMobs = localMobs.size();
 
-	Iterator<Mob> it = localMobs.iterator();
-	while (it.hasNext()) {
-	    Mob mob = it.next();
-	    if (!mob.isActive() || mob.isTeleporting() || mob.getPosition().getLongestDelta(player.getPosition()) > player.getViewingDistance()) {
-		it.remove();
-		segments.add(new RemoveCharacterSegment());
-	    } else {
-		segments.add(new MovementSegment(mob.getBlockSet(), mob.getDirections()));
-	    }
-	}
+	Stream<Mob> stream = localMobs.stream().filter(this);
+	stream.forEach((Mob mob) -> segments.add(new RemoveCharacterSegment()));
+
+	stream = localMobs.stream().filter(negate());
+	stream.forEach((Mob mob) -> segments.add(new MovementSegment(mob.getBlockSet(), mob.getDirections())));
 
 	int added = 0;
 
-	EntityRepository<Mob> repository = world.getMobRepository();
-	// lambda does not work here
-	// due to variables needing to be final.
-	for (Mob mob : repository) {
+	for (Mob mob : world.getMobRepository()) {
 	    if (localMobs.size() >= 255) {
 		player.flagExcessiveMobs();
 		break;
@@ -86,11 +76,16 @@ public final class MobSynchronizationTask extends SynchronizationTask {
 	    if (mob.getPosition().isWithinDistance(player.getPosition(), player.getViewingDistance()) && !localMobs.contains(mob)) {
 		localMobs.add(mob);
 		added++;
-		blockSet = mob.getBlockSet();
-		segments.add(new AddCharacterSegment(blockSet, mob, mob.getIndex(), mob.getDefinition().getId(), mob.getPosition()));
+		segments.add(new AddCharacterSegment(mob.getBlockSet(), mob, mob.getIndex(), mob.getDefinition().getId(), mob.getPosition()));
 	    }
 	}
+
 	player.send(new MobSynchronizationMessage(player.getPosition(), segments, oldLocalMobs));
+    }
+
+    @Override
+    public boolean test(Mob mob) {
+	return !mob.isActive() || mob.isTeleporting() || mob.getPosition().getLongestDelta(player.getPosition()) > player.getViewingDistance();
     }
 
 }

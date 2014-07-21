@@ -35,6 +35,10 @@ public final class HandshakeDecoder extends ByteToMessageDecoder {
 	case HandshakeConstants.SERVICE_UPDATE:
 	    ctx.pipeline().addFirst("updateEncoder", new UpdateEncoder());
 	    ctx.pipeline().addBefore("handler", "updateDecoder", new UpdateDecoder());
+
+	    // XXX: Better way?
+	    ByteBuf buf = ctx.alloc().buffer(8).writeLong(0);
+	    ctx.channel().writeAndFlush(buf);
 	    break;
 	default:
 	    throw new IllegalStateException("Invalid service id");
