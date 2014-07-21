@@ -8,7 +8,6 @@ import org.apollo.game.model.inv.AppearanceInventoryListener;
 import org.apollo.game.model.inv.FullInventoryListener;
 import org.apollo.game.model.inv.InventoryListener;
 import org.apollo.game.model.inv.SynchronizationInventoryListener;
-import org.apollo.game.model.skill.LevelUpSkillListener;
 import org.apollo.game.model.skill.SkillListener;
 import org.apollo.game.model.skill.SynchronizationSkillListener;
 import org.apollo.game.msg.Message;
@@ -350,12 +349,8 @@ public final class Player extends GameCharacter {
 	// synchronization listener
 	SkillListener syncListener = new SynchronizationSkillListener(this);
 
-	// level up listener
-	SkillListener levelUpListener = new LevelUpSkillListener(this);
-
 	// add the listeners
 	skills.addListener(syncListener);
-	skills.addListener(levelUpListener);
     }
 
     /**
