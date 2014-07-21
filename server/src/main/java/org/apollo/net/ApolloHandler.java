@@ -120,7 +120,7 @@ public final class ApolloHandler extends ChannelHandlerAdapter {
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable e) {
 	Channel channel = ctx.channel();
-	logger.log(Level.WARNING, "Exception occurred for channel: " + channel + ", closing...", e.getCause());
+	logger.log(Level.WARNING, "Exception occurred for channel: " + channel + ", closing...", e);
 	channel.close();
     }
 

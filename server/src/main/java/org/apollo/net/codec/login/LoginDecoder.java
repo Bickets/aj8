@@ -82,8 +82,9 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 	usernameHash = in.readUnsignedByte();
 	serverSeed = RANDOM.nextLong();
 
-	ByteBuf resp = ctx.alloc().buffer(9);
+	ByteBuf resp = ctx.alloc().buffer(17);
 	resp.writeByte(LoginConstants.STATUS_EXCHANGE_DATA);
+	resp.writeLong(0);
 	resp.writeLong(serverSeed);
 	ctx.channel().writeAndFlush(resp);
 

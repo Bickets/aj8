@@ -4,6 +4,7 @@ import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.nio.NioEventLoopGroup;
 import io.netty.channel.socket.nio.NioServerSocketChannel;
+import io.netty.util.ResourceLeakDetector;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;
@@ -45,6 +46,9 @@ final class Server {
      * @param args The command-line arguments passed to the application.
      */
     public static void main(String[] args) {
+	/* XXX: Need to do heavy network testing and fix resource leaks. */
+	ResourceLeakDetector.setLevel(ResourceLeakDetector.Level.PARANOID);
+
 	try {
 	    Server server = new Server();
 	    server.init();

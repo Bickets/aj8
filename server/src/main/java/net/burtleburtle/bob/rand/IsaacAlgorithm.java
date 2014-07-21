@@ -1,7 +1,5 @@
 package net.burtleburtle.bob.rand;
 
-import java.util.Arrays;
-
 /**
  * <p>
  * An implementation of the <a
@@ -86,7 +84,8 @@ public final class IsaacAlgorithm {
      */
     public IsaacAlgorithm(int[] seed) {
 	mem = new int[SIZE];
-	rsl = Arrays.copyOf(seed, seed.length <= SIZE ? seed.length : SIZE);
+	rsl = new int[SIZE];
+	System.arraycopy(seed, 0, rsl, 0, seed.length <= rsl.length ? seed.length : rsl.length);
 	init();
     }
 
