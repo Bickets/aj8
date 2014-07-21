@@ -192,14 +192,7 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 	PlayerCredentials credentials = new PlayerCredentials(username, password, usernameHash, uid, address);
 	IsaacRandomPair randomPair = new IsaacRandomPair(encodingRandom, decodingRandom);
 
-	LoginRequest request = new LoginRequest(credentials, randomPair, reconnecting, lowMemory, clientVersion, archiveCrcs);
-
-	out.add(request);
-
-	// TODO: Necessary?
-	if (in.isReadable()) {
-	    out.add(in.readBytes(in.readableBytes()));
-	}
+	out.add(new LoginRequest(credentials, randomPair, reconnecting, lowMemory, clientVersion, archiveCrcs));
     }
 
 }
