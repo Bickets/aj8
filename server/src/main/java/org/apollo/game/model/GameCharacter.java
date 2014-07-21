@@ -34,6 +34,12 @@ public abstract class GameCharacter extends Entity {
     private final WalkingQueue walkingQueue = new WalkingQueue(this);
 
     /**
+     * A character fields class used to store, modify and get character
+     * attributes.
+     */
+    private final GameCharacterFields fields = new GameCharacterFields(this);
+
+    /**
      * This characters first direction.
      */
     private Direction firstDirection = Direction.NONE;
@@ -49,19 +55,14 @@ public abstract class GameCharacter extends Entity {
     private Position position;
 
     /**
-     * A character fields class used to store miscellaneous variables.
-     */
-    private final GameCharacterFields fields = new GameCharacterFields();
-
-    /**
      * A set of local players.
      */
-    private final Set<Player> localPlayers = new LinkedHashSet<Player>();
+    private final Set<Player> localPlayers = new LinkedHashSet<>();
 
     /**
      * A set of local mobs.
      */
-    private final Set<Mob> localMobs = new LinkedHashSet<Mob>();
+    private final Set<Mob> localMobs = new LinkedHashSet<>();
 
     /**
      * A map of attributes.
@@ -86,7 +87,7 @@ public abstract class GameCharacter extends Entity {
     /**
      * The character's current action.
      */
-    private Action<?> action; // TODO
+    private Action<?> currentAction;
 
     /**
      * The character's inventory.
@@ -423,25 +424,24 @@ public abstract class GameCharacter extends Entity {
      * @return A flag indicating if the action was started.
      */
     public boolean startAction(Action<?> action) {
-	if (this.action != null) {
-	    if (this.action.equals(action)) {
+	if (currentAction != null) {
+	    if (currentAction.equals(action)) {
 		return false;
 	    }
 	    stopAction();
 	}
-	this.action = action;
+	currentAction = action;
 	TaskScheduler.getInstance().schedule(action);
-	return true; // TODO maybe this should be incorporated into the action
-	// class itself?
+	return true;
     }
 
     /**
      * Stops the current action.
      */
     public void stopAction() {
-	if (action != null) {
-	    action.stop();
-	    action = null;
+	if (currentAction != null) {
+	    currentAction.stop();
+	    currentAction = null;
 	}
     }
 

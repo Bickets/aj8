@@ -1,36 +1,55 @@
 package org.apollo.game.model;
 
+import org.apollo.game.attribute.AttributeKey;
+
 /**
- * This class is storage for miscellaneous variables related to
- * {@link GameCharacters}. <b> Please do not use this class to store character
- * specific methods as that is not what this class is intended for. We don't
- * want this to turn into the next client.java </b>
+ * The sole purpose of this class is to store, get and modify attributes for
+ * some {@link GameCharacter}.
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class GameCharacterFields {
 
     /**
-     * A flag indicating if the player is withdrawing items as notes.
+     * The game character who owns these attributes.
      */
-    private boolean withdrawingNotes = false;
+    private final GameCharacter character;
 
     /**
-     * Gets the withdrawing notes flag.
-     *
-     * @return The flag.
+     * Constructs a new {@link GameCharacterFields} with the specified game
+     * character.
+     * 
+     * @param character The character.
      */
-    public boolean isWithdrawingNotes() {
-	return withdrawingNotes;
+    protected GameCharacterFields(GameCharacter character) {
+	this.character = character;
     }
 
     /**
-     * Sets the withdrawing notes flag.
-     *
-     * @param withdrawingNotes The flag.
+     * An attribute key representing a {@code boolean} which denotes whether or
+     * not this character is withdrawing noted items from their bank. Default
+     * value is {@code false}.
      */
-    public void setWithdrawingNotes(boolean withdrawingNotes) {
-	this.withdrawingNotes = withdrawingNotes;
+    private static final AttributeKey<Boolean> WITHDRAWING_NOTES = AttributeKey.valueOf("withdrawing_notes", false);
+
+    /**
+     * Returns the current {@code boolean} flag of the withdrawing notes
+     * attribute key.
+     * 
+     * @return {@code true} if the withdrawing notes attribute key is
+     *         {@code true} otherwise {@code false}.
+     */
+    public boolean isWithdrawingNotes() {
+	return character.getAttributes().get(WITHDRAWING_NOTES);
+    }
+
+    /**
+     * Sets the withdrawing notes attribute key to the specified {@code flag}.
+     * 
+     * @param flag The new value for the withdrawing notes attribute key.
+     */
+    public void setWithdrawingNotes(boolean flag) {
+	character.getAttributes().set(WITHDRAWING_NOTES, flag);
     }
 
 }
