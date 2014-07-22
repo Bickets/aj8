@@ -224,10 +224,10 @@ public class Game extends GameShell {
     private int anInt1014;
     private final int[] characterEditColors = new int[5];
     private int anInt1017;
-    private int anInt1020;
-    private int anInt1021;
-    private int anInt1022;
-    private int anInt1023;
+    private int cameraAngleX;
+    private int cameraAngleY;
+    private int cameraAngleHeight;
+    private int cameraAngleSpeed;
     private int anInt1024;
     private ISAACCipher isaacCipher;
     private ImageRGB minimapEdge;
@@ -278,7 +278,7 @@ public class Game extends GameShell {
     private int anInt1064;
     private int anInt1065;
     private int anInt1066;
-    private int anInt1067 = -1;
+    private int chatboxOverlay = -1;
     private final int[] skillMaxLevel = new int[SkillConstants.SKILL_COUNT];
     private final int[] defaultSettings = new int[2000];
     private int anInt1071;
@@ -289,7 +289,7 @@ public class Game extends GameShell {
     private final int[] anIntArray1077 = new int[151];
     private Archive anArchive1078;
     private int flashingSidebar = -1;
-    private int anInt1080;
+    private int multiState;
     private LinkedList aLinkedList1081 = new LinkedList();
     private final int[] anIntArray1082 = new int[33];
     private final Widget aWidget1084 = new Widget();
@@ -330,11 +330,11 @@ public class Game extends GameShell {
     private int[] menuActionIds1 = new int[500];
     private ImageRGB[] anImageRGBArray1120 = new ImageRGB[20];
     private static int anInt1122;
-    private int anInt1123;
-    private int anInt1124;
-    private int anInt1125;
-    private int anInt1126;
-    private int anInt1127;
+    private int cameraX;
+    private int cameraY;
+    private int cameraHeight;
+    private int cameraSpeed;
+    private int cameraAngle;
     private boolean drawTabIcons = false;
     private int systemUpdateTime;
     private ProducingGraphicsBuffer aProducingGraphicsBuffer1132;
@@ -418,7 +418,7 @@ public class Game extends GameShell {
     private int anInt1211;
     private int anInt1212;
     private static int anInt1213;
-    private int anInt1214 = -1;
+    private int inventoryOverlay = -1;
     private int[] anIntArray1215;
     private int[] anIntArray1216;
     private Buffer outBuffer = Buffer.newPooledBuffer(1);
@@ -622,8 +622,8 @@ public class Game extends GameShell {
 		fontBold.drawStringLeft("Click to continue", 239, 60, 128);
 	    } else if (chatboxWidgetId != -1) {
 		method105(0, 0, Widget.cache[chatboxWidgetId], 0);
-	    } else if (anInt1067 != -1) {
-		method105(0, 0, Widget.cache[anInt1067], 0);
+	    } else if (chatboxOverlay != -1) {
+		method105(0, 0, Widget.cache[chatboxOverlay], 0);
 	    } else {
 		TypeFace typeFace = fontNormal;
 		int i = 0;
@@ -1876,8 +1876,8 @@ public class Game extends GameShell {
 	    aProducingGraphicsBuffer1188.createRasterizer();
 	    Rasterizer3D.lineOffsets = anIntArray1206;
 	    inventoryBackgroundImage.drawImage(0, 0);
-	    if (anInt1214 != -1) {
-		method105(0, 0, Widget.cache[anInt1214], 0);
+	    if (inventoryOverlay != -1) {
+		method105(0, 0, Widget.cache[inventoryOverlay], 0);
 	    } else if (tabWidgetIds[currentTabId] != -1) {
 		method105(0, 0, Widget.cache[tabWidgetIds[currentTabId]], 0);
 	    }
@@ -2006,48 +2006,48 @@ public class Game extends GameShell {
     public final void method39(byte b) {
 	do {
 	    try {
-		int i = anInt1123 * 128 + 64;
-		int i_179_ = anInt1124 * 128 + 64;
-		int i_180_ = method42(currentSceneId, i_179_, true, i) - anInt1125;
+		int i = cameraX * 128 + 64;
+		int i_179_ = cameraY * 128 + 64;
+		int i_180_ = method42(currentSceneId, i_179_, true, i) - cameraHeight;
 		if (anInt883 < i) {
-		    anInt883 += anInt1126 + (i - anInt883) * anInt1127 / 1000;
+		    anInt883 += cameraSpeed + (i - anInt883) * cameraAngle / 1000;
 		    if (anInt883 > i) {
 			anInt883 = i;
 		    }
 		}
 		if (anInt883 > i) {
-		    anInt883 -= anInt1126 + (anInt883 - i) * anInt1127 / 1000;
+		    anInt883 -= cameraSpeed + (anInt883 - i) * cameraAngle / 1000;
 		    if (anInt883 < i) {
 			anInt883 = i;
 		    }
 		}
 		if (anInt884 < i_180_) {
-		    anInt884 += anInt1126 + (i_180_ - anInt884) * anInt1127 / 1000;
+		    anInt884 += cameraSpeed + (i_180_ - anInt884) * cameraAngle / 1000;
 		    if (anInt884 > i_180_) {
 			anInt884 = i_180_;
 		    }
 		}
 		if (anInt884 > i_180_) {
-		    anInt884 -= anInt1126 + (anInt884 - i_180_) * anInt1127 / 1000;
+		    anInt884 -= cameraSpeed + (anInt884 - i_180_) * cameraAngle / 1000;
 		    if (anInt884 < i_180_) {
 			anInt884 = i_180_;
 		    }
 		}
 		if (anInt885 < i_179_) {
-		    anInt885 += anInt1126 + (i_179_ - anInt885) * anInt1127 / 1000;
+		    anInt885 += cameraSpeed + (i_179_ - anInt885) * cameraAngle / 1000;
 		    if (anInt885 > i_179_) {
 			anInt885 = i_179_;
 		    }
 		}
 		if (anInt885 > i_179_) {
-		    anInt885 -= anInt1126 + (anInt885 - i_179_) * anInt1127 / 1000;
+		    anInt885 -= cameraSpeed + (anInt885 - i_179_) * cameraAngle / 1000;
 		    if (anInt885 < i_179_) {
 			anInt885 = i_179_;
 		    }
 		}
-		i = anInt1020 * 128 + 64;
-		i_179_ = anInt1021 * 128 + 64;
-		i_180_ = method42(currentSceneId, i_179_, true, i) - anInt1022;
+		i = cameraAngleX * 128 + 64;
+		i_179_ = cameraAngleY * 128 + 64;
+		i_180_ = method42(currentSceneId, i_179_, true, i) - cameraAngleHeight;
 		int i_181_ = i - anInt883;
 		int i_182_ = i_180_ - anInt884;
 		int i_183_ = i_179_ - anInt885;
@@ -2066,13 +2066,13 @@ public class Game extends GameShell {
 		    i_185_ = 383;
 		}
 		if (anInt886 < i_185_) {
-		    anInt886 += anInt1023 + (i_185_ - anInt886) * anInt1024 / 1000;
+		    anInt886 += cameraAngleSpeed + (i_185_ - anInt886) * anInt1024 / 1000;
 		    if (anInt886 > i_185_) {
 			anInt886 = i_185_;
 		    }
 		}
 		if (anInt886 > i_185_) {
-		    anInt886 -= anInt1023 + (anInt886 - i_185_) * anInt1024 / 1000;
+		    anInt886 -= cameraAngleSpeed + (anInt886 - i_185_) * anInt1024 / 1000;
 		    if (anInt886 < i_185_) {
 			anInt886 = i_185_;
 		    }
@@ -2085,11 +2085,11 @@ public class Game extends GameShell {
 		    i_187_ += 2048;
 		}
 		if (i_187_ > 0) {
-		    anInt887 += anInt1023 + i_187_ * anInt1024 / 1000;
+		    anInt887 += cameraAngleSpeed + i_187_ * anInt1024 / 1000;
 		    anInt887 &= 0x7ff;
 		}
 		if (i_187_ < 0) {
-		    anInt887 -= anInt1023 + -i_187_ * anInt1024 / 1000;
+		    anInt887 -= cameraAngleSpeed + -i_187_ * anInt1024 / 1000;
 		    anInt887 &= 0x7ff;
 		}
 		int i_188_ = i_186_ - anInt887;
@@ -5636,7 +5636,7 @@ public class Game extends GameShell {
 
     public final void sendMessage(String message, int type, String prefix) {
 	try {
-	    if (type == 0 && anInt1067 != -1) {
+	    if (type == 0 && chatboxOverlay != -1) {
 		aString869 = message;
 		clickType = 0;
 	    }
@@ -5838,8 +5838,8 @@ public class Game extends GameShell {
 
 		anInt911 = 0;
 		if (mouseEventX > 553 && mouseEventY > 205 && mouseEventX < 743 && mouseEventY < 466) {
-		    if (anInt1214 != -1) {
-			processWidgetClick(553, Widget.cache[anInt1214], mouseEventX, 205, mouseEventY, 0);
+		    if (inventoryOverlay != -1) {
+			processWidgetClick(553, Widget.cache[inventoryOverlay], mouseEventX, 205, mouseEventY, 0);
 		    } else if (tabWidgetIds[currentTabId] != -1) {
 			processWidgetClick(553, Widget.cache[tabWidgetIds[currentTabId]], mouseEventX, 205, mouseEventY, 0);
 		    }
@@ -6033,10 +6033,10 @@ public class Game extends GameShell {
 		spawnObjectNodeList = new LinkedList();
 		friendListStatus = 0;
 		friendsListCount = 0;
-		anInt1067 = -1;
+		chatboxOverlay = -1;
 		chatboxWidgetId = -1;
 		openWidgetId = -1;
-		anInt1214 = -1;
+		inventoryOverlay = -1;
 		walkableWidgetId = -1;
 		aBoolean1174 = false;
 		currentTabId = 3;
@@ -6044,7 +6044,7 @@ public class Game extends GameShell {
 		actionMenuOpen = false;
 		messagePromptRaised = false;
 		aString869 = null;
-		anInt1080 = 0;
+		multiState = 0;
 		flashingSidebar = -1;
 		characterEditChangeGenger = true;
 		characterChangeGenger(0);
@@ -7687,8 +7687,8 @@ public class Game extends GameShell {
 	if (actionMenuOpen && actionMenuArea == 1) {
 	    redrawTab = true;
 	}
-	if (anInt1214 != -1) {
-	    boolean bool_622_ = method119(anInt970, anInt1214);
+	if (inventoryOverlay != -1) {
+	    boolean bool_622_ = method119(anInt970, inventoryOverlay);
 	    if (bool_622_) {
 		redrawTab = true;
 	    }
@@ -7758,7 +7758,7 @@ public class Game extends GameShell {
 	    drawTabIcons = false;
 	    aProducingGraphicsBuffer1150.createRasterizer();
 	    anIndexedImage1054.drawImage(0, 0);
-	    if (anInt1214 == -1) {
+	    if (inventoryOverlay == -1) {
 		if (tabWidgetIds[currentTabId] != -1) {
 		    if (currentTabId == 0) {
 			anIndexedImage1168.drawImage(22, 10);
@@ -7807,7 +7807,7 @@ public class Game extends GameShell {
 	    aProducingGraphicsBuffer1150.drawGraphics(516, 160, gameGraphics);
 	    aProducingGraphicsBuffer1149.createRasterizer();
 	    anIndexedImage1053.drawImage(0, 0);
-	    if (anInt1214 == -1) {
+	    if (inventoryOverlay == -1) {
 		if (tabWidgetIds[currentTabId] != -1) {
 		    if (currentTabId == 7) {
 			anIndexedImage890.drawImage(42, 0);
@@ -8679,7 +8679,7 @@ public class Game extends GameShell {
 	} else if (actionMenuArea == 0) {
 	    drawActionMenu();
 	}
-	if (anInt1080 == 1) {
+	if (multiState == 1) {
 	    anImageRGBArray1120[1].drawImage(472, 296);
 	}
 
@@ -10053,17 +10053,18 @@ public class Game extends GameShell {
 			    }
 			}
 		    }
+		    /* Spawns an object to the map */
 		    if (opcode == 151) {
-			int i_929_ = buffer.getUnsignedByteA();
-			int i_930_ = playerPositionX + (i_929_ >> 4 & 0x7);
-			int i_931_ = playerPositionY + (i_929_ & 0x7);
-			int i_932_ = buffer.getUnsignedShort();
-			int i_933_ = buffer.getUnsignedByteS();
-			int i_934_ = i_933_ >> 2;
-			int i_935_ = i_933_ & 0x3;
-			int i_936_ = anIntArray1202[i_934_];
-			if (i_930_ >= 0 && i_931_ >= 0 && i_930_ < 104 && i_931_ < 104) {
-			    addSpawnObjectNode(-1, i_932_, i_935_, i_936_, i_931_, i_934_, currentSceneId, i_930_, 0);
+			int positionOffset = buffer.getUnsignedByteA(); // TODO: Is this correct?
+			int x = playerPositionX + (positionOffset >> 4 & 0x7);
+			int y = playerPositionY + (positionOffset & 0x7);
+			int objectId = buffer.getUnsignedShort();
+			int objectDefHashCode = buffer.getUnsignedByteS();
+			int objectTypeIndex = objectDefHashCode >> 2;
+			int objectOrientation = objectDefHashCode & 0x3;
+			int objectType = anIntArray1202[objectTypeIndex];
+			if (x >= 0 && y >= 0 && x < 104 && y < 104) {
+			    addSpawnObjectNode(-1, objectId, objectOrientation, objectType, y, objectTypeIndex, currentSceneId, x, 0);
 			}
 		    } else if (opcode == 4) {
 			int i_937_ = buffer.getUnsignedByte();
@@ -10551,7 +10552,7 @@ public class Game extends GameShell {
 		    return true;
 		}
 
-		/* TODO: Figure out usage */
+		/* Resends the received region */
 		if (opcode == 64) {
 		    playerPositionX = inBuffer.getUnsignedByteC();
 		    playerPositionY = inBuffer.getUnsignedByteS();
@@ -10620,18 +10621,18 @@ public class Game extends GameShell {
 		    return true;
 		}
 
-		/* XXX: Figure out usage. */
+		/* Spins the camera */
 		if (opcode == 166) {
 		    aBoolean1185 = true;
-		    anInt1123 = inBuffer.getUnsignedByte();
-		    anInt1124 = inBuffer.getUnsignedByte();
-		    anInt1125 = inBuffer.getUnsignedLEShort();
-		    anInt1126 = inBuffer.getUnsignedByte();
-		    anInt1127 = inBuffer.getUnsignedByte();
-		    if (anInt1127 >= 100) {
-			anInt883 = anInt1123 * 128 + 64;
-			anInt885 = anInt1124 * 128 + 64;
-			anInt884 = method42(currentSceneId, anInt885, true, anInt883) - anInt1125;
+		    cameraX = inBuffer.getUnsignedByte();
+		    cameraY = inBuffer.getUnsignedByte();
+		    cameraHeight = inBuffer.getUnsignedLEShort();
+		    cameraSpeed = inBuffer.getUnsignedByte();
+		    cameraAngle = inBuffer.getUnsignedByte();
+		    if (cameraAngle >= 100) {
+			anInt883 = cameraX * 128 + 64;
+			anInt885 = cameraY * 128 + 64;
+			anInt884 = method42(currentSceneId, anInt885, true, anInt883) - cameraHeight;
 		    }
 		    opcode = -1;
 		    return true;
@@ -11003,17 +11004,16 @@ public class Game extends GameShell {
 		}
 
 		/* Adds an action to players */
-		// TODO: Figure out what unknownVar1 is.
 		if (opcode == 104) {
 		    int actionId = inBuffer.getUnsignedByteC();
-		    int unknownVar1 = inBuffer.getUnsignedByteA();
+		    boolean onTop = inBuffer.getUnsignedByteA() == 0;
 		    String action = inBuffer.getString();
 		    if (actionId >= 1 && actionId <= 5) {
 			if (action.equalsIgnoreCase("null")) {
 			    action = null;
 			}
 			playerActions[actionId - 1] = action;
-			aBooleanArray1153[actionId - 1] = unknownVar1 == 0;
+			aBooleanArray1153[actionId - 1] = onTop;
 		    }
 		    opcode = -1;
 		    return true;
@@ -11204,7 +11204,7 @@ public class Game extends GameShell {
 			redrawChatbox = true;
 		    }
 		    openWidgetId = widgetId;
-		    anInt1214 = inventoryWidgetId;
+		    inventoryOverlay = inventoryWidgetId;
 		    redrawTab = true;
 		    drawTabIcons = true;
 		    aBoolean1174 = false;
@@ -11338,10 +11338,10 @@ public class Game extends GameShell {
 		    return true;
 		}
 
-		/* TODO: Figure out usage. */
+		/* Adds an inventory widget overlay */
 		if (opcode == 142) {
-		    int i_1142_ = inBuffer.getUnsignedShort();
-		    method60(i_1142_);
+		    int widgetId = inBuffer.getUnsignedShort();
+		    method60(widgetId);
 		    if (chatboxWidgetId != -1) {
 			chatboxWidgetId = -1;
 			redrawChatbox = true;
@@ -11350,7 +11350,7 @@ public class Game extends GameShell {
 			inputType = 0;
 			redrawChatbox = true;
 		    }
-		    anInt1214 = i_1142_;
+		    inventoryOverlay = widgetId;
 		    redrawTab = true;
 		    drawTabIcons = true;
 		    openWidgetId = -1;
@@ -11457,18 +11457,18 @@ public class Game extends GameShell {
 		    return true;
 		}
 
-		/* TODO: Figure out usage. */
+		/* Sends the camera angle */
 		if (opcode == 177) {
 		    aBoolean1185 = true;
-		    anInt1020 = inBuffer.getUnsignedByte();
-		    anInt1021 = inBuffer.getUnsignedByte();
-		    anInt1022 = inBuffer.getUnsignedLEShort();
-		    anInt1023 = inBuffer.getUnsignedByte();
-		    anInt1024 = inBuffer.getUnsignedByte();
+		    cameraAngleX = inBuffer.getUnsignedByte();
+		    cameraAngleY = inBuffer.getUnsignedByte();
+		    cameraAngleHeight = inBuffer.getUnsignedLEShort();
+		    cameraAngleSpeed = inBuffer.getUnsignedByte();
+		    anInt1024 = inBuffer.getUnsignedByte(); // TODO Should be angle?
 		    if (anInt1024 >= 100) {
-			int i_1160_ = anInt1020 * 128 + 64;
-			int i_1161_ = anInt1021 * 128 + 64;
-			int i_1162_ = method42(currentSceneId, i_1161_, true, i_1160_) - anInt1022;
+			int i_1160_ = cameraAngleX * 128 + 64;
+			int i_1161_ = cameraAngleY * 128 + 64;
+			int i_1162_ = method42(currentSceneId, i_1161_, true, i_1160_) - cameraAngleHeight;
 			int i_1163_ = i_1160_ - anInt883;
 			int i_1164_ = i_1162_ - anInt884;
 			int i_1165_ = i_1161_ - anInt885;
@@ -11525,8 +11525,8 @@ public class Game extends GameShell {
 		if (opcode == 97) {
 		    int widgetId = inBuffer.getUnsignedLEShort();
 		    method60(widgetId);
-		    if (anInt1214 != -1) {
-			anInt1214 = -1;
+		    if (inventoryOverlay != -1) {
+			inventoryOverlay = -1;
 			redrawTab = true;
 			drawTabIcons = true;
 		    }
@@ -11544,10 +11544,10 @@ public class Game extends GameShell {
 		    return true;
 		}
 
-		/* TODO: Figure out usage. */
+		/* Sets the chatbox overlay */
 		if (opcode == 218) {
-		    int i_1168_ = inBuffer.getForceLEShortA();
-		    anInt1067 = i_1168_;
+		    int widgetId = inBuffer.getForceLEShortA();
+		    chatboxOverlay = widgetId;
 		    redrawChatbox = true;
 		    opcode = -1;
 		    return true;
@@ -11562,7 +11562,7 @@ public class Game extends GameShell {
 			widgetSettings[settingId] = settingValue;
 			handleWidgetSetting(settingId);
 			redrawTab = true;
-			if (anInt1067 != -1) {
+			if (chatboxOverlay != -1) {
 			    redrawChatbox = true;
 			}
 		    }
@@ -11579,7 +11579,7 @@ public class Game extends GameShell {
 			widgetSettings[i_1171_] = i_1172_;
 			handleWidgetSetting(i_1171_);
 			redrawTab = true;
-			if (anInt1067 != -1) {
+			if (chatboxOverlay != -1) {
 			    redrawChatbox = true;
 			}
 		    }
@@ -11587,9 +11587,9 @@ public class Game extends GameShell {
 		    return true;
 		}
 
-		/* TODO: Figure out usage. */
+		/* Sets the multi combat state, 0 for off 1 for on*/
 		if (opcode == 61) {
-		    anInt1080 = inBuffer.getUnsignedByte();
+		    multiState = inBuffer.getUnsignedByte();
 		    opcode = -1;
 		    return true;
 		}
@@ -11610,8 +11610,8 @@ public class Game extends GameShell {
 
 		/* Closes all open interfaces. */
 		if (opcode == 219) {
-		    if (anInt1214 != -1) {
-			anInt1214 = -1;
+		    if (inventoryOverlay != -1) {
+			inventoryOverlay = -1;
 			redrawTab = true;
 			drawTabIcons = true;
 		    }
@@ -11664,8 +11664,8 @@ public class Game extends GameShell {
 		if (opcode == 164) {
 		    int widgetId = inBuffer.getUnsignedShort();
 		    method60(widgetId);
-		    if (anInt1214 != -1) {
-			anInt1214 = -1;
+		    if (inventoryOverlay != -1) {
+			inventoryOverlay = -1;
 			redrawTab = true;
 			drawTabIcons = true;
 		    }
@@ -11778,8 +11778,8 @@ public class Game extends GameShell {
 
     public final void closeWidgets() {
 	outBuffer.putOpcode(130);
-	if (anInt1214 != -1) {
-	    anInt1214 = -1;
+	if (inventoryOverlay != -1) {
+	    inventoryOverlay = -1;
 	    redrawTab = true;
 	    aBoolean1174 = false;
 	    drawTabIcons = true;
