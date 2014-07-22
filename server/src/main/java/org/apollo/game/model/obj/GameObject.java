@@ -6,11 +6,16 @@ import org.apollo.game.model.def.GameObjectDefinition;
 
 /**
  * Represents a game object within the world.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
- * @author Major, structure taken from his apollo
+ * @author Major, structure idea from his apollo
  */
 public final class GameObject extends Entity {
+
+    /**
+     * Represents the id of this object.
+     */
+    private final int id;
 
     /**
      * A hash of all attributes for this game object.
@@ -26,7 +31,7 @@ public final class GameObject extends Entity {
      * Constructs a new {@link GameObject} with the specified id and position.
      * This game object has a default orientation of north and a default type of
      * general prop.
-     * 
+     *
      * @param id The id of this game object.
      * @param position The position of this game object.
      */
@@ -37,7 +42,7 @@ public final class GameObject extends Entity {
     /**
      * Constructs a new {@link GameObject} with the specified id, position and
      * orientation. this game object has a default type of general prop.
-     * 
+     *
      * @param id The id of this game object.
      * @param position The position of this game object.
      * @param orientation The orientation of this object.
@@ -49,7 +54,7 @@ public final class GameObject extends Entity {
     /**
      * Constructs a new {@link GameObject} with the specified id, position,
      * orientation and type.
-     * 
+     *
      * @param id The id of this game object.
      * @param position The position of this game object.
      * @param type The type of this object.
@@ -57,21 +62,22 @@ public final class GameObject extends Entity {
      */
     public GameObject(int id, Position position, ObjectType type, ObjectOrientation orientation) {
 	super(position);
-	this.hashCode = (id << 8) + (type.getId() << 2) + orientation.getId();
+	this.id = id;
+	hashCode = (type.getId() << 2) + (orientation.getId() & 0x3F);
     }
 
     /**
-     * Decodes and returns the id of this object from its hash code.
+     * Decodes and returns the id of this object.
      */
     public int getId() {
-	return hashCode >> 8;
+	return id;
     }
 
     /**
      * Decodes and returns the type of this object from its hash code.
      */
     public ObjectType getType() {
-	return ObjectType.forId((hashCode >> 2) & 0x3F);
+	return ObjectType.forId(hashCode >> 2 & 0x3F);
     }
 
     /**
