@@ -50,7 +50,7 @@ public final class Objects {
      * @param obj The object.
      * @return The center position of the object.
      */
-    public Position getCenterPosition(GameObject obj) {
+    public static Position getCenterPosition(GameObject obj) {
 	GameObjectDefinition def = obj.getDefinition();
 
 	int width = def.getSizeX();
@@ -72,7 +72,7 @@ public final class Objects {
      * @param from The starting position.
      * @return The position which faces the object.
      */
-    public Position getTurnToPosition(GameObject obj, Position from) {
+    public static Position getTurnToPosition(GameObject obj, Position from) {
 	GameObjectDefinition def = obj.getDefinition();
 	Position position = obj.getPosition();
 
