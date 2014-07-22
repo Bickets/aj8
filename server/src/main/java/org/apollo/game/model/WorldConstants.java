@@ -18,6 +18,11 @@ public final class WorldConstants {
     public static final int MAXIMUM_PLAYERS = 2000;
 
     /**
+     * The maximum number of game objects.
+     */
+    public static final int MAXIMUM_GAME_OBJECTS = 2000;
+
+    /**
      * Default private constructor to prevent instantiation by other classes.
      */
     private WorldConstants() {

@@ -7,19 +7,26 @@ import java.io.InputStream;
 import java.util.logging.Logger;
 
 import org.apollo.fs.FileSystem;
+import org.apollo.fs.parser.GameObjectDefinitionParser;
 import org.apollo.fs.parser.ItemDefinitionParser;
 import org.apollo.fs.parser.MobDefinitionParser;
+import org.apollo.fs.parser.StaticObjectDefinitionParser;
 import org.apollo.game.event.Event;
 import org.apollo.game.event.EventProvider;
 import org.apollo.game.event.EventSubscriber;
 import org.apollo.game.event.UniversalEventProvider;
 import org.apollo.game.model.def.EquipmentDefinition;
+import org.apollo.game.model.def.GameObjectDefinition;
 import org.apollo.game.model.def.GamePacketDefinition;
 import org.apollo.game.model.def.ItemDefinition;
 import org.apollo.game.model.def.LevelUpDefinition;
 import org.apollo.game.model.def.MobDefinition;
+import org.apollo.game.model.def.StaticObjectDefinition;
+import org.apollo.game.model.obj.GameObject;
 import org.apollo.io.EquipmentDefinitionParser;
 import org.apollo.service.Service;
+
+import com.google.common.collect.Multimap;
 
 /**
  * The world class is a singleton which contains objects like the
@@ -71,6 +78,11 @@ public final class World {
     private final EntityRepository<Player> playerRepository = new EntityRepository<>(WorldConstants.MAXIMUM_PLAYERS);
 
     /**
+     * The {@link EntityRepository} of {@link GameObject}s.
+     */
+    private final EntityRepository<GameObject> objectRepository = new EntityRepository<>(WorldConstants.MAXIMUM_GAME_OBJECTS);
+
+    /**
      * This worlds event provider.
      */
     private final EventProvider eventProvider = new UniversalEventProvider();
@@ -113,6 +125,16 @@ public final class World {
 	MobDefinition[] mobDefs = MobDefinitionParser.parse(fileSystem);
 	MobDefinition.init(mobDefs);
 	logger.info("Done (loaded " + mobDefs.length + " mob definitions).");
+
+	logger.info("Loading static object definitions...");
+	Multimap<Integer, StaticObjectDefinition> objDefs = StaticObjectDefinitionParser.parse(fileSystem);
+	StaticObjectDefinition.init(objDefs);
+	logger.info("Done (loaded " + objDefs.size() + " static object definitions).");
+
+	logger.info("Loading game object definitions...");
+	GameObjectDefinition[] gameObjDefs = GameObjectDefinitionParser.parse(fileSystem);
+	GameObjectDefinition.init(gameObjDefs);
+	logger.info("Done (loaded " + gameObjDefs.length + " game object definitions).");
 
 	logger.info("Loading skill level up definitions...");
 	LevelUpDefinition.init();
@@ -160,6 +182,23 @@ public final class World {
     }
 
     /**
+     * Registers the specified game object.
+     *
+     * @param object The object.
+     * @return {@code true} if the game object registered successfully,
+     *         otherwise {@code false}.
+     */
+    public boolean register(GameObject object) {
+	boolean success = objectRepository.add(object);
+	if (success) {
+	    logger.info("Registered game object: " + object + " [online=" + objectRepository.size() + "]");
+	} else {
+	    logger.warning("Failed to register game object, repository capacity reached: [online=" + objectRepository.size() + "]");
+	}
+	return success;
+    }
+
+    /**
      * Checks if the specified player is online.
      *
      * @param name The players name, as a long
@@ -197,6 +236,19 @@ public final class World {
 	    logger.info("Unregistered mob: " + mob + " [online=" + mobRepository.size() + "]");
 	} else {
 	    logger.warning("Could not find mob " + mob + " to unregister!");
+	}
+    }
+
+    /**
+     * Unregisters the specified {@link GameObject}.
+     *
+     * @param object The object.
+     */
+    public void unregister(GameObject object) {
+	if (objectRepository.remove(object)) {
+	    logger.info("Unregistered object: " + object + " [online=" + objectRepository.size() + "]");
+	} else {
+	    logger.warning("Could not find object " + object + " to unregister!");
 	}
     }
 
