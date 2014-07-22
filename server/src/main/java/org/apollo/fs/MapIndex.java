@@ -30,6 +30,14 @@ public final class MapIndex {
 	return entries.get(hash(regionX, regionY));
     }
 
+    public MapEntry entryFor(int hash) {
+	return entries.get(hash);
+    }
+
+    public Map<Integer, MapEntry> getEntries() {
+	return entries;
+    }
+
     private static int hash(int regionX, int regionY) {
 	return regionX << 8 | regionY;
     }

@@ -80,6 +80,11 @@ final class Server {
     private final ServerBootstrap jagGrabBootstrap;
 
     /**
+     * The {@link FileSystem} for building the servers file system.
+     */
+    private final FileSystem fileSystem;
+
+    /**
      * The {@link ServiceManager} for initiating services.
      */
     private final ServiceManager serviceManager;
@@ -115,11 +120,6 @@ final class Server {
     private final MessageTranslator messageTranslator;
 
     /**
-     * The {@link FileSystem} for building the servers file system.
-     */
-    private final FileSystem fileSystem;
-
-    /**
      * Creates the Apollo server.
      *
      * @throws IOException If some I/O error occurs.
@@ -131,6 +131,7 @@ final class Server {
 	serviceBootstrap = new ServerBootstrap();
 	httpBootstrap = new ServerBootstrap();
 	jagGrabBootstrap = new ServerBootstrap();
+	fileSystem = FileSystem.create("data/fs");
 	serviceManager = new ServiceManager();
 	world = new World();
 	playerSerializer = new PlayerSerializerWorker(new JdbcPlayerSerializer("jdbc:mysql://127.0.0.1/game_server", "root", ""));
@@ -138,7 +139,6 @@ final class Server {
 	pluginService = new PluginService(world);
 	updateService = new UpdateService();
 	messageTranslator = new MessageTranslator(world);
-	fileSystem = FileSystem.create("data/fs/");
     }
 
     /**

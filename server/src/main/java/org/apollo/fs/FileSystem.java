@@ -43,8 +43,8 @@ public final class FileSystem {
     }
 
     private void init() throws IOException {
-	Archive versionList = getArchive(MANIFEST_ARCHIVE);
-	manifest.unpack(versionList);
+	Archive archive = getArchive(MANIFEST_ARCHIVE);
+	manifest.unpack(archive);
     }
 
     public void configureCaching(int id, int maximumSize) {
@@ -149,6 +149,10 @@ public final class FileSystem {
 	buffer.flip();
 
 	return archiveHashes = buffer.array();
+    }
+
+    public Manifest getManifest() {
+	return manifest;
     }
 
 }
