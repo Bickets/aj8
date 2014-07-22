@@ -29,7 +29,51 @@ public final class Interfaces {
      * @author Ryley Kimmel <ryley.kimmel@live.com>
      */
     public enum InterfaceOption {
-	OPTION_ONE, OPTION_TWO, OPTION_THREE, OPTION_FOUR, OPTION_FIVE;
+	/**
+	 * The first drop down menu option.
+	 */
+	OPTION_ONE(0),
+
+	/**
+	 * The second drop down menu option.
+	 */
+	OPTION_TWO(1),
+
+	/**
+	 * The third drop down menu option.
+	 */
+	OPTION_THREE(2),
+
+	/**
+	 * The fourth drop down menu option.
+	 */
+	OPTION_FOUR(3),
+
+	/**
+	 * The fifth drop down menu option.
+	 */
+	OPTION_FIVE(4);
+
+	/**
+	 * Represents the id of this option.
+	 */
+	private final int id;
+
+	/**
+	 * Constructs a new {@link InterfaceOption} with the specified id.
+	 * 
+	 * @param id The id of this option.
+	 */
+	private InterfaceOption(int id) {
+	    this.id = id;
+	}
+
+	/**
+	 * Returns the id of this option.
+	 */
+	public final int getId() {
+	    return id;
+	}
 
 	/**
 	 * Converts an option to an amount.
