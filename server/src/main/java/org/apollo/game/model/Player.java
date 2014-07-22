@@ -317,23 +317,30 @@ public final class Player extends GameCharacter {
 
     @Override
     public void send(Message message) {
+	/*
+	 * If this player is not active add messages to a queue to be dispatched
+	 * later.
+	 */
 	if (!isActive()) {
 	    queuedMessages.add(message);
 	    return;
 	}
 
+	/* If the queued messages are not empty.. */
 	if (!queuedMessages.isEmpty()) {
-	    for (Message evt : queuedMessages) {
-		session.dispatchMessage(evt);
+	    /* Loop through them, removing the head each iteration. */
+	    for (Message msg; (msg = queuedMessages.poll()) != null;) {
+		/* Dispatch the message. */
+		session.dispatchMessage(msg);
 	    }
-	    queuedMessages.clear();
 	}
 
+	/* Dispatch the initial message normally */
 	session.dispatchMessage(message);
     }
 
     /**
-     * Initialises this player.
+     * Initializes this player.
      */
     private void init() {
 	initInventories();
@@ -341,7 +348,7 @@ public final class Player extends GameCharacter {
     }
 
     /**
-     * Initialises the players skills.
+     * Initializes the players skills.
      */
     private void initSkills() {
 	SkillSet skills = getSkillSet();
@@ -354,7 +361,7 @@ public final class Player extends GameCharacter {
     }
 
     /**
-     * Initialises the players inventories.
+     * Initializes the players inventories.
      */
     private void initInventories() {
 	Inventory inventory = getInventory();
@@ -539,7 +546,7 @@ public final class Player extends GameCharacter {
     }
 
     @Override
-    public EntityType getType() {
+    public EntityType type() {
 	return EntityType.PLAYER;
     }
 

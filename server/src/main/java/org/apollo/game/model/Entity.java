@@ -22,6 +22,20 @@ public abstract class Entity {
     private int index = -1;
 
     /**
+     * The current position of this entity.
+     */
+    private Position position;
+
+    /**
+     * Creates a new entity with the specified initial position.
+     *
+     * @param position The initial position of this entity.
+     */
+    public Entity(Position position) {
+	this.setPosition(position);
+    }
+
+    /**
      * Checks if this entity is active.
      *
      * @return {@code true} if so, {@code false} if not.
@@ -65,6 +79,24 @@ public abstract class Entity {
     /**
      * Returns the type of this entity.
      */
-    public abstract EntityType getType();
+    public abstract EntityType type();
+
+    /**
+     * Gets the position of this entity.
+     *
+     * @return The position of this entity.
+     */
+    public Position getPosition() {
+	return position;
+    }
+
+    /**
+     * Sets the position of this entity.
+     *
+     * @param position The position of this entity.
+     */
+    public void setPosition(Position position) {
+	this.position = position;
+    }
 
 }

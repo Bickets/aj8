@@ -50,11 +50,6 @@ public abstract class GameCharacter extends Entity {
     private Direction secondDirection = Direction.NONE;
 
     /**
-     * The current position of this character.
-     */
-    private Position position;
-
-    /**
      * A set of local players.
      */
     private final Set<Player> localPlayers = new LinkedHashSet<>();
@@ -115,7 +110,7 @@ public abstract class GameCharacter extends Entity {
      * @param position The initial position of this character.
      */
     public GameCharacter(Position position) {
-	this.position = position;
+	super(position);
 	init();
     }
 
@@ -263,24 +258,6 @@ public abstract class GameCharacter extends Entity {
     }
 
     /**
-     * Gets the position of this character.
-     *
-     * @return The position of this character.
-     */
-    public Position getPosition() {
-	return position;
-    }
-
-    /**
-     * Sets the position of this character.
-     *
-     * @param position The position of this character.
-     */
-    public void setPosition(Position position) {
-	this.position = position;
-    }
-
-    /**
      * Checks if this player has ever known a region.
      *
      * @return {@code true} if so, {@code false} if not.
@@ -361,7 +338,7 @@ public abstract class GameCharacter extends Entity {
      */
     public void teleport(Position position) {
 	setTeleporting(true);
-	this.position = position;
+	setPosition(position);
 
 	walkingQueue.clear();
 	stopAction();

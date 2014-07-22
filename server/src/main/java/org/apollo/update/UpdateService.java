@@ -63,11 +63,10 @@ public final class UpdateService implements Service {
     @Override
     public void start() {
 	try {
-	    String base = "./data/fs/";
 	    for (int i = 0; i < THREADS_PER_REQUEST_TYPE; i++) {
-		workers.add(new JagGrabRequestWorker(dispatcher, FileSystem.create(base)));
-		workers.add(new OnDemandRequestWorker(dispatcher, FileSystem.create(base)));
-		workers.add(new HttpRequestWorker(dispatcher, FileSystem.create(base)));
+		workers.add(new JagGrabRequestWorker(dispatcher, FileSystem.create("data/fs")));
+		workers.add(new OnDemandRequestWorker(dispatcher, FileSystem.create("data/fs")));
+		workers.add(new HttpRequestWorker(dispatcher, FileSystem.create("data/fs")));
 	    }
 
 	    for (RequestWorker<?, ?> worker : workers) {

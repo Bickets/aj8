@@ -77,7 +77,7 @@ public final class Mob extends GameCharacter {
     }
 
     @Override
-    public EntityType getType() {
+    public EntityType type() {
 	return EntityType.MOB;
     }
 

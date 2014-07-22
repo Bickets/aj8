@@ -29,7 +29,7 @@ public final class SkillNormalizationTask extends Task {
 
     @Override
     public void execute() {
-	if (!gameCharacter.isActive() && gameCharacter.getType() != EntityType.MOB) {
+	if (!gameCharacter.isActive() && gameCharacter.type() != EntityType.MOB) {
 	    stop();
 	} else {
 	    gameCharacter.getSkillSet().normalize();
