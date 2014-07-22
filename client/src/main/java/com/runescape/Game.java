@@ -10055,7 +10055,7 @@ public class Game extends GameShell {
 		    }
 		    /* Spawns an object to the map */
 		    if (opcode == 151) {
-			int positionOffset = buffer.getUnsignedByteA(); // TODO: Is this correct?
+			int positionOffset = buffer.getUnsignedByteA();
 			int x = playerPositionX + (positionOffset >> 4 & 0x7);
 			int y = playerPositionY + (positionOffset & 0x7);
 			int objectId = buffer.getUnsignedShort();
@@ -10552,7 +10552,7 @@ public class Game extends GameShell {
 		    return true;
 		}
 
-		/* Resends the received region */
+		/* Clears an 8x8 sector from the received player position */
 		if (opcode == 64) {
 		    playerPositionX = inBuffer.getUnsignedByteC();
 		    playerPositionY = inBuffer.getUnsignedByteS();
@@ -10962,8 +10962,8 @@ public class Game extends GameShell {
 		    playerPositionY = inBuffer.getUnsignedByte();
 		    playerPositionX = inBuffer.getUnsignedByteC();
 		    while (inBuffer.offset < packetSize) {
-			int i_1098_ = inBuffer.getUnsignedByte();
-			method137(anInt1144, inBuffer, i_1098_);
+			int opcode = inBuffer.getUnsignedByte();
+			method137(anInt1144, inBuffer, opcode);
 		    }
 		    opcode = -1;
 		    return true;
