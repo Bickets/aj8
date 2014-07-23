@@ -4,9 +4,13 @@ import org.apollo.game.command.CommandEvent
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.model.Position
+import org.apollo.game.model.obj.GameObject
+import org.apollo.game.msg.impl.GameObjectMessage
+import org.apollo.game.msg.impl.PositionMessage
+import common.Plugin
 
 @SubscribesTo(CommandEvent)
-class CommandPlugin implements EventSubscriber<CommandEvent> {
+class CommandPlugin extends Plugin implements EventSubscriber<CommandEvent> {
 
 	override subscribe(CommandEvent event) {
 		val args = event.arguments
@@ -19,23 +23,16 @@ class CommandPlugin implements EventSubscriber<CommandEvent> {
 					return
 				}
 
-				val x = args.get(0).asInt
-				val y = args.get(1).asInt
-				val z = if(args.length == 3) args.get(2).asInt else 0
+				val x = toInt(args.get(0))
+				val y = toInt(args.get(1))
+				val z = if(args.length == 3) toInt(args.get(2)) else 0
 				plr.teleport(new Position(x, y, z))
 			}
+			case "obj": {
+				plr.send(new PositionMessage(plr.position))
+				plr.send(new GameObjectMessage(new GameObject(2213, plr.position), 0))
+			}
 		}
-	}
-
-	def isNumeric(String str) {
-		str.matches("-?\\d+")
-	}
-
-	def asInt(String str) {
-		if (str.isNumeric)
-			Integer.valueOf(str)
-		else
-			throw new NumberFormatException(str + " is not a valid numeric string!")
 	}
 
 }

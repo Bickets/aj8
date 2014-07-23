@@ -34,7 +34,7 @@ public final class PluginService implements Service {
     @Override
     public void start() {
 	try {
-	    Class<?> clazz = Class.forName("Bootstrap");
+	    Class<?> clazz = Class.forName("common.Bootstrap");
 	    Constructor<?> bootstrap = clazz.getConstructor(World.class);
 	    bootstrap.newInstance(world);
 	} catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
