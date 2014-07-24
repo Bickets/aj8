@@ -61,7 +61,7 @@ public enum ObjectOrientation {
 		return orientation;
 	    }
 	}
-	throw new IllegalArgumentException("no orientation foiund for id: " + id);
+	throw new IllegalArgumentException("no orientation found for id: " + id);
     }
 
 }
