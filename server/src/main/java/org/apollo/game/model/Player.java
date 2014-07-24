@@ -101,7 +101,7 @@ public final class Player extends GameCharacter {
     /**
      * This player's privilege level.
      */
-    private PrivilegeLevel privilegeLevel = PrivilegeLevel.ADMINISTRATOR;
+    private PrivilegeLevel privilegeLevel = PrivilegeLevel.STANDARD;
 
     /**
      * The membership flag.
