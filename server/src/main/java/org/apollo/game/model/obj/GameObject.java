@@ -8,7 +8,6 @@ import org.apollo.game.model.def.GameObjectDefinition;
  * Represents a game object within the world.
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
- * @author Major, structure idea from his apollo
  */
 public final class GameObject extends Entity {
 
@@ -18,9 +17,14 @@ public final class GameObject extends Entity {
     private final int id;
 
     /**
-     * A hash of all attributes for this game object.
+     * Represents the type of this object.
      */
-    private final int hashCode;
+    private final ObjectType type;
+
+    /**
+     * Represents the orientation of this object.
+     */
+    private final ObjectOrientation orientation;
 
     @Override
     public EntityType type() {
@@ -63,7 +67,8 @@ public final class GameObject extends Entity {
     public GameObject(int id, Position position, ObjectType type, ObjectOrientation orientation) {
 	super(position);
 	this.id = id;
-	hashCode = (type.getId() << 2) + (orientation.getId() & 0x3F);
+	this.type = type;
+	this.orientation = orientation;
     }
 
     /**
@@ -74,29 +79,41 @@ public final class GameObject extends Entity {
     }
 
     /**
-     * Decodes and returns the type of this object from its hash code.
+     * Returns the type of this object.
      */
     public ObjectType getType() {
-	return ObjectType.forId(hashCode >> 2 & 0x3F);
+	return type;
     }
 
     /**
-     * Decodes and returns the orientation of this object from its hash code.
+     * Returns the orientation of this object.
      */
     public ObjectOrientation getOrientation() {
-	return ObjectOrientation.forId(hashCode & 0x3F);
+	return orientation;
     }
 
     /**
      * Returns the definition of this object.
      */
     public GameObjectDefinition getDefinition() {
-	return GameObjectDefinition.forId(getId());
+	return GameObjectDefinition.forId(id);
+    }
+
+    /**
+     * Notifies the positions that this object exists if it was added after
+     * initialization, this method is required in order to make custom object
+     * function if they are placed elsewhere on the map.
+     * 
+     * @param position The position of this object.
+     * @see {@link GameObjectDefinition#notifyExist(Position)}
+     */
+    public void notifyExists() {
+	getDefinition().notifyExists(getPosition());
     }
 
     @Override
     public int hashCode() {
-	return hashCode;
+	return (type.getId() << 2) | orientation.getId() & 0x3F;
     }
 
 }
