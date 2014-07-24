@@ -21,15 +21,49 @@ import org.apollo.io.player.PlayerSerializerResponse;
 import org.apollo.net.codec.login.LoginConstants;
 import org.apollo.security.PlayerCredentials;
 
+/**
+ * A {@link PlayerSerializer} implementation which supports the JDBC MySQL
+ * protocol.
+ * 
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
+ */
 public final class JdbcPlayerSerializer implements Closeable, PlayerSerializer {
 
+    /**
+     * The logger
+     */
     private static final Logger LOGGER = Logger.getGlobal();
 
+    /**
+     * The database connection.
+     */
     private final Connection connection;
+
+    /**
+     * A prepared statement which selects the necessary information from the
+     * players table required in order to query the {@link #tables}.
+     */
     private final PreparedStatement loginStatement;
+
+    /**
+     * The sanction provider which checks a players sanctions.
+     */
     private final PlayerSanctionProvider sanctionProvider;
+
+    /**
+     * An array of {@link Table}s used to load and save player information.
+     */
     private final Table[] tables;
 
+    /**
+     * Constructs a new {@link JdbcPlayerSerializer} with the specified url,
+     * username and password used for connecting to the database.
+     * 
+     * @param url The database url.
+     * @param username The database username.
+     * @param password The database password.
+     * @throws SQLException If some database access error occurs.
+     */
     public JdbcPlayerSerializer(String url, String username, String password) throws SQLException {
 	connection = DriverManager.getConnection(url, username, password);
 	connection.setAutoCommit(false);

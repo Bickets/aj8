@@ -11,12 +11,31 @@ import org.apollo.game.model.Player;
 import org.apollo.game.model.Player.PrivilegeLevel;
 import org.apollo.game.model.Position;
 
+/**
+ * A {@link Table} which serializes player information.
+ * 
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
+ */
 public final class PlayersTable extends Table {
 
+    /**
+     * A prepared statement which selects player information from the database.
+     */
     private final PreparedStatement loadStatement;
+
+    /**
+     * A prepared statement which inserts player information to the database.
+     */
     private final PreparedStatement saveStatement;
 
-    public PlayersTable(Connection connection) throws SQLException {
+    /**
+     * Constructs a new {@link PlayersTable} with the specified database
+     * connection.
+     * 
+     * @param connection The database connection.
+     * @throws SQLException If some database access error occurs.
+     */
+    protected PlayersTable(Connection connection) throws SQLException {
 	loadStatement = connection.prepareStatement("SELECT * FROM players WHERE id = ?");
 	saveStatement = connection.prepareStatement("REPLACE INTO players (id, username, password, rights, members, x, y, height) VALUES (?, ?, ?, ?, ?, ?, ?, ?);");
     }

@@ -19,12 +19,12 @@ public final class SettingsTable extends Table {
      * A prepared statement which selects the players settings from the
      * database.
      */
-    private final PreparedStatement settingsLoadStatement;
+    private final PreparedStatement loadStatement;
 
     /**
      * A prepared statement which inserts the players settings to the database.
      */
-    private final PreparedStatement settingsSaveStatement;
+    private final PreparedStatement saveStatement;
 
     /**
      * Constructs a new {@link SettingsTable} with the specified database
@@ -34,15 +34,15 @@ public final class SettingsTable extends Table {
      * @throws SQLException If some database access error occurs.
      */
     protected SettingsTable(Connection connection) throws SQLException {
-	settingsLoadStatement = connection.prepareStatement("SELECT * FROM settings WHERE player_id = ?;");
-	settingsSaveStatement = connection.prepareStatement("INSERT INTO settings (player_id, setting, value) VALUES (?, ?) ON DUPLICATE KEY UPDATE valu = VALUES(value);");
+	loadStatement = connection.prepareStatement("SELECT * FROM settings WHERE player_id = ?;");
+	saveStatement = connection.prepareStatement("INSERT INTO settings (player_id, setting, value) VALUES (?, ?) ON DUPLICATE KEY UPDATE valu = VALUES(value);");
     }
 
     @Override
     public void load(Player player) throws SQLException, IOException {
-	settingsLoadStatement.setInt(1, player.getDatabaseId());
+	loadStatement.setInt(1, player.getDatabaseId());
 
-	try (ResultSet set = settingsLoadStatement.executeQuery()) {
+	try (ResultSet set = loadStatement.executeQuery()) {
 	    while (set.next()) {
 		String setting = set.getString("setting");
 		boolean value = set.getBoolean("value");
@@ -58,13 +58,13 @@ public final class SettingsTable extends Table {
 
     @Override
     public void save(Player player) throws SQLException, IOException {
-	settingsSaveStatement.setInt(1, player.getDatabaseId());
+	saveStatement.setInt(1, player.getDatabaseId());
 
-	settingsSaveStatement.setString(2, "designed_character");
-	settingsSaveStatement.setBoolean(3, player.hasDesignedCharacter());
-	settingsSaveStatement.addBatch();
+	saveStatement.setString(2, "designed_character");
+	saveStatement.setBoolean(3, player.hasDesignedCharacter());
+	saveStatement.addBatch();
 
-	settingsSaveStatement.executeBatch();
+	saveStatement.executeBatch();
     }
 
 }

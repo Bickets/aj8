@@ -10,11 +10,32 @@ import org.apollo.io.player.PlayerSanctionProvider;
 import org.apollo.io.player.PlayerSanctionResponse;
 import org.apollo.security.PlayerCredentials;
 
+/**
+ * A {@link PlayerSanctionProvider} implementation which supports the JDBC MySQL
+ * protocol.
+ * 
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
+ */
 public final class JdbcSanctionProvider implements PlayerSanctionProvider {
 
+    /**
+     * A prepared statement which selects sanction information from the
+     * database.
+     */
     private final PreparedStatement sanctionStatement;
+
+    /**
+     * A prepared statement which closes a sanction if it has expired.
+     */
     private final PreparedStatement closeStatement;
 
+    /**
+     * Constructs a new {@link JdbcSanctionProvider} with the specified database
+     * connection.
+     * 
+     * @param connection The database connection.
+     * @throws SQLException If some database access error occurs.
+     */
     protected JdbcSanctionProvider(Connection connection) throws SQLException {
 	sanctionStatement = connection.prepareStatement("SELECT UNIX_TIMESTAMP() as now, id, type, UNIX_TIMESTAMP(expire) as expire FROM sanctions WHERE ((username = ?) OR (address IS NOT NULL AND address = ?)) AND active = 0 ORDER BY id DESC;");
 	closeStatement = connection.prepareStatement("UPDATE sanctions SET active = 1 WHERE id = ?;");
@@ -36,7 +57,7 @@ public final class JdbcSanctionProvider implements PlayerSanctionProvider {
 
 		if (expire != 0 && now >= expire) {
 		    closeStatement.setInt(1, id);
-		    closeStatement.executeUpdate();
+		    closeStatement.execute();
 		    continue;
 		}
 

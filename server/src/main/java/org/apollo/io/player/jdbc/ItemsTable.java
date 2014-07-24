@@ -11,18 +11,49 @@ import org.apollo.game.model.Inventory;
 import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
 
+/**
+ * A {@link Table} which serializes player inventories.
+ * 
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
+ */
 public abstract class ItemsTable extends Table {
 
+    /**
+     * A prepared statement which selects the players inventory from the
+     * database.
+     */
     private final PreparedStatement loadStatement;
+
+    /**
+     * A prepared statement which inserts the players inventory to the database.
+     */
     private final PreparedStatement saveStatement;
+
+    /**
+     * Represents the type of inventory as a {@code String}.
+     */
     private final String type;
 
-    public ItemsTable(Connection connection, String type) throws SQLException {
+    /**
+     * Constructs a new {@link ItemTable} with the specified database connection
+     * and inventory type.
+     * 
+     * @param connection The database connection.
+     * @param type The type of inventory.
+     * @throws SQLException If some database access error occurs.
+     */
+    protected ItemsTable(Connection connection, String type) throws SQLException {
 	loadStatement = connection.prepareStatement("SELECT * FROM items WHERE player_id = ? AND type = ?;");
 	saveStatement = connection.prepareStatement("INSERT INTO items (player_id, type, slot, item, amount) VALUES (?, ?, ?, ?, ?) ON DUPLICATE KEY UPDATE item = VALUES(item), amount = VALUES(amount);");
 	this.type = type;
     }
 
+    /**
+     * Returns an the inventory instance for a specified player.
+     * 
+     * @param player The player who owns the inventory.
+     * @return The inventory.
+     */
     public abstract Inventory getInventory(Player player);
 
     @Override

@@ -10,12 +10,31 @@ import org.apollo.game.model.Player;
 import org.apollo.game.model.Skill;
 import org.apollo.game.model.SkillSet;
 
+/**
+ * A {@link Table} which serializes players skills.
+ * 
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
+ */
 public final class SkillsTable extends Table {
 
+    /**
+     * A prepared statement which selects the players skills from the database.
+     */
     private final PreparedStatement loadStatement;
+
+    /**
+     * A prepared statement which inserts the players skills to the database.
+     */
     private final PreparedStatement saveStatement;
 
-    public SkillsTable(Connection connection) throws SQLException {
+    /**
+     * Constructs a new {@link SkillsTable} with the specified database
+     * connection.
+     * 
+     * @param connection The database connection.
+     * @throws SQLException If some database access error occurs.
+     */
+    protected SkillsTable(Connection connection) throws SQLException {
 	loadStatement = connection.prepareStatement("SELECT * FROM skills WHERE player_id = ?;");
 	saveStatement = connection.prepareStatement("INSERT INTO skills (player_id, current_level, experience) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE current_level = VALUES(current_level), experience = VALUES(experience);");
     }

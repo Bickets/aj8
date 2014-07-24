@@ -10,17 +10,55 @@ import org.apollo.game.model.Appearance;
 import org.apollo.game.model.Gender;
 import org.apollo.game.model.Player;
 
+/**
+ * A {@link Table} which serializes player appearance.
+ * 
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
+ */
 public final class AppearanceTable extends Table {
 
+    /**
+     * A prepared statement which selects the players gender from the database.
+     */
     private final PreparedStatement genderLoadStatement;
+
+    /**
+     * A prepared statement which selects the players appearance styles from the
+     * database.
+     */
     private final PreparedStatement styleLoadStatement;
+
+    /**
+     * A prepared statement which selects the players appearance colors from the
+     * database.
+     */
     private final PreparedStatement colorLoadStatement;
 
+    /**
+     * A prepared statement which inserts the players gender into the database.
+     */
     private final PreparedStatement genderSaveStatement;
+
+    /**
+     * A prepared statement which inserts the players appearance styles into the
+     * database.
+     */
     private final PreparedStatement styleSaveStatement;
+
+    /**
+     * A prepared statement which inserts the players appearance colors into the
+     * database.
+     */
     private final PreparedStatement colorSaveStatement;
 
-    public AppearanceTable(Connection connection) throws SQLException {
+    /**
+     * Constructs a new {@link AppearanceTable} with the specified database
+     * connection.
+     * 
+     * @param connection The database connection.
+     * @throws SQLException If some database access error occurs.
+     */
+    protected AppearanceTable(Connection connection) throws SQLException {
 	genderLoadStatement = connection.prepareStatement("SELECT * FROM gender WHERE player_id = ?;");
 	styleLoadStatement = connection.prepareStatement("SELECT * FROM style WHERE player_id = ?;");
 	colorLoadStatement = connection.prepareStatement("SELECT * FROM color WHERE player_id = ?;");
