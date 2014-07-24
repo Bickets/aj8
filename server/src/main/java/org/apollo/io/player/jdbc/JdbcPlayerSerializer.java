@@ -37,6 +37,7 @@ public final class JdbcPlayerSerializer implements Closeable, PlayerSerializer {
 	loginStatement = connection.prepareStatement("SELECT id, password FROM players WHERE username = ?;");
 	tables = new Table[] { new PlayersTable(connection),
 		new SkillsTable(connection), new AppearanceTable(connection),
+		new SettingsTable(connection),
 		new ItemsTable(connection, "inventory") {
 		    @Override
 		    public Inventory getInventory(Player player) {

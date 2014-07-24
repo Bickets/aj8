@@ -38,6 +38,15 @@ CREATE TABLE `players` (
   UNIQUE KEY `player_username` (`id`, `username`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
+CREATE TABLE `settings` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `player_id` int(11) NOT NULL,
+  `setting` enum('designed_character') NOT NULL,
+  `value` tinyint(4) NOT NULL,
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `player_setting` (`player_id`,`setting`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
 CREATE TABLE `sanctions` (
   `id` int(10) NOT NULL AUTO_INCREMENT,
   `username` varchar(12) NOT NULL,
