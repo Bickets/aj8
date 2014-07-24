@@ -3,8 +3,6 @@ package org.apollo.io.player;
 import java.io.IOException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.apollo.fs.FileSystem;
 import org.apollo.game.model.Player;
@@ -13,6 +11,8 @@ import org.apollo.net.codec.login.LoginConstants;
 import org.apollo.net.codec.login.LoginRequest;
 import org.apollo.net.session.GameSession;
 import org.apollo.net.session.LoginSession;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
@@ -32,9 +32,9 @@ public final class PlayerSerializerWorker {
     private static final PlayerSerializer DEFAULT_SERIALIZER = new BinaryPlayerSerializer();
 
     /**
-     * An instance of {@link Logger} used to log information to the console.
+     * The logger used to print information and debug messages to the console.
      */
-    private static final Logger LOGGER = Logger.getLogger(PlayerSerializerWorker.class.getName());
+    private final Logger logger = LoggerFactory.getLogger(PlayerSerializerWorker.class);
 
     /**
      * The player serializer.
@@ -80,7 +80,7 @@ public final class PlayerSerializerWorker {
 		PlayerSerializerResponse response = serializer.loadPlayer(request.getCredentials());
 		session.handlePlayerLoaderResponse(request, response);
 	    } catch (Exception e) {
-		LOGGER.log(Level.SEVERE, "Unable to load players game.", e);
+		logger.error("Unable to load players game.", e);
 		session.handlePlayerLoaderResponse(request, new PlayerSerializerResponse(LoginConstants.STATUS_COULD_NOT_COMPLETE));
 	    }
 	});
@@ -97,7 +97,7 @@ public final class PlayerSerializerWorker {
 	    try {
 		serializer.savePlayer(player);
 	    } catch (Exception e) {
-		LOGGER.log(Level.SEVERE, "Unable to save players game.", e);
+		logger.error("Unable to save players game.", e);
 	    } finally {
 		session.handlePlayerSaverResponse();
 	    }

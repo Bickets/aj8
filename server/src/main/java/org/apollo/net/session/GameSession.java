@@ -7,7 +7,6 @@ import io.netty.channel.ChannelHandlerContext;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
-import java.util.logging.Logger;
 
 import org.apollo.game.GameConstants;
 import org.apollo.game.GameService;
@@ -15,6 +14,8 @@ import org.apollo.game.model.Player;
 import org.apollo.game.msg.Message;
 import org.apollo.game.msg.MessageTranslator;
 import org.apollo.game.msg.impl.LogoutMessage;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A game session.
@@ -24,9 +25,9 @@ import org.apollo.game.msg.impl.LogoutMessage;
 public final class GameSession extends Session {
 
     /**
-     * The logger for this class.
+     * The logger used to print information and debug messages to the console.
      */
-    private static final Logger logger = Logger.getLogger(GameSession.class.getName());
+    private final Logger logger = LoggerFactory.getLogger(GameSession.class);
 
     /**
      * The message translator.
@@ -67,7 +68,7 @@ public final class GameSession extends Session {
     public void messageReceived(Object msg) {
 	Message message = (Message) msg;
 	if (messageQueue.size() >= GameConstants.MESSAGES_PER_PULSE) {
-	    logger.warning("Too many messages in queue for game session, dropping...");
+	    logger.error("Too many messages in queue for game session, dropping...");
 	} else {
 	    messageQueue.add(message);
 	}

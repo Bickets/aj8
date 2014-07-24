@@ -10,7 +10,6 @@ import java.io.IOException;
 import java.net.InetSocketAddress;
 import java.net.SocketAddress;
 import java.sql.SQLException;
-import java.util.logging.Logger;
 
 import org.apollo.fs.FileSystem;
 import org.apollo.game.GameService;
@@ -27,6 +26,8 @@ import org.apollo.net.ServiceChannelHandler;
 import org.apollo.plugin.PluginService;
 import org.apollo.service.ServiceManager;
 import org.apollo.update.UpdateService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The core class of the Apollo server.
@@ -34,11 +35,11 @@ import org.apollo.update.UpdateService;
  * @author Graham
  */
 final class Server {
-
+    
     /**
-     * The logger for this class.
+     * The logger used to print information and debug messages to the console.
      */
-    private final Logger logger = Logger.getLogger(getClass().getName());
+    private final Logger logger = LoggerFactory.getLogger(Server.class);
 
     /**
      * The entry point of the Apollo server application.
@@ -179,13 +180,13 @@ final class Server {
      * @param jagGrabAddress The JAGGRAB address to bind to.
      */
     public void bind(SocketAddress serviceAddress, SocketAddress httpAddress, SocketAddress jagGrabAddress) {
-	logger.info("Binding service listener to address: " + serviceAddress + "...");
+	logger.info("Binding service listener to address: {}...", serviceAddress);
 	serviceBootstrap.bind(serviceAddress);
 
-	logger.info("Binding HTTP listener to address: " + httpAddress + "...");
+	logger.info("Binding HTTP listener to address: {}...", httpAddress);
 	httpBootstrap.bind(httpAddress);
 
-	logger.info("Binding JAGGRAB listener to address: " + jagGrabAddress + "...");
+	logger.info("Binding JAGGRAB listener to address: {}...", jagGrabAddress);
 	jagGrabBootstrap.bind(jagGrabAddress);
 
 	logger.info("Ready for connections.");

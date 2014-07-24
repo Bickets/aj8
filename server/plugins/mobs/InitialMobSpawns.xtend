@@ -8,17 +8,18 @@ import org.apollo.game.model.World
 
 import static org.apollo.game.model.Direction.EAST
 import org.apollo.game.model.Direction
+import org.slf4j.LoggerFactory
 
 @Data class InitialMobSpawns {
 	val World world
 	val mobs = new ArrayList<Mob>
-	val logger = Logger.getGlobal
+	val logger = LoggerFactory.getLogger(InitialMobSpawns)
 
 	def init() {
 		addAll
 
 		mobs.map[world.register(it)]
-		logger.info('Loaded ' + mobs.size + ' mob spawns.')
+		logger.info('Loaded {} mob spawns.', mobs.size)
 	}
 
 	def addAll() {

@@ -4,7 +4,6 @@ import java.io.BufferedInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.util.logging.Logger;
 
 import org.apollo.fs.FileSystem;
 import org.apollo.fs.parser.GameObjectDefinitionParser;
@@ -25,6 +24,8 @@ import org.apollo.game.model.def.StaticObjectDefinition;
 import org.apollo.game.model.obj.GameObject;
 import org.apollo.io.EquipmentDefinitionParser;
 import org.apollo.service.Service;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.google.common.collect.Multimap;
 
@@ -40,9 +41,9 @@ import com.google.common.collect.Multimap;
 public final class World {
 
     /**
-     * The logger for this class.
+     * The logger used to print information and debug messages to the console.
      */
-    private final Logger logger = Logger.getLogger(getClass().getName());
+    private final Logger logger = LoggerFactory.getLogger(World.class);
 
     /**
      * Represents the different status codes for registering a player.
@@ -105,7 +106,7 @@ public final class World {
 	logger.info("Loading item definitions...");
 	ItemDefinition[] itemDefs = ItemDefinitionParser.parse(fileSystem);
 	ItemDefinition.init(itemDefs);
-	logger.info("Done (loaded " + itemDefs.length + " item definitions).");
+	logger.info("Done (loaded {} item definitions).", itemDefs.length);
 
 	logger.info("Loading equipment definitions...");
 	int nonNull = 0;
@@ -119,28 +120,66 @@ public final class World {
 	    }
 	    EquipmentDefinition.init(equipDefs);
 	}
-	logger.info("Done (loaded " + nonNull + " equipment definitions).");
+	logger.info("Done (loaded {} equipment definitions).", nonNull);
 
 	logger.info("Loading mob definitions...");
 	MobDefinition[] mobDefs = MobDefinitionParser.parse(fileSystem);
 	MobDefinition.init(mobDefs);
-	logger.info("Done (loaded " + mobDefs.length + " mob definitions).");
+	logger.info("Done (loaded {} mob definitions).", mobDefs.length);
 
 	logger.info("Loading static object definitions...");
 	Multimap<Integer, StaticObjectDefinition> objDefs = StaticObjectDefinitionParser.parse(fileSystem);
 	StaticObjectDefinition.init(objDefs);
-	logger.info("Done (loaded " + objDefs.size() + " static object definitions).");
+	logger.info("Done (loaded {} static object definitions).", objDefs.size());
 
 	logger.info("Loading game object definitions...");
 	GameObjectDefinition[] gameObjDefs = GameObjectDefinitionParser.parse(fileSystem);
 	GameObjectDefinition.init(gameObjDefs);
-	logger.info("Done (loaded " + gameObjDefs.length + " game object definitions).");
+	logger.info("Done (loaded {} game object definitions).", gameObjDefs.length);
 
 	logger.info("Loading skill level up definitions...");
 	LevelUpDefinition.init();
 
 	logger.info("Loading game packet definitions...");
 	GamePacketDefinition.init();
+    }
+
+    /**
+     * Attempts to register some entity to a specified entity repository.
+     * 
+     * @param entity The entity to register.
+     * @param repo The entity repository to register the entity to.
+     * @return A flag denoting whether or not the entity was successfully added
+     *         to the repository.
+     */
+    private <T extends Entity> boolean register(T entity, EntityRepository<T> repo) {
+	boolean success = repo.add(entity);
+	if (success) {
+	    logger.info("Registered entity: {} [online={}]", entity, repo.size());
+	} else {
+	    logger.error("Failed to register entity (server full): {} [online={}]", entity, repo.size());
+	}
+
+	return success;
+    }
+
+    /**
+     * Attempts to unregister some entity from a specified entity repository.
+     * 
+     * @param entity The entity to unregister.
+     * @param repo The entity repository to unregister the entity to.
+     * @return A flag denoting whether or not the entity was successfully
+     *         unregistered to the repository.
+     */
+    private <T extends Entity> boolean unregister(T entity, EntityRepository<T> repo) {
+	boolean success = repo.remove(entity);
+	if (success) {
+	    logger.info("Unregistered entity: {} [online={}]", entity, repo.size());
+	} else {
+	    logger.error("Could not find entity to unregister: {}", entity);
+	}
+
+	return success;
     }
 
     /**
@@ -154,14 +193,9 @@ public final class World {
 	    return RegistrationStatus.ALREADY_ONLINE;
 	}
 
-	boolean success = playerRepository.add(player);
-	if (success) {
-	    logger.info("Registered player: " + player + " [online=" + playerRepository.size() + "]");
-	    return RegistrationStatus.OK;
-	} else {
-	    logger.warning("Failed to register player (server full): " + player + " [online=" + playerRepository.size() + "]");
-	    return RegistrationStatus.WORLD_FULL;
-	}
+	boolean success = register(player, playerRepository);
+
+	return success ? RegistrationStatus.OK : RegistrationStatus.WORLD_FULL;
     }
 
     /**
@@ -172,13 +206,7 @@ public final class World {
      *         {@code false}.
      */
     public boolean register(Mob mob) {
-	boolean success = mobRepository.add(mob);
-	if (success) {
-	    logger.info("Registered mob: " + mob + " [online=" + mobRepository.size() + "]");
-	} else {
-	    logger.warning("Failed to register mob, repository capacity reached: [online=" + mobRepository.size() + "]");
-	}
-	return success;
+	return register(mob, mobRepository);
     }
 
     /**
@@ -189,28 +217,7 @@ public final class World {
      *         otherwise {@code false}.
      */
     public boolean register(GameObject object) {
-	boolean success = objectRepository.add(object);
-	if (success) {
-	    logger.info("Registered game object: " + object + " [online=" + objectRepository.size() + "]");
-	} else {
-	    logger.warning("Failed to register game object, repository capacity reached: [online=" + objectRepository.size() + "]");
-	}
-	return success;
-    }
-
-    /**
-     * Checks if the specified player is online.
-     *
-     * @param name The players name, as a long
-     * @return {@code true} if so, {@code false} if not.
-     */
-    public boolean isPlayerOnline(long name) {
-	for (Player p : playerRepository) {
-	    if (p.getEncodedName() == name) {
-		return true;
-	    }
-	}
-	return false;
+	return register(object, objectRepository);
     }
 
     /**
@@ -219,11 +226,7 @@ public final class World {
      * @param player The player.
      */
     public void unregister(Player player) {
-	if (playerRepository.remove(player)) {
-	    logger.info("Unregistered player: " + player + " [online=" + playerRepository.size() + "]");
-	} else {
-	    logger.warning("Could not find player to unregister: " + player + "!");
-	}
+	unregister(player, playerRepository);
     }
 
     /**
@@ -232,11 +235,7 @@ public final class World {
      * @param mob The mob.
      */
     public void unregister(Mob mob) {
-	if (mobRepository.remove(mob)) {
-	    logger.info("Unregistered mob: " + mob + " [online=" + mobRepository.size() + "]");
-	} else {
-	    logger.warning("Could not find mob " + mob + " to unregister!");
-	}
+	unregister(mob, mobRepository);
     }
 
     /**
@@ -245,11 +244,7 @@ public final class World {
      * @param object The object.
      */
     public void unregister(GameObject object) {
-	if (objectRepository.remove(object)) {
-	    logger.info("Unregistered object: " + object + " [online=" + objectRepository.size() + "]");
-	} else {
-	    logger.warning("Could not find object " + object + " to unregister!");
-	}
+	unregister(object, objectRepository);
     }
 
     /**
@@ -277,6 +272,21 @@ public final class World {
      */
     public <E extends Event> void depriveSubscriber(EventSubscriber<E> subscriber) {
 	eventProvider.depriveSubscriber(subscriber);
+    }
+
+    /**
+     * Checks if the specified player is online.
+     *
+     * @param name The players name, as a long
+     * @return {@code true} if so, {@code false} if not.
+     */
+    public boolean isPlayerOnline(long name) {
+	for (Player p : playerRepository) {
+	    if (p.getEncodedName() == name) {
+		return true;
+	    }
+	}
+	return false;
     }
 
     /**

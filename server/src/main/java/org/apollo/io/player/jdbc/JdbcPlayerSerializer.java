@@ -7,8 +7,6 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 import org.apollo.game.crypto.BCrypt;
 import org.apollo.game.model.Inventory;
@@ -20,6 +18,8 @@ import org.apollo.io.player.PlayerSerializer;
 import org.apollo.io.player.PlayerSerializerResponse;
 import org.apollo.net.codec.login.LoginConstants;
 import org.apollo.security.PlayerCredentials;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A {@link PlayerSerializer} implementation which supports the JDBC MySQL
@@ -30,9 +30,9 @@ import org.apollo.security.PlayerCredentials;
 public final class JdbcPlayerSerializer implements Closeable, PlayerSerializer {
 
     /**
-     * The logger
+     * The logger used to print information and debug messages to the console.
      */
-    private static final Logger LOGGER = Logger.getGlobal();
+    private final Logger logger = LoggerFactory.getLogger(JdbcPlayerSerializer.class);
 
     /**
      * The database connection.
@@ -132,8 +132,8 @@ public final class JdbcPlayerSerializer implements Closeable, PlayerSerializer {
 		return new PlayerSerializerResponse(LoginConstants.STATUS_OK, player);
 
 	    }
-	} catch (SQLException | IOException ex) {
-	    LOGGER.log(Level.SEVERE, "Loading player " + credentials.getUsername() + " failed.", ex);
+	} catch (SQLException | IOException e) {
+	    logger.error("Loading player {} failed.", credentials.getUsername(), e);
 	    return new PlayerSerializerResponse(LoginConstants.STATUS_COULD_NOT_COMPLETE);
 	}
     }
@@ -146,9 +146,9 @@ public final class JdbcPlayerSerializer implements Closeable, PlayerSerializer {
 	    }
 
 	    connection.commit();
-	} catch (SQLException | IOException ex) {
+	} catch (SQLException | IOException e) {
 	    connection.rollback();
-	    LOGGER.log(Level.SEVERE, "Saving player " + player.getName() + " failed.", ex);
+	    logger.error("Saving player {} failed.", player.getName(), e);
 	}
     }
 
@@ -156,8 +156,8 @@ public final class JdbcPlayerSerializer implements Closeable, PlayerSerializer {
     public void close() throws IOException {
 	try {
 	    connection.close();
-	} catch (SQLException ex) {
-	    throw new IOException(ex);
+	} catch (SQLException e) {
+	    throw new IOException(e);
 	}
     }
 

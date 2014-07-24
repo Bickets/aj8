@@ -2,7 +2,9 @@ package org.apollo.service;
 
 import java.util.HashSet;
 import java.util.Set;
-import java.util.logging.Logger;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A class which manages {@link Service}s.
@@ -12,9 +14,9 @@ import java.util.logging.Logger;
 public final class ServiceManager {
 
     /**
-     * The logger for this class.
+     * The logger used to print information and debug messages to the console.
      */
-    private final Logger logger = Logger.getLogger(getClass().getName());
+    private final Logger logger = LoggerFactory.getLogger(ServiceManager.class);
 
     /**
      * The service set.
@@ -42,7 +44,7 @@ public final class ServiceManager {
      */
     public void startAll() {
 	services.forEach((s) -> s.start());
-	logger.info("Started " + services.size() + " services!");
+	logger.info("Started {} services.", services.size());
     }
 
 }

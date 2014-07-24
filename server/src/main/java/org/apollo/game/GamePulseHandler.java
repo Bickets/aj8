@@ -1,7 +1,7 @@
 package org.apollo.game;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * A class which handles the logic for each pulse of the {@link GameService}.
@@ -11,9 +11,9 @@ import java.util.logging.Logger;
 public final class GamePulseHandler implements Runnable {
 
     /**
-     * The logger for this class.
+     * The logger used to print information and debug messages to the console.
      */
-    private static final Logger logger = Logger.getLogger(GamePulseHandler.class.getName());
+    private final Logger logger = LoggerFactory.getLogger(GamePulseHandler.class);
 
     /**
      * The {@link GameService}.
@@ -34,7 +34,7 @@ public final class GamePulseHandler implements Runnable {
 	try {
 	    service.pulse();
 	} catch (Throwable t) {
-	    logger.log(Level.SEVERE, "Exception during pulse.", t);
+	    logger.error("Exception during pulse.", t);
 	}
     }
 

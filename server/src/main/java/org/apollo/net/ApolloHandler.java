@@ -7,9 +7,6 @@ import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.HttpRequest;
 import io.netty.util.Attribute;
 
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
 import org.apollo.fs.FileSystem;
 import org.apollo.game.GameService;
 import org.apollo.game.msg.MessageTranslator;
@@ -21,6 +18,8 @@ import org.apollo.net.session.LoginSession;
 import org.apollo.net.session.Session;
 import org.apollo.net.session.UpdateSession;
 import org.apollo.update.UpdateService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * An implementation of {@link ChannelHandlerAdapter} which handles incoming
@@ -34,9 +33,9 @@ import org.apollo.update.UpdateService;
 public final class ApolloHandler extends ChannelHandlerAdapter {
 
     /**
-     * The logger for this class.
+     * The logger used to print information and debug messages to the console.
      */
-    private static final Logger logger = Logger.getLogger(ApolloHandler.class.getName());
+    private final Logger logger = LoggerFactory.getLogger(ApolloHandler.class);
 
     /**
      * The message translator.
@@ -87,7 +86,7 @@ public final class ApolloHandler extends ChannelHandlerAdapter {
 	if (session != null) {
 	    session.destroy();
 	}
-	logger.info("Channel disconnected: " + channel);
+	logger.info("Channel disconnected: {}", channel);
     }
 
     @Override
@@ -120,7 +119,7 @@ public final class ApolloHandler extends ChannelHandlerAdapter {
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable e) {
 	Channel channel = ctx.channel();
-	logger.log(Level.WARNING, "Exception occurred for channel: " + channel + ", closing...", e);
+	logger.error("Exception occurred for channel: {}, closing...", channel, e);
 	channel.close();
     }
 
