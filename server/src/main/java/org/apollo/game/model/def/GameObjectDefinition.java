@@ -5,7 +5,9 @@ import java.util.Collection;
 import org.apollo.game.model.Position;
 
 import com.google.common.collect.ArrayListMultimap;
+import com.google.common.collect.Iterables;
 import com.google.common.collect.Multimap;
+import com.google.common.collect.Multimaps;
 
 /**
  * Represents the definition of some game object.
@@ -25,6 +27,12 @@ public final class GameObjectDefinition {
      * map.
      */
     private static final Multimap<Integer, Position> positions = ArrayListMultimap.create();
+
+    /**
+     * A map of positions to object ids, used for reverse look ups to find an
+     * objects id by position.
+     */
+    private static final Multimap<Position, Integer> positionsInverse = Multimaps.invertFrom(positions, ArrayListMultimap.create());
 
     /**
      * Gets the total number of objects.
@@ -173,6 +181,39 @@ public final class GameObjectDefinition {
 	    if (!action.contains("Examine"))
 		hasActions = true;
 	}
+    }
+
+    /**
+     * Notifies the positions that this object exists if it was added after
+     * initialization, this method is required in order to make custom object
+     * function if they are placed elsewhere on the map.
+     * 
+     * @param position The position of this object.
+     */
+    public void notifyExists(Position position) {
+	/*
+	 * If an object exists on the map at the specified position, we can
+	 * override it.
+	 */
+	if (positions.containsValue(position)) {
+	    /*
+	     * Let's get a collection of possible keys to the specified
+	     * position.
+	     */
+	    Collection<Integer> ids = positionsInverse.get(position);
+
+	    /*
+	     * We know there will be only one possible position for the
+	     * specified id, so let's get the first (and only) one available.
+	     */
+	    int id = Iterables.getFirst(ids, 0);
+
+	    /* Remove the old entry. */
+	    positions.remove(id, position);
+	}
+
+	/* Add the new position. */
+	positions.put(id, position);
     }
 
     /**
