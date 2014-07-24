@@ -19,7 +19,7 @@ abstract class Plugin {
 			result = inclusiveRandom.apply(min, max)
 		}
 	]
-	val randomFloat = [float range|random.nextFloat() * range]
+	val randomFloat = [float range|random.nextFloat * range]
 
 	def toInt(String str) {
 		toInt.apply(str)
@@ -47,10 +47,6 @@ abstract class Plugin {
 
 	def random(float range) {
 		randomFloat.apply(range)
-	}
-
-	def camelize(String str) {
-		str.replace("/(?:^|_)(.)/", str.toFirstUpper)
 	}
 
 }
