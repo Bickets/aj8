@@ -35,7 +35,7 @@ CREATE TABLE `players` (
   `y` smallint(6) NOT NULL,
   `height` tinyint(4) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `username` (`username`)
+  UNIQUE KEY `player_username` (`id`, `username`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 CREATE TABLE `sanctions` (
@@ -49,7 +49,7 @@ CREATE TABLE `sanctions` (
   `active` tinyint(1) NOT NULL DEFAULT '0',
   `reason` varchar(256) NOT NULL,
   PRIMARY KEY (`id`),
-  UNIQUE KEY `player_type` (`username`,`type`)
+  UNIQUE KEY `username_type` (`username`,`type`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
 
 CREATE TABLE `skills` (
@@ -67,4 +67,15 @@ CREATE TABLE `style` (
   `style` smallint(6) NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `player_style` (`player_id`, `style`)
+) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
+
+CREATE TABLE `failed_logins` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `player_id` int(11) NOT NULL,
+  `username` varchar(12) NOT NULL,
+  `issue` datetime NOT NULL,
+  `expire` datetime DEFAULT 'NOW() + INTERVAL 5 MINUTE'
+  `active` tinyint(1) NOT NULL DEFAULT '0',
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `player_username` (`player_id`, `username`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
