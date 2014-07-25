@@ -33,20 +33,34 @@ public final class GameCharacterFields {
     private static final AttributeKey<Boolean> WITHDRAWING_NOTES = AttributeKey.valueOf("withdrawing_notes", false);
 
     /**
-     * Returns the current {@code boolean} flag of the withdrawing notes
-     * attribute key.
-     * 
-     * @return {@code true} if the withdrawing notes attribute key is
-     *         {@code true} otherwise {@code false}.
+     * An attribute key representing a {@code boolean} which denotes whether or
+     * not this characters client is within focus. Default value is {@code true}
+     */
+    private static final AttributeKey<Boolean> CLIENT_WINDOW_FOCUSED = AttributeKey.valueOf("client_window_focused", true);
+
+    /**
+     * Returns whether or not this character is withdrawing notes.
      */
     public boolean isWithdrawingNotes() {
 	return character.getAttributes().get(WITHDRAWING_NOTES);
     }
 
     /**
-     * Sets the withdrawing notes attribute key to the specified {@code flag}.
-     * 
-     * @param flag The new value for the withdrawing notes attribute key.
+     * Returns whether or not the client window is in focus.
+     */
+    public boolean isClientWindowFocused() {
+	return character.getAttributes().get(CLIENT_WINDOW_FOCUSED);
+    }
+
+    /**
+     * Set the client windows focused state.
+     */
+    public void setClientWindowFocused(boolean flag) {
+	character.getAttributes().set(CLIENT_WINDOW_FOCUSED, flag);
+    }
+
+    /**
+     * Sets the withdrawing notes state.
      */
     public void setWithdrawingNotes(boolean flag) {
 	character.getAttributes().set(WITHDRAWING_NOTES, flag);

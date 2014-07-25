@@ -11,6 +11,7 @@ import org.apollo.game.msg.annotate.HandlesMessage;
 import org.apollo.game.msg.decoder.ButtonMessageDecoder;
 import org.apollo.game.msg.decoder.CharacterDesignMessageDecoder;
 import org.apollo.game.msg.decoder.ChatMessageDecoder;
+import org.apollo.game.msg.decoder.ClientFocusedMessageDecoder;
 import org.apollo.game.msg.decoder.ClosedInterfaceMessageDecoder;
 import org.apollo.game.msg.decoder.CommandMessageDecoder;
 import org.apollo.game.msg.decoder.DialogueContinueMessageDecoder;
@@ -20,7 +21,11 @@ import org.apollo.game.msg.decoder.FifthItemActionMessageDecoder;
 import org.apollo.game.msg.decoder.FirstItemActionMessageDecoder;
 import org.apollo.game.msg.decoder.FirstObjectActionMessageDecoder;
 import org.apollo.game.msg.decoder.FourthItemActionMessageDecoder;
+import org.apollo.game.msg.decoder.IdleMessageDecoder;
 import org.apollo.game.msg.decoder.KeepAliveMessageDecoder;
+import org.apollo.game.msg.decoder.MouseClickMessageDecoder;
+import org.apollo.game.msg.decoder.ObsoleteMessageDecoder;
+import org.apollo.game.msg.decoder.RegionLoadedMessageDecoder;
 import org.apollo.game.msg.decoder.SecondItemActionMessageDecoder;
 import org.apollo.game.msg.decoder.SecondObjectActionMessageDecoder;
 import org.apollo.game.msg.decoder.SwitchItemMessageDecoder;
@@ -58,9 +63,12 @@ import org.apollo.game.msg.handler.EnteredAmountMessageHandler;
 import org.apollo.game.msg.handler.EquipMessageHandler;
 import org.apollo.game.msg.handler.ItemActionMessageHandler;
 import org.apollo.game.msg.handler.ObjectMessageHandler;
+import org.apollo.game.msg.handler.RegionLoadedMessageHandler;
 import org.apollo.game.msg.handler.SwitchItemMessageHandler;
 import org.apollo.game.msg.handler.WalkMessageHandler;
 import org.apollo.net.codec.game.GamePacket;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  * The responsibility of this class is to translate registered {@link Message}'s
@@ -70,6 +78,11 @@ import org.apollo.net.codec.game.GamePacket;
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class MessageTranslator {
+
+    /**
+     * The logger used to print information and debug messages to the console.
+     */
+    private final Logger logger = LoggerFactory.getLogger(MessageTranslator.class);
 
     /**
      * A {@link Map} of {@link Integer}s to {@link MessageDecoder}s.
@@ -125,6 +138,11 @@ public final class MessageTranslator {
 	register(new ClosedInterfaceMessageDecoder());
 	register(new EnteredAmountMessageDecoder());
 	register(new DialogueContinueMessageDecoder());
+	register(new ClientFocusedMessageDecoder());
+	register(new MouseClickMessageDecoder());
+	register(new IdleMessageDecoder());
+	register(new RegionLoadedMessageDecoder());
+	register(new ObsoleteMessageDecoder());
 
 	// register encoders
 	register(new IdAssignmentMessageEncoder());
@@ -158,6 +176,7 @@ public final class MessageTranslator {
 	register(new ClosedInterfaceMessageHandler());
 	register(new EnteredAmountMessageHandler());
 	register(new DialogueContinueMessageHandler());
+	register(new RegionLoadedMessageHandler());
 
 	// world handlers
 	register(new ObjectMessageHandler(world));
@@ -174,8 +193,9 @@ public final class MessageTranslator {
     private <E extends Message> void register(MessageDecoder<E> decoder) {
 	DecodesMessage annotation = decoder.getClass().getAnnotation(DecodesMessage.class);
 	if (annotation == null) {
-	    throw new NullPointerException(decoder.getClass().getSimpleName() + " must be annotated with @DecodesMessage");
+	    throw new NullPointerException(decoder + " must be annotated with @DecodesMessage");
 	}
+
 	for (int value : annotation.value()) {
 	    decoders.put(value, decoder);
 	}
@@ -189,8 +209,9 @@ public final class MessageTranslator {
     private <E extends Message> void register(MessageEncoder<E> encoder) {
 	EncodesMessage annotation = encoder.getClass().getAnnotation(EncodesMessage.class);
 	if (annotation == null) {
-	    throw new NullPointerException(encoder.getClass().getSimpleName() + " must be annotated with @EncodesMessage");
+	    throw new NullPointerException(encoder + " must be annotated with @EncodesMessage");
 	}
+
 	encoders.put(annotation.value(), encoder);
     }
 
@@ -202,8 +223,9 @@ public final class MessageTranslator {
     private <E extends Message> void register(MessageHandler<E> handler) {
 	HandlesMessage annotation = handler.getClass().getAnnotation(HandlesMessage.class);
 	if (annotation == null) {
-	    throw new NullPointerException(handler.getClass().getSimpleName() + " must be annotated with @HandlesMessage");
+	    throw new NullPointerException(handler + " must be annotated with @HandlesMessage");
 	}
+
 	handlers.put(annotation.value(), handler);
     }
 
@@ -219,8 +241,10 @@ public final class MessageTranslator {
     public <E extends Message> E decode(GamePacket packet) {
 	MessageDecoder<E> decoder = (MessageDecoder<E>) decoders.get(packet.getOpcode());
 	if (decoder == null) {
+	    logger.error("No message decoder for packet: {}", packet.getOpcode());
 	    return null;
 	}
+
 	return decoder.decode(packet);
     }
 
@@ -235,8 +259,10 @@ public final class MessageTranslator {
     public <E extends Message> GamePacket encode(E msg) {
 	MessageEncoder<E> encoder = (MessageEncoder<E>) encoders.get(msg.getClass());
 	if (encoder == null) {
+	    logger.error("No message encoder for message: {}", msg);
 	    return null;
 	}
+
 	return encoder.encode(msg);
     }
 
@@ -253,6 +279,7 @@ public final class MessageTranslator {
 	if (handler == null) {
 	    return;
 	}
+
 	handler.handle(player, msg);
     }
 
