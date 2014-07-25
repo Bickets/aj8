@@ -8,7 +8,6 @@ import org.apollo.game.model.Position
 import org.apollo.game.model.^def.GameObjectDefinition
 import org.apollo.game.model.obj.GameObject
 import org.apollo.game.msg.impl.GameObjectMessage
-import org.apollo.game.msg.impl.PositionMessage
 
 @SubscribesTo(CommandEvent)
 class CommandPlugin extends Plugin implements EventSubscriber<CommandEvent> {
@@ -50,7 +49,11 @@ class CommandPlugin extends Plugin implements EventSubscriber<CommandEvent> {
 				val object = new GameObject(id, plr.position)
 				object.notifyExists
 
-				plr.send(new PositionMessage(object.position))
+//				val r_pos = plr.lastEnteredRegionPosition
+//				val curr = plr.position
+//				val offset = Math.abs((curr.x - r_pos.x) + (curr.y - r_pos.y))
+//				println(offset)
+				
 				plr.send(new GameObjectMessage(object, 0))
 			}
 		}
