@@ -67,7 +67,7 @@ public final class PlayersTable extends Table {
     public void save(Player player) throws SQLException {
 	saveStatement.setInt(1, player.getDatabaseId());
 	saveStatement.setString(2, player.getName());
-	saveStatement.setString(3, BCrypt.hashpw(player.getPassword(), BCrypt.gensalt()));
+	saveStatement.setString(3, BCrypt.hashpw(player.getPassword(), BCrypt.gensalt(12)));
 	saveStatement.setInt(4, player.getPrivilegeLevel().toInteger());
 	saveStatement.setBoolean(5, player.isMembers());
 
