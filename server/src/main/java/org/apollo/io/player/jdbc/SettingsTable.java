@@ -35,7 +35,7 @@ public final class SettingsTable extends Table {
      */
     protected SettingsTable(Connection connection) throws SQLException {
 	loadStatement = connection.prepareStatement("SELECT * FROM settings WHERE player_id = ?;");
-	saveStatement = connection.prepareStatement("INSERT INTO settings (player_id, setting, value) VALUES (?, ?) ON DUPLICATE KEY UPDATE valu = VALUES(value);");
+	saveStatement = connection.prepareStatement("INSERT INTO settings (player_id, setting, value) VALUES (?, ?, ?) ON DUPLICATE KEY UPDATE value = VALUES(value);");
     }
 
     @Override
