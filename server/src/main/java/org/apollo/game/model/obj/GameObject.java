@@ -100,15 +100,43 @@ public final class GameObject extends Entity {
     }
 
     /**
-     * Notifies the positions that this object exists if it was added after
-     * initialization, this method is required in order to make custom object
-     * function if they are placed elsewhere on the map.
-     * 
-     * @param position The position of this object.
-     * @see {@link GameObjectDefinition#notifyExist(Position)}
+     * Notifies that this object actually exists within the world if it does not
+     * already. If this object already exists an {@link IllegalStateException}
+     * is thrown.
      */
     public void notifyExists() {
+	if (exists()) {
+	    throw new IllegalStateException("This object already exists within the world");
+	}
 	getDefinition().notifyExists(getPosition());
+    }
+
+    /**
+     * Returns the amount of between this game objects position and the
+     * specified position.
+     * 
+     * @param position The starting position.
+     * @return The amount of between this game objects position and the
+     *         specified position.
+     */
+    public int getTileOffset(Position position) {
+	GameObjectDefinition def = getDefinition();
+	if (def.getSize() <= 1) {
+	    return 1;
+	}
+
+	int distanceX = Math.abs(position.getX() - getPosition().getX());
+	int distanceY = Math.abs(position.getY() - getPosition().getY());
+	int total = distanceX > distanceY ? def.getSizeX() : def.getSizeY();
+	return total;
+    }
+
+    /**
+     * Returns {@code true} if and only if this object actually exists within
+     * the world otherwise {@code false}.
+     */
+    public boolean exists() {
+	return getDefinition().objectExists(getPosition());
     }
 
     @Override

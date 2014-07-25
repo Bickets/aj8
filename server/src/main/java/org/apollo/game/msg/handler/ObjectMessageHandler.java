@@ -6,7 +6,6 @@ import org.apollo.game.model.Player;
 import org.apollo.game.model.World;
 import org.apollo.game.model.def.GameObjectDefinition;
 import org.apollo.game.model.obj.GameObject;
-import org.apollo.game.model.obj.Objects;
 import org.apollo.game.msg.MessageHandler;
 import org.apollo.game.msg.annotate.HandlesMessage;
 import org.apollo.game.msg.impl.ObjectActionMessage;
@@ -40,7 +39,7 @@ public final class ObjectMessageHandler implements MessageHandler<ObjectActionMe
 	GameObjectDefinition def = obj.getDefinition();
 
 	/* Ensure the object we want to interact with actually exists. */
-	if (!Objects.objectExists(obj, message.getPosition())) {
+	if (!obj.exists()) {
 	    return;
 	}
 
@@ -71,7 +70,7 @@ public final class ObjectMessageHandler implements MessageHandler<ObjectActionMe
 	 * Start an action which moves to the object before executing an action
 	 * event.
 	 */
-	player.startAction(new DistancedAction<Player>(0, true, player, message.getPosition(), Objects.getTileOffset(player.getPosition(), obj)) {
+	player.startAction(new DistancedAction<Player>(0, true, player, message.getPosition(), obj.getTileOffset(player.getPosition())) {
 	    @Override
 	    public void executeAction() {
 		player.turnTo(message.getPosition());
