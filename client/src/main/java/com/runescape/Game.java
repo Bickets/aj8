@@ -444,7 +444,7 @@ public class Game extends GameShell {
     private long aLong1240;
     private int anInt1241;
     private final IndexedImage[] moderatorIcon = new IndexedImage[2];
-    protected long aLong1245;
+    protected long lastClickTime;
     private int currentTabId = 3;
     private int hintIconActorId;
     private boolean redrawChatbox = false;
@@ -1027,6 +1027,7 @@ public class Game extends GameShell {
 		/* empty */
 	    }
 	    GameObjectDefinition.modelCache.removeAll();
+	    /* XXX: Believed purpose to check if a user is using the applet or not */
 	    if (gameFrame != null) {
 		outBuffer.putOpcode(210);
 		outBuffer.putInt(1057001181);
@@ -3188,31 +3189,31 @@ public class Game extends GameShell {
 			}
 		    }
 		    if (clickType != 0) {
-			long l = (clickTime - aLong1245) / 50L;
-			if (l > 4095L) {
-			    l = 4095L;
+			/* XXX: Mouse click packet */
+			long time = (clickTime - lastClickTime) / 50L;
+			if (time > 4095L) {
+			    time = 4095L;
 			}
-			aLong1245 = clickTime;
-			int i_314_ = clickY;
-			if (i_314_ < 0) {
-			    i_314_ = 0;
-			} else if (i_314_ > 502) {
-			    i_314_ = 502;
+			lastClickTime = clickTime;
+			int lastY = clickY;
+			if (lastY < 0) {
+			    lastY = 0;
+			} else if (lastY > 502) {
+			    lastY = 502;
 			}
-			int i_315_ = clickX;
-			if (i_315_ < 0) {
-			    i_315_ = 0;
-			} else if (i_315_ > 764) {
-			    i_315_ = 764;
+			int lastX = clickX;
+			if (lastX < 0) {
+			    lastX = 0;
+			} else if (lastX > 764) {
+			    lastX = 764;
 			}
-			int i_316_ = i_314_ * 765 + i_315_;
-			int i_317_ = 0;
+			int mouseClickHashCode = lastY * 765 + lastX;
+			int clickType = 0;
 			if (clickType == 2) {
-			    i_317_ = 1;
+			    clickType = 1;
 			}
-			int i_318_ = (int) l;
 			outBuffer.putOpcode(241);
-			outBuffer.putInt((i_318_ << 20) + (i_317_ << 19) + i_316_);
+			outBuffer.putInt(((int) time << 20) + (clickType << 19) + mouseClickHashCode);
 		    }
 		    if (anInt1041 > 0) {
 			anInt1041--;
@@ -5974,7 +5975,7 @@ public class Game extends GameShell {
 	    } else if (loginResponse == 2) {
 		playerRights = bufferedConnection.read();
 		Game.flagged = bufferedConnection.read() == 1;
-		aLong1245 = 0L;
+		lastClickTime = 0L;
 		anInt1047 = 0;
 		mouseCapturer.coord = 0;
 		awtFocus = true;
@@ -8517,9 +8518,10 @@ public class Game extends GameShell {
 		    Game.anInt1030++;
 		    if (Game.anInt1030 > 1512) {
 			Game.anInt1030 = 0;
+			// TODO: WHAT IS THE PURPOSE OF THIS????
 			outBuffer.putOpcode(77);
 			outBuffer.put(0);
-			int i_708_ = outBuffer.offset;
+			int offset = outBuffer.offset;
 			outBuffer.put((int) (Math.random() * 256.0));
 			outBuffer.put(101);
 			outBuffer.put(233);
@@ -8532,7 +8534,7 @@ public class Game extends GameShell {
 			outBuffer.put(38);
 			outBuffer.putShort((int) (Math.random() * 65536.0));
 			outBuffer.putShort((int) (Math.random() * 65536.0));
-			outBuffer.putSizeByte(outBuffer.offset - i_708_);
+			outBuffer.putSizeByte(outBuffer.offset - offset);
 		    }
 		    int i_709_ = i_703_ * 192;
 		    if (i_709_ > 98048) {
