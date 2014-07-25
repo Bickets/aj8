@@ -171,7 +171,7 @@ public final class MessageTranslator {
      * 
      * @param decoder The message decoder to register.
      */
-    private void register(MessageDecoder<?> decoder) {
+    private <E extends Message> void register(MessageDecoder<E> decoder) {
 	DecodesMessage annotation = decoder.getClass().getAnnotation(DecodesMessage.class);
 	if (annotation == null) {
 	    throw new NullPointerException(decoder.getClass().getSimpleName() + " must be annotated with @DecodesMessage");
@@ -186,7 +186,7 @@ public final class MessageTranslator {
      * 
      * @param encoder The message encoder to register.
      */
-    private void register(MessageEncoder<?> encoder) {
+    private <E extends Message> void register(MessageEncoder<E> encoder) {
 	EncodesMessage annotation = encoder.getClass().getAnnotation(EncodesMessage.class);
 	if (annotation == null) {
 	    throw new NullPointerException(encoder.getClass().getSimpleName() + " must be annotated with @EncodesMessage");
@@ -199,7 +199,7 @@ public final class MessageTranslator {
      * 
      * @param handler The message handler to register.
      */
-    private void register(MessageHandler<?> handler) {
+    private <E extends Message> void register(MessageHandler<E> handler) {
 	HandlesMessage annotation = handler.getClass().getAnnotation(HandlesMessage.class);
 	if (annotation == null) {
 	    throw new NullPointerException(handler.getClass().getSimpleName() + " must be annotated with @HandlesMessage");
@@ -211,12 +211,13 @@ public final class MessageTranslator {
      * Attempts to decode the specified {@code packet} into a {@link Message}.
      *
      * @param packet The packet.
+     * @return
      * @return The decoded message if and only if it was decoded successfully,
      *         otherwise {@code null}.
      */
-    public Message decode(GamePacket packet) {
-	@SuppressWarnings("unchecked")
-	MessageDecoder<Message> decoder = (MessageDecoder<Message>) decoders.get(packet.getOpcode());
+    @SuppressWarnings("unchecked")
+    public <E extends Message> E decode(GamePacket packet) {
+	MessageDecoder<E> decoder = (MessageDecoder<E>) decoders.get(packet.getOpcode());
 	if (decoder == null) {
 	    return null;
 	}
@@ -230,9 +231,9 @@ public final class MessageTranslator {
      * @return The encoded game packet, if and only if it was encoded
      *         successfully, otherwise {@code null}.
      */
-    public GamePacket encode(Message msg) {
-	@SuppressWarnings("unchecked")
-	MessageEncoder<Message> encoder = (MessageEncoder<Message>) encoders.get(msg.getClass());
+    @SuppressWarnings("unchecked")
+    public <E extends Message> GamePacket encode(E msg) {
+	MessageEncoder<E> encoder = (MessageEncoder<E>) encoders.get(msg.getClass());
 	if (encoder == null) {
 	    return null;
 	}
@@ -246,9 +247,9 @@ public final class MessageTranslator {
      * @param player The player.
      * @param msg The message.
      */
-    public void handle(Player player, Message msg) {
-	@SuppressWarnings("unchecked")
-	MessageHandler<Message> handler = (MessageHandler<Message>) handlers.get(msg.getClass());
+    @SuppressWarnings("unchecked")
+    public <E extends Message> void handle(Player player, E msg) {
+	MessageHandler<E> handler = (MessageHandler<E>) handlers.get(msg.getClass());
 	if (handler == null) {
 	    return;
 	}
