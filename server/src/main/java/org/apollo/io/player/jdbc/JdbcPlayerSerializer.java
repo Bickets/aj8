@@ -7,6 +7,8 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.sql.Timestamp;
+import java.util.Calendar;
 
 import org.apollo.game.crypto.BCrypt;
 import org.apollo.game.model.Inventory;
@@ -30,6 +32,11 @@ import org.slf4j.LoggerFactory;
 public final class JdbcPlayerSerializer implements Closeable, PlayerSerializer {
 
     /**
+     * Represents the maximum amount of failed logins.
+     */
+    private static final int MAXIMUM_FAILED_LOGIN_ATTEMPTS = 5;
+
+    /**
      * The logger used to print information and debug messages to the console.
      */
     private final Logger logger = LoggerFactory.getLogger(JdbcPlayerSerializer.class);
@@ -44,6 +51,23 @@ public final class JdbcPlayerSerializer implements Closeable, PlayerSerializer {
      * players table required in order to query the {@link #tables}.
      */
     private final PreparedStatement loginStatement;
+
+    /**
+     * A prepared statement which selects information about the current amount
+     * of failed login attempts.
+     */
+    private final PreparedStatement selectFailedLogins;
+
+    /**
+     * A prepared statement which inserts failed login user information to the
+     * database.
+     */
+    private final PreparedStatement insertFailedLogins;
+
+    /**
+     * A prepared statement which closes failed login users.
+     */
+    private final PreparedStatement closeFailedLogins;
 
     /**
      * The sanction provider which checks a players sanctions.
@@ -69,6 +93,9 @@ public final class JdbcPlayerSerializer implements Closeable, PlayerSerializer {
 	connection.setAutoCommit(false);
 	sanctionProvider = new JdbcSanctionProvider(connection);
 	loginStatement = connection.prepareStatement("SELECT id, password FROM players WHERE username = ?;");
+	selectFailedLogins = connection.prepareStatement("SELECT UNIX_TIMESTAMP() as now, count, UNIX_TIMESTAMP(expire) as expire FROM failed_logins WHERE player_id = ?;");
+	insertFailedLogins = connection.prepareStatement("INSERT INTO failed_logins (player_id, expire) VALUES (?, ?) ON DUPLICATE KEY UPDATE count = count + 1;");
+	closeFailedLogins = connection.prepareStatement("DELETE FROM failed_logins WHERE player_id = ?;");
 	tables = new Table[] { new PlayersTable(connection),
 		new SkillsTable(connection), new AppearanceTable(connection),
 		new SettingsTable(connection),
@@ -112,10 +139,18 @@ public final class JdbcPlayerSerializer implements Closeable, PlayerSerializer {
 		String hashedPassword = set.getString("password");
 
 		/*
+		 * Check to be sure we aren't blocked from logging in.
+		 */
+		if (failedAttempts(id) >= MAXIMUM_FAILED_LOGIN_ATTEMPTS) {
+		    return new PlayerSerializerResponse(LoginConstants.STATUS_TOO_MANY_LOGINS);
+		}
+
+		/*
 		 * Wrong password, increment failed count and return invalid
 		 * credentials.
 		 */
 		if (!BCrypt.checkpw(credentials.getPassword(), hashedPassword)) {
+		    incrementFailedAttempts(id);
 		    return new PlayerSerializerResponse(LoginConstants.STATUS_INVALID_CREDENTIALS);
 		}
 
@@ -150,6 +185,53 @@ public final class JdbcPlayerSerializer implements Closeable, PlayerSerializer {
 	    connection.rollback();
 	    logger.error("Saving player {} failed.", player.getName(), e);
 	}
+    }
+
+    /**
+     * Returns the amount of failed login attempts for the specified players id.
+     * 
+     * @param id The players id.
+     * @return Returns the amount of failed login attempts.
+     * @throws SQLException If some database access error occurs.
+     */
+    private int failedAttempts(int id) throws SQLException {
+	selectFailedLogins.setInt(1, id);
+
+	try (ResultSet set = selectFailedLogins.executeQuery()) {
+	    if (!set.first()) {
+		return 0;
+	    }
+
+	    long now = set.getLong("now");
+	    int count = set.getInt("count");
+	    long expire = set.getLong("expire");
+
+	    System.out.println(now + "," + expire);
+
+	    /* expired, we can remove it. */
+	    if (now >= expire) {
+		closeFailedLogins.setInt(1, id);
+		closeFailedLogins.execute();
+		return 0;
+	    }
+
+	    return count;
+	}
+    }
+
+    /**
+     * Increments the failed login attempts for the specified player's id.
+     * 
+     * @param id The players id.
+     * @throws SQLException If some database access error occurs.
+     */
+    private void incrementFailedAttempts(int id) throws SQLException {
+	insertFailedLogins.setInt(1, id);
+
+	long now = Calendar.getInstance().getTimeInMillis();
+	Timestamp timestamp = new Timestamp(now + 60000);
+	insertFailedLogins.setTimestamp(2, timestamp);
+	insertFailedLogins.execute();
     }
 
     @Override

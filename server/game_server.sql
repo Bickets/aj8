@@ -81,10 +81,10 @@ CREATE TABLE `style` (
 CREATE TABLE `failed_logins` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `player_id` int(11) NOT NULL,
-  `username` varchar(12) NOT NULL,
-  `issue` datetime NOT NULL,
-  `expire` datetime DEFAULT CURRENT_TIMESTAMP,
+  `issue` datetime NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `expire` datetime NOT NULL,
+  `count` int(11) NOT NULL DEFAULT '1',
   `active` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
-  UNIQUE KEY `player_username` (`player_id`, `username`)
+  UNIQUE KEY `player` (`player_id`)
 ) ENGINE=InnoDB  DEFAULT CHARSET=utf8;
