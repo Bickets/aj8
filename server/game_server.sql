@@ -83,7 +83,7 @@ CREATE TABLE `failed_logins` (
   `player_id` int(11) NOT NULL,
   `username` varchar(12) NOT NULL,
   `issue` datetime NOT NULL,
-  `expire` datetime DEFAULT 'NOW() + INTERVAL 5 MINUTE'
+  `expire` datetime DEFAULT CURRENT_TIMESTAMP,
   `active` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`),
   UNIQUE KEY `player_username` (`player_id`, `username`)
