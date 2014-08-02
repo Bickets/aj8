@@ -13,7 +13,7 @@ import org.apollo.game.model.Position;
  *       animations.
  * @author Major
  */
-public class ForceMovementBlock extends SynchronizationBlock {
+public final class ForceMovementBlock extends SynchronizationBlock {
 
     /**
      * The initial {@link Position} of the {@link Player}.
@@ -52,7 +52,7 @@ public class ForceMovementBlock extends SynchronizationBlock {
      *            final Y.
      * @param direction The direction the {@link Player} should move.
      */
-    public ForceMovementBlock(Position initialPosition, Position finalPosition, int speedX, int speedY, int direction) {
+    protected ForceMovementBlock(Position initialPosition, Position finalPosition, int speedX, int speedY, int direction) {
 	this.initialPosition = initialPosition;
 	this.finalPosition = finalPosition;
 	markerX = speedX;

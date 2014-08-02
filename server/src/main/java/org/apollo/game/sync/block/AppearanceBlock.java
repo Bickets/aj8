@@ -46,7 +46,7 @@ public final class AppearanceBlock extends SynchronizationBlock {
      * @param skill The players skill, or 0 if showing the combat level.
      * @param equipment The players equipment.
      */
-    AppearanceBlock(long name, Appearance appearance, int combat, int skill, Inventory equipment) {
+    protected AppearanceBlock(long name, Appearance appearance, int combat, int skill, Inventory equipment) {
 	this.name = name;
 	this.appearance = appearance;
 	this.combat = combat;

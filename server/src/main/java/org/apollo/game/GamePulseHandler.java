@@ -25,7 +25,7 @@ public final class GamePulseHandler implements Runnable {
      *
      * @param service The {@link GameService}.
      */
-    GamePulseHandler(GameService service) {
+    protected GamePulseHandler(GameService service) {
 	this.service = service;
     }
 

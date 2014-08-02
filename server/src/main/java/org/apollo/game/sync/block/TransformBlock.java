@@ -18,7 +18,7 @@ public final class TransformBlock extends SynchronizationBlock {
      *
      * @param id The id of the mob to transform into.
      */
-    public TransformBlock(int id) {
+    protected TransformBlock(int id) {
 	this.id = id;
     }
 

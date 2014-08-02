@@ -19,7 +19,7 @@ public final class AnimationBlock extends SynchronizationBlock {
      *
      * @param animation The animation.
      */
-    AnimationBlock(Animation animation) {
+    protected AnimationBlock(Animation animation) {
 	this.animation = animation;
     }
 

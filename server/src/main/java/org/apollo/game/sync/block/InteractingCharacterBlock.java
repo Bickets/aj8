@@ -5,7 +5,7 @@ package org.apollo.game.sync.block;
  *
  * @author Major
  */
-public class InteractingCharacterBlock extends SynchronizationBlock {
+public final class InteractingCharacterBlock extends SynchronizationBlock {
 
     /**
      * The index of the Interacting {@link Character}.
@@ -17,7 +17,7 @@ public class InteractingCharacterBlock extends SynchronizationBlock {
      *
      * @param characterIndex The index of the current interacting character.
      */
-    public InteractingCharacterBlock(int characterIndex) {
+    protected InteractingCharacterBlock(int characterIndex) {
 	this.characterIndex = characterIndex;
     }
 

@@ -19,7 +19,7 @@ public final class GraphicBlock extends SynchronizationBlock {
      *
      * @param graphic The graphic.
      */
-    GraphicBlock(Graphic graphic) {
+    protected GraphicBlock(Graphic graphic) {
 	this.graphic = graphic;
     }
 

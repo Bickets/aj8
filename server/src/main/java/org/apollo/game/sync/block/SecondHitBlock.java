@@ -11,7 +11,7 @@ import org.apollo.game.model.Player;
  *
  * @author Major
  */
-public class SecondHitBlock extends SynchronizationBlock {
+public final class SecondHitBlock extends SynchronizationBlock {
 
     /**
      * The amount of damage the hit will do.
@@ -24,28 +24,26 @@ public class SecondHitBlock extends SynchronizationBlock {
     private final int type;
 
     /**
-     * The {@link org.apollo.game.model.Character}'s current health.
+     * The {@link GameCharacter}s current health.
      */
     private final int currentHealth;
 
     /**
-     * The {@link org.apollo.game.model.Character}'s maximum health.
+     * The {@link GameCharacter}s maximum health.
      */
     private final int maximumHealth;
 
     /**
      * Creates a new Second Hit Update block.
      *
-     * @param hitDamage The damage dealt by the hit.
-     * @param hitType The type of hit.
-     * @param currentHealth The current health of the
-     *            {@link org.apollo.game.model.Character}.
-     * @param maximumHealth The maximum health of the
-     *            {@link org.apollo.game.model.Character}.
+     * @param damage The damage dealt by the hit.
+     * @param type The type of hit.
+     * @param currentHealth The current health of the {@link GameCharacter}.
+     * @param maximumHealth The maximum health of the {@link GameCharacter}.
      */
-    public SecondHitBlock(int hitDamage, int hitType, int currentHealth, int maximumHealth) {
-	damage = hitDamage;
-	type = hitType;
+    protected SecondHitBlock(int damage, int type, int currentHealth, int maximumHealth) {
+	this.damage = damage;
+	this.type = type;
 	this.currentHealth = currentHealth;
 	this.maximumHealth = maximumHealth;
     }
@@ -69,7 +67,7 @@ public class SecondHitBlock extends SynchronizationBlock {
     }
 
     /**
-     * Gets the current health of the {@link org.apollo.game.model.Character}.
+     * Gets the current health of the {@link GameCharacter}.
      *
      * @return The current health;
      */
@@ -78,7 +76,7 @@ public class SecondHitBlock extends SynchronizationBlock {
     }
 
     /**
-     * Gets the maximum health of the {@link org.apollo.game.model.Character}.
+     * Gets the maximum health of the {@link GameCharacter}.
      *
      * @return The maximum health.
      */

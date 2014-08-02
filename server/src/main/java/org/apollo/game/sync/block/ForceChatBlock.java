@@ -12,7 +12,7 @@ import org.apollo.game.model.Player;
  *
  * @author Major
  */
-public class ForceChatBlock extends SynchronizationBlock {
+public final class ForceChatBlock extends SynchronizationBlock {
 
     /**
      * The Force Chat text.
@@ -24,7 +24,7 @@ public class ForceChatBlock extends SynchronizationBlock {
      *
      * @param message The message the {@link Character} will say.
      */
-    public ForceChatBlock(String message) {
+    protected ForceChatBlock(String message) {
 	this.message = message;
     }
 

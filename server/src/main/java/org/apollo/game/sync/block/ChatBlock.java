@@ -26,7 +26,7 @@ public final class ChatBlock extends SynchronizationBlock {
      * @param privilegeLevel The privilege level.
      * @param chatMessage The messages content.
      */
-    ChatBlock(PrivilegeLevel privilegeLevel, ChatMessage chatMessage) {
+    protected ChatBlock(PrivilegeLevel privilegeLevel, ChatMessage chatMessage) {
 	this.privilegeLevel = privilegeLevel;
 	this.chatMessage = chatMessage;
     }

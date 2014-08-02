@@ -1,5 +1,6 @@
 package org.apollo.game.sync.block;
 
+import org.apollo.game.model.GameCharacter;
 import org.apollo.game.model.Mob;
 import org.apollo.game.model.Player;
 
@@ -22,28 +23,26 @@ public final class HitBlock extends SynchronizationBlock {
     private final int type;
 
     /**
-     * The {@link org.apollo.game.model.Character}'s current health.
+     * The {@link GameCharacter}s current health.
      */
     private final int currentHealth;
 
     /**
-     * The {@link org.apollo.game.model.Character}'s maximum health.
+     * The {{@link GameCharacter}s maximum health.
      */
     private final int maximumHealth;
 
     /**
      * Creates a new Hit Update block.
      *
-     * @param hitDamage The damage dealt by the hit.
-     * @param hitType The type of hit.
-     * @param currentHealth The current health of the
-     *            {@link org.apollo.game.model.Character}.
-     * @param maximumHealth The maximum health of the
-     *            {@link org.apollo.game.model.Character}.
+     * @param damage The damage dealt by the hit.
+     * @param type The type of hit.
+     * @param currentHealth The current health of the {@link GameCharacter}.
+     * @param maximumHealth The maximum health of the {@link GameCharacter}.
      */
-    HitBlock(int hitDamage, int hitType, int currentHealth, int maximumHealth) {
-	damage = hitDamage;
-	type = hitType;
+    protected HitBlock(int damage, int type, int currentHealth, int maximumHealth) {
+	this.damage = damage;
+	this.type = type;
 	this.currentHealth = currentHealth;
 	this.maximumHealth = maximumHealth;
     }
@@ -67,7 +66,7 @@ public final class HitBlock extends SynchronizationBlock {
     }
 
     /**
-     * Gets the current health of the {@link org.apollo.game.model.Character}.
+     * Gets the current health of the {@link GameCharacter}.
      *
      * @return The current health;
      */
@@ -76,7 +75,7 @@ public final class HitBlock extends SynchronizationBlock {
     }
 
     /**
-     * Gets the maximum health of the {@link org.apollo.game.model.Character}.
+     * Gets the maximum health of the {@link GameCharacter}.
      *
      * @return The maximum health.
      */
