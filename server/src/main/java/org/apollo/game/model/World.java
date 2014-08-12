@@ -7,6 +7,7 @@ import java.io.InputStream;
 
 import org.apollo.fs.FileSystem;
 import org.apollo.fs.parser.GameObjectDefinitionParser;
+import org.apollo.fs.parser.InterfaceDefinitionParser;
 import org.apollo.fs.parser.ItemDefinitionParser;
 import org.apollo.fs.parser.MobDefinitionParser;
 import org.apollo.fs.parser.StaticObjectDefinitionParser;
@@ -17,6 +18,7 @@ import org.apollo.game.event.UniversalEventProvider;
 import org.apollo.game.model.def.EquipmentDefinition;
 import org.apollo.game.model.def.GameObjectDefinition;
 import org.apollo.game.model.def.GamePacketDefinition;
+import org.apollo.game.model.def.InterfaceDefinition;
 import org.apollo.game.model.def.ItemDefinition;
 import org.apollo.game.model.def.LevelUpDefinition;
 import org.apollo.game.model.def.MobDefinition;
@@ -137,6 +139,11 @@ public final class World {
 	GameObjectDefinition.init(gameObjDefs);
 	logger.info("Done (loaded {} game object definitions).", gameObjDefs.length);
 
+	logger.info("Loading interface definitions...");
+	InterfaceDefinition[] interfaceDefs = InterfaceDefinitionParser.parse(fileSystem);
+	InterfaceDefinition.init(interfaceDefs);
+	logger.info("Done (loaded {} interface definitions).", interfaceDefs.length);
+
 	logger.info("Loading skill level up definitions...");
 	LevelUpDefinition.init();
 
@@ -146,7 +153,7 @@ public final class World {
 
     /**
      * Attempts to register some entity to a specified entity repository.
-     * 
+     *
      * @param entity The entity to register.
      * @param repo The entity repository to register the entity to.
      * @return A flag denoting whether or not the entity was successfully added
@@ -165,7 +172,7 @@ public final class World {
 
     /**
      * Attempts to unregister some entity from a specified entity repository.
-     * 
+     *
      * @param entity The entity to unregister.
      * @param repo The entity repository to unregister the entity to.
      * @return A flag denoting whether or not the entity was successfully
@@ -249,7 +256,7 @@ public final class World {
 
     /**
      * Posts an event to this worlds event provider.
-     * 
+     *
      * @param event The event to post.
      */
     public <E extends Event> void post(E event) {
@@ -258,7 +265,7 @@ public final class World {
 
     /**
      * Provides an event subscriber to this worlds event provider.
-     * 
+     *
      * @param subscriber The event subscriber.
      */
     public <E extends Event> void provideSubscriber(EventSubscriber<E> subscriber) {
@@ -267,7 +274,7 @@ public final class World {
 
     /**
      * Deprives an event subscriber to this worlds event provider.
-     * 
+     *
      * @param subscriber The event subscriber.
      */
     public <E extends Event> void depriveSubscriber(EventSubscriber<E> subscriber) {
