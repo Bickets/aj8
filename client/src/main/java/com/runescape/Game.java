@@ -101,11 +101,11 @@ public class Game extends GameShell {
     private int hintIconType;
     private static BigInteger RSA_MODULUS = new BigInteger("7162900525229798032761816791230527296329313291232324290237849263501208207972894053929065636522363163621000728841182238772712427862772219676577293600221789");
     private int openWidgetId = -1;
-    private int anInt883;
-    private int anInt884;
-    private int anInt885;
-    private int anInt886;
-    private int anInt887;
+    private int cameraPositionX;
+    private int cameraPositionZ;
+    private int cameraPositionY;
+    private int cameraCurveY;
+    private int cameraCurveX;
     private int playerRights;
     private final int[] skillExperience = new int[SkillConstants.SKILL_COUNT];
     private IndexedImage anIndexedImage890;
@@ -124,7 +124,7 @@ public class Game extends GameShell {
     protected MouseRecorder mouseCapturer;
     private volatile boolean aBoolean905 = false;
     private String reportedName = "";
-    private int anInt909 = -1;
+    private int playerIndex = -1;
     private boolean actionMenuOpen = false;
     private int anInt911;
     private String chatboxInput = "";
@@ -224,11 +224,11 @@ public class Game extends GameShell {
     private int anInt1014;
     private final int[] characterEditColors = new int[5];
     private int anInt1017;
-    private int cameraAngleX;
-    private int cameraAngleY;
-    private int cameraAngleHeight;
-    private int cameraAngleSpeed;
-    private int anInt1024;
+    private int cameraFaceX;
+    private int cameraFaceY;
+    private int camreaFaceZ;
+    private int cameraFaceTransitionSpeed;
+    private int cameraFaceAngle;
     private ISAACCipher isaacCipher;
     private ImageRGB minimapEdge;
     private final int anInt1027 = 2301979;
@@ -332,8 +332,8 @@ public class Game extends GameShell {
     private static int anInt1122;
     private int cameraX;
     private int cameraY;
-    private int cameraHeight;
-    private int cameraSpeed;
+    private int cameraZ;
+    private int cameraTransitionSpeed;
     private int cameraAngle;
     private boolean drawTabIcons = false;
     private int systemUpdateTime;
@@ -347,7 +347,6 @@ public class Game extends GameShell {
     private ProducingGraphicsBuffer aProducingGraphicsBuffer1139;
     private ProducingGraphicsBuffer aProducingGraphicsBuffer1140;
     private static int anInt1142;
-    private int anInt1144 = -77;
     private int membershipAdviser;
     private String chatboxInputMessage = "";
     private ImageRGB minimapCompass;
@@ -1027,7 +1026,10 @@ public class Game extends GameShell {
 		/* empty */
 	    }
 	    GameObjectDefinition.modelCache.removeAll();
-	    /* XXX: Believed purpose to check if a user is using the applet or not */
+	    /*
+	     * XXX: Believed purpose to check if a user is using the applet or
+	     * not
+	     */
 	    if (gameFrame != null) {
 		outBuffer.putOpcode(210);
 		outBuffer.putInt(1057001181);
@@ -2004,112 +2006,103 @@ public class Game extends GameShell {
 	}
     }
 
-    public final void method39(byte b) {
-	do {
-	    try {
-		int i = cameraX * 128 + 64;
-		int i_179_ = cameraY * 128 + 64;
-		int i_180_ = method42(currentSceneId, i_179_, true, i) - cameraHeight;
-		if (anInt883 < i) {
-		    anInt883 += cameraSpeed + (i - anInt883) * cameraAngle / 1000;
-		    if (anInt883 > i) {
-			anInt883 = i;
-		    }
+    public final void calculateCameraPosition() {
+	try {
+	    int x = cameraX * 128 + 64;
+	    int y = cameraY * 128 + 64;
+	    int z = method42(currentSceneId, y, true, x) - cameraZ;
+	    if (cameraPositionX < x) {
+		cameraPositionX += cameraTransitionSpeed + (x - cameraPositionX) * cameraAngle / 1000;
+		if (cameraPositionX > x) {
+		    cameraPositionX = x;
 		}
-		if (anInt883 > i) {
-		    anInt883 -= cameraSpeed + (anInt883 - i) * cameraAngle / 1000;
-		    if (anInt883 < i) {
-			anInt883 = i;
-		    }
-		}
-		if (anInt884 < i_180_) {
-		    anInt884 += cameraSpeed + (i_180_ - anInt884) * cameraAngle / 1000;
-		    if (anInt884 > i_180_) {
-			anInt884 = i_180_;
-		    }
-		}
-		if (anInt884 > i_180_) {
-		    anInt884 -= cameraSpeed + (anInt884 - i_180_) * cameraAngle / 1000;
-		    if (anInt884 < i_180_) {
-			anInt884 = i_180_;
-		    }
-		}
-		if (anInt885 < i_179_) {
-		    anInt885 += cameraSpeed + (i_179_ - anInt885) * cameraAngle / 1000;
-		    if (anInt885 > i_179_) {
-			anInt885 = i_179_;
-		    }
-		}
-		if (anInt885 > i_179_) {
-		    anInt885 -= cameraSpeed + (anInt885 - i_179_) * cameraAngle / 1000;
-		    if (anInt885 < i_179_) {
-			anInt885 = i_179_;
-		    }
-		}
-		i = cameraAngleX * 128 + 64;
-		i_179_ = cameraAngleY * 128 + 64;
-		i_180_ = method42(currentSceneId, i_179_, true, i) - cameraAngleHeight;
-		int i_181_ = i - anInt883;
-		int i_182_ = i_180_ - anInt884;
-		int i_183_ = i_179_ - anInt885;
-		int i_184_ = (int) Math.sqrt(i_181_ * i_181_ + i_183_ * i_183_);
-		int i_185_ = (int) (Math.atan2(i_182_, i_184_) * 325.949) & 0x7ff;
-		if (b == 5) {
-		    b = (byte) 0;
-		} else {
-		    Game.aBoolean944 = !Game.aBoolean944;
-		}
-		int i_186_ = (int) (Math.atan2(i_181_, i_183_) * -325.949) & 0x7ff;
-		if (i_185_ < 128) {
-		    i_185_ = 128;
-		}
-		if (i_185_ > 383) {
-		    i_185_ = 383;
-		}
-		if (anInt886 < i_185_) {
-		    anInt886 += cameraAngleSpeed + (i_185_ - anInt886) * anInt1024 / 1000;
-		    if (anInt886 > i_185_) {
-			anInt886 = i_185_;
-		    }
-		}
-		if (anInt886 > i_185_) {
-		    anInt886 -= cameraAngleSpeed + (anInt886 - i_185_) * anInt1024 / 1000;
-		    if (anInt886 < i_185_) {
-			anInt886 = i_185_;
-		    }
-		}
-		int i_187_ = i_186_ - anInt887;
-		if (i_187_ > 1024) {
-		    i_187_ -= 2048;
-		}
-		if (i_187_ < -1024) {
-		    i_187_ += 2048;
-		}
-		if (i_187_ > 0) {
-		    anInt887 += cameraAngleSpeed + i_187_ * anInt1024 / 1000;
-		    anInt887 &= 0x7ff;
-		}
-		if (i_187_ < 0) {
-		    anInt887 -= cameraAngleSpeed + -i_187_ * anInt1024 / 1000;
-		    anInt887 &= 0x7ff;
-		}
-		int i_188_ = i_186_ - anInt887;
-		if (i_188_ > 1024) {
-		    i_188_ -= 2048;
-		}
-		if (i_188_ < -1024) {
-		    i_188_ += 2048;
-		}
-		if ((i_188_ >= 0 || i_187_ <= 0) && (i_188_ <= 0 || i_187_ >= 0)) {
-		    break;
-		}
-		anInt887 = i_186_;
-	    } catch (RuntimeException runtimeexception) {
-		Signlink.reportError("71397, " + b + ", " + runtimeexception.toString());
-		throw new RuntimeException();
 	    }
-	    break;
-	} while (false);
+	    if (cameraPositionX > x) {
+		cameraPositionX -= cameraTransitionSpeed + (cameraPositionX - x) * cameraAngle / 1000;
+		if (cameraPositionX < x) {
+		    cameraPositionX = x;
+		}
+	    }
+	    if (cameraPositionZ < z) {
+		cameraPositionZ += cameraTransitionSpeed + (z - cameraPositionZ) * cameraAngle / 1000;
+		if (cameraPositionZ > z) {
+		    cameraPositionZ = z;
+		}
+	    }
+	    if (cameraPositionZ > z) {
+		cameraPositionZ -= cameraTransitionSpeed + (cameraPositionZ - z) * cameraAngle / 1000;
+		if (cameraPositionZ < z) {
+		    cameraPositionZ = z;
+		}
+	    }
+	    if (cameraPositionY < y) {
+		cameraPositionY += cameraTransitionSpeed + (y - cameraPositionY) * cameraAngle / 1000;
+		if (cameraPositionY > y) {
+		    cameraPositionY = y;
+		}
+	    }
+	    if (cameraPositionY > y) {
+		cameraPositionY -= cameraTransitionSpeed + (cameraPositionY - y) * cameraAngle / 1000;
+		if (cameraPositionY < y) {
+		    cameraPositionY = y;
+		}
+	    }
+	    x = cameraFaceX * 128 + 64;
+	    y = cameraFaceY * 128 + 64;
+	    z = method42(currentSceneId, y, true, x) - camreaFaceZ;
+	    int i_181_ = x - cameraPositionX;
+	    int i_182_ = z - cameraPositionZ;
+	    int i_183_ = y - cameraPositionY;
+	    int i_184_ = (int) Math.sqrt(i_181_ * i_181_ + i_183_ * i_183_);
+	    int i_185_ = (int) (Math.atan2(i_182_, i_184_) * 325.949) & 0x7ff;
+	    int i_186_ = (int) (Math.atan2(i_181_, i_183_) * -325.949) & 0x7ff;
+	    if (i_185_ < 128) {
+		i_185_ = 128;
+	    }
+	    if (i_185_ > 383) {
+		i_185_ = 383;
+	    }
+	    if (cameraCurveY < i_185_) {
+		cameraCurveY += cameraFaceTransitionSpeed + (i_185_ - cameraCurveY) * cameraFaceAngle / 1000;
+		if (cameraCurveY > i_185_) {
+		    cameraCurveY = i_185_;
+		}
+	    }
+	    if (cameraCurveY > i_185_) {
+		cameraCurveY -= cameraFaceTransitionSpeed + (cameraCurveY - i_185_) * cameraFaceAngle / 1000;
+		if (cameraCurveY < i_185_) {
+		    cameraCurveY = i_185_;
+		}
+	    }
+	    int i_187_ = i_186_ - cameraCurveX;
+	    if (i_187_ > 1024) {
+		i_187_ -= 2048;
+	    }
+	    if (i_187_ < -1024) {
+		i_187_ += 2048;
+	    }
+	    if (i_187_ > 0) {
+		cameraCurveX += cameraFaceTransitionSpeed + i_187_ * cameraFaceAngle / 1000;
+		cameraCurveX &= 0x7ff;
+	    }
+	    if (i_187_ < 0) {
+		cameraCurveX -= cameraFaceTransitionSpeed + -i_187_ * cameraFaceAngle / 1000;
+		cameraCurveX &= 0x7ff;
+	    }
+	    int i_188_ = i_186_ - cameraCurveX;
+	    if (i_188_ > 1024) {
+		i_188_ -= 2048;
+	    }
+	    if (i_188_ < -1024) {
+		i_188_ += 2048;
+	    }
+	    if ((i_188_ < 0 || i_187_ > 0) && (i_188_ > 0 || i_187_ > 0)) {
+		cameraCurveX = i_186_;
+	    }
+	} catch (RuntimeException runtimeexception) {
+	    Signlink.reportError("71397, " + runtimeexception.toString());
+	    throw new RuntimeException();
+	}
     }
 
     public final void drawActionMenu() {
@@ -2861,7 +2854,7 @@ public class Game extends GameShell {
 		    if (projectile.targetedEntityId < 0) {
 			int i_279_ = -projectile.targetedEntityId - 1;
 			Player player;
-			if (i_279_ == anInt909) {
+			if (i_279_ == playerIndex) {
 			    player = Game.localPlayer;
 			} else {
 			    player = players[i_279_];
@@ -3357,7 +3350,7 @@ public class Game extends GameShell {
 			method108(3);
 		    }
 		    if (anInt1048 == 2 && aBoolean1185) {
-			method39((byte) 5);
+			calculateCameraPosition();
 		    }
 		    for (int i_326_ = 0; i_326_ < 5; i_326_++) {
 			anIntArray1055[i_326_]++;
@@ -7081,7 +7074,6 @@ public class Game extends GameShell {
 
     private final void method91(Buffer buffer, int i) {
 	try {
-	    anInt1144 = -50;
 	    while (buffer.bitOffset + 10 < i * 8) {
 		int playerId = buffer.getBits(11);
 		if (playerId == 2047) {
@@ -7547,7 +7539,7 @@ public class Game extends GameShell {
 		    }
 		    if (mob.interactingEntity >= 32768) {
 			int i_616_ = mob.interactingEntity - 32768;
-			if (i_616_ == anInt909) {
+			if (i_616_ == playerIndex) {
 			    i_616_ = localPlayerId;
 			}
 			Player player = players[i_616_];
@@ -9009,9 +9001,9 @@ public class Game extends GameShell {
     public final int method120() {
 	try {
 	    int i_747_ = 3;
-	    if (anInt886 < 310) {
-		int i_748_ = anInt883 >> 7;
-		int i_749_ = anInt885 >> 7;
+	    if (cameraCurveY < 310) {
+		int i_748_ = cameraPositionX >> 7;
+		int i_749_ = cameraPositionY >> 7;
 		int i_750_ = Game.localPlayer.xWithBoundary >> 7;
 		int i_751_ = Game.localPlayer.yWithBoundary >> 7;
 		if ((currentSceneTileFlags[currentSceneId][i_748_][i_749_] & 0x4) != 0) {
@@ -9096,8 +9088,8 @@ public class Game extends GameShell {
 	    while (i >= 0) {
 		outBuffer.put(21);
 	    }
-	    int i_758_ = method42(currentSceneId, anInt885, true, anInt883);
-	    if (i_758_ - anInt884 < 800 && (currentSceneTileFlags[currentSceneId][anInt883 >> 7][anInt885 >> 7] & 0x4) != 0) {
+	    int i_758_ = method42(currentSceneId, cameraPositionY, true, cameraPositionX);
+	    if (i_758_ - cameraPositionZ < 800 && (currentSceneTileFlags[currentSceneId][cameraPositionX >> 7][cameraPositionY >> 7] & 0x4) != 0) {
 		return currentSceneId;
 	    }
 	    return 3;
@@ -9452,13 +9444,13 @@ public class Game extends GameShell {
 		anInt989 = -1;
 	    } else {
 		int i_797_ = method42(currentSceneId, i_796_, true, i) - i_794_;
-		i -= anInt883;
-		i_797_ -= anInt884;
-		i_796_ -= anInt885;
-		int i_798_ = Model.SINE[anInt886];
-		int i_799_ = Model.COSINE[anInt886];
-		int i_800_ = Model.SINE[anInt887];
-		int i_801_ = Model.COSINE[anInt887];
+		i -= cameraPositionX;
+		i_797_ -= cameraPositionZ;
+		i_796_ -= cameraPositionY;
+		int i_798_ = Model.SINE[cameraCurveY];
+		int i_799_ = Model.COSINE[cameraCurveY];
+		int i_800_ = Model.SINE[cameraCurveX];
+		int i_801_ = Model.COSINE[cameraCurveX];
 		int i_802_ = i_796_ * i_800_ + i * i_801_ >> 16;
 		i_796_ = i_796_ * i_801_ - i * i_800_ >> 16;
 		i = i_802_;
@@ -9869,11 +9861,8 @@ public class Game extends GameShell {
 	}
     }
 
-    public final void method137(int i, Buffer buffer, int opcode) {
+    public final void method137(Buffer buffer, int opcode) {
 	try {
-	    while (i >= 0) {
-		opcode = -1;
-	    }
 	    if (opcode == 84) {
 		int i_870_ = buffer.getUnsignedByte();
 		int i_871_ = playerPositionX + (i_870_ >> 4 & 0x7);
@@ -9916,7 +9905,7 @@ public class Game extends GameShell {
 		    int i_886_ = playerPositionY + (i_884_ & 0x7);
 		    int i_887_ = buffer.getUnsignedLEShortA();
 		    int i_888_ = buffer.getUnsignedLEShort();
-		    if (i_885_ >= 0 && i_886_ >= 0 && i_885_ < 104 && i_886_ < 104 && i_887_ != anInt909) {
+		    if (i_885_ >= 0 && i_886_ >= 0 && i_885_ < 104 && i_886_ < 104 && i_887_ != playerIndex) {
 			Item item = new Item();
 			item.itemId = i_883_;
 			item.itemCount = i_888_;
@@ -9995,63 +9984,65 @@ public class Game extends GameShell {
 			}
 		    }
 		} else {
+		    // Turns a player into an object for a specified duration of
+		    // cycles
 		    if (opcode == 147) {
-			int i_906_ = buffer.getUnsignedByteS();
-			int i_907_ = playerPositionX + (i_906_ >> 4 & 0x7);
-			int i_908_ = playerPositionY + (i_906_ & 0x7);
-			int i_909_ = buffer.getUnsignedLEShort();
-			int i_910_ = buffer.getByteS();
-			int i_911_ = buffer.getUnsignedShort();
-			int i_912_ = buffer.getByteC();
-			int i_913_ = buffer.getUnsignedLEShort();
-			int i_914_ = buffer.getUnsignedByteS();
-			int i_915_ = i_914_ >> 2;
-			int i_916_ = i_914_ & 0x3;
-			int i_917_ = anIntArray1202[i_915_];
-			int i_918_ = buffer.get();
-			int i_919_ = buffer.getUnsignedLEShort();
-			int i_920_ = buffer.getByteC();
+			int positionOffset = buffer.getUnsignedByteS();
+			int x = playerPositionX + (positionOffset >> 4 & 0x7);
+			int y = playerPositionY + (positionOffset & 0x7);
+			int index = buffer.getUnsignedLEShort();
+			int objectOffsetX = buffer.getByteS();
+			int startDelay = buffer.getUnsignedShort();
+			int objectOffsetY = buffer.getByteC();
+			int duration = buffer.getUnsignedLEShort();
+			int objectHashCode = buffer.getUnsignedByteS();
+			int typeId = objectHashCode >> 2;
+			int face = objectHashCode & 0x3;
+			int type = anIntArray1202[typeId];
+			int playerOffsetX = buffer.get();
+			int id = buffer.getUnsignedLEShort();
+			int playerOffsetY = buffer.getByteC();
 			Player player;
-			if (i_909_ == anInt909) {
+			if (index == playerIndex) {
 			    player = Game.localPlayer;
 			} else {
-			    player = players[i_909_];
+			    player = players[index];
 			}
 			if (player != null) {
-			    GameObjectDefinition gameobjectdefinition = GameObjectDefinition.getDefinition(i_919_);
-			    int i_921_ = anIntArrayArrayArray1239[currentSceneId][i_907_][i_908_];
-			    int i_922_ = anIntArrayArrayArray1239[currentSceneId][i_907_ + 1][i_908_];
-			    int i_923_ = anIntArrayArrayArray1239[currentSceneId][i_907_ + 1][i_908_ + 1];
-			    int i_924_ = anIntArrayArrayArray1239[currentSceneId][i_907_][i_908_ + 1];
-			    Model model = gameobjectdefinition.getGameObjectModel(i_915_, i_916_, i_921_, i_922_, i_923_, i_924_, -1);
+			    GameObjectDefinition def = GameObjectDefinition.getDefinition(id);
+			    int i_921_ = anIntArrayArrayArray1239[currentSceneId][x][y];
+			    int i_922_ = anIntArrayArrayArray1239[currentSceneId][x + 1][y];
+			    int i_923_ = anIntArrayArrayArray1239[currentSceneId][x + 1][y + 1];
+			    int i_924_ = anIntArrayArrayArray1239[currentSceneId][x][y + 1];
+			    Model model = def.getGameObjectModel(typeId, face, i_921_, i_922_, i_923_, i_924_, -1);
 			    if (model != null) {
-				addSpawnObjectNode(i_913_ + 1, -1, 0, i_917_, i_908_, 0, currentSceneId, i_907_, i_911_ + 1);
-				player.anInt1727 = i_911_ + Game.currentCycle;
-				player.anInt1728 = i_913_ + Game.currentCycle;
+				addSpawnObjectNode(duration + 1, -1, 0, type, y, 0, currentSceneId, x, startDelay + 1);
+				player.anInt1727 = startDelay + Game.currentCycle;
+				player.anInt1728 = duration + Game.currentCycle;
 				player.playerModel = model;
-				int i_925_ = gameobjectdefinition.sizeX;
-				int i_926_ = gameobjectdefinition.sizeY;
-				if (i_916_ == 1 || i_916_ == 3) {
-				    i_925_ = gameobjectdefinition.sizeY;
-				    i_926_ = gameobjectdefinition.sizeX;
+				int width = def.sizeX;
+				int height = def.sizeY;
+				if (face == 1 || face == 3) {
+				    width = def.sizeY;
+				    height = def.sizeX;
 				}
-				player.anInt1731 = i_907_ * 128 + i_925_ * 64;
-				player.anInt1733 = i_908_ * 128 + i_926_ * 64;
+				player.anInt1731 = x * 128 + width * 64;
+				player.anInt1733 = y * 128 + height * 64;
 				player.anInt1732 = method42(currentSceneId, player.anInt1733, true, player.anInt1731);
-				if (i_918_ > i_910_) {
-				    int i_927_ = i_918_;
-				    i_918_ = i_910_;
-				    i_910_ = i_927_;
+				if (playerOffsetX > objectOffsetX) {
+				    int offset = playerOffsetX;
+				    playerOffsetX = objectOffsetX;
+				    objectOffsetX = offset;
 				}
-				if (i_920_ > i_912_) {
-				    int i_928_ = i_920_;
-				    i_920_ = i_912_;
-				    i_912_ = i_928_;
+				if (playerOffsetY > objectOffsetY) {
+				    int offset = playerOffsetY;
+				    playerOffsetY = objectOffsetY;
+				    objectOffsetY = offset;
 				}
-				player.anInt1739 = i_907_ + i_918_;
-				player.anInt1741 = i_907_ + i_910_;
-				player.anInt1740 = i_908_ + i_920_;
-				player.anInt1742 = i_908_ + i_912_;
+				player.anInt1739 = x + playerOffsetX;
+				player.anInt1741 = x + objectOffsetX;
+				player.anInt1740 = y + playerOffsetY;
+				player.anInt1742 = y + objectOffsetY;
 			    }
 			}
 		    }
@@ -10135,7 +10126,7 @@ public class Game extends GameShell {
 		}
 	    }
 	} catch (RuntimeException runtimeexception) {
-	    Signlink.reportError("29026, " + i + ", " + buffer + ", " + opcode + ", " + runtimeexception.toString());
+	    Signlink.reportError("29026, " + buffer + ", " + opcode + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -10457,11 +10448,11 @@ public class Game extends GameShell {
 		i_1022_ = i_1022_ * i_1027_ - i_1020_ * i_1026_ >> 16;
 		i_1020_ = i_1028_;
 	    }
-	    anInt883 = i_1014_ - i_1020_;
-	    anInt884 = i_1015_ - i_1021_;
-	    anInt885 = i_1017_ - i_1022_;
-	    anInt886 = i_1013_;
-	    anInt887 = i_1016_;
+	    cameraPositionX = i_1014_ - i_1020_;
+	    cameraPositionZ = i_1015_ - i_1021_;
+	    cameraPositionY = i_1017_ - i_1022_;
+	    cameraCurveY = i_1013_;
+	    cameraCurveX = i_1016_;
 	} catch (RuntimeException runtimeexception) {
 	    Signlink.reportError("69735, " + i + ", " + i_1012_ + ", " + i_1013_ + ", " + i_1014_ + ", " + i_1015_ + ", " + i_1016_ + ", " + i_1017_ + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
@@ -10628,13 +10619,13 @@ public class Game extends GameShell {
 		    aBoolean1185 = true;
 		    cameraX = inBuffer.getUnsignedByte();
 		    cameraY = inBuffer.getUnsignedByte();
-		    cameraHeight = inBuffer.getUnsignedLEShort();
-		    cameraSpeed = inBuffer.getUnsignedByte();
+		    cameraZ = inBuffer.getUnsignedLEShort();
+		    cameraTransitionSpeed = inBuffer.getUnsignedByte();
 		    cameraAngle = inBuffer.getUnsignedByte();
 		    if (cameraAngle >= 100) {
-			anInt883 = cameraX * 128 + 64;
-			anInt885 = cameraY * 128 + 64;
-			anInt884 = method42(currentSceneId, anInt885, true, anInt883) - cameraHeight;
+			cameraPositionX = cameraX * 128 + 64;
+			cameraPositionY = cameraY * 128 + 64;
+			cameraPositionZ = method42(currentSceneId, cameraPositionY, true, cameraPositionX) - cameraZ;
 		    }
 		    opcode = -1;
 		    return true;
@@ -10965,7 +10956,7 @@ public class Game extends GameShell {
 		    playerPositionX = inBuffer.getUnsignedByteC();
 		    while (inBuffer.offset < packetSize) {
 			int opcode = inBuffer.getUnsignedByte();
-			method137(anInt1144, inBuffer, opcode);
+			method137(inBuffer, opcode);
 		    }
 		    opcode = -1;
 		    return true;
@@ -11462,26 +11453,26 @@ public class Game extends GameShell {
 		/* Sends the camera angle */
 		if (opcode == 177) {
 		    aBoolean1185 = true;
-		    cameraAngleX = inBuffer.getUnsignedByte();
-		    cameraAngleY = inBuffer.getUnsignedByte();
-		    cameraAngleHeight = inBuffer.getUnsignedLEShort();
-		    cameraAngleSpeed = inBuffer.getUnsignedByte();
-		    anInt1024 = inBuffer.getUnsignedByte(); // TODO Should be angle?
-		    if (anInt1024 >= 100) {
-			int i_1160_ = cameraAngleX * 128 + 64;
-			int i_1161_ = cameraAngleY * 128 + 64;
-			int i_1162_ = method42(currentSceneId, i_1161_, true, i_1160_) - cameraAngleHeight;
-			int i_1163_ = i_1160_ - anInt883;
-			int i_1164_ = i_1162_ - anInt884;
-			int i_1165_ = i_1161_ - anInt885;
+		    cameraFaceX = inBuffer.getUnsignedByte();
+		    cameraFaceY = inBuffer.getUnsignedByte();
+		    camreaFaceZ = inBuffer.getUnsignedLEShort();
+		    cameraFaceTransitionSpeed = inBuffer.getUnsignedByte();
+		    cameraFaceAngle = inBuffer.getUnsignedByte();
+		    if (cameraFaceAngle >= 100) {
+			int i_1160_ = cameraFaceX * 128 + 64;
+			int i_1161_ = cameraFaceY * 128 + 64;
+			int i_1162_ = method42(currentSceneId, i_1161_, true, i_1160_) - camreaFaceZ;
+			int i_1163_ = i_1160_ - cameraPositionX;
+			int i_1164_ = i_1162_ - cameraPositionZ;
+			int i_1165_ = i_1161_ - cameraPositionY;
 			int i_1166_ = (int) Math.sqrt(i_1163_ * i_1163_ + i_1165_ * i_1165_);
-			anInt886 = (int) (Math.atan2(i_1164_, i_1166_) * 325.949) & 0x7ff;
-			anInt887 = (int) (Math.atan2(i_1163_, i_1165_) * -325.949) & 0x7ff;
-			if (anInt886 < 128) {
-			    anInt886 = 128;
+			cameraCurveY = (int) (Math.atan2(i_1164_, i_1166_) * 325.949) & 0x7ff;
+			cameraCurveX = (int) (Math.atan2(i_1163_, i_1165_) * -325.949) & 0x7ff;
+			if (cameraCurveY < 128) {
+			    cameraCurveY = 128;
 			}
-			if (anInt886 > 383) {
-			    anInt886 = 383;
+			if (cameraCurveY > 383) {
+			    cameraCurveY = 383;
 			}
 		    }
 		    opcode = -1;
@@ -11491,7 +11482,7 @@ public class Game extends GameShell {
 		/* Initialize Player */
 		if (opcode == 249) {
 		    anInt1071 = inBuffer.getUnsignedByteA();
-		    anInt909 = inBuffer.getUnsignedShortA();
+		    playerIndex = inBuffer.getUnsignedShortA();
 		    opcode = -1;
 		    return true;
 		}
@@ -11589,7 +11580,7 @@ public class Game extends GameShell {
 		    return true;
 		}
 
-		/* Sets the multi combat state, 0 for off 1 for on*/
+		/* Sets the multi combat state, 0 for off 1 for on */
 		if (opcode == 61) {
 		    multiState = inBuffer.getUnsignedByte();
 		    opcode = -1;
@@ -11652,7 +11643,7 @@ public class Game extends GameShell {
 		    return true;
 		}
 		if (opcode == 105 || opcode == 84 || opcode == 147 || opcode == 215 || opcode == 4 || opcode == 117 || opcode == 156 || opcode == 44 || opcode == 160 || opcode == 101 || opcode == 151) {
-		    method137(anInt1144, inBuffer, opcode);
+		    method137(inBuffer, opcode);
 		    opcode = -1;
 		    return true;
 		}
@@ -11723,33 +11714,33 @@ public class Game extends GameShell {
 	    } else {
 		i = method121(anInt1106);
 	    }
-	    int i_1181_ = anInt883;
-	    int i_1182_ = anInt884;
-	    int i_1183_ = anInt885;
-	    int i_1184_ = anInt886;
-	    int i_1185_ = anInt887;
+	    int i_1181_ = cameraPositionX;
+	    int i_1182_ = cameraPositionZ;
+	    int i_1183_ = cameraPositionY;
+	    int i_1184_ = cameraCurveY;
+	    int i_1185_ = cameraCurveX;
 	    for (int i_1186_ = 0; i_1186_ < 5; i_1186_++) {
 		if (aBooleanArray901[i_1186_]) {
 		    int i_1187_ = (int) (Math.random() * (anIntArray898[i_1186_] * 2 + 1) - anIntArray898[i_1186_] + Math.sin(anIntArray1055[i_1186_] * (anIntArray953[i_1186_] / 100.0)) * anIntArray1228[i_1186_]);
 		    if (i_1186_ == 0) {
-			anInt883 += i_1187_;
+			cameraPositionX += i_1187_;
 		    }
 		    if (i_1186_ == 1) {
-			anInt884 += i_1187_;
+			cameraPositionZ += i_1187_;
 		    }
 		    if (i_1186_ == 2) {
-			anInt885 += i_1187_;
+			cameraPositionY += i_1187_;
 		    }
 		    if (i_1186_ == 3) {
-			anInt887 = anInt887 + i_1187_ & 0x7ff;
+			cameraCurveX = cameraCurveX + i_1187_ & 0x7ff;
 		    }
 		    if (i_1186_ == 4) {
-			anInt886 += i_1187_;
-			if (anInt886 < 128) {
-			    anInt886 = 128;
+			cameraCurveY += i_1187_;
+			if (cameraCurveY < 128) {
+			    cameraCurveY = 128;
 			}
-			if (anInt886 > 383) {
-			    anInt886 = 383;
+			if (cameraCurveY > 383) {
+			    cameraCurveY = 383;
 			}
 		    }
 		}
@@ -11760,18 +11751,18 @@ public class Game extends GameShell {
 	    Model.anInt1678 = mouseEventX - 4;
 	    Model.anInt1679 = mouseEventY - 4;
 	    Rasterizer.resetPixels();
-	    currentScene.method535(anInt883, anInt885, anInt887, anInt884, i, anInt886, false);
+	    currentScene.method535(cameraPositionX, cameraPositionY, cameraCurveX, cameraPositionZ, i, cameraCurveY, false);
 	    currentScene.method510((byte) 104);
 	    method34();
 	    method61();
 	    method37(854, i_1188_);
 	    method112();
 	    currentSceneBuffer.drawGraphics(4, 4, gameGraphics);
-	    anInt883 = i_1181_;
-	    anInt884 = i_1182_;
-	    anInt885 = i_1183_;
-	    anInt886 = i_1184_;
-	    anInt887 = i_1185_;
+	    cameraPositionX = i_1181_;
+	    cameraPositionZ = i_1182_;
+	    cameraPositionY = i_1183_;
+	    cameraCurveY = i_1184_;
+	    cameraCurveX = i_1185_;
 	} catch (RuntimeException runtimeexception) {
 	    Signlink.reportError("97263, " + runtimeexception.toString());
 	    throw new RuntimeException();
