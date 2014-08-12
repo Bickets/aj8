@@ -1,5 +1,8 @@
 package org.apollo.io.player.jdbc;
 
+import static java.time.temporal.ChronoField.MILLI_OF_DAY;
+import static java.time.temporal.ChronoUnit.MINUTES;
+
 import java.io.Closeable;
 import java.io.IOException;
 import java.sql.Connection;
@@ -8,7 +11,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Timestamp;
-import java.util.Calendar;
+import java.time.LocalTime;
 
 import org.apollo.game.crypto.BCrypt;
 import org.apollo.game.model.Inventory;
@@ -26,7 +29,7 @@ import org.slf4j.LoggerFactory;
 /**
  * A {@link PlayerSerializer} implementation which supports the JDBC MySQL
  * protocol.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class JdbcPlayerSerializer implements Closeable, PlayerSerializer {
@@ -82,7 +85,7 @@ public final class JdbcPlayerSerializer implements Closeable, PlayerSerializer {
     /**
      * Constructs a new {@link JdbcPlayerSerializer} with the specified url,
      * username and password used for connecting to the database.
-     * 
+     *
      * @param url The database url.
      * @param username The database username.
      * @param password The database password.
@@ -189,7 +192,7 @@ public final class JdbcPlayerSerializer implements Closeable, PlayerSerializer {
 
     /**
      * Returns the amount of failed login attempts for the specified players id.
-     * 
+     *
      * @param id The players id.
      * @return Returns the amount of failed login attempts.
      * @throws SQLException If some database access error occurs.
@@ -206,8 +209,6 @@ public final class JdbcPlayerSerializer implements Closeable, PlayerSerializer {
 	    int count = set.getInt("count");
 	    long expire = set.getLong("expire");
 
-	    System.out.println(now + "," + expire);
-
 	    /* expired, we can remove it. */
 	    if (now >= expire) {
 		closeFailedLogins.setInt(1, id);
@@ -221,15 +222,17 @@ public final class JdbcPlayerSerializer implements Closeable, PlayerSerializer {
 
     /**
      * Increments the failed login attempts for the specified player's id.
-     * 
+     *
      * @param id The players id.
      * @throws SQLException If some database access error occurs.
      */
     private void incrementFailedAttempts(int id) throws SQLException {
 	insertFailedLogins.setInt(1, id);
 
-	long now = Calendar.getInstance().getTimeInMillis();
-	Timestamp timestamp = new Timestamp(now + 60000);
+	LocalTime now = LocalTime.now();
+	LocalTime expire = now.plus(1, MINUTES);
+	Timestamp timestamp = new Timestamp(expire.getLong(MILLI_OF_DAY));
+
 	insertFailedLogins.setTimestamp(2, timestamp);
 	insertFailedLogins.execute();
     }
