@@ -17,7 +17,8 @@ import org.apollo.util.ByteBufferUtil;
 public final class ItemDefinitionParser {
 
     /**
-     * Parses and returns the all found item definitions within the cache.
+     * Parses and returns an array of item definitions from the specified file
+     * system.
      *
      * @param fs The file system to parse from.
      * @throws IOException If some I/O exception occurs.

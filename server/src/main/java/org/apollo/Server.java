@@ -15,9 +15,8 @@ import org.apollo.fs.FileSystem;
 import org.apollo.game.GameService;
 import org.apollo.game.model.World;
 import org.apollo.game.msg.MessageTranslator;
-import org.apollo.io.player.PlayerSerializer;
 import org.apollo.io.player.PlayerSerializerWorker;
-import org.apollo.io.player.jdbc.JdbcPlayerSerializer;
+import org.apollo.io.player.bin.BinaryPlayerSerializer;
 import org.apollo.net.ApolloHandler;
 import org.apollo.net.HttpChannelHandler;
 import org.apollo.net.JagGrabChannelHandler;
@@ -35,7 +34,7 @@ import org.slf4j.LoggerFactory;
  * @author Graham
  */
 final class Server {
-    
+
     /**
      * The logger used to print information and debug messages to the console.
      */
@@ -68,17 +67,42 @@ final class Server {
     /**
      * The {@link ServerBootstrap} for the service listener.
      */
-    private final ServerBootstrap serviceBootstrap;
+    private final ServerBootstrap serviceBootstrap = new ServerBootstrap();
 
     /**
      * The {@link ServerBootstrap} for the HTTP listener.
      */
-    private final ServerBootstrap httpBootstrap;
+    private final ServerBootstrap httpBootstrap = new ServerBootstrap();
 
     /**
      * The {@link ServerBootstrap} for the JAGGRAB listener.
      */
-    private final ServerBootstrap jagGrabBootstrap;
+    private final ServerBootstrap jagGrabBootstrap = new ServerBootstrap();
+
+    /**
+     * The {@link ServiceManager} for initiating services.
+     */
+    private final ServiceManager serviceManager = new ServiceManager();
+
+    /**
+     * The {@link World} for the game service.
+     */
+    private final World world = new World();
+
+    /**
+     * The {@link PluginService} used to register all plugins.
+     */
+    private final PluginService pluginService = new PluginService(world);
+
+    /**
+     * The {@link UpdateService} for managing file requests.
+     */
+    private final UpdateService updateService = new UpdateService();
+
+    /**
+     * The {@link MessageTranslator} for translating messages to their handlers.
+     */
+    private final MessageTranslator messageTranslator = new MessageTranslator(world);
 
     /**
      * The {@link FileSystem} for building the servers file system.
@@ -86,39 +110,14 @@ final class Server {
     private final FileSystem fileSystem;
 
     /**
-     * The {@link ServiceManager} for initiating services.
+     * The {@link PlayerSerializerWorker} for managing save/load requests.
      */
-    private final ServiceManager serviceManager;
-
-    /**
-     * The {@link World} for the game service.
-     */
-    private final World world;
-
-    /**
-     * The {@link PlayerSerializer} for managing save/load requests.
-     */
-    private final PlayerSerializerWorker playerSerializer;
+    private final PlayerSerializerWorker serializerWorker;
 
     /**
      * The {@link GameService} for managing the games pulse handler.
      */
     private final GameService gameService;
-
-    /**
-     * The {@link PluginService} used to register all plugins.
-     */
-    private final PluginService pluginService;
-
-    /**
-     * The {@link UpdateService} for managing file requests.
-     */
-    private final UpdateService updateService;
-
-    /**
-     * The {@link MessageTranslator} for translating messages to their handlers.
-     */
-    private final MessageTranslator messageTranslator;
 
     /**
      * Creates the Apollo server.
@@ -129,17 +128,9 @@ final class Server {
     private Server() throws IOException, SQLException {
 	logger.info("Starting Apollo...");
 
-	serviceBootstrap = new ServerBootstrap();
-	httpBootstrap = new ServerBootstrap();
-	jagGrabBootstrap = new ServerBootstrap();
 	fileSystem = FileSystem.create("data/fs");
-	serviceManager = new ServiceManager();
-	world = new World();
-	playerSerializer = new PlayerSerializerWorker(new JdbcPlayerSerializer("jdbc:mysql://127.0.0.1/game_server", "root", ""));
-	gameService = new GameService(world, playerSerializer);
-	pluginService = new PluginService(world);
-	updateService = new UpdateService();
-	messageTranslator = new MessageTranslator(world);
+	serializerWorker = new PlayerSerializerWorker(new BinaryPlayerSerializer());
+	gameService = new GameService(world, serializerWorker);
     }
 
     /**
@@ -148,7 +139,7 @@ final class Server {
     public void init() {
 	logger.info("Initialized Apollo.");
 
-	ApolloHandler handler = new ApolloHandler(messageTranslator, fileSystem, playerSerializer, gameService, updateService);
+	ApolloHandler handler = new ApolloHandler(messageTranslator, fileSystem, serializerWorker, gameService, updateService);
 
 	bootstrap(serviceBootstrap, new ServiceChannelHandler(handler));
 	bootstrap(httpBootstrap, new HttpChannelHandler(handler));
