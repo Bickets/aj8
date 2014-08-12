@@ -24,8 +24,14 @@ public final class FileSystem {
     public static final int MIDI_IDX = 3;
     public static final int MAP_IDX = 4;
 
+    public static final int TITLE_ARCHIVE = 1;
     public static final int CONFIG_ARCHIVE = 2;
+    public static final int INTERFACE_ARCHIVE = 3;
+    public static final int MEDIA_ARCHIVE = 4;
     public static final int MANIFEST_ARCHIVE = 5;
+    public static final int TEXTURES_ARCHIVE = 6;
+    public static final int CHAT_ARCHIVE = 7;
+    public static final int SOUND_ARCHIVE = 8;
 
     public static final int ARCHIVE_COUNT = 9;
 
