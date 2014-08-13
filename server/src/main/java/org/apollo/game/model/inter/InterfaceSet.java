@@ -1,10 +1,9 @@
-package org.apollo.game.model;
+package org.apollo.game.model.inter;
 
 import java.util.HashMap;
 import java.util.Map;
 
-import org.apollo.game.model.inter.EnterAmountListener;
-import org.apollo.game.model.inter.InterfaceListener;
+import org.apollo.game.model.Player;
 import org.apollo.game.model.inter.dialog.DialogueListener;
 import org.apollo.game.model.inter.dialog.DialogueOption;
 import org.apollo.game.msg.impl.CloseInterfaceMessage;
@@ -92,7 +91,7 @@ public final class InterfaceSet {
 
     /**
      * Opens a dialogue listener.
-     * 
+     *
      * @param listener The dialogue listener to open.
      */
     public void openDialogue(DialogueListener listener) {
@@ -109,7 +108,7 @@ public final class InterfaceSet {
 
     /**
      * Fires the dialogue listener option clicked event.
-     * 
+     *
      * @param option The dialogue option clicked.
      * @return {@code true} if and only if the event fired successfully,
      *         otherwise {@code false}.
@@ -236,7 +235,7 @@ public final class InterfaceSet {
 
 	interfaces.clear();
 	if (listener != null) {
-	    listener.interfaceClosed();
+	    listener.close();
 	    listener = null;
 	}
     }

@@ -4,7 +4,7 @@ import java.util.Objects
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ButtonActionEvent
-import org.apollo.game.model.InterfaceType
+import org.apollo.game.model.inter.InterfaceType
 import org.apollo.game.model.inter.dialog.DialogueOption
 
 @SubscribesTo(ButtonActionEvent)

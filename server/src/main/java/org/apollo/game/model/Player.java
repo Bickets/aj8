@@ -3,6 +3,7 @@ package org.apollo.game.model;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
+import org.apollo.game.model.inter.InterfaceSet;
 import org.apollo.game.model.inter.bank.BankConstants;
 import org.apollo.game.model.inv.AppearanceInventoryListener;
 import org.apollo.game.model.inv.FullInventoryListener;

@@ -33,7 +33,7 @@ public interface DialogueListener extends InterfaceListener {
     int execute(Player player);
 
     @Override
-    default void interfaceClosed() {
+    default void close() {
 	/* Method intended to be overridden. */
     }
 

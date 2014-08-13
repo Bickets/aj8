@@ -41,7 +41,7 @@ public final class BankInterfaceListener implements InterfaceListener {
     }
 
     @Override
-    public void interfaceClosed() {
+    public void close() {
 	player.getInventory().removeListener(invListener);
 	player.getBank().removeListener(bankListener);
     }
