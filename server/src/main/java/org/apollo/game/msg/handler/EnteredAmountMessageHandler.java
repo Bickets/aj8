@@ -15,11 +15,7 @@ public final class EnteredAmountMessageHandler implements MessageHandler<Entered
 
     @Override
     public void handle(Player player, EnteredAmountMessage message) {
-	int amount = message.getAmount();
-
-	if (amount < 1) {
-	    amount = 1;
-	}
+	int amount = Math.abs(message.getAmount());
 
 	player.getInterfaceSet().enteredAmount(amount);
     }

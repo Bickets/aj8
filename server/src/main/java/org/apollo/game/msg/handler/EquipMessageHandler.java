@@ -7,6 +7,7 @@ import org.apollo.game.model.Player;
 import org.apollo.game.model.Skill;
 import org.apollo.game.model.SkillSet;
 import org.apollo.game.model.def.EquipmentDefinition;
+import org.apollo.game.model.def.InterfaceDefinition;
 import org.apollo.game.model.def.ItemDefinition;
 import org.apollo.game.model.inv.SynchronizationInventoryListener;
 import org.apollo.game.msg.MessageHandler;
@@ -23,6 +24,10 @@ public final class EquipMessageHandler implements MessageHandler<EquipMessage> {
 
     @Override
     public void handle(Player player, EquipMessage message) {
+	if (message.getInterfaceId() < 0 || message.getInterfaceId() > InterfaceDefinition.count()) {
+	    return;
+	}
+
 	if (message.getInterfaceId() == SynchronizationInventoryListener.INVENTORY_ID) {
 	    int slot = message.getSlot();
 	    if (slot < 0 || slot >= player.getInventory().capacity()) {
