@@ -1,9 +1,9 @@
 package org.apollo.game.model;
 
-import java.io.BufferedInputStream;
-import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.nio.file.Files;
+import java.nio.file.Paths;
 
 import org.apollo.fs.FileSystem;
 import org.apollo.fs.parser.GameObjectDefinitionParser;
@@ -112,9 +112,8 @@ public final class World {
 
 	logger.info("Loading equipment definitions...");
 	int nonNull = 0;
-	try (InputStream is = new BufferedInputStream(new FileInputStream("data/equipment.dat"))) {
-	    EquipmentDefinitionParser equipParser = new EquipmentDefinitionParser(is);
-	    EquipmentDefinition[] equipDefs = equipParser.parse();
+	try (InputStream is = Files.newInputStream(Paths.get("data", "equipment.dat"))) {
+	    EquipmentDefinition[] equipDefs = EquipmentDefinitionParser.parse(is);
 	    for (EquipmentDefinition def : equipDefs) {
 		if (def != null) {
 		    nonNull++;

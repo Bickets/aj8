@@ -12,7 +12,7 @@ import org.apollo.game.model.SkillSet;
 
 /**
  * A {@link Table} which serializes players skills.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class SkillsTable extends Table {
@@ -30,7 +30,7 @@ public final class SkillsTable extends Table {
     /**
      * Constructs a new {@link SkillsTable} with the specified database
      * connection.
-     * 
+     *
      * @param connection The database connection.
      * @throws SQLException If some database access error occurs.
      */

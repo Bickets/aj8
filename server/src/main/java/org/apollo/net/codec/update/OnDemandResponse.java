@@ -36,7 +36,7 @@ public final class OnDemandResponse {
 
     /**
      * Creates the on-demand response.
-     * 
+     *
      * @param index The index of this file.
      * @param id The id of this file.
      * @param fileSize The size, in bytes of this file.

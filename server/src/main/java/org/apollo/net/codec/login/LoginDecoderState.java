@@ -25,6 +25,6 @@ public enum LoginDecoderState {
      * The login payload state will wait for all login information (such as
      * client version, username and password).
      */
-    LOGIN_PAYLOAD;
+    LOGIN_PAYLOAD
 
 }

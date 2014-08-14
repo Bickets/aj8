@@ -85,7 +85,7 @@ public abstract class SynchronizationBlock {
 
     /**
      * Creates a hit update block.
-     * 
+     *
      * @param damage The damage dealt.
      * @param type The type of hit.
      * @param currentHealth The current health.
@@ -98,7 +98,7 @@ public abstract class SynchronizationBlock {
 
     /**
      * Creates a second hit update block.
-     * 
+     *
      * @param damage The damage dealt.
      * @param type The type of hit.
      * @param currentHealth The current health.

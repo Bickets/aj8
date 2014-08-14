@@ -11,7 +11,7 @@ import com.google.common.collect.Multimap;
 
 /**
  * A universal event provider which posts, provides and deprives subscribers.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class UniversalEventProvider implements EventProvider {
@@ -48,12 +48,7 @@ public final class UniversalEventProvider implements EventProvider {
     @Override
     public <E extends Event> void post(E event) {
 	Collection<EventSubscriber> subscribers = events.get(event.getClass());
-
-	subscribers.forEach(subscriber -> {
-	    if (subscriber.test(event)) {
-		subscriber.subscribe(event);
-	    }
-	});
+	subscribers.stream().filter(s -> s.test(event)).forEach(s -> s.subscribe(event));
     }
 
 }

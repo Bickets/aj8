@@ -22,7 +22,7 @@ public final class ChatBlock extends SynchronizationBlock {
 
     /**
      * Constructs a new {@link ChatBlock}.
-     * 
+     *
      * @param privilegeLevel The privilege level.
      * @param chatMessage The messages content.
      */

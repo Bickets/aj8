@@ -26,7 +26,7 @@ import org.apollo.util.StreamUtil;
 /**
  * An implementation of {@link PlayerSerializer} used to save
  * <code>Player</code>s as binary objects.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  * @author Graham Edgecombe
  */

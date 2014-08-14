@@ -13,7 +13,7 @@ import org.apollo.game.model.Player;
 
 /**
  * A {@link Table} which serializes player inventories.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public abstract class ItemsTable extends Table {
@@ -37,7 +37,7 @@ public abstract class ItemsTable extends Table {
     /**
      * Constructs a new {@link ItemTable} with the specified database connection
      * and inventory type.
-     * 
+     *
      * @param connection The database connection.
      * @param type The type of inventory.
      * @throws SQLException If some database access error occurs.
@@ -50,7 +50,7 @@ public abstract class ItemsTable extends Table {
 
     /**
      * Returns an the inventory instance for a specified player.
-     * 
+     *
      * @param player The player who owns the inventory.
      * @return The inventory.
      */

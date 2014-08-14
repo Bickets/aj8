@@ -15,26 +15,12 @@ import org.apollo.game.model.def.EquipmentDefinition;
 public final class EquipmentDefinitionParser {
 
     /**
-     * The input stream.
-     */
-    private final InputStream is;
-
-    /**
-     * Creates the equipment definition parser.
-     *
-     * @param is The input stream.
-     */
-    public EquipmentDefinitionParser(InputStream is) {
-	this.is = is;
-    }
-
-    /**
      * Parses the input stream.
      *
      * @return The equipment definition array.
      * @throws IOException if an I/O error occurs.
      */
-    public EquipmentDefinition[] parse() throws IOException {
+    public static EquipmentDefinition[] parse(InputStream is) throws IOException {
 	DataInputStream dis = new DataInputStream(is);
 
 	int count = dis.readShort() & 0xFFFF;
@@ -63,6 +49,14 @@ public final class EquipmentDefinitionParser {
 	}
 
 	return defs;
+    }
+
+    /**
+     * Default private constructor used to prevent this class from being
+     * instantiated by other classes.
+     */
+    private EquipmentDefinitionParser() {
+
     }
 
 }

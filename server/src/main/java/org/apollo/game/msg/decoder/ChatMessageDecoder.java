@@ -34,7 +34,6 @@ public final class ChatMessageDecoder implements MessageDecoder<ChatMessage> {
 
 	byte[] recompressed = new byte[length];
 	TextUtil.compress(uncompressed, recompressed);
-	// in case invalid data gets sent, this effectively verifies it
 
 	return new ChatMessage(uncompressed, recompressed, color, effects);
     }

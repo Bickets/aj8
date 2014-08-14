@@ -18,20 +18,20 @@ public final class WalkMessage extends Message {
     /**
      * The running flag.
      */
-    private final boolean run;
+    private final boolean running;
 
     /**
      * Creates the message.
      *
      * @param steps The steps array.
-     * @param run The run flag.
+     * @param running The running flag.
      */
-    public WalkMessage(Position[] steps, boolean run) {
+    public WalkMessage(Position[] steps, boolean running) {
 	if (steps.length < 0) {
 	    throw new IllegalArgumentException("number of steps must not be negative");
 	}
 	this.steps = steps;
-	this.run = run;
+	this.running = running;
     }
 
     /**
@@ -44,12 +44,12 @@ public final class WalkMessage extends Message {
     }
 
     /**
-     * Checks if the steps should be ran (ctrl+click).
+     * Checks if the steps should be running (ctrl+click).
      *
      * @return {@code true} if so, {@code false} otherwise.
      */
     public boolean isRunning() {
-	return run;
+	return running;
     }
 
 }

@@ -43,7 +43,7 @@ public final class ServiceManager {
      * Starts all the services.
      */
     public void startAll() {
-	services.forEach((s) -> s.start());
+	services.forEach(s -> s.start());
 	logger.info("Started {} services.", services.size());
     }
 

@@ -65,4 +65,5 @@ public enum DialogueType {
      * to 4) item models which you have a choice to make and how many.
      */
     MAKE_ITEM_OPTION
+
 }

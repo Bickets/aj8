@@ -43,7 +43,7 @@ public abstract class Session {
      * Destroys this session.
      */
     public void destroy() {
-	// Intended to be overridden.
+	/* Intended to be overridden. */
     }
 
 }

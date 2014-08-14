@@ -35,6 +35,6 @@ public enum SegmentType {
     /**
      * A segment where the character is removed.
      */
-    REMOVE_CHARACTER;
+    REMOVE_CHARACTER
 
 }

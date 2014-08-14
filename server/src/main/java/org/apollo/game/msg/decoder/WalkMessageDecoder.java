@@ -41,7 +41,7 @@ public final class WalkMessageDecoder implements MessageDecoder<WalkMessage> {
 	    path[i][1] = (int) reader.getSigned(DataType.BYTE);
 	}
 	int y = (int) reader.getUnsigned(DataType.SHORT, DataOrder.LITTLE);
-	boolean run = reader.getUnsigned(DataType.BYTE, DataTransformation.NEGATE) == 1;
+	boolean running = reader.getUnsigned(DataType.BYTE, DataTransformation.NEGATE) == 1;
 
 	Position[] positions = new Position[steps + 1];
 	positions[0] = new Position(x, y);
@@ -49,7 +49,7 @@ public final class WalkMessageDecoder implements MessageDecoder<WalkMessage> {
 	    positions[step + 1] = new Position(path[step][0] + x, path[step][1] + y);
 	}
 
-	return new WalkMessage(positions, run);
+	return new WalkMessage(positions, running);
     }
 
 }
