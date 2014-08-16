@@ -10,12 +10,12 @@ public final class Position {
     /**
      * The number of height levels.
      */
-    public static final int HEIGHT_LEVELS = 4;
+    public static final int MAXIMUM_HEIGHT_LEVELS = 4;
 
     /**
      * The maximum distance players/mobs can 'see'.
      */
-    public static final int MAX_DISTANCE = 15;
+    public static final int MAXIMUM_DISTANCE = 15;
 
     /**
      * The x coordinate.
@@ -50,7 +50,7 @@ public final class Position {
      * @param height The height.
      */
     public Position(int x, int y, int height) {
-	if (height < 0 || height >= HEIGHT_LEVELS) {
+	if (height < 0 || height >= MAXIMUM_HEIGHT_LEVELS) {
 	    throw new IllegalArgumentException("Height out of bounds");
 	}
 	this.x = x;
@@ -147,7 +147,7 @@ public final class Position {
      * @return The local x coordinate.
      */
     public int getLocalX(Position base) {
-	return x - base.getTopLeftRegionX() * 8;
+	return x - base.getBaseLocalX();
     }
 
     /**
@@ -158,7 +158,25 @@ public final class Position {
      * @return The local y coordinate.
      */
     public int getLocalY(Position base) {
-	return y - base.getTopLeftRegionY() * 8;
+	return y - base.getBaseLocalY();
+    }
+
+    /**
+     * Returns the base local x coordinate.
+     *
+     * @return The base local x coordinate.
+     */
+    public int getBaseLocalX() {
+	return getTopLeftRegionX() * 8;
+    }
+
+    /**
+     * Returns the base local y coordinate.
+     *
+     * @return The base local y coordinate.
+     */
+    public int getBaseLocalY() {
+	return getTopLeftRegionY() * 8;
     }
 
     @Override
