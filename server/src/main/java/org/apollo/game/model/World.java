@@ -128,15 +128,15 @@ public final class World {
 	MobDefinition.init(mobDefs);
 	logger.info("Done (loaded {} mob definitions).", mobDefs.length);
 
-	logger.info("Loading static object definitions...");
-	Multimap<Integer, StaticObjectDefinition> objDefs = StaticObjectDefinitionParser.parse(fileSystem);
-	StaticObjectDefinition.init(objDefs);
-	logger.info("Done (loaded {} static object definitions).", objDefs.size());
-
 	logger.info("Loading game object definitions...");
 	GameObjectDefinition[] gameObjDefs = GameObjectDefinitionParser.parse(fileSystem);
 	GameObjectDefinition.init(gameObjDefs);
 	logger.info("Done (loaded {} game object definitions).", gameObjDefs.length);
+
+	logger.info("Loading static object definitions...");
+	Multimap<Integer, StaticObjectDefinition> objDefs = StaticObjectDefinitionParser.parse(fileSystem);
+	StaticObjectDefinition.init(objDefs);
+	logger.info("Done (loaded {} static object definitions).", objDefs.size());
 
 	logger.info("Loading interface definitions...");
 	InterfaceDefinition[] interfaceDefs = InterfaceDefinitionParser.parse(fileSystem);
@@ -296,26 +296,14 @@ public final class World {
     }
 
     /**
-     * Gets the character repository. NOTE:
-     * {@link CharacterRepository#add(GameCharacter)} and
-     * {@link CharacterRepository#remove(GameCharacter)} should not be called
-     * directly! These mutation methods are not guaranteed to work in future
-     * releases!
-     * <p>
-     * Instead, use the {@link World#register(Player)} and
-     * {@link World#unregister(Player)} methods which do the same thing and will
-     * continue to work as normal in future releases.
-     *
-     * @return The character repository.
+     * Returns this worlds player repository.
      */
     public EntityRepository<Player> getPlayerRepository() {
 	return playerRepository;
     }
 
     /**
-     * Gets the mob repository.
-     *
-     * @return The mob repository.
+     * Returns this worlds mob repository.
      */
     public EntityRepository<Mob> getMobRepository() {
 	return mobRepository;

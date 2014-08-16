@@ -1,17 +1,13 @@
 package org.apollo.game.model.def;
 
-import java.util.Collection;
-
 import org.apollo.game.model.Position;
 
 import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Iterables;
 import com.google.common.collect.Multimap;
-import com.google.common.collect.Multimaps;
 
 /**
  * Represents the definition of some game object.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  * @author Steve
  */
@@ -23,20 +19,13 @@ public final class GameObjectDefinition {
     private static GameObjectDefinition[] definitions;
 
     /**
-     * A map of object ids to positions representing object positions on the
-     * map.
+     * A map representing known positions for object ids.
      */
-    private static final Multimap<Integer, Position> positions = ArrayListMultimap.create();
-
-    /**
-     * A map of positions to object ids, used for reverse look ups to find an
-     * objects id by position.
-     */
-    private static final Multimap<Position, Integer> positionsInverse = Multimaps.invertFrom(positions, ArrayListMultimap.create());
+    private final Multimap<Integer, Position> positions = ArrayListMultimap.create();
 
     /**
      * Gets the total number of objects.
-     * 
+     *
      * @return The total number of objects.
      */
     public static int count() {
@@ -45,7 +34,7 @@ public final class GameObjectDefinition {
 
     /**
      * Gets the object definition for the specified id.
-     * 
+     *
      * @param id The id.
      * @return The definition.
      * @throws IndexOutOfBoundsException if the id is out of bounds.
@@ -59,7 +48,7 @@ public final class GameObjectDefinition {
 
     /**
      * Initializes the class with the specified set of definitions.
-     * 
+     *
      * @param definitions The definitions.
      * @throws RuntimeException if there is an id mismatch.
      */
@@ -70,8 +59,6 @@ public final class GameObjectDefinition {
 	    if (def.getId() != id) {
 		throw new RuntimeException("Object definition id mismatch");
 	    }
-	    Collection<StaticObjectDefinition> objs = StaticObjectDefinition.forId(id);
-	    objs.forEach(o -> positions.put(o.getId(), o.getPosition()));
 	}
     }
 
@@ -162,7 +149,7 @@ public final class GameObjectDefinition {
 
     /**
      * Creates a new object definition.
-     * 
+     *
      * @param id The object id.
      */
     public GameObjectDefinition(int id) {
@@ -170,8 +157,34 @@ public final class GameObjectDefinition {
     }
 
     /**
+     * Adds an this object definitions position to the map.
+     *
+     * @param position The position to add.
+     * @throws IllegalStateException If the position is not valid.
+     */
+    public void addPosition(Position position) {
+	if (valid(position)) {
+	    positions.put(id, position);
+	    return;
+	}
+
+	throw new IllegalStateException(position + " already exists for the object id: " + id);
+    }
+
+    /**
+     * Checks whether or not the specified position is valid.
+     *
+     * @param position The position to test.
+     * @return <code>true</code> if and only if the position is valid, otherwise
+     *         <code>false</code>.
+     */
+    public boolean valid(Position position) {
+	return positions.containsEntry(id, position);
+    }
+
+    /**
      * Adds a action to the actions array.
-     * 
+     *
      * @param code The position to add the action.
      * @param action The action to add.
      */
@@ -184,62 +197,8 @@ public final class GameObjectDefinition {
     }
 
     /**
-     * Notifies the positions that this object exists if it was added after
-     * initialization, this method is required in order to make custom object
-     * function if they are placed elsewhere on the map.
-     * 
-     * @param position The position of this object.
-     */
-    public void notifyExists(Position position) {
-	/*
-	 * If an object exists on the map at the specified position, we can
-	 * override it.
-	 */
-	if (positions.containsValue(position)) {
-	    /*
-	     * Let's get a collection of possible keys to the specified
-	     * position.
-	     */
-	    Collection<Integer> ids = positionsInverse.get(position);
-
-	    /*
-	     * We know there will be only one possible position for the
-	     * specified id, so let's get the first (and only) one available.
-	     */
-	    int id = Iterables.getFirst(ids, 0);
-
-	    /* Remove the old entry. */
-	    positions.remove(id, position);
-	}
-
-	/* Add the new position. */
-	positions.put(id, position);
-    }
-
-    /**
-     * Returns a flag for denoting whether or not an object actually exists on
-     * the map.
-     * 
-     * @param position The position of the object.
-     * @return {@code true} if and only if the object exists on the map
-     *         otherwise {@code false}.
-     */
-    public boolean objectExists(Position position) {
-	return positions.containsEntry(id, position);
-    }
-
-    /**
-     * Returns all known positions of this game object.
-     * 
-     * @return A collection of all known positions.
-     */
-    public Collection<Position> getKnownPositions() {
-	return positions.get(id);
-    }
-
-    /**
      * Gets the actions.
-     * 
+     *
      * @return The actions.
      */
     public String[] getActions() {
@@ -248,7 +207,7 @@ public final class GameObjectDefinition {
 
     /**
      * Gets the description.
-     * 
+     *
      * @return The description.
      */
     public String getDescription() {
@@ -257,7 +216,7 @@ public final class GameObjectDefinition {
 
     /**
      * Gets the object id.
-     * 
+     *
      * @return The object id.
      */
     public int getId() {
@@ -266,7 +225,7 @@ public final class GameObjectDefinition {
 
     /**
      * Gets the map scene id.
-     * 
+     *
      * @return The map scene id.
      */
     public int getMapSceneId() {
@@ -275,7 +234,7 @@ public final class GameObjectDefinition {
 
     /**
      * Gets the name.
-     * 
+     *
      * @return The name.
      */
     public String getName() {
@@ -284,7 +243,7 @@ public final class GameObjectDefinition {
 
     /**
      * Gets the offset.
-     * 
+     *
      * @return The offset.
      */
     public Position getOffset() {
@@ -293,7 +252,7 @@ public final class GameObjectDefinition {
 
     /**
      * Gets the scale.
-     * 
+     *
      * @return The scale.
      */
     public Position getScale() {
@@ -302,7 +261,7 @@ public final class GameObjectDefinition {
 
     /**
      * Gets the object size, in tiles.
-     * 
+     *
      * @return The size.
      */
     public int getSize() {
@@ -311,7 +270,7 @@ public final class GameObjectDefinition {
 
     /**
      * Gets the object's horizontal X size.
-     * 
+     *
      * @return The X size.
      */
     public int getSizeX() {
@@ -320,7 +279,7 @@ public final class GameObjectDefinition {
 
     /**
      * Gets the object's horizontal Y size.
-     * 
+     *
      * @return The Y size.
      */
     public int getSizeY() {
@@ -329,7 +288,7 @@ public final class GameObjectDefinition {
 
     /**
      * Gets the actions flag.
-     * 
+     *
      * @return The actions flag.
      */
     public boolean hasActions() {
@@ -338,7 +297,7 @@ public final class GameObjectDefinition {
 
     /**
      * Gets the object's intractability flag.
-     * 
+     *
      * @return {@code true} if the object has actions, {@code false} otherwise.
      */
     public boolean isInteractable() {
@@ -347,7 +306,7 @@ public final class GameObjectDefinition {
 
     /**
      * Gets the object's solid flag.
-     * 
+     *
      * @return The solid flag.
      */
     public boolean isSolid() {
@@ -356,7 +315,7 @@ public final class GameObjectDefinition {
 
     /**
      * Gets the object's walkable flag.
-     * 
+     *
      * @return The walkable flag.
      */
     public boolean isWalkable() {
@@ -365,7 +324,7 @@ public final class GameObjectDefinition {
 
     /**
      * Sets the description.
-     * 
+     *
      * @param description The description.
      */
     public void setDescription(String description) {
@@ -374,7 +333,7 @@ public final class GameObjectDefinition {
 
     /**
      * Sets the object's intractability flag.
-     * 
+     *
      * @param interactable The intractability flag.
      */
     public void setInteractable(boolean interactable) {
@@ -383,7 +342,7 @@ public final class GameObjectDefinition {
 
     /**
      * Sets the map scene id.
-     * 
+     *
      * @param mapSceneId The map scene id.
      */
     public void setMapSceneId(int mapSceneId) {
@@ -392,7 +351,7 @@ public final class GameObjectDefinition {
 
     /**
      * Sets the name.
-     * 
+     *
      * @param name The name to set.
      */
     public void setName(String name) {
@@ -401,7 +360,7 @@ public final class GameObjectDefinition {
 
     /**
      * Sets the offset x.
-     * 
+     *
      * @param offsetX The offset x.
      */
     public void setOffsetX(int offsetX) {
@@ -410,7 +369,7 @@ public final class GameObjectDefinition {
 
     /**
      * Sets the offset y.
-     * 
+     *
      * @param offsetY The offset y.
      */
     public void setOffsetY(int offsetY) {
@@ -419,7 +378,7 @@ public final class GameObjectDefinition {
 
     /**
      * Sets the offset z.
-     * 
+     *
      * @param offsetZ The offset z.
      */
     public void setOffsetZ(int offsetZ) {
@@ -428,7 +387,7 @@ public final class GameObjectDefinition {
 
     /**
      * Sets the scale x.
-     * 
+     *
      * @param scaleX The scale x.
      */
     public void setScaleX(int scaleX) {
@@ -437,7 +396,7 @@ public final class GameObjectDefinition {
 
     /**
      * Sets the scale y.
-     * 
+     *
      * @param scaleY The scale y.
      */
     public void setScaleY(int scaleY) {
@@ -446,7 +405,7 @@ public final class GameObjectDefinition {
 
     /**
      * Sets the scale z.
-     * 
+     *
      * @param scaleZ The scale z.
      */
     public void setScaleZ(int scaleZ) {
@@ -455,7 +414,7 @@ public final class GameObjectDefinition {
 
     /**
      * Sets the horizontal X size.
-     * 
+     *
      * @param sizeX The horizontal size to be set.
      */
     public void setSizeX(int sizeX) {
@@ -464,7 +423,7 @@ public final class GameObjectDefinition {
 
     /**
      * Sets the vertical Y size.
-     * 
+     *
      * @param sizeY The vertical size to be set.
      */
     public void setSizeY(int sizeY) {
@@ -473,7 +432,7 @@ public final class GameObjectDefinition {
 
     /**
      * Sets the object's solid flag.
-     * 
+     *
      * @param solid The solid flag.
      */
     public void setSolid(boolean solid) {
@@ -482,7 +441,7 @@ public final class GameObjectDefinition {
 
     /**
      * Sets the object's walkable flag.
-     * 
+     *
      * @param walkable The walkable flag.
      */
     public void setWalkable(boolean walkable) {

@@ -17,7 +17,7 @@ public final class GameObject extends Entity {
     private final int id;
 
     /**
-     * Represents the type of this object.
+     * Represents the type of this object .
      */
     private final ObjectType type;
 
@@ -100,21 +100,9 @@ public final class GameObject extends Entity {
     }
 
     /**
-     * Notifies that this object actually exists within the world if it does not
-     * already. If this object already exists an {@link IllegalStateException}
-     * is thrown.
-     */
-    public void notifyExists() {
-	if (exists()) {
-	    throw new IllegalStateException("This object already exists within the world");
-	}
-	getDefinition().notifyExists(getPosition());
-    }
-
-    /**
      * Returns the amount of between this game objects position and the
      * specified position.
-     * 
+     *
      * @param position The starting position.
      * @return The amount of between this game objects position and the
      *         specified position.
@@ -136,7 +124,7 @@ public final class GameObject extends Entity {
      * the world otherwise {@code false}.
      */
     public boolean exists() {
-	return getDefinition().objectExists(getPosition());
+	return getDefinition().valid(getPosition());
     }
 
     @Override
