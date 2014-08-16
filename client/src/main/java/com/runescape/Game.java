@@ -5108,27 +5108,25 @@ public class Game extends GameShell {
 			redrawChatbox = true;
 		    }
 		    if (key == KeyEvent.VK_ENTER && chatboxInput.length() > 0) {
-			if (playerRights == 0) {
-			    if (chatboxInput.equals("::clientdrop")) {
-				method68(-670);
+			if (chatboxInput.equals("::clientdrop")) {
+			    method68(-670);
+			}
+			if (chatboxInput.equals("::lag")) {
+			    method72();
+			}
+			if (chatboxInput.equals("::prefetchmusic")) {
+			    for (int i_417_ = 0; i_417_ < onDemandRequester.fileCount(2); i_417_++) {
+				onDemandRequester.setPriority((byte) 1, 2, i_417_);
 			    }
-			    if (chatboxInput.equals("::lag")) {
-				method72();
-			    }
-			    if (chatboxInput.equals("::prefetchmusic")) {
-				for (int i_417_ = 0; i_417_ < onDemandRequester.fileCount(2); i_417_++) {
-				    onDemandRequester.setPriority((byte) 1, 2, i_417_);
-				}
-			    }
-			    if (chatboxInput.equals("::fps")) {
-				Game.debug = !Game.debug;
-			    }
-			    if (chatboxInput.equals("::noclip")) {
-				for (int plane = 0; plane < 4; plane++) {
-				    for (int x = 1; x < 103; x++) {
-					for (int y = 1; y < 103; y++) {
-					    currentCollisionMap[plane].adjacency[x][y] = 0;
-					}
+			}
+			if (chatboxInput.equals("::fps")) {
+			    Game.debug = !Game.debug;
+			}
+			if (chatboxInput.equals("::noclip")) {
+			    for (int plane = 0; plane < 4; plane++) {
+				for (int x = 1; x < 103; x++) {
+				    for (int y = 1; y < 103; y++) {
+					currentCollisionMap[plane].adjacency[x][y] = 0;
 				    }
 				}
 			    }
@@ -10388,7 +10386,7 @@ public class Game extends GameShell {
 		if (i_1007_ < 3 && (currentSceneTileFlags[1][x][y] & 0x2) == 2) {
 		    i_1007_++;
 		}
-		Region.method470(currentScene, i_995_, y, i_996_, i_1007_, currentCollisionMap[plane], anIntArrayArrayArray1239, x, i_999_, plane, (byte) 93);
+		Region.method470(currentScene, i_995_, y, i_996_, i_1007_, currentCollisionMap[plane], anIntArrayArrayArray1239, x, i_999_, plane);
 	    }
 	    break;
 	} while (false);

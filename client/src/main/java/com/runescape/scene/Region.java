@@ -859,10 +859,10 @@ public class Region {
 		    }
 		}
 		Buffer buffer = new Buffer(bs);
-		for (int i_177_ = 0; i_177_ < 4; i_177_++) {
-		    for (int i_178_ = 0; i_178_ < 64; i_178_++) {
-			for (int i_179_ = 0; i_179_ < 64; i_179_++) {
-			    method463(i_179_ + i, i_173_, buffer, i_178_ + i_171_, i_177_, 0, 942, i_172_);
+		for (int plane = 0; plane < 4; plane++) {
+		    for (int localX = 0; localX < 64; localX++) {
+			for (int localY = 0; localY < 64; localY++) {
+			    method463(localY + i, i_173_, buffer, localX + i_171_, plane, 0, 942, i_172_);
 			}
 		    }
 		}
@@ -878,43 +878,43 @@ public class Region {
 	} while (false);
     }
 
-    private final void method463(int i, int i_180_, Buffer buffer, int i_181_, int i_182_, int i_183_, int i_184_, int i_185_) {
+    private final void method463(int localY, int i_180_, Buffer buffer, int localX, int plane, int i_183_, int i_184_, int i_185_) {
 	try {
 	    i_184_ = 36 / i_184_;
-	    if (i_181_ >= 0 && i_181_ < 104 && i >= 0 && i < 104) {
-		renderRuleFlags[i_182_][i_181_][i] = (byte) 0;
+	    if (localX >= 0 && localX < 104 && localY >= 0 && localY < 104) {
+		renderRuleFlags[plane][localX][localY] = (byte) 0;
 		for (;;) {
-		    int i_186_ = buffer.getUnsignedByte();
-		    if (i_186_ == 0) {
-			if (i_182_ == 0) {
-			    vertexHeights[0][i_181_][i] = -Region.calculateVertexHeight(932731 + i_181_ + i_185_, 556238 + i + i_180_) * 8;
+		    int config = buffer.getUnsignedByte();
+		    if (config == 0) {
+			if (plane == 0) {
+			    vertexHeights[0][localX][localY] = -Region.calculateVertexHeight(932731 + localX + i_185_, 556238 + localY + i_180_) * 8;
 			} else {
-			    vertexHeights[i_182_][i_181_][i] = vertexHeights[i_182_ - 1][i_181_][i] - 240;
+			    vertexHeights[plane][localX][localY] = vertexHeights[plane - 1][localX][localY] - 240;
 			    break;
 			}
 			break;
 		    }
-		    if (i_186_ == 1) {
+		    if (config == 1) {
 			int i_187_ = buffer.getUnsignedByte();
 			if (i_187_ == 1) {
 			    i_187_ = 0;
 			}
-			if (i_182_ == 0) {
-			    vertexHeights[0][i_181_][i] = -i_187_ * 8;
+			if (plane == 0) {
+			    vertexHeights[0][localX][localY] = -i_187_ * 8;
 			} else {
-			    vertexHeights[i_182_][i_181_][i] = vertexHeights[i_182_ - 1][i_181_][i] - i_187_ * 8;
+			    vertexHeights[plane][localX][localY] = vertexHeights[plane - 1][localX][localY] - i_187_ * 8;
 			    break;
 			}
 			break;
 		    }
-		    if (i_186_ <= 49) {
-			overlayFloorIds[i_182_][i_181_][i] = buffer.get();
-			overlayClippingPaths[i_182_][i_181_][i] = (byte) ((i_186_ - 2) / 4);
-			overlayRotations[i_182_][i_181_][i] = (byte) (i_186_ - 2 + i_183_ & 0x3);
-		    } else if (i_186_ <= 81) {
-			renderRuleFlags[i_182_][i_181_][i] = (byte) (i_186_ - 49);
+		    if (config <= 49) {
+			overlayFloorIds[plane][localX][localY] = buffer.get();
+			overlayClippingPaths[plane][localX][localY] = (byte) ((config - 2) / 4);
+			overlayRotations[plane][localX][localY] = (byte) (config - 2 + i_183_ & 0x3);
+		    } else if (config <= 81) {
+			renderRuleFlags[plane][localX][localY] = (byte) (config - 49);
 		    } else {
-			underlayFloorIds[i_182_][i_181_][i] = (byte) (i_186_ - 81);
+			underlayFloorIds[plane][localX][localY] = (byte) (config - 81);
 		    }
 		}
 	    } else {
@@ -933,7 +933,7 @@ public class Region {
 		}
 	    }
 	} catch (RuntimeException runtimeexception) {
-	    Signlink.reportError("30203, " + i + ", " + i_180_ + ", " + buffer + ", " + i_181_ + ", " + i_182_ + ", " + i_183_ + ", " + i_184_ + ", " + i_185_ + ", " + runtimeexception.toString());
+	    Signlink.reportError("30203, " + localY + ", " + i_180_ + ", " + buffer + ", " + localX + ", " + plane + ", " + i_183_ + ", " + i_184_ + ", " + i_185_ + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
@@ -1053,200 +1053,198 @@ public class Region {
 	return (i & 0xff80) + i_220_;
     }
 
-    public static final void method470(Scene scene, int i, int i_221_, int i_222_, int i_223_, TraversalMap collisionmap, int[][][] is, int i_224_, int i_225_, int i_226_, byte b) {
+    public static final void method470(Scene scene, int face, int y, int clickType, int i_223_, TraversalMap map, int[][][] is, int x, int id, int plane) {
 	try {
-	    int i_227_ = is[i_223_][i_224_][i_221_];
-	    int i_228_ = is[i_223_][i_224_ + 1][i_221_];
-	    int i_229_ = is[i_223_][i_224_ + 1][i_221_ + 1];
-	    int i_230_ = is[i_223_][i_224_][i_221_ + 1];
-	    if (b != 93) {
+	    int vertexHeight = is[i_223_][x][y];
+	    int vertexHeightRight = is[i_223_][x + 1][y];
+	    int vertexHeightTopRight = is[i_223_][x + 1][y + 1];
+	    int vertexHeightTop = is[i_223_][x][y + 1];
+	    int z = vertexHeight + vertexHeightRight + vertexHeightTopRight + vertexHeightTop >> 2;
+	    GameObjectDefinition def = GameObjectDefinition.getDefinition(id);
+	    int hash = x + (y << 7) + (id << 14) + 1073741824;
+	    if (!def.actionsBoolean) {
+		hash += -2147483648;
 	    }
-	    int i_231_ = i_227_ + i_228_ + i_229_ + i_230_ >> 2;
-	    GameObjectDefinition gameobjectdefinition = GameObjectDefinition.getDefinition(i_225_);
-	    int i_232_ = i_224_ + (i_221_ << 7) + (i_225_ << 14) + 1073741824;
-	    if (!gameobjectdefinition.actionsBoolean) {
-		i_232_ += -2147483648;
-	    }
-	    byte b_233_ = (byte) ((i << 6) + i_222_);
-	    if (i_222_ == 22) {
+	    byte config = (byte) ((face << 6) + clickType);
+	    if (clickType == 22) {
 		Renderable renderable;
-		if (gameobjectdefinition.animationId == -1 && gameobjectdefinition.childrenIds == null) {
-		    renderable = gameobjectdefinition.getGameObjectModel(22, i, i_227_, i_228_, i_229_, i_230_, -1);
+		if (def.animationId == -1 && def.childrenIds == null) {
+		    renderable = def.getGameObjectModel(22, face, vertexHeight, vertexHeightRight, vertexHeightTopRight, vertexHeightTop, -1);
 		} else {
-		    renderable = new GameObject(i_225_, i, 22, i_228_, i_229_, i_227_, i_230_, gameobjectdefinition.animationId, true);
+		    renderable = new GameObject(id, face, 22, vertexHeightRight, vertexHeightTopRight, vertexHeight, vertexHeightTop, def.animationId, true);
 		}
-		scene.addGroundDecoration(i_226_, i_231_, i_221_, 68, renderable, b_233_, i_232_, i_224_);
-		if (gameobjectdefinition.solid && gameobjectdefinition.actionsBoolean) {
-		    collisionmap.markBlocked(i_224_, i_221_);
+		scene.addGroundDecoration(plane, z, y, 68, renderable, config, hash, x);
+		if (def.solid && def.actionsBoolean) {
+		    map.markBlocked(x, y);
 		}
-	    } else if (i_222_ == 10 || i_222_ == 11) {
+	    } else if (clickType == 10 || clickType == 11) {
 		Renderable renderable;
-		if (gameobjectdefinition.animationId == -1 && gameobjectdefinition.childrenIds == null) {
-		    renderable = gameobjectdefinition.getGameObjectModel(10, i, i_227_, i_228_, i_229_, i_230_, -1);
+		if (def.animationId == -1 && def.childrenIds == null) {
+		    renderable = def.getGameObjectModel(10, face, vertexHeight, vertexHeightRight, vertexHeightTopRight, vertexHeightTop, -1);
 		} else {
-		    renderable = new GameObject(i_225_, i, 10, i_228_, i_229_, i_227_, i_230_, gameobjectdefinition.animationId, true);
+		    renderable = new GameObject(id, face, 10, vertexHeightRight, vertexHeightTopRight, vertexHeight, vertexHeightTop, def.animationId, true);
 		}
 		if (renderable != null) {
 		    int i_234_ = 0;
-		    if (i_222_ == 11) {
+		    if (clickType == 11) {
 			i_234_ += 256;
 		    }
 		    int i_235_;
 		    int i_236_;
-		    if (i == 1 || i == 3) {
-			i_235_ = gameobjectdefinition.sizeY;
-			i_236_ = gameobjectdefinition.sizeX;
+		    if (face == 1 || face == 3) {
+			i_235_ = def.sizeY;
+			i_236_ = def.sizeX;
 		    } else {
-			i_235_ = gameobjectdefinition.sizeX;
-			i_236_ = gameobjectdefinition.sizeY;
+			i_235_ = def.sizeX;
+			i_236_ = def.sizeY;
 		    }
-		    scene.method506(i_232_, b_233_, i_231_, i_236_, renderable, i_235_, i_226_, i_234_, (byte) 110, i_221_, i_224_);
+		    scene.method506(hash, config, z, i_236_, renderable, i_235_, plane, i_234_, (byte) 110, y, x);
 		}
-		if (gameobjectdefinition.solid) {
-		    collisionmap.markSolidOccupant(i_224_, i_221_, gameobjectdefinition.sizeX, gameobjectdefinition.sizeY, i, gameobjectdefinition.walkable);
+		if (def.solid) {
+		    map.markSolidOccupant(x, y, def.sizeX, def.sizeY, face, def.walkable);
 		}
-	    } else if (i_222_ >= 12) {
+	    } else if (clickType >= 12) {
 		Renderable renderable;
-		if (gameobjectdefinition.animationId == -1 && gameobjectdefinition.childrenIds == null) {
-		    renderable = gameobjectdefinition.getGameObjectModel(i_222_, i, i_227_, i_228_, i_229_, i_230_, -1);
+		if (def.animationId == -1 && def.childrenIds == null) {
+		    renderable = def.getGameObjectModel(clickType, face, vertexHeight, vertexHeightRight, vertexHeightTopRight, vertexHeightTop, -1);
 		} else {
-		    renderable = new GameObject(i_225_, i, i_222_, i_228_, i_229_, i_227_, i_230_, gameobjectdefinition.animationId, true);
+		    renderable = new GameObject(id, face, clickType, vertexHeightRight, vertexHeightTopRight, vertexHeight, vertexHeightTop, def.animationId, true);
 		}
-		scene.method506(i_232_, b_233_, i_231_, 1, renderable, 1, i_226_, 0, (byte) 110, i_221_, i_224_);
-		if (gameobjectdefinition.solid) {
-		    collisionmap.markSolidOccupant(i_224_, i_221_, gameobjectdefinition.sizeX, gameobjectdefinition.sizeY, i, gameobjectdefinition.walkable);
+		scene.method506(hash, config, z, 1, renderable, 1, plane, 0, (byte) 110, y, x);
+		if (def.solid) {
+		    map.markSolidOccupant(x, y, def.sizeX, def.sizeY, face, def.walkable);
 		}
-	    } else if (i_222_ == 0) {
+	    } else if (clickType == 0) {
 		Renderable renderable;
-		if (gameobjectdefinition.animationId == -1 && gameobjectdefinition.childrenIds == null) {
-		    renderable = gameobjectdefinition.getGameObjectModel(0, i, i_227_, i_228_, i_229_, i_230_, -1);
+		if (def.animationId == -1 && def.childrenIds == null) {
+		    renderable = def.getGameObjectModel(0, face, vertexHeight, vertexHeightRight, vertexHeightTopRight, vertexHeightTop, -1);
 		} else {
-		    renderable = new GameObject(i_225_, i, 0, i_228_, i_229_, i_227_, i_230_, gameobjectdefinition.animationId, true);
+		    renderable = new GameObject(id, face, 0, vertexHeightRight, vertexHeightTopRight, vertexHeight, vertexHeightTop, def.animationId, true);
 		}
-		scene.method504(Region.anIntArray506[i], renderable, true, i_232_, i_221_, b_233_, i_224_, null, i_231_, 0, i_226_);
-		if (gameobjectdefinition.solid) {
-		    collisionmap.markWall(i_224_, i_221_, i_222_, i, gameobjectdefinition.walkable);
+		scene.method504(Region.anIntArray506[face], renderable, true, hash, y, config, x, null, z, 0, plane);
+		if (def.solid) {
+		    map.markWall(x, y, clickType, face, def.walkable);
 		}
-	    } else if (i_222_ == 1) {
+	    } else if (clickType == 1) {
 		Renderable renderable;
-		if (gameobjectdefinition.animationId == -1 && gameobjectdefinition.childrenIds == null) {
-		    renderable = gameobjectdefinition.getGameObjectModel(1, i, i_227_, i_228_, i_229_, i_230_, -1);
+		if (def.animationId == -1 && def.childrenIds == null) {
+		    renderable = def.getGameObjectModel(1, face, vertexHeight, vertexHeightRight, vertexHeightTopRight, vertexHeightTop, -1);
 		} else {
-		    renderable = new GameObject(i_225_, i, 1, i_228_, i_229_, i_227_, i_230_, gameobjectdefinition.animationId, true);
+		    renderable = new GameObject(id, face, 1, vertexHeightRight, vertexHeightTopRight, vertexHeight, vertexHeightTop, def.animationId, true);
 		}
-		scene.method504(Region.anIntArray494[i], renderable, true, i_232_, i_221_, b_233_, i_224_, null, i_231_, 0, i_226_);
-		if (gameobjectdefinition.solid) {
-		    collisionmap.markWall(i_224_, i_221_, i_222_, i, gameobjectdefinition.walkable);
+		scene.method504(Region.anIntArray494[face], renderable, true, hash, y, config, x, null, z, 0, plane);
+		if (def.solid) {
+		    map.markWall(x, y, clickType, face, def.walkable);
 		}
-	    } else if (i_222_ == 2) {
-		int i_237_ = i + 1 & 0x3;
+	    } else if (clickType == 2) {
+		int i_237_ = face + 1 & 0x3;
 		Renderable renderable;
 		Renderable renderable_238_;
-		if (gameobjectdefinition.animationId == -1 && gameobjectdefinition.childrenIds == null) {
-		    renderable = gameobjectdefinition.getGameObjectModel(2, 4 + i, i_227_, i_228_, i_229_, i_230_, -1);
-		    renderable_238_ = gameobjectdefinition.getGameObjectModel(2, i_237_, i_227_, i_228_, i_229_, i_230_, -1);
+		if (def.animationId == -1 && def.childrenIds == null) {
+		    renderable = def.getGameObjectModel(2, 4 + face, vertexHeight, vertexHeightRight, vertexHeightTopRight, vertexHeightTop, -1);
+		    renderable_238_ = def.getGameObjectModel(2, i_237_, vertexHeight, vertexHeightRight, vertexHeightTopRight, vertexHeightTop, -1);
 		} else {
-		    renderable = new GameObject(i_225_, 4 + i, 2, i_228_, i_229_, i_227_, i_230_, gameobjectdefinition.animationId, true);
-		    renderable_238_ = new GameObject(i_225_, i_237_, 2, i_228_, i_229_, i_227_, i_230_, gameobjectdefinition.animationId, true);
+		    renderable = new GameObject(id, 4 + face, 2, vertexHeightRight, vertexHeightTopRight, vertexHeight, vertexHeightTop, def.animationId, true);
+		    renderable_238_ = new GameObject(id, i_237_, 2, vertexHeightRight, vertexHeightTopRight, vertexHeight, vertexHeightTop, def.animationId, true);
 		}
-		scene.method504(Region.anIntArray506[i], renderable, true, i_232_, i_221_, b_233_, i_224_, renderable_238_, i_231_, Region.anIntArray506[i_237_], i_226_);
-		if (gameobjectdefinition.solid) {
-		    collisionmap.markWall(i_224_, i_221_, i_222_, i, gameobjectdefinition.walkable);
+		scene.method504(Region.anIntArray506[face], renderable, true, hash, y, config, x, renderable_238_, z, Region.anIntArray506[i_237_], plane);
+		if (def.solid) {
+		    map.markWall(x, y, clickType, face, def.walkable);
 		}
-	    } else if (i_222_ == 3) {
+	    } else if (clickType == 3) {
 		Renderable renderable;
-		if (gameobjectdefinition.animationId == -1 && gameobjectdefinition.childrenIds == null) {
-		    renderable = gameobjectdefinition.getGameObjectModel(3, i, i_227_, i_228_, i_229_, i_230_, -1);
+		if (def.animationId == -1 && def.childrenIds == null) {
+		    renderable = def.getGameObjectModel(3, face, vertexHeight, vertexHeightRight, vertexHeightTopRight, vertexHeightTop, -1);
 		} else {
-		    renderable = new GameObject(i_225_, i, 3, i_228_, i_229_, i_227_, i_230_, gameobjectdefinition.animationId, true);
+		    renderable = new GameObject(id, face, 3, vertexHeightRight, vertexHeightTopRight, vertexHeight, vertexHeightTop, def.animationId, true);
 		}
-		scene.method504(Region.anIntArray494[i], renderable, true, i_232_, i_221_, b_233_, i_224_, null, i_231_, 0, i_226_);
-		if (gameobjectdefinition.solid) {
-		    collisionmap.markWall(i_224_, i_221_, i_222_, i, gameobjectdefinition.walkable);
+		scene.method504(Region.anIntArray494[face], renderable, true, hash, y, config, x, null, z, 0, plane);
+		if (def.solid) {
+		    map.markWall(x, y, clickType, face, def.walkable);
 		}
-	    } else if (i_222_ == 9) {
+	    } else if (clickType == 9) {
 		Renderable renderable;
-		if (gameobjectdefinition.animationId == -1 && gameobjectdefinition.childrenIds == null) {
-		    renderable = gameobjectdefinition.getGameObjectModel(i_222_, i, i_227_, i_228_, i_229_, i_230_, -1);
+		if (def.animationId == -1 && def.childrenIds == null) {
+		    renderable = def.getGameObjectModel(clickType, face, vertexHeight, vertexHeightRight, vertexHeightTopRight, vertexHeightTop, -1);
 		} else {
-		    renderable = new GameObject(i_225_, i, i_222_, i_228_, i_229_, i_227_, i_230_, gameobjectdefinition.animationId, true);
+		    renderable = new GameObject(id, face, clickType, vertexHeightRight, vertexHeightTopRight, vertexHeight, vertexHeightTop, def.animationId, true);
 		}
-		scene.method506(i_232_, b_233_, i_231_, 1, renderable, 1, i_226_, 0, (byte) 110, i_221_, i_224_);
-		if (gameobjectdefinition.solid) {
-		    collisionmap.markSolidOccupant(i_224_, i_221_, gameobjectdefinition.sizeX, gameobjectdefinition.sizeY, i, gameobjectdefinition.walkable);
+		scene.method506(hash, config, z, 1, renderable, 1, plane, 0, (byte) 110, y, x);
+		if (def.solid) {
+		    map.markSolidOccupant(x, y, def.sizeX, def.sizeY, face, def.walkable);
 		}
 	    } else {
-		if (gameobjectdefinition.adjustToTerrain) {
-		    if (i == 1) {
-			int i_239_ = i_230_;
-			i_230_ = i_229_;
-			i_229_ = i_228_;
-			i_228_ = i_227_;
-			i_227_ = i_239_;
-		    } else if (i == 2) {
-			int i_240_ = i_230_;
-			i_230_ = i_228_;
-			i_228_ = i_240_;
-			i_240_ = i_229_;
-			i_229_ = i_227_;
-			i_227_ = i_240_;
-		    } else if (i == 3) {
-			int i_241_ = i_230_;
-			i_230_ = i_227_;
-			i_227_ = i_228_;
-			i_228_ = i_229_;
-			i_229_ = i_241_;
+		if (def.adjustToTerrain) {
+		    if (face == 1) {
+			int i_239_ = vertexHeightTop;
+			vertexHeightTop = vertexHeightTopRight;
+			vertexHeightTopRight = vertexHeightRight;
+			vertexHeightRight = vertexHeight;
+			vertexHeight = i_239_;
+		    } else if (face == 2) {
+			int i_240_ = vertexHeightTop;
+			vertexHeightTop = vertexHeightRight;
+			vertexHeightRight = i_240_;
+			i_240_ = vertexHeightTopRight;
+			vertexHeightTopRight = vertexHeight;
+			vertexHeight = i_240_;
+		    } else if (face == 3) {
+			int i_241_ = vertexHeightTop;
+			vertexHeightTop = vertexHeight;
+			vertexHeight = vertexHeightRight;
+			vertexHeightRight = vertexHeightTopRight;
+			vertexHeightTopRight = i_241_;
 		    }
 		}
-		if (i_222_ == 4) {
+		if (clickType == 4) {
 		    Renderable renderable;
-		    if (gameobjectdefinition.animationId == -1 && gameobjectdefinition.childrenIds == null) {
-			renderable = gameobjectdefinition.getGameObjectModel(4, 0, i_227_, i_228_, i_229_, i_230_, -1);
+		    if (def.animationId == -1 && def.childrenIds == null) {
+			renderable = def.getGameObjectModel(4, 0, vertexHeight, vertexHeightRight, vertexHeightTopRight, vertexHeightTop, -1);
 		    } else {
-			renderable = new GameObject(i_225_, 0, 4, i_228_, i_229_, i_227_, i_230_, gameobjectdefinition.animationId, true);
+			renderable = new GameObject(id, 0, 4, vertexHeightRight, vertexHeightTopRight, vertexHeight, vertexHeightTop, def.animationId, true);
 		    }
-		    scene.addWallDecoration(i_224_, 0, i_221_, 0, i_231_, i_226_, i * 512, Region.anIntArray506[i], b_233_, i_232_, renderable);
-		} else if (i_222_ == 5) {
-		    int i_242_ = 16;
-		    int i_243_ = scene.method522(i_226_, i_224_, i_221_);
-		    if (i_243_ > 0) {
-			i_242_ = GameObjectDefinition.getDefinition(i_243_ >> 14 & 0x7fff).unknown4;
+		    scene.addWallDecoration(x, 0, y, 0, z, plane, face * 512, Region.anIntArray506[face], config, hash, renderable);
+		} else if (clickType == 5) {
+		    int offset = 16;
+		    int wallHash = scene.method522(plane, x, y);
+		    if (wallHash > 0) {
+			offset = GameObjectDefinition.getDefinition(wallHash >> 14 & 0x7fff).unknown4;
 		    }
 		    Renderable renderable;
-		    if (gameobjectdefinition.animationId == -1 && gameobjectdefinition.childrenIds == null) {
-			renderable = gameobjectdefinition.getGameObjectModel(4, 0, i_227_, i_228_, i_229_, i_230_, -1);
+		    if (def.animationId == -1 && def.childrenIds == null) {
+			renderable = def.getGameObjectModel(4, 0, vertexHeight, vertexHeightRight, vertexHeightTopRight, vertexHeightTop, -1);
 		    } else {
-			renderable = new GameObject(i_225_, 0, 4, i_228_, i_229_, i_227_, i_230_, gameobjectdefinition.animationId, true);
+			renderable = new GameObject(id, 0, 4, vertexHeightRight, vertexHeightTopRight, vertexHeight, vertexHeightTop, def.animationId, true);
 		    }
-		    scene.addWallDecoration(i_224_, Region.anIntArray491[i] * i_242_, i_221_, Region.anIntArray498[i] * i_242_, i_231_, i_226_, i * 512, Region.anIntArray506[i], b_233_, i_232_, renderable);
-		} else if (i_222_ == 6) {
+		    scene.addWallDecoration(x, Region.anIntArray491[face] * offset, y, Region.anIntArray498[face] * offset, z, plane, face * 512, Region.anIntArray506[face], config, hash, renderable);
+		} else if (clickType == 6) {
 		    Renderable renderable;
-		    if (gameobjectdefinition.animationId == -1 && gameobjectdefinition.childrenIds == null) {
-			renderable = gameobjectdefinition.getGameObjectModel(4, 0, i_227_, i_228_, i_229_, i_230_, -1);
+		    if (def.animationId == -1 && def.childrenIds == null) {
+			renderable = def.getGameObjectModel(4, 0, vertexHeight, vertexHeightRight, vertexHeightTopRight, vertexHeightTop, -1);
 		    } else {
-			renderable = new GameObject(i_225_, 0, 4, i_228_, i_229_, i_227_, i_230_, gameobjectdefinition.animationId, true);
+			renderable = new GameObject(id, 0, 4, vertexHeightRight, vertexHeightTopRight, vertexHeight, vertexHeightTop, def.animationId, true);
 		    }
-		    scene.addWallDecoration(i_224_, 0, i_221_, 0, i_231_, i_226_, i, 256, b_233_, i_232_, renderable);
-		} else if (i_222_ == 7) {
+		    scene.addWallDecoration(x, 0, y, 0, z, plane, face, 256, config, hash, renderable);
+		} else if (clickType == 7) {
 		    Renderable renderable;
-		    if (gameobjectdefinition.animationId == -1 && gameobjectdefinition.childrenIds == null) {
-			renderable = gameobjectdefinition.getGameObjectModel(4, 0, i_227_, i_228_, i_229_, i_230_, -1);
+		    if (def.animationId == -1 && def.childrenIds == null) {
+			renderable = def.getGameObjectModel(4, 0, vertexHeight, vertexHeightRight, vertexHeightTopRight, vertexHeightTop, -1);
 		    } else {
-			renderable = new GameObject(i_225_, 0, 4, i_228_, i_229_, i_227_, i_230_, gameobjectdefinition.animationId, true);
+			renderable = new GameObject(id, 0, 4, vertexHeightRight, vertexHeightTopRight, vertexHeight, vertexHeightTop, def.animationId, true);
 		    }
-		    scene.addWallDecoration(i_224_, 0, i_221_, 0, i_231_, i_226_, i, 512, b_233_, i_232_, renderable);
-		} else if (i_222_ == 8) {
+		    scene.addWallDecoration(x, 0, y, 0, z, plane, face, 512, config, hash, renderable);
+		} else if (clickType == 8) {
 		    Renderable renderable;
-		    if (gameobjectdefinition.animationId == -1 && gameobjectdefinition.childrenIds == null) {
-			renderable = gameobjectdefinition.getGameObjectModel(4, 0, i_227_, i_228_, i_229_, i_230_, -1);
+		    if (def.animationId == -1 && def.childrenIds == null) {
+			renderable = def.getGameObjectModel(4, 0, vertexHeight, vertexHeightRight, vertexHeightTopRight, vertexHeightTop, -1);
 		    } else {
-			renderable = new GameObject(i_225_, 0, 4, i_228_, i_229_, i_227_, i_230_, gameobjectdefinition.animationId, true);
+			renderable = new GameObject(id, 0, 4, vertexHeightRight, vertexHeightTopRight, vertexHeight, vertexHeightTop, def.animationId, true);
 		    }
-		    scene.addWallDecoration(i_224_, 0, i_221_, 0, i_231_, i_226_, i, 768, b_233_, i_232_, renderable);
+		    scene.addWallDecoration(x, 0, y, 0, z, plane, face, 768, config, hash, renderable);
 		}
 	    }
 	} catch (RuntimeException runtimeexception) {
-	    Signlink.reportError("89985, " + scene + ", " + i + ", " + i_221_ + ", " + i_222_ + ", " + i_223_ + ", " + collisionmap + ", " + is + ", " + i_224_ + ", " + i_225_ + ", " + i_226_ + ", " + b + ", " + runtimeexception.toString());
+	    Signlink.reportError("89985, " + scene + ", " + face + ", " + y + ", " + clickType + ", " + i_223_ + ", " + map + ", " + is + ", " + x + ", " + id + ", " + plane + ", " + runtimeexception.toString());
 	    throw new RuntimeException();
 	}
     }
