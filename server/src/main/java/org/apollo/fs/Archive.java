@@ -10,18 +10,44 @@ import org.apollo.util.ByteBufferUtil;
 import org.apollo.util.CompressionUtil;
 import org.apollo.util.NameUtil;
 
+/**
+ * Represents an archive within the file system.
+ *
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
+ * @author Hadyn Richard
+ */
 public final class Archive {
 
+    /**
+     * A map of integer keys to entries within this archive.
+     */
     private final Map<Integer, ArchiveEntry> entries = new HashMap<>();
 
+    /**
+     * The bytes within this archive.
+     */
     private final byte[] bytes;
 
+    /**
+     * Denotes whether or not this archive is compressed.
+     */
     private boolean packed;
 
+    /**
+     * Constructs a new {@link Archive} with the expected data.
+     *
+     * @param bytes The archives data.
+     */
     public Archive(byte[] bytes) {
 	this.bytes = bytes;
     }
 
+    /**
+     * Decodes this archives contents into {@link ArchiveEntry}s
+     *
+     * @return An instance of this archive.
+     * @throws IOException If some I/O exception occurs.
+     */
     public Archive decode() throws IOException {
 	ByteBuffer buffer = ByteBuffer.wrap(bytes);
 	int unpackedSize = ByteBufferUtil.readMedium(buffer);
@@ -61,11 +87,20 @@ public final class Archive {
 	return this;
     }
 
+    /**
+     * Returns an the data of an archive entry based on its name.
+     *
+     * @param name The name of the archive entry.
+     * @return The archive entries name.
+     */
     public byte[] get(String name) {
 	ArchiveEntry entry = Objects.requireNonNull(entries.get(NameUtil.hash(name)));
 	return entry.getBytes();
     }
 
+    /**
+     * Returns whether or not this archive is compressed.
+     */
     public boolean isPacked() {
 	return packed;
     }

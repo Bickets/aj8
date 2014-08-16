@@ -10,7 +10,7 @@ import org.apollo.util.ByteBufferUtil;
 
 /**
  * A class which parses object definitions.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  * @author Steve, initial contribution
  */
@@ -19,7 +19,7 @@ public final class GameObjectDefinitionParser {
     /**
      * Reads object information from the file system and parses all of the
      * definitions.
-     * 
+     *
      * @param fs The file system.
      * @return An array of game object definitions.
      * @throws IOException If some I/O exception occurs.
@@ -50,7 +50,7 @@ public final class GameObjectDefinitionParser {
     /**
      * Parses a single game object definition by reading object info from a
      * buffer.
-     * 
+     *
      * @param id The id of the object.
      * @param buffer The buffer.
      * @return The read game object definition.
@@ -136,7 +136,10 @@ public final class GameObjectDefinitionParser {
 		def.setSolid(false);
 		def.setWalkable(false);
 	    } else if (code == 75) {
-		buffer.get();
+		int solidInt = buffer.get() & 0xFF;
+		if (solidInt == -1) {
+		    solidInt = def.isSolid() ? 1 : 0;
+		}
 	    } else {
 		continue;
 	    }

@@ -6,20 +6,60 @@ import java.nio.channels.SeekableByteChannel;
 
 import org.apollo.util.ByteBufferUtil;
 
+/**
+ * Represents a standard file index.
+ *
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
+ * @author Hadyn Richard
+ */
 public final class Index implements FileIndex {
 
+    /**
+     * The default file block size.
+     */
     public static final int FILE_BLOCK_SIZE = 6;
+
+    /**
+     * The default block header size.
+     */
     public static final int DATA_BLOCK_HEADER_SIZE = 8;
+
+    /**
+     * The default block size.
+     */
     public static final int DATA_BLOCK_SIZE = 520;
 
+    /**
+     * A byte buffer allocated byte count is {@link #DATA_BLOCK_SIZE}.
+     */
     private final ByteBuffer buffer = ByteBuffer.allocate(DATA_BLOCK_SIZE);
+
+    /**
+     * A channel of bytes within this indexes data file.
+     */
     private final SeekableByteChannel dataChannel;
+
+    /**
+     * A channel of bytes within this indexes index file.
+     */
     private final SeekableByteChannel indexChannel;
+
+    /**
+     * The id of this file index.
+     */
     private final int id;
 
-    public Index(SeekableByteChannel data, SeekableByteChannel index, int id) {
-	dataChannel = data;
-	indexChannel = index;
+    /**
+     * Constructs a new {@link Index} with the specified data channel, index
+     * channel and id.
+     *
+     * @param dataChannel A channel of bytes within this indexes data file.
+     * @param indexChannel A channel of bytes within this indexes index file.
+     * @param id The id of this file index.
+     */
+    public Index(SeekableByteChannel dataChannel, SeekableByteChannel indexChannel, int id) {
+	this.dataChannel = dataChannel;
+	this.indexChannel = indexChannel;
 	this.id = ++id;
     }
 
@@ -58,10 +98,10 @@ public final class Index implements FileIndex {
 
 	    buffer.flip();
 
-	    int fileCheck = buffer.getShort() & 0xffff;
-	    int chunkCheck = buffer.getShort() & 0xffff;
+	    int fileCheck = buffer.getShort() & 0xFFFF;
+	    int chunkCheck = buffer.getShort() & 0xFFFF;
 	    int nextBlock = ByteBufferUtil.readMedium(buffer);
-	    int idCheck = buffer.get() & 0xff;
+	    int idCheck = buffer.get() & 0xFF;
 
 	    if (fileCheck != file || chunkCheck != chunk || idCheck != id) {
 		throw new IOException();
