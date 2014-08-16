@@ -1,6 +1,5 @@
 package buttons
 
-import java.util.Objects
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ButtonActionEvent
@@ -15,7 +14,7 @@ class DialogueButton implements EventSubscriber<ButtonActionEvent> {
 	override subscribe(ButtonActionEvent event) {
 		var player = event.player
 
-		val option = Objects.requireNonNull(DialogueOption.fromId(event.id))
+		val option = DialogueOption.fromId(event.id)
 		val success = player.interfaceSet.optionClicked(option)
 		if (success) {
 			player.interfaceSet.continueRequested

@@ -35,7 +35,7 @@ class Bootstrap {
 	def classes(String dir) {
 		val files = new File('bin/' + dir, '/').list
 		val classes = newArrayList
-		val filtered = files?.filter[it.endsWith('.class') && !it.contains('$')]
+		val filtered = files.filter[it.endsWith('.class') && !it.contains('$')]
 
 		filtered.forEach [
 			val name = it.substring(0, it.indexOf('.'))
