@@ -81,4 +81,9 @@ public final class Mob extends GameCharacter {
 	return EntityType.MOB;
     }
 
+    @Override
+    public int size() {
+	return getDefinition().getSize();
+    }
+
 }

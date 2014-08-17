@@ -17,7 +17,7 @@ public final class GameObject extends Entity {
     private final int id;
 
     /**
-     * Represents the type of this object .
+     * Represents the type of this object.
      */
     private final ObjectType type;
 
@@ -25,11 +25,6 @@ public final class GameObject extends Entity {
      * Represents the orientation of this object.
      */
     private final ObjectOrientation orientation;
-
-    @Override
-    public EntityType type() {
-	return EntityType.GAME_OBJECT;
-    }
 
     /**
      * Constructs a new {@link GameObject} with the specified id and position.
@@ -108,11 +103,11 @@ public final class GameObject extends Entity {
      *         specified position.
      */
     public int getTileOffset(Position position) {
-	GameObjectDefinition def = getDefinition();
-	if (def.getSize() <= 1) {
+	if (size() <= 1) {
 	    return 1;
 	}
 
+	GameObjectDefinition def = getDefinition();
 	int distanceX = Math.abs(position.getX() - getPosition().getX());
 	int distanceY = Math.abs(position.getY() - getPosition().getY());
 	int total = distanceX > distanceY ? def.getSizeX() : def.getSizeY();
@@ -130,6 +125,16 @@ public final class GameObject extends Entity {
     @Override
     public int hashCode() {
 	return (type.getId() << 2) | orientation.getId() & 0x3F;
+    }
+
+    @Override
+    public int size() {
+	return getDefinition().getSize();
+    }
+
+    @Override
+    public EntityType type() {
+	return EntityType.GAME_OBJECT;
     }
 
 }

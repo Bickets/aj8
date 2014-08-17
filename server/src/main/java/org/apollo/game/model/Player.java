@@ -243,7 +243,7 @@ public final class Player extends GameCharacter {
      * viewing distance.
      */
     public void incrementViewingDistance() {
-	if (viewingDistance < Position.MAX_DISTANCE) {
+	if (viewingDistance < Position.MAXIMUM_DISTANCE) {
 	    viewingDistance++;
 	}
     }
@@ -549,6 +549,13 @@ public final class Player extends GameCharacter {
     @Override
     public EntityType type() {
 	return EntityType.PLAYER;
+    }
+
+    @Override
+    public int size() {
+	// XXX: Size could change, player to object transformation packet
+	// This needs accounted for at a later date.
+	return 1;
     }
 
 }

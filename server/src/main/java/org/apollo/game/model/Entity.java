@@ -2,14 +2,14 @@ package org.apollo.game.model;
 
 /**
  * Represents an entity within the game world.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public abstract class Entity {
 
     /**
      * Represents the type of this entity.
-     * 
+     *
      * @author Ryley Kimmel <ryley.kimmel@live.com>
      */
     public enum EntityType {
@@ -80,6 +80,13 @@ public abstract class Entity {
      * Returns the type of this entity.
      */
     public abstract EntityType type();
+
+    /**
+     * Returns an integer representation of this entity size, in tiles.
+     *
+     * @return The size of this entity.
+     */
+    public abstract int size();
 
     /**
      * Gets the position of this entity.
