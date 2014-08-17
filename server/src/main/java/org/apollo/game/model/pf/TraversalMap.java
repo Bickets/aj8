@@ -97,6 +97,20 @@ public final class TraversalMap {
     }
 
     /**
+     * Returns the region for the specified coordinates, may be {@code null}.
+     *
+     * @param x The x coordinate.
+     * @param y The y coordinate.
+     * @return The region for the specified coordinates.
+     */
+    private Region getRegion(int x, int y) {
+	int regionX = x >> 6;
+	int regionY = y >> 6;
+
+	return regions[regionX + regionY * SIZE];
+    }
+
+    /**
      * Initializes the region at the specified coordinates.
      *
      * @param x The x coordinate.
@@ -116,10 +130,7 @@ public final class TraversalMap {
      * @param y The y coordinate.
      */
     public boolean regionInitialized(int x, int y) {
-	int regionX = x >> 6;
-	int regionY = y >> 6;
-
-	return regions[regionX + regionY * SIZE] != null;
+	return getRegion(x, y) != null;
     }
 
     /**
@@ -391,23 +402,20 @@ public final class TraversalMap {
      * @param y The y coordinate.
      */
     public void markBlocked(int height, int x, int y) {
-	int regionX = x >> 6;
-	int regionY = y >> 6;
-
 	int localX = x & 0x3F;
 	int localY = y & 0x3F;
 
-	Region region = regions[regionX + regionY * SIZE];
+	Region region = getRegion(x, y);
 	if (region == null) {
 	    return;
 	}
 
-	int modifiedheight = height;
+	int modifiedHeight = height;
 	if ((region.getTile(1, localX, localY).flags() & BRIDGE) != 0) {
-	    modifiedheight = height - 1;
+	    modifiedHeight = height - 1;
 	}
 
-	region.getTile(modifiedheight, x & 0x3F, y & 0x3F).set(BLOCKED);
+	region.getTile(modifiedHeight, x & 0x3F, y & 0x3F).set(BLOCKED);
     }
 
     /**
@@ -859,10 +867,7 @@ public final class TraversalMap {
      * @param flag The flag to put on this tile.
      */
     public void set(int height, int x, int y, int flag) {
-	int regionX = x >> 6;
-	int regionY = y >> 6;
-
-	Region region = regions[regionX + regionY * SIZE];
+	Region region = getRegion(x, y);
 	if (region == null) {
 	    return;
 	}
@@ -882,23 +887,20 @@ public final class TraversalMap {
      *         specified position, otherwise <code>false</code>.
      */
     public boolean isInactive(int height, int x, int y, int flag) {
-	int regionX = x >> 6;
-	int regionY = y >> 6;
-
 	int localX = x & 0x3F;
 	int localY = y & 0x3F;
 
-	Region region = regions[regionX + regionY * SIZE];
+	Region region = getRegion(x, y);
 	if (region == null) {
 	    return false;
 	}
 
-	int modifiedheight = height;
+	int modifiedHeight = height;
 	if (region.getTile(1, localX, localY).isActive(BRIDGE)) {
-	    modifiedheight = height + 1;
+	    modifiedHeight = height + 1;
 	}
 
-	return region.getTile(modifiedheight, localX, localY).isInactive(flag);
+	return region.getTile(modifiedHeight, localX, localY).isInactive(flag);
     }
 
     /**
@@ -910,10 +912,7 @@ public final class TraversalMap {
      * @param flag The flag to unset from the specified position.
      */
     public void unset(int height, int x, int y, int flag) {
-	int regionX = x >> 6;
-	int regionY = y >> 6;
-
-	Region region = regions[regionX + regionY * SIZE];
+	Region region = getRegion(x, y);
 	if (region == null) {
 	    return;
 	}
