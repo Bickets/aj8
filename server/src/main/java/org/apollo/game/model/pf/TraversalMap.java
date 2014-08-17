@@ -402,12 +402,12 @@ public final class TraversalMap {
 	    return;
 	}
 
-	int modifiedPlane = height;
+	int modifiedheight = height;
 	if ((region.getTile(1, localX, localY).flags() & BRIDGE) != 0) {
-	    modifiedPlane = height - 1;
+	    modifiedheight = height - 1;
 	}
 
-	region.getTile(modifiedPlane, x & 0x3F, y & 0x3F).set(BLOCKED);
+	region.getTile(modifiedheight, x & 0x3F, y & 0x3F).set(BLOCKED);
     }
 
     /**
@@ -466,31 +466,31 @@ public final class TraversalMap {
     /**
      * Tests if the specified position can be traversed north.
      *
-     * @param plane The height.
+     * @param height The height.
      * @param x The x coordinate.
      * @param y The y coordinate.
      * @return <code>true</code> if it is possible to traverse north otherwise
      *         <code>false</code>.
      */
-    public boolean isTraversableNorth(int plane, int x, int y) {
-	return isTraversableNorth(plane, x, y, false);
+    public boolean isTraversableNorth(int height, int x, int y) {
+	return isTraversableNorth(height, x, y, false);
     }
 
     /**
      * Tests if the specified position can be traversed north.
      *
-     * @param plane The height.
+     * @param height The height.
      * @param x The x coordinate.
      * @param y The y coordinate.
      * @param impenetrable Whether or not this occupation can be traversed.
      * @return <code>true</code> if it is possible to traverse north otherwise
      *         <code>false</code>.
      */
-    public boolean isTraversableNorth(int plane, int x, int y, boolean impenetrable) {
+    public boolean isTraversableNorth(int height, int x, int y, boolean impenetrable) {
 	if (impenetrable) {
-	    return isInactive(plane, x, y + 1, IMPENETRABLE_OCCUPANT | IMPENETRABLE_WALL_SOUTH);
+	    return isInactive(height, x, y + 1, IMPENETRABLE_OCCUPANT | IMPENETRABLE_WALL_SOUTH);
 	}
-	return isInactive(plane, x, y + 1, WALL_SOUTH | OCCUPANT | BLOCKED);
+	return isInactive(height, x, y + 1, WALL_SOUTH | OCCUPANT | BLOCKED);
     }
 
     /**
@@ -503,10 +503,10 @@ public final class TraversalMap {
      * @return <code>true</code> if it is possible to traverse south otherwise
      *         <code>false</code>
      */
-    public boolean isTraversableSouth(int plane, int x, int y, int size) {
+    public boolean isTraversableSouth(int height, int x, int y, int size) {
 	for (int offsetX = 0; offsetX < size; offsetX++) {
 	    for (int offsetY = 0; offsetY < size; offsetY++) {
-		if (!isTraversableSouth(plane, x + offsetX, y + offsetY)) {
+		if (!isTraversableSouth(height, x + offsetX, y + offsetY)) {
 		    return false;
 		}
 	    }
@@ -517,31 +517,31 @@ public final class TraversalMap {
     /**
      * Tests if the specified position can be traversed south.
      *
-     * @param plane The height.
+     * @param height The height.
      * @param x The x coordinate.
      * @param y The y coordinate.
      * @return <code>true</code> if it is possible to traverse south otherwise
      *         <code>false</code>.
      */
-    public boolean isTraversableSouth(int plane, int x, int y) {
-	return isTraversableSouth(plane, x, y, false);
+    public boolean isTraversableSouth(int height, int x, int y) {
+	return isTraversableSouth(height, x, y, false);
     }
 
     /**
      * Tests if the specified position can be traversed south.
      *
-     * @param plane The height.
+     * @param height The height.
      * @param x The x coordinate.
      * @param y The y coordinate.
      * @param impenetrable Whether or not this occupation can be traversed.
      * @return <code>true</code> if it is possible to traverse south otherwise
      *         <code>false</code>.
      */
-    public boolean isTraversableSouth(int plane, int x, int y, boolean impenetrable) {
+    public boolean isTraversableSouth(int height, int x, int y, boolean impenetrable) {
 	if (impenetrable) {
-	    return isInactive(plane, x, y - 1, IMPENETRABLE_OCCUPANT | IMPENETRABLE_WALL_NORTH);
+	    return isInactive(height, x, y - 1, IMPENETRABLE_OCCUPANT | IMPENETRABLE_WALL_NORTH);
 	}
-	return isInactive(plane, x, y - 1, WALL_NORTH | OCCUPANT | BLOCKED);
+	return isInactive(height, x, y - 1, WALL_NORTH | OCCUPANT | BLOCKED);
     }
 
     /**
@@ -554,10 +554,10 @@ public final class TraversalMap {
      * @return <code>true</code> if it is possible to traverse east otherwise
      *         <code>false</code>
      */
-    public boolean isTraversableEast(int plane, int x, int y, int size) {
+    public boolean isTraversableEast(int height, int x, int y, int size) {
 	for (int offsetX = 0; offsetX < size; offsetX++) {
 	    for (int offsetY = 0; offsetY < size; offsetY++) {
-		if (!isTraversableEast(plane, x + offsetX, y + offsetY)) {
+		if (!isTraversableEast(height, x + offsetX, y + offsetY)) {
 		    return false;
 		}
 	    }
@@ -568,31 +568,31 @@ public final class TraversalMap {
     /**
      * Tests if the specified position can be traversed east.
      *
-     * @param plane The height.
+     * @param height The height.
      * @param x The x coordinate.
      * @param y The y coordinate.
      * @return <code>true</code> if it is possible to traverse east otherwise
      *         <code>false</code>.
      */
-    public boolean isTraversableEast(int plane, int x, int y) {
-	return isTraversableEast(plane, x, y, false);
+    public boolean isTraversableEast(int height, int x, int y) {
+	return isTraversableEast(height, x, y, false);
     }
 
     /**
      * Tests if the specified position can be traversed east.
      *
-     * @param plane The height.
+     * @param height The height.
      * @param x The x coordinate.
      * @param y The y coordinate.
      * @param impenetrable Whether or not this occupation can be traversed.
      * @return <code>true</code> if it is possible to traverse east otherwise
      *         <code>false</code>.
      */
-    public boolean isTraversableEast(int plane, int x, int y, boolean impenetrable) {
+    public boolean isTraversableEast(int height, int x, int y, boolean impenetrable) {
 	if (impenetrable) {
-	    return isInactive(plane, x + 1, y, IMPENETRABLE_OCCUPANT | IMPENETRABLE_WALL_WEST);
+	    return isInactive(height, x + 1, y, IMPENETRABLE_OCCUPANT | IMPENETRABLE_WALL_WEST);
 	}
-	return isInactive(plane, x + 1, y, WALL_WEST | OCCUPANT | BLOCKED);
+	return isInactive(height, x + 1, y, WALL_WEST | OCCUPANT | BLOCKED);
     }
 
     /**
@@ -605,10 +605,10 @@ public final class TraversalMap {
      * @return <code>true</code> if it is possible to traverse west otherwise
      *         <code>false</code>
      */
-    public boolean isTraversableWest(int plane, int x, int y, int size) {
+    public boolean isTraversableWest(int height, int x, int y, int size) {
 	for (int offsetX = 0; offsetX < size; offsetX++) {
 	    for (int offsetY = 0; offsetY < size; offsetY++) {
-		if (!isTraversableWest(plane, x + offsetX, y + offsetY)) {
+		if (!isTraversableWest(height, x + offsetX, y + offsetY)) {
 		    return false;
 		}
 	    }
@@ -619,31 +619,31 @@ public final class TraversalMap {
     /**
      * Tests if the specified position can be traversed west.
      *
-     * @param plane The height.
+     * @param height The height.
      * @param x The x coordinate.
      * @param y The y coordinate.
      * @return <code>true</code> if it is possible to traverse west otherwise
      *         <code>false</code>.
      */
-    public boolean isTraversableWest(int plane, int x, int y) {
-	return isTraversableWest(plane, x, y, false);
+    public boolean isTraversableWest(int height, int x, int y) {
+	return isTraversableWest(height, x, y, false);
     }
 
     /**
      * Tests if the specified position can be traversed west.
      *
-     * @param plane The height.
+     * @param height The height.
      * @param x The x coordinate.
      * @param y The y coordinate.
      * @param impenetrable Whether or not this occupation can be traversed.
      * @return <code>true</code> if it is possible to traverse west otherwise
      *         <code>false</code>.
      */
-    public boolean isTraversableWest(int plane, int x, int y, boolean impenetrable) {
+    public boolean isTraversableWest(int height, int x, int y, boolean impenetrable) {
 	if (impenetrable) {
-	    return isInactive(plane, x - 1, y, IMPENETRABLE_OCCUPANT | IMPENETRABLE_WALL_EAST);
+	    return isInactive(height, x - 1, y, IMPENETRABLE_OCCUPANT | IMPENETRABLE_WALL_EAST);
 	}
-	return isInactive(plane, x - 1, y, WALL_EAST | OCCUPANT | BLOCKED);
+	return isInactive(height, x - 1, y, WALL_EAST | OCCUPANT | BLOCKED);
     }
 
     /**
@@ -656,10 +656,10 @@ public final class TraversalMap {
      * @return <code>true</code> if it is possible to traverse north east
      *         otherwise <code>false</code>
      */
-    public boolean isTraversableNorthEast(int plane, int x, int y, int size) {
+    public boolean isTraversableNorthEast(int height, int x, int y, int size) {
 	for (int offsetX = 0; offsetX < size; offsetX++) {
 	    for (int offsetY = 0; offsetY < size; offsetY++) {
-		if (!isTraversableNorthEast(plane, x + offsetX, y + offsetY)) {
+		if (!isTraversableNorthEast(height, x + offsetX, y + offsetY)) {
 		    return false;
 		}
 	    }
@@ -670,31 +670,31 @@ public final class TraversalMap {
     /**
      * Tests if the specified position can be traversed north east.
      *
-     * @param plane The height.
+     * @param height The height.
      * @param x The x coordinate.
      * @param y The y coordinate.
      * @return <code>true</code> if it is possible to traverse north east
      *         otherwise <code>false</code>.
      */
-    public boolean isTraversableNorthEast(int plane, int x, int y) {
-	return isTraversableNorthEast(plane, x, y, false);
+    public boolean isTraversableNorthEast(int height, int x, int y) {
+	return isTraversableNorthEast(height, x, y, false);
     }
 
     /**
      * Tests if the specified position can be traversed north east.
      *
-     * @param plane The height.
+     * @param height The height.
      * @param x The x coordinate.
      * @param y The y coordinate.
      * @param impenetrable Whether or not this occupation can be traversed.
      * @return <code>true</code> if it is possible to traverse north east
      *         otherwise <code>false</code>.
      */
-    public boolean isTraversableNorthEast(int plane, int x, int y, boolean impenetrable) {
+    public boolean isTraversableNorthEast(int height, int x, int y, boolean impenetrable) {
 	if (impenetrable) {
-	    return isInactive(plane, x + 1, y + 1, IMPENETRABLE_WALL_WEST | IMPENETRABLE_WALL_SOUTH | IMPENETRABLE_WALL_SOUTH_WEST | OCCUPANT) && isInactive(plane, x + 1, y, IMPENETRABLE_WALL_WEST | IMPENETRABLE_OCCUPANT) && isInactive(plane, x, y + 1, IMPENETRABLE_WALL_SOUTH | IMPENETRABLE_OCCUPANT);
+	    return isInactive(height, x + 1, y + 1, IMPENETRABLE_WALL_WEST | IMPENETRABLE_WALL_SOUTH | IMPENETRABLE_WALL_SOUTH_WEST | OCCUPANT) && isInactive(height, x + 1, y, IMPENETRABLE_WALL_WEST | IMPENETRABLE_OCCUPANT) && isInactive(height, x, y + 1, IMPENETRABLE_WALL_SOUTH | IMPENETRABLE_OCCUPANT);
 	}
-	return isInactive(plane, x + 1, y + 1, WALL_WEST | WALL_SOUTH | WALL_SOUTH_WEST | OCCUPANT | BLOCKED) && isInactive(plane, x + 1, y, WALL_WEST | OCCUPANT | BLOCKED) && isInactive(plane, x, y + 1, WALL_SOUTH | OCCUPANT | BLOCKED);
+	return isInactive(height, x + 1, y + 1, WALL_WEST | WALL_SOUTH | WALL_SOUTH_WEST | OCCUPANT | BLOCKED) && isInactive(height, x + 1, y, WALL_WEST | OCCUPANT | BLOCKED) && isInactive(height, x, y + 1, WALL_SOUTH | OCCUPANT | BLOCKED);
     }
 
     /**
@@ -707,10 +707,10 @@ public final class TraversalMap {
      * @return <code>true</code> if it is possible to traverse north west
      *         otherwise <code>false</code>
      */
-    public boolean isTraversableNorthWest(int plane, int x, int y, int size) {
+    public boolean isTraversableNorthWest(int height, int x, int y, int size) {
 	for (int offsetX = 0; offsetX < size; offsetX++) {
 	    for (int offsetY = 0; offsetY < size; offsetY++) {
-		if (!isTraversableNorthWest(plane, x + offsetX, y + offsetY)) {
+		if (!isTraversableNorthWest(height, x + offsetX, y + offsetY)) {
 		    return false;
 		}
 	    }
@@ -721,31 +721,31 @@ public final class TraversalMap {
     /**
      * Tests if the specified position can be traversed north west.
      *
-     * @param plane The height.
+     * @param height The height.
      * @param x The x coordinate.
      * @param y The y coordinate.
      * @return <code>true</code> if it is possible to traverse north west
      *         otherwise <code>false</code>.
      */
-    public boolean isTraversableNorthWest(int plane, int x, int y) {
-	return isTraversableNorthWest(plane, x, y, false);
+    public boolean isTraversableNorthWest(int height, int x, int y) {
+	return isTraversableNorthWest(height, x, y, false);
     }
 
     /**
      * Tests if the specified position can be traversed north west.
      *
-     * @param plane The height.
+     * @param height The height.
      * @param x The x coordinate.
      * @param y The y coordinate.
      * @param impenetrable Whether or not this occupation can be traversed.
      * @return <code>true</code> if it is possible to traverse north west
      *         otherwise <code>false</code>.
      */
-    public boolean isTraversableNorthWest(int plane, int x, int y, boolean impenetrable) {
+    public boolean isTraversableNorthWest(int height, int x, int y, boolean impenetrable) {
 	if (impenetrable) {
-	    return isInactive(plane, x - 1, y + 1, IMPENETRABLE_WALL_EAST | IMPENETRABLE_WALL_SOUTH | IMPENETRABLE_WALL_SOUTH_EAST | OCCUPANT) && isInactive(plane, x - 1, y, IMPENETRABLE_WALL_EAST | IMPENETRABLE_OCCUPANT) && isInactive(plane, x, y + 1, IMPENETRABLE_WALL_SOUTH | IMPENETRABLE_OCCUPANT);
+	    return isInactive(height, x - 1, y + 1, IMPENETRABLE_WALL_EAST | IMPENETRABLE_WALL_SOUTH | IMPENETRABLE_WALL_SOUTH_EAST | OCCUPANT) && isInactive(height, x - 1, y, IMPENETRABLE_WALL_EAST | IMPENETRABLE_OCCUPANT) && isInactive(height, x, y + 1, IMPENETRABLE_WALL_SOUTH | IMPENETRABLE_OCCUPANT);
 	}
-	return isInactive(plane, x - 1, y + 1, WALL_EAST | WALL_SOUTH | WALL_SOUTH_EAST | OCCUPANT | BLOCKED) && isInactive(plane, x - 1, y, WALL_EAST | OCCUPANT | BLOCKED) && isInactive(plane, x, y + 1, WALL_SOUTH | OCCUPANT | BLOCKED);
+	return isInactive(height, x - 1, y + 1, WALL_EAST | WALL_SOUTH | WALL_SOUTH_EAST | OCCUPANT | BLOCKED) && isInactive(height, x - 1, y, WALL_EAST | OCCUPANT | BLOCKED) && isInactive(height, x, y + 1, WALL_SOUTH | OCCUPANT | BLOCKED);
     }
 
     /**
@@ -758,10 +758,10 @@ public final class TraversalMap {
      * @return <code>true</code> if it is possible to traverse south east
      *         otherwise <code>false</code>
      */
-    public boolean isTraversableSouthEast(int plane, int x, int y, int size) {
+    public boolean isTraversableSouthEast(int height, int x, int y, int size) {
 	for (int offsetX = 0; offsetX < size; offsetX++) {
 	    for (int offsetY = 0; offsetY < size; offsetY++) {
-		if (!isTraversableSouthEast(plane, x + offsetX, y + offsetY)) {
+		if (!isTraversableSouthEast(height, x + offsetX, y + offsetY)) {
 		    return false;
 		}
 	    }
@@ -772,31 +772,31 @@ public final class TraversalMap {
     /**
      * Tests if the specified position can be traversed south east.
      *
-     * @param plane The height.
+     * @param height The height.
      * @param x The x coordinate.
      * @param y The y coordinate.
      * @return <code>true</code> if it is possible to traverse south east
      *         otherwise <code>false</code>.
      */
-    public boolean isTraversableSouthEast(int plane, int x, int y) {
-	return isTraversableSouthEast(plane, x, y, false);
+    public boolean isTraversableSouthEast(int height, int x, int y) {
+	return isTraversableSouthEast(height, x, y, false);
     }
 
     /**
      * Tests if the specified position can be traversed south east.
      *
-     * @param plane The height.
+     * @param height The height.
      * @param x The x coordinate.
      * @param y The y coordinate.
      * @param impenetrable Whether or not this occupation can be traversed.
      * @return <code>true</code> if it is possible to traverse south east
      *         otherwise <code>false</code>.
      */
-    public boolean isTraversableSouthEast(int plane, int x, int y, boolean impenetrable) {
+    public boolean isTraversableSouthEast(int height, int x, int y, boolean impenetrable) {
 	if (impenetrable) {
-	    return isInactive(plane, x + 1, y - 1, IMPENETRABLE_WALL_WEST | IMPENETRABLE_WALL_NORTH | IMPENETRABLE_WALL_NORTH_WEST | OCCUPANT) && isInactive(plane, x + 1, y, IMPENETRABLE_WALL_WEST | IMPENETRABLE_OCCUPANT) && isInactive(plane, x, y - 1, IMPENETRABLE_WALL_NORTH | IMPENETRABLE_OCCUPANT);
+	    return isInactive(height, x + 1, y - 1, IMPENETRABLE_WALL_WEST | IMPENETRABLE_WALL_NORTH | IMPENETRABLE_WALL_NORTH_WEST | OCCUPANT) && isInactive(height, x + 1, y, IMPENETRABLE_WALL_WEST | IMPENETRABLE_OCCUPANT) && isInactive(height, x, y - 1, IMPENETRABLE_WALL_NORTH | IMPENETRABLE_OCCUPANT);
 	}
-	return isInactive(plane, x + 1, y - 1, WALL_WEST | WALL_NORTH | WALL_NORTH_WEST | OCCUPANT | BLOCKED) && isInactive(plane, x + 1, y, WALL_WEST | OCCUPANT | BLOCKED) && isInactive(plane, x, y - 1, WALL_NORTH | OCCUPANT | BLOCKED);
+	return isInactive(height, x + 1, y - 1, WALL_WEST | WALL_NORTH | WALL_NORTH_WEST | OCCUPANT | BLOCKED) && isInactive(height, x + 1, y, WALL_WEST | OCCUPANT | BLOCKED) && isInactive(height, x, y - 1, WALL_NORTH | OCCUPANT | BLOCKED);
     }
 
     /**
@@ -809,10 +809,10 @@ public final class TraversalMap {
      * @return <code>true</code> if it is possible to traverse south west
      *         otherwise <code>false</code>
      */
-    public boolean isTraversableSouthWest(int plane, int x, int y, int size) {
+    public boolean isTraversableSouthWest(int height, int x, int y, int size) {
 	for (int offsetX = 0; offsetX < size; offsetX++) {
 	    for (int offsetY = 0; offsetY < size; offsetY++) {
-		if (!isTraversableSouthWest(plane, x + offsetX, y + offsetY)) {
+		if (!isTraversableSouthWest(height, x + offsetX, y + offsetY)) {
 		    return false;
 		}
 	    }
@@ -823,42 +823,42 @@ public final class TraversalMap {
     /**
      * Tests if the specified position can be traversed south west.
      *
-     * @param plane The height.
+     * @param height The height.
      * @param x The x coordinate.
      * @param y The y coordinate.
      * @return <code>true</code> if it is possible to traverse south west
      *         otherwise <code>false</code>.
      */
-    public boolean isTraversableSouthWest(int plane, int x, int y) {
-	return isTraversableSouthWest(plane, x, y, false);
+    public boolean isTraversableSouthWest(int height, int x, int y) {
+	return isTraversableSouthWest(height, x, y, false);
     }
 
     /**
      * Tests if the specified position can be traversed south west.
      *
-     * @param plane The height.
+     * @param height The height.
      * @param x The x coordinate.
      * @param y The y coordinate.
      * @param impenetrable Whether or not this occupation can be traversed.
      * @return <code>true</code> if it is possible to traverse south west
      *         otherwise <code>false</code>.
      */
-    public boolean isTraversableSouthWest(int plane, int x, int y, boolean impenetrable) {
+    public boolean isTraversableSouthWest(int height, int x, int y, boolean impenetrable) {
 	if (impenetrable) {
-	    return isInactive(plane, x - 1, y - 1, IMPENETRABLE_WALL_EAST | IMPENETRABLE_WALL_NORTH | IMPENETRABLE_WALL_NORTH_EAST | OCCUPANT) && isInactive(plane, x - 1, y, IMPENETRABLE_WALL_EAST | IMPENETRABLE_OCCUPANT) && isInactive(plane, x, y - 1, IMPENETRABLE_WALL_NORTH | IMPENETRABLE_OCCUPANT);
+	    return isInactive(height, x - 1, y - 1, IMPENETRABLE_WALL_EAST | IMPENETRABLE_WALL_NORTH | IMPENETRABLE_WALL_NORTH_EAST | OCCUPANT) && isInactive(height, x - 1, y, IMPENETRABLE_WALL_EAST | IMPENETRABLE_OCCUPANT) && isInactive(height, x, y - 1, IMPENETRABLE_WALL_NORTH | IMPENETRABLE_OCCUPANT);
 	}
-	return isInactive(plane, x - 1, y - 1, WALL_EAST | WALL_NORTH | WALL_NORTH_EAST | OCCUPANT | BLOCKED) && isInactive(plane, x - 1, y, WALL_EAST | OCCUPANT | BLOCKED) && isInactive(plane, x, y - 1, WALL_NORTH | OCCUPANT | BLOCKED);
+	return isInactive(height, x - 1, y - 1, WALL_EAST | WALL_NORTH | WALL_NORTH_EAST | OCCUPANT | BLOCKED) && isInactive(height, x - 1, y, WALL_EAST | OCCUPANT | BLOCKED) && isInactive(height, x, y - 1, WALL_NORTH | OCCUPANT | BLOCKED);
     }
 
     /**
      * Sets a flag on the specified position.
      *
-     * @param plane The height.
+     * @param height The height.
      * @param x The x coordinate.
      * @param y The y coordinate.
      * @param flag The flag to put on this tile.
      */
-    public void set(int plane, int x, int y, int flag) {
+    public void set(int height, int x, int y, int flag) {
 	int regionX = x >> 6;
 	int regionY = y >> 6;
 
@@ -867,21 +867,21 @@ public final class TraversalMap {
 	    return;
 	}
 
-	region.getTile(plane, x & 0x3F, y & 0x3F).set(flag);
+	region.getTile(height, x & 0x3F, y & 0x3F).set(flag);
     }
 
     /**
      * Checks whether or not the specified flag is not active on the specified
      * position.
      *
-     * @param plane The height.
+     * @param height The height.
      * @param x The x coordinate.
      * @param y The y coordinate.
      * @param flag The flag to check.
      * @return <code>true</code> if the specified flag is not active on the
      *         specified position, otherwise <code>false</code>.
      */
-    public boolean isInactive(int plane, int x, int y, int flag) {
+    public boolean isInactive(int height, int x, int y, int flag) {
 	int regionX = x >> 6;
 	int regionY = y >> 6;
 
@@ -893,23 +893,23 @@ public final class TraversalMap {
 	    return false;
 	}
 
-	int modifiedPlane = plane;
+	int modifiedheight = height;
 	if (region.getTile(1, localX, localY).isActive(BRIDGE)) {
-	    modifiedPlane = plane + 1;
+	    modifiedheight = height + 1;
 	}
 
-	return region.getTile(modifiedPlane, localX, localY).isInactive(flag);
+	return region.getTile(modifiedheight, localX, localY).isInactive(flag);
     }
 
     /**
      * Unsets the specified flag from the specified position.
      *
-     * @param plane The height.
+     * @param height The height.
      * @param x The x coordinate.
      * @param y The y coordinate.
      * @param flag The flag to unset from the specified position.
      */
-    public void unset(int plane, int x, int y, int flag) {
+    public void unset(int height, int x, int y, int flag) {
 	int regionX = x >> 6;
 	int regionY = y >> 6;
 
@@ -918,7 +918,7 @@ public final class TraversalMap {
 	    return;
 	}
 
-	region.getTile(plane, x & 0x3F, y & 0x3F).unset(flag);
+	region.getTile(height, x & 0x3F, y & 0x3F).unset(flag);
     }
 
     /**
