@@ -22,7 +22,7 @@ public final class WalkingQueue {
      *
      * @author Graham
      */
-    private static final class Point {
+    private final class Point {
 
 	/**
 	 * The point's position.
@@ -60,12 +60,12 @@ public final class WalkingQueue {
     /**
      * The queue of directions.
      */
-    private final Deque<Point> points = new ArrayDeque<Point>();
+    private final Deque<Point> points = new ArrayDeque<>();
 
     /**
      * The old queue of directions.
      */
-    private final Deque<Point> oldPoints = new ArrayDeque<Point>();
+    private final Deque<Point> oldPoints = new ArrayDeque<>();
 
     /**
      * Flag indicating if this queue (only) should be ran.
@@ -92,15 +92,26 @@ public final class WalkingQueue {
 
 	Point next = points.poll();
 	if (next != null) {
-	    first = next.direction;
-	    position = next.position;
-
-	    if (runningQueue /* or run toggled AND enough energy */) {
-		next = points.poll();
-		if (next != null) {
-		    second = next.direction;
-		    position = next.position;
+	    Direction direction = Direction.between(position, next.position);
+	    boolean traversable = Direction.isTraversable(position, direction, gameCharacter.size());
+	    if (traversable) {
+		first = direction;
+		position = next.position;
+		if (runningQueue/* or run toggled AND enough energy */) {
+		    next = points.poll();
+		    if (next != null) {
+			direction = Direction.between(position, next.position);
+			traversable = Direction.isTraversable(position, direction, gameCharacter.size());
+			if (traversable) {
+			    second = direction;
+			    position = next.position;
+			}
+		    }
 		}
+	    }
+
+	    if (!traversable) {
+		clear();
 	    }
 	}
 
@@ -138,7 +149,7 @@ public final class WalkingQueue {
 	    return true;
 	}
 
-	Queue<Position> travelBackQueue = new ArrayDeque<Position>();
+	Queue<Position> travelBackQueue = new ArrayDeque<>();
 
 	Point oldPoint;
 	while ((oldPoint = oldPoints.pollLast()) != null) {
@@ -152,9 +163,7 @@ public final class WalkingQueue {
 	    if (Direction.isConnectable(deltaX, deltaY)) {
 		clear();
 
-		for (Position travelBackPosition : travelBackQueue) {
-		    addStep(travelBackPosition);
-		}
+		travelBackQueue.forEach(this::addStep);
 
 		addStep(clientConnectionPosition);
 		return true;
@@ -176,10 +185,10 @@ public final class WalkingQueue {
 	int x = step.getX();
 	int y = step.getY();
 
-	int deltaX = x - last.position.getX();
-	int deltaY = y - last.position.getY();
+	int deltaX = Math.abs(x - last.position.getX());
+	int deltaY = Math.abs(y - last.position.getY());
 
-	int max = Math.max(Math.abs(deltaX), Math.abs(deltaY));
+	int max = Math.max(deltaX, deltaY);
 
 	for (int i = 0; i < max; i++) {
 	    if (deltaX < 0) {
@@ -210,11 +219,7 @@ public final class WalkingQueue {
 	}
 
 	Point last = getLast();
-
-	int deltaX = x - last.position.getX();
-	int deltaY = y - last.position.getY();
-
-	Direction direction = Direction.fromDeltas(deltaX, deltaY);
+	Direction direction = Direction.between(new Position(x, y), last.position);
 
 	if (direction != Direction.NONE) {
 	    Point p = new Point(new Position(x, y, gameCharacter.getPosition().getHeight()), direction);

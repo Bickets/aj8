@@ -7,6 +7,7 @@ import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.model.Position
 import org.apollo.game.model.^def.GameObjectDefinition
 import org.apollo.game.model.obj.GameObject
+import org.apollo.game.model.pf.AStarPathFinder
 import org.apollo.game.msg.impl.GameObjectMessage
 
 @SubscribesTo(CommandEvent)
@@ -47,14 +48,30 @@ class CommandPlugin extends Plugin implements EventSubscriber<CommandEvent> {
 				}
 
 				val object = new GameObject(id, plr.position)
-				object.notifyExists
 
-//				val r_pos = plr.lastEnteredRegionPosition
-//				val curr = plr.position
-//				val offset = Math.abs((curr.x - r_pos.x) + (curr.y - r_pos.y))
-//				println(offset)
-				
+				//				val r_pos = plr.lastEnteredRegionPosition
+				//				val curr = plr.position
+				//				val offset = Math.abs((curr.x - r_pos.x) + (curr.y - r_pos.y))
+				//				println(offset)
 				plr.send(new GameObjectMessage(object, 0))
+			}
+			case "walk": {
+				if (args.length != 2) {
+					plr.sendMessage("Syntax is: ::walk [x, y]")
+					return
+				}
+
+				var x = toInt(args.get(0))
+				var y = toInt(args.get(1))
+
+				val finder = new AStarPathFinder
+				val path = finder.find(plr, x, y)
+				if (path != null) {
+					plr.walkingQueue.addFirstStep(path.poll)
+					while (!path.empty) {
+						plr.walkingQueue.addStep(path.poll)
+					}
+				}
 			}
 		}
 	}

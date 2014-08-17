@@ -1,5 +1,7 @@
 package org.apollo.game.model;
 
+import org.apollo.game.model.pf.TraversalMap;
+
 /**
  * Represents a single movement direction.
  *
@@ -70,37 +72,78 @@ public enum Direction {
     }
 
     /**
-     * Creates a direction from the differences between X and Y.
+     * Creates a direction from the differences between two positions.
      *
-     * @param deltaX The difference between two X coordinates.
-     * @param deltaY The difference between two Y coordinates.
+     * @param cur The current position.
+     * @param next The next position.
      * @return The direction.
      */
-    public static Direction fromDeltas(int deltaX, int deltaY) {
-	if (deltaY == 1) {
-	    if (deltaX == 1) {
-		return Direction.NORTH_EAST;
+    public static Direction between(Position cur, Position next) {
+	int deltaX = next.getX() - cur.getX();
+	int deltaY = next.getY() - cur.getY();
+
+	if (deltaY >= 1) {
+	    if (deltaX >= 1) {
+		return NORTH_EAST;
 	    } else if (deltaX == 0) {
-		return Direction.NORTH;
-	    } else {
-		return Direction.NORTH_WEST;
+		return NORTH;
+	    } else if (deltaX <= -1) {
+		return NORTH_WEST;
 	    }
-	} else if (deltaY == -1) {
-	    if (deltaX == 1) {
-		return Direction.SOUTH_EAST;
+	} else if (deltaY <= -1) {
+	    if (deltaX >= 1) {
+		return SOUTH_EAST;
 	    } else if (deltaX == 0) {
-		return Direction.SOUTH;
-	    } else {
-		return Direction.SOUTH_WEST;
+		return SOUTH;
+	    } else if (deltaX <= -1) {
+		return SOUTH_WEST;
 	    }
-	} else {
-	    if (deltaX == 1) {
-		return Direction.EAST;
-	    } else if (deltaX == -1) {
-		return Direction.WEST;
+	} else if (deltaY == 0) {
+	    if (deltaX >= 1) {
+		return EAST;
+	    } else if (deltaX == 0) {
+		return NONE;
+	    } else if (deltaX <= -1) {
+		return WEST;
 	    }
 	}
-	return Direction.NONE;
+	throw new IllegalArgumentException(deltaX + " " + deltaY);
+    }
+
+    /**
+     * Tests whether or not a specified position is traversable in the specified
+     * direction.
+     *
+     * @param from The position.
+     * @param direction The direction to traverse.
+     * @param size The size of the entity attempting to traverse.
+     * @return <code>true</code> if the direction is traversable otherwise
+     *         <code>false</code>.
+     */
+    public static boolean isTraversable(Position from, Direction direction, int size) {
+	TraversalMap traversalMap = TraversalMap.getInstance();
+	switch (direction) {
+	case NORTH:
+	    return traversalMap.isTraversableNorth(from.getHeight(), from.getX(), from.getY(), size);
+	case SOUTH:
+	    return traversalMap.isTraversableSouth(from.getHeight(), from.getX(), from.getY(), size);
+	case EAST:
+	    return traversalMap.isTraversableEast(from.getHeight(), from.getX(), from.getY(), size);
+	case WEST:
+	    return traversalMap.isTraversableWest(from.getHeight(), from.getX(), from.getY(), size);
+	case NORTH_EAST:
+	    return traversalMap.isTraversableNorthEast(from.getHeight(), from.getX(), from.getY(), size);
+	case NORTH_WEST:
+	    return traversalMap.isTraversableNorthWest(from.getHeight(), from.getX(), from.getY(), size);
+	case SOUTH_EAST:
+	    return traversalMap.isTraversableSouthEast(from.getHeight(), from.getX(), from.getY(), size);
+	case SOUTH_WEST:
+	    return traversalMap.isTraversableSouthWest(from.getHeight(), from.getX(), from.getY(), size);
+	case NONE:
+	    return true;
+	default:
+	    throw new IllegalArgumentException("direction: " + direction + " is not valid");
+	}
     }
 
     /**
