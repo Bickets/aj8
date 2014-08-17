@@ -2,7 +2,7 @@ package org.apollo.game.model.obj;
 
 /**
  * Represents an objects type.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  * @author Maxi <http://www.rune-server.org/members/maxi/>
  */
@@ -131,7 +131,7 @@ public enum ObjectType {
 
     /**
      * Constructs a new {@link ObjectType} with the specified id.
-     * 
+     *
      * @param id The id of this object type.
      */
     private ObjectType(int id) {
@@ -146,8 +146,15 @@ public enum ObjectType {
     }
 
     /**
+     * Returns the object group this type of object belongs to.
+     */
+    public ObjectGroup getGroup() {
+	return ObjectGroup.forType(this);
+    }
+
+    /**
      * Returns a single object type for the specified id.
-     * 
+     *
      * @param id The types id.
      * @return The objects type if possible.
      */
@@ -157,7 +164,7 @@ public enum ObjectType {
 		return type;
 	    }
 	}
-	throw new IllegalArgumentException("no type foiund for id: " + id);
+	throw new IllegalArgumentException("no type found for id: " + id);
     }
 
 }
