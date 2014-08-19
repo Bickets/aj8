@@ -160,15 +160,9 @@ public final class GameObjectDefinition {
      * Adds an this object definitions position to the map.
      *
      * @param position The position to add.
-     * @throws IllegalStateException If the position is not valid.
      */
     public void addPosition(Position position) {
-	if (valid(position)) {
-	    positions.put(id, position);
-	    return;
-	}
-
-	throw new IllegalStateException(position + " already exists for the object id: " + id);
+	positions.put(id, position);
     }
 
     /**
