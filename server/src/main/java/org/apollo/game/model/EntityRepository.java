@@ -1,16 +1,17 @@
 package org.apollo.game.model;
 
+import java.util.AbstractCollection;
 import java.util.Iterator;
-import java.util.NoSuchElementException;
 
 /**
  * A {@link EntityRepository} is a repository of {@link Entity}s that are
  * currently active in the game world.
  *
  * @author Graham
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
  * @param <T> The type of entity.
  */
-public final class EntityRepository<T extends Entity> implements Iterable<T> {
+public final class EntityRepository<T extends Entity> extends AbstractCollection<T> implements Iterable<T> {
 
     /**
      * The array of entities in this repository.
@@ -21,11 +22,6 @@ public final class EntityRepository<T extends Entity> implements Iterable<T> {
      * The current size of this repository.
      */
     private int size = 0;
-
-    /**
-     * The position of the next free index.
-     */
-    private int pointer = 0;
 
     /**
      * Creates a new entity repository with the specified capacity.
@@ -42,6 +38,7 @@ public final class EntityRepository<T extends Entity> implements Iterable<T> {
      *
      * @return The number of entities in this repository.
      */
+    @Override
     public int size() {
 	return size;
     }
@@ -56,69 +53,92 @@ public final class EntityRepository<T extends Entity> implements Iterable<T> {
     }
 
     /**
-     * Adds an entity to the repository.
+     * Tests the specified index to ensure it is valid.
      *
-     * @param entity The entity to add.
-     * @return {@code true} if the entity was added, {@code false} if the size
-     *         has reached the capacity of this repository.
+     * @param index The index to test.
+     * @throws ArrayIndexOutOfBoundsException If the specified index is invalid.
      */
+    private void testIndex(int index) {
+	if (index < 1 || index >= entities.length + 1) {
+	    throw new ArrayIndexOutOfBoundsException();
+	}
+    }
+
+    @Override
     public boolean add(T entity) {
-	if (size == capacity()) {
-	    return false;
-	}
-	int index = -1;
-	for (int i = pointer; i < capacity(); i++) {
-	    if (entities[i] == null) {
-		index = i;
-		break;
+	for (int index = 0; index < entities.length; index++) {
+	    if (entities[index] != null) {
+		continue;
 	    }
+
+	    entities[index] = entity;
+	    entity.setIndex(index + 1);
+	    size++;
+
+	    return true;
 	}
-	if (index == -1) {
-	    for (int i = 0; i < pointer; i++) {
-		if (entities[i] == null) {
-		    index = i;
-		    break;
-		}
-	    }
-	}
-	if (index == -1) {
-	    return false; // shouldn't happen, but just in case
-	}
-	entities[index] = entity;
-	entity.setIndex(index + 1);
-	if (index == capacity() - 1) {
-	    pointer = 0;
-	} else {
-	    pointer = index;
-	}
-	size++;
+
+	return false;
+    }
+
+    /**
+     * Attempts to remove the specified entity from this collection.
+     *
+     * @param entity The entity to try to remove.
+     * @return {@code true} if and only if the specified entity was removed
+     *         otherwise {@code false}.
+     */
+    public boolean remove(T entity) {
+	int index = entity.getIndex();
+
+	Entity other = entities[index = 1];
+	assert other == entity;
+
+	remove(index);
 	return true;
     }
 
     /**
-     * Removes a entity from the repository.
+     * Looks up an entity at the specified index and attempts to remove it from
+     * this collection.
      *
-     * @param entity The entity to remove.
-     * @return {@code true} if the entity was removed, {@code false} if it was
-     *         not (e.g. if it was never added or has been removed already).
+     * @param index The index within this collection to remove the specified
+     *            entity.
+     * @return {@code true} if and only if the entity for the specified index
+     *         was removed.
      */
-    public boolean remove(T entity) {
-	int index = entity.getIndex() - 1;
-	if (index < 0 || index >= capacity()) {
+    public boolean remove(int index) {
+	Entity entity = get(index);
+	if (entity == null) {
 	    return false;
 	}
-	if (entities[index] == entity) {
-	    entities[index] = null;
-	    entity.resetIndex();
-	    size--;
-	    return true;
+
+	if (entity.getIndex() != index) {
+	    throw new IllegalStateException("Unexpected index: " + index + ", expected: " + entity.getIndex());
 	}
-	return false;
+
+	entities[index - 1] = null;
+	entity.resetIndex();
+	size--;
+	return true;
+    }
+
+    /**
+     * Attempts to get the entity at the specified index.
+     *
+     * @param index The index of the entity to get.
+     * @return The entity at the specified index if and only if it exists
+     *         otherwise {@code null} is returned.
+     */
+    @SuppressWarnings("unchecked")
+    public T get(int index) {
+	testIndex(index);
+	return (T) entities[index - 1];
     }
 
     @Override
     public Iterator<T> iterator() {
-	return new CharacterRepositoryIterator();
+	return new EntityRepositoryIterator();
     }
 
     /**
@@ -126,24 +146,29 @@ public final class EntityRepository<T extends Entity> implements Iterable<T> {
      * class.
      *
      * @author Graham
+     * @author Ryley Kimmel <ryley.kimmel@live.com>
      */
-    private final class CharacterRepositoryIterator implements Iterator<T> {
-
-	/**
-	 * The previous index of this iterator.
-	 */
-	private int previousIndex = -1;
+    private final class EntityRepositoryIterator implements Iterator<T> {
 
 	/**
 	 * The current index of this iterator.
 	 */
-	private int index = 0;
+	private int currentIndex;
+
+	/**
+	 * The amount of indexes found.
+	 */
+	private int foundIndex;
 
 	@Override
 	public boolean hasNext() {
-	    for (int i = index; i < capacity(); i++) {
-		if (entities[i] != null) {
-		    index = i;
+	    if (foundIndex == size) {
+		return false;
+	    }
+
+	    while (currentIndex < capacity()) {
+		if (entities[currentIndex++] != null) {
+		    foundIndex++;
 		    return true;
 		}
 	    }
@@ -153,32 +178,16 @@ public final class EntityRepository<T extends Entity> implements Iterable<T> {
 	@SuppressWarnings("unchecked")
 	@Override
 	public T next() {
-	    T entity = null;
-	    for (int i = index; i < capacity(); i++) {
-		if (entities[i] != null) {
-		    entity = (T) entities[i];
-		    index = i;
-		    break;
-		}
-	    }
-	    if (entity == null) {
-		throw new NoSuchElementException();
-	    }
-	    previousIndex = index;
-	    index++;
-	    return entity;
+	    return (T) entities[currentIndex - 1];
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public void remove() {
-	    if (previousIndex == -1) {
-		throw new IllegalStateException();
-	    }
-	    EntityRepository.this.remove((T) entities[previousIndex]);
-	    previousIndex = -1;
+	    Entity entity = entities[currentIndex];
+	    entities[currentIndex] = null;
+	    entity.resetIndex();
+	    size--;
 	}
-
     }
 
 }
