@@ -58,7 +58,7 @@ public abstract class DistancedAction<T extends GameCharacter> extends Action<T>
     }
 
     @Override
-    public void execute() {
+    public final void execute() {
 	if (reached) {
 	    // some actions (e.g. agility) will cause the player to move away
 	    // again

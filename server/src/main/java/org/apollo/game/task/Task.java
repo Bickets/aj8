@@ -52,7 +52,7 @@ public abstract class Task {
      * @throws IllegalArgumentException if the delay is less than or equal to
      *             zero.
      */
-    public void setDelay(int delay) {
+    public final void setDelay(int delay) {
 	if (delay < 0) {
 	    throw new IllegalArgumentException();
 	}

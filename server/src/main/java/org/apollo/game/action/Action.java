@@ -45,7 +45,7 @@ public abstract class Action<T extends GameCharacter> extends Task {
      *
      * @return The character.
      */
-    public T getCharacter() {
+    public final T getCharacter() {
 	return character;
     }
 
