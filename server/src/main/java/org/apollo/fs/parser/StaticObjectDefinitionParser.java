@@ -169,22 +169,26 @@ public final class StaticObjectDefinitionParser {
      */
     private static void objectDecoded(int id, ObjectOrientation orientation, ObjectType type, Position position) {
 	GameObjectDefinition def = GameObjectDefinition.forId(id);
+	def.addPosition(position);
 
-	if (def.isSolid()) {
-	    if (!TRAVERSAL_MAP.regionInitialized(position.getX(), position.getY())) {
-		TRAVERSAL_MAP.initializeRegion(position.getX(), position.getY());
-	    }
+	if (!TRAVERSAL_MAP.regionInitialized(position.getX(), position.getY())) {
+	    TRAVERSAL_MAP.initializeRegion(position.getX(), position.getY());
+	}
 
-	    if (type.getGroup() == WALL) {
-		TRAVERSAL_MAP.markWall(orientation, position.getHeight(), position.getX(), position.getY(), type, def.isWalkable());
-	    }
+	if (type.getGroup() == WALL) {
+	    TRAVERSAL_MAP.markWall(orientation, position.getHeight(), position.getX(), position.getY(), type, def.isWalkable());
+	}
 
-	    if (type == GROUND_PROP || type.getId() >= 9 && type.getId() <= 12) {
+	if (type.getId() >= 9 && type.getId() <= 12) {
+	    TRAVERSAL_MAP.markBlocked(position.getHeight(), position.getX(), position.getY());
+	}
+
+	if (type == GROUND_PROP) {
+	    if (def.hasActions()) {
 		TRAVERSAL_MAP.markBlocked(position.getHeight(), position.getX(), position.getY());
 	    }
 	}
 
-	def.addPosition(position);
 	definitions.put(id, new StaticObjectDefinition(id, position, type, orientation));
     }
 
