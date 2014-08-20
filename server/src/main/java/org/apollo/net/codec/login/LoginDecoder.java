@@ -1,6 +1,8 @@
 package org.apollo.net.codec.login;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.channel.ChannelFuture;
+import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
 
@@ -58,7 +60,7 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 	    decodeHandshake(ctx, in);
 	    break;
 	case LOGIN_HEADER:
-	    decodeHeader(in);
+	    decodeHeader(ctx, in);
 	    break;
 	case LOGIN_PAYLOAD:
 	    decodePayload(ctx, in, out);
@@ -86,7 +88,7 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 	resp.writeByte(LoginConstants.STATUS_EXCHANGE_DATA);
 	resp.writeLong(0);
 	resp.writeLong(serverSeed);
-	ctx.channel().writeAndFlush(resp);
+	ctx.writeAndFlush(resp);
 
 	state = LoginDecoderState.LOGIN_HEADER;
     }
@@ -96,7 +98,7 @@ public final class LoginDecoder extends ByteToMessageDecoder {
      *
      * @param in The input buffer.
      */
-    private void decodeHeader(ByteBuf in) {
+    private void decodeHeader(ChannelHandlerContext ctx, ByteBuf in) {
 	if (in.readableBytes() < 2) {
 	    return;
 	}
@@ -104,7 +106,8 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 	int loginType = in.readUnsignedByte();
 
 	if (loginType != LoginConstants.TYPE_STANDARD && loginType != LoginConstants.TYPE_RECONNECTION) {
-	    throw new IllegalStateException("Invalid login type");
+	    sendErrorCode(ctx, LoginConstants.STATUS_COULD_NOT_COMPLETE);
+	    return;
 	}
 
 	reconnecting = loginType == LoginConstants.TYPE_RECONNECTION;
@@ -127,17 +130,20 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 
 	ByteBuf payload = in.readBytes(loginLength);
 	if (payload.readUnsignedByte() != 0xFF) {
-	    throw new IllegalStateException("Invalid magic id");
+	    sendErrorCode(ctx, LoginConstants.STATUS_EXCHANGE_DATA);
+	    return;
 	}
 
 	int clientVersion = payload.readUnsignedShort();
 	if (clientVersion != 317) {
-	    throw new IllegalStateException("Invalid client version");
+	    sendErrorCode(ctx, LoginConstants.STATUS_GAME_UPDATED);
+	    return;
 	}
 
 	int lowMemoryFlag = payload.readUnsignedByte();
 	if (lowMemoryFlag != 0 && lowMemoryFlag != 1) {
-	    throw new IllegalStateException("Invalid value for low memory flag");
+	    sendErrorCode(ctx, LoginConstants.STATUS_COULD_NOT_COMPLETE);
+	    return;
 	}
 
 	boolean lowMemory = lowMemoryFlag == 1;
@@ -149,20 +155,23 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 
 	int securePayloadLength = payload.readUnsignedByte();
 	if (securePayloadLength != loginLength - 41) {
-	    throw new IllegalStateException("Secure payload length mismatch");
+	    sendErrorCode(ctx, LoginConstants.STATUS_COULD_NOT_COMPLETE);
+	    return;
 	}
 
 	ByteBuf securePayload = payload.readBytes(securePayloadLength);
 
 	int secureId = securePayload.readUnsignedByte();
 	if (secureId != 10) {
-	    throw new IllegalStateException("Invalid secure payload id");
+	    sendErrorCode(ctx, LoginConstants.STATUS_COULD_NOT_COMPLETE);
+	    return;
 	}
 
 	long clientSeed = securePayload.readLong();
 	long reportedServerSeed = securePayload.readLong();
 	if (reportedServerSeed != serverSeed) {
-	    throw new IllegalStateException("Server seed mismatch");
+	    sendErrorCode(ctx, LoginConstants.STATUS_BAD_SESSION_ID);
+	    return;
 	}
 
 	int uid = securePayload.readInt();
@@ -174,7 +183,8 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 	String address = socketAddress.getHostName();
 
 	if (username.length() > 12 || password.length() > 20) {
-	    throw new IllegalStateException("Username or password too long.");
+	    sendErrorCode(ctx, LoginConstants.STATUS_INVALID_CREDENTIALS);
+	    return;
 	}
 
 	int[] seed = new int[4];
@@ -193,6 +203,23 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 	IsaacRandomPair randomPair = new IsaacRandomPair(encodingRandom, decodingRandom);
 
 	out.add(new LoginRequest(credentials, randomPair, reconnecting, lowMemory, clientVersion, archiveCrcs));
+    }
+
+    /**
+     * Sends an error code to the client and closes the current channel when an
+     * invalid piece of data gets passed through the login protocol.
+     *
+     * @param ctx The context of the channel handler.
+     * @param errorCode The code of the error to send.
+     */
+    private void sendErrorCode(ChannelHandlerContext ctx, int errorCode) {
+	ByteBuf resp = ctx.alloc().buffer(1);
+	resp.writeByte(errorCode);
+
+	ChannelFuture future = ctx.writeAndFlush(resp);
+	if (future.isDone()) {
+	    future.addListener(ChannelFutureListener.CLOSE);
+	}
     }
 
 }
