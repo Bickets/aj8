@@ -123,6 +123,11 @@ public final class GameObjectDefinition {
     private boolean walkable = false;
 
     /**
+     * Denotes some un-interactable solid ground decoration.
+     */
+    private boolean uninteractableSolid = false;
+
+    /**
      * Flag for if the object is intractable.
      */
     private boolean interactable;
@@ -317,6 +322,13 @@ public final class GameObjectDefinition {
     }
 
     /**
+     * Returns whether or not this object is an un-interactable solid.
+     */
+    public boolean isUninteractableSolid() {
+	return uninteractableSolid;
+    }
+
+    /**
      * Sets the description.
      *
      * @param description The description.
@@ -440,6 +452,13 @@ public final class GameObjectDefinition {
      */
     public void setWalkable(boolean walkable) {
 	this.walkable = walkable;
+    }
+
+    /**
+     * Sets whether or not this object is an un-interactable solid.
+     */
+    public void setUninteractableSolid(boolean uninteractableSolid) {
+	this.uninteractableSolid = uninteractableSolid;
     }
 
 }

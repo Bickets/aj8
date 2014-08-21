@@ -72,42 +72,37 @@ public enum Direction {
     }
 
     /**
-     * Creates a direction from the differences between two positions.
+     * Creates a direction from the differences between X and Y.
      *
-     * @param cur The current position.
-     * @param next The next position.
+     * @param deltaX The difference between two X coordinates.
+     * @param deltaY The difference between two Y coordinates.
      * @return The direction.
      */
-    public static Direction between(Position cur, Position next) {
-	int deltaX = next.getX() - cur.getX();
-	int deltaY = next.getY() - cur.getY();
-
-	if (deltaY >= 1) {
-	    if (deltaX >= 1) {
-		return NORTH_EAST;
+    public static Direction fromDeltas(int deltaX, int deltaY) {
+	if (deltaY == 1) {
+	    if (deltaX == 1) {
+		return Direction.NORTH_EAST;
 	    } else if (deltaX == 0) {
-		return NORTH;
-	    } else if (deltaX <= -1) {
-		return NORTH_WEST;
+		return Direction.NORTH;
+	    } else {
+		return Direction.NORTH_WEST;
 	    }
-	} else if (deltaY <= -1) {
-	    if (deltaX >= 1) {
-		return SOUTH_EAST;
+	} else if (deltaY == -1) {
+	    if (deltaX == 1) {
+		return Direction.SOUTH_EAST;
 	    } else if (deltaX == 0) {
-		return SOUTH;
-	    } else if (deltaX <= -1) {
-		return SOUTH_WEST;
+		return Direction.SOUTH;
+	    } else {
+		return Direction.SOUTH_WEST;
 	    }
-	} else if (deltaY == 0) {
-	    if (deltaX >= 1) {
-		return EAST;
-	    } else if (deltaX == 0) {
-		return NONE;
-	    } else if (deltaX <= -1) {
-		return WEST;
+	} else {
+	    if (deltaX == 1) {
+		return Direction.EAST;
+	    } else if (deltaX == -1) {
+		return Direction.WEST;
 	    }
 	}
-	throw new IllegalArgumentException(deltaX + " " + deltaY);
+	return Direction.NONE;
     }
 
     /**

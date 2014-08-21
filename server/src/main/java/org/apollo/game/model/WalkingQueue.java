@@ -53,11 +53,6 @@ public final class WalkingQueue {
     }
 
     /**
-     * The gameCharacter whose walking queue this is.
-     */
-    private final GameCharacter gameCharacter;
-
-    /**
      * The queue of directions.
      */
     private final Deque<Point> points = new ArrayDeque<>();
@@ -66,6 +61,11 @@ public final class WalkingQueue {
      * The old queue of directions.
      */
     private final Deque<Point> oldPoints = new ArrayDeque<>();
+
+    /**
+     * The gameCharacter whose walking queue this is.
+     */
+    private final GameCharacter gameCharacter;
 
     /**
      * Flag indicating if this queue (only) should be ran.
@@ -92,18 +92,16 @@ public final class WalkingQueue {
 
 	Point next = points.poll();
 	if (next != null) {
-	    Direction direction = Direction.between(position, next.position);
-	    boolean traversable = Direction.isTraversable(position, direction, gameCharacter.size());
+	    boolean traversable = Direction.isTraversable(position, next.direction, gameCharacter.size());
 	    if (traversable) {
-		first = direction;
+		first = next.direction;
 		position = next.position;
 		if (runningQueue/* or run toggled AND enough energy */) {
 		    next = points.poll();
 		    if (next != null) {
-			direction = Direction.between(position, next.position);
-			traversable = Direction.isTraversable(position, direction, gameCharacter.size());
+			traversable = Direction.isTraversable(position, next.direction, gameCharacter.size());
 			if (traversable) {
-			    second = direction;
+			    second = next.direction;
 			    position = next.position;
 			}
 		    }
@@ -185,10 +183,10 @@ public final class WalkingQueue {
 	int x = step.getX();
 	int y = step.getY();
 
-	int deltaX = Math.abs(x - last.position.getX());
-	int deltaY = Math.abs(y - last.position.getY());
+	int deltaX = x - last.position.getX();
+	int deltaY = y - last.position.getY();
 
-	int max = Math.max(deltaX, deltaY);
+	int max = Math.max(Math.abs(deltaX), Math.abs(deltaY));
 
 	for (int i = 0; i < max; i++) {
 	    if (deltaX < 0) {
@@ -219,7 +217,11 @@ public final class WalkingQueue {
 	}
 
 	Point last = getLast();
-	Direction direction = Direction.between(new Position(x, y), last.position);
+
+	int deltaX = x - last.position.getX();
+	int deltaY = y - last.position.getY();
+
+	Direction direction = Direction.fromDeltas(deltaX, deltaY);
 
 	if (direction != Direction.NONE) {
 	    Point p = new Point(new Position(x, y, gameCharacter.getPosition().getHeight()), direction);

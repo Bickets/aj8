@@ -1,5 +1,8 @@
 package org.apollo.game.model.obj;
 
+import static org.apollo.game.model.obj.ObjectOrientation.NORTH;
+import static org.apollo.game.model.obj.ObjectOrientation.SOUTH;
+
 import org.apollo.game.model.Entity;
 import org.apollo.game.model.Position;
 import org.apollo.game.model.def.GameObjectDefinition;
@@ -112,6 +115,83 @@ public final class GameObject extends Entity {
 	int distanceY = Math.abs(position.getY() - getPosition().getY());
 	int total = distanceX > distanceY ? def.getSizeX() : def.getSizeY();
 	return total;
+    }
+
+    /**
+     * Calculates the center position of this object.
+     *
+     * @return The center position of this object.
+     */
+    public Position getCenterPosition() {
+	GameObjectDefinition def = getDefinition();
+	int width = def.getSizeX();
+	int length = def.getSizeY();
+	if (orientation == NORTH || orientation == SOUTH) {
+	    width = def.getSizeY();
+	    length = def.getSizeX();
+	}
+	int centerX = getPosition().getX() + (width / 2);
+	int centerY = getPosition().getY() + (length / 2);
+	return new Position(centerX, centerY);
+    }
+
+    /**
+     * Calculates the turn to position from the specified position for this game
+     * object.
+     *
+     * @param from The from position.
+     * @return The position to turn to.
+     */
+    public Position getTurnToPosition(Position from) {
+	GameObjectDefinition def = getDefinition();
+
+	int width = def.getSizeX();
+	int length = def.getSizeY();
+	if (orientation == NORTH || orientation == SOUTH) {
+	    width = def.getSizeY();
+	    length = def.getSizeX();
+	}
+
+	int turnToX = from.getX();
+	int turnToY = from.getY();
+
+	Position position = getPosition();
+
+	/* Within the width of the object */
+	if (from.getX() >= position.getX() && from.getX() < position.getX() + width) {
+	    turnToY = position.getY();
+	}
+
+	/* Within the length of the object */
+	if (from.getY() >= position.getY() && from.getY() < position.getY() + width) {
+	    turnToX = position.getX();
+	}
+
+	/* Upper left corner */
+	if (from.getX() < position.getX() && from.getY() >= position.getY() + length) {
+	    turnToX = position.getX();
+	    turnToY = position.getY() + length - 1;
+	}
+
+	/* Upper right corner */
+	if (from.getX() >= position.getX() + width && from.getY() >= position.getY() + length) {
+	    turnToX = position.getX() + width - 1;
+	    turnToY = position.getY() + length - 1;
+	}
+
+	/* Lower left corner */
+	if (from.getX() < position.getX() + width && from.getY() < position.getY()) {
+	    turnToX = position.getX();
+	    turnToY = position.getY();
+	}
+
+	/* Lower right corner */
+	if (from.getX() >= position.getX() + width && from.getY() < position.getY()) {
+	    turnToX = position.getX() + width - 1;
+	    turnToY = position.getY();
+	}
+
+	return new Position(turnToX, turnToY);
     }
 
     /**

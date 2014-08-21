@@ -66,6 +66,7 @@ class CommandPlugin extends Plugin implements EventSubscriber<CommandEvent> {
 
 				val finder = new AStarPathFinder
 				val path = finder.find(plr, x, y)
+				plr.walkingQueue.clear
 				if (path != null) {
 					plr.walkingQueue.addFirstStep(path.poll)
 					while (!path.empty) {

@@ -184,7 +184,7 @@ public final class StaticObjectDefinitionParser {
 	}
 
 	if (type == GROUND_PROP) {
-	    if (def.hasActions()) {
+	    if (def.hasActions() || def.isUninteractableSolid()) {
 		TRAVERSAL_MAP.markBlocked(position.getHeight(), position.getX(), position.getY());
 	    }
 	}

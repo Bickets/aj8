@@ -38,42 +38,30 @@ public final class ObjectMessageHandler implements MessageHandler<ObjectActionMe
 	GameObject obj = new GameObject(message.getId(), message.getPosition());
 	GameObjectDefinition def = obj.getDefinition();
 
-	/* Ensure the object we want to interact with actually exists. */
 	if (!obj.exists()) {
 	    return;
 	}
 
-	/* Ensure the object is interactable. */
 	if (!def.isInteractable()) {
 	    return;
 	}
 
-	/*
-	 * Ensure the object we want to interact with is really what the client
-	 * claims.
-	 */
 	if (def.getId() != message.getId()) {
 	    return;
 	}
 
-	/* Check the actions id to the objects action and be sure it exists. */
 	if (def.getActions()[message.getOption().getId()] == null) {
 	    return;
 	}
 
-	/* We can't interact with the object if it is out of sight. */
 	if (!player.getPosition().isWithinDistance(message.getPosition(), 32)) {
 	    return;
 	}
 
-	/*
-	 * Start an action which moves to the object before executing an action
-	 * event.
-	 */
 	player.startAction(new DistancedAction<Player>(0, true, player, message.getPosition(), obj.getTileOffset(player.getPosition())) {
 	    @Override
 	    public void executeAction() {
-		player.turnTo(message.getPosition());
+		player.turnTo(obj.getTurnToPosition(player.getPosition()));
 		world.post(new ObjectActionEvent(player, message.getId(), message.getOption(), message.getPosition()));
 		stop();
 	    }

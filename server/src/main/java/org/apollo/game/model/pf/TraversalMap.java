@@ -411,7 +411,7 @@ public final class TraversalMap {
 	}
 
 	int modifiedHeight = height;
-	if ((region.getTile(1, localX, localY).flags() & BRIDGE) != 0) {
+	if (region.getTile(1, localX, localY).isActive(BRIDGE)) {
 	    modifiedHeight = height - 1;
 	}
 

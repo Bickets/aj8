@@ -132,6 +132,8 @@ public final class GameObjectDefinitionParser {
 	    } else if (code == 72) {
 		final int offsetZ = buffer.getShort() & 0xFFFF;
 		def.setOffsetZ(offsetZ);
+	    } else if (code == 73) {
+		def.setUninteractableSolid(true);
 	    } else if (code == 74) {
 		def.setSolid(false);
 		def.setWalkable(false);
