@@ -9,6 +9,7 @@ import org.apollo.game.msg.annotate.DecodesMessage;
 import org.apollo.game.msg.annotate.EncodesMessage;
 import org.apollo.game.msg.annotate.HandlesMessage;
 import org.apollo.game.msg.decoder.ButtonMessageDecoder;
+import org.apollo.game.msg.decoder.CameraMovementMessageDecoder;
 import org.apollo.game.msg.decoder.CharacterDesignMessageDecoder;
 import org.apollo.game.msg.decoder.ChatMessageDecoder;
 import org.apollo.game.msg.decoder.ClientFocusedMessageDecoder;
@@ -143,6 +144,7 @@ public final class MessageTranslator {
 	register(new IdleMessageDecoder());
 	register(new RegionLoadedMessageDecoder());
 	register(new ObsoleteMessageDecoder());
+	register(new CameraMovementMessageDecoder());
 
 	// register encoders
 	register(new IdAssignmentMessageEncoder());
@@ -187,7 +189,7 @@ public final class MessageTranslator {
 
     /**
      * Registers an {@link MessageDecoder} to its respective map.
-     * 
+     *
      * @param decoder The message decoder to register.
      */
     private <E extends Message> void register(MessageDecoder<E> decoder) {
@@ -203,7 +205,7 @@ public final class MessageTranslator {
 
     /**
      * Registers an {@link MessageEncoder} to its respective map.
-     * 
+     *
      * @param encoder The message encoder to register.
      */
     private <E extends Message> void register(MessageEncoder<E> encoder) {
@@ -217,7 +219,7 @@ public final class MessageTranslator {
 
     /**
      * Registers an {@link MessageHandler} to its respective map.
-     * 
+     *
      * @param handler The message handler to register.
      */
     private <E extends Message> void register(MessageHandler<E> handler) {
