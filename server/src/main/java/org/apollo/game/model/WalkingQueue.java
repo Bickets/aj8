@@ -108,13 +108,14 @@ public final class WalkingQueue {
 		}
 	    }
 
+	    gameCharacter.setPosition(position);
+
 	    if (!traversable) {
 		clear();
 	    }
 	}
 
 	gameCharacter.setDirections(first, second);
-	gameCharacter.setPosition(position);
     }
 
     /**

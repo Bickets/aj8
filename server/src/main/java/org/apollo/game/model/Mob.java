@@ -36,10 +36,10 @@ public final class Mob extends GameCharacter {
      *
      * @param id The id of the mob.
      * @param position The position of the mob.
-     * @param direction The initial facing direction of this mob.
+     * @param initialFaceDirection The initial facing direction of this mob.
      */
-    public Mob(int id, Position position, Direction direction) {
-	this(MobDefinition.forId(id), position, direction);
+    public Mob(int id, Position position, Direction initialFaceDirection) {
+	this(MobDefinition.forId(id), position, initialFaceDirection);
     }
 
     /**

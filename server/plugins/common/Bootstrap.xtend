@@ -2,7 +2,7 @@ package common
 
 import java.io.File
 import java.lang.reflect.Modifier
-import mobs.InitialMobSpawns
+import mobs.MobSpawn
 import org.apollo.game.command.CommandEvent
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.interact.ButtonActionEvent
@@ -25,7 +25,10 @@ class Bootstrap {
 	}
 
 	def initSpawns(World world) {
-		new InitialMobSpawns(world).init
+		classes('location').forEach [
+			val mob = it.getConstructor(World).newInstance(world) as MobSpawn
+			mob.spawn
+		]
 	}
 
 	def initCommands(World world) {
