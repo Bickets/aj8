@@ -15,15 +15,15 @@ import org.apollo.net.codec.game.GamePacketReader;
  *
  * @author Graham
  */
-@DecodesMessage(117)
+@DecodesMessage(75)
 public final class SecondItemActionMessageDecoder implements MessageDecoder<ItemActionMessage> {
 
     @Override
     public ItemActionMessage decode(GamePacket packet) {
 	GamePacketReader reader = new GamePacketReader(packet);
 	int interfaceId = (int) reader.getUnsigned(DataType.SHORT, DataOrder.LITTLE, DataTransformation.ADD);
-	int id = (int) reader.getUnsigned(DataType.SHORT, DataOrder.LITTLE, DataTransformation.ADD);
 	int slot = (int) reader.getUnsigned(DataType.SHORT, DataOrder.LITTLE);
+	int id = (int) reader.getUnsigned(DataType.SHORT, DataTransformation.ADD);
 	return new ItemActionMessage(InterfaceOption.OPTION_TWO, interfaceId, id, slot);
     }
 

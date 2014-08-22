@@ -39,7 +39,7 @@ public final class ItemActionMessageHandler implements MessageHandler<ItemAction
 	    return;
 	}
 
-	InterfaceDefinition def = InterfaceDefinition.forId(message.getId());
+	InterfaceDefinition def = InterfaceDefinition.forId(message.getInterfaceId());
 	if (!def.isInventory()) {
 	    return;
 	}
