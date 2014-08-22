@@ -9,12 +9,7 @@ import org.apollo.game.msg.Message;
  *
  * @author Graham
  */
-public class ObjectActionMessage extends Message {
-
-    /**
-     * The interface option.
-     */
-    private final InterfaceOption option;
+public final class ObjectActionMessage extends ActionMessage {
 
     /**
      * The object's id.
@@ -34,18 +29,9 @@ public class ObjectActionMessage extends Message {
      * @param position The position of the object.
      */
     public ObjectActionMessage(InterfaceOption option, int id, Position position) {
-	this.option = option;
+	super(option);
 	this.id = id;
 	this.position = position;
-    }
-
-    /**
-     * Gets the interface option.
-     *
-     * @return The interface option.
-     */
-    public InterfaceOption getOption() {
-	return option;
     }
 
     /**
