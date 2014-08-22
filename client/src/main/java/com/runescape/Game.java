@@ -1222,7 +1222,6 @@ public class Game extends GameShell {
     }
 
     private final void printLoadError(String loadError) {
-	System.out.println(loadError);
 	try {
 	    getAppletContext().showDocument(new URL(getCodeBase(), "loaderror_" + loadError + ".html"));
 	} catch (Exception exception) {
@@ -2756,7 +2755,6 @@ public class Game extends GameShell {
 	    System.out.println("RS2 user client - release #" + 317);
 	    Game.nodeId = 0;
 	    Game.portOffset = 0;
-	    // setLowMemory((byte) 77);
 	    Game.setHighMemory();
 	    Game.membersWorld = true;
 	    Signlink.storeId = 32;
@@ -5099,7 +5097,6 @@ public class Game extends GameShell {
 		    }
 		} else if (chatboxWidgetId == -1) {
 		    if (key >= 32 && key <= 122 && chatboxInput.length() < 80) {
-			System.out.println((char) 32);
 			chatboxInput += (char) key;
 			redrawChatbox = true;
 		    }
@@ -10142,18 +10139,18 @@ public class Game extends GameShell {
 	    if (i >= 0) {
 	    }
 	    buffer.initBitAccess();
-	    int i_969_ = buffer.getBits(8);
-	    if (i_969_ < actorCount) {
-		for (int i_970_ = i_969_; i_970_ < actorCount; i_970_++) {
+	    int count = buffer.getBits(8);
+	    if (count < actorCount) {
+		for (int i_970_ = count; i_970_ < actorCount; i_970_++) {
 		    anIntArray865[anInt864++] = anIntArray862[i_970_];
 		}
 	    }
-	    if (i_969_ > actorCount) {
-		Signlink.reportError(username + " Too many npcs");
+	    if (count > actorCount) {
+		Signlink.reportError(username + " too many npcs, count: " + count + ", max: " + actorCount);
 		throw new RuntimeException("eek");
 	    }
 	    actorCount = 0;
-	    for (int i_971_ = 0; i_971_ < i_969_; i_971_++) {
+	    for (int i_971_ = 0; i_971_ < count; i_971_++) {
 		int i_972_ = anIntArray862[i_971_];
 		Mob npc = localNpcs[i_972_];
 		int i_973_ = buffer.getBits(1);
