@@ -10,10 +10,10 @@ import org.apollo.net.codec.game.GamePacketReader;
 
 /**
  * Decodes the {@link ObsoleteMessage}.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-@DecodesMessage({ 36, 77, 78, 210 })
+@DecodesMessage({ 36, 77, 78, 210, 226 })
 public final class ObsoleteMessageDecoder implements MessageDecoder<ObsoleteMessage> {
 
     @Override
