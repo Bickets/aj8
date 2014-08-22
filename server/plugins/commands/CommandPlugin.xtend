@@ -28,14 +28,16 @@ class CommandPlugin extends Plugin implements EventSubscriber<CommandEvent> {
 				val id = toInt(args.get(0))
 				var amount = 1
 
-				if ("max".equals(args.get(1))) {
-					amount = Integer.MAX_VALUE
-				} else {
-					args.set(1, args.get(1).toLowerCase)
-					args.set(1, args.get(1).replace("k", "000"))
-					args.set(1, args.get(1).replace("m", "000000"))
-					args.set(1, args.get(1).replace("b", "000000000"))
-					amount = toInt(args.get(1))
+				if (args.length == 2) {
+					if ("max".equals(args.get(1))) {
+						amount = Integer.MAX_VALUE
+					} else {
+						args.set(1, args.get(1).toLowerCase)
+						args.set(1, args.get(1).replace("k", "000"))
+						args.set(1, args.get(1).replace("m", "000000"))
+						args.set(1, args.get(1).replace("b", "000000000"))
+						amount = toInt(args.get(1))
+					}
 				}
 
 				if (id < 0 || amount < 0 || id > ItemDefinition.count || amount > Integer.MAX_VALUE) {
