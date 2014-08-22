@@ -1,10 +1,11 @@
 package org.apollo.game.sync.task;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
 import java.util.function.Predicate;
-import java.util.stream.Stream;
+import java.util.stream.Collectors;
 
 import org.apollo.game.model.Mob;
 import org.apollo.game.model.Player;
@@ -57,11 +58,15 @@ public final class MobSynchronizationTask extends SynchronizationTask implements
 	List<SynchronizationSegment> segments = new ArrayList<>();
 	int oldLocalMobs = localMobs.size();
 
-	Stream<Mob> stream = localMobs.stream().filter(this);
-	stream.forEach((Mob mob) -> segments.add(new RemoveCharacterSegment()));
+	List<Mob> mobs = localMobs.stream().filter(this).collect(Collectors.toList());
+	Iterator<Mob> iterator = mobs.iterator();
+	iterator.forEachRemaining((Mob mob) -> {
+	    segments.add(new RemoveCharacterSegment());
+	    iterator.remove();
+	});
 
-	stream = localMobs.stream().filter(negate());
-	stream.forEach((Mob mob) -> segments.add(new MovementSegment(mob.getBlockSet(), mob.getDirections())));
+	mobs = localMobs.stream().filter(negate()).collect(Collectors.toList());
+	mobs.forEach((Mob mob) -> segments.add(new MovementSegment(mob.getBlockSet(), mob.getDirections())));
 
 	int added = 0;
 
