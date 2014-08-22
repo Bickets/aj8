@@ -6,6 +6,7 @@ import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.model.Position
 import org.apollo.game.model.^def.GameObjectDefinition
+import org.apollo.game.model.^def.ItemDefinition
 import org.apollo.game.model.obj.GameObject
 import org.apollo.game.model.pf.AStarPathFinder
 import org.apollo.game.msg.impl.GameObjectMessage
@@ -18,6 +19,32 @@ class CommandPlugin extends Plugin implements EventSubscriber<CommandEvent> {
 		val plr = event.player
 
 		switch event.name.toLowerCase {
+			case "pickup": {
+				if (args.length < 1) {
+					plr.sendMessage("Syntax is ::pickup [id] [amount=1]")
+					return
+				}
+
+				val id = toInt(args.get(0))
+				var amount = 1
+
+				if ("max".equals(args.get(1))) {
+					amount = Integer.MAX_VALUE
+				} else {
+					args.set(1, args.get(1).toLowerCase)
+					args.set(1, args.get(1).replace("k", "000"))
+					args.set(1, args.get(1).replace("m", "000000"))
+					args.set(1, args.get(1).replace("b", "000000000"))
+					amount = toInt(args.get(1))
+				}
+
+				if (id < 0 || amount < 0 || id > ItemDefinition.count || amount > Integer.MAX_VALUE) {
+					plr.sendMessage("Item [id=" + id + ", amount=" + amount + "] ")
+					return
+				}
+
+				plr.inventory.add(id, amount)
+			}
 			case "tele": {
 				if (args.length < 2 || args.length > 3) {
 					plr.sendMessage("Syntax is: ::tele [x] [y] [z=0]")
@@ -41,7 +68,7 @@ class CommandPlugin extends Plugin implements EventSubscriber<CommandEvent> {
 					return
 				}
 
-				var id = toInt(args.get(0))
+				val id = toInt(args.get(0))
 				if (id < 0 || id > GameObjectDefinition.count) {
 					plr.sendMessage("Object: [id=" + id + "] is not valid.")
 					return
@@ -49,10 +76,6 @@ class CommandPlugin extends Plugin implements EventSubscriber<CommandEvent> {
 
 				val object = new GameObject(id, plr.position)
 
-				//				val r_pos = plr.lastEnteredRegionPosition
-				//				val curr = plr.position
-				//				val offset = Math.abs((curr.x - r_pos.x) + (curr.y - r_pos.y))
-				//				println(offset)
 				plr.send(new GameObjectMessage(object, 0))
 			}
 			case "walk": {
@@ -61,8 +84,8 @@ class CommandPlugin extends Plugin implements EventSubscriber<CommandEvent> {
 					return
 				}
 
-				var x = toInt(args.get(0))
-				var y = toInt(args.get(1))
+				val x = toInt(args.get(0))
+				val y = toInt(args.get(1))
 
 				val finder = new AStarPathFinder
 				val path = finder.find(plr, x, y)
