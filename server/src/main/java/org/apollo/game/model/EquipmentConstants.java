@@ -63,10 +63,13 @@ public final class EquipmentConstants {
     public static final int ARROWS = 13;
 
     /**
-     * Default private constructor to prevent instantiation.
+     * Suppresses the default-public constructor preventing this class from
+     * being instantiated by other classes.
+     *
+     * @throws InstantiationError If this class is instantiated within itself.
      */
     private EquipmentConstants() {
-
+	throw new InstantiationError("constant-container classes may not be instantiated.");
     }
 
 }

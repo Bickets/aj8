@@ -20,10 +20,13 @@ public final class LanguageUtil {
     }
 
     /**
-     * Default private constructor to prevent instantiation.
+     * Suppresses the default-public constructor preventing this class from
+     * being instantiated by other classes.
+     *
+     * @throws InstantiationError If this class is instantiated within itself.
      */
     private LanguageUtil() {
-
+	throw new InstantiationError("static-utility classes may not be instantiated.");
     }
 
 }

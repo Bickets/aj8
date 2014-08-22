@@ -1193,10 +1193,13 @@ public final class EquipmentUpdater {
     }
 
     /**
-     * Default private constructor to prevent instantiation.
+     * Suppresses the default-public constructor preventing this class from
+     * being instantiated by other classes.
+     *
+     * @throws InstantiationError If this class is instantiated within itself.
      */
     private EquipmentUpdater() {
-
+	throw new InstantiationError("static-utility classes may not be instantiated.");
     }
 
     /**
@@ -1308,10 +1311,14 @@ public final class EquipmentUpdater {
 		"full helm (t)", "full helm (g)", "mask" };
 
 	/**
-	 * Default private constructor to prevent instantiation.
+	 * Suppresses the default-public constructor preventing this class from
+	 * being instantiated by other classes.
+	 *
+	 * @throws InstantiationError If this class is instantiated within
+	 *             itself.
 	 */
 	private EquipmentConstants() {
-
+	    throw new InstantiationError("constant-container classes may not be instantiated.");
 	}
 
     }

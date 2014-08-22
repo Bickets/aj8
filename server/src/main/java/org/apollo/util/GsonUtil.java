@@ -110,8 +110,7 @@ public final class GsonUtil {
      * Suppresses the default-public constructor preventing this class from
      * being instantiated by other classes.
      *
-     * @throws InstantiationError If this class was instantiated from within
-     *             itself.
+     * @throws InstantiationError If this class is instantiated within itself.
      */
     private GsonUtil() {
 	throw new InstantiationError("static-utility classes may not be instantiated.");

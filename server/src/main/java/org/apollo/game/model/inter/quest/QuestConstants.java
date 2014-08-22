@@ -33,10 +33,13 @@ public final class QuestConstants {
 	    12218, 12219, 12220, 12221, 12222, 12223 };
 
     /**
-     * Default private constructor to prevent instantiation.
+     * Suppresses the default-public constructor preventing this class from
+     * being instantiated by other classes.
+     *
+     * @throws InstantiationError If this class is instantiated within itself.
      */
     private QuestConstants() {
-
+	throw new InstantiationError("constant-container classes may not be instantiated.");
     }
 
 }

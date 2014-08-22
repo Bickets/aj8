@@ -23,10 +23,13 @@ public final class WorldConstants {
     public static final int MAXIMUM_GAME_OBJECTS = 2000;
 
     /**
-     * Default private constructor to prevent instantiation by other classes.
+     * Suppresses the default-public constructor preventing this class from
+     * being instantiated by other classes.
+     *
+     * @throws InstantiationError If this class is instantiated within itself.
      */
     private WorldConstants() {
-
+	throw new InstantiationError("constant-container classes may not be instantiated.");
     }
 
 }

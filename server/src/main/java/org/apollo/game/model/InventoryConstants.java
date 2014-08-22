@@ -23,10 +23,13 @@ public final class InventoryConstants {
     public static final int EQUIPMENT_CAPACITY = 14;
 
     /**
-     * Default private constructor to prevent instantiation.
+     * Suppresses the default-public constructor preventing this class from
+     * being instantiated by other classes.
+     *
+     * @throws InstantiationError If this class is instantiated within itself.
      */
     private InventoryConstants() {
-
+	throw new InstantiationError("constant-container classes may not be instantiated.");
     }
 
 }

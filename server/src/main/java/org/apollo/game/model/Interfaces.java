@@ -25,7 +25,7 @@ public final class Interfaces {
 
     /**
      * Represents the option clicked on some drop-down interface menu.
-     * 
+     *
      * @author Ryley Kimmel <ryley.kimmel@live.com>
      */
     public enum InterfaceOption {
@@ -61,7 +61,7 @@ public final class Interfaces {
 
 	/**
 	 * Constructs a new {@link InterfaceOption} with the specified id.
-	 * 
+	 *
 	 * @param id The id of this option.
 	 */
 	private InterfaceOption(int id) {
@@ -137,12 +137,11 @@ public final class Interfaces {
     /**
      * Suppresses the default-public constructor preventing this class from
      * being instantiated by other classes.
-     * 
-     * @throws InstantiationError If this class was instantiated from within
-     *             itself.
+     *
+     * @throws InstantiationError If this class is instantiated within itself.
      */
     private Interfaces() {
-	throw new InstantiationError("static-utility classes may not be instantiated");
+	throw new InstantiationError("constant-container classes may not be instantiated.");
     }
 
 }

@@ -18,10 +18,13 @@ public final class HandshakeConstants {
     public static final int SERVICE_UPDATE = 15;
 
     /**
-     * Default private constructor to prevent instantiation by other classes.
+     * Suppresses the default-public constructor preventing this class from
+     * being instantiated by other classes.
+     *
+     * @throws InstantiationError If this class is instantiated within itself.
      */
     private HandshakeConstants() {
-
+	throw new InstantiationError("constant-container classes may not be instantiated.");
     }
 
 }

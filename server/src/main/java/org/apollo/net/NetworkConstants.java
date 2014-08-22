@@ -43,10 +43,13 @@ public final class NetworkConstants {
     public static final AttributeKey<Session> NETWORK_SESSION = AttributeKey.valueOf("session.KEY");
 
     /**
-     * Default private constructor to prevent instantiation by other classes.
+     * Suppresses the default-public constructor preventing this class from
+     * being instantiated by other classes.
+     *
+     * @throws InstantiationError If this class is instantiated within itself.
      */
     private NetworkConstants() {
-
+	throw new InstantiationError("constant-container classes may not be instantiated.");
     }
 
 }

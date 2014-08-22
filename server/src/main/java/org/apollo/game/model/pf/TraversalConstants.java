@@ -113,13 +113,13 @@ public final class TraversalConstants {
     protected static final int NONE = 0x0;
 
     /**
-     * Suppresses the default public constructor preventing this class from
+     * Suppresses the default-public constructor preventing this class from
      * being instantiated by other classes.
      *
-     * @throws InstantationError If this class is constructed within itself.
+     * @throws InstantiationError If this class is instantiated within itself.
      */
     private TraversalConstants() {
-	throw new InstantiationError("constant container classes may not be instantiated.");
+	throw new InstantiationError("constant-container classes may not be instantiated.");
     }
 
 }
