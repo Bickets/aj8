@@ -23,3 +23,6 @@
 # Plugins #
 server/compiled-plugins
 server/bin
+client/bin
+
+server/data/savedGames/*.dat
