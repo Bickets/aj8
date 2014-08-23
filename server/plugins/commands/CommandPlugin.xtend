@@ -7,6 +7,7 @@ import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.model.Position
 import org.apollo.game.model.^def.GameObjectDefinition
 import org.apollo.game.model.^def.ItemDefinition
+import org.apollo.game.model.inter.bank.BankUtils
 import org.apollo.game.model.obj.GameObject
 import org.apollo.game.model.pf.AStarPathFinder
 import org.apollo.game.msg.impl.GameObjectMessage
@@ -19,6 +20,7 @@ class CommandPlugin extends Plugin implements EventSubscriber<CommandEvent> {
 		val plr = event.player
 
 		switch event.name.toLowerCase {
+			case "close": plr.interfaceSet.close
 			case "pickup": {
 				if (args.length < 1) {
 					plr.sendMessage("Syntax is ::pickup [id] [amount=1]")
@@ -47,6 +49,7 @@ class CommandPlugin extends Plugin implements EventSubscriber<CommandEvent> {
 
 				plr.inventory.add(id, amount)
 			}
+			case "bank": BankUtils.openBank(plr)
 			case "tele": {
 				if (args.length < 2 || args.length > 3) {
 					plr.sendMessage("Syntax is: ::tele [x] [y] [z=0]")
