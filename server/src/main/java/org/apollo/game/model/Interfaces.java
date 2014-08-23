@@ -119,7 +119,7 @@ public final class Interfaces {
 	case BankConstants.BANK_INVENTORY_ID:
 	    return player.getBank();
 	}
-	throw new IllegalArgumentException("Inventory not supported!");
+	throw new IllegalArgumentException("Inventory for interface: " + id + " not supported!");
     }
 
     /**

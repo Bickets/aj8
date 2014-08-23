@@ -5,7 +5,7 @@ import org.apollo.game.model.Interfaces.InterfaceOption;
 import org.apollo.game.model.Player;
 
 /**
- * An event which manages item actions.
+ * An event which manages single item actions.
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
@@ -15,6 +15,11 @@ public final class ItemActionEvent implements Event {
      * The player to perform the item action for.
      */
     private final Player player;
+
+    /**
+     * The clicked interface option.
+     */
+    private final InterfaceOption option;
 
     /**
      * The interface id.
@@ -32,26 +37,21 @@ public final class ItemActionEvent implements Event {
     private final int slot;
 
     /**
-     * The interface option clicked.
-     */
-    private final InterfaceOption option;
-
-    /**
      * Constructs a new {@link ItemActionEvent} with the specified player,
-     * interface id, item id, item slot and interface option.
+     * interface id, item id and item slot.
      *
      * @param player The player performing this event.
+     * @param option The clicked interface option.
      * @param interfaceId The interface id.
      * @param id The items id.
      * @param slot The items slot.
-     * @param option The interface option clicked.
      */
-    public ItemActionEvent(Player player, int interfaceId, int id, int slot, InterfaceOption option) {
+    public ItemActionEvent(Player player, InterfaceOption option, int interfaceId, int id, int slot) {
 	this.player = player;
+	this.option = option;
 	this.interfaceId = interfaceId;
 	this.id = id;
 	this.slot = slot;
-	this.option = option;
     }
 
     /**
@@ -59,6 +59,13 @@ public final class ItemActionEvent implements Event {
      */
     public Player getPlayer() {
 	return player;
+    }
+
+    /**
+     * Returns the clicked interface option.
+     */
+    public InterfaceOption getOption() {
+	return option;
     }
 
     /**
@@ -80,13 +87,6 @@ public final class ItemActionEvent implements Event {
      */
     public int getSlot() {
 	return slot;
-    }
-
-    /**
-     * Returns the interface option clicked.
-     */
-    public InterfaceOption getOption() {
-	return option;
     }
 
 }

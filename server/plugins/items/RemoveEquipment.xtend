@@ -2,10 +2,9 @@ package items
 
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
-import org.apollo.game.interact.ItemActionEvent
-import org.apollo.game.model.Interfaces.InterfaceOption
 import org.apollo.game.model.Player
 import org.apollo.game.model.inv.SynchronizationInventoryListener
+import org.apollo.game.interact.ItemActionEvent
 
 @SubscribesTo(ItemActionEvent)
 class RemoveEquipment implements EventSubscriber<ItemActionEvent> {
@@ -14,45 +13,34 @@ class RemoveEquipment implements EventSubscriber<ItemActionEvent> {
 		val inventory = player.inventory
 		val equipment = player.equipment
 
-		var hasRoomForStackable = inventory.contains(id) && inventory.get(slot).definition.stackable
-		if (inventory.freeSlots < 1 && !hasRoomForStackable) {
-			inventory.forceCapacityExceeded
-			return
-		}
- 
+		val item = equipment.get(slot)
 		if (slot < 0 || slot >= equipment.capacity) {
 			return
 		}
 
-		val item = equipment.get(slot)
 		if (item == null || item.id != id) {
 			return
 		}
 
-		var removed = true
+		var hasRoomForStackable = inventory.contains(id) && item.definition.stackable
+		if (inventory.freeSlots < 1 && !hasRoomForStackable) {
+			inventory.forceCapacityExceeded
+			return
+		}
 
 		inventory.stopFiringEvents
 		equipment.stopFiringEvents
 
 		try {
 			equipment.set(slot, null)
-			var copy = item
 			inventory.add(item.id, item.amount)
-			if (copy != null) {
-				removed = false
-				equipment.set(slot, copy)
-			}
 		} finally {
 			inventory.startFiringEvents
 			equipment.startFiringEvents
 		}
 
-		if (removed) {
-			inventory.forceRefresh(slot)
-			equipment.forceRefresh(slot)
-		} else {
-			inventory.forceCapacityExceeded
-		}
+		inventory.forceRefresh(slot)
+		equipment.forceRefresh(slot)
 	}
 
 	override subscribe(ItemActionEvent event) {
@@ -60,7 +48,7 @@ class RemoveEquipment implements EventSubscriber<ItemActionEvent> {
 	}
 
 	override test(ItemActionEvent event) {
-		event.interfaceId == SynchronizationInventoryListener.EQUIPMENT_ID && event.option == InterfaceOption.OPTION_ONE
+		event.interfaceId == SynchronizationInventoryListener.EQUIPMENT_ID
 	}
 
 }

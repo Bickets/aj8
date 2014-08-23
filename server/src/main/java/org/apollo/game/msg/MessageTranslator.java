@@ -17,22 +17,25 @@ import org.apollo.game.msg.decoder.ClosedInterfaceMessageDecoder;
 import org.apollo.game.msg.decoder.CommandMessageDecoder;
 import org.apollo.game.msg.decoder.DialogueContinueMessageDecoder;
 import org.apollo.game.msg.decoder.EnteredAmountMessageDecoder;
-import org.apollo.game.msg.decoder.EquipMessageDecoder;
-import org.apollo.game.msg.decoder.FifthItemActionMessageDecoder;
-import org.apollo.game.msg.decoder.FirstItemActionMessageDecoder;
 import org.apollo.game.msg.decoder.FirstObjectActionMessageDecoder;
-import org.apollo.game.msg.decoder.FourthItemActionMessageDecoder;
+import org.apollo.game.msg.decoder.FirstSingleItemActionMessageDecoder;
 import org.apollo.game.msg.decoder.IdleMessageDecoder;
 import org.apollo.game.msg.decoder.KeepAliveMessageDecoder;
 import org.apollo.game.msg.decoder.MouseClickMessageDecoder;
 import org.apollo.game.msg.decoder.ObsoleteMessageDecoder;
 import org.apollo.game.msg.decoder.RegionLoadedMessageDecoder;
-import org.apollo.game.msg.decoder.SecondItemActionMessageDecoder;
 import org.apollo.game.msg.decoder.SecondObjectActionMessageDecoder;
+import org.apollo.game.msg.decoder.SecondSingleItemActionMessageDecoder;
 import org.apollo.game.msg.decoder.SwitchItemMessageDecoder;
-import org.apollo.game.msg.decoder.ThirdItemActionMessageDecoder;
 import org.apollo.game.msg.decoder.ThirdObjectActionMessageDecoder;
+import org.apollo.game.msg.decoder.ThirdSingleItemActionMessageDecoder;
 import org.apollo.game.msg.decoder.WalkMessageDecoder;
+import org.apollo.game.msg.decoder.item.FifthItemActionMessageDecoder;
+import org.apollo.game.msg.decoder.item.FirstItemActionMessageDecoder;
+import org.apollo.game.msg.decoder.item.FourthItemActionMessageDecoder;
+import org.apollo.game.msg.decoder.item.ThirdItemActionMessageDecoder;
+import org.apollo.game.msg.decoder.item.SingleItemGroupActionMessageDecoder;
+import org.apollo.game.msg.decoder.item.SecondItemActionMessageDecoder;
 import org.apollo.game.msg.encoder.CloseInterfaceMessageEncoder;
 import org.apollo.game.msg.encoder.EnterAmountMessageEncoder;
 import org.apollo.game.msg.encoder.GameObjectMessageEncoder;
@@ -61,7 +64,6 @@ import org.apollo.game.msg.handler.ClosedInterfaceMessageHandler;
 import org.apollo.game.msg.handler.CommandMessageHandler;
 import org.apollo.game.msg.handler.DialogueContinueMessageHandler;
 import org.apollo.game.msg.handler.EnteredAmountMessageHandler;
-import org.apollo.game.msg.handler.EquipMessageHandler;
 import org.apollo.game.msg.handler.ItemActionMessageHandler;
 import org.apollo.game.msg.handler.ObjectMessageHandler;
 import org.apollo.game.msg.handler.RegionLoadedMessageHandler;
@@ -130,12 +132,6 @@ public final class MessageTranslator {
 	register(new FirstObjectActionMessageDecoder());
 	register(new SecondObjectActionMessageDecoder());
 	register(new ThirdObjectActionMessageDecoder());
-	register(new EquipMessageDecoder());
-	register(new FirstItemActionMessageDecoder());
-	register(new SecondItemActionMessageDecoder());
-	register(new ThirdItemActionMessageDecoder());
-	register(new FourthItemActionMessageDecoder());
-	register(new FifthItemActionMessageDecoder());
 	register(new ClosedInterfaceMessageDecoder());
 	register(new EnteredAmountMessageDecoder());
 	register(new DialogueContinueMessageDecoder());
@@ -145,6 +141,18 @@ public final class MessageTranslator {
 	register(new RegionLoadedMessageDecoder());
 	register(new ObsoleteMessageDecoder());
 	register(new CameraMovementMessageDecoder());
+
+	register(new SingleItemGroupActionMessageDecoder());
+
+	register(new FirstSingleItemActionMessageDecoder());
+	register(new SecondSingleItemActionMessageDecoder());
+	register(new ThirdSingleItemActionMessageDecoder());
+
+	register(new FirstItemActionMessageDecoder());
+	register(new ThirdItemActionMessageDecoder());
+	register(new SecondItemActionMessageDecoder());
+	register(new FourthItemActionMessageDecoder());
+	register(new FifthItemActionMessageDecoder());
 
 	// register encoders
 	register(new IdAssignmentMessageEncoder());
@@ -174,7 +182,6 @@ public final class MessageTranslator {
 	register(new WalkMessageHandler());
 	register(new ChatMessageHandler());
 	register(new SwitchItemMessageHandler());
-	register(new EquipMessageHandler());
 	register(new ClosedInterfaceMessageHandler());
 	register(new EnteredAmountMessageHandler());
 	register(new DialogueContinueMessageHandler());
@@ -183,8 +190,8 @@ public final class MessageTranslator {
 	// world handlers
 	register(new ObjectMessageHandler(world));
 	register(new ButtonMessageHandler(world));
-	register(new ItemActionMessageHandler(world));
 	register(new CommandMessageHandler(world));
+	register(new ItemActionMessageHandler(world));
     }
 
     /**

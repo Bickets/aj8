@@ -12,8 +12,9 @@ import org.apollo.game.msg.annotate.HandlesMessage;
 import org.apollo.game.msg.impl.ItemActionMessage;
 
 /**
- * A message handler which handles item actions.
+ * A message handler which handles the {@link ItemActionMessage}.
  *
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
  * @author Graham
  */
 @HandlesMessage(ItemActionMessage.class)
@@ -39,12 +40,7 @@ public final class ItemActionMessageHandler implements MessageHandler<ItemAction
 	    return;
 	}
 
-	InterfaceDefinition def = InterfaceDefinition.forId(message.getInterfaceId());
-	if (!def.isInventory()) {
-	    return;
-	}
-
-	Inventory inventory = Interfaces.getInventoryForInterface(player, def.getId());
+	Inventory inventory = Interfaces.getInventoryForInterface(player, message.getInterfaceId());
 	if (inventory == null) {
 	    return;
 	}
@@ -58,11 +54,11 @@ public final class ItemActionMessageHandler implements MessageHandler<ItemAction
 	}
 
 	Item item = inventory.get(message.getSlot());
-	if (message.getId() != item.getId()) {
+	if (item == null || message.getId() != item.getId()) {
 	    return;
 	}
 
-	world.post(new ItemActionEvent(player, message.getInterfaceId(), message.getId(), message.getSlot(), message.getOption()));
+	world.post(new ItemActionEvent(player, message.getOption(), message.getInterfaceId(), message.getId(), message.getSlot()));
     }
 
 }

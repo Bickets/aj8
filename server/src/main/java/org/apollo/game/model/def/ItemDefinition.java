@@ -388,4 +388,18 @@ public final class ItemDefinition {
 	return inventoryActions[id];
     }
 
+    /**
+     * Returns the inventory actions for this item.
+     */
+    public String[] getInventoryActions() {
+	return inventoryActions;
+    }
+
+    /**
+     * Returns the ground actions for this item.
+     */
+    public String[] getGroundActions() {
+	return groundActions;
+    }
+
 }

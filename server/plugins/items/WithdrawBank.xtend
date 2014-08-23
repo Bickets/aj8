@@ -24,7 +24,7 @@ class WithdrawBank implements EventSubscriber<ItemActionEvent> {
 	}
 
 	override test(ItemActionEvent event) {
-		event.interfaceId == BankConstants.SIDEBAR_INVENTORY_ID;
+		event.interfaceId == BankConstants.BANK_INVENTORY_ID;
 	}
 
 }
