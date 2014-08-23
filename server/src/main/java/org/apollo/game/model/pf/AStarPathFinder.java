@@ -335,9 +335,9 @@ public final class AStarPathFinder extends PathFinder {
      * @return The distance.
      */
     public int estimateDistance(Node src, Node dst) {
-	int deltaX = Math.abs(src.getX() - dst.getX());
-	int deltaY = Math.abs(src.getY() - dst.getY());
-	return (deltaX + deltaY) * COST_STRAIGHT;
+	int deltaX = src.getX() - dst.getX();
+	int deltaY = src.getY() - dst.getY();
+	return (Math.abs(deltaX) + Math.abs(deltaY)) * COST_STRAIGHT;
     }
 
 }
