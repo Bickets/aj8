@@ -110,13 +110,13 @@ public abstract class SynchronizationBlock {
     }
 
     /**
-     * Creates a transform npc block.
+     * Creates a transform mob block.
      *
-     * @param npc The npc to transform into.
-     * @return The transform npc block.
+     * @param mobId The mob to transform into.
+     * @return The transform mob block.
      */
-    public static SynchronizationBlock createTransformUpdateBlock(int npc) {
-	return new TransformBlock(npc);
+    public static SynchronizationBlock createTransformUpdateBlock(int mobId) {
+	return new TransformBlock(mobId);
     }
 
     /**
