@@ -1,5 +1,6 @@
 package items
 
+import common.Plugin
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ItemActionEvent
@@ -11,7 +12,7 @@ import org.apollo.game.model.^def.ItemDefinition
 import org.apollo.game.model.inv.SynchronizationInventoryListener
 
 @SubscribesTo(ItemActionEvent)
-class WearEquipment implements EventSubscriber<ItemActionEvent> {
+class WearEquipment extends Plugin implements EventSubscriber<ItemActionEvent> {
 
 	def wear(Player player, int id, int slot) {
 		val item = player.inventory.get(slot)
@@ -122,6 +123,7 @@ class WearEquipment implements EventSubscriber<ItemActionEvent> {
 		if (!definition.inventoryActions.contains("Wield") && !definition.inventoryActions.contains("Wear")) {
 			return false
 		}
+		closeInterfaces(event.player)
 		event.interfaceId == SynchronizationInventoryListener.INVENTORY_ID
 	}
 

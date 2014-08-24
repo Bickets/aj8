@@ -1,13 +1,14 @@
 package items
 
+import common.Plugin
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
+import org.apollo.game.interact.ItemActionEvent
 import org.apollo.game.model.Player
 import org.apollo.game.model.inv.SynchronizationInventoryListener
-import org.apollo.game.interact.ItemActionEvent
 
 @SubscribesTo(ItemActionEvent)
-class RemoveEquipment implements EventSubscriber<ItemActionEvent> {
+class RemoveEquipment extends Plugin implements EventSubscriber<ItemActionEvent> {
 
 	def remove(Player player, int id, int slot) {
 		val inventory = player.inventory
@@ -48,6 +49,7 @@ class RemoveEquipment implements EventSubscriber<ItemActionEvent> {
 	}
 
 	override test(ItemActionEvent event) {
+		closeInterfaces(event.player)
 		event.interfaceId == SynchronizationInventoryListener.EQUIPMENT_ID
 	}
 
