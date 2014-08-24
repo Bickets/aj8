@@ -216,6 +216,18 @@ public final class InterfaceSet {
     }
 
     /**
+     * Returns whether whether or not this interface set contains a window and a
+     * sidebar interface open at the same time.
+     *
+     * @param windowId The window's interface id.
+     * @param sidebarId The sidebar's interface id.
+     * @return {@code true} if so, {@code false} if not.
+     */
+    public boolean contains(int windowId, int sidebarId) {
+	return contains(windowId) && contains(sidebarId);
+    }
+
+    /**
      * Checks if this interface set contains the specified interface type.
      *
      * @param type The interface's type.
