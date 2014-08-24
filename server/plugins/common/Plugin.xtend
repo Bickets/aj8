@@ -1,7 +1,8 @@
 package common
 
-import java.util.concurrent.ThreadLocalRandom
 import java.util.List
+import java.util.concurrent.ThreadLocalRandom
+import org.apollo.game.model.Player
 
 abstract class Plugin {
 
@@ -48,6 +49,10 @@ abstract class Plugin {
 	def random(float range) {
 		randomFloat.apply(range)
 	}
-
+	
+	def closeInterfaces(Player player) {
+		player.interfaceSet.close
+	}
+	
 }
  
