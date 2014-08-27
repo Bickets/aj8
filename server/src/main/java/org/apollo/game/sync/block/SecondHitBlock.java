@@ -1,5 +1,6 @@
 package org.apollo.game.sync.block;
 
+import org.apollo.game.model.GameCharacter;
 import org.apollo.game.model.Mob;
 import org.apollo.game.model.Player;
 
