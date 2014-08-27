@@ -1,7 +1,9 @@
 package org.apollo.game.model;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 import org.apollo.game.model.def.ItemDefinition;
@@ -231,6 +233,47 @@ public final class Inventory implements Cloneable {
 	items[slot] = null;
 	notifyItemUpdated(slot);
 	return old;
+    }
+
+    /**
+     * Attempts to remove all of the specified {@code items} from this
+     * inventory.
+     *
+     * @param items The array of items to remove.
+     * @return A {@link List} of items that were not successfully removed, an
+     *         empty list indicates that all items were removed successfully.
+     */
+    public List<Item> removeAll(Item... items) {
+	List<Item> failed = new ArrayList<>();
+	for (Item item : items) {
+	    if (item != null) {
+		int amountRemoved = remove(item);
+		if (amountRemoved == 0) {
+		    failed.add(new Item(item.getId(), item.getAmount() - amountRemoved));
+		}
+	    }
+	}
+	return failed;
+    }
+
+    /**
+     * Attempts to add all of the specified {@code items} to this inventory.
+     *
+     * @param items The array of items to add.
+     * @return A {@link List} of items that were not successfully added, an
+     *         empty list indicates that all items were added successfully.
+     */
+    public List<Item> addAll(Item... items) {
+	List<Item> failed = new ArrayList<>();
+	for (Item item : items) {
+	    if (item != null) {
+		Item available = add(item);
+		if (available != null) {
+		    failed.add(available);
+		}
+	    }
+	}
+	return failed;
     }
 
     /**
