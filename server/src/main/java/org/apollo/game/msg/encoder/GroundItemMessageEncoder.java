@@ -22,7 +22,7 @@ public final class GroundItemMessageEncoder implements MessageEncoder<GroundItem
 	GamePacketBuilder bldr = new GamePacketBuilder(44);
 	bldr.put(DataType.SHORT, DataOrder.LITTLE, DataTransformation.ADD, msg.getGroundItem().getItem().getId());
 	bldr.put(DataType.SHORT, msg.getGroundItem().getItem().getAmount());
-	bldr.put(DataType.BYTE, 0);
+	bldr.put(DataType.BYTE, msg.getPositionOffset());
 	return bldr.toGamePacket();
     }
 
