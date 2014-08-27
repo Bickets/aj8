@@ -1,8 +1,5 @@
 package org.apollo.game.model;
 
-import org.apollo.game.model.inter.bank.BankConstants;
-import org.apollo.game.model.inv.SynchronizationInventoryListener;
-
 /**
  * A common static-utility class with helper methods and constants for
  * interfaces.
@@ -111,14 +108,22 @@ public final class Interfaces {
      */
     public static Inventory getInventoryForInterface(Player player, int id) {
 	switch (id) {
-	case SynchronizationInventoryListener.INVENTORY_ID:
-	case BankConstants.SIDEBAR_INVENTORY_ID:
+	case InventoryConstants.INVENTORY_ID:
+	case InventoryConstants.BANK_SIDEBAR_INVENTORY_ID:
+	case InventoryConstants.TRADE_SIDEBAR_INVENTORY_ID:
 	    return player.getInventory();
-	case SynchronizationInventoryListener.EQUIPMENT_ID:
+
+	case InventoryConstants.EQUIPMENT_INVENTORY_ID:
 	    return player.getEquipment();
-	case BankConstants.BANK_INVENTORY_ID:
+
+	case InventoryConstants.BANK_INVENTORY_ID:
 	    return player.getBank();
+
+	case InventoryConstants.TRADE_INVENTORY_ID:
+	case InventoryConstants.OTHER_TRADE_INVENTORY_ID:
+	    return player.getTrade();
 	}
+
 	throw new IllegalArgumentException("Inventory for interface: " + id + " not supported!");
     }
 
@@ -131,7 +136,7 @@ public final class Interfaces {
      *         interface id, otherwise return {@code false}.
      */
     public static boolean insertPermitted(int id) {
-	return id == BankConstants.BANK_INVENTORY_ID;
+	return id == InventoryConstants.BANK_INVENTORY_ID;
     }
 
     /**

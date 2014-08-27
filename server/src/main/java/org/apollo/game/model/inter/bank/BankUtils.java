@@ -1,6 +1,7 @@
 package org.apollo.game.model.inter.bank;
 
 import org.apollo.game.model.Inventory;
+import org.apollo.game.model.InventoryConstants;
 import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.def.ItemDefinition;
@@ -21,8 +22,8 @@ public final class BankUtils {
      * @param player The player.
      */
     public static void openBank(Player player) {
-	InventoryListener invListener = new SynchronizationInventoryListener(player, BankConstants.SIDEBAR_INVENTORY_ID);
-	InventoryListener bankListener = new SynchronizationInventoryListener(player, BankConstants.BANK_INVENTORY_ID);
+	InventoryListener invListener = new SynchronizationInventoryListener(player, InventoryConstants.BANK_SIDEBAR_INVENTORY_ID);
+	InventoryListener bankListener = new SynchronizationInventoryListener(player, InventoryConstants.BANK_INVENTORY_ID);
 
 	player.getInventory().addListener(invListener);
 	player.getBank().addListener(bankListener);
@@ -42,11 +43,12 @@ public final class BankUtils {
      * @param slot The slot.
      * @param id The id.
      * @param amount The amount.
-     * @return {@code false} if the chain should be broken.
+     * @return {@code true} if and only if the specified item was deposited
+     *         otherwise {@code false}.
      */
     public static boolean deposit(Player player, int slot, int id, int amount) {
 	if (amount == 0) {
-	    return true;
+	    return false;
 	}
 
 	Inventory inventory = player.getInventory();
@@ -65,7 +67,7 @@ public final class BankUtils {
 
 	if (bank.freeSlots() == 0 && !bank.contains(item.getId())) {
 	    bank.forceCapacityExceeded();
-	    return true;
+	    return false;
 	}
 
 	int removed;
@@ -94,11 +96,12 @@ public final class BankUtils {
      * @param slot The slot.
      * @param id The id.
      * @param amount The amount.
-     * @return {@code false} if the chain should be broken.
+     * @return {@code true} if and only if the specified item was removed
+     *         otherwise {@code false}.
      */
     public static boolean withdraw(Player player, int slot, int id, int amount) {
 	if (amount == 0) {
-	    return true;
+	    return false;
 	}
 
 	Inventory inventory = player.getInventory();
@@ -121,7 +124,7 @@ public final class BankUtils {
 
 	if (inventory.freeSlots() == 0 && !(inventory.contains(newId) && ItemDefinition.forId(newId).isStackable())) {
 	    inventory.forceCapacityExceeded();
-	    return true;
+	    return false;
 	}
 
 	int remaining = inventory.add(newId, amount);

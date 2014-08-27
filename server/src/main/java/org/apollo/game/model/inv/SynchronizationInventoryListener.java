@@ -16,16 +16,6 @@ import org.apollo.game.msg.impl.UpdateSlottedItemsMessage;
 public final class SynchronizationInventoryListener extends InventoryAdapter {
 
     /**
-     * The inventory interface id.
-     */
-    public static final int INVENTORY_ID = 3214;
-
-    /**
-     * The equipment interface id.
-     */
-    public static final int EQUIPMENT_ID = 1688;
-
-    /**
      * The player who we are synchronization their inventory for.
      */
     private final Player player;

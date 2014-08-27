@@ -5,11 +5,11 @@ import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ItemActionEvent
 import org.apollo.game.model.EquipmentConstants
+import org.apollo.game.model.InventoryConstants
 import org.apollo.game.model.Player
 import org.apollo.game.model.Skill
 import org.apollo.game.model.^def.EquipmentDefinition
 import org.apollo.game.model.^def.ItemDefinition
-import org.apollo.game.model.inv.SynchronizationInventoryListener
 
 @SubscribesTo(ItemActionEvent)
 class WearEquipment extends Plugin implements EventSubscriber<ItemActionEvent> {
@@ -25,6 +25,8 @@ class WearEquipment extends Plugin implements EventSubscriber<ItemActionEvent> {
 		if (equipDef == null) {
 			return
 		}
+
+		closeInterfaces(player)
 
 		val skillSet = player.skillSet
 		if (skillSet.getSkill(Skill.ATTACK).maximumLevel < equipDef.attackLevel) {
@@ -123,8 +125,7 @@ class WearEquipment extends Plugin implements EventSubscriber<ItemActionEvent> {
 		if (!definition.inventoryActions.contains("Wield") && !definition.inventoryActions.contains("Wear")) {
 			return false
 		}
-		closeInterfaces(event.player)
-		event.interfaceId == SynchronizationInventoryListener.INVENTORY_ID
+		event.interfaceId == InventoryConstants.INVENTORY_ID
 	}
 
 }

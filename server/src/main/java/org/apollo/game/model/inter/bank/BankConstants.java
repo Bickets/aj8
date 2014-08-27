@@ -18,16 +18,6 @@ public final class BankConstants {
     public static final int SIDEBAR_ID = 2005;
 
     /**
-     * The bank inventory id.
-     */
-    public static final int BANK_INVENTORY_ID = 5382;
-
-    /**
-     * The sidebar inventory id.
-     */
-    public static final int SIDEBAR_INVENTORY_ID = 2006;
-
-    /**
      * Suppresses the default-public constructor preventing this class from
      * being instantiated by other classes.
      *

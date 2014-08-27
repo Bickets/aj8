@@ -4,8 +4,8 @@ import common.Plugin
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ItemActionEvent
+import org.apollo.game.model.InventoryConstants
 import org.apollo.game.model.Player
-import org.apollo.game.model.inv.SynchronizationInventoryListener
 
 @SubscribesTo(ItemActionEvent)
 class RemoveEquipment extends Plugin implements EventSubscriber<ItemActionEvent> {
@@ -22,6 +22,8 @@ class RemoveEquipment extends Plugin implements EventSubscriber<ItemActionEvent>
 		if (item == null || item.id != id) {
 			return
 		}
+
+		closeInterfaces(player)
 
 		var hasRoomForStackable = inventory.contains(id) && item.definition.stackable
 		if (inventory.freeSlots < 1 && !hasRoomForStackable) {
@@ -49,8 +51,7 @@ class RemoveEquipment extends Plugin implements EventSubscriber<ItemActionEvent>
 	}
 
 	override test(ItemActionEvent event) {
-		closeInterfaces(event.player)
-		event.interfaceId == SynchronizationInventoryListener.EQUIPMENT_ID
+		event.interfaceId == InventoryConstants.EQUIPMENT_INVENTORY_ID
 	}
 
 }
