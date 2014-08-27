@@ -1,7 +1,5 @@
 package org.apollo.game.msg.encoder;
 
-import org.apollo.game.model.Mob;
-import org.apollo.game.model.Player;
 import org.apollo.game.msg.MessageEncoder;
 import org.apollo.game.msg.annotate.EncodesMessage;
 import org.apollo.game.msg.impl.CharacterHintIconMessage;
