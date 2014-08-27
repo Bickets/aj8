@@ -8,6 +8,8 @@ import org.apollo.game.attribute.AttributeKey;
 import org.apollo.game.attribute.AttributeMap;
 import org.apollo.game.model.Inventory.StackMode;
 import org.apollo.game.msg.Message;
+import org.apollo.game.msg.impl.CharacterHintIconMessage;
+import org.apollo.game.msg.impl.LocationHintIconMessage;
 import org.apollo.game.msg.impl.ServerMessageMessage;
 import org.apollo.game.sync.block.SynchronizationBlock;
 import org.apollo.game.sync.block.SynchronizationBlockSet;
@@ -439,5 +441,24 @@ public abstract class GameCharacter extends Entity {
     public void sendMessage(String message) {
 	send(new ServerMessageMessage(message));
     }
-
+    
+    /**
+     * Sends a hint icon for a certain location.
+     * @param type The icon type.
+     * @param location The location.
+     * @param height The draw height.
+     */
+    public void sendHintLocation(HintIconType type, Position location, int height)
+    {
+	send(new LocationHintIconMessage(type, location, height));
+    }
+    
+    /**
+     * Sends a hint icon for a certain character.
+     * @param character The character.
+     */
+    public void sendHintCharacter(GameCharacter character)
+    {
+	send(new CharacterHintIconMessage(character));
+    }
 }

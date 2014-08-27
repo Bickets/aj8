@@ -37,6 +37,7 @@ import org.apollo.game.msg.decoder.ThirdItemActionMessageDecoder;
 import org.apollo.game.msg.decoder.ThirdObjectActionMessageDecoder;
 import org.apollo.game.msg.decoder.ThirdInventoryItemActionMessageDecoder;
 import org.apollo.game.msg.decoder.WalkMessageDecoder;
+import org.apollo.game.msg.encoder.CharacterHintIconMessageEncoder;
 import org.apollo.game.msg.encoder.CloseInterfaceMessageEncoder;
 import org.apollo.game.msg.encoder.EnterAmountMessageEncoder;
 import org.apollo.game.msg.encoder.GameObjectMessageEncoder;
@@ -44,6 +45,7 @@ import org.apollo.game.msg.encoder.GroundItemMessageEncoder;
 import org.apollo.game.msg.encoder.IdAssignmentMessageEncoder;
 import org.apollo.game.msg.encoder.InterfaceItemModelMessageEncoder;
 import org.apollo.game.msg.encoder.InterfaceModelAnimationMessageEncoder;
+import org.apollo.game.msg.encoder.LocationHintIconMessageEncoder;
 import org.apollo.game.msg.encoder.LogoutMessageEncoder;
 import org.apollo.game.msg.encoder.MobModelOnInterfaceMessageEncoder;
 import org.apollo.game.msg.encoder.MobSynchronizationMessageEncoder;
@@ -181,6 +183,8 @@ public final class MessageTranslator {
 	register(new PositionMessageEncoder());
 	register(new GameObjectMessageEncoder());
 	register(new GroundItemMessageEncoder());
+	register(new LocationHintIconMessageEncoder());
+	register(new CharacterHintIconMessageEncoder());
 
 	// register handlers
 	register(new CharacterDesignMessageHandler());

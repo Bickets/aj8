@@ -399,7 +399,7 @@ public final class Player extends GameCharacter {
 	// vital initial stuff
 	send(new IdAssignmentMessage(getIndex(), members));
 	sendMessage("Welcome to RuneScape.");
-
+	
 	// character design screen
 	if (!designedCharacter) {
 	    interfaceSet.openWindow(Interfaces.CHARACTER_DESIGN_INTERFACE_ID);
