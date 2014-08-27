@@ -20,6 +20,7 @@ class CommandPlugin extends Plugin implements EventSubscriber<CommandEvent> {
 		val plr = event.player
 
 		switch event.name.toLowerCase {
+			case "pos": plr.sendMessage(plr.position.toString())
 			case "close": plr.interfaceSet.close
 			case "pickup": {
 				if (args.length < 1) {
