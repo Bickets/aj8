@@ -21,6 +21,11 @@ public final class WorldConstants {
      * The maximum number of game objects.
      */
     public static final int MAXIMUM_GAME_OBJECTS = 2000;
+    
+    /**
+     * The maximum number of ground items.
+     */
+    public static final int MAXIMUM_GROUND_ITEMS = 2000;
 
     /**
      * Suppresses the default-public constructor preventing this class from
