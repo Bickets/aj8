@@ -1,6 +1,7 @@
 package org.apollo.game.model;
 
 import org.apollo.game.attribute.AttributeKey;
+import org.apollo.game.model.inter.trade.TradeSession;
 
 /**
  * The sole purpose of this class is to store, get and modify attributes for
@@ -18,7 +19,7 @@ public final class GameCharacterFields {
     /**
      * Constructs a new {@link GameCharacterFields} with the specified game
      * character.
-     * 
+     *
      * @param character The character.
      */
     protected GameCharacterFields(GameCharacter character) {
@@ -37,6 +38,12 @@ public final class GameCharacterFields {
      * not this characters client is within focus. Default value is {@code true}
      */
     private static final AttributeKey<Boolean> CLIENT_WINDOW_FOCUSED = AttributeKey.valueOf("client_window_focused", true);
+
+    /**
+     * An attribute key representing a {@link TradeSession} which specifies this
+     * characters current trading session. Default value is {@code null}.
+     */
+    private static final AttributeKey<TradeSession> TRADE_SESSION = AttributeKey.valueOf("trade_session", null);
 
     /**
      * Returns whether or not this character is withdrawing notes.
@@ -64,6 +71,20 @@ public final class GameCharacterFields {
      */
     public void setWithdrawingNotes(boolean flag) {
 	character.getAttributes().set(WITHDRAWING_NOTES, flag);
+    }
+
+    /**
+     * Returns the current trade session.
+     */
+    public TradeSession getTradeSession() {
+	return character.getAttributes().get(TRADE_SESSION);
+    }
+
+    /**
+     * Sets the current trade session.
+     */
+    public void setTradeSession(TradeSession session) {
+	character.getAttributes().set(TRADE_SESSION, session);
     }
 
 }

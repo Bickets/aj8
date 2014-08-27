@@ -100,6 +100,11 @@ public abstract class GameCharacter extends Entity {
     private final Inventory bank = new Inventory(InventoryConstants.BANK_CAPACITY, StackMode.STACK_ALWAYS);
 
     /**
+     * The character's bank.
+     */
+    private final Inventory trade = new Inventory(InventoryConstants.TRADE_CAPACITY);
+
+    /**
      * The character's skill set.
      */
     private final SkillSet skillSet = new SkillSet();
@@ -146,6 +151,13 @@ public abstract class GameCharacter extends Entity {
      */
     public Inventory getBank() {
 	return bank;
+    }
+
+    /**
+     * Returns the character's trade inventory.
+     */
+    public Inventory getTrade() {
+	return trade;
     }
 
     /**

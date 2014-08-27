@@ -4,7 +4,6 @@ import java.util.ArrayDeque;
 import java.util.Queue;
 
 import org.apollo.game.model.inter.InterfaceSet;
-import org.apollo.game.model.inter.bank.BankConstants;
 import org.apollo.game.model.inv.AppearanceInventoryListener;
 import org.apollo.game.model.inv.FullInventoryListener;
 import org.apollo.game.model.inv.InventoryListener;
@@ -367,26 +366,29 @@ public final class Player extends GameCharacter {
     private void initInventories() {
 	Inventory inventory = getInventory();
 	Inventory bank = getBank();
+	Inventory trade = getTrade();
 	Inventory equipment = getEquipment();
 
 	// inventory full listeners
 	InventoryListener fullInventoryListener = new FullInventoryListener(this, FullInventoryListener.FULL_INVENTORY_MESSAGE);
 	InventoryListener fullBankListener = new FullInventoryListener(this, FullInventoryListener.FULL_BANK_MESSAGE);
+	InventoryListener fullTradeListener = new FullInventoryListener(this, FullInventoryListener.FULL_TRADE_MESSAGE);
 	InventoryListener fullEquipmentListener = new FullInventoryListener(this, FullInventoryListener.FULL_EQUIPMENT_MESSAGE);
 
 	// equipment appearance listener
 	InventoryListener appearanceListener = new AppearanceInventoryListener(this);
 
 	// synchronization listeners
-	InventoryListener syncInventoryListener = new SynchronizationInventoryListener(this, SynchronizationInventoryListener.INVENTORY_ID);
-	InventoryListener syncBankListener = new SynchronizationInventoryListener(this, BankConstants.BANK_INVENTORY_ID);
-	InventoryListener syncEquipmentListener = new SynchronizationInventoryListener(this, SynchronizationInventoryListener.EQUIPMENT_ID);
+	InventoryListener syncInventoryListener = new SynchronizationInventoryListener(this, InventoryConstants.INVENTORY_ID);
+	InventoryListener syncBankListener = new SynchronizationInventoryListener(this, InventoryConstants.BANK_INVENTORY_ID);
+	InventoryListener syncEquipmentListener = new SynchronizationInventoryListener(this, InventoryConstants.EQUIPMENT_INVENTORY_ID);
 
 	// add the listeners
 	inventory.addListener(syncInventoryListener);
 	inventory.addListener(fullInventoryListener);
 	bank.addListener(syncBankListener);
 	bank.addListener(fullBankListener);
+	trade.addListener(fullTradeListener);
 	equipment.addListener(syncEquipmentListener);
 	equipment.addListener(appearanceListener);
 	equipment.addListener(fullEquipmentListener);
@@ -538,6 +540,26 @@ public final class Player extends GameCharacter {
      */
     public void setFlagged(boolean flagged) {
 	this.flagged = flagged;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+	if (this == obj)
+	    return true;
+	if (obj == null)
+	    return false;
+	if (getClass() != obj.getClass())
+	    return false;
+	Player other = (Player) obj;
+	if (other.hashCode() != hashCode()) {
+	    return false;
+	}
+	return true;
+    }
+
+    @Override
+    public int hashCode() {
+	return credentials.getUsernameHash();
     }
 
     @Override
