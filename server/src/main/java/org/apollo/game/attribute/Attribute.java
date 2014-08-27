@@ -30,13 +30,13 @@ final class Attribute<T> {
      * Constructs a new {@link Attribute<T>} with the specified key and value.
      *
      * @param key This attributes key, may not be {@code null}.
-     * @param value This attributes value, may not be {@code null}.
+     * @param value This attributes value.
      * @throws NullPointerException If the specified key or value is
      *             {@code null}.
      */
     protected Attribute(AttributeKey<T> key, T value) {
 	this.key = Objects.requireNonNull(key);
-	this.value = Objects.requireNonNull(value);
+	this.value = value;
     }
 
     /**

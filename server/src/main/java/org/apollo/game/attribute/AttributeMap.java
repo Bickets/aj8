@@ -23,7 +23,7 @@ public final class AttributeMap {
      *
      * @param <T> The attributes value type reference.
      * @param key The attribute key, may not be {@code null}.
-     * @return The value of the attribute, never {@code null}.
+     * @return The value of the attribute.
      * @unchecked This method declares unchecked as the cast from
      *            {@code Attribute<?>} to {@code Attribute<T>} is unchecked.
      *            This method is safe across all compilers.
@@ -48,14 +48,13 @@ public final class AttributeMap {
      *
      * @param <T> The attributes value type reference.
      * @param key The attribute key, may not be {@code null}.
-     * @param value The value of the attribute, may not be {@code null}.
-     * @return The value of the attribute, will never be {@code null}.
+     * @param value The value of the attribute.
+     * @return The value of the attribute.
      * @throws NullPointerException If the specified key or value is
      *             {@code null}.
      */
     public <T> T setAndGet(AttributeKey<T> key, T value) {
 	Objects.requireNonNull(key);
-	Objects.requireNonNull(value);
 
 	attrs.put(key, new Attribute<T>(key, value));
 	return value;
@@ -66,7 +65,7 @@ public final class AttributeMap {
      *
      * @param <T> The attributes value type reference.
      * @param key The attribute key, may not be {@code null}.
-     * @param value The value of the attribute, may not be {@code null}.
+     * @param value The value of the attribute.
      * @throws NullPointerException If the specified key or value is
      *             {@code null}.
      */

@@ -27,8 +27,7 @@ public final class AttributeKey<T> {
      * Constructs a new {@link AttributeKey<T>} with the specified name.
      *
      * @param name The name of this attribute, may not be {@code null}.
-     * @param initial The initial value of the specified type reference, may not
-     *            be {@code null}.
+     * @param initial The initial value of the specified type reference.
      * @throws NullPointerException If the specified name or initial is
      *             {@code null}.
      *
@@ -39,7 +38,7 @@ public final class AttributeKey<T> {
      */
     private AttributeKey(String name, T initial) {
 	this.name = Objects.requireNonNull(name);
-	this.initial = Objects.requireNonNull(initial);
+	this.initial = initial;
     }
 
     /**
