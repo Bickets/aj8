@@ -27,6 +27,11 @@ public final class FullInventoryListener extends InventoryAdapter {
     public static final String FULL_EQUIPMENT_MESSAGE = "Not enough equipment space.";
 
     /**
+     * The trade full message.
+     */
+    public static final String FULL_TRADE_MESSAGE = "Not enough trade space.";
+
+    /**
      * The player who we are notifying of a full inventory.
      */
     private final Player player;
