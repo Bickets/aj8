@@ -16,6 +16,7 @@ import org.apollo.game.msg.decoder.ClientFocusedMessageDecoder;
 import org.apollo.game.msg.decoder.ClosedInterfaceMessageDecoder;
 import org.apollo.game.msg.decoder.CommandMessageDecoder;
 import org.apollo.game.msg.decoder.DialogueContinueMessageDecoder;
+import org.apollo.game.msg.decoder.DropItemMessageDecoder;
 import org.apollo.game.msg.decoder.EnteredAmountMessageDecoder;
 import org.apollo.game.msg.decoder.FifthItemActionMessageDecoder;
 import org.apollo.game.msg.decoder.FirstInventoryItemActionMessageDecoder;
@@ -39,6 +40,7 @@ import org.apollo.game.msg.decoder.WalkMessageDecoder;
 import org.apollo.game.msg.encoder.CloseInterfaceMessageEncoder;
 import org.apollo.game.msg.encoder.EnterAmountMessageEncoder;
 import org.apollo.game.msg.encoder.GameObjectMessageEncoder;
+import org.apollo.game.msg.encoder.GroundItemMessageEncoder;
 import org.apollo.game.msg.encoder.IdAssignmentMessageEncoder;
 import org.apollo.game.msg.encoder.InterfaceItemModelMessageEncoder;
 import org.apollo.game.msg.encoder.InterfaceModelAnimationMessageEncoder;
@@ -63,6 +65,7 @@ import org.apollo.game.msg.handler.ChatMessageHandler;
 import org.apollo.game.msg.handler.ClosedInterfaceMessageHandler;
 import org.apollo.game.msg.handler.CommandMessageHandler;
 import org.apollo.game.msg.handler.DialogueContinueMessageHandler;
+import org.apollo.game.msg.handler.DropItemMessageHandler;
 import org.apollo.game.msg.handler.EnteredAmountMessageHandler;
 import org.apollo.game.msg.handler.ItemActionMessageHandler;
 import org.apollo.game.msg.handler.ObjectMessageHandler;
@@ -141,6 +144,7 @@ public final class MessageTranslator {
 	register(new RegionLoadedMessageDecoder());
 	register(new ObsoleteMessageDecoder());
 	register(new CameraMovementMessageDecoder());
+	register(new DropItemMessageDecoder());
 
 	register(new FirstInventoryItemActionMessageDecoder());
 
@@ -176,6 +180,7 @@ public final class MessageTranslator {
 	register(new InterfaceItemModelMessageEncoder());
 	register(new PositionMessageEncoder());
 	register(new GameObjectMessageEncoder());
+	register(new GroundItemMessageEncoder());
 
 	// register handlers
 	register(new CharacterDesignMessageHandler());
@@ -192,6 +197,7 @@ public final class MessageTranslator {
 	register(new ButtonMessageHandler(world));
 	register(new CommandMessageHandler(world));
 	register(new ItemActionMessageHandler(world));
+	register(new DropItemMessageHandler(world));
     }
 
     /**
