@@ -1,6 +1,5 @@
 package org.apollo.net.codec.handshake;
 
-import static io.netty.util.ReferenceCountUtil.releaseLater;
 import io.netty.buffer.ByteBuf;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
@@ -26,7 +25,7 @@ public final class HandshakeDecoder extends ByteToMessageDecoder {
 	    return;
 	}
 
-	int id = releaseLater(buffer).readUnsignedByte();
+	int id = buffer.readUnsignedByte();
 
 	switch (id) {
 	case HandshakeConstants.SERVICE_GAME:

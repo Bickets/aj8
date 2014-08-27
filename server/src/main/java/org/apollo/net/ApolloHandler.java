@@ -6,6 +6,7 @@ import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.http.HttpRequest;
 import io.netty.util.Attribute;
+import io.netty.util.ReferenceCountUtil;
 
 import org.apollo.fs.FileSystem;
 import org.apollo.game.GameService;
@@ -22,12 +23,11 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * An implementation of {@link ChannelHandlerAdapter} which handles incoming
- * upstream events from Netty.
+ * A {@link Sharable} implementation of {@link ChannelHandlerAdapter} which
+ * handles incoming upstream events from Netty.
  *
  * @author Graham
  * @author Ryley Kimmel <ryley.kimmel@live.com>
- * @see {@link Sharable}
  */
 @Sharable
 public final class ApolloHandler extends ChannelHandlerAdapter {
@@ -91,28 +91,32 @@ public final class ApolloHandler extends ChannelHandlerAdapter {
 
     @Override
     public void channelRead(ChannelHandlerContext ctx, Object msg) throws Exception {
-	Attribute<Session> attribute = ctx.attr(NetworkConstants.NETWORK_SESSION);
-	Session session = attribute.get();
+	try {
+	    Attribute<Session> attribute = ctx.attr(NetworkConstants.NETWORK_SESSION);
+	    Session session = attribute.get();
 
-	if (msg.getClass() == HttpRequest.class || msg.getClass() == JagGrabRequest.class) {
-	    session = new UpdateSession(ctx, updateService);
-	}
+	    if (msg.getClass() == HttpRequest.class || msg.getClass() == JagGrabRequest.class) {
+		session = new UpdateSession(ctx, updateService);
+	    }
 
-	if (session != null) {
-	    session.messageReceived(msg);
-	    return;
-	}
+	    if (session != null) {
+		session.messageReceived(msg);
+		return;
+	    }
 
-	HandshakeMessage handshakeMessage = (HandshakeMessage) msg;
-	switch (handshakeMessage.getServiceId()) {
-	case HandshakeConstants.SERVICE_GAME:
-	    attribute.set(new LoginSession(ctx, messageTranslator, fileSystem, playerSerializer, gameService));
-	    break;
-	case HandshakeConstants.SERVICE_UPDATE:
-	    attribute.set(new UpdateSession(ctx, updateService));
-	    break;
-	default:
-	    throw new IllegalStateException("Invalid service id");
+	    HandshakeMessage handshakeMessage = (HandshakeMessage) msg;
+	    switch (handshakeMessage.getServiceId()) {
+	    case HandshakeConstants.SERVICE_GAME:
+		attribute.set(new LoginSession(ctx, messageTranslator, fileSystem, playerSerializer, gameService));
+		break;
+	    case HandshakeConstants.SERVICE_UPDATE:
+		attribute.set(new UpdateSession(ctx, updateService));
+		break;
+	    default:
+		throw new IllegalStateException("Invalid service id");
+	    }
+	} finally {
+	    ReferenceCountUtil.release(msg);
 	}
     }
 
