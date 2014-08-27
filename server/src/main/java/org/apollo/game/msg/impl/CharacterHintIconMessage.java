@@ -4,6 +4,7 @@ import org.apollo.game.model.GameCharacter;
 import org.apollo.game.model.HintIconType;
 import org.apollo.game.model.Mob;
 import org.apollo.game.model.Player;
+import org.apollo.game.model.Entity.EntityType;
 import org.apollo.game.msg.Message;
 
 /**
@@ -32,10 +33,10 @@ public final class CharacterHintIconMessage extends Message {
     {
 	this.target = target;
 	
-	if (target instanceof Mob)
+	if (target.type() == EntityType.MOB)
 	    this.type = HintIconType.MOB;
 	
-	if (target instanceof Player)
+	if (target.type() == EntityType.PLAYER)
 	    this.type = HintIconType.PLAYER;
     }
     
