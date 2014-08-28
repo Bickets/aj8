@@ -2,8 +2,6 @@ package org.apollo.game.msg.impl;
 
 import org.apollo.game.model.GameCharacter;
 import org.apollo.game.model.HintIconType;
-import org.apollo.game.model.Mob;
-import org.apollo.game.model.Player;
 import org.apollo.game.model.Entity.EntityType;
 import org.apollo.game.msg.Message;
 
