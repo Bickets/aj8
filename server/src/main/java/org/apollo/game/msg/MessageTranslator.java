@@ -57,6 +57,7 @@ import org.apollo.game.msg.encoder.SwitchTabInterfaceMessageEncoder;
 import org.apollo.game.msg.encoder.UpdateItemsMessageEncoder;
 import org.apollo.game.msg.encoder.UpdateSkillMessageEncoder;
 import org.apollo.game.msg.encoder.UpdateSlottedItemsMessageEncoder;
+import org.apollo.game.msg.encoder.WelcomeScreenMessageEncoder;
 import org.apollo.game.msg.handler.ButtonMessageHandler;
 import org.apollo.game.msg.handler.CharacterDesignMessageHandler;
 import org.apollo.game.msg.handler.ChatMessageHandler;
@@ -176,6 +177,7 @@ public final class MessageTranslator {
 	register(new InterfaceItemModelMessageEncoder());
 	register(new PositionMessageEncoder());
 	register(new GameObjectMessageEncoder());
+	register(new WelcomeScreenMessageEncoder());
 
 	// register handlers
 	register(new CharacterDesignMessageHandler());
