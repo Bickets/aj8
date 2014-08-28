@@ -238,6 +238,13 @@ public final class InterfaceSet {
     }
 
     /**
+     * Removes this interface sets {@code #listener}.
+     */
+    public void removeListener() {
+	listener = null;
+    }
+
+    /**
      * An internal method for closing the interface, notifying the listener if
      * appropriate, but not sending any events.
      */
