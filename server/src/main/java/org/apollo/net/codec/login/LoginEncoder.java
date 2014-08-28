@@ -1,7 +1,6 @@
 package org.apollo.net.codec.login;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.buffer.Unpooled;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageEncoder;
 
@@ -16,7 +15,7 @@ public final class LoginEncoder extends MessageToMessageEncoder<LoginResponse> {
 
     @Override
     protected void encode(ChannelHandlerContext ctx, LoginResponse msg, List<Object> out) {
-	ByteBuf buffer = Unpooled.buffer(3);
+	ByteBuf buffer = ctx.alloc().buffer(3);
 	buffer.writeByte(msg.getStatus());
 	if (msg.getStatus() == LoginConstants.STATUS_OK) {
 	    buffer.writeByte(msg.getRights());
