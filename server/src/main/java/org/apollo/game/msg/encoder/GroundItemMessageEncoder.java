@@ -12,7 +12,7 @@ import org.apollo.net.codec.game.GamePacketBuilder;
 /**
  * Encodes the message for a ground item.
  * 
- * @author Tyler Buchanan (https://www.github.com/TylerBuchanan97)
+ * @author Tyler Buchanan <https://www.github.com/TylerBuchanan97>
  */
 @EncodesMessage(GroundItemMessage.class)
 public final class GroundItemMessageEncoder implements MessageEncoder<GroundItemMessage> {

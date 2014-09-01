@@ -7,7 +7,7 @@ import org.apollo.game.msg.Message;
  * Defines a message related to a {@link GroundItem} for either the removal or
  * addition.
  * 
- * @author Tyler Buchanan (https://www.github.com/TylerBuchanan97)
+ * @author Tyler Buchanan <https://www.github.com/TylerBuchanan97>
  */
 public final class GroundItemMessage extends Message {
 

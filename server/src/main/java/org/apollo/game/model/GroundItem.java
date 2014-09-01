@@ -4,7 +4,7 @@ package org.apollo.game.model;
  * Creates an {@link Item} that is placed on the ground somewhere in the game
  * world.
  * 
- * @author Tyler Buchanan (https://www.github.com/TylerBuchanan97)
+ * @author Tyler Buchanan <https://www.github.com/TylerBuchanan97>
  */
 public class GroundItem extends Entity {
 

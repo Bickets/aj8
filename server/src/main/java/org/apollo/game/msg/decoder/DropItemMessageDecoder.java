@@ -11,7 +11,7 @@ import org.apollo.net.codec.game.GamePacketReader;
 /**
  * Defines the decoder for a {@link DropItemMessage}.
  * 
- * @author Tyler Buchanan (https://www.github.com/TylerBuchanan97)
+ * @author Tyler Buchanan <https://www.github.com/TylerBuchanan97>
  */
 @DecodesMessage(87)
 public final class DropItemMessageDecoder implements MessageDecoder<DropItemMessage> {
