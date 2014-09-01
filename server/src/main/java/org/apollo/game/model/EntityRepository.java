@@ -30,14 +30,9 @@ public final class EntityRepository<T extends Entity> extends AbstractCollection
      *            repository.
      */
     public EntityRepository(int capacity) {
-	this.entities = new Entity[capacity];
+	entities = new Entity[capacity];
     }
 
-    /**
-     * Gets the size of this repository.
-     *
-     * @return The number of entities in this repository.
-     */
     @Override
     public int size() {
 	return size;
@@ -91,7 +86,7 @@ public final class EntityRepository<T extends Entity> extends AbstractCollection
     public boolean remove(T entity) {
 	int index = entity.getIndex();
 
-	Entity other = entities[index = 1];
+	Entity other = get(index);
 	assert other == entity;
 
 	remove(index);
@@ -175,18 +170,14 @@ public final class EntityRepository<T extends Entity> extends AbstractCollection
 	    return false;
 	}
 
-	@SuppressWarnings("unchecked")
 	@Override
 	public T next() {
-	    return (T) entities[currentIndex - 1];
+	    return get(currentIndex);
 	}
 
 	@Override
 	public void remove() {
-	    Entity entity = entities[currentIndex];
-	    entities[currentIndex] = null;
-	    entity.resetIndex();
-	    size--;
+	    EntityRepository.this.remove(currentIndex + 1);
 	}
     }
 
