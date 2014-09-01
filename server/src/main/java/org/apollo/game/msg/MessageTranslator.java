@@ -25,6 +25,7 @@ import org.apollo.game.msg.decoder.FirstObjectActionMessageDecoder;
 import org.apollo.game.msg.decoder.FirstSingleItemActionMessageDecoder;
 import org.apollo.game.msg.decoder.FourthItemActionMessageDecoder;
 import org.apollo.game.msg.decoder.IdleMessageDecoder;
+import org.apollo.game.msg.decoder.ItemOnItemMessageDecoder;
 import org.apollo.game.msg.decoder.KeepAliveMessageDecoder;
 import org.apollo.game.msg.decoder.MouseClickMessageDecoder;
 import org.apollo.game.msg.decoder.ObsoleteMessageDecoder;
@@ -70,6 +71,7 @@ import org.apollo.game.msg.handler.DialogueContinueMessageHandler;
 import org.apollo.game.msg.handler.DropItemMessageHandler;
 import org.apollo.game.msg.handler.EnteredAmountMessageHandler;
 import org.apollo.game.msg.handler.ItemActionMessageHandler;
+import org.apollo.game.msg.handler.ItemOnItemMessageHandler;
 import org.apollo.game.msg.handler.ObjectMessageHandler;
 import org.apollo.game.msg.handler.RegionLoadedMessageHandler;
 import org.apollo.game.msg.handler.SwitchItemMessageHandler;
@@ -147,6 +149,7 @@ public final class MessageTranslator {
 	register(new ObsoleteMessageDecoder());
 	register(new CameraMovementMessageDecoder());
 	register(new DropItemMessageDecoder());
+	register(new ItemOnItemMessageDecoder());
 
 	register(new FirstInventoryItemActionMessageDecoder());
 
@@ -202,6 +205,7 @@ public final class MessageTranslator {
 	register(new CommandMessageHandler(world));
 	register(new ItemActionMessageHandler(world));
 	register(new DropItemMessageHandler(world));
+	register(new ItemOnItemMessageHandler(world));
     }
 
     /**
