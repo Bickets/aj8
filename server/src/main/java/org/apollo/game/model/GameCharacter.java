@@ -1,6 +1,7 @@
 package org.apollo.game.model;
 
 import java.util.LinkedHashSet;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apollo.game.action.Action;
@@ -444,12 +445,13 @@ public abstract class GameCharacter extends Entity {
     }
 
     /**
-     * Sends a message to the character.
+     * Sends some type of message to this {@link GameCharacter} as specified by
+     * {@link T}
      *
-     * @param message The message.
+     * @param message The type of message to send.
      */
-    public void sendMessage(String message) {
-	send(new ServerMessageMessage(message));
+    public <T> void sendMessage(T message) {
+	send(new ServerMessageMessage(Objects.toString(message)));
     }
 
 }
