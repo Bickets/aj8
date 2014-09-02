@@ -19,7 +19,7 @@ import org.apollo.game.msg.impl.WelcomeScreenMessage
 
 @SubscribesTo(CommandEvent)
 @Data class CommandPlugin extends Plugin implements EventSubscriber<CommandEvent> {
-	val World world;
+	val World world
 
 	override subscribe(CommandEvent event) {
 		val args = event.arguments
@@ -36,6 +36,8 @@ import org.apollo.game.msg.impl.WelcomeScreenMessage
 				plr.interfaceSet.close
 			case "trade":
 				TradeUtils.openTrade(plr, world.playerRepository.get(2))
+			case "pos":
+				plr.sendMessage(plr.position)
 			case "pickup": {
 				if (args.length < 1) {
 					plr.sendMessage("Syntax is ::pickup [id] [amount=1]")

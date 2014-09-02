@@ -86,6 +86,11 @@ public final class World {
     private final EntityRepository<GameObject> objectRepository = new EntityRepository<>(WorldConstants.MAXIMUM_GAME_OBJECTS);
 
     /**
+     * The {@link EntityRepository} of {@link GroundItem}s.
+     */
+    private final EntityRepository<GroundItem> groundItemRepository = new EntityRepository<>(WorldConstants.MAXIMUM_GROUND_ITEMS);
+
+    /**
      * This worlds event provider.
      */
     private final EventProvider eventProvider = new UniversalEventProvider();
@@ -227,6 +232,17 @@ public final class World {
     }
 
     /**
+     * Registers a ground item.
+     * 
+     * @param item The item to add to the {@link EntityRepository}.
+     * @return {@code true} if the ground item registered successfully,
+     *         otherwise {@code false}.
+     */
+    public boolean register(GroundItem item) {
+	return register(item, groundItemRepository);
+    }
+
+    /**
      * Unregisters the specified player.
      *
      * @param player The player.
@@ -251,6 +267,15 @@ public final class World {
      */
     public void unregister(GameObject object) {
 	unregister(object, objectRepository);
+    }
+
+    /**
+     * Unregisters a ground item.
+     * 
+     * @param item The item to remove from the {@link EntityRepository}.
+     */
+    public void unregister(GroundItem item) {
+	unregister(item, groundItemRepository);
     }
 
     /**
