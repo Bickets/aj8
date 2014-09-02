@@ -38,15 +38,14 @@ import org.apollo.game.msg.decoder.ThirdInventoryItemActionMessageDecoder;
 import org.apollo.game.msg.decoder.ThirdItemActionMessageDecoder;
 import org.apollo.game.msg.decoder.ThirdObjectActionMessageDecoder;
 import org.apollo.game.msg.decoder.WalkMessageDecoder;
-import org.apollo.game.msg.encoder.CharacterHintIconMessageEncoder;
 import org.apollo.game.msg.encoder.CloseInterfaceMessageEncoder;
 import org.apollo.game.msg.encoder.EnterAmountMessageEncoder;
+import org.apollo.game.msg.encoder.GameCharacterHintIconMessageEncoder;
 import org.apollo.game.msg.encoder.GameObjectMessageEncoder;
 import org.apollo.game.msg.encoder.GroundItemMessageEncoder;
 import org.apollo.game.msg.encoder.IdAssignmentMessageEncoder;
 import org.apollo.game.msg.encoder.InterfaceItemModelMessageEncoder;
 import org.apollo.game.msg.encoder.InterfaceModelAnimationMessageEncoder;
-import org.apollo.game.msg.encoder.LocationHintIconMessageEncoder;
 import org.apollo.game.msg.encoder.LogoutMessageEncoder;
 import org.apollo.game.msg.encoder.MobModelOnInterfaceMessageEncoder;
 import org.apollo.game.msg.encoder.MobSynchronizationMessageEncoder;
@@ -54,6 +53,7 @@ import org.apollo.game.msg.encoder.OpenDialogueInterfaceMessageEncoder;
 import org.apollo.game.msg.encoder.OpenInterfaceMessageEncoder;
 import org.apollo.game.msg.encoder.OpenInterfaceSidebarMessageEncoder;
 import org.apollo.game.msg.encoder.PlayerSynchronizationMessageEncoder;
+import org.apollo.game.msg.encoder.PositionHintIconMessageEncoder;
 import org.apollo.game.msg.encoder.PositionMessageEncoder;
 import org.apollo.game.msg.encoder.RegionChangeMessageEncoder;
 import org.apollo.game.msg.encoder.ServerMessageMessageEncoder;
@@ -187,8 +187,8 @@ public final class MessageTranslator {
 	register(new PositionMessageEncoder());
 	register(new GameObjectMessageEncoder());
 	register(new GroundItemMessageEncoder());
-	register(new LocationHintIconMessageEncoder());
-	register(new CharacterHintIconMessageEncoder());
+	register(new PositionHintIconMessageEncoder());
+	register(new GameCharacterHintIconMessageEncoder());
 	register(new WelcomeScreenMessageEncoder());
 
 	// register handlers

@@ -6,7 +6,7 @@ import org.apollo.game.model.Player;
 /**
  * This defines the type of event that is called when an item interacts with
  * another.
- * 
+ *
  * @author Tyler Buchanan <https://www.github.com/TylerBuchanan97>
  */
 public class ItemOnItemEvent implements Event {
@@ -28,7 +28,7 @@ public class ItemOnItemEvent implements Event {
 
     /**
      * Creates an instance of this event.
-     * 
+     *
      * @param player The player causing the two items to interact.
      * @param receiverSlot The slot of the item getting interacted with.
      * @param senderSlot The slot of the item creating the interaction.
@@ -41,7 +41,7 @@ public class ItemOnItemEvent implements Event {
 
     /**
      * The player causing the two items to interact.
-     * 
+     *
      * @return The player.
      */
     public Player getPlayer() {
@@ -50,7 +50,7 @@ public class ItemOnItemEvent implements Event {
 
     /**
      * The slot of the item getting interacted with.
-     * 
+     *
      * @return The slot of the item getting interacted with.
      */
     public int getReceiverSlot() {
@@ -59,7 +59,7 @@ public class ItemOnItemEvent implements Event {
 
     /**
      * The slot of the item creating the interaction.
-     * 
+     *
      * @return The slot of the item creating the interaction.
      */
     public int getSenderSlot() {

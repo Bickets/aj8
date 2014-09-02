@@ -3,7 +3,7 @@ package org.apollo.game.model;
 /**
  * Creates an {@link Item} that is placed on the ground somewhere in the game
  * world.
- * 
+ *
  * @author Tyler Buchanan <https://www.github.com/TylerBuchanan97>
  */
 public class GroundItem extends Entity {
@@ -20,7 +20,7 @@ public class GroundItem extends Entity {
 
     /**
      * Constructs a new ground item.
-     * 
+     *
      * @param owner The owner of the ground item.
      * @param item The item on the ground.
      * @param position The position of the item.
@@ -33,7 +33,7 @@ public class GroundItem extends Entity {
 
     /**
      * Returns the owner of the ground item.
-     * 
+     *
      * @return The owner of the item.
      */
     public Player getOwner() {
@@ -42,7 +42,7 @@ public class GroundItem extends Entity {
 
     /**
      * Returns the item on the ground.
-     * 
+     *
      * @return The item.
      */
     public Item getItem() {
