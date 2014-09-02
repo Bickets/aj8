@@ -11,7 +11,7 @@ import org.apollo.game.msg.impl.DropItemMessage;
 /**
  * This class handles the {@link DropItemMessage}.
  * 
- * @author Tyler Buchanan (https://www.github.com/TylerBuchanan97)
+ * @author Tyler Buchanan <https://www.github.com/TylerBuchanan97>
  */
 @HandlesMessage(DropItemMessage.class)
 public class DropItemMessageHandler implements MessageHandler<DropItemMessage> {
