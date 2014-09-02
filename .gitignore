@@ -1,28 +1,8 @@
 *.class
-
-# Package Files #
 *.jar
-*.war
-*.ear
-/bin
+*._trace
+*.classpath
+*.project
 
-# Eclipse #
-.classpath
-.project
-/.settings
-
-# Assets #
-/lib[s]
-/dep[s]
-/assets
-
-# File System #
-/data/fs
-/data/savedGames
-
-# Plugins #
 server/compiled-plugins
-server/bin
-client/bin
-
-server/data/savedGames/*.dat
+server/data/savedGames
