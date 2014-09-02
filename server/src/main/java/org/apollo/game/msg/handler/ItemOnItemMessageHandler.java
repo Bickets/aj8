@@ -1,6 +1,8 @@
 package org.apollo.game.msg.handler;
 
 import org.apollo.game.interact.ItemOnItemEvent;
+import org.apollo.game.model.Inventory;
+import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.World;
 import org.apollo.game.msg.MessageHandler;
@@ -31,7 +33,30 @@ public final class ItemOnItemMessageHandler implements MessageHandler<ItemOnItem
 
     @Override
     public void handle(Player player, ItemOnItemMessage msg) {
-	world.post(new ItemOnItemEvent(player, msg.getReceiverSlot(), msg.getSenderSlot()));
+	Inventory inventory = player.getInventory();
+	if (inventory == null) {
+	    return;
+	}
+
+	if (msg.getReceiverSlot() < 0 || msg.getSenderSlot() < 0) {
+	    return;
+	}
+
+	if (msg.getReceiverSlot() >= inventory.capacity() || msg.getSenderSlot() >= inventory.capacity()) {
+	    return;
+	}
+
+	Item receiver = inventory.get(msg.getReceiverSlot());
+	Item sender = inventory.get(msg.getSenderSlot());
+	if (receiver == null || sender == null) {
+	    return;
+	}
+
+	if (!inventory.contains(receiver.getId()) || !inventory.contains(sender.getId())) {
+	    return;
+	}
+
+	world.post(new ItemOnItemEvent(player, receiver, sender));
     }
 
 }
