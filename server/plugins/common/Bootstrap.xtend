@@ -32,7 +32,7 @@ class Bootstrap {
 	}
 
 	def initCommands(World world) {
-		classes('commands').forEach[world.provideSubscriber(it.newInstance as EventSubscriber<CommandEvent>)]
+		classes('commands').forEach[world.provideSubscriber(it.getConstructor(World).newInstance(world) as EventSubscriber<CommandEvent>)]
 	}
 
 	def classes(String dir) {

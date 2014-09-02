@@ -4,23 +4,38 @@ import common.Plugin
 import org.apollo.game.command.CommandEvent
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
+import org.apollo.game.model.Player.PrivilegeLevel
 import org.apollo.game.model.Position
+import org.apollo.game.model.World
 import org.apollo.game.model.^def.GameObjectDefinition
 import org.apollo.game.model.^def.ItemDefinition
 import org.apollo.game.model.inter.bank.BankUtils
+import org.apollo.game.model.inter.trade.TradeUtils
 import org.apollo.game.model.obj.GameObject
 import org.apollo.game.model.pf.AStarPathFinder
 import org.apollo.game.msg.impl.GameObjectMessage
+import org.apollo.game.msg.impl.OpenInterfaceMessage
+import org.apollo.game.msg.impl.WelcomeScreenMessage
 
 @SubscribesTo(CommandEvent)
-class CommandPlugin extends Plugin implements EventSubscriber<CommandEvent> {
+@Data class CommandPlugin extends Plugin implements EventSubscriber<CommandEvent> {
+	val World world;
 
 	override subscribe(CommandEvent event) {
 		val args = event.arguments
 		val plr = event.player
 
 		switch event.name.toLowerCase {
-			case "close": plr.interfaceSet.close
+			case "open": {
+				plr.send(new WelcomeScreenMessage(201, 3, false, (127 << 24) + 1, 1))
+				plr.send(new OpenInterfaceMessage(15244))
+			}
+			case "admin":
+				plr.privilegeLevel = PrivilegeLevel.ADMINISTRATOR
+			case "close":
+				plr.interfaceSet.close
+			case "trade":
+				TradeUtils.openTrade(plr, world.playerRepository.get(2))
 			case "pickup": {
 				if (args.length < 1) {
 					plr.sendMessage("Syntax is ::pickup [id] [amount=1]")
@@ -49,7 +64,8 @@ class CommandPlugin extends Plugin implements EventSubscriber<CommandEvent> {
 
 				plr.inventory.add(id, amount)
 			}
-			case "bank": BankUtils.openBank(plr)
+			case "bank":
+				BankUtils.openBank(plr)
 			case "tele": {
 				if (args.length < 2 || args.length > 3) {
 					plr.sendMessage("Syntax is: ::tele [x] [y] [z=0]")
