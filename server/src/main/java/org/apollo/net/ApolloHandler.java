@@ -2,8 +2,8 @@ package org.apollo.net;
 
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandler.Sharable;
-import io.netty.channel.ChannelHandlerAdapter;
 import io.netty.channel.ChannelHandlerContext;
+import io.netty.channel.ChannelInboundHandlerAdapter;
 import io.netty.handler.codec.http.HttpRequest;
 import io.netty.util.Attribute;
 import io.netty.util.ReferenceCountUtil;
@@ -23,14 +23,14 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * A {@link Sharable} implementation of {@link ChannelHandlerAdapter} which
- * handles incoming upstream events from Netty.
+ * A {@link Sharable} implementation of {@link ChannelInboundHandlerAdapter}
+ * which handles incoming upstream events from Netty.
  *
  * @author Graham
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @Sharable
-public final class ApolloHandler extends ChannelHandlerAdapter {
+public final class ApolloHandler extends ChannelInboundHandlerAdapter {
 
     /**
      * The logger used to print information and debug messages to the console.
