@@ -33,6 +33,7 @@ public class ItemOnItemMessage extends Message {
 
     /**
      * Gets the slot of the receiver item.
+     * 
      * @return The slot of the item getting interacted with.
      */
     public int getReceiverSlot() {
@@ -41,6 +42,7 @@ public class ItemOnItemMessage extends Message {
 
     /**
      * Gets the slot of the sender item.
+     * 
      * @return The slot of the item creating the interaction.
      */
     public int getSenderSlot() {
