@@ -15,17 +15,17 @@ public final class ItemOnItemEvent implements Event {
     /**
      * The player causing the two items to interact.
      */
-    private Player player;
+    private final Player player;
 
     /**
      * The item getting interacted with.
      */
-    private Item receiver;
+    private final Item receiver;
 
     /**
      * The item creating the interaction.
      */
-    private Item sender;
+    private final Item sender;
 
     /**
      * Creates an instance of this event.
@@ -51,19 +51,32 @@ public final class ItemOnItemEvent implements Event {
 
     /**
      * Returns the item getting interacted with.
-     * 
+     *
      * @return The item getting interacted with.
      */
     public Item getReceiver() {
-        return receiver;
+	return receiver;
     }
 
     /**
      * Returns the item creating the interaction.
-     * 
+     *
      * @return The item creating the interaction.
      */
     public Item getSender() {
-        return sender;
+	return sender;
     }
+
+    /**
+     * Tests if the specified items can be combined within this event.
+     *
+     * @param receiverId The received, used, items id.
+     * @param senderId The senders, used with, items id.
+     * @return Returns {@code true} if and only if the specified items can be
+     *         combined.
+     */
+    public boolean canCombine(int receiverId, int senderId) {
+	return receiver.getId() == receiverId && sender.getId() == senderId || receiver.getId() == senderId && sender.getId() == receiverId;
+    }
+
 }
