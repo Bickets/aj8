@@ -233,7 +233,7 @@ public final class World {
 
     /**
      * Registers a ground item.
-     * 
+     *
      * @param item The item to add to the {@link EntityRepository}.
      * @return {@code true} if the ground item registered successfully,
      *         otherwise {@code false}.
@@ -271,7 +271,7 @@ public final class World {
 
     /**
      * Unregisters a ground item.
-     * 
+     *
      * @param item The item to remove from the {@link EntityRepository}.
      */
     public void unregister(GroundItem item) {
