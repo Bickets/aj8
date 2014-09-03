@@ -80,14 +80,14 @@ public final class PlayerSynchronizationTask extends SynchronizationTask impleme
 	List<SynchronizationSegment> segments = new ArrayList<>();
 	int oldLocalPlayers = localPlayers.size();
 
-	List<Player> players = localPlayers.stream().filter(this).collect(Collectors.toList());
+	Set<Player> players = localPlayers.stream().filter(this).collect(Collectors.toSet());
 	Iterator<Player> iterator = players.iterator();
 	iterator.forEachRemaining((Player p) -> {
+	    localPlayers.remove(p);
 	    segments.add(new RemoveCharacterSegment());
-	    iterator.remove();
 	});
 
-	players = localPlayers.stream().filter(negate()).collect(Collectors.toList());
+	players = localPlayers.stream().filter(negate()).collect(Collectors.toSet());
 	players.forEach((Player p) -> segments.add(new MovementSegment(p.getBlockSet(), p.getDirections())));
 
 	int added = 0;

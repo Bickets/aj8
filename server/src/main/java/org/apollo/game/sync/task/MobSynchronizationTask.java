@@ -58,14 +58,14 @@ public final class MobSynchronizationTask extends SynchronizationTask implements
 	List<SynchronizationSegment> segments = new ArrayList<>();
 	int oldLocalMobs = localMobs.size();
 
-	List<Mob> mobs = localMobs.stream().filter(this).collect(Collectors.toList());
+	Set<Mob> mobs = localMobs.stream().filter(this).collect(Collectors.toSet());
 	Iterator<Mob> iterator = mobs.iterator();
 	iterator.forEachRemaining((Mob mob) -> {
+	    localMobs.remove(mob);
 	    segments.add(new RemoveCharacterSegment());
-	    iterator.remove();
 	});
 
-	mobs = localMobs.stream().filter(negate()).collect(Collectors.toList());
+	mobs = localMobs.stream().filter(negate()).collect(Collectors.toSet());
 	mobs.forEach((Mob mob) -> segments.add(new MovementSegment(mob.getBlockSet(), mob.getDirections())));
 
 	int added = 0;
