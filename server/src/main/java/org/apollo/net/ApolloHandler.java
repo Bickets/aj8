@@ -86,7 +86,7 @@ public final class ApolloHandler extends ChannelInboundHandlerAdapter {
 	if (session != null) {
 	    session.destroy();
 	}
-	logger.info("Channel disconnected: {}", channel);
+	logger.trace("Channel disconnected: {}", channel);
     }
 
     @Override
@@ -123,8 +123,32 @@ public final class ApolloHandler extends ChannelInboundHandlerAdapter {
     @Override
     public void exceptionCaught(ChannelHandlerContext ctx, Throwable e) {
 	Channel channel = ctx.channel();
-	logger.error("Exception occurred for channel: {}, closing...", channel, e);
+	if (shouldNotify(e)) {
+	    logger.error("Exception occurred for channel: {}, closing...", channel, e);
+	}
 	channel.close();
+    }
+
+    /**
+     * Tests if the specified throwable should be notified.
+     *
+     * @param e The throwable.
+     * @return {@code true} if and only if the specified {@link Throwable}
+     *         should be notified otherwise {@code false}.
+     */
+    private boolean shouldNotify(Throwable e) {
+	String msg = e.getMessage();
+
+	if (msg == null) {
+	    return true;
+	}
+
+	// TODO: A proper way to manage this??
+	if (msg.equals("An existing connection was forcibly closed by the remote host")) {
+	    return false;
+	}
+
+	return true;
     }
 
 }
