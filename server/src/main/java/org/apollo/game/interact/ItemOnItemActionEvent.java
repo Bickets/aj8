@@ -10,7 +10,7 @@ import org.apollo.game.model.Player;
  *
  * @author Tyler Buchanan <https://www.github.com/TylerBuchanan97>
  */
-public final class ItemOnItemEvent implements Event {
+public final class ItemOnItemActionEvent implements Event {
 
     /**
      * The player causing the two items to interact.
@@ -34,7 +34,7 @@ public final class ItemOnItemEvent implements Event {
      * @param receiver The slot of the item getting interacted with.
      * @param sender The slot of the item creating the interaction.
      */
-    public ItemOnItemEvent(Player player, Item receiver, Item sender) {
+    public ItemOnItemActionEvent(Player player, Item receiver, Item sender) {
 	this.player = player;
 	this.receiver = receiver;
 	this.sender = sender;
