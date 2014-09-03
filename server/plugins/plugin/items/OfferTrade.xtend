@@ -1,4 +1,4 @@
-package items
+package plugin.items
 
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo

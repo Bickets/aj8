@@ -1,11 +1,11 @@
-package items
+package plugin.items
 
-import common.Plugin
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ItemActionEvent
 import org.apollo.game.model.InventoryConstants
 import org.apollo.game.model.Player
+import plugin.Plugin
 
 @SubscribesTo(ItemActionEvent)
 class RemoveEquipment extends Plugin implements EventSubscriber<ItemActionEvent> {

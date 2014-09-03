@@ -1,4 +1,4 @@
-package common
+package plugin
 
 import java.util.List
 import java.util.concurrent.ThreadLocalRandom
@@ -8,19 +8,36 @@ abstract class Plugin {
 
 	val random = ThreadLocalRandom.current
 
-	/* logic expressions */
-	val isNum = [String str|str.matches("-?\\d+")]
-	val toInt = [String str|if(isNum(str)) Integer.valueOf(str) else throw new NumberFormatException]
-	val randomNoZero = [int range|exclusiveRandom.apply(range) + 1]
-	val exclusiveRandom = [int range|random.nextInt(range)]
-	val inclusiveRandom = [int min, int max|exclusiveRandom.apply((max - min) + 1) + min]
+	val isNum = [ String str |
+		str.matches("-?\\d+")
+	]
+
+	val toInt = [ String str |
+		if(str.isNum) Integer.valueOf(str) else throw new NumberFormatException
+	]
+
+	val randomNoZero = [ int range |
+		exclusiveRandom.apply(range) + 1
+	]
+
+	val exclusiveRandom = [ int range |
+		random.nextInt(range)
+	]
+
+	val inclusiveRandom = [ int min, int max |
+		exclusiveRandom.apply((max - min) + 1) + min
+	]
+
 	val inclusiveRandomExcludes = [ int min, int max, List<Integer> excludes |
 		var result = inclusiveRandom.apply(min, max)
 		while (excludes.contains(result)) {
 			result = inclusiveRandom.apply(min, max)
 		}
 	]
-	val randomFloat = [float range|random.nextFloat * range]
+
+	val randomFloat = [ float range |
+		random.nextFloat * range
+	]
 
 	def toInt(String str) {
 		toInt.apply(str)
@@ -49,10 +66,9 @@ abstract class Plugin {
 	def random(float range) {
 		randomFloat.apply(range)
 	}
-	
+
 	def closeInterfaces(Player player) {
 		player.interfaceSet.close
 	}
-	
+
 }
- 

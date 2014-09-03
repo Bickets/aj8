@@ -1,11 +1,12 @@
-package mobs
+package plugin.mobs
 
+import org.apollo.game.event.Event
 import org.apollo.game.model.Direction
 import org.apollo.game.model.Mob
 import org.apollo.game.model.Position
 import org.apollo.game.model.World
 
-@Data abstract class MobSpawn {
+@Data class MobSpawnEvent implements Event {
 
 	val World world
 
@@ -25,7 +26,5 @@ import org.apollo.game.model.World
 		val mob = new Mob(id, position, direction)
 		world.register(mob)
 	}
-
-	def void spawn();
 
 }

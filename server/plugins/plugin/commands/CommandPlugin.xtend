@@ -1,6 +1,5 @@
-package commands
+package plugin.commands
 
-import common.Plugin
 import org.apollo.game.command.CommandEvent
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
@@ -16,6 +15,7 @@ import org.apollo.game.model.pf.AStarPathFinder
 import org.apollo.game.msg.impl.GameObjectMessage
 import org.apollo.game.msg.impl.OpenInterfaceMessage
 import org.apollo.game.msg.impl.WelcomeScreenMessage
+import plugin.Plugin
 
 @SubscribesTo(CommandEvent)
 @Data class CommandPlugin extends Plugin implements EventSubscriber<CommandEvent> {

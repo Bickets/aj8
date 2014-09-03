@@ -1,6 +1,5 @@
-package items
+package plugin.items
 
-import common.Plugin
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ItemActionEvent
@@ -10,6 +9,7 @@ import org.apollo.game.model.Player
 import org.apollo.game.model.Skill
 import org.apollo.game.model.^def.EquipmentDefinition
 import org.apollo.game.model.^def.ItemDefinition
+import plugin.Plugin
 
 @SubscribesTo(ItemActionEvent)
 class WearEquipment extends Plugin implements EventSubscriber<ItemActionEvent> {

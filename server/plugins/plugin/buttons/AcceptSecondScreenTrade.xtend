@@ -1,6 +1,5 @@
-package buttons
+package plugin.buttons
 
-import common.Plugin
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ButtonActionEvent
@@ -8,6 +7,7 @@ import org.apollo.game.model.Player
 import org.apollo.game.model.inter.trade.TradeStage
 import org.apollo.game.model.inter.trade.TradeStatus
 import org.apollo.game.msg.impl.SetInterfaceTextMessage
+import plugin.Plugin
 
 import static org.apollo.game.model.inter.trade.TradeConstants.*
 import static org.apollo.game.model.inter.trade.TradeStage.*
