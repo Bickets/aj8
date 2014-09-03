@@ -9,13 +9,13 @@ import org.apollo.game.model.World
 import org.apollo.game.model.^def.GameObjectDefinition
 import org.apollo.game.model.^def.ItemDefinition
 import org.apollo.game.model.inter.bank.BankUtils
-import org.apollo.game.model.inter.trade.TradeUtils
 import org.apollo.game.model.obj.GameObject
 import org.apollo.game.model.pf.AStarPathFinder
 import org.apollo.game.msg.impl.GameObjectMessage
 import org.apollo.game.msg.impl.OpenInterfaceMessage
 import org.apollo.game.msg.impl.WelcomeScreenMessage
 import plugin.Plugin
+import plugin.trade.Trade
 
 @SubscribesTo(CommandEvent)
 @Data class CommandPlugin extends Plugin implements EventSubscriber<CommandEvent> {
@@ -35,7 +35,7 @@ import plugin.Plugin
 			case "close":
 				plr.interfaceSet.close
 			case "trade":
-				TradeUtils.openTrade(plr, world.playerRepository.get(2))
+				Trade.openTrade(plr, world.playerRepository.get(2))
 			case "pos":
 				plr.sendMessage(plr.position)
 			case "pickup": {

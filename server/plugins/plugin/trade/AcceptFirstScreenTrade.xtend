@@ -1,4 +1,4 @@
-package plugin.buttons
+package plugin.trade
 
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo

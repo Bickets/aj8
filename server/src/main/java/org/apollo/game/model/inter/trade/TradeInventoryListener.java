@@ -27,12 +27,19 @@ public final class TradeInventoryListener extends InventoryAdapter {
     private final TradeSession session;
 
     /**
+     * The other trade session.
+     */
+    private final TradeSession otherSession;
+
+    /**
      * Constructs a new {@link TradeInventoryListener}.
      *
      * @param session The current trade session.
+     * @param otherSession The other trade session.
      */
-    public TradeInventoryListener(TradeSession session) {
+    public TradeInventoryListener(TradeSession session, TradeSession otherSession) {
 	this.session = session;
+	this.otherSession = otherSession;
     }
 
     @Override
@@ -43,8 +50,7 @@ public final class TradeInventoryListener extends InventoryAdapter {
     @Override
     public void itemsUpdated(Inventory inventory) {
 	Player player = session.getPlayer();
-	Player other = session.getOther();
-	TradeSession otherSession = other.getFields().getTradeSession();
+	Player other = otherSession.getPlayer();
 
 	if (!validStatus(session.getStatus()) && !validStatus(otherSession.getStatus()) || !validStage(session.getStage()) && !validStage(otherSession.getStage())) {
 	    return;
@@ -68,12 +74,7 @@ public final class TradeInventoryListener extends InventoryAdapter {
      */
     private String buildTitle(Player player) {
 	Inventory inventory = player.getInventory();
-
-	StringBuilder bldr = new StringBuilder();
-	bldr.append("Trading with: ").append(player.getName());
-	bldr.append(" who has @gre@").append(inventory.freeSlots());
-	bldr.append(" @yel@free slots.");
-	return bldr.toString();
+	return "Trading with: " + player.getName() + " who has @gre@" + inventory.freeSlots() + " @yel@ free slots.";
     }
 
     /**

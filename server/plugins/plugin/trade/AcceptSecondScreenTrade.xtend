@@ -1,4 +1,4 @@
-package plugin.buttons
+package plugin.trade
 
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
@@ -36,7 +36,8 @@ class AcceptSecondScreenTrade extends Plugin implements EventSubscriber<ButtonAc
 			return
 		}
 
-		if (validStatus(session.status) && validStatus(otherSession.status) && validStage(session.stage) && validStage(otherSession.stage)) {
+		if (validStatus(session.status) && validStatus(otherSession.status) && validStage(session.stage) &&
+			validStage(otherSession.stage)) {
 			plr.send(new SetInterfaceTextMessage(SECOND_SCREEN_TITLE_ID, "Waiting for other player..."))
 			other.send(new SetInterfaceTextMessage(SECOND_SCREEN_TITLE_ID, "Other player has accepted."))
 
@@ -65,10 +66,17 @@ class AcceptSecondScreenTrade extends Plugin implements EventSubscriber<ButtonAc
 	}
 
 	def finish(Player player, Player other) {
+		player.close
+		other.close
+
 		other.inventory.addAll(player.items)
 		player.inventory.addAll(other.items)
+	}
+
+	def close(Player player) {
 		closeInterfaces(player)
-		closeInterfaces(other)
+		player.fields.tradeSession = null
+		player.sendMessage("Accepted trade.")
 	}
 
 	def items(Player player) {

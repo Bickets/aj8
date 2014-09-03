@@ -36,7 +36,7 @@ public final class TradeSession {
      * @param player The player who owns this trade session.
      * @param other The other player in this trade session.
      */
-    protected TradeSession(Player player, Player other) {
+    public TradeSession(Player player, Player other) {
 	this.player = player;
 	this.other = other;
     }
@@ -112,6 +112,8 @@ public final class TradeSession {
     private void decline(Player player) {
 	player.getInterfaceSet().removeListener();
 	player.getInterfaceSet().close();
+
+	player.getFields().setTradeSession(null);
 
 	Inventory inventory = player.getInventory();
 	Inventory trade = player.getTrade();

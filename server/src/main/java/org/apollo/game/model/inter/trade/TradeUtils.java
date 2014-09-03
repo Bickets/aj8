@@ -1,18 +1,9 @@
 package org.apollo.game.model.inter.trade;
 
-import static org.apollo.game.model.InventoryConstants.OTHER_TRADE_INVENTORY_ID;
-import static org.apollo.game.model.InventoryConstants.TRADE_INVENTORY_ID;
-import static org.apollo.game.model.InventoryConstants.TRADE_SIDEBAR_INVENTORY_ID;
-import static org.apollo.game.model.inter.trade.TradeConstants.SIDEBAR_ID;
-import static org.apollo.game.model.inter.trade.TradeConstants.TRADE_WINDOW_ID;
-
 import org.apollo.game.model.Inventory;
 import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.def.ItemDefinition;
-import org.apollo.game.model.inter.InterfaceListener;
-import org.apollo.game.model.inv.InventoryListener;
-import org.apollo.game.model.inv.SynchronizationInventoryListener;
 
 /**
  * Contains static utility methods for dealing with trade inventories.
@@ -20,66 +11,6 @@ import org.apollo.game.model.inv.SynchronizationInventoryListener;
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class TradeUtils {
-
-    /**
-     * Opens a trade session between two players.
-     *
-     * @param player The player who instantiated the trade.
-     * @param other The other player in the trade.
-     */
-    public static void openTrade(Player player, Player other) {
-	TradeSession session = player.getFields().getTradeSession();
-	TradeSession otherSession = other.getFields().getTradeSession();
-
-	if (session != null || otherSession != null) {
-	    return;
-	}
-
-	player.getFields().setTradeSession(new TradeSession(player, other));
-	other.getFields().setTradeSession(new TradeSession(other, player));
-
-	InventoryListener updateListener = new TradeInventoryListener(player.getFields().getTradeSession());
-
-	register(player, updateListener, new SynchronizationInventoryListener(other, OTHER_TRADE_INVENTORY_ID));
-	register(other, updateListener, new SynchronizationInventoryListener(player, OTHER_TRADE_INVENTORY_ID));
-
-	initialize(player, TRADE_WINDOW_ID, SIDEBAR_ID);
-	initialize(other, TRADE_WINDOW_ID, SIDEBAR_ID);
-    }
-
-    /**
-     * Initializes a trade for the specified player.
-     *
-     * @param player The player to initialize the trade for.
-     * @param windowId The window to open for this trade.
-     * @param sidebarId The sidebar to open for this trade.
-     */
-    private static void initialize(Player player, int windowId, int sidebarId) {
-	InventoryListener invListener = new SynchronizationInventoryListener(player, TRADE_SIDEBAR_INVENTORY_ID);
-	InventoryListener tradeInvListener = new SynchronizationInventoryListener(player, TRADE_INVENTORY_ID);
-
-	player.getInventory().addListener(invListener);
-	player.getTrade().addListener(tradeInvListener);
-
-	player.getInventory().forceRefresh();
-	player.getTrade().forceRefresh();
-
-	InterfaceListener interListener = new TradeInterfaceListener(player, invListener, tradeInvListener);
-	player.getInterfaceSet().openWindowWithSidebar(interListener, windowId, sidebarId);
-    }
-
-    /**
-     * Registers the update and synchronization inventory listeners to the trade
-     * inventory.
-     *
-     * @param player The player who owns the trade inventory.
-     * @param updateListener The update inventory listener.
-     * @param syncListener The synchronization inventory listener.
-     */
-    private static void register(Player player, InventoryListener updateListener, InventoryListener syncListener) {
-	player.getTrade().addListener(updateListener);
-	player.getTrade().addListener(syncListener);
-    }
 
     /**
      * Offers an item onto the trade screen.
