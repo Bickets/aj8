@@ -272,4 +272,12 @@ public final class InterfaceSet {
 	}
     }
 
+    /**
+     * Returns {@code true} if and only if 1 or more of any interface is open
+     * otherwise {@code false}.
+     */
+    public boolean isOpen() {
+	return interfaces.size() > 0;
+    }
+
 }

@@ -35,6 +35,10 @@ public final class ItemOnItemMessageHandler implements MessageHandler<ItemOnItem
     public void handle(Player player, ItemOnItemMessage msg) {
 	Inventory inventory = player.getInventory();
 
+	if (player.getInterfaceSet().isOpen()) {
+	    return;
+	}
+
 	if (msg.getReceiverSlot() < 0 || msg.getSenderSlot() < 0) {
 	    return;
 	}
@@ -45,6 +49,7 @@ public final class ItemOnItemMessageHandler implements MessageHandler<ItemOnItem
 
 	Item receiver = inventory.get(msg.getReceiverSlot());
 	Item sender = inventory.get(msg.getSenderSlot());
+
 	if (receiver == null || sender == null) {
 	    return;
 	}

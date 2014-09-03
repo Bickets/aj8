@@ -23,6 +23,7 @@ public final class SwitchItemMessageHandler implements MessageHandler<SwitchItem
 	if (message.getOldSlot() < 0 || message.getNewSlot() < 0) {
 	    return;
 	}
+
 	if (message.getInterfaceId() < 0 || message.getInterfaceId() > InterfaceDefinition.count()) {
 	    return;
 	}
