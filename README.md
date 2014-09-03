@@ -14,6 +14,7 @@ aj8 aims to provide a simple, elegant, robust and easy to use framework utilizin
 * jre-8
 * commons-compress-1.5
 * commons-lang3-3.3.2
+* ant-1.9.4
 * gson-2.2.4
 * xtend 2.6.2
 * mysql-connector-java-5.1.18
