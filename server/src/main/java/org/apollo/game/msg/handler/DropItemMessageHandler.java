@@ -10,7 +10,7 @@ import org.apollo.game.msg.impl.DropItemMessage;
 
 /**
  * This class handles the {@link DropItemMessage}.
- * 
+ *
  * @author Tyler Buchanan <https://www.github.com/TylerBuchanan97>
  */
 @HandlesMessage(DropItemMessage.class)
@@ -23,7 +23,7 @@ public class DropItemMessageHandler implements MessageHandler<DropItemMessage> {
 
     /**
      * Constructs a new instance of this class.
-     * 
+     *
      * @param world The world object.
      */
     public DropItemMessageHandler(World world) {
@@ -33,6 +33,8 @@ public class DropItemMessageHandler implements MessageHandler<DropItemMessage> {
     @Override
     public void handle(Player player, DropItemMessage msg) {
 	Item item = new Item(msg.getItemId(), player.getInventory().get(msg.getSlotId()).getAmount());
+	player.getInventory().remove(item);
 	world.register(new GroundItem(player, item, player.getPosition()));
     }
+
 }
