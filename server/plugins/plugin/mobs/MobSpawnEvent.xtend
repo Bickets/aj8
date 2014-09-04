@@ -5,6 +5,7 @@ import org.apollo.game.model.Direction
 import org.apollo.game.model.Mob
 import org.apollo.game.model.Position
 import org.apollo.game.model.World
+import org.eclipse.xtend.lib.annotations.Data
 
 @Data class MobSpawnEvent implements Event {
 

@@ -29,13 +29,7 @@ class DialogueButton implements EventSubscriber<ButtonActionEvent> {
 
 	override test(ButtonActionEvent event) {
 		val player = event.player
-		var hasId = false
-
-		for (id : ids) {
-			if (id == event.id) {
-				hasId = true
-			}
-		}
+		val hasId = ids.filter[it == event.id].size > 0
 
 		player.interfaceSet.contains(InterfaceType.DIALOGUE) && hasId
 	}
