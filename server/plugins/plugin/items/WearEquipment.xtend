@@ -3,7 +3,6 @@ package plugin.items
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ItemActionEvent
-import org.apollo.game.model.EquipmentConstants
 import org.apollo.game.model.InventoryConstants
 import org.apollo.game.model.Player
 import org.apollo.game.model.Skill
@@ -11,113 +10,115 @@ import org.apollo.game.model.^def.EquipmentDefinition
 import org.apollo.game.model.^def.ItemDefinition
 import plugin.Plugin
 
+import static org.apollo.game.model.EquipmentConstants.*
+
 @SubscribesTo(ItemActionEvent)
 class WearEquipment extends Plugin implements EventSubscriber<ItemActionEvent> {
 
 	def wear(Player player, int id, int slot) {
-		val item = player.inventory.get(slot)
-		if (item == null || item.id != id) {
-			return
-		}
-
-		val itemDef = item.definition
-		val equipDef = EquipmentDefinition.forId(item.id)
-		if (equipDef == null) {
-			return
-		}
-
-		closeInterfaces(player)
-
-		val skillSet = player.skillSet
-		if (skillSet.getSkill(Skill.ATTACK).maximumLevel < equipDef.attackLevel) {
-			player.sendMessage("You need an Attack level of " + equipDef.attackLevel + " to equip this item.")
-			return
-		}
-		if (skillSet.getSkill(Skill.STRENGTH).maximumLevel < equipDef.strengthLevel) {
-			player.sendMessage("You need a Strength level of " + equipDef.strengthLevel + " to equip this item.")
-			return
-		}
-		if (skillSet.getSkill(Skill.DEFENCE).maximumLevel < equipDef.defenceLevel) {
-			player.sendMessage("You need a Defence level of " + equipDef.defenceLevel + " to equip this item.")
-			return
-		}
-		if (skillSet.getSkill(Skill.RANGED).maximumLevel < equipDef.rangedLevel) {
-			player.sendMessage("You need a Ranged level of " + equipDef.rangedLevel + " to equip this item.")
-			return
-		}
-		if (skillSet.getSkill(Skill.MAGIC).maximumLevel < equipDef.magicLevel) {
-			player.sendMessage("You need a Magic level of " + equipDef.magicLevel + " to equip this item.")
-			return
-		}
-
 		val inventory = player.inventory
 		val equipment = player.equipment
 
-		val equipmentSlot = equipDef.slot
+		val item = inventory.get(slot)
+		val itemDef = item.definition
+		val equipDef = EquipmentDefinition.forId(item.id)
 
-		// check if there is enough space for a two handed weapon
+		if (equipDef == null) {
+			player.sendMessage(
+				id + " - " + itemDef.name +
+					" is not wearable, if you think this is a mistake please report this message.")
+			return false
+		}
+
+		val equipSlot = equipDef.slot
+
+		closeInterfaces(player)
+
+		if (checkReqs(player, equipDef)) {
+			return false
+		}
+
+		val weapon = equipment.get(WEAPON)
+		val shield = equipment.get(SHIELD)
+
 		if (equipDef.twoHanded) {
-			if (equipment.get(EquipmentConstants.SHIELD) != null) {
-				val shield = equipment.reset(EquipmentConstants.SHIELD)
-				inventory.add(shield)
+			var slots = if(weapon != null && shield != null) 1 else 0
+			if (inventory.freeSlots < slots) {
+				inventory.forceCapacityExceeded
+				return false
 			}
+
+			equipment.set(WEAPON, inventory.reset(slot))
+
+			if(weapon != null) inventory.add(weapon)
+			if(shield != null) inventory.add(equipment.reset(SHIELD))
+
+			return true
 		}
 
-		// check if a shield is being added with a two handed weapon
-		var removeWeapon = false
-		if (equipmentSlot == EquipmentConstants.SHIELD) {
-			val currentWeapon = equipment.get(EquipmentConstants.WEAPON)
-			if (currentWeapon != null) {
-				val weaponDef = EquipmentDefinition.forId(currentWeapon.id)
-				if (weaponDef.twoHanded) {
-					if (inventory.freeSlots < 1) {
-						inventory.forceCapacityExceeded
-						return
-					}
-					removeWeapon = true
-				}
-			}
+		if (equipSlot == SHIELD && weapon != null && EquipmentDefinition.forId(weapon.id).twoHanded) {
+			equipment.set(SHIELD, inventory.reset(slot))
+			inventory.add(equipment.reset(WEAPON))
+			return true
 		}
 
-		val previous = equipment.get(equipmentSlot)
-		if (itemDef.stackable && previous != null && previous.getId == item.id) {
+		val previous = equipment.get(equipSlot)
 
-			// we know the item is there, so we can let the inventory class
-			// do its stacking magic
-			inventory.remove(item)
-			val tmp = equipment.add(item)
-			if (tmp != null) {
-				inventory.add(tmp)
-			}
-		} else {
+		if (previous != null && previous.id == item.id && itemDef.stackable) {
+			val amount = item.amount + previous.amount
 
-			// swap the weapons around
-			val tmp = equipment.reset(equipmentSlot)
-			equipment.set(equipmentSlot, item)
-			inventory.reset(slot)
-			if (tmp != null) {
-				inventory.add(tmp)
+			if (amount > 0) {
+				return equipment.add(inventory.reset(slot)) == null
 			}
+
+			val normalized = amount - Integer.MAX_VALUE
+			val removed = item.amount - normalized
+
+			if (normalized == item.amount) {
+				equipment.forceCapacityExceeded
+				return false
+			}
+
+			inventory.remove(item.id, removed)
+			equipment.add(item.id, removed)
+			return true
 		}
 
-		// remove the shield if this weapon is two handed
-		if (equipDef.twoHanded) {
-			val tmp = equipment.reset(EquipmentConstants.SHIELD)
+		equipment.reset(equipSlot)
+		inventory.remove(item)
+		equipment.set(equipSlot, item)
+		if(previous != null) inventory.add(previous)
+		return true
+	}
 
-			// we know tmp will not be null from the check above
-			inventory.add(tmp)
+	def checkReqs(Player player, EquipmentDefinition equipDef) {
+		val skillSet = player.skillSet
+		if (skillSet.getSkill(Skill.ATTACK).maximumLevel < equipDef.attackLevel) {
+			player.sendMessage("You need an Attack level of " + equipDef.attackLevel + " to equip this item.")
+			return true
 		}
-
-		if (removeWeapon) {
-			val tmp = equipment.reset(EquipmentConstants.WEAPON)
-
-			// we know tmp will not be null from the check above
-			inventory.add(tmp)
+		if (skillSet.getSkill(Skill.STRENGTH).maximumLevel < equipDef.strengthLevel) {
+			player.sendMessage("You need a Strength level of " + equipDef.strengthLevel + " to equip this item.")
+			return true
+		}
+		if (skillSet.getSkill(Skill.DEFENCE).maximumLevel < equipDef.defenceLevel) {
+			player.sendMessage("You need a Defence level of " + equipDef.defenceLevel + " to equip this item.")
+			return true
+		}
+		if (skillSet.getSkill(Skill.RANGED).maximumLevel < equipDef.rangedLevel) {
+			player.sendMessage("You need a Ranged level of " + equipDef.rangedLevel + " to equip this item.")
+			return true
+		}
+		if (skillSet.getSkill(Skill.MAGIC).maximumLevel < equipDef.magicLevel) {
+			player.sendMessage("You need a Magic level of " + equipDef.magicLevel + " to equip this item.")
+			return true
 		}
 	}
 
 	override subscribe(ItemActionEvent event) {
-		wear(event.player, event.id, event.slot)
+		if (wear(event.player, event.id, event.slot)) {
+			return
+		}
 	}
 
 	override test(ItemActionEvent event) {
