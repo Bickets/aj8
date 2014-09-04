@@ -75,7 +75,8 @@ class WearEquipment extends Plugin implements EventSubscriber<ItemActionEvent> {
 			val removed = item.amount - normalized
 
 			if (normalized == item.amount) {
-				equipment.forceCapacityExceeded
+				equipment.set(equipSlot, item)
+				inventory.set(slot, previous)
 				return false
 			}
 
