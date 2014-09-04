@@ -4,6 +4,7 @@ import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ItemActionEvent
 import org.apollo.game.model.InventoryConstants
+import org.apollo.game.model.Item
 import org.apollo.game.model.Player
 import plugin.Plugin
 
@@ -15,18 +16,11 @@ class RemoveEquipment extends Plugin implements EventSubscriber<ItemActionEvent>
 		val equipment = player.equipment
 
 		val item = equipment.get(slot)
-		if (slot < 0 || slot >= equipment.capacity) {
-			return
-		}
-
-		if (item == null || item.id != id) {
-			return
-		}
+		val itemDef = item.definition
 
 		closeInterfaces(player)
 
-		var hasRoomForStackable = inventory.contains(id) && item.definition.stackable
-		if (inventory.freeSlots < 1 && !hasRoomForStackable) {
+		if (inventory.freeSlots == 0 && !itemDef.stackable) {
 			inventory.forceCapacityExceeded
 			return
 		}
@@ -34,16 +28,23 @@ class RemoveEquipment extends Plugin implements EventSubscriber<ItemActionEvent>
 		inventory.stopFiringEvents
 		equipment.stopFiringEvents
 
+		var removed = true
+
 		try {
-			equipment.set(slot, null)
-			inventory.add(item.id, item.amount)
+			val remaining = inventory.add(id, item.amount)
+			removed = remaining == 0
+			equipment.set(slot, if(removed) null else new Item(id, remaining))
 		} finally {
 			inventory.startFiringEvents
 			equipment.startFiringEvents
 		}
 
-		inventory.forceRefresh(slot)
-		equipment.forceRefresh(slot)
+		if (removed) {
+			inventory.forceRefresh
+			equipment.forceRefresh(slot)
+		} else {
+			inventory.forceCapacityExceeded
+		}
 	}
 
 	override subscribe(ItemActionEvent event) {
