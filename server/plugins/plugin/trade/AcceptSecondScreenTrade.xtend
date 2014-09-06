@@ -7,14 +7,14 @@ import org.apollo.game.model.Player
 import org.apollo.game.model.inter.trade.TradeStage
 import org.apollo.game.model.inter.trade.TradeStatus
 import org.apollo.game.msg.impl.SetInterfaceTextMessage
-import plugin.Plugin
 
 import static org.apollo.game.model.inter.trade.TradeConstants.*
 import static org.apollo.game.model.inter.trade.TradeStage.*
 import static org.apollo.game.model.inter.trade.TradeStatus.*
+import static plugin.Plugin.*
 
 @SubscribesTo(ButtonActionEvent)
-class AcceptSecondScreenTrade extends Plugin implements EventSubscriber<ButtonActionEvent> {
+class AcceptSecondScreenTrade implements EventSubscriber<ButtonActionEvent> {
 
 	override subscribe(ButtonActionEvent event) {
 		val plr = event.player
