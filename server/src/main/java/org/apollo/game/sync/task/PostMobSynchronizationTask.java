@@ -26,17 +26,8 @@ public final class PostMobSynchronizationTask extends SynchronizationTask {
 
     @Override
     public void run() {
-	if (mob.isTeleporting()) {
-	    mob.setTeleporting(false);
-	}
-
-	if (mob.hasRegionChanged()) {
-	    mob.setRegionChanged(false);
-	}
-
-	if (mob.getBlockSet().size() > 0) {
-	    mob.resetBlockSet();
-	}
+	mob.setTeleporting(false);
+	mob.resetBlockSet();
     }
 
 }

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import org.apollo.game.model.Player;
 import org.apollo.game.model.Position;
@@ -27,7 +25,7 @@ import org.apollo.game.sync.seg.TeleportSegment;
  *
  * @author Graham
  */
-public final class PlayerSynchronizationTask extends SynchronizationTask implements Predicate<Player> {
+public final class PlayerSynchronizationTask extends SynchronizationTask {
 
     /**
      * The maximum number of players to load per cycle. This prevents the update
@@ -80,15 +78,16 @@ public final class PlayerSynchronizationTask extends SynchronizationTask impleme
 	List<SynchronizationSegment> segments = new ArrayList<>();
 	int oldLocalPlayers = localPlayers.size();
 
-	Set<Player> players = localPlayers.stream().filter(this).collect(Collectors.toSet());
-	Iterator<Player> iterator = players.iterator();
-	iterator.forEachRemaining((Player p) -> {
-	    localPlayers.remove(p);
-	    segments.add(new RemoveCharacterSegment());
-	});
-
-	players = localPlayers.stream().filter(negate()).collect(Collectors.toSet());
-	players.forEach((Player p) -> segments.add(new MovementSegment(p.getBlockSet(), p.getDirections())));
+	Iterator<Player> it = localPlayers.iterator();
+	while (it.hasNext()) {
+	    Player p = it.next();
+	    if (!p.isActive() || p.isTeleporting() || p.getPosition().getLongestDelta(player.getPosition()) > player.getViewingDistance()) {
+		it.remove();
+		segments.add(new RemoveCharacterSegment());
+	    } else {
+		segments.add(new MovementSegment(p.getBlockSet(), p.getDirections()));
+	    }
+	}
 
 	int added = 0;
 
@@ -116,11 +115,6 @@ public final class PlayerSynchronizationTask extends SynchronizationTask impleme
 	}
 
 	player.send(new PlayerSynchronizationMessage(lastKnownRegion, player.getPosition(), regionChanged, segment, oldLocalPlayers, segments));
-    }
-
-    @Override
-    public boolean test(Player p) {
-	return !p.isActive() || p.isTeleporting() || p.getPosition().getLongestDelta(player.getPosition()) > player.getViewingDistance();
     }
 
 }

@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Set;
-import java.util.function.Predicate;
-import java.util.stream.Collectors;
 
 import org.apollo.game.model.Mob;
 import org.apollo.game.model.Player;
@@ -22,7 +20,7 @@ import org.apollo.game.sync.seg.SynchronizationSegment;
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public final class MobSynchronizationTask extends SynchronizationTask implements Predicate<Mob> {
+public final class MobSynchronizationTask extends SynchronizationTask {
 
     /**
      * The maximum number of mobs to load per cycle. This prevents the update
@@ -58,15 +56,16 @@ public final class MobSynchronizationTask extends SynchronizationTask implements
 	List<SynchronizationSegment> segments = new ArrayList<>();
 	int oldLocalMobs = localMobs.size();
 
-	Set<Mob> mobs = localMobs.stream().filter(this).collect(Collectors.toSet());
-	Iterator<Mob> iterator = mobs.iterator();
-	iterator.forEachRemaining((Mob mob) -> {
-	    localMobs.remove(mob);
-	    segments.add(new RemoveCharacterSegment());
-	});
-
-	mobs = localMobs.stream().filter(negate()).collect(Collectors.toSet());
-	mobs.forEach((Mob mob) -> segments.add(new MovementSegment(mob.getBlockSet(), mob.getDirections())));
+	Iterator<Mob> it = localMobs.iterator();
+	while (it.hasNext()) {
+	    Mob mob = it.next();
+	    if (!mob.isActive() || mob.isTeleporting() || mob.getPosition().getLongestDelta(player.getPosition()) > player.getViewingDistance()) {
+		it.remove();
+		segments.add(new RemoveCharacterSegment());
+	    } else {
+		segments.add(new MovementSegment(mob.getBlockSet(), mob.getDirections()));
+	    }
+	}
 
 	int added = 0;
 
@@ -86,11 +85,6 @@ public final class MobSynchronizationTask extends SynchronizationTask implements
 	}
 
 	player.send(new MobSynchronizationMessage(player.getPosition(), segments, oldLocalMobs));
-    }
-
-    @Override
-    public boolean test(Mob mob) {
-	return !mob.isActive() || mob.isTeleporting() || mob.getPosition().getLongestDelta(player.getPosition()) > player.getViewingDistance();
     }
 
 }

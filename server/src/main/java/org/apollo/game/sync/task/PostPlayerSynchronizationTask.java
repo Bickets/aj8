@@ -27,23 +27,16 @@ public final class PostPlayerSynchronizationTask extends SynchronizationTask {
 
     @Override
     public void run() {
-	if (player.isTeleporting()) {
-	    player.setTeleporting(false);
-	}
+	player.setTeleporting(false);
+	player.setRegionChanged(false);
+	player.resetBlockSet();
 
-	if (player.hasRegionChanged()) {
-	    player.setRegionChanged(false);
-	}
-
-	if (player.getBlockSet().size() > 0) {
-	    player.resetBlockSet();
-	}
-
-	if (!player.isExcessivePlayersSet()) {
+	if (!player.isExcessivePlayersSet() || !player.isExcessivemMobsSet()) {
 	    player.incrementViewingDistance();
 	} else {
 	    player.decrementViewingDistance();
 	    player.resetExcessivePlayers();
+	    player.resetExcessiveMobs();
 	}
     }
 
