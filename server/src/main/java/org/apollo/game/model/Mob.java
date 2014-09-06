@@ -1,11 +1,11 @@
 package org.apollo.game.model;
 
+import org.apollo.game.model.area.Area;
 import org.apollo.game.model.def.MobDefinition;
 import org.apollo.game.msg.Message;
 
 /**
  * A {@link GameCharacter} that has AI and is not controlled by a {@link Player}
- * .
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
@@ -17,9 +17,19 @@ public final class Mob extends GameCharacter {
     private final MobDefinition definition;
 
     /**
-     * The initial facing direction of this mob.
+     * Represents this mobs spawn position.
      */
-    private final Direction initialFaceDirection;
+    private Position spawnPosition;
+
+    /**
+     * Represents this mobs movement area.
+     */
+    private Area movementArea;
+
+    /**
+     * Represents the movement distance this mob is allowed to move.
+     */
+    private int movementDistance = 1;
 
     /**
      * Constructs a new {@link Mob}.
@@ -28,18 +38,7 @@ public final class Mob extends GameCharacter {
      * @param position The position of the mob.
      */
     public Mob(int id, Position position) {
-	this(MobDefinition.forId(id), position, Direction.NONE);
-    }
-
-    /**
-     * Constructs a new {@link Mob}.
-     *
-     * @param id The id of the mob.
-     * @param position The position of the mob.
-     * @param initialFaceDirection The initial facing direction of this mob.
-     */
-    public Mob(int id, Position position, Direction initialFaceDirection) {
-	this(MobDefinition.forId(id), position, initialFaceDirection);
+	this(MobDefinition.forId(id), position);
     }
 
     /**
@@ -49,26 +48,58 @@ public final class Mob extends GameCharacter {
      * @param position The position of the mob.
      * @param initialFaceDirection The initial facing direction of this mob.
      */
-    public Mob(MobDefinition definition, Position position, Direction initialFaceDirection) {
+    public Mob(MobDefinition definition, Position position) {
 	super(position);
 	this.definition = definition;
-	this.initialFaceDirection = initialFaceDirection;
+	spawnPosition = position;
     }
 
     /**
-     * Returns the mobs definitions.
-     *
-     * @return The definition of this mob.
+     * Returns this mobs definitions.
      */
     public MobDefinition getDefinition() {
 	return definition;
     }
 
     /**
-     * Returns the initial face direction of this mob.
+     * Returns this mobs spawn position.
      */
-    public Direction getInitialFaceDirection() {
-	return initialFaceDirection;
+    public Position getSpawnPosition() {
+	return spawnPosition;
+    }
+
+    /**
+     * Returns the current movement area.
+     */
+    public Area getMovementArea() {
+	return movementArea;
+    }
+
+    /**
+     * Sets this mobs movement area.
+     */
+    public void setMovementArea(Area movementArea) {
+	this.movementArea = movementArea;
+    }
+
+    /**
+     * Returns the current movement distance.
+     */
+    public int getMovementDistance() {
+	return movementDistance;
+    }
+
+    /**
+     * Sets this mobs movement distance.
+     */
+    public void setMovementDistance(int movementDistance) {
+	this.movementDistance = movementDistance;
+    }
+
+    @Override
+    public void setPosition(Position position) {
+	spawnPosition = position;
+	super.setPosition(position);
     }
 
     @Override
@@ -83,7 +114,7 @@ public final class Mob extends GameCharacter {
 
     @Override
     public int size() {
-	return getDefinition().getSize();
+	return definition.getSize();
     }
 
 }
