@@ -31,7 +31,7 @@ public final class MapDefinitionParser {
 
 	int count = buffer.capacity() / 7;
 	for (int i = 0; i < count; i++) {
-	    int hash = buffer.getShort();
+	    int hash = buffer.getShort() & 0xFFFF;
 	    int mapFile = buffer.getShort() & 0xFFFF;
 	    int landscapeFile = buffer.getShort() & 0xFFFF;
 	    boolean preload = buffer.get() == 1;
