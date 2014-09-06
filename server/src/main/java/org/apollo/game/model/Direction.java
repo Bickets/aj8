@@ -1,5 +1,8 @@
 package org.apollo.game.model;
 
+import java.util.LinkedList;
+import java.util.List;
+
 import org.apollo.game.model.pf.TraversalMap;
 
 /**
@@ -139,6 +142,53 @@ public enum Direction {
 	default:
 	    throw new IllegalArgumentException("direction: " + direction + " is not valid");
 	}
+    }
+
+    /**
+     * Returns a {@link List} of positions that are traversable from the
+     * specified position.
+     *
+     * @param from The position.
+     * @param size The size of the mob attempting to traverse.
+     * @return A {@link List} of positions.
+     */
+    public static List<Position> getNearbyTraversableTiles(Position from, int size) {
+	TraversalMap traversalMap = TraversalMap.getInstance();
+	List<Position> positions = new LinkedList<>();
+
+	if (traversalMap.isTraversableNorth(from.getHeight(), from.getX(), from.getY(), size)) {
+	    positions.add(new Position(from.getX(), from.getY() + 1, from.getHeight()));
+	}
+
+	if (traversalMap.isTraversableSouth(from.getHeight(), from.getX(), from.getY(), size)) {
+	    positions.add(new Position(from.getX(), from.getY() - 1, from.getHeight()));
+	}
+
+	if (traversalMap.isTraversableEast(from.getHeight(), from.getX(), from.getY(), size)) {
+	    positions.add(new Position(from.getX() + 1, from.getY(), from.getHeight()));
+	}
+
+	if (traversalMap.isTraversableWest(from.getHeight(), from.getX(), from.getY(), size)) {
+	    positions.add(new Position(from.getX() - 1, from.getY(), from.getHeight()));
+	}
+
+	if (traversalMap.isTraversableNorthEast(from.getHeight(), from.getX(), from.getY(), size)) {
+	    positions.add(new Position(from.getX() + 1, from.getY() + 1, from.getHeight()));
+	}
+
+	if (traversalMap.isTraversableNorthWest(from.getHeight(), from.getX(), from.getY(), size)) {
+	    positions.add(new Position(from.getX() - 1, from.getY() + 1, from.getHeight()));
+	}
+
+	if (traversalMap.isTraversableSouthEast(from.getHeight(), from.getX(), from.getY(), size)) {
+	    positions.add(new Position(from.getX() + 1, from.getY() - 1, from.getHeight()));
+	}
+
+	if (traversalMap.isTraversableSouthWest(from.getHeight(), from.getX(), from.getY(), size)) {
+	    positions.add(new Position(from.getX() - 1, from.getY() - 1, from.getHeight()));
+	}
+
+	return positions;
     }
 
     /**
