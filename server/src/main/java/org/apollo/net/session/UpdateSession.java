@@ -36,11 +36,11 @@ public final class UpdateSession extends Session {
     public void messageReceived(Object message) {
 	UpdateDispatcher dispatcher = updateService.getDispatcher();
 	Channel channel = ctx().channel();
-	if (message.getClass() == OnDemandRequest.class) {
+	if (message instanceof OnDemandRequest) {
 	    dispatcher.dispatch(channel, (OnDemandRequest) message);
-	} else if (message.getClass() == JagGrabRequest.class) {
+	} else if (message instanceof JagGrabRequest) {
 	    dispatcher.dispatch(channel, (JagGrabRequest) message);
-	} else if (message.getClass() == HttpRequest.class) {
+	} else if (message instanceof HttpRequest) {
 	    dispatcher.dispatch(channel, (HttpRequest) message);
 	} else {
 	    throw new IllegalStateException("unknown message type");
