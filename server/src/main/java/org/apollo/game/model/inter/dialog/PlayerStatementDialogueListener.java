@@ -15,29 +15,29 @@ import org.apollo.game.msg.impl.SetInterfaceTextMessage;
  */
 public abstract class PlayerStatementDialogueListener implements DialogueListener {
 
-    @Override
-    public final int execute(Player player) {
-	String[] lines = lines();
-	int dialogueId = PLAYER_DIALOGUE_ID[lines.length - 1];
-	int headChildId = dialogueId - 2;
-	player.send(new PlayerModelOnInterfaceMessage(headChildId));
-	player.send(new InterfaceModelAnimationMessage(expression().getAnimation(), headChildId));
-	player.send(new SetInterfaceTextMessage(dialogueId - 1, player.getName()));
-	for (int i = 0; i < lines.length; i++) {
-	    player.send(new SetInterfaceTextMessage(dialogueId + i, lines[i]));
+	@Override
+	public final int execute(Player player) {
+		String[] lines = lines();
+		int dialogueId = PLAYER_DIALOGUE_ID[lines.length - 1];
+		int headChildId = dialogueId - 2;
+		player.send(new PlayerModelOnInterfaceMessage(headChildId));
+		player.send(new InterfaceModelAnimationMessage(expression().getAnimation(), headChildId));
+		player.send(new SetInterfaceTextMessage(dialogueId - 1, player.getName()));
+		for (int i = 0; i < lines.length; i++) {
+			player.send(new SetInterfaceTextMessage(dialogueId + i, lines[i]));
+		}
+		return dialogueId -= 3;
 	}
-	return dialogueId -= 3;
-    }
 
-    @Override
-    public final DialogueType type() {
-	return DialogueType.PLAYER_STATEMENT;
-    }
+	@Override
+	public final DialogueType type() {
+		return DialogueType.PLAYER_STATEMENT;
+	}
 
-    /* Do not allow method overriding for these methods. */
-    @Override
-    public final boolean optionClicked(DialogueOption option) {
-	return false;
-    }
+	/* Do not allow method overriding for these methods. */
+	@Override
+	public final boolean optionClicked(DialogueOption option) {
+		return false;
+	}
 
 }

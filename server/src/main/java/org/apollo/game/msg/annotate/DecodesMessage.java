@@ -17,9 +17,9 @@ import java.lang.annotation.Target;
 @Target(ElementType.TYPE)
 public @interface DecodesMessage {
 
-    /**
-     * Returns an <code>int[]</code> array of opcodes that the message decodes.
-     */
-    int[] value();
+	/**
+	 * Returns an <code>int[]</code> array of opcodes that the message decodes.
+	 */
+	int[] value();
 
 }

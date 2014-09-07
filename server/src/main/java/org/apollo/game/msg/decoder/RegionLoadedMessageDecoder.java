@@ -13,9 +13,9 @@ import org.apollo.net.codec.game.GamePacket;
 @DecodesMessage(121)
 public final class RegionLoadedMessageDecoder implements MessageDecoder<RegionLoadedMessage> {
 
-    @Override
-    public RegionLoadedMessage decode(GamePacket packet) {
-	return new RegionLoadedMessage();
-    }
+	@Override
+	public RegionLoadedMessage decode(GamePacket packet) {
+		return new RegionLoadedMessage();
+	}
 
 }

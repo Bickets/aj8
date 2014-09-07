@@ -17,48 +17,48 @@ import org.apollo.game.msg.impl.ItemOnItemMessage;
 @HandlesMessage(ItemOnItemMessage.class)
 public final class ItemOnItemMessageHandler implements MessageHandler<ItemOnItemMessage> {
 
-    /**
-     * The main world object.
-     */
-    private final World world;
+	/**
+	 * The main world object.
+	 */
+	private final World world;
 
-    /**
-     * Constructs a new {@link ItemOnItemMessageHandler}.
-     *
-     * @param world The world.
-     */
-    public ItemOnItemMessageHandler(World world) {
-	this.world = world;
-    }
-
-    @Override
-    public void handle(Player player, ItemOnItemMessage msg) {
-	Inventory inventory = player.getInventory();
-
-	if (player.getInterfaceSet().isOpen()) {
-	    return;
+	/**
+	 * Constructs a new {@link ItemOnItemMessageHandler}.
+	 *
+	 * @param world The world.
+	 */
+	public ItemOnItemMessageHandler(World world) {
+		this.world = world;
 	}
 
-	if (msg.getReceiverSlot() < 0 || msg.getSenderSlot() < 0) {
-	    return;
+	@Override
+	public void handle(Player player, ItemOnItemMessage msg) {
+		Inventory inventory = player.getInventory();
+
+		if (player.getInterfaceSet().isOpen()) {
+			return;
+		}
+
+		if (msg.getReceiverSlot() < 0 || msg.getSenderSlot() < 0) {
+			return;
+		}
+
+		if (msg.getReceiverSlot() >= inventory.capacity() || msg.getSenderSlot() >= inventory.capacity()) {
+			return;
+		}
+
+		Item receiver = inventory.get(msg.getReceiverSlot());
+		Item sender = inventory.get(msg.getSenderSlot());
+
+		if (receiver == null || sender == null) {
+			return;
+		}
+
+		if (!inventory.contains(receiver.getId()) || !inventory.contains(sender.getId())) {
+			return;
+		}
+
+		world.post(new ItemOnItemActionEvent(player, receiver, sender));
 	}
-
-	if (msg.getReceiverSlot() >= inventory.capacity() || msg.getSenderSlot() >= inventory.capacity()) {
-	    return;
-	}
-
-	Item receiver = inventory.get(msg.getReceiverSlot());
-	Item sender = inventory.get(msg.getSenderSlot());
-
-	if (receiver == null || sender == null) {
-	    return;
-	}
-
-	if (!inventory.contains(receiver.getId()) || !inventory.contains(sender.getId())) {
-	    return;
-	}
-
-	world.post(new ItemOnItemActionEvent(player, receiver, sender));
-    }
 
 }

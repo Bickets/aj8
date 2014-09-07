@@ -90,222 +90,222 @@ import org.slf4j.LoggerFactory;
  */
 public final class MessageTranslator {
 
-    /**
-     * The logger used to print information and debug messages to the console.
-     */
-    private final Logger logger = LoggerFactory.getLogger(MessageTranslator.class);
+	/**
+	 * The logger used to print information and debug messages to the console.
+	 */
+	private final Logger logger = LoggerFactory.getLogger(MessageTranslator.class);
 
-    /**
-     * A {@link Map} of {@link Integer}s to {@link MessageDecoder}s.
-     */
-    private final Map<Integer, MessageDecoder<?>> decoders = new HashMap<>();
+	/**
+	 * A {@link Map} of {@link Integer}s to {@link MessageDecoder}s.
+	 */
+	private final Map<Integer, MessageDecoder<?>> decoders = new HashMap<>();
 
-    /**
-     * A {@link Map} of {@link Class}' to {@link MessageEncoder}s.
-     */
-    private final Map<Class<?>, MessageEncoder<?>> encoders = new HashMap<>();
+	/**
+	 * A {@link Map} of {@link Class}' to {@link MessageEncoder}s.
+	 */
+	private final Map<Class<?>, MessageEncoder<?>> encoders = new HashMap<>();
 
-    /**
-     * A {@link Map} of {@link Class}' to {@link MessageHandler}s.
-     */
-    private final Map<Class<?>, MessageHandler<?>> handlers = new HashMap<>();
+	/**
+	 * A {@link Map} of {@link Class}' to {@link MessageHandler}s.
+	 */
+	private final Map<Class<?>, MessageHandler<?>> handlers = new HashMap<>();
 
-    /**
-     * The world used for world message handlers.
-     */
-    private final World world;
+	/**
+	 * The world used for world message handlers.
+	 */
+	private final World world;
 
-    /**
-     * Constructs a new {@link MessageTranslator}.
-     *
-     * @param world The world used for world message handlers.
-     */
-    public MessageTranslator(World world) {
-	this.world = world;
-	registerAll();
-    }
-
-    /**
-     * Registers all message decoders, encoders and handlers.
-     */
-    private void registerAll() {
-	// register decoders
-	register(new KeepAliveMessageDecoder());
-	register(new CharacterDesignMessageDecoder());
-	register(new WalkMessageDecoder());
-	register(new ChatMessageDecoder());
-	register(new ButtonMessageDecoder());
-	register(new CommandMessageDecoder());
-	register(new SwitchItemMessageDecoder());
-	register(new FirstObjectActionMessageDecoder());
-	register(new SecondObjectActionMessageDecoder());
-	register(new ThirdObjectActionMessageDecoder());
-	register(new ClosedInterfaceMessageDecoder());
-	register(new EnteredAmountMessageDecoder());
-	register(new DialogueContinueMessageDecoder());
-	register(new ClientFocusedMessageDecoder());
-	register(new MouseClickMessageDecoder());
-	register(new IdleMessageDecoder());
-	register(new RegionLoadedMessageDecoder());
-	register(new ObsoleteMessageDecoder());
-	register(new CameraMovementMessageDecoder());
-	register(new DropItemMessageDecoder());
-	register(new ItemOnItemMessageDecoder());
-
-	register(new FirstInventoryItemActionMessageDecoder());
-
-	register(new FirstSingleItemActionMessageDecoder());
-	register(new SecondSingleItemActionMessageDecoder());
-	register(new ThirdInventoryItemActionMessageDecoder());
-
-	register(new FirstItemActionMessageDecoder());
-	register(new ThirdItemActionMessageDecoder());
-	register(new SecondItemActionMessageDecoder());
-	register(new FourthItemActionMessageDecoder());
-	register(new FifthItemActionMessageDecoder());
-
-	// register encoders
-	register(new IdAssignmentMessageEncoder());
-	register(new RegionChangeMessageEncoder());
-	register(new ServerMessageMessageEncoder());
-	register(new MobSynchronizationMessageEncoder());
-	register(new PlayerSynchronizationMessageEncoder());
-	register(new OpenInterfaceMessageEncoder());
-	register(new CloseInterfaceMessageEncoder());
-	register(new SwitchTabInterfaceMessageEncoder());
-	register(new LogoutMessageEncoder());
-	register(new UpdateItemsMessageEncoder());
-	register(new UpdateSlottedItemsMessageEncoder());
-	register(new UpdateSkillMessageEncoder());
-	register(new OpenInterfaceSidebarMessageEncoder());
-	register(new EnterAmountMessageEncoder());
-	register(new SetInterfaceTextMessageEncoder());
-	register(new OpenDialogueInterfaceMessageEncoder());
-	register(new MobModelOnInterfaceMessageEncoder());
-	register(new InterfaceModelAnimationMessageEncoder());
-	register(new InterfaceItemModelMessageEncoder());
-	register(new PositionMessageEncoder());
-	register(new GameObjectMessageEncoder());
-	register(new GroundItemMessageEncoder());
-	register(new PositionHintIconMessageEncoder());
-	register(new GameCharacterHintIconMessageEncoder());
-	register(new WelcomeScreenMessageEncoder());
-
-	// register handlers
-	register(new CharacterDesignMessageHandler());
-	register(new WalkMessageHandler());
-	register(new ChatMessageHandler());
-	register(new SwitchItemMessageHandler());
-	register(new ClosedInterfaceMessageHandler());
-	register(new EnteredAmountMessageHandler());
-	register(new DialogueContinueMessageHandler());
-	register(new RegionLoadedMessageHandler());
-
-	// world handlers
-	register(new ObjectMessageHandler(world));
-	register(new ButtonMessageHandler(world));
-	register(new CommandMessageHandler(world));
-	register(new ItemActionMessageHandler(world));
-	register(new DropItemMessageHandler(world));
-	register(new ItemOnItemMessageHandler(world));
-    }
-
-    /**
-     * Registers an {@link MessageDecoder} to its respective map.
-     *
-     * @param decoder The message decoder to register.
-     */
-    private <E extends Message> void register(MessageDecoder<E> decoder) {
-	DecodesMessage annotation = decoder.getClass().getAnnotation(DecodesMessage.class);
-	if (annotation == null) {
-	    throw new NullPointerException(decoder + " must be annotated with @DecodesMessage");
+	/**
+	 * Constructs a new {@link MessageTranslator}.
+	 *
+	 * @param world The world used for world message handlers.
+	 */
+	public MessageTranslator(World world) {
+		this.world = world;
+		registerAll();
 	}
 
-	for (int value : annotation.value()) {
-	    decoders.put(value, decoder);
+	/**
+	 * Registers all message decoders, encoders and handlers.
+	 */
+	private void registerAll() {
+		// register decoders
+		register(new KeepAliveMessageDecoder());
+		register(new CharacterDesignMessageDecoder());
+		register(new WalkMessageDecoder());
+		register(new ChatMessageDecoder());
+		register(new ButtonMessageDecoder());
+		register(new CommandMessageDecoder());
+		register(new SwitchItemMessageDecoder());
+		register(new FirstObjectActionMessageDecoder());
+		register(new SecondObjectActionMessageDecoder());
+		register(new ThirdObjectActionMessageDecoder());
+		register(new ClosedInterfaceMessageDecoder());
+		register(new EnteredAmountMessageDecoder());
+		register(new DialogueContinueMessageDecoder());
+		register(new ClientFocusedMessageDecoder());
+		register(new MouseClickMessageDecoder());
+		register(new IdleMessageDecoder());
+		register(new RegionLoadedMessageDecoder());
+		register(new ObsoleteMessageDecoder());
+		register(new CameraMovementMessageDecoder());
+		register(new DropItemMessageDecoder());
+		register(new ItemOnItemMessageDecoder());
+
+		register(new FirstInventoryItemActionMessageDecoder());
+
+		register(new FirstSingleItemActionMessageDecoder());
+		register(new SecondSingleItemActionMessageDecoder());
+		register(new ThirdInventoryItemActionMessageDecoder());
+
+		register(new FirstItemActionMessageDecoder());
+		register(new ThirdItemActionMessageDecoder());
+		register(new SecondItemActionMessageDecoder());
+		register(new FourthItemActionMessageDecoder());
+		register(new FifthItemActionMessageDecoder());
+
+		// register encoders
+		register(new IdAssignmentMessageEncoder());
+		register(new RegionChangeMessageEncoder());
+		register(new ServerMessageMessageEncoder());
+		register(new MobSynchronizationMessageEncoder());
+		register(new PlayerSynchronizationMessageEncoder());
+		register(new OpenInterfaceMessageEncoder());
+		register(new CloseInterfaceMessageEncoder());
+		register(new SwitchTabInterfaceMessageEncoder());
+		register(new LogoutMessageEncoder());
+		register(new UpdateItemsMessageEncoder());
+		register(new UpdateSlottedItemsMessageEncoder());
+		register(new UpdateSkillMessageEncoder());
+		register(new OpenInterfaceSidebarMessageEncoder());
+		register(new EnterAmountMessageEncoder());
+		register(new SetInterfaceTextMessageEncoder());
+		register(new OpenDialogueInterfaceMessageEncoder());
+		register(new MobModelOnInterfaceMessageEncoder());
+		register(new InterfaceModelAnimationMessageEncoder());
+		register(new InterfaceItemModelMessageEncoder());
+		register(new PositionMessageEncoder());
+		register(new GameObjectMessageEncoder());
+		register(new GroundItemMessageEncoder());
+		register(new PositionHintIconMessageEncoder());
+		register(new GameCharacterHintIconMessageEncoder());
+		register(new WelcomeScreenMessageEncoder());
+
+		// register handlers
+		register(new CharacterDesignMessageHandler());
+		register(new WalkMessageHandler());
+		register(new ChatMessageHandler());
+		register(new SwitchItemMessageHandler());
+		register(new ClosedInterfaceMessageHandler());
+		register(new EnteredAmountMessageHandler());
+		register(new DialogueContinueMessageHandler());
+		register(new RegionLoadedMessageHandler());
+
+		// world handlers
+		register(new ObjectMessageHandler(world));
+		register(new ButtonMessageHandler(world));
+		register(new CommandMessageHandler(world));
+		register(new ItemActionMessageHandler(world));
+		register(new DropItemMessageHandler(world));
+		register(new ItemOnItemMessageHandler(world));
 	}
-    }
 
-    /**
-     * Registers an {@link MessageEncoder} to its respective map.
-     *
-     * @param encoder The message encoder to register.
-     */
-    private <E extends Message> void register(MessageEncoder<E> encoder) {
-	EncodesMessage annotation = encoder.getClass().getAnnotation(EncodesMessage.class);
-	if (annotation == null) {
-	    throw new NullPointerException(encoder + " must be annotated with @EncodesMessage");
+	/**
+	 * Registers an {@link MessageDecoder} to its respective map.
+	 *
+	 * @param decoder The message decoder to register.
+	 */
+	private <E extends Message> void register(MessageDecoder<E> decoder) {
+		DecodesMessage annotation = decoder.getClass().getAnnotation(DecodesMessage.class);
+		if (annotation == null) {
+			throw new NullPointerException(decoder + " must be annotated with @DecodesMessage");
+		}
+
+		for (int value : annotation.value()) {
+			decoders.put(value, decoder);
+		}
 	}
 
-	encoders.put(annotation.value(), encoder);
-    }
+	/**
+	 * Registers an {@link MessageEncoder} to its respective map.
+	 *
+	 * @param encoder The message encoder to register.
+	 */
+	private <E extends Message> void register(MessageEncoder<E> encoder) {
+		EncodesMessage annotation = encoder.getClass().getAnnotation(EncodesMessage.class);
+		if (annotation == null) {
+			throw new NullPointerException(encoder + " must be annotated with @EncodesMessage");
+		}
 
-    /**
-     * Registers an {@link MessageHandler} to its respective map.
-     *
-     * @param handler The message handler to register.
-     */
-    private <E extends Message> void register(MessageHandler<E> handler) {
-	HandlesMessage annotation = handler.getClass().getAnnotation(HandlesMessage.class);
-	if (annotation == null) {
-	    throw new NullPointerException(handler + " must be annotated with @HandlesMessage");
+		encoders.put(annotation.value(), encoder);
 	}
 
-	handlers.put(annotation.value(), handler);
-    }
+	/**
+	 * Registers an {@link MessageHandler} to its respective map.
+	 *
+	 * @param handler The message handler to register.
+	 */
+	private <E extends Message> void register(MessageHandler<E> handler) {
+		HandlesMessage annotation = handler.getClass().getAnnotation(HandlesMessage.class);
+		if (annotation == null) {
+			throw new NullPointerException(handler + " must be annotated with @HandlesMessage");
+		}
 
-    /**
-     * Attempts to decode the specified {@code packet} into a {@link Message}.
-     *
-     * @param packet The packet.
-     * @return
-     * @return The decoded message if and only if it was decoded successfully,
-     *         otherwise {@code null}.
-     */
-    @SuppressWarnings("unchecked")
-    public <E extends Message> E decode(GamePacket packet) {
-	MessageDecoder<E> decoder = (MessageDecoder<E>) decoders.get(packet.getOpcode());
-	if (decoder == null) {
-	    logger.error("No message decoder for packet: {}", packet.getOpcode());
-	    return null;
+		handlers.put(annotation.value(), handler);
 	}
 
-	return decoder.decode(packet);
-    }
+	/**
+	 * Attempts to decode the specified {@code packet} into a {@link Message}.
+	 *
+	 * @param packet The packet.
+	 * @return
+	 * @return The decoded message if and only if it was decoded successfully,
+	 *         otherwise {@code null}.
+	 */
+	@SuppressWarnings("unchecked")
+	public <E extends Message> E decode(GamePacket packet) {
+		MessageDecoder<E> decoder = (MessageDecoder<E>) decoders.get(packet.getOpcode());
+		if (decoder == null) {
+			logger.error("No message decoder for packet: {}", packet.getOpcode());
+			return null;
+		}
 
-    /**
-     * Attempts to encode the specified {@code msg} into a {@link GamePacket}.
-     *
-     * @param msg The message.
-     * @return The encoded game packet, if and only if it was encoded
-     *         successfully, otherwise {@code null}.
-     */
-    @SuppressWarnings("unchecked")
-    public <E extends Message> GamePacket encode(E msg) {
-	MessageEncoder<E> encoder = (MessageEncoder<E>) encoders.get(msg.getClass());
-	if (encoder == null) {
-	    logger.error("No message encoder for message: {}", msg);
-	    return null;
+		return decoder.decode(packet);
 	}
 
-	return encoder.encode(msg);
-    }
+	/**
+	 * Attempts to encode the specified {@code msg} into a {@link GamePacket}.
+	 *
+	 * @param msg The message.
+	 * @return The encoded game packet, if and only if it was encoded
+	 *         successfully, otherwise {@code null}.
+	 */
+	@SuppressWarnings("unchecked")
+	public <E extends Message> GamePacket encode(E msg) {
+		MessageEncoder<E> encoder = (MessageEncoder<E>) encoders.get(msg.getClass());
+		if (encoder == null) {
+			logger.error("No message encoder for message: {}", msg);
+			return null;
+		}
 
-    /**
-     * Handles a {@link Message} for a specified {@link Player} if it exists by
-     * the message's class.
-     *
-     * @param player The player.
-     * @param msg The message.
-     */
-    @SuppressWarnings("unchecked")
-    public <E extends Message> void handle(Player player, E msg) {
-	MessageHandler<E> handler = (MessageHandler<E>) handlers.get(msg.getClass());
-	if (handler == null) {
-	    return;
+		return encoder.encode(msg);
 	}
 
-	handler.handle(player, msg);
-    }
+	/**
+	 * Handles a {@link Message} for a specified {@link Player} if it exists by
+	 * the message's class.
+	 *
+	 * @param player The player.
+	 * @param msg The message.
+	 */
+	@SuppressWarnings("unchecked")
+	public <E extends Message> void handle(Player player, E msg) {
+		MessageHandler<E> handler = (MessageHandler<E>) handlers.get(msg.getClass());
+		if (handler == null) {
+			return;
+		}
+
+		handler.handle(player, msg);
+	}
 
 }

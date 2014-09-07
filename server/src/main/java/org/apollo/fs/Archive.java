@@ -19,91 +19,91 @@ import org.apollo.util.NameUtil;
  */
 public final class Archive {
 
-    /**
-     * A map of integer keys to entries within this archive.
-     */
-    private final Map<Integer, ArchiveEntry> entries = new HashMap<>();
+	/**
+	 * A map of integer keys to entries within this archive.
+	 */
+	private final Map<Integer, ArchiveEntry> entries = new HashMap<>();
 
-    /**
-     * The bytes within this archive.
-     */
-    private final byte[] bytes;
+	/**
+	 * The bytes within this archive.
+	 */
+	private final byte[] bytes;
 
-    /**
-     * Denotes whether or not this archive is compressed.
-     */
-    private boolean packed;
+	/**
+	 * Denotes whether or not this archive is compressed.
+	 */
+	private boolean packed;
 
-    /**
-     * Constructs a new {@link Archive} with the expected data.
-     *
-     * @param bytes The archives data.
-     */
-    public Archive(byte[] bytes) {
-	this.bytes = bytes;
-    }
-
-    /**
-     * Decodes this archives contents into {@link ArchiveEntry}s
-     *
-     * @return An instance of this archive.
-     * @throws IOException If some I/O exception occurs.
-     */
-    public Archive decode() throws IOException {
-	ByteBuffer buffer = ByteBuffer.wrap(bytes);
-	int unpackedSize = ByteBufferUtil.readMedium(buffer);
-	int packedSize = ByteBufferUtil.readMedium(buffer);
-
-	byte[] unpackedBytes = bytes;
-
-	packed = packedSize != unpackedSize;
-
-	if (packed) {
-	    unpackedBytes = CompressionUtil.unbzip2(bytes, 6, packedSize);
-	    buffer = ByteBuffer.wrap(unpackedBytes);
+	/**
+	 * Constructs a new {@link Archive} with the expected data.
+	 *
+	 * @param bytes The archives data.
+	 */
+	public Archive(byte[] bytes) {
+		this.bytes = bytes;
 	}
 
-	int amountEntries = buffer.getShort() & 0xff;
-	int offset = buffer.position() + amountEntries * 10;
+	/**
+	 * Decodes this archives contents into {@link ArchiveEntry}s
+	 *
+	 * @return An instance of this archive.
+	 * @throws IOException If some I/O exception occurs.
+	 */
+	public Archive decode() throws IOException {
+		ByteBuffer buffer = ByteBuffer.wrap(bytes);
+		int unpackedSize = ByteBufferUtil.readMedium(buffer);
+		int packedSize = ByteBufferUtil.readMedium(buffer);
 
-	for (int i = 0; i < amountEntries; i++) {
-	    int name = buffer.getInt();
-	    int unpacked = ByteBufferUtil.readMedium(buffer);
-	    int packed = ByteBufferUtil.readMedium(buffer);
+		byte[] unpackedBytes = bytes;
 
-	    byte[] entryBytes = null;
+		packed = packedSize != unpackedSize;
 
-	    if (unpacked != packed) {
-		entryBytes = CompressionUtil.unbzip2(unpackedBytes, offset, packed);
-	    } else {
-		entryBytes = new byte[unpacked];
-		System.arraycopy(unpackedBytes, offset, entryBytes, 0, unpacked);
-	    }
+		if (packed) {
+			unpackedBytes = CompressionUtil.unbzip2(bytes, 6, packedSize);
+			buffer = ByteBuffer.wrap(unpackedBytes);
+		}
 
-	    offset += packed;
+		int amountEntries = buffer.getShort() & 0xff;
+		int offset = buffer.position() + amountEntries * 10;
 
-	    entries.put(name, new ArchiveEntry(entryBytes, name));
+		for (int i = 0; i < amountEntries; i++) {
+			int name = buffer.getInt();
+			int unpacked = ByteBufferUtil.readMedium(buffer);
+			int packed = ByteBufferUtil.readMedium(buffer);
+
+			byte[] entryBytes = null;
+
+			if (unpacked != packed) {
+				entryBytes = CompressionUtil.unbzip2(unpackedBytes, offset, packed);
+			} else {
+				entryBytes = new byte[unpacked];
+				System.arraycopy(unpackedBytes, offset, entryBytes, 0, unpacked);
+			}
+
+			offset += packed;
+
+			entries.put(name, new ArchiveEntry(entryBytes, name));
+		}
+
+		return this;
 	}
 
-	return this;
-    }
+	/**
+	 * Returns an the data of an archive entry based on its name.
+	 *
+	 * @param name The name of the archive entry.
+	 * @return The archive entries name.
+	 */
+	public byte[] get(String name) {
+		ArchiveEntry entry = requireNonNull(entries.get(NameUtil.hash(name)));
+		return entry.getBytes();
+	}
 
-    /**
-     * Returns an the data of an archive entry based on its name.
-     *
-     * @param name The name of the archive entry.
-     * @return The archive entries name.
-     */
-    public byte[] get(String name) {
-	ArchiveEntry entry = requireNonNull(entries.get(NameUtil.hash(name)));
-	return entry.getBytes();
-    }
-
-    /**
-     * Returns whether or not this archive is compressed.
-     */
-    public boolean isPacked() {
-	return packed;
-    }
+	/**
+	 * Returns whether or not this archive is compressed.
+	 */
+	public boolean isPacked() {
+		return packed;
+	}
 
 }

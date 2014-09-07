@@ -22,69 +22,69 @@ import org.apollo.game.sync.seg.SynchronizationSegment;
  */
 public final class MobSynchronizationTask extends SynchronizationTask {
 
-    /**
-     * The maximum number of mobs to load per cycle. This prevents the update
-     * packet from becoming too large (the client uses a 5000 byte buffer) and
-     * also stops old spec PCs from crashing when they login or teleport.
-     */
-    private static final int NEW_MOBS_PER_CYCLE = 20;
+	/**
+	 * The maximum number of mobs to load per cycle. This prevents the update
+	 * packet from becoming too large (the client uses a 5000 byte buffer) and
+	 * also stops old spec PCs from crashing when they login or teleport.
+	 */
+	private static final int NEW_MOBS_PER_CYCLE = 20;
 
-    /**
-     * The player.
-     */
-    private final Player player;
+	/**
+	 * The player.
+	 */
+	private final Player player;
 
-    /**
-     * The world.
-     */
-    private final World world;
+	/**
+	 * The world.
+	 */
+	private final World world;
 
-    /**
-     * Constructs a new {@link MobSynchronizationTask}.
-     *
-     * @param player The player.
-     * @param world The world.
-     */
-    public MobSynchronizationTask(Player player, World world) {
-	this.player = player;
-	this.world = world;
-    }
-
-    @Override
-    public void run() {
-	Set<Mob> localMobs = player.getLocalMobs();
-	List<SynchronizationSegment> segments = new ArrayList<>();
-	int oldLocalMobs = localMobs.size();
-
-	Iterator<Mob> it = localMobs.iterator();
-	while (it.hasNext()) {
-	    Mob mob = it.next();
-	    if (!mob.isActive() || mob.isTeleporting() || mob.getPosition().getLongestDelta(player.getPosition()) > player.getViewingDistance()) {
-		it.remove();
-		segments.add(new RemoveCharacterSegment());
-	    } else {
-		segments.add(new MovementSegment(mob.getBlockSet(), mob.getDirections()));
-	    }
+	/**
+	 * Constructs a new {@link MobSynchronizationTask}.
+	 *
+	 * @param player The player.
+	 * @param world The world.
+	 */
+	public MobSynchronizationTask(Player player, World world) {
+		this.player = player;
+		this.world = world;
 	}
 
-	int added = 0;
+	@Override
+	public void run() {
+		Set<Mob> localMobs = player.getLocalMobs();
+		List<SynchronizationSegment> segments = new ArrayList<>();
+		int oldLocalMobs = localMobs.size();
 
-	for (Mob mob : world.getMobRepository()) {
-	    if (localMobs.size() >= 255) {
-		player.flagExcessiveMobs();
-		break;
-	    } else if (added >= NEW_MOBS_PER_CYCLE) {
-		break;
-	    }
+		Iterator<Mob> it = localMobs.iterator();
+		while (it.hasNext()) {
+			Mob mob = it.next();
+			if (!mob.isActive() || mob.isTeleporting() || mob.getPosition().getLongestDelta(player.getPosition()) > player.getViewingDistance()) {
+				it.remove();
+				segments.add(new RemoveCharacterSegment());
+			} else {
+				segments.add(new MovementSegment(mob.getBlockSet(), mob.getDirections()));
+			}
+		}
 
-	    if (mob.getPosition().isWithinDistance(player.getPosition(), player.getViewingDistance()) && !localMobs.contains(mob)) {
-		localMobs.add(mob);
-		added++;
-		segments.add(new AddCharacterSegment(mob.getBlockSet(), mob, mob.getIndex(), mob.getDefinition().getId(), mob.getPosition()));
-	    }
+		int added = 0;
+
+		for (Mob mob : world.getMobRepository()) {
+			if (localMobs.size() >= 255) {
+				player.flagExcessiveMobs();
+				break;
+			} else if (added >= NEW_MOBS_PER_CYCLE) {
+				break;
+			}
+
+			if (mob.getPosition().isWithinDistance(player.getPosition(), player.getViewingDistance()) && !localMobs.contains(mob)) {
+				localMobs.add(mob);
+				added++;
+				segments.add(new AddCharacterSegment(mob.getBlockSet(), mob, mob.getIndex(), mob.getDefinition().getId(), mob.getPosition()));
+			}
+		}
+
+		player.send(new MobSynchronizationMessage(player.getPosition(), segments, oldLocalMobs));
 	}
-
-	player.send(new MobSynchronizationMessage(player.getPosition(), segments, oldLocalMobs));
-    }
 
 }

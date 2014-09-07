@@ -16,12 +16,12 @@ import org.apollo.net.codec.game.GamePacketReader;
 @DecodesMessage({ 36, 77, 78, 210, 226 })
 public final class ObsoleteMessageDecoder implements MessageDecoder<ObsoleteMessage> {
 
-    @Override
-    public ObsoleteMessage decode(GamePacket packet) {
-	GamePacketReader reader = new GamePacketReader(packet);
-	byte[] bytes = new byte[packet.getLength()];
-	reader.getBytes(bytes);
-	return new ObsoleteMessage(Unpooled.wrappedBuffer(bytes));
-    }
+	@Override
+	public ObsoleteMessage decode(GamePacket packet) {
+		GamePacketReader reader = new GamePacketReader(packet);
+		byte[] bytes = new byte[packet.getLength()];
+		reader.getBytes(bytes);
+		return new ObsoleteMessage(Unpooled.wrappedBuffer(bytes));
+	}
 
 }

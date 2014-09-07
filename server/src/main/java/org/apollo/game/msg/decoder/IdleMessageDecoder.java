@@ -13,9 +13,9 @@ import org.apollo.net.codec.game.GamePacket;
 @DecodesMessage(202)
 public final class IdleMessageDecoder implements MessageDecoder<IdleMessage> {
 
-    @Override
-    public IdleMessage decode(GamePacket packet) {
-	return new IdleMessage();
-    }
+	@Override
+	public IdleMessage decode(GamePacket packet) {
+		return new IdleMessage();
+	}
 
 }

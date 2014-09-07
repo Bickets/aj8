@@ -16,12 +16,12 @@ import org.apollo.net.codec.game.GamePacketBuilder;
 @EncodesMessage(RegionChangeMessage.class)
 public final class RegionChangeMessageEncoder implements MessageEncoder<RegionChangeMessage> {
 
-    @Override
-    public GamePacket encode(RegionChangeMessage message) {
-	GamePacketBuilder builder = new GamePacketBuilder(73);
-	builder.put(DataType.SHORT, DataTransformation.ADD, message.getPosition().getCentralRegionX());
-	builder.put(DataType.SHORT, message.getPosition().getCentralRegionY());
-	return builder.toGamePacket();
-    }
+	@Override
+	public GamePacket encode(RegionChangeMessage message) {
+		GamePacketBuilder builder = new GamePacketBuilder(73);
+		builder.put(DataType.SHORT, DataTransformation.ADD, message.getPosition().getCentralRegionX());
+		builder.put(DataType.SHORT, message.getPosition().getCentralRegionY());
+		return builder.toGamePacket();
+	}
 
 }

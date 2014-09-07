@@ -9,27 +9,27 @@ import org.apollo.game.msg.Message;
  */
 public final class EnteredAmountMessage implements Message {
 
-    /**
-     * The amount.
-     */
-    private final int amount;
+	/**
+	 * The amount.
+	 */
+	private final int amount;
 
-    /**
-     * Creates the entered amount message.
-     *
-     * @param amount The amount.
-     */
-    public EnteredAmountMessage(int amount) {
-	this.amount = amount;
-    }
+	/**
+	 * Creates the entered amount message.
+	 *
+	 * @param amount The amount.
+	 */
+	public EnteredAmountMessage(int amount) {
+		this.amount = amount;
+	}
 
-    /**
-     * Gets the amount.
-     *
-     * @return The amount.
-     */
-    public int getAmount() {
-	return amount;
-    }
+	/**
+	 * Gets the amount.
+	 *
+	 * @return The amount.
+	 */
+	public int getAmount() {
+		return amount;
+	}
 
 }

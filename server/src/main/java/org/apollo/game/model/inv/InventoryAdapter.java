@@ -10,19 +10,19 @@ import org.apollo.game.model.Item;
  */
 public abstract class InventoryAdapter implements InventoryListener {
 
-    @Override
-    public void capacityExceeded(Inventory inventory) {
-	/* empty */
-    }
+	@Override
+	public void capacityExceeded(Inventory inventory) {
+		/* empty */
+	}
 
-    @Override
-    public void itemUpdated(Inventory inventory, int slot, Item item) {
-	/* empty */
-    }
+	@Override
+	public void itemUpdated(Inventory inventory, int slot, Item item) {
+		/* empty */
+	}
 
-    @Override
-    public void itemsUpdated(Inventory inventory) {
-	/* empty */
-    }
+	@Override
+	public void itemsUpdated(Inventory inventory) {
+		/* empty */
+	}
 
 }

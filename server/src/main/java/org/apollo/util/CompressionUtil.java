@@ -18,142 +18,142 @@ import org.apache.tools.bzip2.CBZip2OutputStream;
  */
 public final class CompressionUtil {
 
-    /**
-     * Compresses a GZIP file.
-     *
-     * @param bytes The uncompressed bytes.
-     * @return The compressed bytes.
-     * @throws IOException if an I/O error occurs.
-     */
-    public static byte[] gzip(byte[] bytes) throws IOException {
-	/* create the streams */
-	InputStream is = new ByteArrayInputStream(bytes);
-	try {
-	    ByteArrayOutputStream bout = new ByteArrayOutputStream();
-	    OutputStream os = new GZIPOutputStream(bout);
-	    try {
-		/* copy data between the streams */
-		byte[] buf = new byte[4096];
-		int len = 0;
-		while ((len = is.read(buf, 0, buf.length)) != -1) {
-		    os.write(buf, 0, len);
+	/**
+	 * Compresses a GZIP file.
+	 *
+	 * @param bytes The uncompressed bytes.
+	 * @return The compressed bytes.
+	 * @throws IOException if an I/O error occurs.
+	 */
+	public static byte[] gzip(byte[] bytes) throws IOException {
+		/* create the streams */
+		InputStream is = new ByteArrayInputStream(bytes);
+		try {
+			ByteArrayOutputStream bout = new ByteArrayOutputStream();
+			OutputStream os = new GZIPOutputStream(bout);
+			try {
+				/* copy data between the streams */
+				byte[] buf = new byte[4096];
+				int len = 0;
+				while ((len = is.read(buf, 0, buf.length)) != -1) {
+					os.write(buf, 0, len);
+				}
+			} finally {
+				os.close();
+			}
+
+			/* return the compressed bytes */
+			return bout.toByteArray();
+		} finally {
+			is.close();
 		}
-	    } finally {
-		os.close();
-	    }
-
-	    /* return the compressed bytes */
-	    return bout.toByteArray();
-	} finally {
-	    is.close();
 	}
-    }
 
-    /**
-     * Uncompresses a GZIP file.
-     *
-     * @param bytes The compressed bytes.
-     * @return The uncompressed bytes.
-     * @throws IOException if an I/O error occurs.
-     */
-    public static byte[] ungzip(byte[] bytes) throws IOException {
-	/* create the streams */
-	InputStream is = new GZIPInputStream(new ByteArrayInputStream(bytes));
-	try {
-	    ByteArrayOutputStream os = new ByteArrayOutputStream();
-	    try {
-		/* copy data between the streams */
-		byte[] buf = new byte[4096];
-		int len = 0;
-		while ((len = is.read(buf, 0, buf.length)) != -1) {
-		    os.write(buf, 0, len);
+	/**
+	 * Uncompresses a GZIP file.
+	 *
+	 * @param bytes The compressed bytes.
+	 * @return The uncompressed bytes.
+	 * @throws IOException if an I/O error occurs.
+	 */
+	public static byte[] ungzip(byte[] bytes) throws IOException {
+		/* create the streams */
+		InputStream is = new GZIPInputStream(new ByteArrayInputStream(bytes));
+		try {
+			ByteArrayOutputStream os = new ByteArrayOutputStream();
+			try {
+				/* copy data between the streams */
+				byte[] buf = new byte[4096];
+				int len = 0;
+				while ((len = is.read(buf, 0, buf.length)) != -1) {
+					os.write(buf, 0, len);
+				}
+			} finally {
+				os.close();
+			}
+
+			/* return the uncompressed bytes */
+			return os.toByteArray();
+		} finally {
+			is.close();
 		}
-	    } finally {
-		os.close();
-	    }
-
-	    /* return the uncompressed bytes */
-	    return os.toByteArray();
-	} finally {
-	    is.close();
 	}
-    }
 
-    /**
-     * Compresses a BZIP2 file.
-     *
-     * @param bytes The uncompressed bytes.
-     * @return The compressed bytes without the header.
-     * @throws IOException if an I/O erorr occurs.
-     */
-    public static byte[] bzip2(byte[] bytes) throws IOException {
-	InputStream is = new ByteArrayInputStream(bytes);
-	try {
-	    ByteArrayOutputStream bout = new ByteArrayOutputStream();
-	    OutputStream os = new CBZip2OutputStream(bout, 1);
-	    try {
-		byte[] buf = new byte[4096];
-		int len = 0;
-		while ((len = is.read(buf, 0, buf.length)) != -1) {
-		    os.write(buf, 0, len);
+	/**
+	 * Compresses a BZIP2 file.
+	 *
+	 * @param bytes The uncompressed bytes.
+	 * @return The compressed bytes without the header.
+	 * @throws IOException if an I/O erorr occurs.
+	 */
+	public static byte[] bzip2(byte[] bytes) throws IOException {
+		InputStream is = new ByteArrayInputStream(bytes);
+		try {
+			ByteArrayOutputStream bout = new ByteArrayOutputStream();
+			OutputStream os = new CBZip2OutputStream(bout, 1);
+			try {
+				byte[] buf = new byte[4096];
+				int len = 0;
+				while ((len = is.read(buf, 0, buf.length)) != -1) {
+					os.write(buf, 0, len);
+				}
+			} finally {
+				os.close();
+			}
+
+			/* strip the header from the byte array and return it */
+			bytes = bout.toByteArray();
+			byte[] bzip2 = new byte[bytes.length - 2];
+			System.arraycopy(bytes, 2, bzip2, 0, bzip2.length);
+			return bzip2;
+		} finally {
+			is.close();
 		}
-	    } finally {
-		os.close();
-	    }
-
-	    /* strip the header from the byte array and return it */
-	    bytes = bout.toByteArray();
-	    byte[] bzip2 = new byte[bytes.length - 2];
-	    System.arraycopy(bytes, 2, bzip2, 0, bzip2.length);
-	    return bzip2;
-	} finally {
-	    is.close();
 	}
-    }
 
-    /**
-     * Uncompresses a BZIP2 file.
-     *
-     * @param bytes The compressed bytes without the header.
-     * @param off The offset.
-     * @param length The length.
-     * @return The uncompressed bytes.
-     * @throws IOException if an I/O error occurs.
-     */
-    public static byte[] unbzip2(byte[] bytes, int off, int length) throws IOException {
-	/* prepare a new byte array with the bzip2 header at the start */
-	byte[] bzip2 = new byte[length + 2];
-	bzip2[0] = 'h';
-	bzip2[1] = '1';
-	System.arraycopy(bytes, off, bzip2, 2, length);
+	/**
+	 * Uncompresses a BZIP2 file.
+	 *
+	 * @param bytes The compressed bytes without the header.
+	 * @param off The offset.
+	 * @param length The length.
+	 * @return The uncompressed bytes.
+	 * @throws IOException if an I/O error occurs.
+	 */
+	public static byte[] unbzip2(byte[] bytes, int off, int length) throws IOException {
+		/* prepare a new byte array with the bzip2 header at the start */
+		byte[] bzip2 = new byte[length + 2];
+		bzip2[0] = 'h';
+		bzip2[1] = '1';
+		System.arraycopy(bytes, off, bzip2, 2, length);
 
-	InputStream is = new CBZip2InputStream(new ByteArrayInputStream(bzip2));
-	try {
-	    ByteArrayOutputStream os = new ByteArrayOutputStream();
-	    try {
-		byte[] buf = new byte[4096];
-		int len = 0;
-		while ((len = is.read(buf, 0, buf.length)) != -1) {
-		    os.write(buf, 0, len);
+		InputStream is = new CBZip2InputStream(new ByteArrayInputStream(bzip2));
+		try {
+			ByteArrayOutputStream os = new ByteArrayOutputStream();
+			try {
+				byte[] buf = new byte[4096];
+				int len = 0;
+				while ((len = is.read(buf, 0, buf.length)) != -1) {
+					os.write(buf, 0, len);
+				}
+			} finally {
+				os.close();
+			}
+
+			return os.toByteArray();
+		} finally {
+			is.close();
 		}
-	    } finally {
-		os.close();
-	    }
-
-	    return os.toByteArray();
-	} finally {
-	    is.close();
 	}
-    }
 
-    /**
-     * Suppresses the default-public constructor preventing this class from
-     * being instantiated by other classes.
-     *
-     * @throws InstantiationError If this class is instantiated within itself.
-     */
-    private CompressionUtil() {
-	throw new InstantiationError("static-utility classes may not be instantiated.");
-    }
+	/**
+	 * Suppresses the default-public constructor preventing this class from
+	 * being instantiated by other classes.
+	 *
+	 * @throws InstantiationError If this class is instantiated within itself.
+	 */
+	private CompressionUtil() {
+		throw new InstantiationError("static-utility classes may not be instantiated.");
+	}
 
 }

@@ -9,27 +9,27 @@ import org.apollo.game.msg.Message;
  */
 public final class ButtonMessage implements Message {
 
-    /**
-     * The interface id.
-     */
-    private final int interfaceId;
+	/**
+	 * The interface id.
+	 */
+	private final int interfaceId;
 
-    /**
-     * Creates the button message.
-     *
-     * @param interfaceId The interface id.
-     */
-    public ButtonMessage(int interfaceId) {
-	this.interfaceId = interfaceId;
-    }
+	/**
+	 * Creates the button message.
+	 *
+	 * @param interfaceId The interface id.
+	 */
+	public ButtonMessage(int interfaceId) {
+		this.interfaceId = interfaceId;
+	}
 
-    /**
-     * Gets the interface id.
-     *
-     * @return The interface id.
-     */
-    public int getInterfaceId() {
-	return interfaceId;
-    }
+	/**
+	 * Gets the interface id.
+	 *
+	 * @return The interface id.
+	 */
+	public int getInterfaceId() {
+		return interfaceId;
+	}
 
 }

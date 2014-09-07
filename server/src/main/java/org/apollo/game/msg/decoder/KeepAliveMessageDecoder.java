@@ -13,9 +13,9 @@ import org.apollo.net.codec.game.GamePacket;
 @DecodesMessage(0)
 public final class KeepAliveMessageDecoder implements MessageDecoder<KeepAliveMessage> {
 
-    @Override
-    public KeepAliveMessage decode(GamePacket packet) {
-	return new KeepAliveMessage();
-    }
+	@Override
+	public KeepAliveMessage decode(GamePacket packet) {
+		return new KeepAliveMessage();
+	}
 
 }

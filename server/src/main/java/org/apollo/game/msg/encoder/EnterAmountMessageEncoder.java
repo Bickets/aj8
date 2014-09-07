@@ -16,9 +16,9 @@ import org.apollo.net.codec.game.GamePacketType;
 @EncodesMessage(EnterAmountMessage.class)
 public final class EnterAmountMessageEncoder implements MessageEncoder<EnterAmountMessage> {
 
-    @Override
-    public GamePacket encode(EnterAmountMessage message) {
-	return new GamePacket(27, GamePacketType.FIXED, Unpooled.EMPTY_BUFFER);
-    }
+	@Override
+	public GamePacket encode(EnterAmountMessage message) {
+		return new GamePacket(27, GamePacketType.FIXED, Unpooled.EMPTY_BUFFER);
+	}
 
 }

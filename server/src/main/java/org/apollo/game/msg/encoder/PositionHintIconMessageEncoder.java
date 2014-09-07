@@ -15,14 +15,14 @@ import org.apollo.net.codec.game.GamePacketBuilder;
 @EncodesMessage(PositionHintIconMessage.class)
 public final class PositionHintIconMessageEncoder implements MessageEncoder<PositionHintIconMessage> {
 
-    @Override
-    public GamePacket encode(PositionHintIconMessage message) {
-	GamePacketBuilder builder = new GamePacketBuilder(254);
-	builder.put(DataType.BYTE, message.getType().getIndex());
-	builder.put(DataType.SHORT, message.getPosition().getX());
-	builder.put(DataType.SHORT, message.getPosition().getY());
-	builder.put(DataType.BYTE, message.getDrawHeight());
-	return builder.toGamePacket();
-    }
+	@Override
+	public GamePacket encode(PositionHintIconMessage message) {
+		GamePacketBuilder builder = new GamePacketBuilder(254);
+		builder.put(DataType.BYTE, message.getType().getIndex());
+		builder.put(DataType.SHORT, message.getPosition().getX());
+		builder.put(DataType.SHORT, message.getPosition().getY());
+		builder.put(DataType.BYTE, message.getDrawHeight());
+		return builder.toGamePacket();
+	}
 
 }

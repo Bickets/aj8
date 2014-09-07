@@ -16,12 +16,12 @@ import org.apollo.net.codec.game.GamePacketBuilder;
 @EncodesMessage(PositionMessage.class)
 public final class PositionMessageEncoder implements MessageEncoder<PositionMessage> {
 
-    @Override
-    public GamePacket encode(PositionMessage msg) {
-	GamePacketBuilder bldr = new GamePacketBuilder(85);
-	bldr.put(DataType.BYTE, DataTransformation.NEGATE, msg.getPosition().getLocalY());
-	bldr.put(DataType.BYTE, DataTransformation.NEGATE, msg.getPosition().getLocalX());
-	return bldr.toGamePacket();
-    }
+	@Override
+	public GamePacket encode(PositionMessage msg) {
+		GamePacketBuilder bldr = new GamePacketBuilder(85);
+		bldr.put(DataType.BYTE, DataTransformation.NEGATE, msg.getPosition().getLocalY());
+		bldr.put(DataType.BYTE, DataTransformation.NEGATE, msg.getPosition().getLocalX());
+		return bldr.toGamePacket();
+	}
 
 }

@@ -15,15 +15,15 @@ import org.apollo.game.msg.impl.DialogueContinueMessage;
 @HandlesMessage(DialogueContinueMessage.class)
 public final class DialogueContinueMessageHandler implements MessageHandler<DialogueContinueMessage> {
 
-    @Override
-    public void handle(Player player, DialogueContinueMessage message) {
-	if (message.getInterfaceId() < 0 || message.getInterfaceId() > InterfaceDefinition.count()) {
-	    return;
-	}
+	@Override
+	public void handle(Player player, DialogueContinueMessage message) {
+		if (message.getInterfaceId() < 0 || message.getInterfaceId() > InterfaceDefinition.count()) {
+			return;
+		}
 
-	if (player.getInterfaceSet().contains(InterfaceType.DIALOGUE)) {
-	    player.getInterfaceSet().continueRequested();
+		if (player.getInterfaceSet().contains(InterfaceType.DIALOGUE)) {
+			player.getInterfaceSet().continueRequested();
+		}
 	}
-    }
 
 }

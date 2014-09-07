@@ -11,9 +11,9 @@ package org.apollo.service;
 @FunctionalInterface
 public interface Service {
 
-    /**
-     * Starts the service.
-     */
-    void start();
+	/**
+	 * Starts the service.
+	 */
+	void start();
 
 }

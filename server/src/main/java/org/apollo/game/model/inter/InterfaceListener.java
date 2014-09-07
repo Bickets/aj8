@@ -11,9 +11,9 @@ package org.apollo.game.model.inter;
 @FunctionalInterface
 public interface InterfaceListener {
 
-    /**
-     * Called when the interface has been closed.
-     */
-    void close();
+	/**
+	 * Called when the interface has been closed.
+	 */
+	void close();
 
 }

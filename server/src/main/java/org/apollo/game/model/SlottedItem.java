@@ -7,43 +7,43 @@ package org.apollo.game.model;
  */
 public final class SlottedItem {
 
-    /**
-     * The slot of this item.
-     */
-    private final int slot;
+	/**
+	 * The slot of this item.
+	 */
+	private final int slot;
 
-    /**
-     * The actual {@link Item} this slot represents.
-     */
-    private final Item item;
+	/**
+	 * The actual {@link Item} this slot represents.
+	 */
+	private final Item item;
 
-    /**
-     * Creates a new slotted item.
-     *
-     * @param slot The slot.
-     * @param item The item.
-     */
-    public SlottedItem(int slot, Item item) {
-	this.slot = slot;
-	this.item = item;
-    }
+	/**
+	 * Creates a new slotted item.
+	 *
+	 * @param slot The slot.
+	 * @param item The item.
+	 */
+	public SlottedItem(int slot, Item item) {
+		this.slot = slot;
+		this.item = item;
+	}
 
-    /**
-     * Gets the slot.
-     *
-     * @return The slot.
-     */
-    public int getSlot() {
-	return slot;
-    }
+	/**
+	 * Gets the slot.
+	 *
+	 * @return The slot.
+	 */
+	public int getSlot() {
+		return slot;
+	}
 
-    /**
-     * Gets the item.
-     *
-     * @return The item.
-     */
-    public Item getItem() {
-	return item;
-    }
+	/**
+	 * Gets the item.
+	 *
+	 * @return The item.
+	 */
+	public Item getItem() {
+		return item;
+	}
 
 }

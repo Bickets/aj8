@@ -15,11 +15,11 @@ import org.apollo.net.codec.game.GamePacketReader;
 @DecodesMessage(3)
 public final class ClientFocusedMessageDecoder implements MessageDecoder<ClientFocusedMessage> {
 
-    @Override
-    public ClientFocusedMessage decode(GamePacket packet) {
-	GamePacketReader reader = new GamePacketReader(packet);
-	int value = (int) reader.getSigned(DataType.BYTE);
-	return new ClientFocusedMessage(value == 1);
-    }
+	@Override
+	public ClientFocusedMessage decode(GamePacket packet) {
+		GamePacketReader reader = new GamePacketReader(packet);
+		int value = (int) reader.getSigned(DataType.BYTE);
+		return new ClientFocusedMessage(value == 1);
+	}
 
 }

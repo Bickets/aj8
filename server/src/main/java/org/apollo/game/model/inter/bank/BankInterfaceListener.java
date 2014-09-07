@@ -12,38 +12,38 @@ import org.apollo.game.model.inv.InventoryListener;
  */
 public final class BankInterfaceListener implements InterfaceListener {
 
-    /**
-     * The player who is interacting with the bank.
-     */
-    private final Player player;
+	/**
+	 * The player who is interacting with the bank.
+	 */
+	private final Player player;
 
-    /**
-     * The inventory's inventory listener.
-     */
-    private final InventoryListener invListener;
+	/**
+	 * The inventory's inventory listener.
+	 */
+	private final InventoryListener invListener;
 
-    /**
-     * The bank's inventory listener.
-     */
-    private final InventoryListener bankListener;
+	/**
+	 * The bank's inventory listener.
+	 */
+	private final InventoryListener bankListener;
 
-    /**
-     * Creates the bank interface listener.
-     *
-     * @param player The player.
-     * @param invListener The inventory listener.
-     * @param bankListener The bank listener.
-     */
-    public BankInterfaceListener(Player player, InventoryListener invListener, InventoryListener bankListener) {
-	this.player = player;
-	this.invListener = invListener;
-	this.bankListener = bankListener;
-    }
+	/**
+	 * Creates the bank interface listener.
+	 *
+	 * @param player The player.
+	 * @param invListener The inventory listener.
+	 * @param bankListener The bank listener.
+	 */
+	public BankInterfaceListener(Player player, InventoryListener invListener, InventoryListener bankListener) {
+		this.player = player;
+		this.invListener = invListener;
+		this.bankListener = bankListener;
+	}
 
-    @Override
-    public void close() {
-	player.getInventory().removeListener(invListener);
-	player.getBank().removeListener(bankListener);
-    }
+	@Override
+	public void close() {
+		player.getInventory().removeListener(invListener);
+		player.getBank().removeListener(bankListener);
+	}
 
 }

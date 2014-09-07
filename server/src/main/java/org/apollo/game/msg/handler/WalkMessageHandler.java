@@ -18,21 +18,21 @@ import org.apollo.game.msg.impl.WalkMessage;
 @HandlesMessage(WalkMessage.class)
 public final class WalkMessageHandler implements MessageHandler<WalkMessage> {
 
-    @Override
-    public void handle(Player player, WalkMessage message) {
-	WalkingQueue queue = player.getWalkingQueue();
-	Position[] steps = message.getSteps();
+	@Override
+	public void handle(Player player, WalkMessage message) {
+		WalkingQueue queue = player.getWalkingQueue();
+		Position[] steps = message.getSteps();
 
-	if (!queue.addFirstStep(steps[0])) {
-	    return;
+		if (!queue.addFirstStep(steps[0])) {
+			return;
+		}
+
+		queue.setRunningQueue(message.isRunning());
+
+		range(1, steps.length).forEach(index -> queue.addStep(steps[index]));
+
+		player.stopAction();
+		player.getInterfaceSet().close();
 	}
-
-	queue.setRunningQueue(message.isRunning());
-
-	range(1, steps.length).forEach(index -> queue.addStep(steps[index]));
-
-	player.stopAction();
-	player.getInterfaceSet().close();
-    }
 
 }

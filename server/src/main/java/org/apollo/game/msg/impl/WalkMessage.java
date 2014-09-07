@@ -10,46 +10,46 @@ import org.apollo.game.msg.Message;
  */
 public final class WalkMessage implements Message {
 
-    /**
-     * The steps.
-     */
-    private final Position[] steps;
+	/**
+	 * The steps.
+	 */
+	private final Position[] steps;
 
-    /**
-     * The running flag.
-     */
-    private final boolean running;
+	/**
+	 * The running flag.
+	 */
+	private final boolean running;
 
-    /**
-     * Creates the message.
-     *
-     * @param steps The steps array.
-     * @param running The running flag.
-     */
-    public WalkMessage(Position[] steps, boolean running) {
-	if (steps.length < 0) {
-	    throw new IllegalArgumentException("number of steps must not be negative");
+	/**
+	 * Creates the message.
+	 *
+	 * @param steps The steps array.
+	 * @param running The running flag.
+	 */
+	public WalkMessage(Position[] steps, boolean running) {
+		if (steps.length < 0) {
+			throw new IllegalArgumentException("number of steps must not be negative");
+		}
+		this.steps = steps;
+		this.running = running;
 	}
-	this.steps = steps;
-	this.running = running;
-    }
 
-    /**
-     * Gets the steps array.
-     *
-     * @return An array of steps.
-     */
-    public Position[] getSteps() {
-	return steps;
-    }
+	/**
+	 * Gets the steps array.
+	 *
+	 * @return An array of steps.
+	 */
+	public Position[] getSteps() {
+		return steps;
+	}
 
-    /**
-     * Checks if the steps should be running (ctrl+click).
-     *
-     * @return {@code true} if so, {@code false} otherwise.
-     */
-    public boolean isRunning() {
-	return running;
-    }
+	/**
+	 * Checks if the steps should be running (ctrl+click).
+	 *
+	 * @return {@code true} if so, {@code false} otherwise.
+	 */
+	public boolean isRunning() {
+		return running;
+	}
 
 }

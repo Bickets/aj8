@@ -20,45 +20,45 @@ import org.apollo.game.msg.impl.ItemActionMessage;
 @HandlesMessage(ItemActionMessage.class)
 public final class ItemActionMessageHandler implements MessageHandler<ItemActionMessage> {
 
-    /**
-     * The world used to post item action events to this worlds event provider.
-     */
-    private final World world;
+	/**
+	 * The world used to post item action events to this worlds event provider.
+	 */
+	private final World world;
 
-    /**
-     * Constructs a new {@link ItemActionMessageHandler}.
-     *
-     * @param world The world.
-     */
-    public ItemActionMessageHandler(World world) {
-	this.world = world;
-    }
-
-    @Override
-    public void handle(Player player, ItemActionMessage message) {
-	if (message.getInterfaceId() < 0 || message.getInterfaceId() > InterfaceDefinition.count()) {
-	    return;
+	/**
+	 * Constructs a new {@link ItemActionMessageHandler}.
+	 *
+	 * @param world The world.
+	 */
+	public ItemActionMessageHandler(World world) {
+		this.world = world;
 	}
 
-	Inventory inventory = Interfaces.getInventoryForInterface(player, message.getInterfaceId());
-	if (inventory == null) {
-	    return;
-	}
+	@Override
+	public void handle(Player player, ItemActionMessage message) {
+		if (message.getInterfaceId() < 0 || message.getInterfaceId() > InterfaceDefinition.count()) {
+			return;
+		}
 
-	if (message.getSlot() < 0 || message.getSlot() >= inventory.capacity()) {
-	    return;
-	}
+		Inventory inventory = Interfaces.getInventoryForInterface(player, message.getInterfaceId());
+		if (inventory == null) {
+			return;
+		}
 
-	if (!inventory.contains(message.getId())) {
-	    return;
-	}
+		if (message.getSlot() < 0 || message.getSlot() >= inventory.capacity()) {
+			return;
+		}
 
-	Item item = inventory.get(message.getSlot());
-	if (item == null || message.getId() != item.getId()) {
-	    return;
-	}
+		if (!inventory.contains(message.getId())) {
+			return;
+		}
 
-	world.post(new ItemActionEvent(player, message.getOption(), message.getInterfaceId(), message.getId(), message.getSlot()));
-    }
+		Item item = inventory.get(message.getSlot());
+		if (item == null || message.getId() != item.getId()) {
+			return;
+		}
+
+		world.post(new ItemActionEvent(player, message.getOption(), message.getInterfaceId(), message.getId(), message.getSlot()));
+	}
 
 }

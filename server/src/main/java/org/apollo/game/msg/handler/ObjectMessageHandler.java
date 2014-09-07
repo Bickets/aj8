@@ -18,54 +18,54 @@ import org.apollo.game.msg.impl.ObjectActionMessage;
 @HandlesMessage(ObjectActionMessage.class)
 public final class ObjectMessageHandler implements MessageHandler<ObjectActionMessage> {
 
-    /**
-     * The world used to post object action events to this worlds event
-     * provider.
-     */
-    private final World world;
+	/**
+	 * The world used to post object action events to this worlds event
+	 * provider.
+	 */
+	private final World world;
 
-    /**
-     * Constructs a new {@link ButtonEvnetHandler}.
-     *
-     * @param world The world.
-     */
-    public ObjectMessageHandler(World world) {
-	this.world = world;
-    }
-
-    @Override
-    public void handle(Player player, ObjectActionMessage message) {
-	GameObject obj = new GameObject(message.getId(), message.getPosition());
-	GameObjectDefinition def = obj.getDefinition();
-
-	if (!obj.exists()) {
-	    return;
+	/**
+	 * Constructs a new {@link ButtonEvnetHandler}.
+	 *
+	 * @param world The world.
+	 */
+	public ObjectMessageHandler(World world) {
+		this.world = world;
 	}
 
-	if (!def.isInteractable()) {
-	    return;
-	}
+	@Override
+	public void handle(Player player, ObjectActionMessage message) {
+		GameObject obj = new GameObject(message.getId(), message.getPosition());
+		GameObjectDefinition def = obj.getDefinition();
 
-	if (def.getId() != message.getId()) {
-	    return;
-	}
+		if (!obj.exists()) {
+			return;
+		}
 
-	if (def.getActions()[message.getOption().getId()] == null) {
-	    return;
-	}
+		if (!def.isInteractable()) {
+			return;
+		}
 
-	if (!player.getPosition().isWithinDistance(message.getPosition(), 32)) {
-	    return;
-	}
+		if (def.getId() != message.getId()) {
+			return;
+		}
 
-	player.startAction(new DistancedAction<Player>(0, true, player, message.getPosition(), obj.getTileOffset(player.getPosition())) {
-	    @Override
-	    public void executeAction() {
-		player.turnTo(obj.getTurnToPosition(player.getPosition()));
-		world.post(new ObjectActionEvent(player, message.getId(), message.getOption(), message.getPosition()));
-		stop();
-	    }
-	});
-    }
+		if (def.getActions()[message.getOption().getId()] == null) {
+			return;
+		}
+
+		if (!player.getPosition().isWithinDistance(message.getPosition(), 32)) {
+			return;
+		}
+
+		player.startAction(new DistancedAction<Player>(0, true, player, message.getPosition(), obj.getTileOffset(player.getPosition())) {
+			@Override
+			public void executeAction() {
+				player.turnTo(obj.getTurnToPosition(player.getPosition()));
+				world.post(new ObjectActionEvent(player, message.getId(), message.getOption(), message.getPosition()));
+				stop();
+			}
+		});
+	}
 
 }

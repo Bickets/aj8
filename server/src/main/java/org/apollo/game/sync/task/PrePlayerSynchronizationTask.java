@@ -12,52 +12,52 @@ import org.apollo.game.msg.impl.RegionChangeMessage;
  */
 public final class PrePlayerSynchronizationTask extends SynchronizationTask {
 
-    /**
-     * The player.
-     */
-    private final Player player;
+	/**
+	 * The player.
+	 */
+	private final Player player;
 
-    /**
-     * Creates the {@link PrePlayerSynchronizationTask} for the specified
-     * player.
-     *
-     * @param player The player.
-     */
-    public PrePlayerSynchronizationTask(Player player) {
-	this.player = player;
-    }
-
-    @Override
-    public void run() {
-	player.getWalkingQueue().pulse();
-
-	if (player.isTeleporting()) {
-	    player.resetViewingDistance();
+	/**
+	 * Creates the {@link PrePlayerSynchronizationTask} for the specified
+	 * player.
+	 *
+	 * @param player The player.
+	 */
+	public PrePlayerSynchronizationTask(Player player) {
+		this.player = player;
 	}
 
-	if (!player.hasLastKnownRegion() || isRegionUpdateRequired()) {
-	    player.setRegionChanged(true);
+	@Override
+	public void run() {
+		player.getWalkingQueue().pulse();
 
-	    Position position = player.getPosition();
-	    player.setLastKnownRegion(position);
+		if (player.isTeleporting()) {
+			player.resetViewingDistance();
+		}
 
-	    player.send(new RegionChangeMessage(position));
+		if (!player.hasLastKnownRegion() || isRegionUpdateRequired()) {
+			player.setRegionChanged(true);
+
+			Position position = player.getPosition();
+			player.setLastKnownRegion(position);
+
+			player.send(new RegionChangeMessage(position));
+		}
 	}
-    }
 
-    /**
-     * Checks if a region update is required.
-     *
-     * @return {@code true} if so, {@code false} otherwise.
-     */
-    private boolean isRegionUpdateRequired() {
-	Position current = player.getPosition();
-	Position last = player.getLastKnownRegion();
+	/**
+	 * Checks if a region update is required.
+	 *
+	 * @return {@code true} if so, {@code false} otherwise.
+	 */
+	private boolean isRegionUpdateRequired() {
+		Position current = player.getPosition();
+		Position last = player.getLastKnownRegion();
 
-	int deltaX = current.getLocalX(last);
-	int deltaY = current.getLocalY(last);
+		int deltaX = current.getLocalX(last);
+		int deltaY = current.getLocalY(last);
 
-	return deltaX < 16 || deltaX >= 88 || deltaY < 16 || deltaY >= 88;
-    }
+		return deltaX < 16 || deltaX >= 88 || deltaY < 16 || deltaY >= 88;
+	}
 
 }

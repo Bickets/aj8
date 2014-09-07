@@ -11,27 +11,27 @@ import org.apollo.game.msg.Message;
  */
 public final class CharacterDesignMessage implements Message {
 
-    /**
-     * The appearance.
-     */
-    private final Appearance appearance;
+	/**
+	 * The appearance.
+	 */
+	private final Appearance appearance;
 
-    /**
-     * Creates the character design message.
-     *
-     * @param appearance The appearance.
-     */
-    public CharacterDesignMessage(Appearance appearance) {
-	this.appearance = appearance;
-    }
+	/**
+	 * Creates the character design message.
+	 *
+	 * @param appearance The appearance.
+	 */
+	public CharacterDesignMessage(Appearance appearance) {
+		this.appearance = appearance;
+	}
 
-    /**
-     * Gets the appearance.
-     *
-     * @return The appearance.
-     */
-    public Appearance getAppearance() {
-	return appearance;
-    }
+	/**
+	 * Gets the appearance.
+	 *
+	 * @return The appearance.
+	 */
+	public Appearance getAppearance() {
+		return appearance;
+	}
 
 }

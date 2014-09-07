@@ -9,40 +9,40 @@ import org.apollo.game.msg.Message;
  */
 public final class CameraMovementMessage implements Message {
 
-    /**
-     * The roll of the camera.
-     */
-    private final int roll;
+	/**
+	 * The roll of the camera.
+	 */
+	private final int roll;
 
-    /**
-     * The pitch of the camera.
-     */
-    private final int pitch;
+	/**
+	 * The pitch of the camera.
+	 */
+	private final int pitch;
 
-    /**
-     * Constructs a new {@link CameraMovementMessage} with the specified roll
-     * and pitch.
-     *
-     * @param roll The roll of the camera.
-     * @param pitch The pitch of the camera.
-     */
-    public CameraMovementMessage(int roll, int pitch) {
-	this.roll = roll;
-	this.pitch = pitch;
-    }
+	/**
+	 * Constructs a new {@link CameraMovementMessage} with the specified roll
+	 * and pitch.
+	 *
+	 * @param roll The roll of the camera.
+	 * @param pitch The pitch of the camera.
+	 */
+	public CameraMovementMessage(int roll, int pitch) {
+		this.roll = roll;
+		this.pitch = pitch;
+	}
 
-    /**
-     * Returns the roll of the camera.
-     */
-    public int getRoll() {
-	return roll;
-    }
+	/**
+	 * Returns the roll of the camera.
+	 */
+	public int getRoll() {
+		return roll;
+	}
 
-    /**
-     * Returns the pitch of the camrea.
-     */
-    public int getPitch() {
-	return pitch;
-    }
+	/**
+	 * Returns the pitch of the camrea.
+	 */
+	public int getPitch() {
+		return pitch;
+	}
 
 }

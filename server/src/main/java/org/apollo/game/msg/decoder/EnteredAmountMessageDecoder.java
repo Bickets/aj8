@@ -15,11 +15,11 @@ import org.apollo.net.codec.game.GamePacketReader;
 @DecodesMessage(208)
 public final class EnteredAmountMessageDecoder implements MessageDecoder<EnteredAmountMessage> {
 
-    @Override
-    public EnteredAmountMessage decode(GamePacket packet) {
-	GamePacketReader reader = new GamePacketReader(packet);
-	int amount = (int) reader.getUnsigned(DataType.INT);
-	return new EnteredAmountMessage(amount);
-    }
+	@Override
+	public EnteredAmountMessage decode(GamePacket packet) {
+		GamePacketReader reader = new GamePacketReader(packet);
+		int amount = (int) reader.getUnsigned(DataType.INT);
+		return new EnteredAmountMessage(amount);
+	}
 
 }

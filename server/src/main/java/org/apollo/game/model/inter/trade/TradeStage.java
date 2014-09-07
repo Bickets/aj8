@@ -7,19 +7,19 @@ package org.apollo.game.model.inter.trade;
  */
 public enum TradeStage {
 
-    /**
-     * Signals that this trade session is at the first screen.
-     */
-    FIRST_SCREEN,
+	/**
+	 * Signals that this trade session is at the first screen.
+	 */
+	FIRST_SCREEN,
 
-    /**
-     * Signals that this trade session is at the second screen.
-     */
-    SECOND_SCREEN,
+	/**
+	 * Signals that this trade session is at the second screen.
+	 */
+	SECOND_SCREEN,
 
-    /**
-     * Signals that this trade session is finished.
-     */
-    FINISHED
+	/**
+	 * Signals that this trade session is finished.
+	 */
+	FINISHED
 
 }

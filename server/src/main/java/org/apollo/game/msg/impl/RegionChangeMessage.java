@@ -10,27 +10,27 @@ import org.apollo.game.msg.Message;
  */
 public final class RegionChangeMessage implements Message {
 
-    /**
-     * The position of the region to load.
-     */
-    private final Position position;
+	/**
+	 * The position of the region to load.
+	 */
+	private final Position position;
 
-    /**
-     * Creates the region changed message.
-     *
-     * @param position The position of the region.
-     */
-    public RegionChangeMessage(Position position) {
-	this.position = position;
-    }
+	/**
+	 * Creates the region changed message.
+	 *
+	 * @param position The position of the region.
+	 */
+	public RegionChangeMessage(Position position) {
+		this.position = position;
+	}
 
-    /**
-     * Gets the position of the region to load.
-     *
-     * @return The position of the region to load.
-     */
-    public Position getPosition() {
-	return position;
-    }
+	/**
+	 * Gets the position of the region to load.
+	 *
+	 * @return The position of the region to load.
+	 */
+	public Position getPosition() {
+		return position;
+	}
 
 }

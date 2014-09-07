@@ -10,24 +10,24 @@ import org.apollo.game.model.Mob;
  */
 public final class PostMobSynchronizationTask extends SynchronizationTask {
 
-    /**
-     * The mob to perform post synchronization for.
-     */
-    private final Mob mob;
+	/**
+	 * The mob to perform post synchronization for.
+	 */
+	private final Mob mob;
 
-    /**
-     * Constructs a new {@link PostMobSynchronizationTask}.
-     *
-     * @param mob The mob.
-     */
-    public PostMobSynchronizationTask(Mob mob) {
-	this.mob = mob;
-    }
+	/**
+	 * Constructs a new {@link PostMobSynchronizationTask}.
+	 *
+	 * @param mob The mob.
+	 */
+	public PostMobSynchronizationTask(Mob mob) {
+		this.mob = mob;
+	}
 
-    @Override
-    public void run() {
-	mob.setTeleporting(false);
-	mob.resetBlockSet();
-    }
+	@Override
+	public void run() {
+		mob.setTeleporting(false);
+		mob.resetBlockSet();
+	}
 
 }

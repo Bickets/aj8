@@ -16,13 +16,13 @@ import org.apollo.net.codec.game.GamePacketReader;
 @DecodesMessage(87)
 public final class DropItemMessageDecoder implements MessageDecoder<DropItemMessage> {
 
-    @Override
-    public DropItemMessage decode(GamePacket packet) {
-	GamePacketReader reader = new GamePacketReader(packet);
-	int itemId = (int) reader.getUnsigned(DataType.SHORT, DataTransformation.ADD);
-	int interfaceId = (int) reader.getUnsigned(DataType.SHORT);
-	int slotId = (int) reader.getUnsigned(DataType.SHORT, DataTransformation.ADD);
-	return new DropItemMessage(itemId, interfaceId, slotId);
-    }
+	@Override
+	public DropItemMessage decode(GamePacket packet) {
+		GamePacketReader reader = new GamePacketReader(packet);
+		int itemId = (int) reader.getUnsigned(DataType.SHORT, DataTransformation.ADD);
+		int interfaceId = (int) reader.getUnsigned(DataType.SHORT);
+		int slotId = (int) reader.getUnsigned(DataType.SHORT, DataTransformation.ADD);
+		return new DropItemMessage(itemId, interfaceId, slotId);
+	}
 
 }

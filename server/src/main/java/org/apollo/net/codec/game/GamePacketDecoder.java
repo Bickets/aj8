@@ -22,91 +22,91 @@ import org.apollo.game.model.def.GamePacketDefinition;
  */
 public final class GamePacketDecoder extends ByteToMessageDecoder {
 
-    /**
-     * The random number generator.
-     */
-    private final IsaacAlgorithm random;
+	/**
+	 * The random number generator.
+	 */
+	private final IsaacAlgorithm random;
 
-    /**
-     * The current opcode.
-     */
-    private int opcode;
+	/**
+	 * The current opcode.
+	 */
+	private int opcode;
 
-    /**
-     * The packet type.
-     */
-    private GamePacketType type;
+	/**
+	 * The packet type.
+	 */
+	private GamePacketType type;
 
-    /**
-     * The current length.
-     */
-    private int length;
+	/**
+	 * The current length.
+	 */
+	private int length;
 
-    /**
-     * The actual length.
-     */
-    private int actualLength;
+	/**
+	 * The actual length.
+	 */
+	private int actualLength;
 
-    /**
-     * The current decode state.
-     */
-    private GameDecoderState state = GAME_OPCODE;
+	/**
+	 * The current decode state.
+	 */
+	private GameDecoderState state = GAME_OPCODE;
 
-    /**
-     * Creates the {@link GamePacketDecoder}.
-     *
-     * @param random The random number generator.
-     */
-    public GamePacketDecoder(IsaacAlgorithm random) {
-	this.random = random;
-    }
-
-    @Override
-    protected void decode(ChannelHandlerContext ctx, ByteBuf buffer, List<Object> out) {
-	while (buffer.isReadable()) {
-	    if (state == GAME_OPCODE) {
-
-		opcode = buffer.readByte() - random.nextInt() & 0xFF;
-
-		GamePacketDefinition def = incomingDefinition(opcode);
-		if (def == null) {
-		    throw new RuntimeException("Illegal opcode: " + opcode);
-		}
-
-		length = actualLength = def.getLength();
-		type = def.getType();
-
-		state = length >= 0 ? GAME_PAYLOAD : GAME_LENGTH;
-	    }
-
-	    if (state == GAME_LENGTH) {
-
-		int check = length == VAR_BYTE ? 1 : 2;
-		if (!buffer.isReadable(check)) {
-		    return;
-		}
-
-		actualLength = 0;
-		for (int i = 0; i < check; i++) {
-		    actualLength |= (buffer.readByte() & 0xFF) << 8 * ((check - 1) - i);
-		}
-
-		state = GAME_PAYLOAD;
-	    }
-
-	    if (state == GAME_PAYLOAD) {
-
-		if (!buffer.isReadable(actualLength)) {
-		    return;
-		}
-
-		ByteBuf packetBuf = buffer.readBytes(actualLength);
-
-		out.add(new GamePacket(opcode, type, packetBuf));
-
-		state = GAME_OPCODE;
-	    }
+	/**
+	 * Creates the {@link GamePacketDecoder}.
+	 *
+	 * @param random The random number generator.
+	 */
+	public GamePacketDecoder(IsaacAlgorithm random) {
+		this.random = random;
 	}
-    }
+
+	@Override
+	protected void decode(ChannelHandlerContext ctx, ByteBuf buffer, List<Object> out) {
+		while (buffer.isReadable()) {
+			if (state == GAME_OPCODE) {
+
+				opcode = buffer.readByte() - random.nextInt() & 0xFF;
+
+				GamePacketDefinition def = incomingDefinition(opcode);
+				if (def == null) {
+					throw new RuntimeException("Illegal opcode: " + opcode);
+				}
+
+				length = actualLength = def.getLength();
+				type = def.getType();
+
+				state = length >= 0 ? GAME_PAYLOAD : GAME_LENGTH;
+			}
+
+			if (state == GAME_LENGTH) {
+
+				int check = length == VAR_BYTE ? 1 : 2;
+				if (!buffer.isReadable(check)) {
+					return;
+				}
+
+				actualLength = 0;
+				for (int i = 0; i < check; i++) {
+					actualLength |= (buffer.readByte() & 0xFF) << 8 * ((check - 1) - i);
+				}
+
+				state = GAME_PAYLOAD;
+			}
+
+			if (state == GAME_PAYLOAD) {
+
+				if (!buffer.isReadable(actualLength)) {
+					return;
+				}
+
+				ByteBuf packetBuf = buffer.readBytes(actualLength);
+
+				out.add(new GamePacket(opcode, type, packetBuf));
+
+				state = GAME_OPCODE;
+			}
+		}
+	}
 
 }

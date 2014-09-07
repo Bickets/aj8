@@ -12,25 +12,25 @@ import org.apollo.game.msg.Message;
  */
 public final class ObsoleteMessage implements Message {
 
-    /**
-     * Represents the payload of this message, the data it sends.
-     */
-    private final ByteBuf payload;
+	/**
+	 * Represents the payload of this message, the data it sends.
+	 */
+	private final ByteBuf payload;
 
-    /**
-     * Constructs a new {@link ObsoleteMessage} with the specified payload.
-     * 
-     * @param payload The payload of this message.
-     */
-    public ObsoleteMessage(ByteBuf payload) {
-	this.payload = payload;
-    }
+	/**
+	 * Constructs a new {@link ObsoleteMessage} with the specified payload.
+	 * 
+	 * @param payload The payload of this message.
+	 */
+	public ObsoleteMessage(ByteBuf payload) {
+		this.payload = payload;
+	}
 
-    /**
-     * Returns the payload of this message.
-     */
-    public ByteBuf getPayload() {
-	return payload;
-    }
+	/**
+	 * Returns the payload of this message.
+	 */
+	public ByteBuf getPayload() {
+		return payload;
+	}
 
 }

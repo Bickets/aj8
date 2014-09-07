@@ -17,21 +17,21 @@ import com.runescape.util.Signlink;
  */
 public final class ModelUtilities {
 
-    /**
-     * The path to where external models are located.
-     */
-    private static final Path PATH = Paths.get(Signlink.getRootDirectory() + "models");
+	/**
+	 * The path to where external models are located.
+	 */
+	private static final Path PATH = Paths.get(Signlink.getRootDirectory() + "models");
 
-    /**
-     * Loads all of the models within the specified {@link #PATH}.
-     *
-     * @throws IOException If some I/O exception occurs.
-     */
-    public static void loadModels() throws IOException {
-	File file = PATH.toFile();
-	for (String name : file.list()) {
-	    Model.loadModelHeader(FileUtilities.getBytesFromFile(file), parseInt(name));
+	/**
+	 * Loads all of the models within the specified {@link #PATH}.
+	 *
+	 * @throws IOException If some I/O exception occurs.
+	 */
+	public static void loadModels() throws IOException {
+		File file = PATH.toFile();
+		for (String name : file.list()) {
+			Model.loadModelHeader(FileUtilities.getBytesFromFile(file), parseInt(name));
+		}
 	}
-    }
 
 }

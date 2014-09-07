@@ -17,13 +17,13 @@ import org.apollo.net.codec.game.GamePacketReader;
 @DecodesMessage(87)
 public final class SecondInventoryItemActionMessageDecoder implements MessageDecoder<ItemActionMessage> {
 
-    @Override
-    public ItemActionMessage decode(GamePacket packet) {
-	GamePacketReader reader = new GamePacketReader(packet);
-	int id = (int) reader.getUnsigned(DataType.SHORT, DataTransformation.ADD);
-	int interfaceId = (int) reader.getUnsigned(DataType.SHORT);
-	int slot = (int) reader.getUnsigned(DataType.SHORT, DataTransformation.ADD);
-	return new ItemActionMessage(InterfaceOption.OPTION_TWO, interfaceId, id, slot);
-    }
+	@Override
+	public ItemActionMessage decode(GamePacket packet) {
+		GamePacketReader reader = new GamePacketReader(packet);
+		int id = (int) reader.getUnsigned(DataType.SHORT, DataTransformation.ADD);
+		int interfaceId = (int) reader.getUnsigned(DataType.SHORT);
+		int slot = (int) reader.getUnsigned(DataType.SHORT, DataTransformation.ADD);
+		return new ItemActionMessage(InterfaceOption.OPTION_TWO, interfaceId, id, slot);
+	}
 
 }

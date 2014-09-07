@@ -16,12 +16,12 @@ import org.apollo.net.codec.game.GamePacketBuilder;
 @EncodesMessage(OpenInterfaceSidebarMessage.class)
 public final class OpenInterfaceSidebarMessageEncoder implements MessageEncoder<OpenInterfaceSidebarMessage> {
 
-    @Override
-    public GamePacket encode(OpenInterfaceSidebarMessage message) {
-	GamePacketBuilder builder = new GamePacketBuilder(248);
-	builder.put(DataType.SHORT, DataTransformation.ADD, message.getInterfaceId());
-	builder.put(DataType.SHORT, message.getSidebarId());
-	return builder.toGamePacket();
-    }
+	@Override
+	public GamePacket encode(OpenInterfaceSidebarMessage message) {
+		GamePacketBuilder builder = new GamePacketBuilder(248);
+		builder.put(DataType.SHORT, DataTransformation.ADD, message.getInterfaceId());
+		builder.put(DataType.SHORT, message.getSidebarId());
+		return builder.toGamePacket();
+	}
 
 }

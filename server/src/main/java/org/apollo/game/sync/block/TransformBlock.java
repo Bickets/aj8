@@ -8,27 +8,27 @@ package org.apollo.game.sync.block;
  */
 public final class TransformBlock extends SynchronizationBlock {
 
-    /**
-     * The id of the mob to transform into.
-     */
-    private final int id;
+	/**
+	 * The id of the mob to transform into.
+	 */
+	private final int id;
 
-    /**
-     * Constructs a new {@link TransformBlock}.
-     *
-     * @param id The id of the mob to transform into.
-     */
-    protected TransformBlock(int id) {
-	this.id = id;
-    }
+	/**
+	 * Constructs a new {@link TransformBlock}.
+	 *
+	 * @param id The id of the mob to transform into.
+	 */
+	protected TransformBlock(int id) {
+		this.id = id;
+	}
 
-    /**
-     * Returns the transform id.
-     *
-     * @return The transform id.
-     */
-    public int getId() {
-	return id;
-    }
+	/**
+	 * Returns the transform id.
+	 *
+	 * @return The transform id.
+	 */
+	public int getId() {
+		return id;
+	}
 
 }

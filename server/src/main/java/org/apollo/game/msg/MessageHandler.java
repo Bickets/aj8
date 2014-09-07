@@ -16,12 +16,12 @@ import org.apollo.game.model.Player;
 @FunctionalInterface
 public interface MessageHandler<E extends Message> {
 
-    /**
-     * Handles a message.
-     *
-     * @param player The player.
-     * @param msg The message.
-     */
-    void handle(Player player, E msg);
+	/**
+	 * Handles a message.
+	 *
+	 * @param player The player.
+	 * @param msg The message.
+	 */
+	void handle(Player player, E msg);
 
 }

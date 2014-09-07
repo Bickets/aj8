@@ -16,12 +16,12 @@ import org.apollo.net.codec.game.GamePacket;
 @FunctionalInterface
 public interface MessageEncoder<E extends Message> {
 
-    /**
-     * Encodes the specified message into a packet.
-     *
-     * @param msg The message.
-     * @return The packet.
-     */
-    GamePacket encode(E msg);
+	/**
+	 * Encodes the specified message into a packet.
+	 *
+	 * @param msg The message.
+	 * @return The packet.
+	 */
+	GamePacket encode(E msg);
 
 }

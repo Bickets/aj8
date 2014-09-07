@@ -17,13 +17,13 @@ import org.apollo.net.codec.game.GamePacketType;
 @EncodesMessage(SetInterfaceTextMessage.class)
 public final class SetInterfaceTextMessageEncoder implements MessageEncoder<SetInterfaceTextMessage> {
 
-    @Override
-    public GamePacket encode(SetInterfaceTextMessage message) {
-	GamePacketBuilder builder = new GamePacketBuilder(126, GamePacketType.VARIABLE_SHORT);
-	builder.putString(message.getText());
-	builder.put(DataType.SHORT, DataTransformation.ADD, message.getInterfaceId());
+	@Override
+	public GamePacket encode(SetInterfaceTextMessage message) {
+		GamePacketBuilder builder = new GamePacketBuilder(126, GamePacketType.VARIABLE_SHORT);
+		builder.putString(message.getText());
+		builder.put(DataType.SHORT, DataTransformation.ADD, message.getInterfaceId());
 
-	return builder.toGamePacket();
-    }
+		return builder.toGamePacket();
+	}
 
 }

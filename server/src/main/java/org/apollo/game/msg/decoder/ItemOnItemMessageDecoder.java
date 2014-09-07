@@ -16,12 +16,12 @@ import org.apollo.net.codec.game.GamePacketReader;
 @DecodesMessage(53)
 public final class ItemOnItemMessageDecoder implements MessageDecoder<ItemOnItemMessage> {
 
-    @Override
-    public ItemOnItemMessage decode(GamePacket packet) {
-	GamePacketReader reader = new GamePacketReader(packet);
-	int receiverSlot = (int) reader.getUnsigned(DataType.SHORT);
-	int senderSlot = (int) reader.getSigned(DataType.SHORT, DataTransformation.ADD);
-	return new ItemOnItemMessage(receiverSlot, senderSlot);
-    }
+	@Override
+	public ItemOnItemMessage decode(GamePacket packet) {
+		GamePacketReader reader = new GamePacketReader(packet);
+		int receiverSlot = (int) reader.getUnsigned(DataType.SHORT);
+		int senderSlot = (int) reader.getSigned(DataType.SHORT, DataTransformation.ADD);
+		return new ItemOnItemMessage(receiverSlot, senderSlot);
+	}
 
 }

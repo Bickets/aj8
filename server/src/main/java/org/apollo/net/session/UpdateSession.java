@@ -16,35 +16,35 @@ import org.apollo.update.UpdateService;
  */
 public final class UpdateSession extends Session {
 
-    /**
-     * The update service.
-     */
-    private final UpdateService updateService;
+	/**
+	 * The update service.
+	 */
+	private final UpdateService updateService;
 
-    /**
-     * Creates an update session for the specified channel.
-     *
-     * @param updateService The update service.
-     * @param ctx The channels context.
-     */
-    public UpdateSession(ChannelHandlerContext ctx, UpdateService updateService) {
-	super(ctx);
-	this.updateService = updateService;
-    }
-
-    @Override
-    public void messageReceived(Object message) {
-	UpdateDispatcher dispatcher = updateService.getDispatcher();
-	Channel channel = ctx().channel();
-	if (message instanceof OnDemandRequest) {
-	    dispatcher.dispatch(channel, (OnDemandRequest) message);
-	} else if (message instanceof JagGrabRequest) {
-	    dispatcher.dispatch(channel, (JagGrabRequest) message);
-	} else if (message instanceof HttpRequest) {
-	    dispatcher.dispatch(channel, (HttpRequest) message);
-	} else {
-	    throw new IllegalStateException("unknown message type");
+	/**
+	 * Creates an update session for the specified channel.
+	 *
+	 * @param updateService The update service.
+	 * @param ctx The channels context.
+	 */
+	public UpdateSession(ChannelHandlerContext ctx, UpdateService updateService) {
+		super(ctx);
+		this.updateService = updateService;
 	}
-    }
+
+	@Override
+	public void messageReceived(Object message) {
+		UpdateDispatcher dispatcher = updateService.getDispatcher();
+		Channel channel = ctx().channel();
+		if (message instanceof OnDemandRequest) {
+			dispatcher.dispatch(channel, (OnDemandRequest) message);
+		} else if (message instanceof JagGrabRequest) {
+			dispatcher.dispatch(channel, (JagGrabRequest) message);
+		} else if (message instanceof HttpRequest) {
+			dispatcher.dispatch(channel, (HttpRequest) message);
+		} else {
+			throw new IllegalStateException("unknown message type");
+		}
+	}
 
 }

@@ -14,20 +14,20 @@ import java.util.StringTokenizer;
  */
 public final class JagGrabRequestDecoder extends MessageToMessageDecoder<String> {
 
-    @Override
-    protected void decode(ChannelHandlerContext ctx, String msg, List<Object> out) {
-	if (!msg.startsWith(JagGrabRequest.JAGGRAB_ROOT)) {
-	    throw new RuntimeException("invalid jaggrab request");
-	}
+	@Override
+	protected void decode(ChannelHandlerContext ctx, String msg, List<Object> out) {
+		if (!msg.startsWith(JagGrabRequest.JAGGRAB_ROOT)) {
+			throw new RuntimeException("invalid jaggrab request");
+		}
 
-	StringTokenizer tokenizer = new StringTokenizer(msg);
-	while (tokenizer.hasMoreTokens()) {
-	    String token = tokenizer.nextToken();
-	    if (token.startsWith("/")) {
-		out.add(new JagGrabRequest(token));
-		break;
-	    }
+		StringTokenizer tokenizer = new StringTokenizer(msg);
+		while (tokenizer.hasMoreTokens()) {
+			String token = tokenizer.nextToken();
+			if (token.startsWith("/")) {
+				out.add(new JagGrabRequest(token));
+				break;
+			}
+		}
 	}
-    }
 
 }

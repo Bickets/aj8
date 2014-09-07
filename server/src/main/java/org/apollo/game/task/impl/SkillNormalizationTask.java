@@ -11,28 +11,28 @@ import org.apollo.game.task.Task;
  */
 public final class SkillNormalizationTask extends Task {
 
-    /**
-     * The player.
-     */
-    private final Player player;
+	/**
+	 * The player.
+	 */
+	private final Player player;
 
-    /**
-     * Creates the skill normalization task.
-     *
-     * @param player The player.
-     */
-    public SkillNormalizationTask(Player player) {
-	super(100, false);
-	this.player = player;
-    }
-
-    @Override
-    public void execute() {
-	if (!player.isActive()) {
-	    stop();
-	} else {
-	    player.getSkillSet().normalize();
+	/**
+	 * Creates the skill normalization task.
+	 *
+	 * @param player The player.
+	 */
+	public SkillNormalizationTask(Player player) {
+		super(100, false);
+		this.player = player;
 	}
-    }
+
+	@Override
+	public void execute() {
+		if (!player.isActive()) {
+			stop();
+		} else {
+			player.getSkillSet().normalize();
+		}
+	}
 
 }

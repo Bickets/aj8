@@ -14,10 +14,10 @@ import org.apollo.net.codec.game.GamePacketReader;
 @DecodesMessage(103)
 public final class CommandMessageDecoder implements MessageDecoder<CommandMessage> {
 
-    @Override
-    public CommandMessage decode(GamePacket packet) {
-	GamePacketReader reader = new GamePacketReader(packet);
-	return new CommandMessage(reader.getString());
-    }
+	@Override
+	public CommandMessage decode(GamePacket packet) {
+		GamePacketReader reader = new GamePacketReader(packet);
+		return new CommandMessage(reader.getString());
+	}
 
 }

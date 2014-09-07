@@ -10,34 +10,34 @@ import org.apollo.game.model.Player;
  */
 public final class PostPlayerSynchronizationTask extends SynchronizationTask {
 
-    /**
-     * The player.
-     */
-    private final Player player;
+	/**
+	 * The player.
+	 */
+	private final Player player;
 
-    /**
-     * Creates the {@link PostPlayerSynchronizationTask} for the specified
-     * player.
-     *
-     * @param player The player.
-     */
-    public PostPlayerSynchronizationTask(Player player) {
-	this.player = player;
-    }
-
-    @Override
-    public void run() {
-	player.setTeleporting(false);
-	player.setRegionChanged(false);
-	player.resetBlockSet();
-
-	if (!player.isExcessivePlayersSet() || !player.isExcessivemMobsSet()) {
-	    player.incrementViewingDistance();
-	} else {
-	    player.decrementViewingDistance();
-	    player.resetExcessivePlayers();
-	    player.resetExcessiveMobs();
+	/**
+	 * Creates the {@link PostPlayerSynchronizationTask} for the specified
+	 * player.
+	 *
+	 * @param player The player.
+	 */
+	public PostPlayerSynchronizationTask(Player player) {
+		this.player = player;
 	}
-    }
+
+	@Override
+	public void run() {
+		player.setTeleporting(false);
+		player.setRegionChanged(false);
+		player.resetBlockSet();
+
+		if (!player.isExcessivePlayersSet() || !player.isExcessivemMobsSet()) {
+			player.incrementViewingDistance();
+		} else {
+			player.decrementViewingDistance();
+			player.resetExcessivePlayers();
+			player.resetExcessiveMobs();
+		}
+	}
 
 }

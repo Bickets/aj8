@@ -12,36 +12,36 @@ import net.burtleburtle.bob.rand.IsaacAlgorithm;
  */
 public final class GamePacketEncoder extends MessageToByteEncoder<GamePacket> {
 
-    /**
-     * The random number generator.
-     */
-    private final IsaacAlgorithm random;
+	/**
+	 * The random number generator.
+	 */
+	private final IsaacAlgorithm random;
 
-    /**
-     * Creates the {@link GamePacketEncoder}.
-     *
-     * @param random The random number generator.
-     */
-    public GamePacketEncoder(IsaacAlgorithm random) {
-	this.random = random;
-    }
-
-    @Override
-    protected void encode(ChannelHandlerContext ctx, GamePacket msg, ByteBuf out) throws Exception {
-	out.writeByte(msg.getOpcode() + random.nextInt() & 0xFF);
-
-	switch (msg.getType()) {
-	case VARIABLE_BYTE:
-	    out.writeByte(msg.getLength());
-	    break;
-	case VARIABLE_SHORT:
-	    out.writeShort(msg.getLength());
-	    break;
-	default:
-	    break;
+	/**
+	 * Creates the {@link GamePacketEncoder}.
+	 *
+	 * @param random The random number generator.
+	 */
+	public GamePacketEncoder(IsaacAlgorithm random) {
+		this.random = random;
 	}
 
-	out.writeBytes(msg.getPayload());
-    }
+	@Override
+	protected void encode(ChannelHandlerContext ctx, GamePacket msg, ByteBuf out) throws Exception {
+		out.writeByte(msg.getOpcode() + random.nextInt() & 0xFF);
+
+		switch (msg.getType()) {
+		case VARIABLE_BYTE:
+			out.writeByte(msg.getLength());
+			break;
+		case VARIABLE_SHORT:
+			out.writeShort(msg.getLength());
+			break;
+		default:
+			break;
+		}
+
+		out.writeBytes(msg.getPayload());
+	}
 
 }

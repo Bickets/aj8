@@ -26,144 +26,144 @@ import java.util.concurrent.TimeUnit;
  */
 public final class Stopwatch {
 
-    /**
-     * A time source representing a fixed but arbitrary point in time.
-     *
-     * <p>
-     * This is a functional interface whose functional method is {@link #time()}
-     *
-     * @author Ryley Kimmel <ryley.kimmel@live.com>
-     */
-    @FunctionalInterface
-    private interface Ticker {
-
 	/**
-	 * Returns the amount of time that has elapsed since the tickers fixed
-	 * point of reference.
+	 * A time source representing a fixed but arbitrary point in time.
+	 *
+	 * <p>
+	 * This is a functional interface whose functional method is {@link #time()}
+	 *
+	 * @author Ryley Kimmel <ryley.kimmel@live.com>
 	 */
-	long time();
+	@FunctionalInterface
+	private interface Ticker {
+
+		/**
+		 * Returns the amount of time that has elapsed since the tickers fixed
+		 * point of reference.
+		 */
+		long time();
+
+		/**
+		 * A default, system ticker which reads the systems current time, in
+		 * nanoseconds.
+		 */
+		public static final Ticker NANOSECOND_TICKER = () -> System.nanoTime();
+	}
 
 	/**
-	 * A default, system ticker which reads the systems current time, in
+	 * The time source of this stopwatch.
+	 */
+	private final Ticker ticker;
+
+	/**
+	 * A flag which denotes whether or not the stopwatch is running.
+	 */
+	private boolean running;
+
+	/**
+	 * Represents the elapsed time since this stopwatch was created, in
 	 * nanoseconds.
 	 */
-	public static final Ticker NANOSECOND_TICKER = () -> System.nanoTime();
-    }
+	private long elapsed;
 
-    /**
-     * The time source of this stopwatch.
-     */
-    private final Ticker ticker;
+	/**
+	 * Represents the start time, when this stopwatch was started, not
+	 * initiated, in nanoseconds.
+	 */
+	private long startTime;
 
-    /**
-     * A flag which denotes whether or not the stopwatch is running.
-     */
-    private boolean running;
+	/**
+	 * Returns a standard, un-started stopwatch.
+	 */
+	public static Stopwatch createUnstarted() {
+		return new Stopwatch();
+	}
 
-    /**
-     * Represents the elapsed time since this stopwatch was created, in
-     * nanoseconds.
-     */
-    private long elapsed;
+	/**
+	 * Returns a standard, un-started stopwatch with the specified time source.
+	 */
+	public static Stopwatch createUnstarted(Ticker ticker) {
+		return new Stopwatch(ticker);
+	}
 
-    /**
-     * Represents the start time, when this stopwatch was started, not
-     * initiated, in nanoseconds.
-     */
-    private long startTime;
+	/**
+	 * Returns a started, standard stopwatch.
+	 */
+	public static Stopwatch createStarted() {
+		return new Stopwatch().start();
+	}
 
-    /**
-     * Returns a standard, un-started stopwatch.
-     */
-    public static Stopwatch createUnstarted() {
-	return new Stopwatch();
-    }
+	/**
+	 * Returns a started, standard stopwatch with the specifid time source.
+	 */
+	public static Stopwatch createStarted(Ticker ticker) {
+		return new Stopwatch(ticker).start();
+	}
 
-    /**
-     * Returns a standard, un-started stopwatch with the specified time source.
-     */
-    public static Stopwatch createUnstarted(Ticker ticker) {
-	return new Stopwatch(ticker);
-    }
+	/**
+	 * Constructs a new {@link Stopwatch} with the
+	 * {@link Ticker#NANOSECOND_TICKER} time source.
+	 */
+	private Stopwatch() {
+		this(Ticker.NANOSECOND_TICKER);
+	}
 
-    /**
-     * Returns a started, standard stopwatch.
-     */
-    public static Stopwatch createStarted() {
-	return new Stopwatch().start();
-    }
+	/**
+	 * Constructs a new {@link Stopwatch} with the specified time source.
+	 */
+	private Stopwatch(Ticker ticker) {
+		this.ticker = ticker;
+	}
 
-    /**
-     * Returns a started, standard stopwatch with the specifid time source.
-     */
-    public static Stopwatch createStarted(Ticker ticker) {
-	return new Stopwatch(ticker).start();
-    }
+	/**
+	 * Returns a flag representing whether or not the stopwatch is running.
+	 */
+	public boolean isRunning() {
+		return running;
+	}
 
-    /**
-     * Constructs a new {@link Stopwatch} with the
-     * {@link Ticker#NANOSECOND_TICKER} time source.
-     */
-    private Stopwatch() {
-	this(Ticker.NANOSECOND_TICKER);
-    }
+	/**
+	 * Starts the stopwatch and returns the instance of this stopwatch, for
+	 * chaining.
+	 */
+	public Stopwatch start() {
+		running = true;
+		startTime = ticker.time();
+		return this;
+	}
 
-    /**
-     * Constructs a new {@link Stopwatch} with the specified time source.
-     */
-    private Stopwatch(Ticker ticker) {
-	this.ticker = ticker;
-    }
+	/**
+	 * Stops the stopwatch and returns the instance of this stopwatch, for
+	 * chaining.
+	 */
+	public Stopwatch stop() {
+		long current = ticker.time();
+		running = false;
+		elapsed += current - startTime;
+		return this;
+	}
 
-    /**
-     * Returns a flag representing whether or not the stopwatch is running.
-     */
-    public boolean isRunning() {
-	return running;
-    }
+	/**
+	 * Resets, stops and returns the instance of this stopwatch, for chaining.
+	 */
+	public Stopwatch reset() {
+		elapsed = 0;
+		running = false;
+		return this;
+	}
 
-    /**
-     * Starts the stopwatch and returns the instance of this stopwatch, for
-     * chaining.
-     */
-    public Stopwatch start() {
-	running = true;
-	startTime = ticker.time();
-	return this;
-    }
+	/**
+	 * Returns the elapsed time, in nanoseconds.
+	 */
+	private long elapsed() {
+		return running ? ticker.time() - startTime + elapsed : elapsed;
+	}
 
-    /**
-     * Stops the stopwatch and returns the instance of this stopwatch, for
-     * chaining.
-     */
-    public Stopwatch stop() {
-	long current = ticker.time();
-	running = false;
-	elapsed += current - startTime;
-	return this;
-    }
-
-    /**
-     * Resets, stops and returns the instance of this stopwatch, for chaining.
-     */
-    public Stopwatch reset() {
-	elapsed = 0;
-	running = false;
-	return this;
-    }
-
-    /**
-     * Returns the elapsed time, in nanoseconds.
-     */
-    private long elapsed() {
-	return running ? ticker.time() - startTime + elapsed : elapsed;
-    }
-
-    /**
-     * Returns the elapsed time in the specified time unit.
-     */
-    public long elapsed(TimeUnit desiredUnit) {
-	return desiredUnit.convert(elapsed(), NANOSECONDS);
-    }
+	/**
+	 * Returns the elapsed time in the specified time unit.
+	 */
+	public long elapsed(TimeUnit desiredUnit) {
+		return desiredUnit.convert(elapsed(), NANOSECONDS);
+	}
 
 }

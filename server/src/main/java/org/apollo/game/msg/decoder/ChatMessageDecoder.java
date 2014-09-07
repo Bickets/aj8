@@ -17,25 +17,25 @@ import org.apollo.util.TextUtil;
 @DecodesMessage(4)
 public final class ChatMessageDecoder implements MessageDecoder<ChatMessage> {
 
-    @Override
-    public ChatMessage decode(GamePacket packet) {
-	GamePacketReader reader = new GamePacketReader(packet);
+	@Override
+	public ChatMessage decode(GamePacket packet) {
+		GamePacketReader reader = new GamePacketReader(packet);
 
-	int effects = (int) reader.getUnsigned(DataType.BYTE, DataTransformation.SUBTRACT);
-	int color = (int) reader.getUnsigned(DataType.BYTE, DataTransformation.SUBTRACT);
-	int length = packet.getLength() - 2;
+		int effects = (int) reader.getUnsigned(DataType.BYTE, DataTransformation.SUBTRACT);
+		int color = (int) reader.getUnsigned(DataType.BYTE, DataTransformation.SUBTRACT);
+		int length = packet.getLength() - 2;
 
-	byte[] originalCompressed = new byte[length];
-	reader.getBytesReverse(DataTransformation.ADD, originalCompressed);
+		byte[] originalCompressed = new byte[length];
+		reader.getBytesReverse(DataTransformation.ADD, originalCompressed);
 
-	String uncompressed = TextUtil.uncompress(originalCompressed, length);
-	uncompressed = TextUtil.filterInvalidCharacters(uncompressed);
-	uncompressed = TextUtil.capitalize(uncompressed);
+		String uncompressed = TextUtil.uncompress(originalCompressed, length);
+		uncompressed = TextUtil.filterInvalidCharacters(uncompressed);
+		uncompressed = TextUtil.capitalize(uncompressed);
 
-	byte[] recompressed = new byte[length];
-	TextUtil.compress(uncompressed, recompressed);
+		byte[] recompressed = new byte[length];
+		TextUtil.compress(uncompressed, recompressed);
 
-	return new ChatMessage(uncompressed, recompressed, color, effects);
-    }
+		return new ChatMessage(uncompressed, recompressed, color, effects);
+	}
 
 }

@@ -11,61 +11,61 @@ import org.apollo.game.model.Player;
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public enum DialogueExpression {
-    /**
-     * The default expression, none.
-     */
-    NO_EXPRESSION(591),
+	/**
+	 * The default expression, none.
+	 */
+	NO_EXPRESSION(591),
 
-    /**
-     * A variation of showing sadness.
-     */
-    SAD(599),
+	/**
+	 * A variation of showing sadness.
+	 */
+	SAD(599),
 
-    /**
-     * A variation of showing sadness.
-     */
-    SAD_TWO(611),
+	/**
+	 * A variation of showing sadness.
+	 */
+	SAD_TWO(611),
 
-    /**
-     * A variation of showing frustration or anger.
-     */
-    MIDLY_ANGRY(614),
+	/**
+	 * A variation of showing frustration or anger.
+	 */
+	MIDLY_ANGRY(614),
 
-    /**
-     * A variation of showing frustration or anger.
-     */
-    ANGRY(615),
+	/**
+	 * A variation of showing frustration or anger.
+	 */
+	ANGRY(615),
 
-    /**
-     * A variation of showing frustration or anger.
-     */
-    VERY_ANGRY(616),
+	/**
+	 * A variation of showing frustration or anger.
+	 */
+	VERY_ANGRY(616),
 
-    /**
-     * A variation of showing frustration or anger.
-     */
-    ANGRY_TWO(617);
+	/**
+	 * A variation of showing frustration or anger.
+	 */
+	ANGRY_TWO(617);
 
-    /**
-     * Constructs a new {@link DialogueExpression} with the specified animtaion
-     * id.
-     *
-     * @param animationId The animation id.
-     */
-    private DialogueExpression(int animationId) {
-	animation = new Animation(animationId);
-    }
+	/**
+	 * Constructs a new {@link DialogueExpression} with the specified animtaion
+	 * id.
+	 *
+	 * @param animationId The animation id.
+	 */
+	private DialogueExpression(int animationId) {
+		animation = new Animation(animationId);
+	}
 
-    /**
-     * The animation object constructed with the specified animation id.
-     */
-    private final Animation animation;
+	/**
+	 * The animation object constructed with the specified animation id.
+	 */
+	private final Animation animation;
 
-    /**
-     * Returns the animation.
-     */
-    public final Animation getAnimation() {
-	return animation;
-    }
+	/**
+	 * Returns the animation.
+	 */
+	public final Animation getAnimation() {
+		return animation;
+	}
 
 }

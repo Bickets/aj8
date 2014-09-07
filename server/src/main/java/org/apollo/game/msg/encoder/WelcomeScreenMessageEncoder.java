@@ -17,15 +17,15 @@ import org.apollo.net.codec.game.GamePacketBuilder;
 @EncodesMessage(WelcomeScreenMessage.class)
 public final class WelcomeScreenMessageEncoder implements MessageEncoder<WelcomeScreenMessage> {
 
-    @Override
-    public GamePacket encode(WelcomeScreenMessage msg) {
-	GamePacketBuilder bldr = new GamePacketBuilder(176);
-	bldr.put(DataType.BYTE, DataTransformation.NEGATE, msg.getLastRecoveryChange());
-	bldr.put(DataType.SHORT, DataOrder.LITTLE, DataTransformation.ADD, msg.getUnreadMessages());
-	bldr.put(DataType.BYTE, msg.isMembersWarning() ? 1 : 0);
-	bldr.put(DataType.INT, DataOrder.INVERSED_MIDDLE, msg.getLastAddress());
-	bldr.put(DataType.SHORT, DataOrder.LITTLE, msg.getLastLogin());
-	return bldr.toGamePacket();
-    }
+	@Override
+	public GamePacket encode(WelcomeScreenMessage msg) {
+		GamePacketBuilder bldr = new GamePacketBuilder(176);
+		bldr.put(DataType.BYTE, DataTransformation.NEGATE, msg.getLastRecoveryChange());
+		bldr.put(DataType.SHORT, DataOrder.LITTLE, DataTransformation.ADD, msg.getUnreadMessages());
+		bldr.put(DataType.BYTE, msg.isMembersWarning() ? 1 : 0);
+		bldr.put(DataType.INT, DataOrder.INVERSED_MIDDLE, msg.getLastAddress());
+		bldr.put(DataType.SHORT, DataOrder.LITTLE, msg.getLastLogin());
+		return bldr.toGamePacket();
+	}
 
 }

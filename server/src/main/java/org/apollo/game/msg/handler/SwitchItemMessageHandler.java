@@ -18,29 +18,29 @@ import org.apollo.game.msg.impl.SwitchItemMessage;
 @HandlesMessage(SwitchItemMessage.class)
 public final class SwitchItemMessageHandler implements MessageHandler<SwitchItemMessage> {
 
-    @Override
-    public void handle(Player player, SwitchItemMessage message) {
-	if (message.getOldSlot() < 0 || message.getNewSlot() < 0) {
-	    return;
-	}
+	@Override
+	public void handle(Player player, SwitchItemMessage message) {
+		if (message.getOldSlot() < 0 || message.getNewSlot() < 0) {
+			return;
+		}
 
-	if (message.getInterfaceId() < 0 || message.getInterfaceId() > InterfaceDefinition.count()) {
-	    return;
-	}
+		if (message.getInterfaceId() < 0 || message.getInterfaceId() > InterfaceDefinition.count()) {
+			return;
+		}
 
-	InterfaceDefinition def = InterfaceDefinition.forId(message.getInterfaceId());
-	if (!def.isInventory()) {
-	    return;
-	}
+		InterfaceDefinition def = InterfaceDefinition.forId(message.getInterfaceId());
+		if (!def.isInventory()) {
+			return;
+		}
 
-	Inventory inventory = Interfaces.getInventoryForInterface(player, def.getId());
-	if (inventory == null) {
-	    return;
-	}
+		Inventory inventory = Interfaces.getInventoryForInterface(player, def.getId());
+		if (inventory == null) {
+			return;
+		}
 
-	if (message.getOldSlot() < inventory.capacity() && message.getNewSlot() < inventory.capacity()) {
-	    inventory.swap(message.isInserting() && Interfaces.insertPermitted(def.getId()), message.getOldSlot(), message.getNewSlot());
+		if (message.getOldSlot() < inventory.capacity() && message.getNewSlot() < inventory.capacity()) {
+			inventory.swap(message.isInserting() && Interfaces.insertPermitted(def.getId()), message.getOldSlot(), message.getNewSlot());
+		}
 	}
-    }
 
 }

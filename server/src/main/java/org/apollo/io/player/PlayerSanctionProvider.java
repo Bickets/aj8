@@ -13,14 +13,14 @@ import org.apollo.security.PlayerCredentials;
 @FunctionalInterface
 public interface PlayerSanctionProvider {
 
-    /**
-     * Returns a status response based on the player credentials.
-     *
-     * @param credentials The players credentials.
-     * @return A response based on the players credentials.
-     * @throws IOException If some I/O exception occurs.
-     * @throws SQLException If some database access error occurs.
-     */
-    PlayerSanctionResponse check(PlayerCredentials credentials) throws IOException, SQLException;
+	/**
+	 * Returns a status response based on the player credentials.
+	 *
+	 * @param credentials The players credentials.
+	 * @return A response based on the players credentials.
+	 * @throws IOException If some I/O exception occurs.
+	 * @throws SQLException If some database access error occurs.
+	 */
+	PlayerSanctionResponse check(PlayerCredentials credentials) throws IOException, SQLException;
 
 }

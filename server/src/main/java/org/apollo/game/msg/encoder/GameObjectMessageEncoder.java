@@ -17,13 +17,13 @@ import org.apollo.net.codec.game.GamePacketBuilder;
 @EncodesMessage(GameObjectMessage.class)
 public class GameObjectMessageEncoder implements MessageEncoder<GameObjectMessage> {
 
-    @Override
-    public GamePacket encode(GameObjectMessage msg) {
-	GamePacketBuilder bldr = new GamePacketBuilder(151);
-	bldr.put(DataType.BYTE, DataTransformation.ADD, msg.getPositionOffset());
-	bldr.put(DataType.SHORT, DataOrder.LITTLE, msg.getObject().getId());
-	bldr.put(DataType.BYTE, DataTransformation.SUBTRACT, msg.getObject().hashCode());
-	return bldr.toGamePacket();
-    }
+	@Override
+	public GamePacket encode(GameObjectMessage msg) {
+		GamePacketBuilder bldr = new GamePacketBuilder(151);
+		bldr.put(DataType.BYTE, DataTransformation.ADD, msg.getPositionOffset());
+		bldr.put(DataType.SHORT, DataOrder.LITTLE, msg.getObject().getId());
+		bldr.put(DataType.BYTE, DataTransformation.SUBTRACT, msg.getObject().hashCode());
+		return bldr.toGamePacket();
+	}
 
 }

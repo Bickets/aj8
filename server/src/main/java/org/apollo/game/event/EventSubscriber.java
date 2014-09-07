@@ -9,18 +9,18 @@ package org.apollo.game.event;
  */
 public interface EventSubscriber<E extends Event> extends EventPredicate<E> {
 
-    /**
-     * A handler method which executes event specific logic if and only if
-     * {@link #test(Event)} returns {@code true}.
-     * 
-     * @param event The event to subscribe.
-     */
-    void subscribe(E event);
+	/**
+	 * A handler method which executes event specific logic if and only if
+	 * {@link #test(Event)} returns {@code true}.
+	 * 
+	 * @param event The event to subscribe.
+	 */
+	void subscribe(E event);
 
-    @Override
-    default boolean test(E event) {
-	// Method intended to be overridden.
-	return true;
-    }
+	@Override
+	default boolean test(E event) {
+		// Method intended to be overridden.
+		return true;
+	}
 
 }

@@ -15,12 +15,12 @@ import org.apollo.net.codec.game.GamePacketBuilder;
 @EncodesMessage(GameCharacterHintIconMessage.class)
 public final class GameCharacterHintIconMessageEncoder implements MessageEncoder<GameCharacterHintIconMessage> {
 
-    @Override
-    public GamePacket encode(GameCharacterHintIconMessage message) {
-	GamePacketBuilder builder = new GamePacketBuilder(254);
-	builder.put(DataType.BYTE, message.getType().getIndex());
-	builder.put(DataType.BYTE, message.getCharacter().getIndex());
-	return builder.toGamePacket();
-    }
+	@Override
+	public GamePacket encode(GameCharacterHintIconMessage message) {
+		GamePacketBuilder builder = new GamePacketBuilder(254);
+		builder.put(DataType.BYTE, message.getType().getIndex());
+		builder.put(DataType.BYTE, message.getCharacter().getIndex());
+		return builder.toGamePacket();
+	}
 
 }

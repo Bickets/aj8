@@ -13,29 +13,29 @@ import org.apollo.game.msg.impl.SetInterfaceTextMessage;
  */
 public abstract class StatementDialogueListener implements DialogueListener {
 
-    @Override
-    public final int execute(Player player) {
-	String[] lines = lines();
-	for (int i = 0; i < lines.length; i++) {
-	    player.send(new SetInterfaceTextMessage(STATEMENT_DIALOGUE_ID[lines.length - 1] + i + 1, lines[i]));
+	@Override
+	public final int execute(Player player) {
+		String[] lines = lines();
+		for (int i = 0; i < lines.length; i++) {
+			player.send(new SetInterfaceTextMessage(STATEMENT_DIALOGUE_ID[lines.length - 1] + i + 1, lines[i]));
+		}
+		return STATEMENT_DIALOGUE_ID[lines.length - 1];
 	}
-	return STATEMENT_DIALOGUE_ID[lines.length - 1];
-    }
 
-    @Override
-    public final DialogueType type() {
-	return DialogueType.STATEMENT;
-    }
+	@Override
+	public final DialogueType type() {
+		return DialogueType.STATEMENT;
+	}
 
-    /* Do not allow method overriding for these methods. */
-    @Override
-    public final DialogueExpression expression() {
-	return null;
-    }
+	/* Do not allow method overriding for these methods. */
+	@Override
+	public final DialogueExpression expression() {
+		return null;
+	}
 
-    @Override
-    public final boolean optionClicked(DialogueOption option) {
-	return false;
-    }
+	@Override
+	public final boolean optionClicked(DialogueOption option) {
+		return false;
+	}
 
 }

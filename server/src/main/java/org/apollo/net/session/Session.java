@@ -11,39 +11,39 @@ import io.netty.channel.ChannelHandlerContext;
  */
 public abstract class Session {
 
-    /**
-     * This sessions channel context.
-     */
-    private final ChannelHandlerContext ctx;
+	/**
+	 * This sessions channel context.
+	 */
+	private final ChannelHandlerContext ctx;
 
-    /**
-     * Creates a session for the specified channel context.
-     *
-     * @param ctx This sessions channel context.
-     */
-    public Session(ChannelHandlerContext ctx) {
-	this.ctx = ctx;
-    }
+	/**
+	 * Creates a session for the specified channel context.
+	 *
+	 * @param ctx This sessions channel context.
+	 */
+	public Session(ChannelHandlerContext ctx) {
+		this.ctx = ctx;
+	}
 
-    /**
-     * Returns the context of this sessions channel.
-     */
-    protected final ChannelHandlerContext ctx() {
-	return ctx;
-    }
+	/**
+	 * Returns the context of this sessions channel.
+	 */
+	protected final ChannelHandlerContext ctx() {
+		return ctx;
+	}
 
-    /**
-     * Processes a message received from the channel.
-     *
-     * @param message The message.
-     */
-    public abstract void messageReceived(Object message) throws Exception;
+	/**
+	 * Processes a message received from the channel.
+	 *
+	 * @param message The message.
+	 */
+	public abstract void messageReceived(Object message) throws Exception;
 
-    /**
-     * Destroys this session.
-     */
-    public void destroy() {
-	/* Intended to be overridden. */
-    }
+	/**
+	 * Destroys this session.
+	 */
+	public void destroy() {
+		/* Intended to be overridden. */
+	}
 
 }

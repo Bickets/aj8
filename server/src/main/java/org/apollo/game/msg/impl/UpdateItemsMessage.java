@@ -10,43 +10,43 @@ import org.apollo.game.msg.Message;
  */
 public final class UpdateItemsMessage implements Message {
 
-    /**
-     * The interface id.
-     */
-    private final int interfaceId;
+	/**
+	 * The interface id.
+	 */
+	private final int interfaceId;
 
-    /**
-     * The items.
-     */
-    private final Item[] items;
+	/**
+	 * The items.
+	 */
+	private final Item[] items;
 
-    /**
-     * Creates the update inventory interface message.
-     *
-     * @param interfaceId The interface id.
-     * @param items The items.
-     */
-    public UpdateItemsMessage(int interfaceId, Item[] items) {
-	this.interfaceId = interfaceId;
-	this.items = items;
-    }
+	/**
+	 * Creates the update inventory interface message.
+	 *
+	 * @param interfaceId The interface id.
+	 * @param items The items.
+	 */
+	public UpdateItemsMessage(int interfaceId, Item[] items) {
+		this.interfaceId = interfaceId;
+		this.items = items;
+	}
 
-    /**
-     * Gets the interface id.
-     *
-     * @return The interface id.
-     */
-    public int getInterfaceId() {
-	return interfaceId;
-    }
+	/**
+	 * Gets the interface id.
+	 *
+	 * @return The interface id.
+	 */
+	public int getInterfaceId() {
+		return interfaceId;
+	}
 
-    /**
-     * Gets the items.
-     *
-     * @return The items.
-     */
-    public Item[] getItems() {
-	return items;
-    }
+	/**
+	 * Gets the items.
+	 *
+	 * @return The items.
+	 */
+	public Item[] getItems() {
+		return items;
+	}
 
 }

@@ -16,12 +16,12 @@ import org.apollo.net.codec.game.GamePacketReader;
 @DecodesMessage(86)
 public final class CameraMovementMessageDecoder implements MessageDecoder<CameraMovementMessage> {
 
-    @Override
-    public CameraMovementMessage decode(GamePacket packet) {
-	GamePacketReader reader = new GamePacketReader(packet);
-	int roll = (int) reader.getUnsigned(DataType.SHORT);
-	int pitch = (int) reader.getUnsigned(DataType.SHORT, DataTransformation.ADD);
-	return new CameraMovementMessage(roll, pitch);
-    }
+	@Override
+	public CameraMovementMessage decode(GamePacket packet) {
+		GamePacketReader reader = new GamePacketReader(packet);
+		int roll = (int) reader.getUnsigned(DataType.SHORT);
+		int pitch = (int) reader.getUnsigned(DataType.SHORT, DataTransformation.ADD);
+		return new CameraMovementMessage(roll, pitch);
+	}
 
 }

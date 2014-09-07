@@ -15,11 +15,11 @@ import org.apollo.net.codec.game.GamePacketReader;
 @DecodesMessage(185)
 public final class ButtonMessageDecoder implements MessageDecoder<ButtonMessage> {
 
-    @Override
-    public ButtonMessage decode(GamePacket packet) {
-	GamePacketReader reader = new GamePacketReader(packet);
-	int interfaceId = (int) reader.getUnsigned(DataType.SHORT);
-	return new ButtonMessage(interfaceId);
-    }
+	@Override
+	public ButtonMessage decode(GamePacket packet) {
+		GamePacketReader reader = new GamePacketReader(packet);
+		int interfaceId = (int) reader.getUnsigned(DataType.SHORT);
+		return new ButtonMessage(interfaceId);
+	}
 
 }

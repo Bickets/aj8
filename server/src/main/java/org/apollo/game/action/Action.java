@@ -17,45 +17,45 @@ import org.apollo.game.task.Task;
  */
 public abstract class Action<T extends GameCharacter> extends Task {
 
-    /**
-     * The character performing the action.
-     */
-    private final T character;
+	/**
+	 * The character performing the action.
+	 */
+	private final T character;
 
-    /**
-     * A flag indicating if this action is stopping.
-     */
-    private boolean stopping = false;
+	/**
+	 * A flag indicating if this action is stopping.
+	 */
+	private boolean stopping = false;
 
-    /**
-     * Creates a new action.
-     *
-     * @param delay The delay in pulses.
-     * @param immediate A flag indicating if the action should happen
-     *            immediately.
-     * @param character The character performing the action.
-     */
-    public Action(int delay, boolean immediate, T character) {
-	super(delay, immediate);
-	this.character = character;
-    }
-
-    /**
-     * Gets the character which performed the action.
-     *
-     * @return The character.
-     */
-    public final T getCharacter() {
-	return character;
-    }
-
-    @Override
-    public void stop() {
-	super.stop();
-	if (!stopping) {
-	    stopping = true;
-	    character.stopAction();
+	/**
+	 * Creates a new action.
+	 *
+	 * @param delay The delay in pulses.
+	 * @param immediate A flag indicating if the action should happen
+	 *            immediately.
+	 * @param character The character performing the action.
+	 */
+	public Action(int delay, boolean immediate, T character) {
+		super(delay, immediate);
+		this.character = character;
 	}
-    }
+
+	/**
+	 * Gets the character which performed the action.
+	 *
+	 * @return The character.
+	 */
+	public final T getCharacter() {
+		return character;
+	}
+
+	@Override
+	public void stop() {
+		super.stop();
+		if (!stopping) {
+			stopping = true;
+			character.stopAction();
+		}
+	}
 
 }

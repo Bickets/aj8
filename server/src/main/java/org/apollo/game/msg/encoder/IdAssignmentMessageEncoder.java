@@ -17,12 +17,12 @@ import org.apollo.net.codec.game.GamePacketBuilder;
 @EncodesMessage(IdAssignmentMessage.class)
 public final class IdAssignmentMessageEncoder implements MessageEncoder<IdAssignmentMessage> {
 
-    @Override
-    public GamePacket encode(IdAssignmentMessage message) {
-	GamePacketBuilder builder = new GamePacketBuilder(249);
-	builder.put(DataType.BYTE, DataTransformation.ADD, message.isMembers() ? 1 : 0);
-	builder.put(DataType.SHORT, DataOrder.LITTLE, DataTransformation.ADD, message.getId());
-	return builder.toGamePacket();
-    }
+	@Override
+	public GamePacket encode(IdAssignmentMessage message) {
+		GamePacketBuilder builder = new GamePacketBuilder(249);
+		builder.put(DataType.BYTE, DataTransformation.ADD, message.isMembers() ? 1 : 0);
+		builder.put(DataType.SHORT, DataOrder.LITTLE, DataTransformation.ADD, message.getId());
+		return builder.toGamePacket();
+	}
 
 }

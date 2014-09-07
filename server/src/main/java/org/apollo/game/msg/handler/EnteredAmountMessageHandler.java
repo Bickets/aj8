@@ -13,11 +13,11 @@ import org.apollo.game.msg.impl.EnteredAmountMessage;
 @HandlesMessage(EnteredAmountMessage.class)
 public final class EnteredAmountMessageHandler implements MessageHandler<EnteredAmountMessage> {
 
-    @Override
-    public void handle(Player player, EnteredAmountMessage message) {
-	int amount = Math.abs(message.getAmount());
+	@Override
+	public void handle(Player player, EnteredAmountMessage message) {
+		int amount = Math.abs(message.getAmount());
 
-	player.getInterfaceSet().enteredAmount(amount);
-    }
+		player.getInterfaceSet().enteredAmount(amount);
+	}
 
 }

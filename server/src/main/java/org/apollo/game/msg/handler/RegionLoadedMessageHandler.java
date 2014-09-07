@@ -14,10 +14,10 @@ import org.apollo.game.msg.impl.RegionLoadedMessage;
 @HandlesMessage(RegionLoadedMessage.class)
 public final class RegionLoadedMessageHandler implements MessageHandler<RegionLoadedMessage> {
 
-    @Override
-    public void handle(Player player, RegionLoadedMessage msg) {
-	/* Inform the client of our new region coordinates */
-	player.send(new PositionMessage(player.getPosition()));
-    }
+	@Override
+	public void handle(Player player, RegionLoadedMessage msg) {
+		/* Inform the client of our new region coordinates */
+		player.send(new PositionMessage(player.getPosition()));
+	}
 
 }

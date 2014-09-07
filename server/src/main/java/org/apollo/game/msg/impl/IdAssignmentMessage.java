@@ -10,43 +10,43 @@ import org.apollo.game.msg.Message;
  */
 public final class IdAssignmentMessage implements Message {
 
-    /**
-     * The id of this player.
-     */
-    private final int id;
+	/**
+	 * The id of this player.
+	 */
+	private final int id;
 
-    /**
-     * The membership flag.
-     */
-    private final boolean members;
+	/**
+	 * The membership flag.
+	 */
+	private final boolean members;
 
-    /**
-     * Creates the local id message.
-     *
-     * @param id The id.
-     * @param members The membership flag.
-     */
-    public IdAssignmentMessage(int id, boolean members) {
-	this.id = id;
-	this.members = members;
-    }
+	/**
+	 * Creates the local id message.
+	 *
+	 * @param id The id.
+	 * @param members The membership flag.
+	 */
+	public IdAssignmentMessage(int id, boolean members) {
+		this.id = id;
+		this.members = members;
+	}
 
-    /**
-     * Gets the id.
-     *
-     * @return The id.
-     */
-    public int getId() {
-	return id;
-    }
+	/**
+	 * Gets the id.
+	 *
+	 * @return The id.
+	 */
+	public int getId() {
+		return id;
+	}
 
-    /**
-     * Gets the membership flag.
-     *
-     * @return The membership flag.
-     */
-    public boolean isMembers() {
-	return members;
-    }
+	/**
+	 * Gets the membership flag.
+	 *
+	 * @return The membership flag.
+	 */
+	public boolean isMembers() {
+		return members;
+	}
 
 }

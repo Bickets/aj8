@@ -10,27 +10,27 @@ import org.apollo.game.msg.Message;
  */
 public final class DialogueContinueMessage implements Message {
 
-    /**
-     * The interface id.
-     */
-    private final int interfaceId;
+	/**
+	 * The interface id.
+	 */
+	private final int interfaceId;
 
-    /**
-     * Creates a new dialogue continue message.
-     *
-     * @param interfaceId The interface id.
-     */
-    public DialogueContinueMessage(int interfaceId) {
-	this.interfaceId = interfaceId;
-    }
+	/**
+	 * Creates a new dialogue continue message.
+	 *
+	 * @param interfaceId The interface id.
+	 */
+	public DialogueContinueMessage(int interfaceId) {
+		this.interfaceId = interfaceId;
+	}
 
-    /**
-     * Gets the interface id of the button.
-     *
-     * @return The interface id.
-     */
-    public int getInterfaceId() {
-	return interfaceId;
-    }
+	/**
+	 * Gets the interface id of the button.
+	 *
+	 * @return The interface id.
+	 */
+	public int getInterfaceId() {
+		return interfaceId;
+	}
 
 }

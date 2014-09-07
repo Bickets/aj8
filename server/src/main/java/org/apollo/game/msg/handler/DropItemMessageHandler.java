@@ -16,25 +16,25 @@ import org.apollo.game.msg.impl.DropItemMessage;
 @HandlesMessage(DropItemMessage.class)
 public class DropItemMessageHandler implements MessageHandler<DropItemMessage> {
 
-    /**
-     * The world object.
-     */
-    private World world;
+	/**
+	 * The world object.
+	 */
+	private World world;
 
-    /**
-     * Constructs a new instance of this class.
-     *
-     * @param world The world object.
-     */
-    public DropItemMessageHandler(World world) {
-	this.world = world;
-    }
+	/**
+	 * Constructs a new instance of this class.
+	 *
+	 * @param world The world object.
+	 */
+	public DropItemMessageHandler(World world) {
+		this.world = world;
+	}
 
-    @Override
-    public void handle(Player player, DropItemMessage msg) {
-	Item item = new Item(msg.getItemId(), player.getInventory().get(msg.getSlotId()).getAmount());
-	player.getInventory().remove(item);
-	world.register(new GroundItem(player, item, player.getPosition()));
-    }
+	@Override
+	public void handle(Player player, DropItemMessage msg) {
+		Item item = new Item(msg.getItemId(), player.getInventory().get(msg.getSlotId()).getAmount());
+		player.getInventory().remove(item);
+		world.register(new GroundItem(player, item, player.getPosition()));
+	}
 
 }

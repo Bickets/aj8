@@ -18,31 +18,31 @@ import org.apollo.net.codec.game.GamePacketType;
 @EncodesMessage(UpdateSlottedItemsMessage.class)
 public final class UpdateSlottedItemsMessageEncoder implements MessageEncoder<UpdateSlottedItemsMessage> {
 
-    @Override
-    public GamePacket encode(UpdateSlottedItemsMessage message) {
-	GamePacketBuilder builder = new GamePacketBuilder(34, GamePacketType.VARIABLE_SHORT);
-	SlottedItem[] items = message.getSlottedItems();
+	@Override
+	public GamePacket encode(UpdateSlottedItemsMessage message) {
+		GamePacketBuilder builder = new GamePacketBuilder(34, GamePacketType.VARIABLE_SHORT);
+		SlottedItem[] items = message.getSlottedItems();
 
-	builder.put(DataType.SHORT, message.getInterfaceId());
+		builder.put(DataType.SHORT, message.getInterfaceId());
 
-	for (SlottedItem slottedItem : items) {
-	    builder.putSmart(slottedItem.getSlot());
+		for (SlottedItem slottedItem : items) {
+			builder.putSmart(slottedItem.getSlot());
 
-	    Item item = slottedItem.getItem();
-	    int id = item == null ? -1 : item.getId();
-	    int amount = item == null ? 0 : item.getAmount();
+			Item item = slottedItem.getItem();
+			int id = item == null ? -1 : item.getId();
+			int amount = item == null ? 0 : item.getAmount();
 
-	    builder.put(DataType.SHORT, id + 1);
+			builder.put(DataType.SHORT, id + 1);
 
-	    if (amount > 254) {
-		builder.put(DataType.BYTE, 255);
-		builder.put(DataType.INT, amount);
-	    } else {
-		builder.put(DataType.BYTE, amount);
-	    }
+			if (amount > 254) {
+				builder.put(DataType.BYTE, 255);
+				builder.put(DataType.INT, amount);
+			} else {
+				builder.put(DataType.BYTE, amount);
+			}
+		}
+
+		return builder.toGamePacket();
 	}
-
-	return builder.toGamePacket();
-    }
 
 }

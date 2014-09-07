@@ -14,15 +14,15 @@ import org.apollo.game.sync.block.SynchronizationBlock;
 @HandlesMessage(ChatMessage.class)
 public final class ChatMessageHandler implements MessageHandler<ChatMessage> {
 
-    @Override
-    public void handle(Player player, ChatMessage message) {
-	int color = message.getTextColor();
-	int effects = message.getTextEffects();
-	if (color < 0 || color > 11 || effects < 0 || effects > 5) {
-	    return;
-	}
+	@Override
+	public void handle(Player player, ChatMessage message) {
+		int color = message.getTextColor();
+		int effects = message.getTextEffects();
+		if (color < 0 || color > 11 || effects < 0 || effects > 5) {
+			return;
+		}
 
-	player.getBlockSet().add(SynchronizationBlock.createChatBlock(player, message));
-    }
+		player.getBlockSet().add(SynchronizationBlock.createChatBlock(player, message));
+	}
 
 }

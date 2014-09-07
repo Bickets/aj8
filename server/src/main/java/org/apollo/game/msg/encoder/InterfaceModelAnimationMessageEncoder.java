@@ -15,12 +15,12 @@ import org.apollo.net.codec.game.GamePacketBuilder;
 @EncodesMessage(InterfaceModelAnimationMessage.class)
 public class InterfaceModelAnimationMessageEncoder implements MessageEncoder<InterfaceModelAnimationMessage> {
 
-    @Override
-    public GamePacket encode(InterfaceModelAnimationMessage message) {
-	GamePacketBuilder bldr = new GamePacketBuilder(200);
-	bldr.put(DataType.SHORT, message.getInterfaceId());
-	bldr.put(DataType.SHORT, message.getAnimation().getId());
-	return bldr.toGamePacket();
-    }
+	@Override
+	public GamePacket encode(InterfaceModelAnimationMessage message) {
+		GamePacketBuilder bldr = new GamePacketBuilder(200);
+		bldr.put(DataType.SHORT, message.getInterfaceId());
+		bldr.put(DataType.SHORT, message.getAnimation().getId());
+		return bldr.toGamePacket();
+	}
 
 }

@@ -25,10 +25,10 @@ import org.apollo.game.event.EventSubscriber;
 @Target(TYPE)
 public @interface SubscribesTo {
 
-    /**
-     * Returns the event class that the annotated {@link EventSubscriber}
-     * subscribes to.
-     */
-    Class<? extends Event> value();
+	/**
+	 * Returns the event class that the annotated {@link EventSubscriber}
+	 * subscribes to.
+	 */
+	Class<? extends Event> value();
 
 }

@@ -10,27 +10,27 @@ import org.apollo.game.msg.Message;
  */
 public final class DropItemMessage implements Message {
 
-    private final int itemId;
+	private final int itemId;
 
-    private final int interfaceId;
+	private final int interfaceId;
 
-    private final int slotId;
+	private final int slotId;
 
-    public DropItemMessage(int itemId, int interfaceId, int slotId) {
-	this.itemId = itemId;
-	this.interfaceId = interfaceId;
-	this.slotId = slotId;
-    }
+	public DropItemMessage(int itemId, int interfaceId, int slotId) {
+		this.itemId = itemId;
+		this.interfaceId = interfaceId;
+		this.slotId = slotId;
+	}
 
-    public int getItemId() {
-	return itemId;
-    }
+	public int getItemId() {
+		return itemId;
+	}
 
-    public int getInterfaceId() {
-	return interfaceId;
-    }
+	public int getInterfaceId() {
+		return interfaceId;
+	}
 
-    public int getSlotId() {
-	return slotId;
-    }
+	public int getSlotId() {
+		return slotId;
+	}
 }

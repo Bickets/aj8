@@ -17,29 +17,29 @@ import org.apollo.service.Service;
  */
 public final class PluginService implements Service {
 
-    /**
-     * The world.
-     */
-    private final World world;
+	/**
+	 * The world.
+	 */
+	private final World world;
 
-    /**
-     * Constructs a new {@link PluginService}.
-     *
-     * @param world The world.
-     */
-    public PluginService(World world) {
-	this.world = world;
-    }
-
-    @Override
-    public void start() {
-	try {
-	    Class<?> clazz = Class.forName("plugin.Bootstrap");
-	    Constructor<?> bootstrap = clazz.getConstructor(World.class);
-	    bootstrap.newInstance(world);
-	} catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-	    e.printStackTrace();
+	/**
+	 * Constructs a new {@link PluginService}.
+	 *
+	 * @param world The world.
+	 */
+	public PluginService(World world) {
+		this.world = world;
 	}
-    }
+
+	@Override
+	public void start() {
+		try {
+			Class<?> clazz = Class.forName("plugin.Bootstrap");
+			Constructor<?> bootstrap = clazz.getConstructor(World.class);
+			bootstrap.newInstance(world);
+		} catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
+			e.printStackTrace();
+		}
+	}
 
 }

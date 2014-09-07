@@ -25,119 +25,119 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
  */
 public final class GameService implements Service {
 
-    /**
-     * The number of times to unregister players per cycle. This is to ensure
-     * the saving threads don't get swamped with requests and slow everything
-     * down.
-     */
-    private static final int UNREGISTERS_PER_CYCLE = 50;
+	/**
+	 * The number of times to unregister players per cycle. This is to ensure
+	 * the saving threads don't get swamped with requests and slow everything
+	 * down.
+	 */
+	private static final int UNREGISTERS_PER_CYCLE = 50;
 
-    /**
-     * The scheduled executor service.
-     */
-    private final ScheduledExecutorService scheduledExecutor = Executors.newSingleThreadScheduledExecutor(new ThreadFactoryBuilder().setNameFormat("GameService").build());
+	/**
+	 * The scheduled executor service.
+	 */
+	private final ScheduledExecutorService scheduledExecutor = Executors.newSingleThreadScheduledExecutor(new ThreadFactoryBuilder().setNameFormat("GameService").build());
 
-    /**
-     * A queue of players to remove.
-     */
-    private final Queue<Player> oldPlayers = new ConcurrentLinkedQueue<>();
+	/**
+	 * A queue of players to remove.
+	 */
+	private final Queue<Player> oldPlayers = new ConcurrentLinkedQueue<>();
 
-    /**
-     * The {@link ClientSynchronizer} which manages the update sequence.
-     */
-    private final ClientSynchronizer clientSynchronizer;
+	/**
+	 * The {@link ClientSynchronizer} which manages the update sequence.
+	 */
+	private final ClientSynchronizer clientSynchronizer;
 
-    /**
-     * The {@link PlayerSerializerWorker} for managing save and load requests.
-     */
-    private final PlayerSerializerWorker serializerWorker;
+	/**
+	 * The {@link PlayerSerializerWorker} for managing save and load requests.
+	 */
+	private final PlayerSerializerWorker serializerWorker;
 
-    /**
-     * The {@link World} for managing world events.
-     */
-    private final World world;
+	/**
+	 * The {@link World} for managing world events.
+	 */
+	private final World world;
 
-    /**
-     * Constructs a new {@link GameService}.
-     *
-     * @param world The world.
-     * @param serializerWorker The serializer worker.
-     */
-    public GameService(World world, PlayerSerializerWorker serializerWorker) {
-	this.world = world;
-	this.serializerWorker = serializerWorker;
+	/**
+	 * Constructs a new {@link GameService}.
+	 *
+	 * @param world The world.
+	 * @param serializerWorker The serializer worker.
+	 */
+	public GameService(World world, PlayerSerializerWorker serializerWorker) {
+		this.world = world;
+		this.serializerWorker = serializerWorker;
 
-	clientSynchronizer = new ClientSynchronizer(world);
-    }
+		clientSynchronizer = new ClientSynchronizer(world);
+	}
 
-    @Override
-    public void start() {
-	scheduledExecutor.scheduleAtFixedRate(new GamePulseHandler(this), GameConstants.PULSE_DELAY, GameConstants.PULSE_DELAY, TimeUnit.MILLISECONDS);
-    }
+	@Override
+	public void start() {
+		scheduledExecutor.scheduleAtFixedRate(new GamePulseHandler(this), GameConstants.PULSE_DELAY, GameConstants.PULSE_DELAY, TimeUnit.MILLISECONDS);
+	}
 
-    /**
-     * Called every pulse.
-     */
-    public void pulse() {
-	synchronized (this) {
-	    int unregistered = 0;
-	    Player old;
-	    while (unregistered < UNREGISTERS_PER_CYCLE && (old = oldPlayers.poll()) != null) {
-		serializerWorker.submitSaveRequest(old.getSession(), old);
-		unregistered++;
-	    }
+	/**
+	 * Called every pulse.
+	 */
+	public void pulse() {
+		synchronized (this) {
+			int unregistered = 0;
+			Player old;
+			while (unregistered < UNREGISTERS_PER_CYCLE && (old = oldPlayers.poll()) != null) {
+				serializerWorker.submitSaveRequest(old.getSession(), old);
+				unregistered++;
+			}
 
-	    for (Player p : world.getPlayerRepository()) {
-		GameSession session = p.getSession();
-		if (session != null) {
-		    session.handlePendingMessages();
+			for (Player p : world.getPlayerRepository()) {
+				GameSession session = p.getSession();
+				if (session != null) {
+					session.handlePendingMessages();
+				}
+			}
+
+			TaskScheduler.getInstance().pulse();
+
+			clientSynchronizer.synchronize();
 		}
-	    }
-
-	    TaskScheduler.getInstance().pulse();
-
-	    clientSynchronizer.synchronize();
 	}
-    }
 
-    /**
-     * Registers a player (may block!).
-     *
-     * @param player The player.
-     * @return A {@link RegistrationStatus}.
-     */
-    public RegistrationStatus registerPlayer(Player player) {
-	synchronized (this) {
-	    return world.register(player);
+	/**
+	 * Registers a player (may block!).
+	 *
+	 * @param player The player.
+	 * @return A {@link RegistrationStatus}.
+	 */
+	public RegistrationStatus registerPlayer(Player player) {
+		synchronized (this) {
+			return world.register(player);
+		}
 	}
-    }
 
-    /**
-     * Unregisters a player. Returns immediately. The player is unregistered at
-     * the start of the next cycle.
-     *
-     * @param player The player.
-     */
-    public void unregisterPlayer(Player player) {
-	oldPlayers.add(player);
-    }
-
-    /**
-     * Finalizes the unregistration of a player.
-     *
-     * @param player The player.
-     */
-    public void finalizePlayerUnregistration(Player player) {
-	synchronized (this) {
-	    world.unregister(player);
+	/**
+	 * Unregisters a player. Returns immediately. The player is unregistered at
+	 * the start of the next cycle.
+	 *
+	 * @param player The player.
+	 */
+	public void unregisterPlayer(Player player) {
+		oldPlayers.add(player);
 	}
-    }
 
-    /**
-     * Returns the world instance.
-     */
-    public World getWorld() {
-	return world;
-    }
+	/**
+	 * Finalizes the unregistration of a player.
+	 *
+	 * @param player The player.
+	 */
+	public void finalizePlayerUnregistration(Player player) {
+		synchronized (this) {
+			world.unregister(player);
+		}
+	}
+
+	/**
+	 * Returns the world instance.
+	 */
+	public World getWorld() {
+		return world;
+	}
 
 }

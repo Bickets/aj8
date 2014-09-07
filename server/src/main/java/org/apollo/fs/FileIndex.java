@@ -14,13 +14,13 @@ import java.io.IOException;
 @FunctionalInterface
 public interface FileIndex {
 
-    /**
-     * Gets the data within this file index.
-     *
-     * @param file The file to get the data from.
-     * @return The data from the specified file.
-     * @throws IOException If some I/O exception occurs.
-     */
-    byte[] get(int file) throws IOException;
+	/**
+	 * Gets the data within this file index.
+	 *
+	 * @param file The file to get the data from.
+	 * @return The data from the specified file.
+	 * @throws IOException If some I/O exception occurs.
+	 */
+	byte[] get(int file) throws IOException;
 
 }

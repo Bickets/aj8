@@ -15,11 +15,11 @@ import org.apollo.net.codec.game.GamePacketReader;
 @DecodesMessage(40)
 public final class DialogueContinueMessageDecoder implements MessageDecoder<DialogueContinueMessage> {
 
-    @Override
-    public DialogueContinueMessage decode(GamePacket packet) {
-	GamePacketReader reader = new GamePacketReader(packet);
-	int interfaceId = (int) reader.getUnsigned(DataType.SHORT);
-	return new DialogueContinueMessage(interfaceId);
-    }
+	@Override
+	public DialogueContinueMessage decode(GamePacket packet) {
+		GamePacketReader reader = new GamePacketReader(packet);
+		int interfaceId = (int) reader.getUnsigned(DataType.SHORT);
+		return new DialogueContinueMessage(interfaceId);
+	}
 
 }

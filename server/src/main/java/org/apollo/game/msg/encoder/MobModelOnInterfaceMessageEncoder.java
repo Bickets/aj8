@@ -17,12 +17,12 @@ import org.apollo.net.codec.game.GamePacketBuilder;
 @EncodesMessage(MobModelOnInterfaceMessage.class)
 public final class MobModelOnInterfaceMessageEncoder implements MessageEncoder<MobModelOnInterfaceMessage> {
 
-    @Override
-    public GamePacket encode(MobModelOnInterfaceMessage message) {
-	GamePacketBuilder bldr = new GamePacketBuilder(75);
-	bldr.put(DataType.SHORT, DataOrder.LITTLE, DataTransformation.ADD, message.getMobId());
-	bldr.put(DataType.SHORT, DataOrder.LITTLE, DataTransformation.ADD, message.getInterfaceId());
-	return bldr.toGamePacket();
-    }
+	@Override
+	public GamePacket encode(MobModelOnInterfaceMessage message) {
+		GamePacketBuilder bldr = new GamePacketBuilder(75);
+		bldr.put(DataType.SHORT, DataOrder.LITTLE, DataTransformation.ADD, message.getMobId());
+		bldr.put(DataType.SHORT, DataOrder.LITTLE, DataTransformation.ADD, message.getInterfaceId());
+		return bldr.toGamePacket();
+	}
 
 }

@@ -24,90 +24,90 @@ import org.slf4j.LoggerFactory;
  */
 public final class GameSession extends Session {
 
-    /**
-     * The logger used to print information and debug messages to the console.
-     */
-    private final Logger logger = LoggerFactory.getLogger(GameSession.class);
+	/**
+	 * The logger used to print information and debug messages to the console.
+	 */
+	private final Logger logger = LoggerFactory.getLogger(GameSession.class);
 
-    /**
-     * The message translator.
-     */
-    private final MessageTranslator messageTranslator;
+	/**
+	 * The message translator.
+	 */
+	private final MessageTranslator messageTranslator;
 
-    /**
-     * The queue of pending {@link Message}s.
-     */
-    private final BlockingQueue<Message> messageQueue = new ArrayBlockingQueue<>(GameConstants.MESSAGES_PER_PULSE);
+	/**
+	 * The queue of pending {@link Message}s.
+	 */
+	private final BlockingQueue<Message> messageQueue = new ArrayBlockingQueue<>(GameConstants.MESSAGES_PER_PULSE);
 
-    /**
-     * The player.
-     */
-    private final Player player;
+	/**
+	 * The player.
+	 */
+	private final Player player;
 
-    /**
-     * The game service.
-     */
-    private final GameService gameService;
+	/**
+	 * The game service.
+	 */
+	private final GameService gameService;
 
-    /**
-     * Creates a login session for the specified channel context.
-     *
-     * @param ctx This sessions channels context.
-     * @param messageTranslator The message translator.
-     * @param player The player.
-     * @param gameService The game service.
-     */
-    public GameSession(ChannelHandlerContext ctx, MessageTranslator messageTranslator, Player player, GameService gameService) {
-	super(ctx);
-	this.messageTranslator = messageTranslator;
-	this.player = player;
-	this.gameService = gameService;
-    }
-
-    @Override
-    public void messageReceived(Object msg) {
-	Message message = (Message) msg;
-	if (messageQueue.size() >= GameConstants.MESSAGES_PER_PULSE) {
-	    logger.error("Too many messages in queue for game session, dropping...");
-	} else {
-	    messageQueue.add(message);
+	/**
+	 * Creates a login session for the specified channel context.
+	 *
+	 * @param ctx This sessions channels context.
+	 * @param messageTranslator The message translator.
+	 * @param player The player.
+	 * @param gameService The game service.
+	 */
+	public GameSession(ChannelHandlerContext ctx, MessageTranslator messageTranslator, Player player, GameService gameService) {
+		super(ctx);
+		this.messageTranslator = messageTranslator;
+		this.player = player;
+		this.gameService = gameService;
 	}
-    }
 
-    /**
-     * Encodes and dispatches the specified message.
-     *
-     * @param message The message
-     */
-    public void dispatchMessage(Message message) {
-	Channel channel = ctx().channel();
-	if (channel.isActive()) {
-	    ChannelFuture future = channel.writeAndFlush(message);
-	    if (message.getClass() == LogoutMessage.class) {
-		future.addListener(ChannelFutureListener.CLOSE);
-	    }
+	@Override
+	public void messageReceived(Object msg) {
+		Message message = (Message) msg;
+		if (messageQueue.size() >= GameConstants.MESSAGES_PER_PULSE) {
+			logger.error("Too many messages in queue for game session, dropping...");
+		} else {
+			messageQueue.add(message);
+		}
 	}
-    }
 
-    /**
-     * Handles pending messages for this session.
-     */
-    public void handlePendingMessages() {
-	for (Message message; (message = messageQueue.poll()) != null;) {
-	    messageTranslator.handle(player, message);
+	/**
+	 * Encodes and dispatches the specified message.
+	 *
+	 * @param message The message
+	 */
+	public void dispatchMessage(Message message) {
+		Channel channel = ctx().channel();
+		if (channel.isActive()) {
+			ChannelFuture future = channel.writeAndFlush(message);
+			if (message.getClass() == LogoutMessage.class) {
+				future.addListener(ChannelFutureListener.CLOSE);
+			}
+		}
 	}
-    }
 
-    /**
-     * Handles a player saver response.
-     */
-    public void handlePlayerSaverResponse() {
-	gameService.finalizePlayerUnregistration(player);
-    }
+	/**
+	 * Handles pending messages for this session.
+	 */
+	public void handlePendingMessages() {
+		for (Message message; (message = messageQueue.poll()) != null;) {
+			messageTranslator.handle(player, message);
+		}
+	}
 
-    @Override
-    public void destroy() {
-	gameService.unregisterPlayer(player);
-    }
+	/**
+	 * Handles a player saver response.
+	 */
+	public void handlePlayerSaverResponse() {
+		gameService.finalizePlayerUnregistration(player);
+	}
+
+	@Override
+	public void destroy() {
+		gameService.unregisterPlayer(player);
+	}
 
 }

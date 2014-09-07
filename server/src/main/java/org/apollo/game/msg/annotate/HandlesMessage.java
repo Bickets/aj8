@@ -19,10 +19,10 @@ import org.apollo.game.msg.Message;
 @Target(ElementType.TYPE)
 public @interface HandlesMessage {
 
-    /**
-     * Returns some class that extends {@link Message}, which is the message to
-     * be handled.
-     */
-    Class<? extends Message> value();
+	/**
+	 * Returns some class that extends {@link Message}, which is the message to
+	 * be handled.
+	 */
+	Class<? extends Message> value();
 
 }

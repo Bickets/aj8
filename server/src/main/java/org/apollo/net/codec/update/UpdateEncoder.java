@@ -14,18 +14,18 @@ import java.util.List;
  */
 public final class UpdateEncoder extends MessageToMessageEncoder<OnDemandResponse> {
 
-    @Override
-    protected void encode(ChannelHandlerContext ctx, OnDemandResponse msg, List<Object> out) {
-	ByteBuf chunkData = msg.getChunkData();
+	@Override
+	protected void encode(ChannelHandlerContext ctx, OnDemandResponse msg, List<Object> out) {
+		ByteBuf chunkData = msg.getChunkData();
 
-	ByteBuf buf = Unpooled.buffer(6 + chunkData.readableBytes());
-	buf.writeByte(msg.getIndex() - 1);
-	buf.writeShort(msg.getId());
-	buf.writeShort(msg.getFileSize());
-	buf.writeByte(msg.getChunkId());
-	buf.writeBytes(chunkData);
+		ByteBuf buf = Unpooled.buffer(6 + chunkData.readableBytes());
+		buf.writeByte(msg.getIndex() - 1);
+		buf.writeShort(msg.getId());
+		buf.writeShort(msg.getFileSize());
+		buf.writeByte(msg.getChunkId());
+		buf.writeBytes(chunkData);
 
-	out.add(buf);
-    }
+		out.add(buf);
+	}
 
 }

@@ -14,27 +14,27 @@ import org.apollo.game.model.Player;
  */
 public final class ForceChatBlock extends SynchronizationBlock {
 
-    /**
-     * The Force Chat text.
-     */
-    private final String message;
+	/**
+	 * The Force Chat text.
+	 */
+	private final String message;
 
-    /**
-     * Creates a new Force Chat [@link SynchronizationBlock}.
-     *
-     * @param message The message the {@link Character} will say.
-     */
-    protected ForceChatBlock(String message) {
-	this.message = message;
-    }
+	/**
+	 * Creates a new Force Chat [@link SynchronizationBlock}.
+	 *
+	 * @param message The message the {@link Character} will say.
+	 */
+	protected ForceChatBlock(String message) {
+		this.message = message;
+	}
 
-    /**
-     * Gets the message being sent by this Force Chat block.
-     *
-     * @return The message.
-     */
-    public String getMessage() {
-	return message;
-    }
+	/**
+	 * Gets the message being sent by this Force Chat block.
+	 *
+	 * @return The message.
+	 */
+	public String getMessage() {
+		return message;
+	}
 
 }

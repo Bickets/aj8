@@ -18,20 +18,20 @@ import org.apollo.net.codec.game.GamePacketReader;
 @DecodesMessage(241)
 public final class MouseClickMessageDecoder implements MessageDecoder<MouseClickMessage> {
 
-    @Override
-    public MouseClickMessage decode(GamePacket packet) {
-	GamePacketReader reader = new GamePacketReader(packet);
+	@Override
+	public MouseClickMessage decode(GamePacket packet) {
+		GamePacketReader reader = new GamePacketReader(packet);
 
-	int clickHash = (int) reader.getUnsigned(DataType.INT);
-	int time = clickHash >> 20;
-	int type = (clickHash >> 19) & 0x1;
+		int clickHash = (int) reader.getUnsigned(DataType.INT);
+		int time = clickHash >> 20;
+		int type = (clickHash >> 19) & 0x1;
 
-	clickHash &= (1 << 19) - 1;
+		clickHash &= (1 << 19) - 1;
 
-	int y = clickHash / 765;
-	int x = clickHash - (y * 765);
+		int y = clickHash / 765;
+		int x = clickHash - (y * 765);
 
-	return new MouseClickMessage(time, ClickType.forId(type), new Point(x, y));
-    }
+		return new MouseClickMessage(time, ClickType.forId(type), new Point(x, y));
+	}
 
 }

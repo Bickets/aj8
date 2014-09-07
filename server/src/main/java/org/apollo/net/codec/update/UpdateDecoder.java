@@ -13,17 +13,17 @@ import java.util.List;
  */
 public final class UpdateDecoder extends ByteToMessageDecoder {
 
-    @Override
-    protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
-	if (in.readableBytes() < 4) {
-	    return;
+	@Override
+	protected void decode(ChannelHandlerContext ctx, ByteBuf in, List<Object> out) {
+		if (in.readableBytes() < 4) {
+			return;
+		}
+
+		int index = in.readUnsignedByte() + 1;
+		int id = in.readUnsignedShort();
+		int priority = in.readUnsignedByte();
+
+		out.add(new OnDemandRequest(index, id, priority));
 	}
-
-	int index = in.readUnsignedByte() + 1;
-	int id = in.readUnsignedShort();
-	int priority = in.readUnsignedByte();
-
-	out.add(new OnDemandRequest(index, id, priority));
-    }
 
 }

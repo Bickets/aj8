@@ -13,9 +13,9 @@ import org.apollo.game.msg.impl.ClosedInterfaceMessage;
 @HandlesMessage(ClosedInterfaceMessage.class)
 public final class ClosedInterfaceMessageHandler implements MessageHandler<ClosedInterfaceMessage> {
 
-    @Override
-    public void handle(Player player, ClosedInterfaceMessage message) {
-	player.getInterfaceSet().interfaceClosed();
-    }
+	@Override
+	public void handle(Player player, ClosedInterfaceMessage message) {
+		player.getInterfaceSet().interfaceClosed();
+	}
 
 }

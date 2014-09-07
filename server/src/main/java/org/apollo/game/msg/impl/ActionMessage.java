@@ -10,25 +10,25 @@ import org.apollo.game.msg.Message;
  */
 public abstract class ActionMessage implements Message {
 
-    /**
-     * The interface option clicked which initiated this action.
-     */
-    private final InterfaceOption option;
+	/**
+	 * The interface option clicked which initiated this action.
+	 */
+	private final InterfaceOption option;
 
-    /**
-     * Constructs a new {@link ActionMessage} with the specified option.
-     *
-     * @param option The interface option clicked which initiated this action.
-     */
-    public ActionMessage(InterfaceOption option) {
-	this.option = option;
-    }
+	/**
+	 * Constructs a new {@link ActionMessage} with the specified option.
+	 *
+	 * @param option The interface option clicked which initiated this action.
+	 */
+	public ActionMessage(InterfaceOption option) {
+		this.option = option;
+	}
 
-    /**
-     * Returns the interface option clicked.F
-     */
-    public InterfaceOption getOption() {
-	return option;
-    }
+	/**
+	 * Returns the interface option clicked.F
+	 */
+	public InterfaceOption getOption() {
+		return option;
+	}
 
 }

@@ -16,13 +16,13 @@ import org.apollo.net.codec.game.GamePacketBuilder;
 @EncodesMessage(InterfaceItemModelMessage.class)
 public final class InterfaceItemModelMessageEncoder implements MessageEncoder<InterfaceItemModelMessage> {
 
-    @Override
-    public GamePacket encode(InterfaceItemModelMessage message) {
-	GamePacketBuilder bldr = new GamePacketBuilder(246);
-	bldr.put(DataType.SHORT, DataOrder.LITTLE, message.getInterfaceId());
-	bldr.put(DataType.SHORT, message.getZoom());
-	bldr.put(DataType.SHORT, message.getItem().getId());
-	return bldr.toGamePacket();
-    }
+	@Override
+	public GamePacket encode(InterfaceItemModelMessage message) {
+		GamePacketBuilder bldr = new GamePacketBuilder(246);
+		bldr.put(DataType.SHORT, DataOrder.LITTLE, message.getInterfaceId());
+		bldr.put(DataType.SHORT, message.getZoom());
+		bldr.put(DataType.SHORT, message.getItem().getId());
+		return bldr.toGamePacket();
+	}
 
 }

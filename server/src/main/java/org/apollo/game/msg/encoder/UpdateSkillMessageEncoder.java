@@ -17,16 +17,16 @@ import org.apollo.net.codec.game.GamePacketBuilder;
 @EncodesMessage(UpdateSkillMessage.class)
 public final class UpdateSkillMessageEncoder implements MessageEncoder<UpdateSkillMessage> {
 
-    @Override
-    public GamePacket encode(UpdateSkillMessage message) {
-	GamePacketBuilder builder = new GamePacketBuilder(134);
-	Skill skill = message.getSkill();
+	@Override
+	public GamePacket encode(UpdateSkillMessage message) {
+		GamePacketBuilder builder = new GamePacketBuilder(134);
+		Skill skill = message.getSkill();
 
-	builder.put(DataType.BYTE, message.getId());
-	builder.put(DataType.INT, DataOrder.MIDDLE, (int) skill.getExperience());
-	builder.put(DataType.BYTE, skill.getCurrentLevel());
+		builder.put(DataType.BYTE, message.getId());
+		builder.put(DataType.INT, DataOrder.MIDDLE, (int) skill.getExperience());
+		builder.put(DataType.BYTE, skill.getCurrentLevel());
 
-	return builder.toGamePacket();
-    }
+		return builder.toGamePacket();
+	}
 
 }

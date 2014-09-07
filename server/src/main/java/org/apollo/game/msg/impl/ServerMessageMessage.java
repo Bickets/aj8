@@ -9,27 +9,27 @@ import org.apollo.game.msg.Message;
  */
 public final class ServerMessageMessage implements Message {
 
-    /**
-     * The message.
-     */
-    private final String message;
+	/**
+	 * The message.
+	 */
+	private final String message;
 
-    /**
-     * Creates the {@link ServerMessageMessage}.
-     *
-     * @param message The message.
-     */
-    public ServerMessageMessage(String message) {
-	this.message = message;
-    }
+	/**
+	 * Creates the {@link ServerMessageMessage}.
+	 *
+	 * @param message The message.
+	 */
+	public ServerMessageMessage(String message) {
+		this.message = message;
+	}
 
-    /**
-     * Gets the message.
-     *
-     * @return The message.
-     */
-    public String getMessage() {
-	return message;
-    }
+	/**
+	 * Gets the message.
+	 *
+	 * @return The message.
+	 */
+	public String getMessage() {
+		return message;
+	}
 
 }

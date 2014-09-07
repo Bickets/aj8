@@ -15,11 +15,11 @@ import org.apollo.net.codec.game.GamePacketBuilder;
 @EncodesMessage(OpenInterfaceMessage.class)
 public final class OpenInterfaceMessageEncoder implements MessageEncoder<OpenInterfaceMessage> {
 
-    @Override
-    public GamePacket encode(OpenInterfaceMessage message) {
-	GamePacketBuilder builder = new GamePacketBuilder(97);
-	builder.put(DataType.SHORT, message.getId());
-	return builder.toGamePacket();
-    }
+	@Override
+	public GamePacket encode(OpenInterfaceMessage message) {
+		GamePacketBuilder builder = new GamePacketBuilder(97);
+		builder.put(DataType.SHORT, message.getId());
+		return builder.toGamePacket();
+	}
 
 }

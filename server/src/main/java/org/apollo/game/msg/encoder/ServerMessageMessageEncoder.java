@@ -15,11 +15,11 @@ import org.apollo.net.codec.game.GamePacketType;
 @EncodesMessage(ServerMessageMessage.class)
 public final class ServerMessageMessageEncoder implements MessageEncoder<ServerMessageMessage> {
 
-    @Override
-    public GamePacket encode(ServerMessageMessage message) {
-	GamePacketBuilder builder = new GamePacketBuilder(253, GamePacketType.VARIABLE_BYTE);
-	builder.putString(message.getMessage());
-	return builder.toGamePacket();
-    }
+	@Override
+	public GamePacket encode(ServerMessageMessage message) {
+		GamePacketBuilder builder = new GamePacketBuilder(253, GamePacketType.VARIABLE_BYTE);
+		builder.putString(message.getMessage());
+		return builder.toGamePacket();
+	}
 
 }

@@ -16,26 +16,26 @@ import org.apollo.game.msg.MessageTranslator;
  */
 public final class GameMessageEncoder extends MessageToMessageEncoder<Message> {
 
-    /**
-     * The message translator.
-     */
-    private final MessageTranslator translator;
+	/**
+	 * The message translator.
+	 */
+	private final MessageTranslator translator;
 
-    /**
-     * Constructs a new {@link GameMessageEncoder}.
-     *
-     * @param translator The message translator.
-     */
-    public GameMessageEncoder(MessageTranslator translator) {
-	this.translator = translator;
-    }
-
-    @Override
-    protected void encode(ChannelHandlerContext ctx, Message msg, List<Object> out) {
-	GamePacket packet = translator.encode(msg);
-	if (packet != null) {
-	    out.add(packet);
+	/**
+	 * Constructs a new {@link GameMessageEncoder}.
+	 *
+	 * @param translator The message translator.
+	 */
+	public GameMessageEncoder(MessageTranslator translator) {
+		this.translator = translator;
 	}
-    }
+
+	@Override
+	protected void encode(ChannelHandlerContext ctx, Message msg, List<Object> out) {
+		GamePacket packet = translator.encode(msg);
+		if (packet != null) {
+			out.add(packet);
+		}
+	}
 
 }

@@ -9,21 +9,21 @@ import org.apollo.game.sync.block.SynchronizationBlockSet;
  */
 public final class RemoveCharacterSegment extends SynchronizationSegment {
 
-    /**
-     * An empty {@link SynchronizationBlockSet}.
-     */
-    private static final SynchronizationBlockSet EMPTY_BLOCK_SET = new SynchronizationBlockSet();
+	/**
+	 * An empty {@link SynchronizationBlockSet}.
+	 */
+	private static final SynchronizationBlockSet EMPTY_BLOCK_SET = new SynchronizationBlockSet();
 
-    /**
-     * Creates the remove character segment.
-     */
-    public RemoveCharacterSegment() {
-	super(EMPTY_BLOCK_SET);
-    }
+	/**
+	 * Creates the remove character segment.
+	 */
+	public RemoveCharacterSegment() {
+		super(EMPTY_BLOCK_SET);
+	}
 
-    @Override
-    public SegmentType getType() {
-	return SegmentType.REMOVE_CHARACTER;
-    }
+	@Override
+	public SegmentType getType() {
+		return SegmentType.REMOVE_CHARACTER;
+	}
 
 }
