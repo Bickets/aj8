@@ -7,8 +7,8 @@ import org.apollo.game.model.Position
 import org.apollo.game.model.World
 import org.apollo.game.model.area.Area
 import org.apollo.game.model.area.PositionArea
+import org.apollo.game.task.TaskScheduler
 import org.eclipse.xtend.lib.annotations.Data
-import plugin.mobs.MobMovementStagedAction.Stage
 
 import static org.apollo.game.model.Direction.*
 
@@ -41,7 +41,7 @@ import static org.apollo.game.model.Direction.*
 
 		world.register(mob)
 
-		mob.startAction(new MobMovementStagedAction(1, mob, Stage.NONE))
+		TaskScheduler.instance.schedule(new MobMovementTask(1, true, mob))
 	}
 
 }
