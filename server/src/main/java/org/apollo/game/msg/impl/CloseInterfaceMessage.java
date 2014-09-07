@@ -7,6 +7,6 @@ import org.apollo.game.msg.Message;
  *
  * @author Graham
  */
-public final class CloseInterfaceMessage extends Message {
+public final class CloseInterfaceMessage implements Message {
 
 }

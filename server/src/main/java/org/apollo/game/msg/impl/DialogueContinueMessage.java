@@ -8,7 +8,7 @@ import org.apollo.game.msg.Message;
  *
  * @author Chris Fletcher
  */
-public final class DialogueContinueMessage extends Message {
+public final class DialogueContinueMessage implements Message {
 
     /**
      * The interface id.

@@ -8,7 +8,7 @@ import org.apollo.game.msg.Message;
  *
  * @author Graham
  */
-public class ItemActionMessage extends Message {
+public class ItemActionMessage implements Message {
 
     /**
      * The interface option.

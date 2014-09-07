@@ -7,7 +7,7 @@ import org.apollo.game.msg.Message;
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public final class OpenDialogueInterfaceMessage extends Message {
+public final class OpenDialogueInterfaceMessage implements Message {
 
     /**
      * Represents the id of the interface.

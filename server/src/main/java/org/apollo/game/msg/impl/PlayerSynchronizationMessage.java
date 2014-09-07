@@ -11,7 +11,7 @@ import org.apollo.game.sync.seg.SynchronizationSegment;
  *
  * @author Graham
  */
-public final class PlayerSynchronizationMessage extends Message {
+public final class PlayerSynchronizationMessage implements Message {
 
     /**
      * The last known region.

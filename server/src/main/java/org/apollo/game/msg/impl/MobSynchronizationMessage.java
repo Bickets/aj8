@@ -12,7 +12,7 @@ import org.apollo.game.sync.seg.SynchronizationSegment;
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public class MobSynchronizationMessage extends Message {
+public class MobSynchronizationMessage implements Message {
 
     /**
      * The mobs position.

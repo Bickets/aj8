@@ -8,7 +8,7 @@ import org.apollo.game.msg.Message;
  * 
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public final class GameObjectMessage extends Message {
+public final class GameObjectMessage implements Message {
 
     /**
      * The game object.

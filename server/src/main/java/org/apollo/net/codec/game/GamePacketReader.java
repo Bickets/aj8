@@ -93,7 +93,7 @@ public final class GamePacketReader {
     public int getSignedSmart() {
 	checkByteAccess();
 	int peek = buffer.getByte(buffer.readerIndex());
-	if (peek < 128) {
+	if ((peek & 0xFF) < 128) {
 	    return buffer.readByte() - 64;
 	} else {
 	    return buffer.readShort() - 49152;
@@ -109,7 +109,7 @@ public final class GamePacketReader {
     public int getUnsignedSmart() {
 	checkByteAccess();
 	int peek = buffer.getByte(buffer.readerIndex());
-	if (peek < 128) {
+	if ((peek & 0xFF) < 128) {
 	    return buffer.readByte();
 	} else {
 	    return buffer.readShort() - 32768;

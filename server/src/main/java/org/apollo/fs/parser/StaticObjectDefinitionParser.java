@@ -1,7 +1,10 @@
 package org.apollo.fs.parser;
 
 import static org.apollo.game.model.obj.ObjectGroup.WALL;
+import static org.apollo.game.model.obj.ObjectType.DIAGONAL_WALL;
+import static org.apollo.game.model.obj.ObjectType.GENERAL_PROP;
 import static org.apollo.game.model.obj.ObjectType.GROUND_PROP;
+import static org.apollo.game.model.obj.ObjectType.WALKABLE_PROP;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -64,7 +67,7 @@ public final class StaticObjectDefinitionParser {
 	    MapDefinition def = entry.getValue();
 
 	    int hash = def.getHash();
-	    int x = (hash >> 8 & 0xFF) * 64;
+	    int x = ((hash >> 8) & 0xFF) * 64;
 	    int y = (hash & 0xFF) * 64;
 
 	    byte[] landscapeData = fs.getFile(FileSystem.MAP_IDX, def.getLandscapeFile());
@@ -124,15 +127,16 @@ public final class StaticObjectDefinitionParser {
 		    for (;;) {
 			int config = mapBuffer.get() & 0xFF;
 			if (config == 0) {
+			    mapDecoded(flags, position);
 			    break;
 			} else if (config == 1) {
 			    mapBuffer.get();
+			    mapDecoded(flags, position);
 			    break;
 			} else if (config <= 49) {
 			    mapBuffer.get();
 			} else if (config <= 81) {
 			    flags = config - 49;
-			    mapDecoded(flags, position);
 			}
 		    }
 		}
@@ -147,15 +151,12 @@ public final class StaticObjectDefinitionParser {
      * @param position The position of the tile.
      */
     private static void mapDecoded(int flags, Position position) {
-	int height = position.getHeight();
+	if ((flags & FLAG_CLIP) != 0) {
+	    TRAVERSAL_MAP.markBlocked(position.getHeight(), position.getX(), position.getY());
+	}
 
-	if ((flags & FLAG_CLIP) == 1) {
-	    if ((flags & FLAG_BRIDGE) == 2) {
-		height--;
-	    }
-	    if (height >= 0 && height <= 3) {
-		TRAVERSAL_MAP.markBlocked(height, position.getX(), position.getY());
-	    }
+	if ((flags & FLAG_BRIDGE) != 0) {
+	    TRAVERSAL_MAP.markBridge(position.getHeight(), position.getX(), position.getY());
 	}
     }
 
@@ -175,18 +176,20 @@ public final class StaticObjectDefinitionParser {
 	    TRAVERSAL_MAP.initializeRegion(position.getX(), position.getY());
 	}
 
-	if (type.getGroup() == WALL) {
-	    TRAVERSAL_MAP.markWall(orientation, position.getHeight(), position.getX(), position.getY(), type, def.isWalkable());
-	}
-
-	if (type.getId() >= 9 && type.getId() <= 12) {
-	    TRAVERSAL_MAP.markBlocked(position.getHeight(), position.getX(), position.getY());
-	}
-
 	if (type == GROUND_PROP) {
-	    if (def.hasActions() || def.isUninteractableSolid()) {
+	    if (def.hasActions()) {
 		TRAVERSAL_MAP.markBlocked(position.getHeight(), position.getX(), position.getY());
 	    }
+	} else if (type == GENERAL_PROP || type == WALKABLE_PROP) {
+	    if (def.getSize() > 0 || !def.isSolid()) {
+		TRAVERSAL_MAP.markBlocked(position.getHeight(), position.getX(), position.getY());
+	    }
+	} else if (type.getId() >= 12) {
+	    TRAVERSAL_MAP.markBlocked(position.getHeight(), position.getX(), position.getY());
+	} else if (type.getGroup() == WALL) {
+	    TRAVERSAL_MAP.markWall(orientation, position.getHeight(), position.getX(), position.getY(), type, def.isWalkable());
+	} else if (type == DIAGONAL_WALL) {
+	    TRAVERSAL_MAP.markBlocked(position.getHeight(), position.getX(), position.getY());
 	}
 
 	definitions.put(id, new StaticObjectDefinition(id, position, type, orientation));

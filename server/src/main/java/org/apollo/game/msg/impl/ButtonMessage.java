@@ -7,7 +7,7 @@ import org.apollo.game.msg.Message;
  *
  * @author Graham
  */
-public final class ButtonMessage extends Message {
+public final class ButtonMessage implements Message {
 
     /**
      * The interface id.

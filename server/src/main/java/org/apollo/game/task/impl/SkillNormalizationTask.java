@@ -1,7 +1,6 @@
 package org.apollo.game.task.impl;
 
-import org.apollo.game.model.Entity.EntityType;
-import org.apollo.game.model.GameCharacter;
+import org.apollo.game.model.Player;
 import org.apollo.game.task.Task;
 
 /**
@@ -13,26 +12,26 @@ import org.apollo.game.task.Task;
 public final class SkillNormalizationTask extends Task {
 
     /**
-     * The gameCharacter.
+     * The player.
      */
-    private final GameCharacter gameCharacter;
+    private final Player player;
 
     /**
      * Creates the skill normalization task.
      *
-     * @param gameCharacter The gameCharacter.
+     * @param player The player.
      */
-    public SkillNormalizationTask(GameCharacter gameCharacter) {
+    public SkillNormalizationTask(Player player) {
 	super(100, false);
-	this.gameCharacter = gameCharacter;
+	this.player = player;
     }
 
     @Override
     public void execute() {
-	if (!gameCharacter.isActive() && gameCharacter.type() != EntityType.MOB) {
+	if (!player.isActive()) {
 	    stop();
 	} else {
-	    gameCharacter.getSkillSet().normalize();
+	    player.getSkillSet().normalize();
 	}
     }
 

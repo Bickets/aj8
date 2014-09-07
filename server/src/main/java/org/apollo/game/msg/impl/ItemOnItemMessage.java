@@ -8,7 +8,7 @@ import org.apollo.game.msg.Message;
  * 
  * @author Tyler Buchanan <https://www.github.com/TylerBuchanan97>
  */
-public class ItemOnItemMessage extends Message {
+public class ItemOnItemMessage implements Message {
 
     /**
      * The slot of the item getting interacted with.

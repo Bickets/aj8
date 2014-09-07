@@ -7,7 +7,7 @@ import org.apollo.game.msg.Message;
  *
  * @author Graham
  */
-public final class OpenInterfaceSidebarMessage extends Message {
+public final class OpenInterfaceSidebarMessage implements Message {
 
     /**
      * The interface id.

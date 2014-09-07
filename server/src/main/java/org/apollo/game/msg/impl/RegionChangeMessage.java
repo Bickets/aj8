@@ -8,7 +8,7 @@ import org.apollo.game.msg.Message;
  *
  * @author Graham
  */
-public final class RegionChangeMessage extends Message {
+public final class RegionChangeMessage implements Message {
 
     /**
      * The position of the region to load.

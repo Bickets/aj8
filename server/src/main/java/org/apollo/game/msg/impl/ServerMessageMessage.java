@@ -7,7 +7,7 @@ import org.apollo.game.msg.Message;
  *
  * @author Graham
  */
-public final class ServerMessageMessage extends Message {
+public final class ServerMessageMessage implements Message {
 
     /**
      * The message.

@@ -3,6 +3,7 @@ package org.apollo.game.model;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
+import org.apollo.game.model.Inventory.StackMode;
 import org.apollo.game.model.inter.InterfaceSet;
 import org.apollo.game.model.inv.AppearanceInventoryListener;
 import org.apollo.game.model.inv.FullInventoryListener;
@@ -15,6 +16,8 @@ import org.apollo.game.msg.impl.IdAssignmentMessage;
 import org.apollo.game.msg.impl.LogoutMessage;
 import org.apollo.game.msg.impl.SwitchTabInterfaceMessage;
 import org.apollo.game.sync.block.SynchronizationBlock;
+import org.apollo.game.task.TaskScheduler;
+import org.apollo.game.task.impl.SkillNormalizationTask;
 import org.apollo.net.session.GameSession;
 import org.apollo.security.PlayerCredentials;
 
@@ -155,6 +158,26 @@ public final class Player extends GameCharacter {
     private final InterfaceSet interfaceSet = new InterfaceSet(this);
 
     /**
+     * The character's inventory.
+     */
+    private final Inventory inventory = new Inventory(InventoryConstants.INVENTORY_CAPACITY);
+
+    /**
+     * The character's equipment.
+     */
+    private final Inventory equipment = new Inventory(InventoryConstants.EQUIPMENT_CAPACITY, StackMode.STACK_ALWAYS);
+
+    /**
+     * The character's bank.
+     */
+    private final Inventory bank = new Inventory(InventoryConstants.BANK_CAPACITY, StackMode.STACK_ALWAYS);
+
+    /**
+     * The character's bank.
+     */
+    private final Inventory trade = new Inventory(InventoryConstants.TRADE_CAPACITY);
+
+    /**
      * Creates the {@link Player}.
      *
      * @param credentials The players credentials.
@@ -173,6 +196,40 @@ public final class Player extends GameCharacter {
      */
     public InterfaceSet getInterfaceSet() {
 	return interfaceSet;
+    }
+
+    /**
+     * Gets the character's inventory.
+     *
+     * @return The character's inventory.
+     */
+    public Inventory getInventory() {
+	return inventory;
+    }
+
+    /**
+     * Gets the character's equipment.
+     *
+     * @return The character's equipment.
+     */
+    public Inventory getEquipment() {
+	return equipment;
+    }
+
+    /**
+     * Gets the character's bank.
+     *
+     * @return The character's bank.
+     */
+    public Inventory getBank() {
+	return bank;
+    }
+
+    /**
+     * Returns the character's trade inventory.
+     */
+    public Inventory getTrade() {
+	return trade;
     }
 
     /**
@@ -317,25 +374,17 @@ public final class Player extends GameCharacter {
 
     @Override
     public void send(Message message) {
-	/*
-	 * If this player is not active add messages to a queue to be dispatched
-	 * later.
-	 */
 	if (!isActive()) {
 	    queuedMessages.add(message);
 	    return;
 	}
 
-	/* If the queued messages are not empty.. */
 	if (!queuedMessages.isEmpty()) {
-	    /* Loop through them, removing the head each iteration. */
 	    for (Message msg; (msg = queuedMessages.poll()) != null;) {
-		/* Dispatch the message. */
 		session.dispatchMessage(msg);
 	    }
 	}
 
-	/* Dispatch the initial message normally */
 	session.dispatchMessage(message);
     }
 
@@ -345,6 +394,8 @@ public final class Player extends GameCharacter {
     private void init() {
 	initInventories();
 	initSkills();
+
+	TaskScheduler.getInstance().schedule(new SkillNormalizationTask(this));
     }
 
     /**

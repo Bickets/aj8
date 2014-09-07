@@ -7,6 +7,6 @@ import org.apollo.game.msg.Message;
  *
  * @author Graham
  */
-public final class LogoutMessage extends Message {
+public final class LogoutMessage implements Message {
 
 }

@@ -1,5 +1,6 @@
 package plugin.commands
 
+import com.google.common.collect.Iterables
 import org.apollo.game.command.CommandEvent
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
@@ -8,17 +9,24 @@ import org.apollo.game.model.Position
 import org.apollo.game.model.World
 import org.apollo.game.model.^def.GameObjectDefinition
 import org.apollo.game.model.^def.ItemDefinition
+import org.apollo.game.model.^def.StaticObjectDefinition
 import org.apollo.game.model.inter.bank.BankUtils
 import org.apollo.game.model.obj.GameObject
 import org.apollo.game.model.pf.AStarPathFinder
 import org.apollo.game.msg.impl.GameObjectMessage
 import org.apollo.game.msg.impl.OpenInterfaceMessage
 import org.apollo.game.msg.impl.WelcomeScreenMessage
+<<<<<<< HEAD
 import plugin.Plugin
+=======
+import org.eclipse.xtend.lib.annotations.Data
+>>>>>>> origin/master
 import plugin.trade.Trade
 
+import static plugin.Plugin.*
+
 @SubscribesTo(CommandEvent)
-@Data class CommandPlugin extends Plugin implements EventSubscriber<CommandEvent> {
+@Data class CommandPlugin implements EventSubscriber<CommandEvent> {
 	val World world
 
 	override subscribe(CommandEvent event) {
@@ -26,6 +34,11 @@ import plugin.trade.Trade
 		val plr = event.player
 
 		switch event.name.toLowerCase {
+			case "type": {
+				var id = toInt(args.get(0))
+				val defs = StaticObjectDefinition.forId(id)
+				plr.sendMessage(Iterables.get(defs, 0).type)
+			}
 			case "open": {
 				plr.send(new WelcomeScreenMessage(201, 3, false, (127 << 24) + 1, 1))
 				plr.send(new OpenInterfaceMessage(15244))

@@ -8,6 +8,6 @@ import org.apollo.game.msg.Message;
  *
  * @author Graham
  */
-public final class EnterAmountMessage extends Message {
+public final class EnterAmountMessage implements Message {
 
 }

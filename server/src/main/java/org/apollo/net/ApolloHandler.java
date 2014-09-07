@@ -95,7 +95,7 @@ public final class ApolloHandler extends ChannelInboundHandlerAdapter {
 	    Attribute<Session> attribute = ctx.attr(NetworkConstants.NETWORK_SESSION);
 	    Session session = attribute.get();
 
-	    if (msg.getClass() == HttpRequest.class || msg.getClass() == JagGrabRequest.class) {
+	    if (msg instanceof HttpRequest || msg instanceof JagGrabRequest) {
 		session = new UpdateSession(ctx, updateService);
 	    }
 
@@ -113,7 +113,7 @@ public final class ApolloHandler extends ChannelInboundHandlerAdapter {
 		attribute.set(new UpdateSession(ctx, updateService));
 		break;
 	    default:
-		throw new IllegalStateException("Invalid service id");
+		throw new UnsupportedOperationException("Unexpected service id: " + handshakeMessage.getServiceId());
 	    }
 	} finally {
 	    ReferenceCountUtil.release(msg);

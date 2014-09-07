@@ -10,7 +10,7 @@ import org.apollo.fs.FileSystem;
  *
  * @author Graham
  */
-public final class VirtualResourceProvider extends ResourceProvider {
+public final class VirtualResourceProvider implements ResourceProvider {
 
     /**
      * An array of valid prefixes.

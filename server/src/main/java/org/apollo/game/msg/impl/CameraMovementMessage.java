@@ -7,7 +7,7 @@ import org.apollo.game.msg.Message;
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public final class CameraMovementMessage extends Message {
+public final class CameraMovementMessage implements Message {
 
     /**
      * The roll of the camera.

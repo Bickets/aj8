@@ -8,7 +8,7 @@ import org.apollo.game.msg.Message;
  *
  * @author Graham
  */
-public final class UpdateSkillMessage extends Message {
+public final class UpdateSkillMessage implements Message {
 
     /**
      * The skill's id.

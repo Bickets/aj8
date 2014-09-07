@@ -9,7 +9,7 @@ import org.apollo.game.msg.Message;
  *
  * @author Graham
  */
-public final class CharacterDesignMessage extends Message {
+public final class CharacterDesignMessage implements Message {
 
     /**
      * The appearance.

@@ -9,7 +9,7 @@ import org.apollo.game.msg.Message;
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public final class MobModelOnInterfaceMessage extends Message {
+public final class MobModelOnInterfaceMessage implements Message {
 
     /**
      * The id of the mob.

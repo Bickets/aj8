@@ -12,7 +12,7 @@ import java.nio.channels.FileChannel.MapMode;
  *
  * @author Graham
  */
-public final class HypertextResourceProvider extends ResourceProvider {
+public final class HypertextResourceProvider implements ResourceProvider {
 
     /**
      * The base directory from which documents are served.

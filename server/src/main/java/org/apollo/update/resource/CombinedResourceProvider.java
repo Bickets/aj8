@@ -7,7 +7,7 @@ import java.io.IOException;
  *
  * @author Graham
  */
-public final class CombinedResourceProvider extends ResourceProvider {
+public final class CombinedResourceProvider implements ResourceProvider {
 
     /**
      * An array of resource providers.

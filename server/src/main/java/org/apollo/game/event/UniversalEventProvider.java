@@ -1,6 +1,6 @@
 package org.apollo.game.event;
 
-import static com.google.common.base.Preconditions.checkNotNull;
+import static java.util.Objects.requireNonNull;
 
 import java.util.Collection;
 
@@ -24,23 +24,25 @@ public final class UniversalEventProvider implements EventProvider {
 
     @Override
     public <E extends Event> void provideSubscriber(EventSubscriber<E> subscriber) {
-	SubscribesTo annotation = checkNotNull(subscriber).getClass().getAnnotation(SubscribesTo.class);
+	requireNonNull(subscriber);
+
+	SubscribesTo annotation = subscriber.getClass().getAnnotation(SubscribesTo.class);
 	if (annotation == null) {
 	    throw new NullPointerException(subscriber.toString() + " is not annotated with @SubscribesTo");
 	}
 
-	/* Cache the event */
 	events.put(annotation.value(), subscriber);
     }
 
     @Override
     public <E extends Event> void depriveSubscriber(EventSubscriber<E> subscriber) {
-	SubscribesTo annotation = checkNotNull(subscriber).getClass().getAnnotation(SubscribesTo.class);
+	requireNonNull(subscriber);
+
+	SubscribesTo annotation = subscriber.getClass().getAnnotation(SubscribesTo.class);
 	if (annotation == null) {
 	    throw new NullPointerException(subscriber.toString() + " is not annotated with @SubscribesTo");
 	}
 
-	/* Removed the cached event */
 	events.remove(annotation.value(), subscriber);
     }
 

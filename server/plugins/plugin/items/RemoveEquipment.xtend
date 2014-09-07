@@ -6,10 +6,11 @@ import org.apollo.game.interact.ItemActionEvent
 import org.apollo.game.model.InventoryConstants
 import org.apollo.game.model.Item
 import org.apollo.game.model.Player
-import plugin.Plugin
+
+import static plugin.Plugin.*
 
 @SubscribesTo(ItemActionEvent)
-class RemoveEquipment extends Plugin implements EventSubscriber<ItemActionEvent> {
+class RemoveEquipment implements EventSubscriber<ItemActionEvent> {
 
 	def remove(Player player, int id, int slot) {
 		val inventory = player.inventory

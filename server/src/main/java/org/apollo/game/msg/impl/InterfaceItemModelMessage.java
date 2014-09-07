@@ -8,7 +8,7 @@ import org.apollo.game.msg.Message;
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public final class InterfaceItemModelMessage extends Message {
+public final class InterfaceItemModelMessage implements Message {
 
     /**
      * The if of the interface which displays the item.

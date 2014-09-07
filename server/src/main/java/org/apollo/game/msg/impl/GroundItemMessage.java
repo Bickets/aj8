@@ -9,7 +9,7 @@ import org.apollo.game.msg.Message;
  * 
  * @author Tyler Buchanan <https://www.github.com/TylerBuchanan97>
  */
-public final class GroundItemMessage extends Message {
+public final class GroundItemMessage implements Message {
 
     /**
      * The ground item.

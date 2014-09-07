@@ -8,12 +8,12 @@ import org.apollo.game.model.Player
 import org.apollo.game.model.Skill
 import org.apollo.game.model.^def.EquipmentDefinition
 import org.apollo.game.model.^def.ItemDefinition
-import plugin.Plugin
 
 import static org.apollo.game.model.EquipmentConstants.*
+import static plugin.Plugin.*
 
 @SubscribesTo(ItemActionEvent)
-class WearEquipment extends Plugin implements EventSubscriber<ItemActionEvent> {
+class WearEquipment implements EventSubscriber<ItemActionEvent> {
 
 	def wear(Player player, int id, int slot) {
 		val inventory = player.inventory
