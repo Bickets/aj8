@@ -6863,6 +6863,7 @@ public class Game extends GameShell {
 		}
 	    }
 	    onDemandRequester.preloadRegions(Game.membersWorld);
+	    ModelUtilities.loadModels();
 	    if (!Game.lowMemory) {
 		fileRequestCount = onDemandRequester.fileCount(2);
 		for (int id = 1; id < fileRequestCount; id++) {
