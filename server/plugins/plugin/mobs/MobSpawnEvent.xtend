@@ -5,15 +5,12 @@ import org.apollo.game.model.Direction
 import org.apollo.game.model.Mob
 import org.apollo.game.model.Position
 import org.apollo.game.model.World
-<<<<<<< HEAD
-=======
 import org.apollo.game.model.area.Area
 import org.apollo.game.model.area.PositionArea
 import org.apollo.game.task.TaskScheduler
 import org.eclipse.xtend.lib.annotations.Data
 
 import static org.apollo.game.model.Direction.*
->>>>>>> origin/master
 
 @Data class MobSpawnEvent implements Event {
 

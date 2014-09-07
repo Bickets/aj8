@@ -11,12 +11,12 @@ import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ButtonActionEvent
 import org.apollo.game.interact.ItemActionEvent
+import org.apollo.game.interact.ItemOnItemActionEvent
 import org.apollo.game.interact.ObjectActionEvent
 import org.apollo.game.model.World
 import plugin.mobs.MobSpawnEvent
 
 import static java.nio.file.FileVisitResult.*
-import org.apollo.game.interact.ItemOnItemActionEvent
 
 class Bootstrap {
 
