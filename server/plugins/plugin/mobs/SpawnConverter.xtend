@@ -26,7 +26,7 @@ class SpawnConverter {
 		val reader = Files.newBufferedReader(read)
 		val writer = Files.newBufferedWriter(write)
 
-		for (var String str; (str = reader.readLine) != null; str.trim) {
+		for (var String str; (str = reader.readLine) != null; str = str.trim) {
 			val spot = str.indexOf("=")
 
 			if (spot > -1) {
