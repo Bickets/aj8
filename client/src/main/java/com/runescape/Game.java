@@ -59,6 +59,7 @@ import com.runescape.scene.tile.Wall;
 import com.runescape.scene.tile.WallDecoration;
 import com.runescape.scene.util.TraversalMap;
 import com.runescape.sound.Track;
+import com.runescape.tools.ModelUtilities;
 import com.runescape.util.MouseRecorder;
 import com.runescape.util.PacketConstants;
 import com.runescape.util.Signlink;
