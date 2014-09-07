@@ -7,13 +7,11 @@ import java.util.Set;
 import org.apollo.game.action.Action;
 import org.apollo.game.attribute.AttributeKey;
 import org.apollo.game.attribute.AttributeMap;
-import org.apollo.game.model.Inventory.StackMode;
 import org.apollo.game.msg.Message;
 import org.apollo.game.msg.impl.ServerMessageMessage;
 import org.apollo.game.sync.block.SynchronizationBlock;
 import org.apollo.game.sync.block.SynchronizationBlockSet;
 import org.apollo.game.task.TaskScheduler;
-import org.apollo.game.task.impl.SkillNormalizationTask;
 
 /**
  * A {@link GameCharacter} is a living creature in the world, such as a player
@@ -86,26 +84,6 @@ public abstract class GameCharacter extends Entity {
     private Action<?> currentAction;
 
     /**
-     * The character's inventory.
-     */
-    private final Inventory inventory = new Inventory(InventoryConstants.INVENTORY_CAPACITY);
-
-    /**
-     * The character's equipment.
-     */
-    private final Inventory equipment = new Inventory(InventoryConstants.EQUIPMENT_CAPACITY, StackMode.STACK_ALWAYS);
-
-    /**
-     * The character's bank.
-     */
-    private final Inventory bank = new Inventory(InventoryConstants.BANK_CAPACITY, StackMode.STACK_ALWAYS);
-
-    /**
-     * The character's bank.
-     */
-    private final Inventory trade = new Inventory(InventoryConstants.TRADE_CAPACITY);
-
-    /**
      * The character's skill set.
      */
     private final SkillSet skillSet = new SkillSet();
@@ -117,48 +95,6 @@ public abstract class GameCharacter extends Entity {
      */
     public GameCharacter(Position position) {
 	super(position);
-	init();
-    }
-
-    /**
-     * Initializes this character.
-     */
-    private void init() {
-	TaskScheduler.getInstance().schedule(new SkillNormalizationTask(this));
-    }
-
-    /**
-     * Gets the character's inventory.
-     *
-     * @return The character's inventory.
-     */
-    public Inventory getInventory() {
-	return inventory;
-    }
-
-    /**
-     * Gets the character's equipment.
-     *
-     * @return The character's equipment.
-     */
-    public Inventory getEquipment() {
-	return equipment;
-    }
-
-    /**
-     * Gets the character's bank.
-     *
-     * @return The character's bank.
-     */
-    public Inventory getBank() {
-	return bank;
-    }
-
-    /**
-     * Returns the character's trade inventory.
-     */
-    public Inventory getTrade() {
-	return trade;
     }
 
     /**

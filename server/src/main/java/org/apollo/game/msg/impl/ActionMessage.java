@@ -8,7 +8,7 @@ import org.apollo.game.msg.Message;
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public abstract class ActionMessage extends Message {
+public abstract class ActionMessage implements Message {
 
     /**
      * The interface option clicked which initiated this action.

@@ -10,7 +10,7 @@ import org.apollo.game.msg.Message;
  * 
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public final class ObsoleteMessage extends Message {
+public final class ObsoleteMessage implements Message {
 
     /**
      * Represents the payload of this message, the data it sends.

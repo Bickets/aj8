@@ -8,6 +8,6 @@ import org.apollo.game.msg.Message;
  * 
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public final class RegionLoadedMessage extends Message {
+public final class RegionLoadedMessage implements Message {
 
 }

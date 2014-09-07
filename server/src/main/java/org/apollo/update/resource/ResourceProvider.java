@@ -7,17 +7,18 @@ import java.io.IOException;
  *
  * @author Graham
  */
-public abstract class ResourceProvider {
+public interface ResourceProvider {
 
     /**
-     * Checks that this provider can fulfil a request to the specified resource.
+     * Checks that this provider can fulfill a request to the specified
+     * resource.
      *
      * @param path The path to the resource, e.g. {@code /crc}.
-     * @return {@code true} if the provider can fulfil a request to the
+     * @return {@code true} if the provider can fulfill a request to the
      *         resource, {@code false} otherwise.
      * @throws IOException if an I/O error occurs.
      */
-    public abstract boolean accept(String path) throws IOException;
+    boolean accept(String path) throws IOException;
 
     /**
      * Gets a resource by its path.
@@ -26,6 +27,6 @@ public abstract class ResourceProvider {
      * @return The resource, or {@code null} if it doesn't exist.
      * @throws IOException if an I/O error occurs.
      */
-    public abstract byte[] get(String path) throws IOException;
+    byte[] get(String path) throws IOException;
 
 }

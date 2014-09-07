@@ -8,7 +8,7 @@ import org.apollo.game.msg.Message;
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public final class InterfaceModelAnimationMessage extends Message {
+public final class InterfaceModelAnimationMessage implements Message {
 
     /**
      * The animation to perform.

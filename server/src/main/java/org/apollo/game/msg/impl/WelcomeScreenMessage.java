@@ -7,7 +7,7 @@ import org.apollo.game.msg.Message;
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public final class WelcomeScreenMessage extends Message {
+public final class WelcomeScreenMessage implements Message {
 
     /**
      * Represents the number of days since the last time your recovery questions

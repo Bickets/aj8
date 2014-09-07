@@ -8,7 +8,7 @@ import org.apollo.game.msg.Message;
  *
  * @author Graham
  */
-public final class IdAssignmentMessage extends Message {
+public final class IdAssignmentMessage implements Message {
 
     /**
      * The id of this player.

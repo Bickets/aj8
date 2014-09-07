@@ -8,7 +8,7 @@ import org.apollo.game.msg.Message;
  * 
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public final class ClientFocusedMessage extends Message {
+public final class ClientFocusedMessage implements Message {
 
     /**
      * A {@code boolean} representing the focus state.

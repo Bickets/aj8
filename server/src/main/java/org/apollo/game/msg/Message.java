@@ -5,6 +5,6 @@ package org.apollo.game.msg;
  *
  * @author Graham
  */
-public abstract class Message {
+public interface Message {
 
 }

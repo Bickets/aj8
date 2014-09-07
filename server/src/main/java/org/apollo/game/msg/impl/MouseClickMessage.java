@@ -9,7 +9,7 @@ import org.apollo.game.msg.Message;
  * 
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public final class MouseClickMessage extends Message {
+public final class MouseClickMessage implements Message {
 
     /**
      * Represents the type of click, left or right.

@@ -7,7 +7,7 @@ import org.apollo.game.msg.Message;
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public final class PlayerModelOnInterfaceMessage extends Message {
+public final class PlayerModelOnInterfaceMessage implements Message {
 
     /**
      * The id of the interface to show the model on.

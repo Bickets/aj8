@@ -8,6 +8,6 @@ import org.apollo.game.msg.Message;
  * 
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public final class IdleMessage extends Message {
+public final class IdleMessage implements Message {
 
 }

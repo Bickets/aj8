@@ -8,7 +8,7 @@ import org.apollo.game.msg.Message;
  *
  * @author Graham
  */
-public final class KeepAliveMessage extends Message {
+public final class KeepAliveMessage implements Message {
 
     /**
      * The time this message was created.

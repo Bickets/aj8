@@ -25,17 +25,17 @@ public final class UpdateDispatcher {
     /**
      * A queue for pending 'on-demand' requests.
      */
-    private final BlockingQueue<ChannelRequest<OnDemandRequest>> onDemandQueue = new PriorityBlockingQueue<ChannelRequest<OnDemandRequest>>();
+    private final BlockingQueue<ChannelRequest<OnDemandRequest>> onDemandQueue = new PriorityBlockingQueue<>();
 
     /**
      * A queue for pending JAGGRAB requests.
      */
-    private final BlockingQueue<ChannelRequest<JagGrabRequest>> jagGrabQueue = new LinkedBlockingQueue<ChannelRequest<JagGrabRequest>>();
+    private final BlockingQueue<ChannelRequest<JagGrabRequest>> jagGrabQueue = new LinkedBlockingQueue<>();
 
     /**
      * A queue for pending HTTP requests.
      */
-    private final BlockingQueue<ChannelRequest<HttpRequest>> httpQueue = new LinkedBlockingQueue<ChannelRequest<HttpRequest>>();
+    private final BlockingQueue<ChannelRequest<HttpRequest>> httpQueue = new LinkedBlockingQueue<>();
 
     /**
      * Gets the next 'on-demand' request from the queue, blocking if none are
@@ -79,8 +79,9 @@ public final class UpdateDispatcher {
     public void dispatch(Channel channel, OnDemandRequest request) {
 	if (onDemandQueue.size() >= MAXIMUM_QUEUE_SIZE) {
 	    channel.close();
+	    return;
 	}
-	onDemandQueue.add(new ChannelRequest<OnDemandRequest>(channel, request));
+	onDemandQueue.add(new ChannelRequest<>(channel, request));
     }
 
     /**
@@ -92,8 +93,9 @@ public final class UpdateDispatcher {
     public void dispatch(Channel channel, JagGrabRequest request) {
 	if (jagGrabQueue.size() >= MAXIMUM_QUEUE_SIZE) {
 	    channel.close();
+	    return;
 	}
-	jagGrabQueue.add(new ChannelRequest<JagGrabRequest>(channel, request));
+	jagGrabQueue.add(new ChannelRequest<>(channel, request));
     }
 
     /**
@@ -105,8 +107,9 @@ public final class UpdateDispatcher {
     public void dispatch(Channel channel, HttpRequest request) {
 	if (httpQueue.size() >= MAXIMUM_QUEUE_SIZE) {
 	    channel.close();
+	    return;
 	}
-	httpQueue.add(new ChannelRequest<HttpRequest>(channel, request));
+	httpQueue.add(new ChannelRequest<>(channel, request));
     }
 
 }

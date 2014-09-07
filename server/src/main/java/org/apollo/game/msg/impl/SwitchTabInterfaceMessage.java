@@ -7,7 +7,7 @@ import org.apollo.game.msg.Message;
  *
  * @author Graham
  */
-public final class SwitchTabInterfaceMessage extends Message {
+public final class SwitchTabInterfaceMessage implements Message {
 
     /**
      * The tab id.

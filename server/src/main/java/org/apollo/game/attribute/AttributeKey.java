@@ -1,6 +1,6 @@
 package org.apollo.game.attribute;
 
-import java.util.Objects;
+import static java.util.Objects.requireNonNull;
 
 /**
  * Represents a key for an {@link Attribute<T>}
@@ -37,7 +37,7 @@ public final class AttributeKey<T> {
      *             </p>
      */
     private AttributeKey(String name, T initial) {
-	this.name = Objects.requireNonNull(name);
+	this.name = requireNonNull(name);
 	this.initial = initial;
     }
 

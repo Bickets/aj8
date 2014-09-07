@@ -8,7 +8,7 @@ import org.apollo.game.msg.Message;
  * 
  * @author Tyler Buchanan <https://www.github.com/TylerBuchanan97>
  */
-public final class DropItemMessage extends Message {
+public final class DropItemMessage implements Message {
 
     private final int itemId;
 

@@ -7,7 +7,7 @@ import org.apollo.game.msg.Message;
  *
  * @author Graham
  */
-public final class SwitchItemMessage extends Message {
+public final class SwitchItemMessage implements Message {
 
     /**
      * The interface id.

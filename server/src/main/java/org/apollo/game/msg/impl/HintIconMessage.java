@@ -8,7 +8,7 @@ import org.apollo.game.msg.Message;
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public abstract class HintIconMessage extends Message {
+public abstract class HintIconMessage implements Message {
 
     /**
      * The different types for hint icons.

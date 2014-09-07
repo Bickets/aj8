@@ -8,7 +8,7 @@ import org.apollo.game.msg.Message;
  * 
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public final class PositionMessage extends Message {
+public final class PositionMessage implements Message {
 
     /**
      * The position.

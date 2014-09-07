@@ -8,7 +8,7 @@ import org.apollo.game.msg.Message;
  *
  * @author Graham
  */
-public final class WalkMessage extends Message {
+public final class WalkMessage implements Message {
 
     /**
      * The steps.

@@ -1,10 +1,11 @@
 package org.apollo.fs;
 
+import static java.util.Objects.requireNonNull;
+
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.Objects;
 
 import org.apollo.util.ByteBufferUtil;
 import org.apollo.util.CompressionUtil;
@@ -94,7 +95,7 @@ public final class Archive {
      * @return The archive entries name.
      */
     public byte[] get(String name) {
-	ArchiveEntry entry = Objects.requireNonNull(entries.get(NameUtil.hash(name)));
+	ArchiveEntry entry = requireNonNull(entries.get(NameUtil.hash(name)));
 	return entry.getBytes();
     }
 
