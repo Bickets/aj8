@@ -14,7 +14,6 @@ import org.apollo.game.model.pf.AStarPathFinder
 import org.apollo.game.msg.impl.GameObjectMessage
 import org.apollo.game.msg.impl.OpenInterfaceMessage
 import org.apollo.game.msg.impl.WelcomeScreenMessage
-import org.eclipse.xtend.lib.annotations.Data
 import plugin.Plugin
 import plugin.trade.Trade
 
