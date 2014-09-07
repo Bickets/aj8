@@ -135,10 +135,7 @@ public final class GameObjectDefinitionParser {
 	    } else if (code == 73) {
 		def.setUninteractableSolid(true);
 	    } else if (code == 75) {
-		int solidInt = buffer.get() & 0xFF;
-		if (solidInt == -1) {
-		    solidInt = def.isSolid() ? 1 : 0;
-		}
+		buffer.get();
 	    } else {
 		continue;
 	    }
