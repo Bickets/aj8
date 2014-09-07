@@ -49,7 +49,7 @@ public final class InterfaceDefinitionParser {
 	    def.setHoveredPopup(buffer.get() & 0xFF);
 
 	    if (def.getHoveredPopup() != 0) {
-		def.setHoveredPopup((def.getHoveredPopup() - 1 << 8) + buffer.get() & 0xFF);
+		def.setHoveredPopup((def.getHoveredPopup() - 1 << 8) + (buffer.get() & 0xFF));
 	    } else {
 		def.setHoveredPopup(-1);
 	    }
@@ -157,22 +157,22 @@ public final class InterfaceDefinitionParser {
 		index = buffer.get() & 0xFF;
 		if (index != 0) {
 		    def.setModelType(1);
-		    def.setModelId((index - 1 << 8) + buffer.get() & 0xFF);
+		    def.setModelId((index - 1 << 8) + (buffer.get() & 0xFF));
 		}
 		index = buffer.get() & 0xFF;
 		if (index != 0) {
 		    def.setEnabledModelType(1);
-		    def.setEnabledModelId((index - 1 << 8) + buffer.get() & 0xFF);
+		    def.setEnabledModelId((index - 1 << 8) + (buffer.get() & 0xFF));
 		}
 		index = buffer.get() & 0xFF;
 		if (index != 0) {
-		    def.setDisabledAnimation((index - 1 << 8) + buffer.get() & 0xFF);
+		    def.setDisabledAnimation((index - 1 << 8) + (buffer.get() & 0xFF));
 		} else {
 		    def.setDisabledAnimation(-1);
 		}
 		index = buffer.get() & 0xFF;
 		if (index != 0) {
-		    def.setEnabledAnimation((index - 1 << 8) + buffer.get() & 0xFF);
+		    def.setEnabledAnimation((index - 1 << 8) + (buffer.get() & 0xFF));
 		} else {
 		    def.setEnabledAnimation(-1);
 		}
