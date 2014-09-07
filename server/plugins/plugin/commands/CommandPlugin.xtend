@@ -16,7 +16,11 @@ import org.apollo.game.model.pf.AStarPathFinder
 import org.apollo.game.msg.impl.GameObjectMessage
 import org.apollo.game.msg.impl.OpenInterfaceMessage
 import org.apollo.game.msg.impl.WelcomeScreenMessage
+<<<<<<< HEAD
+import plugin.Plugin
+=======
 import org.eclipse.xtend.lib.annotations.Data
+>>>>>>> origin/master
 import plugin.trade.Trade
 
 import static plugin.Plugin.*
