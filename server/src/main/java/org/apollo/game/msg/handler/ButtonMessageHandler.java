@@ -23,7 +23,7 @@ public final class ButtonMessageHandler implements MessageHandler<ButtonMessage>
 	private final World world;
 
 	/**
-	 * Constructs a new {@link ButtonEvnetHandler}.
+	 * Constructs a new {@link ButtonMessageHandler}.
 	 *
 	 * @param world The world.
 	 */

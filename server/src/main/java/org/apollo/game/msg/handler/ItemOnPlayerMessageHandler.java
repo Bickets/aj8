@@ -49,7 +49,7 @@ public final class ItemOnPlayerMessageHandler implements MessageHandler<ItemOnPl
 			return;
 		}
 
-		Player victim = world.getPlayerRepository().get(victimIndex);
+		Player victim = repository.get(victimIndex);
 		if (victim == null || victimIndex != victim.getIndex()) {
 			return;
 		}

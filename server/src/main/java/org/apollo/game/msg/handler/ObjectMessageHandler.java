@@ -35,33 +35,29 @@ public final class ObjectMessageHandler implements MessageHandler<ObjectActionMe
 
 	@Override
 	public void handle(Player player, ObjectActionMessage message) {
-		GameObject obj = new GameObject(message.getId(), message.getPosition());
-		GameObjectDefinition def = obj.getDefinition();
+		if (player.getInterfaceSet().isOpen()) {
+			return;
+		}
+
+		GameObject object = new GameObject(message.getId(), message.getPosition());
+		GameObjectDefinition definition = object.getDefinition();
+
+		if (!object.exists() || !definition.isInteractable()) {
+			return;
+		}
+
+		if (definition.getActions()[message.getOption().getId()] == null) {
+			return;
+		}
 
 		if (!player.getPosition().isWithinDistance(message.getPosition(), player.getViewingDistance() + 1)) {
 			return;
 		}
 
-		if (!obj.exists()) {
-			return;
-		}
-
-		if (!def.isInteractable()) {
-			return;
-		}
-
-		if (def.getId() != message.getId()) {
-			return;
-		}
-
-		if (def.getActions()[message.getOption().getId()] == null) {
-			return;
-		}
-
-		player.startAction(new DistancedAction<Player>(0, true, player, message.getPosition(), obj.getTileOffset(player.getPosition())) {
+		player.startAction(new DistancedAction<Player>(0, true, player, message.getPosition(), object.getTileOffset(player.getPosition())) {
 			@Override
 			public void executeAction() {
-				player.turnTo(obj.getTurnToPosition(player.getPosition()));
+				player.turnTo(object.getTurnToPosition(player.getPosition()));
 				world.post(new ObjectActionEvent(player, message.getId(), message.getOption(), message.getPosition()));
 				stop();
 			}
