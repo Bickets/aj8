@@ -1,6 +1,9 @@
 package org.apollo.game.model.inter.trade;
 
+import java.util.List;
+
 import org.apollo.game.model.Inventory;
+import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
 
 /**
@@ -90,11 +93,27 @@ public final class TradeSession {
 	 * only if this trade session is valid otherwise {@code false}.
 	 */
 	public boolean verify() {
+		Inventory cloned = player.getInventory().clone();
+
+		List<Item> removed = cloned.removeAll(player.getTrade().getItems());
+		if (removed.size() > 0) {
+			player.sendMessage("There was an issue verifying this trade, please decline and try again.");
+			other.sendMessage("There was an issue verifying this trade, please decline and try again.");
+			return false;
+		}
+
+		List<Item> added = cloned.addAll(other.getTrade().getItems());
+		if (added.size() > 0) {
+			player.sendMessage("You do not have enough free inventory space to complete that transaction.");
+			other.sendMessage("Other player does not have enough free inventory space.");
+			return false;
+		}
+
 		return true;
 	}
 
 	/**
-	 * Declines this trade session, the {@code player} is the declinee.
+	 * Declines this trade session, the {@code player} declined the trade.
 	 */
 	public void decline() {
 		player.sendMessage("Trade declined.");
