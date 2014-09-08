@@ -24,7 +24,7 @@ public final class SecondSingleItemActionMessageDecoder implements MessageDecode
 		int id = (int) reader.getUnsigned(DataType.SHORT, DataTransformation.ADD);
 		int slot = (int) reader.getUnsigned(DataType.SHORT, DataOrder.LITTLE, DataTransformation.ADD);
 		int interfaceId = (int) reader.getUnsigned(DataType.SHORT, DataOrder.LITTLE, DataTransformation.ADD);
-		return new ItemActionMessage(InterfaceOption.OPTION_THREE, interfaceId, id, slot);
+		return new ItemActionMessage(InterfaceOption.OPTION_TWO, interfaceId, id, slot);
 	}
 
 }

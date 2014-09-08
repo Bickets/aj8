@@ -10,19 +10,19 @@ import org.apollo.net.codec.game.GamePacket;
 import org.apollo.net.codec.game.GamePacketReader;
 
 /**
- * A {@link MessageDecoder} for the {@link ItemActionMessage}.
+ * An {@link MessageDecoder} for the {@link ItemActionMessage}.
  *
  * @author Graham
  */
-@DecodesMessage(87)
+@DecodesMessage(129)
 public final class SecondInventoryItemActionMessageDecoder implements MessageDecoder<ItemActionMessage> {
 
 	@Override
 	public ItemActionMessage decode(GamePacket packet) {
 		GamePacketReader reader = new GamePacketReader(packet);
-		int id = (int) reader.getUnsigned(DataType.SHORT, DataTransformation.ADD);
-		int interfaceId = (int) reader.getUnsigned(DataType.SHORT);
 		int slot = (int) reader.getUnsigned(DataType.SHORT, DataTransformation.ADD);
+		int interfaceId = (int) reader.getUnsigned(DataType.SHORT);
+		int id = (int) reader.getUnsigned(DataType.SHORT, DataTransformation.ADD);
 		return new ItemActionMessage(InterfaceOption.OPTION_TWO, interfaceId, id, slot);
 	}
 

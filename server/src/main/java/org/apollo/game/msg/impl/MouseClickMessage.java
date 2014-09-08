@@ -80,7 +80,7 @@ public final class MouseClickMessage implements Message {
 	 *
 	 * @param time The time from the last occurrence of a click.
 	 * @param type The type of this click.
-	 * @param point The point where this click occured.
+	 * @param point The point where this click occurred.
 	 */
 	public MouseClickMessage(int time, ClickType type, Point point) {
 		this.time = time;
