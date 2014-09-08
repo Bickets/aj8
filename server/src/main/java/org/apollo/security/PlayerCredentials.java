@@ -1,6 +1,7 @@
 package org.apollo.security;
 
 import org.apollo.util.NameUtil;
+import org.apollo.util.TextUtil;
 
 /**
  * Holds the credentials for a player.
@@ -13,6 +14,11 @@ public final class PlayerCredentials {
 	 * The players username.
 	 */
 	private final String username;
+
+	/**
+	 * The players displayed username.
+	 */
+	private final String displayUsername;
 
 	/**
 	 * The players username encoded as a long.
@@ -51,6 +57,7 @@ public final class PlayerCredentials {
 	 */
 	public PlayerCredentials(String username, String password, int usernameHash, int uid, String address) {
 		this.username = username;
+		displayUsername = TextUtil.capitalize(username);
 		encodedUsername = NameUtil.encodeBase37(username);
 		this.password = password;
 		this.usernameHash = usernameHash;
@@ -65,6 +72,15 @@ public final class PlayerCredentials {
 	 */
 	public String getUsername() {
 		return username;
+	}
+
+	/**
+	 * Gets the players displayed username..
+	 *
+	 * @return The players displayed username.
+	 */
+	public String getDisplayUsername() {
+		return displayUsername;
 	}
 
 	/**
