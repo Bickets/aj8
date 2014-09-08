@@ -54,7 +54,7 @@ public final class ObjectMessageHandler implements MessageHandler<ObjectActionMe
 			return;
 		}
 
-		if (!player.getPosition().isWithinDistance(message.getPosition(), 32)) {
+		if (!player.getPosition().isWithinDistance(message.getPosition(), player.getViewingDistance() + 1)) {
 			return;
 		}
 
