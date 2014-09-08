@@ -505,6 +505,15 @@ public final class Player extends GameCharacter {
 	}
 
 	/**
+	 * Gets the players display name.
+	 *
+	 * @return The players display name.
+	 */
+	public String getDisplayName() {
+		return credentials.getDisplayUsername();
+	}
+
+	/**
 	 * Gets the players password.
 	 *
 	 * @return The players password.

@@ -22,7 +22,7 @@ public abstract class PlayerStatementDialogueListener implements DialogueListene
 		int headChildId = dialogueId - 2;
 		player.send(new PlayerModelOnInterfaceMessage(headChildId));
 		player.send(new InterfaceModelAnimationMessage(expression().getAnimation(), headChildId));
-		player.send(new SetInterfaceTextMessage(dialogueId - 1, player.getName()));
+		player.send(new SetInterfaceTextMessage(dialogueId - 1, player.getDisplayName()));
 		for (int i = 0; i < lines.length; i++) {
 			player.send(new SetInterfaceTextMessage(dialogueId + i, lines[i]));
 		}

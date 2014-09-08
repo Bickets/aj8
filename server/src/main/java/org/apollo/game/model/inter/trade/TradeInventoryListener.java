@@ -74,7 +74,7 @@ public final class TradeInventoryListener extends InventoryAdapter {
 	 */
 	private String buildTitle(Player player) {
 		Inventory inventory = player.getInventory();
-		return "Trading with: " + player.getName() + " who has @gre@" + inventory.freeSlots() + " @yel@ free slots.";
+		return "Trading with: " + player.getDisplayName() + " who has @gre@" + inventory.freeSlots() + " @yel@ free slots.";
 	}
 
 	/**
