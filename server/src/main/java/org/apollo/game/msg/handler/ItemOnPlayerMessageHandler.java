@@ -38,6 +38,10 @@ public final class ItemOnPlayerMessageHandler implements MessageHandler<ItemOnPl
 
 	@Override
 	public void handle(Player player, ItemOnPlayerMessage message) {
+		if (player.getInterfaceSet().isOpen()) {
+			return;
+		}
+
 		EntityRepository<Player> repository = world.getPlayerRepository();
 
 		int victimIndex = message.getVictimIndex();
@@ -47,6 +51,15 @@ public final class ItemOnPlayerMessageHandler implements MessageHandler<ItemOnPl
 
 		Player victim = world.getPlayerRepository().get(victimIndex);
 		if (victim == null || victimIndex != victim.getIndex()) {
+			return;
+		}
+
+		if (victim.getInterfaceSet().isOpen()) {
+			player.sendMessage("Other player is busy at the moment.");
+			return;
+		}
+
+		if (!player.getPosition().isWithinDistance(victim.getPosition(), player.getViewingDistance() + 1)) {
 			return;
 		}
 
@@ -72,11 +85,7 @@ public final class ItemOnPlayerMessageHandler implements MessageHandler<ItemOnPl
 			return;
 		}
 
-		if (!player.getPosition().isWithinDistance(victim.getPosition(), player.getViewingDistance() + 1)) {
-			return;
-		}
-
-		player.startAction(new DistancedAction<Player>(0, true, player, victim.getPosition(), 1) {
+		player.startAction(new DistancedAction<Player>(0, true, player, victim.getPosition(), victim.size()) {
 			@Override
 			public void executeAction() {
 				player.turnTo(victim.getPosition());

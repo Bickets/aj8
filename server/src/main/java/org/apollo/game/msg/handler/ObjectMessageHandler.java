@@ -38,6 +38,10 @@ public final class ObjectMessageHandler implements MessageHandler<ObjectActionMe
 		GameObject obj = new GameObject(message.getId(), message.getPosition());
 		GameObjectDefinition def = obj.getDefinition();
 
+		if (!player.getPosition().isWithinDistance(message.getPosition(), player.getViewingDistance() + 1)) {
+			return;
+		}
+
 		if (!obj.exists()) {
 			return;
 		}
@@ -51,10 +55,6 @@ public final class ObjectMessageHandler implements MessageHandler<ObjectActionMe
 		}
 
 		if (def.getActions()[message.getOption().getId()] == null) {
-			return;
-		}
-
-		if (!player.getPosition().isWithinDistance(message.getPosition(), player.getViewingDistance() + 1)) {
 			return;
 		}
 
