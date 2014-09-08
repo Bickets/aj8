@@ -7,7 +7,7 @@ import org.apollo.game.model.Player;
 /**
  * This class defines the {@link Event} that is executed when a
  * {@code ItemOnPlayerMessage} occurs.
- * 
+ *
  * @author Tyler Buchanan <https://www.github.com/TylerBuchanan97>
  */
 public final class ItemOnPlayerActionEvent implements Event {
@@ -15,26 +15,26 @@ public final class ItemOnPlayerActionEvent implements Event {
 	/**
 	 * The player.
 	 */
-	private Player player;
+	private final Player player;
 
 	/**
 	 * The other player.
 	 */
-	private Player otherPlayer;
+	private final Player otherPlayer;
 
 	/**
 	 * The item.
 	 */
-	private Item item;
+	private final Item item;
 
 	/**
 	 * The interface id.
 	 */
-	private int interfaceId;
+	private final int interfaceId;
 
 	/**
 	 * Constructs a new instance of this event.
-	 * 
+	 *
 	 * @param player The player.
 	 * @param otherPlayer The other player.
 	 * @param item The item.
@@ -49,7 +49,7 @@ public final class ItemOnPlayerActionEvent implements Event {
 
 	/**
 	 * Gets the player.
-	 * 
+	 *
 	 * @return The player.
 	 */
 	public Player getPlayer() {
@@ -58,7 +58,7 @@ public final class ItemOnPlayerActionEvent implements Event {
 
 	/**
 	 * Gets the other player.
-	 * 
+	 *
 	 * @return The other player.
 	 */
 	public Player getOtherPlayer() {
@@ -67,7 +67,7 @@ public final class ItemOnPlayerActionEvent implements Event {
 
 	/**
 	 * Gets the item.
-	 * 
+	 *
 	 * @return The item.
 	 */
 	public Item getItem() {
@@ -76,7 +76,7 @@ public final class ItemOnPlayerActionEvent implements Event {
 
 	/**
 	 * Gets the interface id.
-	 * 
+	 *
 	 * @return The interface id.
 	 */
 	public int getInterfaceId() {

@@ -4,7 +4,7 @@ import org.apollo.game.msg.Message;
 
 /**
  * Defines the message that handles using an item on another Player.
- * 
+ *
  * @author Tyler Buchanan <https://www.github.com/TylerBuchanan97>
  */
 public final class ItemOnPlayerMessage implements Message {
@@ -12,41 +12,41 @@ public final class ItemOnPlayerMessage implements Message {
 	/**
 	 * The interface id.
 	 */
-	private int interfaceId;
+	private final int interfaceId;
 
 	/**
-	 * The victim player's id.
+	 * The victim player's index.
 	 */
-	private int victimId;
+	private final int victimIndex;
 
 	/**
 	 * The item id.
 	 */
-	private int itemId;
+	private final int id;
 
 	/**
-	 * The slot id.
+	 * The slot.
 	 */
-	private int slotId;
+	private final int slot;
 
 	/**
 	 * Constructs a new instance of this message.
-	 * 
+	 *
 	 * @param interfaceId The interface id.
-	 * @param victimId The victim player's id.
-	 * @param itemId The item id.
-	 * @param slotId The slot id.
+	 * @param victimIndex The victim player's index.
+	 * @param id The item id.
+	 * @param slot The slot.
 	 */
-	public ItemOnPlayerMessage(int interfaceId, int victimId, int itemId, int slotId) {
+	public ItemOnPlayerMessage(int interfaceId, int victimIndex, int id, int slot) {
 		this.interfaceId = interfaceId;
-		this.victimId = victimId;
-		this.itemId = itemId;
-		this.slotId = slotId;
+		this.victimIndex = victimIndex;
+		this.id = id;
+		this.slot = slot;
 	}
 
 	/**
 	 * Gets the interface id.
-	 * 
+	 *
 	 * @return The interface id.
 	 */
 	public int getInterfaceId() {
@@ -54,30 +54,30 @@ public final class ItemOnPlayerMessage implements Message {
 	}
 
 	/**
-	 * Gets the victim player's id.
-	 * 
-	 * @return The victim player's id.
+	 * Gets the victim player's index.
+	 *
+	 * @return The victim player's index.
 	 */
-	public int getVictimId() {
-		return victimId;
+	public int getVictimIndex() {
+		return victimIndex;
 	}
 
 	/**
 	 * Gets the item id.
-	 * 
+	 *
 	 * @return The item id.
 	 */
-	public int getItemId() {
-		return itemId;
+	public int getId() {
+		return id;
 	}
 
 	/**
-	 * Gets the slot id.
-	 * 
-	 * @return The slot id.
+	 * Gets the slot.
+	 *
+	 * @return The slot.
 	 */
-	public int getSlotId() {
-		return slotId;
+	public int getSlot() {
+		return slot;
 	}
 
 }

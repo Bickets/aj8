@@ -21,10 +21,10 @@ public final class ItemOnPlayerMessageDecoder implements MessageDecoder<ItemOnPl
 	public ItemOnPlayerMessage decode(GamePacket packet) {
 		GamePacketReader reader = new GamePacketReader(packet);
 		int interfaceId = (int) reader.getUnsigned(DataType.SHORT, DataTransformation.ADD);
-		int victimId = (int) reader.getUnsigned(DataType.SHORT);
-		int itemId = (int) reader.getUnsigned(DataType.SHORT);
-		int slotId = (int) reader.getUnsigned(DataType.SHORT, DataOrder.LITTLE);
-		return new ItemOnPlayerMessage(interfaceId, victimId, itemId, slotId);
+		int victimIndex = (int) reader.getUnsigned(DataType.SHORT);
+		int id = (int) reader.getUnsigned(DataType.SHORT);
+		int slot = (int) reader.getUnsigned(DataType.SHORT, DataOrder.LITTLE);
+		return new ItemOnPlayerMessage(interfaceId, victimIndex, id, slot);
 	}
 
 }
