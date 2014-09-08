@@ -10,6 +10,7 @@ import org.apollo.game.model.inter.trade.TradeStage
 import org.apollo.game.model.inter.trade.TradeStatus
 import org.apollo.game.msg.impl.SetInterfaceTextMessage
 import org.apollo.util.NumberUtil
+import org.eclipse.xtend.lib.annotations.Data
 
 import static org.apollo.game.model.inter.trade.TradeConstants.*
 import static org.apollo.game.model.inter.trade.TradeStage.*

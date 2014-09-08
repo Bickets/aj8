@@ -1,7 +1,7 @@
 package plugin.items.onitem
 
-import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.event.EventSubscriber
+import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ItemOnItemActionEvent
 
 @SubscribesTo(ItemOnItemActionEvent)
