@@ -6,6 +6,7 @@ import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ItemOnPlayerActionEvent
 import org.apollo.game.model.Animation
 import org.apollo.game.model.Graphic
+import org.apollo.game.model.InventoryConstants
 import org.apollo.game.model.Player
 import org.apollo.game.model.inter.dialog.DialogueOption
 import org.apollo.game.model.inter.dialog.OptionDialogueListener
@@ -96,7 +97,7 @@ class ChristmasCracker implements EventSubscriber<ItemOnPlayerActionEvent> {
 	}
 
 	override test(ItemOnPlayerActionEvent event) {
-		if (event.item.id != 962) {
+		if (event.item.id != 962 || event.interfaceId != InventoryConstants.INVENTORY_ID) {
 			return false
 		}
 
