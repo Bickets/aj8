@@ -8,36 +8,29 @@ final class Plugin {
 
 	val static random = ThreadLocalRandom.current
 
-	val static isNum = [ String str |
-		str.matches("-?\\d+")
+	val static (String)=>boolean isNum = [matches("-?\\d+")]
+
+	val static (String)=>int toInt = [
+		if(it.isNum) Integer.valueOf(it) else throw new NumberFormatException
 	]
 
-	val static toInt = [ String str |
-		if(str.isNum) Integer.valueOf(str) else throw new NumberFormatException
-	]
+	val static exclusiveRandom = [random.nextInt(it)]
 
-	val static randomNoZero = [ int range |
-		exclusiveRandom.apply(range) + 1
-	]
+	val static randomNoZero = [exclusiveRandom.apply(it) + 1]
 
-	val static exclusiveRandom = [ int range |
-		random.nextInt(range)
-	]
-
-	val static inclusiveRandom = [ int min, int max |
+	val static (Integer, Integer)=>int inclusiveRandom = [ min, max |
 		exclusiveRandom.apply((max - min) + 1) + min
 	]
 
-	val static inclusiveRandomExcludes = [ int min, int max, List<Integer> excludes |
+	val static (Integer, Integer, List<Integer>)=>int inclusiveRandomExcludes = [ min, max, excludes |
 		var result = inclusiveRandom.apply(min, max)
 		while (excludes.contains(result)) {
 			result = inclusiveRandom.apply(min, max)
 		}
+		return result
 	]
 
-	val static randomFloat = [ float range |
-		random.nextFloat * range
-	]
+	val static (Float)=>float randomFloat = [random.nextFloat * it]
 
 	def static toInt(String str) {
 		toInt.apply(str)
