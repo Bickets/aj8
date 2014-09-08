@@ -18,11 +18,11 @@ final class Plugin {
 
 	val static randomNoZero = [exclusiveRandom.apply(it) + 1]
 
-	val static (Integer, Integer)=>int inclusiveRandom = [ min, max |
+	val static (int, int)=>int inclusiveRandom = [ min, max |
 		exclusiveRandom.apply((max - min) + 1) + min
 	]
 
-	val static (Integer, Integer, List<Integer>)=>int inclusiveRandomExcludes = [ min, max, excludes |
+	val static (int, int, List<Integer>)=>int inclusiveRandomExcludes = [ min, max, excludes |
 		var result = inclusiveRandom.apply(min, max)
 		while (excludes.contains(result)) {
 			result = inclusiveRandom.apply(min, max)
@@ -30,7 +30,7 @@ final class Plugin {
 		return result
 	]
 
-	val static (Float)=>float randomFloat = [random.nextFloat * it]
+	val static (float)=>float randomFloat = [random.nextFloat * it]
 
 	def static toInt(String str) {
 		toInt.apply(str)
