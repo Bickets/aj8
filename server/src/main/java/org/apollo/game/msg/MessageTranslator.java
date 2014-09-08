@@ -83,7 +83,9 @@ import org.apollo.game.msg.handler.EnteredAmountMessageHandler;
 import org.apollo.game.msg.handler.ItemActionMessageHandler;
 import org.apollo.game.msg.handler.ItemOnItemMessageHandler;
 import org.apollo.game.msg.handler.ItemOnPlayerMessageHandler;
+import org.apollo.game.msg.handler.MobActionMessageHandler;
 import org.apollo.game.msg.handler.ObjectMessageHandler;
+import org.apollo.game.msg.handler.PlayerActionMessageHandler;
 import org.apollo.game.msg.handler.RegionLoadedMessageHandler;
 import org.apollo.game.msg.handler.SwitchItemMessageHandler;
 import org.apollo.game.msg.handler.WalkMessageHandler;
@@ -232,6 +234,8 @@ public final class MessageTranslator {
 		register(new ItemActionMessageHandler(world));
 		register(new ItemOnItemMessageHandler(world));
 		register(new ItemOnPlayerMessageHandler(world));
+		register(new PlayerActionMessageHandler(world));
+		register(new MobActionMessageHandler(world));
 	}
 
 	/**
