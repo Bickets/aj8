@@ -4,5 +4,6 @@
 *.classpath
 *.project
 
+*/bin
 server/compiled-plugins
 server/data/savedGames
