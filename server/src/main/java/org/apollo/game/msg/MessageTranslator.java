@@ -18,11 +18,16 @@ import org.apollo.game.msg.decoder.CommandMessageDecoder;
 import org.apollo.game.msg.decoder.DialogueContinueMessageDecoder;
 import org.apollo.game.msg.decoder.EnteredAmountMessageDecoder;
 import org.apollo.game.msg.decoder.FifthItemActionMessageDecoder;
+import org.apollo.game.msg.decoder.FifthPlayerActionMessageDecoder;
 import org.apollo.game.msg.decoder.FirstInventoryItemActionMessageDecoder;
 import org.apollo.game.msg.decoder.FirstItemActionMessageDecoder;
+import org.apollo.game.msg.decoder.FirstMobActionMessageDecoder;
 import org.apollo.game.msg.decoder.FirstObjectActionMessageDecoder;
+import org.apollo.game.msg.decoder.FirstPlayerActionMessageDecoder;
 import org.apollo.game.msg.decoder.FirstSingleItemActionMessageDecoder;
 import org.apollo.game.msg.decoder.FourthItemActionMessageDecoder;
+import org.apollo.game.msg.decoder.FourthMobActionMessageDecoder;
+import org.apollo.game.msg.decoder.FourthPlayerActionMessageDecoder;
 import org.apollo.game.msg.decoder.IdleMessageDecoder;
 import org.apollo.game.msg.decoder.ItemOnItemMessageDecoder;
 import org.apollo.game.msg.decoder.ItemOnPlayerMessageDecoder;
@@ -32,12 +37,16 @@ import org.apollo.game.msg.decoder.ObsoleteMessageDecoder;
 import org.apollo.game.msg.decoder.RegionLoadedMessageDecoder;
 import org.apollo.game.msg.decoder.SecondInventoryItemActionMessageDecoder;
 import org.apollo.game.msg.decoder.SecondItemActionMessageDecoder;
+import org.apollo.game.msg.decoder.SecondMobActionMessageDecoder;
 import org.apollo.game.msg.decoder.SecondObjectActionMessageDecoder;
+import org.apollo.game.msg.decoder.SecondPlayerActionMessageDecoder;
 import org.apollo.game.msg.decoder.SecondSingleItemActionMessageDecoder;
 import org.apollo.game.msg.decoder.SwitchItemMessageDecoder;
 import org.apollo.game.msg.decoder.ThirdInventoryItemActionMessageDecoder;
 import org.apollo.game.msg.decoder.ThirdItemActionMessageDecoder;
+import org.apollo.game.msg.decoder.ThirdMobActionMessageDecoder;
 import org.apollo.game.msg.decoder.ThirdObjectActionMessageDecoder;
+import org.apollo.game.msg.decoder.ThirdPlayerActionMessageDecoder;
 import org.apollo.game.msg.decoder.WalkMessageDecoder;
 import org.apollo.game.msg.encoder.CloseInterfaceMessageEncoder;
 import org.apollo.game.msg.encoder.EnterAmountMessageEncoder;
@@ -167,6 +176,17 @@ public final class MessageTranslator {
 		register(new ThirdItemActionMessageDecoder());
 		register(new FourthItemActionMessageDecoder());
 		register(new FifthItemActionMessageDecoder());
+
+		register(new FirstMobActionMessageDecoder());
+		register(new SecondMobActionMessageDecoder());
+		register(new ThirdMobActionMessageDecoder());
+		register(new FourthMobActionMessageDecoder());
+
+		register(new FirstPlayerActionMessageDecoder());
+		register(new SecondPlayerActionMessageDecoder());
+		register(new ThirdPlayerActionMessageDecoder());
+		register(new FourthPlayerActionMessageDecoder());
+		register(new FifthPlayerActionMessageDecoder());
 
 		// register encoders
 		register(new IdAssignmentMessageEncoder());
