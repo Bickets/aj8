@@ -17,6 +17,7 @@ import org.apollo.game.model.World
 import plugin.mobs.MobSpawnEvent
 
 import static java.nio.file.FileVisitResult.*
+import org.apollo.game.interact.ItemOnPlayerActionEvent
 
 class Bootstrap {
 
@@ -45,6 +46,9 @@ class Bootstrap {
 					}
 					case ObjectActionEvent: {
 						world.provideSubscriber(it.newInstance as EventSubscriber<ObjectActionEvent>)
+					}
+					case ItemOnPlayerActionEvent: {
+						world.provideSubscriber(it.newInstance as EventSubscriber<ItemOnPlayerActionEvent>)
 					}
 				}
 			}
