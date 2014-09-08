@@ -6,7 +6,6 @@ import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.model.Player.PrivilegeLevel
 import org.apollo.game.model.Position
-import org.apollo.game.model.World
 import org.apollo.game.model.^def.GameObjectDefinition
 import org.apollo.game.model.^def.ItemDefinition
 import org.apollo.game.model.^def.StaticObjectDefinition
@@ -16,14 +15,11 @@ import org.apollo.game.model.pf.AStarPathFinder
 import org.apollo.game.msg.impl.GameObjectMessage
 import org.apollo.game.msg.impl.OpenInterfaceMessage
 import org.apollo.game.msg.impl.WelcomeScreenMessage
-import org.eclipse.xtend.lib.annotations.Data
-import plugin.trade.Trade
 
 import static plugin.Plugin.*
 
 @SubscribesTo(CommandEvent)
-@Data class CommandPlugin implements EventSubscriber<CommandEvent> {
-	val World world
+class CommandPlugin implements EventSubscriber<CommandEvent> {
 
 	override subscribe(CommandEvent event) {
 		val args = event.arguments
@@ -43,8 +39,6 @@ import static plugin.Plugin.*
 				plr.privilegeLevel = PrivilegeLevel.ADMINISTRATOR
 			case "close":
 				plr.interfaceSet.close
-			case "trade":
-				Trade.openTrade(plr, world.playerRepository.get(2))
 			case "pos":
 				plr.sendMessage(plr.position)
 			case "pickup": {
