@@ -2,7 +2,7 @@ package org.apollo.game.model.obj;
 
 /**
  * Represents the orientation of an object.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public enum ObjectOrientation {
@@ -35,7 +35,7 @@ public enum ObjectOrientation {
 	/**
 	 * Constructs a new {@link ObjectOrientation} with the specified orientation
 	 * id.
-	 * 
+	 *
 	 * @param id The orientation id.
 	 */
 	private ObjectOrientation(int id) {
@@ -51,7 +51,7 @@ public enum ObjectOrientation {
 
 	/**
 	 * Returns a single object orientation for the specified id.
-	 * 
+	 *
 	 * @param id The orientations id.
 	 * @return The objects orientation if possible.
 	 */

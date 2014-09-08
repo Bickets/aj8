@@ -11,7 +11,7 @@ import org.apollo.util.GsonUtil;
 
 /**
  * Represents meta-data about game packets.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class GamePacketDefinition {
@@ -39,7 +39,7 @@ public final class GamePacketDefinition {
 	/**
 	 * Constructs a new {@link GamePacketDefinition} with the specified opcode
 	 * and length.
-	 * 
+	 *
 	 * @param opcode The opcode of this game packet definition.
 	 * @param length The length of this game packet definition.
 	 */
@@ -60,7 +60,7 @@ public final class GamePacketDefinition {
 
 	/**
 	 * Initializes the definitions.
-	 * 
+	 *
 	 * @throws IOException If some I/O error occurs.
 	 */
 	public static void init() throws IOException {
@@ -79,7 +79,7 @@ public final class GamePacketDefinition {
 	 * Returns the incoming game packet definition for the specified opcode if
 	 * it is within bounds otherwise a {@link IndexOutOfBoundsException} is
 	 * thrown.
-	 * 
+	 *
 	 * @param opcode The opcode.
 	 * @return The incoming game packet definition.
 	 */
@@ -95,7 +95,7 @@ public final class GamePacketDefinition {
 	 * Returns the outgoing game packet definition for the specified opcode if
 	 * it is within bounds otherwise a {@link IndexOutOfBoundsException} is
 	 * thrown.
-	 * 
+	 *
 	 * @param opcode The opcode.
 	 * @return The outgoing game packet definition.
 	 */

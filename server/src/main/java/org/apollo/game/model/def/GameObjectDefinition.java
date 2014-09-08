@@ -190,8 +190,9 @@ public final class GameObjectDefinition {
 	public void addAction(int code, String action) {
 		if (!action.equalsIgnoreCase("hidden")) {
 			actions[code] = action;
-			if (!action.contains("Examine"))
+			if (!action.contains("Examine")) {
 				hasActions = true;
+			}
 		}
 	}
 

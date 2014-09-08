@@ -13,7 +13,7 @@ import org.apollo.security.PlayerCredentials;
 /**
  * A {@link PlayerSanctionProvider} implementation which supports the JDBC MySQL
  * protocol.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class JdbcSanctionProvider implements PlayerSanctionProvider {
@@ -32,7 +32,7 @@ public final class JdbcSanctionProvider implements PlayerSanctionProvider {
 	/**
 	 * Constructs a new {@link JdbcSanctionProvider} with the specified database
 	 * connection.
-	 * 
+	 *
 	 * @param connection The database connection.
 	 * @throws SQLException If some database access error occurs.
 	 */

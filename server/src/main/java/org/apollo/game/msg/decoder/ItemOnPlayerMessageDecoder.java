@@ -11,7 +11,7 @@ import org.apollo.net.codec.game.GamePacketReader;
 
 /**
  * This class decodes the message sent when an item is used on another player.
- * 
+ *
  * @author Tyler Buchanan <http://www.github.com/TylerBuchanan97)
  */
 @DecodesMessage(14)

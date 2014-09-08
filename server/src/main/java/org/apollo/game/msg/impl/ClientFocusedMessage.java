@@ -5,7 +5,7 @@ import org.apollo.game.msg.Message;
 /**
  * A message which is received whenever the client windows comes in or out of
  * focus.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class ClientFocusedMessage implements Message {
@@ -17,7 +17,7 @@ public final class ClientFocusedMessage implements Message {
 
 	/**
 	 * Constructs a new {@link ClientFocusedMessage} with the specified flag.
-	 * 
+	 *
 	 * @param clientWindowFocused A flag denoting whether or not the client
 	 *            windows is within focus.
 	 */

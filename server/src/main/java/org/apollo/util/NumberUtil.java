@@ -24,7 +24,7 @@ public final class NumberUtil {
 		NumberFormat decimalFormatter = new DecimalFormat("#,###.#");
 		NumberFormat valueFormatter = NumberFormat.getInstance(Locale.US);
 		int power = (int) Math.log10(number.doubleValue());
-		double value = Math.floor(number.doubleValue() / (Math.pow(10, (power / 3) * 3)));
+		double value = Math.floor(number.doubleValue() / Math.pow(10, power / 3 * 3));
 		bldr.append(decimalFormatter.format(value)).append(suffix.charAt(power / 3));
 		bldr.append(" (").append(valueFormatter.format(number)).append(")");
 		return bldr.toString();

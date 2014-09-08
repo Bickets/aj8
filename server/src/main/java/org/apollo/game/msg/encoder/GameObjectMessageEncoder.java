@@ -11,7 +11,7 @@ import org.apollo.net.codec.game.GamePacketBuilder;
 
 /**
  * Encodes the game object message.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @EncodesMessage(GameObjectMessage.class)

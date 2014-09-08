@@ -19,7 +19,7 @@ public class DropItemMessageHandler implements MessageHandler<DropItemMessage> {
 	/**
 	 * The world object.
 	 */
-	private World world;
+	private final World world;
 
 	/**
 	 * Constructs a new instance of this class.

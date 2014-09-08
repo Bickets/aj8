@@ -23,7 +23,6 @@ public final class InterfaceDefinitionParser {
 	 * @return An array of parsed interface definitions.
 	 * @throws IOException If some I/O exception occurs.
 	 */
-	@SuppressWarnings("unused")
 	public static InterfaceDefinition[] parse(FileSystem fs) throws IOException {
 		Archive archive = fs.getArchive(FileSystem.INTERFACE_ARCHIVE);
 		ByteBuffer buffer = ByteBuffer.wrap(archive.get("data"));
@@ -111,7 +110,7 @@ public final class InterfaceDefinitionParser {
 					if (hasSprite == 1) {
 						def.getImageX()[sprite] = buffer.getShort();
 						def.getImageY()[sprite] = buffer.getShort();
-						String spriteName = ByteBufferUtil.readString(buffer);
+						ByteBufferUtil.readString(buffer);
 					}
 				}
 				def.setActions(new String[5]);
@@ -129,7 +128,7 @@ public final class InterfaceDefinitionParser {
 
 			if (def.getType() == 4 || def.getType() == 1) {
 				def.setTypeFaceCentered((buffer.get() & 0xFF) == 1);
-				int typeFace = buffer.get() & 0xFF;
+				buffer.get();
 				def.setTypeFaceShadowed((buffer.get() & 0xFF) == 1);
 			}
 
@@ -149,8 +148,8 @@ public final class InterfaceDefinitionParser {
 			}
 
 			if (def.getType() == 5) {
-				String spriteName = ByteBufferUtil.readString(buffer);
-				spriteName = ByteBufferUtil.readString(buffer);
+				ByteBufferUtil.readString(buffer);
+				ByteBufferUtil.readString(buffer);
 			}
 
 			if (def.getType() == 6) {
@@ -185,7 +184,7 @@ public final class InterfaceDefinitionParser {
 				def.setItems(new int[def.getWidth() * def.getHeight()]);
 				def.setItemAmounts(new int[def.getWidth() * def.getHeight()]);
 				def.setTypeFaceCentered((buffer.get() & 0xFF) == 1);
-				int typeFaceCount = buffer.get() & 0xFF;
+				buffer.get();
 				def.setTypeFaceShadowed((buffer.get() & 0xFF) == 1);
 				def.setDisabledColor(buffer.getInt());
 				def.setItemSpritePadsX(buffer.getShort());

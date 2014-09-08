@@ -58,7 +58,7 @@ public final class StaticObjectDefinition {
 
 	/**
 	 * Initializes the static object definitions multimap.
-	 * 
+	 *
 	 * @param definitions The object definitions multimap.
 	 */
 	public static void init(Multimap<Integer, StaticObjectDefinition> definitions) {
@@ -67,7 +67,7 @@ public final class StaticObjectDefinition {
 
 	/**
 	 * Returns all of the static objects on the map for the specified id.
-	 * 
+	 *
 	 * @param id The id.
 	 * @return The object definition.
 	 */

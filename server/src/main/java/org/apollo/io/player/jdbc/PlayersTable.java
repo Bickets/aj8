@@ -13,7 +13,7 @@ import org.apollo.game.model.Position;
 
 /**
  * A {@link Table} which serializes player information.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class PlayersTable extends Table {
@@ -31,7 +31,7 @@ public final class PlayersTable extends Table {
 	/**
 	 * Constructs a new {@link PlayersTable} with the specified database
 	 * connection.
-	 * 
+	 *
 	 * @param connection The database connection.
 	 * @throws SQLException If some database access error occurs.
 	 */

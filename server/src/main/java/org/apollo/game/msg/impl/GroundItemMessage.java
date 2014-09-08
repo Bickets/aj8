@@ -6,7 +6,7 @@ import org.apollo.game.msg.Message;
 /**
  * Defines a message related to a {@link GroundItem} for either the removal or
  * addition.
- * 
+ *
  * @author Tyler Buchanan <https://www.github.com/TylerBuchanan97>
  */
 public final class GroundItemMessage implements Message {
@@ -23,7 +23,7 @@ public final class GroundItemMessage implements Message {
 
 	/**
 	 * This constructs a new ground item message.
-	 * 
+	 *
 	 * @param groundItem The ground item.
 	 * @param positionOffset The position offset.
 	 */
@@ -34,7 +34,7 @@ public final class GroundItemMessage implements Message {
 
 	/**
 	 * Get the ground item.
-	 * 
+	 *
 	 * @return The ground item.
 	 */
 	public GroundItem getGroundItem() {
@@ -43,7 +43,7 @@ public final class GroundItemMessage implements Message {
 
 	/**
 	 * Gets the position offset.
-	 * 
+	 *
 	 * @return The position offset.
 	 */
 	public int getPositionOffset() {

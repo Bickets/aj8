@@ -9,7 +9,7 @@ import org.apollo.net.codec.game.GamePacketReader;
 
 /**
  * Decodes the client focused message.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @DecodesMessage(3)

@@ -7,7 +7,7 @@ import org.apollo.game.msg.Message;
 /**
  * A message which marks a specified packet obsolete, it is either unused or
  * serves no purpose in our implementation/
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class ObsoleteMessage implements Message {
@@ -19,7 +19,7 @@ public final class ObsoleteMessage implements Message {
 
 	/**
 	 * Constructs a new {@link ObsoleteMessage} with the specified payload.
-	 * 
+	 *
 	 * @param payload The payload of this message.
 	 */
 	public ObsoleteMessage(ByteBuf payload) {

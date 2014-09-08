@@ -6,14 +6,14 @@ import org.apollo.game.msg.Message;
 
 /**
  * A message which is decoded when the mouse is clicked on the game screen.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class MouseClickMessage implements Message {
 
 	/**
 	 * Represents the type of click, left or right.
-	 * 
+	 *
 	 * @author Ryley Kimmel <ryley.kimmel@live.com>
 	 */
 	public enum ClickType {
@@ -35,7 +35,7 @@ public final class MouseClickMessage implements Message {
 		/**
 		 * Constructs a new {@link ClickType} with the specified click
 		 * identifier.
-		 * 
+		 *
 		 * @param id The identifier of this click type.
 		 */
 		private ClickType(int id) {
@@ -45,7 +45,7 @@ public final class MouseClickMessage implements Message {
 		/**
 		 * Returns a click type for the specified id or throws an
 		 * {@link IllegalArgumentException} if the click type doesn't exist.
-		 * 
+		 *
 		 * @param id The identifier of the click type we're trying to find.
 		 * @return The click type, if possible.
 		 */
@@ -77,7 +77,7 @@ public final class MouseClickMessage implements Message {
 	/**
 	 * Constructs a new {@link MouseClickEvent} with the specified time, type
 	 * and point.
-	 * 
+	 *
 	 * @param time The time from the last occurrence of a click.
 	 * @param type The type of this click.
 	 * @param point The point where this click occured.

@@ -10,7 +10,7 @@ import org.apollo.game.model.Player;
 
 /**
  * A {@link Table} which serializes common settings of a player.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class SettingsTable extends Table {
@@ -29,7 +29,7 @@ public final class SettingsTable extends Table {
 	/**
 	 * Constructs a new {@link SettingsTable} with the specified database
 	 * connection.
-	 * 
+	 *
 	 * @param connection The database connection.
 	 * @throws SQLException If some database access error occurs.
 	 */

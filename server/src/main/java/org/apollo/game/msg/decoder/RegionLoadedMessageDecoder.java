@@ -7,7 +7,7 @@ import org.apollo.net.codec.game.GamePacket;
 
 /**
  * Decodes the {@link RegionLoadedMessage}.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @DecodesMessage(121)

@@ -5,7 +5,7 @@ import org.apollo.game.msg.Message;
 /**
  * This defines the message send by the client when the "Drop" option is pressed
  * on an item.
- * 
+ *
  * @author Tyler Buchanan <https://www.github.com/TylerBuchanan97>
  */
 public final class DropItemMessage implements Message {

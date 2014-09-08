@@ -68,7 +68,7 @@ public final class TraversalMap {
 		/**
 		 * The flags within the region.
 		 */
-		private Tile[][] tiles;
+		private final Tile[][] tiles;
 
 		/**
 		 * Constructs a new {@link Region}.

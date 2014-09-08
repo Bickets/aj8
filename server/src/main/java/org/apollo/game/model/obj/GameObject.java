@@ -130,8 +130,8 @@ public final class GameObject extends Entity {
 			width = def.getSizeY();
 			length = def.getSizeX();
 		}
-		int centerX = getPosition().getX() + (width / 2);
-		int centerY = getPosition().getY() + (length / 2);
+		int centerX = getPosition().getX() + width / 2;
+		int centerY = getPosition().getY() + length / 2;
 		return new Position(centerX, centerY);
 	}
 
@@ -204,7 +204,7 @@ public final class GameObject extends Entity {
 
 	@Override
 	public int hashCode() {
-		return (type.getId() << 2) | orientation.getId() & 0x3F;
+		return type.getId() << 2 | orientation.getId() & 0x3F;
 	}
 
 	@Override

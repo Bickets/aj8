@@ -67,7 +67,7 @@ public final class StaticObjectDefinitionParser {
 			MapDefinition def = entry.getValue();
 
 			int hash = def.getHash();
-			int x = ((hash >> 8) & 0xFF) * 64;
+			int x = (hash >> 8 & 0xFF) * 64;
 			int y = (hash & 0xFF) * 64;
 
 			byte[] landscapeData = fs.getFile(FileSystem.MAP_IDX, def.getLandscapeFile());

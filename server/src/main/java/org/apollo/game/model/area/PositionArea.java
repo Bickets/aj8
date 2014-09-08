@@ -27,7 +27,7 @@ public final class PositionArea extends Area {
 
 	@Override
 	public boolean withinArea(int x, int y, int padding) {
-		return x >= (position.getX() - padding) && x <= (position.getX() + padding) && y >= (position.getY() - padding) && y <= (position.getY() + padding);
+		return x >= position.getX() - padding && x <= position.getX() + padding && y >= position.getY() - padding && y <= position.getY() + padding;
 	}
 
 	@Override

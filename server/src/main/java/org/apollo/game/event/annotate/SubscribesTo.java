@@ -17,7 +17,7 @@ import org.apollo.game.event.EventSubscriber;
  * event value is indeed an event. All event subscribers MUST be annotated
  * otherwise {@link EventProvider}s will be unable to provide and deprive
  * subscribers.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @Documented

@@ -10,7 +10,7 @@ import org.apollo.net.codec.game.GamePacketReader;
 
 /**
  * This class decodes the {@link ItemOnItemMessage}.
- * 
+ *
  * @author Tyler Buchanan <https://www.github.com/TylerBuchanan97>
  */
 @DecodesMessage(53)

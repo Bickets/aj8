@@ -5,7 +5,7 @@ import org.apollo.net.codec.game.GamePacket;
 /**
  * An {@link MessageEncoder} encodes {@link Message} objects into
  * {@link GamePacket} s which can be sent over the network.
- * 
+ *
  * <p>
  * This is a functional interface whose functional method is
  * {@link #encode(Message)}

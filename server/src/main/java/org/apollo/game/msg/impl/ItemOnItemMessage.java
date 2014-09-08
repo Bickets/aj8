@@ -5,7 +5,7 @@ import org.apollo.game.msg.Message;
 /**
  * This class defines the message for when the player uses an item on another
  * item, in an inventory.
- * 
+ *
  * @author Tyler Buchanan <https://www.github.com/TylerBuchanan97>
  */
 public class ItemOnItemMessage implements Message {
@@ -13,16 +13,16 @@ public class ItemOnItemMessage implements Message {
 	/**
 	 * The slot of the item getting interacted with.
 	 */
-	private int receiverSlot;
+	private final int receiverSlot;
 
 	/**
 	 * The slot of the item creating the interaction.
 	 */
-	private int senderSlot;
+	private final int senderSlot;
 
 	/**
 	 * Constructs a new instance of this {@link Message}.
-	 * 
+	 *
 	 * @param receiverSlot The slot of the item getting interacted with.
 	 * @param senderSlot The slot of the item creating the interaction.
 	 */
@@ -33,7 +33,7 @@ public class ItemOnItemMessage implements Message {
 
 	/**
 	 * Gets the slot of the receiver item.
-	 * 
+	 *
 	 * @return The slot of the item getting interacted with.
 	 */
 	public int getReceiverSlot() {
@@ -42,7 +42,7 @@ public class ItemOnItemMessage implements Message {
 
 	/**
 	 * Gets the slot of the sender item.
-	 * 
+	 *
 	 * @return The slot of the item creating the interaction.
 	 */
 	public int getSenderSlot() {

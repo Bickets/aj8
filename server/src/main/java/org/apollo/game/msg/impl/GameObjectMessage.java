@@ -5,7 +5,7 @@ import org.apollo.game.msg.Message;
 
 /**
  * A message related to a {@link GameObject} which could be addition or removal.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class GameObjectMessage implements Message {
@@ -23,7 +23,7 @@ public final class GameObjectMessage implements Message {
 	/**
 	 * Constructs a new {@link GameObjectMessage} with the specified game
 	 * object.
-	 * 
+	 *
 	 * @param positionOffset The objects offset.
 	 * @param object The game object.
 	 */

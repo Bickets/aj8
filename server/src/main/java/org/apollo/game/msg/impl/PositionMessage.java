@@ -5,7 +5,7 @@ import org.apollo.game.msg.Message;
 
 /**
  * A message which sends a normalized {@link Position}.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class PositionMessage implements Message {
@@ -17,7 +17,7 @@ public final class PositionMessage implements Message {
 
 	/**
 	 * Constructs a new {@link PositionMessage} with the specified position.
-	 * 
+	 *
 	 * @param position The position.
 	 */
 	public PositionMessage(Position position) {

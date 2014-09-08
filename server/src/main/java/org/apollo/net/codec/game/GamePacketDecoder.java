@@ -88,7 +88,7 @@ public final class GamePacketDecoder extends ByteToMessageDecoder {
 
 				actualLength = 0;
 				for (int i = 0; i < check; i++) {
-					actualLength |= (buffer.readByte() & 0xFF) << 8 * ((check - 1) - i);
+					actualLength |= (buffer.readByte() & 0xFF) << 8 * (check - 1 - i);
 				}
 
 				state = GAME_PAYLOAD;

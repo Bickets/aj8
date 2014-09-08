@@ -8,7 +8,7 @@ import org.apollo.game.msg.impl.RegionLoadedMessage;
 
 /**
  * A {@link MessageHandler} for the {@link RegionLoadedMessage}.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @HandlesMessage(RegionLoadedMessage.class)

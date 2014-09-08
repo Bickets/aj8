@@ -32,7 +32,7 @@ public abstract class Entity {
 	 * @param position The initial position of this entity.
 	 */
 	public Entity(Position position) {
-		this.setPosition(position);
+		setPosition(position);
 	}
 
 	/**

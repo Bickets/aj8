@@ -5,7 +5,7 @@ import org.apollo.net.codec.game.GamePacket;
 /**
  * An {@link MessageDecoder} decodes a {@link GamePacket} into a {@link Message}
  * object which can be processed by the server.
- * 
+ *
  * <p>
  * This is a functional interface whose functional method is
  * {@link #decode(GamePacket)}

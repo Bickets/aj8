@@ -59,12 +59,12 @@ public final class QuadArea extends Area {
 
 	@Override
 	public boolean withinArea(int x, int y, int padding) {
-		return x >= (leftX - padding) && x <= (rightX + padding) && y >= (leftY - padding) && y <= (rightY + padding);
+		return x >= leftX - padding && x <= rightX + padding && y >= leftY - padding && y <= rightY + padding;
 	}
 
 	@Override
 	public Position center() {
-		return new Position(leftX + ((rightX - leftX) / 2), leftY + ((rightY - leftY) / 2));
+		return new Position(leftX + (rightX - leftX) / 2, leftY + (rightY - leftY) / 2);
 	}
 
 	@Override

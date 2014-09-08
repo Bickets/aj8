@@ -12,7 +12,7 @@ import org.apollo.net.codec.game.GamePacketReader;
 
 /**
  * Decodes the mouse click message.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 @DecodesMessage(241)
@@ -24,12 +24,12 @@ public final class MouseClickMessageDecoder implements MessageDecoder<MouseClick
 
 		int clickHash = (int) reader.getUnsigned(DataType.INT);
 		int time = clickHash >> 20;
-		int type = (clickHash >> 19) & 0x1;
+		int type = clickHash >> 19 & 0x1;
 
 		clickHash &= (1 << 19) - 1;
 
 		int y = clickHash / 765;
-		int x = clickHash - (y * 765);
+		int x = clickHash - y * 765;
 
 		return new MouseClickMessage(time, ClickType.forId(type), new Point(x, y));
 	}
