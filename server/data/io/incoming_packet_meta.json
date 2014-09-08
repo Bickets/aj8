@@ -229,11 +229,11 @@
   },
   {
     "opcode": 57,
-    "length": 0
+    "length": 8
   },
   {
     "opcode": 58,
-    "length": 8
+    "length": 0
   },
   {
     "opcode": 59,

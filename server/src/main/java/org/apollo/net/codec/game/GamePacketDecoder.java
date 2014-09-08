@@ -66,7 +66,7 @@ public final class GamePacketDecoder extends ByteToMessageDecoder {
 		while (buffer.isReadable()) {
 			if (state == GAME_OPCODE) {
 
-				opcode = buffer.readByte() - random.nextInt() & 0xFF;
+				opcode = buffer.readUnsignedByte() - random.nextInt() & 0xFF;
 
 				GamePacketDefinition def = incomingDefinition(opcode);
 				if (def == null) {
