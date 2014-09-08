@@ -1,7 +1,6 @@
 package org.apollo.game.model;
 
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -104,15 +103,10 @@ public final class Inventory implements Cloneable {
 		this.mode = mode;
 	}
 
-	/**
-	 * Creates a copy of this inventory. Listeners are not copied, they must be
-	 * added again yourself! This is so cloned copies don't send updates to
-	 * their counterparts.
-	 */
 	@Override
 	public Inventory clone() {
 		Inventory copy = new Inventory(capacity, mode);
-		copy.items = Arrays.copyOf(items, capacity);
+		copy.items = items.clone();
 		copy.size = size;
 		return copy;
 	}
@@ -248,7 +242,7 @@ public final class Inventory implements Cloneable {
 		for (Item item : items) {
 			if (item != null) {
 				int amountRemoved = remove(item);
-				if (amountRemoved == 0) {
+				if (amountRemoved != item.getAmount()) {
 					failed.add(new Item(item.getId(), item.getAmount() - amountRemoved));
 				}
 			}
@@ -267,9 +261,9 @@ public final class Inventory implements Cloneable {
 		List<Item> failed = new ArrayList<>();
 		for (Item item : items) {
 			if (item != null) {
-				Item available = add(item);
-				if (available != null) {
-					failed.add(available);
+				Item added = add(item);
+				if (added == null) {
+					failed.add(added);
 				}
 			}
 		}
