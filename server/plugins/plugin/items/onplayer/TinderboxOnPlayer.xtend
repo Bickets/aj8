@@ -9,7 +9,7 @@ import org.apollo.game.model.InventoryConstants
 class TinderboxOnPlayer implements EventSubscriber<ItemOnPlayerActionEvent> {
 
 	override subscribe(ItemOnPlayerActionEvent event) {
-		event.player.sendMessage("You're just sick, aren't you?")
+		event.player.sendMessage("Why would you do that to someone? You're sick.")
 	}
 
 	override test(ItemOnPlayerActionEvent event) {
