@@ -50,7 +50,12 @@ public final class UniversalEventProvider implements EventProvider {
 	@Override
 	public <E extends Event> void post(E event) {
 		Collection<EventSubscriber> subscribers = events.get(event.getClass());
-		subscribers.stream().filter(s -> s.test(event)).forEach(s -> s.subscribe(event));
+
+		subscribers.forEach(subscriber -> {
+			if (subscriber.test(event)) {
+				subscriber.subscribe(event);
+			}
+		});
 	}
 
 }
