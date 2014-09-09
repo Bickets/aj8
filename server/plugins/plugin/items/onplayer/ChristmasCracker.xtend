@@ -63,11 +63,7 @@ class ChristmasCracker implements EventSubscriber<ItemOnPlayerActionEvent> {
 							player.sendMessage("The person you pull the cracker with gets the prize.")
 							other.give
 						}
-
-						return true
 					}
-
-					return false
 				}
 
 				override lines() {

@@ -41,8 +41,8 @@ public abstract class ContinueStatementDialogueListener implements DialogueListe
 	}
 
 	@Override
-	public final boolean optionClicked(DialogueOption option) {
-		return false;
+	public final void optionClicked(DialogueOption option) {
+
 	}
 
 }

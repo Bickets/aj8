@@ -91,20 +91,20 @@ public enum DialogueOption {
 	 * Returns an instance of {@link DialogueOption} from the specified id if
 	 * the id exists within some dialogue option's {@link #ids}.
 	 *
-	 * @param _id The id.
+	 * @param id The id.
 	 * @return The dialogue option.
 	 * @throws IllegalArgumentException If the specified id does not have a
 	 *             parent dialogue option.
 	 */
-	public static DialogueOption fromId(int _id) {
+	public static DialogueOption fromId(int id) {
 		for (DialogueOption option : ALL_OPTIONS) {
-			for (int id : option.getIds()) {
-				if (_id == id) {
+			for (int _id : option.getIds()) {
+				if (id == _id) {
 					return option;
 				}
 			}
 		}
-		throw new IllegalArgumentException("No enum constant exists for specified id: " + _id);
+		throw new IllegalArgumentException("No enum constant exists for specified id: " + id);
 	}
 
 }

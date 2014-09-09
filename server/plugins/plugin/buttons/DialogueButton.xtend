@@ -14,10 +14,8 @@ class DialogueButton implements EventSubscriber<ButtonActionEvent> {
 	override subscribe(ButtonActionEvent event) {
 		val player = event.player
 		val option = DialogueOption.fromId(event.id)
-		val success = player.interfaceSet.optionClicked(option)
-		if (success) {
-			player.interfaceSet.continueRequested
-		}
+		player.interfaceSet.optionClicked(option)
+		player.interfaceSet.continueRequested
 	}
 
 	def static buildIds() {

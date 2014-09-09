@@ -1,8 +1,7 @@
 package org.apollo.game.model.inter.dialog;
 
+import static java.util.Objects.requireNonNull;
 import static org.apollo.game.model.inter.dialog.DialogueConstants.MOB_DIALOGUE_ID;
-
-import java.util.Objects;
 
 import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
@@ -30,14 +29,14 @@ public abstract class ItemStatementDialogueListener implements DialogueListener 
 	 * @throws NullPointerException If the specified item is null.
 	 */
 	public ItemStatementDialogueListener(Item item) {
-		this.item = Objects.requireNonNull(item);
+		this.item = requireNonNull(item);
 	}
 
 	@Override
 	public final int execute(Player player) {
-		String[] lines = Objects.requireNonNull(lines());
+		String[] lines = lines();
 		int length = lines.length;
-		if (length < 0 || length > MOB_DIALOGUE_ID.length) {
+		if (length < 0 || length >= MOB_DIALOGUE_ID.length) {
 			throw new DialogueException("line length: (%d) - out of bounds", length);
 		}
 
@@ -83,8 +82,8 @@ public abstract class ItemStatementDialogueListener implements DialogueListener 
 	}
 
 	@Override
-	public final boolean optionClicked(DialogueOption option) {
-		return false;
+	public final void optionClicked(DialogueOption option) {
+
 	}
 
 }

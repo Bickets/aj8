@@ -1,9 +1,8 @@
 package org.apollo.game.model.inter.dialog;
 
+import static java.util.Objects.requireNonNull;
 import static org.apollo.game.model.inter.dialog.DialogueConstants.MAKE_ITEM_DIALOGUE_ID;
 import static org.apollo.game.model.inter.dialog.DialogueConstants.MAKE_ITEM_MODEL_ID;
-
-import java.util.Objects;
 
 import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
@@ -30,14 +29,14 @@ public abstract class MakeItemOptionDialogueListener implements DialogueListener
 	 * @throws NullPointerException If the {@code items} are null.
 	 */
 	public MakeItemOptionDialogueListener(Item... items) {
-		this.items = Objects.requireNonNull(items);
+		this.items = requireNonNull(items);
 		if (items.length < 2 || items.length > 5) {
-			throw new DialogueException("length of items must be greater than 2 and less than 5, len: %d", items.length);
+			throw new DialogueException("length of items must be greater than 2 and less than 6, len: %d", items.length);
 		}
 	}
 
 	@Override
-	public abstract boolean optionClicked(DialogueOption option);
+	public abstract void optionClicked(DialogueOption option);
 
 	@Override
 	public final DialogueType type() {

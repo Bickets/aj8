@@ -1,5 +1,9 @@
 package org.apollo.game.model.inter.dialog;
 
+import static org.apollo.game.model.inter.dialog.DialogueConstants.MAKE_ITEM_INTERFACE_ID;
+import static org.apollo.game.model.inter.dialog.DialogueConstants.MAKE_ITEM_MODEL_INTERFACE_ID;
+import static org.apollo.game.model.inter.dialog.DialogueConstants.MAKE_ITEM_TITLE_INTERFACE_ID;
+
 import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.def.ItemDefinition;
@@ -29,7 +33,7 @@ public abstract class MakeItemDialogueListener implements DialogueListener {
 	}
 
 	@Override
-	public abstract boolean optionClicked(DialogueOption option);
+	public abstract void optionClicked(DialogueOption option);
 
 	@Override
 	public final DialogueType type() {
@@ -38,9 +42,9 @@ public abstract class MakeItemDialogueListener implements DialogueListener {
 
 	@Override
 	public final int execute(Player player) {
-		player.send(new InterfaceItemModelMessage(1746, item, getModelZoom()));
-		player.send(new SetInterfaceTextMessage(2799, getTitle()));
-		return 4429;
+		player.send(new InterfaceItemModelMessage(MAKE_ITEM_MODEL_INTERFACE_ID, item, getModelZoom()));
+		player.send(new SetInterfaceTextMessage(MAKE_ITEM_TITLE_INTERFACE_ID, getTitle()));
+		return MAKE_ITEM_INTERFACE_ID;
 	}
 
 	/**

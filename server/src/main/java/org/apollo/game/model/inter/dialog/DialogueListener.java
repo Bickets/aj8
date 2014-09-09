@@ -72,12 +72,9 @@ public interface DialogueListener extends InterfaceListener {
 	 * the dialogue type of {@link DialogueType#OPTION}.
 	 *
 	 * @param option The option, only five option dialogues are supported.
-	 * @return A flag to determine whether or not the event was successful,
-	 *         {@code true} is so otherwise {@code false}.
 	 */
-	default boolean optionClicked(DialogueOption option) {
+	default void optionClicked(DialogueOption option) {
 		/* Method intended to be overridden. */
-		return false;
 	}
 
 }

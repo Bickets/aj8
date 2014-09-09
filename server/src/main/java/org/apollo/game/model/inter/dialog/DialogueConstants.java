@@ -8,6 +8,21 @@ package org.apollo.game.model.inter.dialog;
 final class DialogueConstants {
 
 	/**
+	 * The make single item title interface id.
+	 */
+	protected static final int MAKE_ITEM_TITLE_INTERFACE_ID = 2799;
+
+	/**
+	 * The make single item model interface id.
+	 */
+	protected static final int MAKE_ITEM_MODEL_INTERFACE_ID = 1746;
+
+	/**
+	 * The make single item interface id.
+	 */
+	protected static final int MAKE_ITEM_INTERFACE_ID = 4429;
+
+	/**
 	 * This array contains the child id where the dialogue statement starts for
 	 * mob and item dialogues.
 	 */

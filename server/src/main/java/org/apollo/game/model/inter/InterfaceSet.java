@@ -41,8 +41,7 @@ public final class InterfaceSet {
 	/**
 	 * The player whose interfaces are being managed.
 	 */
-	private final Player player; // TODO: maybe switch to a listener system like
-	// the inventory?
+	private final Player player;
 
 	/**
 	 * A map of open interfaces.
@@ -110,14 +109,11 @@ public final class InterfaceSet {
 	 * Fires the dialogue listener option clicked event.
 	 *
 	 * @param option The dialogue option clicked.
-	 * @return {@code true} if and only if the event fired successfully,
-	 *         otherwise {@code false}.
 	 */
-	public boolean optionClicked(DialogueOption option) {
+	public void optionClicked(DialogueOption option) {
 		if (dialogueListener != null) {
-			return dialogueListener.optionClicked(option);
+			dialogueListener.optionClicked(option);
 		}
-		return false;
 	}
 
 	/**

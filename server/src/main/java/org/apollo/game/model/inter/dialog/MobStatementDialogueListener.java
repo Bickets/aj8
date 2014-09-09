@@ -33,12 +33,17 @@ public abstract class MobStatementDialogueListener implements DialogueListener {
 	@Override
 	public final int execute(Player player) {
 		String[] lines = lines();
-		int dialogueId = MOB_DIALOGUE_ID[lines.length - 1];
+		int length = lines.length;
+		if (length < 0 || length >= MOB_DIALOGUE_ID.length) {
+			throw new DialogueException("line length: (%d) - out of bounds", length);
+		}
+
+		int dialogueId = MOB_DIALOGUE_ID[length - 1];
 		int headChildId = dialogueId - 2;
 		player.send(new MobModelOnInterfaceMessage(mobId, headChildId));
 		player.send(new InterfaceModelAnimationMessage(expression().getAnimation(), headChildId));
 		player.send(new SetInterfaceTextMessage(dialogueId - 1, MobDefinition.forId(mobId).getName()));
-		for (int i = 0; i < lines.length; i++) {
+		for (int i = 0; i < length; i++) {
 			player.send(new SetInterfaceTextMessage(dialogueId + i, lines[i]));
 		}
 		return dialogueId -= 3;
@@ -51,8 +56,8 @@ public abstract class MobStatementDialogueListener implements DialogueListener {
 
 	/* Do not allow method overriding for these methods. */
 	@Override
-	public final boolean optionClicked(DialogueOption option) {
-		return false;
+	public final void optionClicked(DialogueOption option) {
+
 	}
 
 }

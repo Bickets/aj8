@@ -16,10 +16,15 @@ public abstract class StatementDialogueListener implements DialogueListener {
 	@Override
 	public final int execute(Player player) {
 		String[] lines = lines();
-		for (int i = 0; i < lines.length; i++) {
-			player.send(new SetInterfaceTextMessage(STATEMENT_DIALOGUE_ID[lines.length - 1] + i + 1, lines[i]));
+		int length = lines.length;
+		if (length < 0 || length >= STATEMENT_DIALOGUE_ID.length) {
+			throw new DialogueException("line length: (%d) - out of bounds", length);
 		}
-		return STATEMENT_DIALOGUE_ID[lines.length - 1];
+
+		for (int i = 0; i < lines.length; i++) {
+			player.send(new SetInterfaceTextMessage(STATEMENT_DIALOGUE_ID[length - 1] + i + 1, lines[i]));
+		}
+		return STATEMENT_DIALOGUE_ID[length - 1];
 	}
 
 	@Override
@@ -34,8 +39,8 @@ public abstract class StatementDialogueListener implements DialogueListener {
 	}
 
 	@Override
-	public final boolean optionClicked(DialogueOption option) {
-		return false;
+	public final void optionClicked(DialogueOption option) {
+
 	}
 
 }

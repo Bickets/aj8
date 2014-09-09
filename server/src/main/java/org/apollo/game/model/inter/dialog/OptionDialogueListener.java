@@ -14,14 +14,19 @@ import org.apollo.game.msg.impl.SetInterfaceTextMessage;
 public abstract class OptionDialogueListener implements DialogueListener {
 
 	@Override
-	public abstract boolean optionClicked(DialogueOption option);
+	public abstract void optionClicked(DialogueOption option);
 
 	@Override
 	public final int execute(Player player) {
 		String[] lines = lines();
-		int dialogueId = OPTION_DIALOGUE_ID[lines.length - 1];
+		int length = lines.length;
+		if (length < 0 || length >= OPTION_DIALOGUE_ID.length) {
+			throw new DialogueException("line length: (%d) - out of bounds", length);
+		}
+
+		int dialogueId = OPTION_DIALOGUE_ID[length - 1];
 		player.send(new SetInterfaceTextMessage(dialogueId - 1, getTitle()));
-		for (int i = 0; i < lines.length; i++) {
+		for (int i = 0; i < length; i++) {
 			player.send(new SetInterfaceTextMessage(dialogueId + i, lines[i]));
 		}
 		return dialogueId - 2;
