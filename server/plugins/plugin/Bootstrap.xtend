@@ -28,7 +28,17 @@ class Bootstrap {
 	}
 
 	def <T extends Event> provide(World world, Class<?> clazz) {
-		world.provideSubscriber(clazz.newInstance as EventSubscriber<T>)
+		clazz.constructors.forEach [
+			val parameterTypes = it.parameterTypes
+			if (parameterTypes.length == 0) {
+				world.provideSubscriber(clazz.newInstance as EventSubscriber<T>)
+				return
+			}
+			if (parameterTypes.length == 1 && parameterTypes.get(0) == World) {
+				world.provideSubscriber(clazz.getConstructor(World).newInstance(world) as EventSubscriber<T>)
+				return
+			}
+		]
 	}
 
 	def classes(String root) {
