@@ -1659,15 +1659,15 @@ public class Game extends GameShell {
 					int offsetY = 30;
 					Player player = (Player) character;
 
-					if (player.headIcon >= 0) {
+					if (player.skullIcon > -1 || player.prayerIcon > -1) {
 						method127(true, character, character.modelHeight + 15);
 						if (headIconDrawX > -1) {
 							if (player.skullIcon > -1) {
 								skullIconImages[player.skullIcon].drawImage(headIconDrawX - 12, headIconDrawY - offsetY);
 								offsetY += 25;
 							}
-							if (player.headIcon > -1) {
-								prayerIconImages[player.headIcon].drawImage(headIconDrawX - 12, headIconDrawY - offsetY);
+							if (player.prayerIcon > -1) {
+								prayerIconImages[player.prayerIcon].drawImage(headIconDrawX - 12, headIconDrawY - offsetY);
 								offsetY += 25;
 							}
 						}
