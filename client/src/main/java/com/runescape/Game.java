@@ -196,8 +196,8 @@ public class Game extends GameShell {
 	private static boolean membersWorld = true;
 	private static boolean lowMemory;
 	private volatile boolean aBoolean987 = false;
-	private int anInt988 = -1;
-	private int anInt989 = -1;
+	private int headIconDrawX = -1;
+	private int headIconDrawY = -1;
 	private final int[] anIntArray990 = { 0xFFFF00, 0xFF0000, 0x00FF00, 0xFFFF,
 			16711935, 0xFFFFFF };
 	private IndexedImage titleboxImage;
@@ -220,7 +220,7 @@ public class Game extends GameShell {
 	private int anInt1009;
 	private int lastSceneId = -1;
 	private static int anInt1011;
-	private ImageRGB[] anImageRGBArray1012 = new ImageRGB[20];
+	private ImageRGB[] anImageRGBArray1012 = new ImageRGB[5];
 	private int anInt1013;
 	private int anInt1014;
 	private final int[] characterEditColors = new int[5];
@@ -270,7 +270,7 @@ public class Game extends GameShell {
 	private final int[] anIntArray1055 = new int[5];
 	private boolean aBoolean1056 = false;
 	private static BigInteger RSA_EXPONENT;
-	private ImageRGB[] worldMapHintIcons = new ImageRGB[100];
+	private ImageRGB[] worldMapHintIcons = new ImageRGB[63];
 	private int regionAbsoluteBaseX;
 	private int regionAbsoluteBaseY;
 	private int anInt1061;
@@ -294,7 +294,7 @@ public class Game extends GameShell {
 	private LinkedList aLinkedList1081 = new LinkedList();
 	private final int[] anIntArray1082 = new int[33];
 	private final Widget aWidget1084 = new Widget();
-	private IndexedImage[] anIndexedImageArray1085 = new IndexedImage[100];
+	private IndexedImage[] anIndexedImageArray1085 = new IndexedImage[72];
 	static int anInt1086;
 	private int trackCount;
 	private final int anInt1088 = 5063219;
@@ -329,7 +329,13 @@ public class Game extends GameShell {
 	private int[] menuActionIds3 = new int[500];
 	private int[] menuActionIds = new int[500];
 	private int[] menuActionIds1 = new int[500];
-	private ImageRGB[] anImageRGBArray1120 = new ImageRGB[20];
+
+	/* Thank you #377 client! */
+	private ImageRGB[] hintIconImages = new ImageRGB[6];
+	private ImageRGB[] skullIconImages = new ImageRGB[6];
+	private ImageRGB[] prayerIconImages = new ImageRGB[9];
+	private ImageRGB multiwayImage;
+
 	private static int anInt1122;
 	private int cameraX;
 	private int cameraY;
@@ -1626,113 +1632,125 @@ public class Game extends GameShell {
 	public final void method34() {
 		try {
 			anInt999 = 0;
-			for (int i_143_ = -1; i_143_ < playerCount + actorCount; i_143_++) {
-				GameCharacter mob;
-				if (i_143_ == -1) {
-					mob = Game.localPlayer;
-				} else if (i_143_ < playerCount) {
-					mob = players[anIntArray917[i_143_]];
+			for (int index = -1; index < playerCount + actorCount; index++) {
+				GameCharacter character;
+				if (index == -1) {
+					character = Game.localPlayer;
+				} else if (index < playerCount) {
+					character = players[anIntArray917[index]];
 				} else {
-					mob = localNpcs[anIntArray862[i_143_ - playerCount]];
+					character = localNpcs[anIntArray862[index - playerCount]];
 				}
-				if (mob != null && mob.isVisibile()) {
-					if (mob instanceof Mob) {
-						MobDefinition npcdefinition = ((Mob) mob).npcDefinition;
-						if (npcdefinition.childrenIds != null) {
-							npcdefinition = npcdefinition.getChildDefinition();
-						}
-						if (npcdefinition == null) {
-							continue;
-						}
+				if (character == null || !character.isVisibile()) {
+					continue;
+				}
+
+				if (character instanceof Mob) {
+					MobDefinition npcdefinition = ((Mob) character).npcDefinition;
+					if (npcdefinition.childrenIds != null) {
+						npcdefinition = npcdefinition.getChildDefinition();
 					}
-					if (i_143_ < playerCount) {
-						int i_144_ = 30;
-						Player player = (Player) mob;
-						if (player.headIcon != 0) {
-							method127(true, mob, mob.modelHeight + 15);
-							if (anInt988 > -1) {
-								for (int i_145_ = 0; i_145_ < 8; i_145_++) {
-									if ((player.headIcon & 1 << i_145_) != 0) {
-										anImageRGBArray1120[i_145_].drawImage(anInt988 - 12, anInt989 - i_144_);
-										i_144_ -= 25;
-									}
-								}
+					if (npcdefinition == null) {
+						continue;
+					}
+				}
+
+				if (index < playerCount) {
+					int offsetY = 30;
+					Player player = (Player) character;
+
+					if (player.headIcon >= 0) {
+						method127(true, character, character.modelHeight + 15);
+						if (headIconDrawX > -1) {
+							if (player.skullIcon > -1) {
+								skullIconImages[player.skullIcon].drawImage(headIconDrawX - 12, headIconDrawY - offsetY);
+								offsetY += 25;
 							}
-						}
-						if (i_143_ >= 0 && hintIconType == 10 && hintIconId == anIntArray917[i_143_]) {
-							method127(true, mob, mob.modelHeight + 15);
-							if (anInt988 > -1) {
-								anImageRGBArray1120[7].drawImage(anInt988 - 12, anInt989 - i_144_);
-							}
-						}
-					} else {
-						MobDefinition npcdefinition = ((Mob) mob).npcDefinition;
-						if (npcdefinition.headIcon >= 0 && npcdefinition.headIcon < anImageRGBArray1120.length) {
-							method127(true, mob, mob.modelHeight + 15);
-							if (anInt988 > -1) {
-								anImageRGBArray1120[npcdefinition.headIcon].drawImage(anInt988 - 12, anInt989 - 30);
-							}
-						}
-						if (hintIconType == 1 && hintIconActorId == anIntArray862[i_143_ - playerCount] && Game.currentCycle % 20 < 10) {
-							method127(true, mob, mob.modelHeight + 15);
-							if (anInt988 > -1) {
-								anImageRGBArray1120[2].drawImage(anInt988 - 12, anInt989 - 28);
+							if (player.headIcon > -1) {
+								prayerIconImages[player.headIcon].drawImage(headIconDrawX - 12, headIconDrawY - offsetY);
+								offsetY += 25;
 							}
 						}
 					}
-					if (mob.forcedChat != null && (i_143_ >= playerCount || publicChatSetting == 0 || publicChatSetting == 3 || publicChatSetting == 1 && method109(false, ((Player) mob).playerName))) {
-						method127(true, mob, mob.modelHeight);
-						if (anInt988 > -1 && anInt999 < anInt1000) {
-							anIntArray1004[anInt999] = fontBold.getStringWidth(mob.forcedChat) / 2;
-							anIntArray1003[anInt999] = fontBold.characterDefaultHeight;
-							anIntArray1001[anInt999] = anInt988;
-							anIntArray1002[anInt999] = anInt989;
-							anIntArray1005[anInt999] = mob.chatColor;
-							anIntArray1006[anInt999] = mob.chatEffect;
-							anIntArray1007[anInt999] = mob.anInt1555;
-							aStringArray1008[anInt999++] = mob.forcedChat;
-							if (anInt1274 == 0 && mob.chatEffect >= 1 && mob.chatEffect <= 3) {
-								anIntArray1003[anInt999] += 10;
-								anIntArray1002[anInt999] += 5;
-							}
-							if (anInt1274 == 0 && mob.chatEffect == 4) {
-								anIntArray1004[anInt999] = 60;
-							}
-							if (anInt1274 == 0 && mob.chatEffect == 5) {
-								anIntArray1003[anInt999] += 5;
-							}
+
+					if (index >= 0 && hintIconType == 10 && hintIconId == anIntArray917[index]) {
+						method127(true, character, character.modelHeight + 15);
+						if (headIconDrawX > -1) {
+							hintIconImages[0].drawImage(headIconDrawX - 12, headIconDrawY - offsetY);
+							offsetY += 25;
 						}
 					}
-					if (mob.endCycle > Game.currentCycle) {
-						method127(true, mob, mob.modelHeight + 15);
-						if (anInt988 > -1) {
-							int i_146_ = mob.maxHealth * 30 / mob.currentHealth;
-							if (i_146_ > 30) {
-								i_146_ = 30;
-							}
-							Rasterizer.drawFilledRectangle(anInt988 - 15, anInt989 - 3, i_146_, 5, 0x00FF00);
-							Rasterizer.drawFilledRectangle(anInt988 - 15 + i_146_, anInt989 - 3, 30 - i_146_, 5, 0xFF0000);
+
+				} else {
+					MobDefinition def = ((Mob) character).npcDefinition;
+
+					if (def.headIcon >= 0 && def.headIcon < prayerIconImages.length) {
+						method127(true, character, character.modelHeight + 15);
+						if (headIconDrawX > -1) {
+							prayerIconImages[def.headIcon].drawImage(headIconDrawX - 12, headIconDrawY - 30);
 						}
 					}
-					for (int i_147_ = 0; i_147_ < 4; i_147_++) {
-						if (mob.hitCycles[i_147_] > Game.currentCycle) {
-							method127(true, mob, mob.modelHeight / 2);
-							if (anInt988 > -1) {
-								if (i_147_ == 1) {
-									anInt989 -= 20;
-								}
-								if (i_147_ == 2) {
-									anInt988 -= 15;
-									anInt989 -= 10;
-								}
-								if (i_147_ == 3) {
-									anInt988 += 15;
-									anInt989 -= 10;
-								}
-								anImageRGBArray1012[mob.hitTypes[i_147_]].drawImage(anInt988 - 12, anInt989 - 12);
-								fontSmall.drawStringLeft(String.valueOf(mob.hitDamages[i_147_]), anInt988, anInt989 + 4, 0);
-								fontSmall.drawStringLeft(String.valueOf(mob.hitDamages[i_147_]), anInt988 - 1, anInt989 + 3, 0xFFFFFF);
+
+					if (hintIconType == 1 && hintIconActorId == anIntArray862[index - playerCount] && Game.currentCycle % 20 < 10) {
+						method127(true, character, character.modelHeight + 15);
+						if (headIconDrawX > -1) {
+							hintIconImages[0].drawImage(headIconDrawX - 12, headIconDrawY - 28);
+						}
+					}
+
+				}
+				if (character.forcedChat != null && (index >= playerCount || publicChatSetting == 0 || publicChatSetting == 3 || publicChatSetting == 1 && method109(false, ((Player) character).playerName))) {
+					method127(true, character, character.modelHeight);
+					if (headIconDrawX > -1 && anInt999 < anInt1000) {
+						anIntArray1004[anInt999] = fontBold.getStringWidth(character.forcedChat) / 2;
+						anIntArray1003[anInt999] = fontBold.characterDefaultHeight;
+						anIntArray1001[anInt999] = headIconDrawX;
+						anIntArray1002[anInt999] = headIconDrawY;
+						anIntArray1005[anInt999] = character.chatColor;
+						anIntArray1006[anInt999] = character.chatEffect;
+						anIntArray1007[anInt999] = character.anInt1555;
+						aStringArray1008[anInt999++] = character.forcedChat;
+						if (anInt1274 == 0 && character.chatEffect >= 1 && character.chatEffect <= 3) {
+							anIntArray1003[anInt999] += 10;
+							anIntArray1002[anInt999] += 5;
+						}
+						if (anInt1274 == 0 && character.chatEffect == 4) {
+							anIntArray1004[anInt999] = 60;
+						}
+						if (anInt1274 == 0 && character.chatEffect == 5) {
+							anIntArray1003[anInt999] += 5;
+						}
+					}
+				}
+				if (character.endCycle > Game.currentCycle) {
+					method127(true, character, character.modelHeight + 15);
+					if (headIconDrawX > -1) {
+						int i_146_ = character.maxHealth * 30 / character.currentHealth;
+						if (i_146_ > 30) {
+							i_146_ = 30;
+						}
+						Rasterizer.drawFilledRectangle(headIconDrawX - 15, headIconDrawY - 3, i_146_, 5, 0x00FF00);
+						Rasterizer.drawFilledRectangle(headIconDrawX - 15 + i_146_, headIconDrawY - 3, 30 - i_146_, 5, 0xFF0000);
+					}
+				}
+				for (int i_147_ = 0; i_147_ < 4; i_147_++) {
+					if (character.hitCycles[i_147_] > Game.currentCycle) {
+						method127(true, character, character.modelHeight / 2);
+						if (headIconDrawX > -1) {
+							if (i_147_ == 1) {
+								headIconDrawY -= 20;
 							}
+							if (i_147_ == 2) {
+								headIconDrawX -= 15;
+								headIconDrawY -= 10;
+							}
+							if (i_147_ == 3) {
+								headIconDrawX += 15;
+								headIconDrawY -= 10;
+							}
+							anImageRGBArray1012[character.hitTypes[i_147_]].drawImage(headIconDrawX - 12, headIconDrawY - 12);
+							fontSmall.drawStringLeft(String.valueOf(character.hitDamages[i_147_]), headIconDrawX, headIconDrawY + 4, 0);
+							fontSmall.drawStringLeft(String.valueOf(character.hitDamages[i_147_]), headIconDrawX - 1, headIconDrawY + 3, 0xFFFFFF);
 						}
 					}
 				}
@@ -1752,8 +1770,8 @@ public class Game extends GameShell {
 						}
 					}
 				}
-				anInt988 = anIntArray1001[i_148_];
-				anInt989 = anIntArray1002[i_148_] = i_150_;
+				headIconDrawX = anIntArray1001[i_148_];
+				headIconDrawY = anIntArray1002[i_148_] = i_150_;
 				String string = aStringArray1008[i_148_];
 				if (anInt1274 == 0) {
 					int i_154_ = 0xFFFF00;
@@ -1800,27 +1818,27 @@ public class Game extends GameShell {
 						}
 					}
 					if (anIntArray1006[i_148_] == 0) {
-						fontBold.drawStringLeft(string, anInt988, anInt989 + 1, 0);
-						fontBold.drawStringLeft(string, anInt988, anInt989, i_154_);
+						fontBold.drawStringLeft(string, headIconDrawX, headIconDrawY + 1, 0);
+						fontBold.drawStringLeft(string, headIconDrawX, headIconDrawY, i_154_);
 					}
 					if (anIntArray1006[i_148_] == 1) {
-						fontBold.drawCenteredStringWaveY(string, anInt988, anInt989 + 1, anInt1290, 0);
-						fontBold.drawCenteredStringWaveY(string, anInt988, anInt989, anInt1290, i_154_);
+						fontBold.drawCenteredStringWaveY(string, headIconDrawX, headIconDrawY + 1, anInt1290, 0);
+						fontBold.drawCenteredStringWaveY(string, headIconDrawX, headIconDrawY, anInt1290, i_154_);
 					}
 					if (anIntArray1006[i_148_] == 2) {
-						fontBold.drawCeneteredStringWaveXY(string, anInt988, anInt989 + 1, anInt1290, 0);
-						fontBold.drawCeneteredStringWaveXY(string, anInt988, anInt989, anInt1290, i_154_);
+						fontBold.drawCeneteredStringWaveXY(string, headIconDrawX, headIconDrawY + 1, anInt1290, 0);
+						fontBold.drawCeneteredStringWaveXY(string, headIconDrawX, headIconDrawY, anInt1290, i_154_);
 					}
 					if (anIntArray1006[i_148_] == 3) {
-						fontBold.drawCenteredStringWaveXYMove(string, anInt988, anInt989 + 1, anInt1290, 150 - anIntArray1007[i_148_], 0);
-						fontBold.drawCenteredStringWaveXYMove(string, anInt988, anInt989, anInt1290, 150 - anIntArray1007[i_148_], i_154_);
+						fontBold.drawCenteredStringWaveXYMove(string, headIconDrawX, headIconDrawY + 1, anInt1290, 150 - anIntArray1007[i_148_], 0);
+						fontBold.drawCenteredStringWaveXYMove(string, headIconDrawX, headIconDrawY, anInt1290, 150 - anIntArray1007[i_148_], i_154_);
 					}
 					if (anIntArray1006[i_148_] == 4) {
 						int i_158_ = fontBold.getStringWidth(string);
 						int i_159_ = (150 - anIntArray1007[i_148_]) * (i_158_ + 100) / 150;
-						Rasterizer.setCoordinates(anInt988 - 50, 0, anInt988 + 50, 334);
-						fontBold.drawString(string, anInt988 + 50 - i_159_, anInt989 + 1, 0);
-						fontBold.drawString(string, anInt988 + 50 - i_159_, anInt989, i_154_);
+						Rasterizer.setCoordinates(headIconDrawX - 50, 0, headIconDrawX + 50, 334);
+						fontBold.drawString(string, headIconDrawX + 50 - i_159_, headIconDrawY + 1, 0);
+						fontBold.drawString(string, headIconDrawX + 50 - i_159_, headIconDrawY, i_154_);
 						Rasterizer.resetCoordinates();
 					}
 					if (anIntArray1006[i_148_] == 5) {
@@ -1831,14 +1849,14 @@ public class Game extends GameShell {
 						} else if (i_160_ > 125) {
 							i_161_ = i_160_ - 125;
 						}
-						Rasterizer.setCoordinates(0, anInt989 - fontBold.characterDefaultHeight - 1, 512, anInt989 + 5);
-						fontBold.drawStringLeft(string, anInt988, anInt989 + 1 + i_161_, 0);
-						fontBold.drawStringLeft(string, anInt988, anInt989 + i_161_, i_154_);
+						Rasterizer.setCoordinates(0, headIconDrawY - fontBold.characterDefaultHeight - 1, 512, headIconDrawY + 5);
+						fontBold.drawStringLeft(string, headIconDrawX, headIconDrawY + 1 + i_161_, 0);
+						fontBold.drawStringLeft(string, headIconDrawX, headIconDrawY + i_161_, i_154_);
 						Rasterizer.resetCoordinates();
 					}
 				} else {
-					fontBold.drawStringLeft(string, anInt988, anInt989 + 1, 0);
-					fontBold.drawStringLeft(string, anInt988, anInt989, 0xFFFF00);
+					fontBold.drawStringLeft(string, headIconDrawX, headIconDrawY + 1, 0);
+					fontBold.drawStringLeft(string, headIconDrawX, headIconDrawY, 0xFFFF00);
 				}
 			}
 		} catch (RuntimeException runtimeexception) {
@@ -3079,22 +3097,16 @@ public class Game extends GameShell {
 		}
 	}
 
-	public final void method61() {
-		do {
-			try {
-				if (hintIconType == 2) {
-					method128((hintIconX - regionAbsoluteBaseX << 7) + anInt962, hintIconOffset * 2, anInt900, (hintIconY - regionAbsoluteBaseY << 7) + anInt963);
-					if (anInt988 <= -1 || Game.currentCycle % 20 >= 10) {
-						break;
-					}
-					anImageRGBArray1120[2].drawImage(anInt988 - 12, anInt989 - 28);
-				}
-			} catch (RuntimeException runtimeexception) {
-				Signlink.reportError("10525, " + runtimeexception.toString());
-				throw new RuntimeException();
-			}
-			break;
-		} while (false);
+	public final void drawHintIcon() {
+		if (hintIconType != 2) {
+			return;
+		}
+
+		method128((hintIconX - regionAbsoluteBaseX << 7) + anInt962, hintIconOffset * 2, anInt900, (hintIconY - regionAbsoluteBaseY << 7) + anInt963);
+
+		if (headIconDrawX > -1 && Game.currentCycle % 20 < 10) {
+			hintIconImages[0].drawImage(headIconDrawX - 12, headIconDrawY - 28);
+		}
 	}
 
 	public final void processGame() {
@@ -4903,7 +4915,10 @@ public class Game extends GameShell {
 		anIndexedImage894 = null;
 		minimapCompass = null;
 		anImageRGBArray1012 = null;
-		anImageRGBArray1120 = null;
+		hintIconImages = null;
+		skullIconImages = null;
+		prayerIconImages = null;
+		multiwayImage = null;
 		cursorCross = null;
 		mapdotItem = null;
 		mapdotActor = null;
@@ -6889,30 +6904,26 @@ public class Game extends GameShell {
 			minimapEdge = new ImageRGB(archiveMedia, "mapedge", 0);
 			minimapEdge.trim();
 
-			try {
-				for (int i = 0; i < 100; i++) {
-					anIndexedImageArray1085[i] = new IndexedImage(archiveMedia, "mapscene", i);
-				}
-			} catch (Exception e) {
+			for (int i = 0; i < anIndexedImageArray1085.length; i++) {
+				anIndexedImageArray1085[i] = new IndexedImage(archiveMedia, "mapscene", i);
 			}
-			try {
-				for (int i = 0; i < 100; i++) {
-					worldMapHintIcons[i] = new ImageRGB(archiveMedia, "mapfunction", i);
-				}
-			} catch (Exception e) {
+			for (int i = 0; i < worldMapHintIcons.length; i++) {
+				worldMapHintIcons[i] = new ImageRGB(archiveMedia, "mapfunction", i);
 			}
-			try {
-				for (int i = 0; i < 20; i++) {
-					anImageRGBArray1012[i] = new ImageRGB(archiveMedia, "hitmarks", i);
-				}
-			} catch (Exception e) {
+			for (int i = 0; i < anImageRGBArray1012.length; i++) {
+				anImageRGBArray1012[i] = new ImageRGB(archiveMedia, "hitmarks", i);
 			}
-			try {
-				for (int i = 0; i < 20; i++) {
-					anImageRGBArray1120[i] = new ImageRGB(archiveMedia, "headicons", i);
-				}
-			} catch (Exception e) {
+			for (int i = 0; i < hintIconImages.length; i++) {
+				hintIconImages[i] = new ImageRGB(archiveMedia, "headicons_hint", i);
 			}
+			for (int i = 0; i < skullIconImages.length; i++) {
+				skullIconImages[i] = new ImageRGB(archiveMedia, "headicons_pk", i);
+			}
+			for (int i = 0; i < prayerIconImages.length; i++) {
+				prayerIconImages[i] = new ImageRGB(archiveMedia, "headicons_prayer", i);
+			}
+
+			multiwayImage = new ImageRGB(archiveMedia, "overlay_multiway", 0);
 			mapFlagMarker = new ImageRGB(archiveMedia, "mapmarker", 0);
 			anImageRGB896 = new ImageRGB(archiveMedia, "mapmarker", 1);
 			for (int i_560_ = 0; i_560_ < 8; i_560_++) {
@@ -6978,7 +6989,7 @@ public class Game extends GameShell {
 			int i_563_ = (int) (Math.random() * 21.0) - 10;
 			int i_564_ = (int) (Math.random() * 21.0) - 10;
 			int i_565_ = (int) (Math.random() * 41.0) - 20;
-			for (int i_566_ = 0; i_566_ < 100; i_566_++) {
+			for (int i_566_ = 0; i_566_ < worldMapHintIcons.length; i_566_++) {
 				if (worldMapHintIcons[i_566_] != null) {
 					worldMapHintIcons[i_566_].adjustRGB(i_562_ + i_565_, i_563_ + i_565_, i_564_ + i_565_);
 				}
@@ -7064,6 +7075,7 @@ public class Game extends GameShell {
 			GameObjectDefinition.client = this;
 			MobDefinition.client = this;
 		} catch (Exception exception) {
+			exception.printStackTrace();
 			Signlink.reportError("loaderror " + aString1074 + " " + anInt1104);
 			aBoolean951 = true;
 		}
@@ -8671,7 +8683,7 @@ public class Game extends GameShell {
 			drawActionMenu();
 		}
 		if (multiState == 1) {
-			anImageRGBArray1120[1].drawImage(472, 296);
+			multiwayImage.drawImage(472, 296);
 		}
 
 		if (Game.debug) {
@@ -9437,8 +9449,8 @@ public class Game extends GameShell {
 	public final void method128(int i, int i_794_, int i_795_, int i_796_) {
 		try {
 			if (i < 128 || i_796_ < 128 || i > 13056 || i_796_ > 13056) {
-				anInt988 = -1;
-				anInt989 = -1;
+				headIconDrawX = -1;
+				headIconDrawY = -1;
 			} else {
 				int i_797_ = method42(currentSceneId, i_796_, true, i) - i_794_;
 				i -= cameraPositionX;
@@ -9458,11 +9470,11 @@ public class Game extends GameShell {
 				i_796_ = i_797_ * i_798_ + i_796_ * i_799_ >> 16;
 				i_797_ = i_802_;
 				if (i_796_ >= 50) {
-					anInt988 = Rasterizer3D.centerX + (i << 9) / i_796_;
-					anInt989 = Rasterizer3D.centerY + (i_797_ << 9) / i_796_;
+					headIconDrawX = Rasterizer3D.centerX + (i << 9) / i_796_;
+					headIconDrawY = Rasterizer3D.centerY + (i_797_ << 9) / i_796_;
 				} else {
-					anInt988 = -1;
-					anInt989 = -1;
+					headIconDrawX = -1;
+					headIconDrawY = -1;
 				}
 			}
 		} catch (RuntimeException runtimeexception) {
@@ -11148,6 +11160,9 @@ public class Game extends GameShell {
 					if (hintIconType == 1) {
 						hintIconActorId = inBuffer.getUnsignedLEShort();
 					}
+					if (hintIconType == 10) {
+						hintIconId = inBuffer.getUnsignedLEShort();
+					}
 					if (hintIconType >= 2 && hintIconType <= 6) {
 						if (hintIconType == 2) {
 							anInt962 = 64;
@@ -11173,9 +11188,6 @@ public class Game extends GameShell {
 						hintIconX = inBuffer.getUnsignedLEShort();
 						hintIconY = inBuffer.getUnsignedLEShort();
 						hintIconOffset = inBuffer.getUnsignedByte();
-					}
-					if (hintIconType == 10) {
-						hintIconId = inBuffer.getUnsignedLEShort();
 					}
 					opcode = -1;
 					return true;
@@ -11751,7 +11763,7 @@ public class Game extends GameShell {
 			currentScene.method535(cameraPositionX, cameraPositionY, cameraCurveX, cameraPositionZ, i, cameraCurveY, false);
 			currentScene.method510((byte) 104);
 			method34();
-			method61();
+			drawHintIcon();
 			method37(854, i_1188_);
 			method112();
 			currentSceneBuffer.drawGraphics(4, 4, gameGraphics);

@@ -22,7 +22,8 @@ public class Player extends GameCharacter {
 	public String playerName;
 	public static Cache modelCache = new Cache(260);
 	public int combatLevel;
-	public int headIcon;
+	public int headIcon = -1;
+	public int skullIcon = -1;
 	public int anInt1727;
 	public int anInt1728;
 	public int anInt1729;
@@ -111,6 +112,7 @@ public class Player extends GameCharacter {
 		buffer.offset = 0;
 		gender = buffer.getUnsignedByte();
 		headIcon = buffer.getUnsignedByte();
+		skullIcon = buffer.getUnsignedByte();
 		npcDefinition = null;
 		teamId = 0;
 		for (int index = 0; index < 12; index++) {
