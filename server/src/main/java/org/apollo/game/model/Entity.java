@@ -86,7 +86,7 @@ public abstract class Entity {
 	 *
 	 * @return The size of this entity.
 	 */
-	public abstract int size();
+	public abstract int getSize();
 
 	/**
 	 * Gets the position of this entity.

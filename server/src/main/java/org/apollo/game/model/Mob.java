@@ -113,7 +113,7 @@ public final class Mob extends GameCharacter {
 	}
 
 	@Override
-	public int size() {
+	public int getSize() {
 		return definition.getSize();
 	}
 

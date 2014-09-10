@@ -663,7 +663,7 @@ public final class Player extends GameCharacter {
 	}
 
 	@Override
-	public int size() {
+	public int getSize() {
 		// XXX: Size could change, player to object transformation packet
 		// This needs accounted for at a later date.
 		return 1;

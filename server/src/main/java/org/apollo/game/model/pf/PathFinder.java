@@ -31,7 +31,7 @@ public abstract class PathFinder {
 		int destLocalX = destX - baseLocalX;
 		int destLocalY = destY - baseLocalY;
 
-		return find(new Position(baseLocalX, baseLocalY), position.getHeight(), 104, 104, position.getLocalX(), position.getLocalY(), destLocalX, destLocalY, character.size());
+		return find(new Position(baseLocalX, baseLocalY), position.getHeight(), 104, 104, position.getLocalX(), position.getLocalY(), destLocalX, destLocalY, character.getSize());
 	}
 
 	/**

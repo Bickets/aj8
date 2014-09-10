@@ -106,7 +106,7 @@ public final class GameObject extends Entity {
 	 *         specified position.
 	 */
 	public int getTileOffset(Position position) {
-		if (size() <= 1) {
+		if (getSize() <= 1) {
 			return 1;
 		}
 
@@ -194,21 +194,13 @@ public final class GameObject extends Entity {
 		return new Position(turnToX, turnToY);
 	}
 
-	/**
-	 * Returns {@code true} if and only if this object actually exists within
-	 * the world otherwise {@code false}.
-	 */
-	public boolean exists() {
-		return getDefinition().valid(getPosition());
-	}
-
 	@Override
 	public int hashCode() {
 		return type.getId() << 2 | orientation.getId() & 0x3F;
 	}
 
 	@Override
-	public int size() {
+	public int getSize() {
 		return getDefinition().getSize();
 	}
 

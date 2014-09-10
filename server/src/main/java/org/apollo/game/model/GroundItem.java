@@ -55,7 +55,7 @@ public class GroundItem extends Entity {
 	}
 
 	@Override
-	public int size() {
+	public int getSize() {
 		return 1;
 	}
 
