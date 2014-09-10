@@ -30,7 +30,7 @@ import static plugin.Plugin.*
 
 		if (type == MOB) {
 			var index = toInt(args.get(1))
-			if (index < 0 || index >= world.mobRepository.capacity) {
+			if (index < 1 || index >= world.mobRepository.capacity) {
 				return
 			}
 
@@ -44,7 +44,7 @@ import static plugin.Plugin.*
 
 		if (type == PLAYER) {
 			var index = toInt(args.get(1))
-			if (index < 0 || index >= world.playerRepository.capacity) {
+			if (index < 1 || index >= world.playerRepository.capacity) {
 				return
 			}
 
