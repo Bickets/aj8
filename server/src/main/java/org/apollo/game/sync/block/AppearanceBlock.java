@@ -1,6 +1,9 @@
 package org.apollo.game.sync.block;
 
 import org.apollo.game.model.Appearance;
+import org.apollo.game.model.HeadIcon;
+import org.apollo.game.model.HeadIcon.Prayer;
+import org.apollo.game.model.HeadIcon.Skull;
 import org.apollo.game.model.Inventory;
 
 /**
@@ -10,12 +13,20 @@ import org.apollo.game.model.Inventory;
  */
 public final class AppearanceBlock extends SynchronizationBlock {
 
-	// TODO head icons support
-
 	/**
 	 * The players name.
 	 */
 	private final long name;
+
+	/**
+	 * The players skull icon.
+	 */
+	private final HeadIcon<Skull> skullIcon;
+
+	/**
+	 * The players prayer icon.
+	 */
+	private final HeadIcon<Prayer> prayerIcon;
 
 	/**
 	 * The players appearance.
@@ -41,13 +52,17 @@ public final class AppearanceBlock extends SynchronizationBlock {
 	 * Creates the appearance block.
 	 *
 	 * @param name The players name.
+	 * @param skullIcon The players skull icon.
+	 * @param prayerIcon The players prayer icon.
 	 * @param appearance The appearance.
 	 * @param combat The players combat.
 	 * @param skill The players skill, or 0 if showing the combat level.
 	 * @param equipment The players equipment.
 	 */
-	protected AppearanceBlock(long name, Appearance appearance, int combat, int skill, Inventory equipment) {
+	protected AppearanceBlock(long name, HeadIcon<Skull> skullIcon, HeadIcon<Prayer> prayerIcon, Appearance appearance, int combat, int skill, Inventory equipment) {
 		this.name = name;
+		this.skullIcon = skullIcon;
+		this.prayerIcon = prayerIcon;
 		this.appearance = appearance;
 		this.combat = combat;
 		this.skill = skill;
@@ -61,6 +76,24 @@ public final class AppearanceBlock extends SynchronizationBlock {
 	 */
 	public long getName() {
 		return name;
+	}
+
+	/**
+	 * Gets the players skull icon.
+	 *
+	 * @return The players skull icon.
+	 */
+	public HeadIcon<Skull> getSkullIcon() {
+		return skullIcon;
+	}
+
+	/**
+	 * Gets the players prayer icon.
+	 *
+	 * @return The players prayer icon.
+	 */
+	public HeadIcon<Prayer> getPrayerIcon() {
+		return prayerIcon;
 	}
 
 	/**

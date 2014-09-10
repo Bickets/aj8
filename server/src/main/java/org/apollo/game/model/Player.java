@@ -3,6 +3,8 @@ package org.apollo.game.model;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
+import org.apollo.game.model.HeadIcon.Prayer;
+import org.apollo.game.model.HeadIcon.Skull;
 import org.apollo.game.model.Inventory.StackMode;
 import org.apollo.game.model.inter.InterfaceSet;
 import org.apollo.game.model.inv.AppearanceInventoryListener;
@@ -178,6 +180,16 @@ public final class Player extends GameCharacter {
 	private final Inventory trade = new Inventory(InventoryConstants.TRADE_CAPACITY);
 
 	/**
+	 * An instance of the current skull head icon.
+	 */
+	private final HeadIcon<Skull> skullIcon = new HeadIcon<>();
+
+	/**
+	 * An instance of the current prayer head icon.
+	 */
+	private final HeadIcon<Prayer> prayerIcon = new HeadIcon<>();
+
+	/**
 	 * Creates the {@link Player}.
 	 *
 	 * @param credentials The players credentials.
@@ -230,6 +242,20 @@ public final class Player extends GameCharacter {
 	 */
 	public Inventory getTrade() {
 		return trade;
+	}
+
+	/**
+	 * Returns this players skull head icon.
+	 */
+	public HeadIcon<Skull> getSkullIcon() {
+		return skullIcon;
+	}
+
+	/**
+	 * Returns this players prayer head icon.
+	 */
+	public HeadIcon<Prayer> getPrayerIcon() {
+		return prayerIcon;
 	}
 
 	/**
