@@ -123,7 +123,6 @@ public final class PlayerCredentials {
 	 * Gets the connection host address.
 	 *
 	 * @return The connecting host address.
-	 * @return
 	 */
 	public String getAddress() {
 		return address;

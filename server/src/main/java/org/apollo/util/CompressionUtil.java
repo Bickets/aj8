@@ -34,7 +34,7 @@ public final class CompressionUtil {
 			try {
 				/* copy data between the streams */
 				byte[] buf = new byte[4096];
-				int len = 0;
+				int len;
 				while ((len = is.read(buf, 0, buf.length)) != -1) {
 					os.write(buf, 0, len);
 				}
@@ -64,7 +64,7 @@ public final class CompressionUtil {
 			try {
 				/* copy data between the streams */
 				byte[] buf = new byte[4096];
-				int len = 0;
+				int len;
 				while ((len = is.read(buf, 0, buf.length)) != -1) {
 					os.write(buf, 0, len);
 				}
@@ -93,7 +93,7 @@ public final class CompressionUtil {
 			OutputStream os = new CBZip2OutputStream(bout, 1);
 			try {
 				byte[] buf = new byte[4096];
-				int len = 0;
+				int len;
 				while ((len = is.read(buf, 0, buf.length)) != -1) {
 					os.write(buf, 0, len);
 				}
@@ -132,7 +132,7 @@ public final class CompressionUtil {
 			ByteArrayOutputStream os = new ByteArrayOutputStream();
 			try {
 				byte[] buf = new byte[4096];
-				int len = 0;
+				int len;
 				while ((len = is.read(buf, 0, buf.length)) != -1) {
 					os.write(buf, 0, len);
 				}

@@ -62,9 +62,8 @@ public final class MobDefinitionParser {
 				return def;
 			} else if (code == 1) {
 				int length = buffer.get() & 0xFF;
-				int[] unknown = new int[length];
 				for (int i = 0; i < length; i++) {
-					unknown[i] = buffer.getShort();
+					buffer.getShort();
 				}
 			} else if (code == 2) {
 				def.setName(ByteBufferUtil.readString(buffer));
@@ -86,17 +85,14 @@ public final class MobDefinitionParser {
 				def.setInteraction(code - 30, str);
 			} else if (code == 40) {
 				int length = buffer.get() & 0xFF;
-				int[] unknown1 = new int[length];
-				int[] unknown2 = new int[length];
 				for (int i = 0; i < length; i++) {
-					unknown1[i] = buffer.getShort();
-					unknown2[i] = buffer.getShort();
+					buffer.getShort();
+					buffer.getShort();
 				}
 			} else if (code == 60) {
 				int length = buffer.get() & 0xFF;
-				int[] unknown = new int[length];
 				for (int i = 0; i < length; i++) {
-					unknown[i] = buffer.getShort();
+					buffer.getShort();
 				}
 			} else if (code == 90) {
 				buffer.getShort(); // Dummy
@@ -104,14 +100,12 @@ public final class MobDefinitionParser {
 				buffer.getShort(); // Dummy
 			} else if (code == 92) {
 				buffer.getShort(); // Dummy
-			} else if (code == 93) {
 			} else if (code == 95) {
 				def.setCombatLevel(buffer.getShort());
 			} else if (code == 97) {
 				buffer.getShort();
 			} else if (code == 98) {
 				buffer.getShort();
-			} else if (code == 99) {
 			} else if (code == 100) {
 				buffer.get();
 			} else if (code == 101) {
@@ -131,15 +125,9 @@ public final class MobDefinitionParser {
 				}
 
 				int count = buffer.get() & 0xFF;
-				int[] unknown = new int[count + 1];
 				for (int i = 0; i <= count; i++) {
-					int unknown3 = buffer.getShort();
-					if (unknown3 == 65535) {
-						unknown3 = -1;
-					}
-					unknown[i] = unknown3;
+					buffer.getShort();
 				}
-			} else if (code == 107) {
 			}
 		}
 	}

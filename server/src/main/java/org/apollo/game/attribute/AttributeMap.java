@@ -25,9 +25,6 @@ public final class AttributeMap {
 	 * @param <T> The attributes value type reference.
 	 * @param key The attribute key, may not be {@code null}.
 	 * @return The value of the attribute.
-	 * @unchecked This method declares unchecked as the cast from
-	 *            {@code Attribute<?>} to {@code Attribute<T>} is unchecked.
-	 *            This method is safe across all compilers.
 	 * @throws NullPointerException If the specified key is {@code null}.
 	 */
 	@SuppressWarnings("unchecked")

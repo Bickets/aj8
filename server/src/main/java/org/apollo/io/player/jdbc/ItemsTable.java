@@ -35,8 +35,8 @@ public abstract class ItemsTable extends Table {
 	private final String type;
 
 	/**
-	 * Constructs a new {@link ItemTable} with the specified database connection
-	 * and inventory type.
+	 * Constructs a new {@link ItemsTable} with the specified database
+	 * connection and inventory type.
 	 *
 	 * @param connection The database connection.
 	 * @param type The type of inventory.

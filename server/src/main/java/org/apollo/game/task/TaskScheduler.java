@@ -55,7 +55,7 @@ public final class TaskScheduler {
 	}
 
 	/**
-	 * Returns the instance of {@link TaskSehcduler}.
+	 * Returns the instance of {@link TaskScheduler}.
 	 */
 	public static TaskScheduler getInstance() {
 		return INSTANCE;

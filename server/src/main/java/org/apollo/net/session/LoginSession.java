@@ -134,11 +134,7 @@ public final class LoginSession extends Session {
 			serverCrcs[crc] = buffer.getInt();
 		}
 
-		if (Arrays.equals(clientCrcs, serverCrcs)) {
-			return false;
-		}
-
-		return true;
+		return !Arrays.equals(clientCrcs, serverCrcs);
 	}
 
 	/**
@@ -156,11 +152,7 @@ public final class LoginSession extends Session {
 		Matcher usernameMatcher = PATTERN.matcher(username);
 		Matcher passwordMatcher = PATTERN.matcher(password);
 
-		if (usernameMatcher.matches() && passwordMatcher.matches()) {
-			return false;
-		}
-
-		return true;
+		return !(usernameMatcher.matches() && passwordMatcher.matches());
 	}
 
 	/**
@@ -173,7 +165,7 @@ public final class LoginSession extends Session {
 		int status = response.getStatus();
 		Player player = response.getPlayer();
 		int rights = player == null ? 0 : player.getPrivilegeLevel().toInteger();
-		boolean log = player == null ? false : player.isFlagged();
+		boolean log = player != null && player.isFlagged();
 
 		if (player != null) {
 			GameSession session = new GameSession(ctx(), messageTranslator, player, gameService);

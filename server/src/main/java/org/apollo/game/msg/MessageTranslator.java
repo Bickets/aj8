@@ -225,7 +225,6 @@ public final class MessageTranslator {
 		register(new ClosedInterfaceMessageHandler());
 		register(new EnteredAmountMessageHandler());
 		register(new DialogueContinueMessageHandler());
-		register(new RegionLoadedMessageHandler());
 
 		// world handlers
 		register(new ObjectMessageHandler(world));
@@ -236,6 +235,7 @@ public final class MessageTranslator {
 		register(new ItemOnPlayerMessageHandler(world));
 		register(new PlayerActionMessageHandler(world));
 		register(new MobActionMessageHandler(world));
+		register(new RegionLoadedMessageHandler(world));
 	}
 
 	/**
@@ -286,7 +286,6 @@ public final class MessageTranslator {
 	 * Attempts to decode the specified {@code packet} into a {@link Message}.
 	 *
 	 * @param packet The packet.
-	 * @return
 	 * @return The decoded message if and only if it was decoded successfully,
 	 *         otherwise {@code null}.
 	 */

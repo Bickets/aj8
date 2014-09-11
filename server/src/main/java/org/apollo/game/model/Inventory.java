@@ -24,20 +24,18 @@ public final class Inventory implements Cloneable {
 	public enum StackMode {
 
 		/**
-		 * When in {@link #STACK_ALWAYS} mode, an {@link Inventory} will stack
-		 * every single item, regardless of the settings of individual items.
+		 * An {@link Inventory} will stack every single item, regardless of the
+		 * settings of individual items.
 		 */
 		STACK_ALWAYS,
 
 		/**
-		 * When in {@link #STACK_STACKABLE_ITEMS} mode, an {@link Inventory}
-		 * will stack items depending on their settings.
+		 * An {@link Inventory} will stack items depending on their settings.
 		 */
 		STACK_STACKABLE_ITEMS,
 
 		/**
-		 * When in {@link #STACK_NEVER} mode, an {@link Inventory} will never
-		 * stack items.
+		 * An {@link Inventory} will never stack items.
 		 */
 		STACK_NEVER
 
@@ -282,7 +280,7 @@ public final class Inventory implements Cloneable {
 	}
 
 	/**
-	 * An alias for {@code add(new Item(id, amount)}.
+	 * An alias for {@code add(new Item(int, int)}.
 	 *
 	 * @param id The id.
 	 * @param amount The amount.
@@ -380,7 +378,7 @@ public final class Inventory implements Cloneable {
 	}
 
 	/**
-	 * An alias for {@code remove(item.getId(), item.getAmount())}.
+	 * An alias for {@code remove(int, int)}.
 	 *
 	 * @param item The item to remove.
 	 * @return The amount that was removed.
@@ -450,7 +448,6 @@ public final class Inventory implements Cloneable {
 	 *
 	 * @param oldSlot The old slot.
 	 * @param newSlot The new slot.
-	 * @throws IndexOutOufBoundsException if the slot is out of bounds.
 	 */
 	public void swap(int oldSlot, int newSlot) {
 		swap(false, oldSlot, newSlot);

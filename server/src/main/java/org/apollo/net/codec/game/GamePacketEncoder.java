@@ -6,7 +6,7 @@ import io.netty.handler.codec.MessageToByteEncoder;
 import net.burtleburtle.bob.rand.IsaacAlgorithm;
 
 /**
- * A {@link OneToOneEncoder} which encodes in-game packets.
+ * A {@link MessageToByteEncoder} which encodes in-game packets.
  *
  * @author Graham
  */

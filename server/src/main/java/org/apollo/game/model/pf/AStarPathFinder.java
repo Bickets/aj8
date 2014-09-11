@@ -197,18 +197,13 @@ public final class AStarPathFinder extends PathFinder {
 	 */
 	private Node current;
 
-	/**
-	 * An array of coordinate nodes.
-	 */
-	private Node[][] nodes;
-
 	@Override
 	public Path find(Position position, int height, int width, int length, int srcX, int srcY, int dstX, int dstY, int size) {
 		if (dstX < 0 || dstY < 0 || dstX >= width || dstY >= length) {
 			return null; // out of range
 		}
 
-		nodes = new Node[width][length];
+		Node[][] nodes = new Node[width][length];
 		for (int x = 0; x < width; x++) {
 			for (int y = 0; y < length; y++) {
 				nodes[x][y] = new Node(x, y);
@@ -334,7 +329,7 @@ public final class AStarPathFinder extends PathFinder {
 	 * @param dst The distance node.
 	 * @return The distance.
 	 */
-	public int estimateDistance(Node src, Node dst) {
+	private int estimateDistance(Node src, Node dst) {
 		int deltaX = src.getX() - dst.getX();
 		int deltaY = src.getY() - dst.getY();
 		return (Math.abs(deltaX) + Math.abs(deltaY)) * COST_STRAIGHT;

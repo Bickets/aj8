@@ -406,7 +406,7 @@ public final class GameObjectDefinition {
 	 * @param sizeY The vertical size to be set.
 	 */
 	public void setSizeY(int sizeY) {
-		sizeX = sizeY;
+		this.sizeY = sizeY;
 	}
 
 	/**

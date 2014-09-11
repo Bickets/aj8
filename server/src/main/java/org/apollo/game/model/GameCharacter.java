@@ -99,7 +99,7 @@ public abstract class GameCharacter extends Entity {
 	 *
 	 * @param position The initial position of this character.
 	 */
-	public GameCharacter(Position position) {
+	protected GameCharacter(Position position) {
 		super(position);
 	}
 

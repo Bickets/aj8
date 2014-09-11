@@ -12,7 +12,7 @@ import java.io.IOException;
  * @author Hadyn Richard
  */
 @FunctionalInterface
-public interface FileIndex {
+interface FileIndex {
 
 	/**
 	 * Gets the data within this file index.

@@ -16,16 +16,6 @@ public final class ManifestEntry {
 	private final String prefix;
 
 	/**
-	 * The version id of the entries.
-	 */
-	private int[] versions = new int[0];
-
-	/**
-	 * The cyclic redundancy checks of the entries.
-	 */
-	private int[] crcs = new int[0];
-
-	/**
 	 * Constructs a new {@link ManifestEntry} with the specified entry prefix.
 	 *
 	 * @param prefix The prefix of the manifest entry.
@@ -43,8 +33,8 @@ public final class ManifestEntry {
 		ByteBuffer versionBuf = ByteBuffer.wrap(archive.get(String.format("%s_version", prefix)));
 
 		int amountEntries = versionBuf.capacity() / 2;
-		versions = new int[amountEntries];
-		crcs = new int[amountEntries];
+		int[] versions = new int[amountEntries];
+		int[] crcs = new int[amountEntries];
 
 		for (int i = 0; i < amountEntries; i++) {
 			versions[i] = versionBuf.getShort() & 0xffff;

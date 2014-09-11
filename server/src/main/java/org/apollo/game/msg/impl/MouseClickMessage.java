@@ -75,7 +75,7 @@ public final class MouseClickMessage implements Message {
 	private final Point point;
 
 	/**
-	 * Constructs a new {@link MouseClickEvent} with the specified time, type
+	 * Constructs a new {@link MouseClickMessage} with the specified time, type
 	 * and point.
 	 *
 	 * @param time The time from the last occurrence of a click.

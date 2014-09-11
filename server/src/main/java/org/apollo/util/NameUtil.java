@@ -40,7 +40,7 @@ public final class NameUtil {
 			}
 		}
 		for (; l % 37L == 0L && l != 0L; l /= 37L) {
-			;
+
 		}
 		return l;
 	}

@@ -16,7 +16,7 @@ import net.burtleburtle.bob.rand.IsaacAlgorithm;
 import org.apollo.game.model.def.GamePacketDefinition;
 
 /**
- * A {@link StatefulByteToMessageDecoder} which decodes game packets.
+ * A {@link ByteToMessageDecoder} which decodes game packets.
  *
  * @author Graham
  */

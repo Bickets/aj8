@@ -1,7 +1,7 @@
 package org.apollo.game.model.def;
 
 /**
- * Represents a type of {@link mob}.
+ * Represents a type of {@link Mob}.
  *
  * @author Chris Fletcher
  */

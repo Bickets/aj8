@@ -35,7 +35,7 @@ public abstract class Action<T extends GameCharacter> extends Task {
 	 *            immediately.
 	 * @param character The character performing the action.
 	 */
-	public Action(int delay, boolean immediate, T character) {
+	protected Action(int delay, boolean immediate, T character) {
 		super(delay, immediate);
 		this.character = character;
 	}
@@ -45,7 +45,7 @@ public abstract class Action<T extends GameCharacter> extends Task {
 	 *
 	 * @return The character.
 	 */
-	public final T getCharacter() {
+	protected final T getCharacter() {
 		return character;
 	}
 

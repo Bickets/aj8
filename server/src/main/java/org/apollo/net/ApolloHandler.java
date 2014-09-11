@@ -144,11 +144,7 @@ public final class ApolloHandler extends ChannelInboundHandlerAdapter {
 		}
 
 		// TODO: A proper way to manage this??
-		if (msg.equals("An existing connection was forcibly closed by the remote host")) {
-			return false;
-		}
-
-		return true;
+		return !msg.equals("An existing connection was forcibly closed by the remote host");
 	}
 
 }

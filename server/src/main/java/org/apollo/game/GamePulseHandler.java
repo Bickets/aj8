@@ -8,7 +8,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Graham
  */
-public final class GamePulseHandler implements Runnable {
+final class GamePulseHandler implements Runnable {
 
 	/**
 	 * The logger used to print information and debug messages to the console.

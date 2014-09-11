@@ -8,7 +8,7 @@ import io.netty.handler.codec.MessageToMessageEncoder;
 import java.util.List;
 
 /**
- * A {@link OneToOneEncoder} for the 'on-demand' protocol.
+ * A {@link MessageToMessageEncoder} for the 'on-demand' protocol.
  *
  * @author Graham
  */

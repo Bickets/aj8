@@ -46,7 +46,7 @@ public abstract class Entity {
 	 *
 	 * @param position The position of this entity.
 	 */
-	public Entity(Position position) {
+	protected Entity(Position position) {
 		setPosition(position);
 	}
 

@@ -21,8 +21,8 @@ public final class ButtonActionEvent implements Event {
 	private final int id;
 
 	/**
-	 * Constructs a new {@link ButtonEvent} with the specified player and button
-	 * id.
+	 * Constructs a new {@link ButtonActionEvent} with the specified player and
+	 * button id.
 	 *
 	 * @param player The player.
 	 * @param id The buttons id.

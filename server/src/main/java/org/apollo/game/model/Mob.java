@@ -46,7 +46,6 @@ public final class Mob extends GameCharacter {
 	 *
 	 * @param definition The mobs definitions.
 	 * @param position The position of the mob.
-	 * @param initialFaceDirection The initial facing direction of this mob.
 	 */
 	public Mob(MobDefinition definition, Position position) {
 		super(position);

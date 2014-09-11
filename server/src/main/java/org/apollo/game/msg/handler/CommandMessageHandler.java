@@ -21,7 +21,7 @@ public final class CommandMessageHandler implements MessageHandler<CommandMessag
 	private final World world;
 
 	/**
-	 * Constructs a new {@link ButtonEvnetHandler}.
+	 * Constructs a new {@link CommandMessageHandler}.
 	 *
 	 * @param world The world.
 	 */

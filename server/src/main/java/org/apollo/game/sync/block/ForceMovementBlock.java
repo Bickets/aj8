@@ -6,11 +6,6 @@ import org.apollo.game.model.Position;
 /**
  * The Force Movement {@link SynchronizationBlock}.
  *
- * @note This block is used to force a {@link Player} to walk to a set location.
- *       The player can then perform an action (e.g. an animation), as used in
- *       the Agility skill, hence this block earning the name 'Asynchronous
- *       Animation/Walking', although the action is not restricted to
- *       animations.
  * @author Major
  */
 public final class ForceMovementBlock extends SynchronizationBlock {

@@ -128,19 +128,7 @@ public final class HttpRequestWorker extends RequestWorker<HttpRequest, Resource
 	private ByteBuf createErrorPage(HttpResponseStatus status, String description) {
 		String title = status.code() + " " + status.reasonPhrase();
 
-		StringBuilder bldr = new StringBuilder();
-
-		bldr.append("<!DOCTYPE html><html><head><title>");
-		bldr.append(title);
-		bldr.append("</title></head><body><h1>");
-		bldr.append(title);
-		bldr.append("</h1><p>");
-		bldr.append(description);
-		bldr.append("</p><hr /><address>");
-		bldr.append(SERVER_IDENTIFIER);
-		bldr.append(" Server</address></body></html>");
-
-		return Unpooled.copiedBuffer(bldr.toString(), Charset.defaultCharset());
+		return Unpooled.copiedBuffer("<!DOCTYPE html><html><head><title>" + title + "</title></head><body><h1>" + title + "</h1><p>" + description + "</p><hr /><address>" + SERVER_IDENTIFIER + " Server</address></body></html>", Charset.defaultCharset());
 	}
 
 }

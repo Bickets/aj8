@@ -293,7 +293,7 @@ public final class GamePacketBuilder {
 	/**
 	 * Puts the bytes from the specified buffer into this packet's buffer.
 	 *
-	 * @param buffer The source {@link ChannelBuffer}.
+	 * @param buffer The source {@link ByteBuf}.
 	 * @throws IllegalStateException if the builder is not in byte access mode.
 	 */
 	public void putBytes(ByteBuf buffer) {
@@ -311,7 +311,7 @@ public final class GamePacketBuilder {
 	 * Puts the bytes from the specified buffer into this packet's buffer, in
 	 * reverse.
 	 *
-	 * @param buffer The source {@link ChannelBuffer}.
+	 * @param buffer The source {@link ByteBuf}.
 	 * @throws IllegalStateException if the builder is not in byte access mode.
 	 */
 	public void putBytesReverse(ByteBuf buffer) {

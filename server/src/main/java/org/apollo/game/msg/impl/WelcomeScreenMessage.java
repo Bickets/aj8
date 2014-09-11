@@ -41,7 +41,7 @@ public final class WelcomeScreenMessage implements Message {
 	 * recovery change, unread messages, members warning, last address and last
 	 * login.
 	 *
-	 * @param lastRecovryChange The last time the recovery questions were
+	 * @param lastRecoveryChange The last time the recovery questions were
 	 *            changed.
 	 * @param unreadMessages The amount of unread messages.
 	 * @param membersWarning Whether or not to warn a member of logging into a

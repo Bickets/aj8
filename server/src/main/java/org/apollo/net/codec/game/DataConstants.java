@@ -5,7 +5,7 @@ package org.apollo.net.codec.game;
  *
  * @author Graham
  */
-public final class DataConstants {
+final class DataConstants {
 
 	/**
 	 * An array of bit masks. The element {@code n} is equal to

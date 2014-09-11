@@ -14,6 +14,6 @@ import java.util.function.Predicate;
  * @param <E> The type of event to the predicate.
  */
 @FunctionalInterface
-public interface EventPredicate<E extends Event> extends Predicate<E> {
+interface EventPredicate<E extends Event> extends Predicate<E> {
 
 }

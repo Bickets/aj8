@@ -20,7 +20,7 @@ public abstract class ActionMessage implements Message {
 	 *
 	 * @param option The interface option clicked which initiated this action.
 	 */
-	public ActionMessage(InterfaceOption option) {
+	protected ActionMessage(InterfaceOption option) {
 		this.option = option;
 	}
 

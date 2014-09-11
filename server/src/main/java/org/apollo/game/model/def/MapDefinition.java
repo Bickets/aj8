@@ -33,7 +33,7 @@ public final class MapDefinition {
 	 *
 	 * @param hash The hash of the region coordinates within this map entry.
 	 * @param mapFile The map file id in this map entry.
-	 * @param scapeFile The landscape file id in this map entry.
+	 * @param landscapeFile The landscape file id in this map entry.
 	 * @param preload Represents whether or not this map is preloaded.
 	 */
 	public MapDefinition(int hash, int mapFile, int landscapeFile, boolean preload) {

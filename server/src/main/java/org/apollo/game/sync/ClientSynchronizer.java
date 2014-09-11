@@ -26,9 +26,7 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
  * thread pool. A {@link Phaser} is used to ensure that the synchronization is
  * complete, allowing control to return to the {@link GameService} that started
  * the synchronization. This class will scale well with machines that have
- * multiple cores/processors. The {@link SequentialClientSynchronizer} will work
- * better on machines with a single core/processor, however, both classes will
- * work.
+ * multiple cores/processors.
  *
  * @author Graham
  * @author Ryley Kimmel <ryley.kimmel@live.com>

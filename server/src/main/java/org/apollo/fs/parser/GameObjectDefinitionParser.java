@@ -57,7 +57,7 @@ public final class GameObjectDefinitionParser {
 	 */
 	private static GameObjectDefinition parseDefinition(int id, ByteBuffer buffer) {
 		GameObjectDefinition def = new GameObjectDefinition(id);
-		int interactableValue = -1;
+		int interactableValue;
 
 		while (true) {
 			int code = buffer.get() & 0xFF;

@@ -71,7 +71,7 @@ public final class Archive {
 			int unpacked = ByteBufferUtil.readMedium(buffer);
 			int packed = ByteBufferUtil.readMedium(buffer);
 
-			byte[] entryBytes = null;
+			byte[] entryBytes;
 
 			if (unpacked != packed) {
 				entryBytes = CompressionUtil.unbzip2(unpackedBytes, offset, packed);

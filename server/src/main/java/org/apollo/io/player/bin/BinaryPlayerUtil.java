@@ -10,7 +10,7 @@ import org.apollo.util.NameUtil;
  *
  * @author Graham
  */
-public final class BinaryPlayerUtil {
+final class BinaryPlayerUtil {
 
 	/**
 	 * The saved games directory.

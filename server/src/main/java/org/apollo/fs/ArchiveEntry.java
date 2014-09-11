@@ -6,7 +6,7 @@ package org.apollo.fs;
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  * @author Hadyn Richard
  */
-public final class ArchiveEntry {
+final class ArchiveEntry {
 
 	/**
 	 * The bytes within this entry.
