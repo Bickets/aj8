@@ -33,7 +33,7 @@ public final class GameCharacterHintIconMessage extends HintIconMessage {
 	 *             supported type.
 	 */
 	private static HintIconType getType(GameCharacter character) {
-		switch (character.type()) {
+		switch (character.getCategory()) {
 		case MOB:
 			return HintIconType.MOB;
 		case PLAYER:

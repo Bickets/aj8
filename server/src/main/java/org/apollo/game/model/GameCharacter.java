@@ -39,16 +39,6 @@ public abstract class GameCharacter extends Entity {
 	private final GameCharacterFields fields = new GameCharacterFields(this);
 
 	/**
-	 * This characters first direction.
-	 */
-	private Direction firstDirection = Direction.NONE;
-
-	/**
-	 * This characters second direction.
-	 */
-	private Direction secondDirection = Direction.NONE;
-
-	/**
 	 * A set of local players.
 	 */
 	private final Set<Player> localPlayers = new LinkedHashSet<>();
@@ -62,6 +52,21 @@ public abstract class GameCharacter extends Entity {
 	 * A map of attributes.
 	 */
 	private final AttributeMap attributes = new AttributeMap();
+
+	/**
+	 * The character's skill set.
+	 */
+	private final SkillSet skillSet = new SkillSet();
+
+	/**
+	 * This characters first direction.
+	 */
+	private Direction firstDirection = Direction.NONE;
+
+	/**
+	 * This characters second direction.
+	 */
+	private Direction secondDirection = Direction.NONE;
 
 	/**
 	 * A set of {@link SynchronizationBlock}s.
@@ -84,9 +89,10 @@ public abstract class GameCharacter extends Entity {
 	private Action<?> currentAction;
 
 	/**
-	 * The character's skill set.
+	 * The index of this entity in the {@link GameCharacterRepository} it
+	 * belongs to.
 	 */
-	private final SkillSet skillSet = new SkillSet();
+	private int index = -1;
 
 	/**
 	 * Creates a new character with the specified initial position.
@@ -95,6 +101,47 @@ public abstract class GameCharacter extends Entity {
 	 */
 	public GameCharacter(Position position) {
 		super(position);
+	}
+
+	/**
+	 * Checks if this entity is active.
+	 *
+	 * @return {@code true} if so, {@code false} if not.
+	 */
+	public boolean isActive() {
+		return index != -1;
+	}
+
+	/**
+	 * Gets the index of this entity.
+	 *
+	 * @return The index of this entity.
+	 */
+	public int getIndex() {
+		synchronized (this) {
+			return index;
+		}
+	}
+
+	/**
+	 * Sets the index of this entity.
+	 *
+	 * @param index The index of this entity.
+	 */
+	public void setIndex(int index) {
+		synchronized (this) {
+			this.index = index;
+		}
+	}
+
+	/**
+	 * Resets the index of this entity, freeing it within its
+	 * {@link GameCharacterRepository}.
+	 */
+	public void resetIndex() {
+		synchronized (this) {
+			index = -1;
+		}
 	}
 
 	/**

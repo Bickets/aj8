@@ -4,19 +4,19 @@ import java.util.AbstractCollection;
 import java.util.Iterator;
 
 /**
- * A {@link EntityRepository} is a repository of {@link Entity}s that are
- * currently active in the game world.
+ * A {@link GameCharacterRepository} is a repository of {@link GameCharacter}s
+ * that are currently active in the game world.
  *
  * @author Graham
  * @author Ryley Kimmel <ryley.kimmel@live.com>
- * @param <T> The type of entity.
+ * @param <T> The type of game character.
  */
-public final class EntityRepository<T extends Entity> extends AbstractCollection<T> implements Iterable<T> {
+public final class GameCharacterRepository<T extends GameCharacter> extends AbstractCollection<T> implements Iterable<T> {
 
 	/**
-	 * The array of entities in this repository.
+	 * The array of game characters in this repository.
 	 */
-	private final Entity[] entities;
+	private final GameCharacter[] characters;
 
 	/**
 	 * The current size of this repository.
@@ -24,13 +24,13 @@ public final class EntityRepository<T extends Entity> extends AbstractCollection
 	private int size = 0;
 
 	/**
-	 * Creates a new entity repository with the specified capacity.
+	 * Creates a new game character repository with the specified capacity.
 	 *
-	 * @param capacity The maximum number of entities that can be present in the
-	 *            repository.
+	 * @param capacity The maximum number of game characters that can be present
+	 *            in the repository.
 	 */
-	public EntityRepository(int capacity) {
-		entities = new Entity[capacity];
+	public GameCharacterRepository(int capacity) {
+		characters = new GameCharacter[capacity];
 	}
 
 	@Override
@@ -44,7 +44,7 @@ public final class EntityRepository<T extends Entity> extends AbstractCollection
 	 * @return The maximum size of this repository.
 	 */
 	public int capacity() {
-		return entities.length;
+		return characters.length;
 	}
 
 	/**
@@ -54,20 +54,20 @@ public final class EntityRepository<T extends Entity> extends AbstractCollection
 	 * @throws ArrayIndexOutOfBoundsException If the specified index is invalid.
 	 */
 	private void testIndex(int index) {
-		if (index < 1 || index >= entities.length + 1) {
+		if (index < 1 || index >= characters.length + 1) {
 			throw new ArrayIndexOutOfBoundsException();
 		}
 	}
 
 	@Override
-	public boolean add(T entity) {
-		for (int index = 0; index < entities.length; index++) {
-			if (entities[index] != null) {
+	public boolean add(T character) {
+		for (int index = 0; index < characters.length; index++) {
+			if (characters[index] != null) {
 				continue;
 			}
 
-			entities[index] = entity;
-			entity.setIndex(index + 1);
+			characters[index] = character;
+			character.setIndex(index + 1);
 			size++;
 
 			return true;
@@ -77,73 +77,73 @@ public final class EntityRepository<T extends Entity> extends AbstractCollection
 	}
 
 	/**
-	 * Attempts to remove the specified entity from this collection.
+	 * Attempts to remove the specified game character from this collection.
 	 *
-	 * @param entity The entity to try to remove.
-	 * @return {@code true} if and only if the specified entity was removed
+	 * @param character The character to try to remove.
+	 * @return {@code true} if and only if the specified character was removed
 	 *         otherwise {@code false}.
 	 */
-	public boolean remove(T entity) {
-		int index = entity.getIndex();
+	public boolean remove(T character) {
+		int index = character.getIndex();
 
-		Entity other = get(index);
-		assert other == entity;
+		GameCharacter other = get(index);
+		assert other == character;
 
 		remove(index);
 		return true;
 	}
 
 	/**
-	 * Looks up an entity at the specified index and attempts to remove it from
-	 * this collection.
+	 * Looks up a game character at the specified index and attempts to remove
+	 * it from this collection.
 	 *
 	 * @param index The index within this collection to remove the specified
-	 *            entity.
-	 * @return {@code true} if and only if the entity for the specified index
-	 *         was removed.
+	 *            character.
+	 * @return {@code true} if and only if the game character for the specified
+	 *         index was removed.
 	 */
 	public boolean remove(int index) {
-		Entity entity = get(index);
-		if (entity == null) {
+		GameCharacter character = get(index);
+		if (character == null) {
 			return false;
 		}
 
-		if (entity.getIndex() != index) {
-			throw new IllegalStateException("Unexpected index: " + index + ", expected: " + entity.getIndex());
+		if (character.getIndex() != index) {
+			throw new IllegalStateException("Unexpected index: " + index + ", expected: " + character.getIndex());
 		}
 
-		entities[index - 1] = null;
-		entity.resetIndex();
+		characters[index - 1] = null;
+		character.resetIndex();
 		size--;
 		return true;
 	}
 
 	/**
-	 * Attempts to get the entity at the specified index.
+	 * Attempts to get the character at the specified index.
 	 *
-	 * @param index The index of the entity to get.
-	 * @return The entity at the specified index if and only if it exists
+	 * @param index The index of the character to get.
+	 * @return The character at the specified index if and only if it exists
 	 *         otherwise {@code null} is returned.
 	 */
 	@SuppressWarnings("unchecked")
 	public T get(int index) {
 		testIndex(index);
-		return (T) entities[index - 1];
+		return (T) characters[index - 1];
 	}
 
 	@Override
 	public Iterator<T> iterator() {
-		return new EntityRepositoryIterator();
+		return new GameCharacterRepositoryIterator();
 	}
 
 	/**
-	 * The {@link Iterator} implementation for the {@link EntityRepository}
-	 * class.
+	 * The {@link Iterator} implementation for the
+	 * {@link GameCharacterRepository} class.
 	 *
 	 * @author Graham
 	 * @author Ryley Kimmel <ryley.kimmel@live.com>
 	 */
-	private final class EntityRepositoryIterator implements Iterator<T> {
+	private final class GameCharacterRepositoryIterator implements Iterator<T> {
 
 		/**
 		 * The current index of this iterator.
@@ -162,7 +162,7 @@ public final class EntityRepository<T extends Entity> extends AbstractCollection
 			}
 
 			while (currentIndex < capacity()) {
-				if (entities[currentIndex++] != null) {
+				if (characters[currentIndex++] != null) {
 					foundIndex++;
 					return true;
 				}
@@ -177,7 +177,7 @@ public final class EntityRepository<T extends Entity> extends AbstractCollection
 
 		@Override
 		public void remove() {
-			EntityRepository.this.remove(currentIndex + 1);
+			GameCharacterRepository.this.remove(currentIndex + 1);
 		}
 	}
 

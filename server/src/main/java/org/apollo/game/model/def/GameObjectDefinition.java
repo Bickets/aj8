@@ -2,9 +2,6 @@ package org.apollo.game.model.def;
 
 import org.apollo.game.model.Position;
 
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
-
 /**
  * Represents the definition of some game object.
  *
@@ -17,11 +14,6 @@ public final class GameObjectDefinition {
 	 * The game object definitions.
 	 */
 	private static GameObjectDefinition[] definitions;
-
-	/**
-	 * A map representing known positions for object ids.
-	 */
-	private final Multimap<Integer, Position> positions = ArrayListMultimap.create();
 
 	/**
 	 * Gets the total number of objects.
@@ -159,26 +151,6 @@ public final class GameObjectDefinition {
 	 */
 	public GameObjectDefinition(int id) {
 		this.id = id;
-	}
-
-	/**
-	 * Adds an this object definitions position to the map.
-	 *
-	 * @param position The position to add.
-	 */
-	public void addPosition(Position position) {
-		positions.put(id, position);
-	}
-
-	/**
-	 * Checks whether or not the specified position is valid.
-	 *
-	 * @param position The position to test.
-	 * @return <code>true</code> if and only if the position is valid, otherwise
-	 *         <code>false</code>.
-	 */
-	public boolean valid(Position position) {
-		return positions.containsEntry(id, position);
 	}
 
 	/**

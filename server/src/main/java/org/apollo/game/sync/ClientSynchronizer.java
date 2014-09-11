@@ -5,7 +5,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.Phaser;
 
 import org.apollo.game.GameService;
-import org.apollo.game.model.EntityRepository;
+import org.apollo.game.model.GameCharacterRepository;
 import org.apollo.game.model.Mob;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.World;
@@ -67,8 +67,8 @@ public final class ClientSynchronizer {
 	 * Synchronizes the specified {@code world}, this method is thread-safe.
 	 */
 	public void synchronize() {
-		EntityRepository<Player> players = world.getPlayerRepository();
-		EntityRepository<Mob> mobs = world.getMobRepository();
+		GameCharacterRepository<Player> players = world.getPlayerRepository();
+		GameCharacterRepository<Mob> mobs = world.getMobRepository();
 
 		int playerCount = players.size();
 		int mobCount = mobs.size();

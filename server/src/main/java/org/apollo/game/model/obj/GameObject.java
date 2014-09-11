@@ -205,8 +205,8 @@ public final class GameObject extends Entity {
 	}
 
 	@Override
-	public EntityType type() {
-		return EntityType.GAME_OBJECT;
+	public EntityCategory getCategory() {
+		return EntityCategory.GAME_OBJECT;
 	}
 
 }

@@ -658,8 +658,8 @@ public final class Player extends GameCharacter {
 	}
 
 	@Override
-	public EntityType type() {
-		return EntityType.PLAYER;
+	public EntityCategory getCategory() {
+		return EntityCategory.PLAYER;
 	}
 
 	@Override

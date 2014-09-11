@@ -8,22 +8,21 @@ import static org.apollo.game.model.obj.ObjectType.WALKABLE_PROP;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.HashSet;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Set;
 
 import org.apollo.fs.FileSystem;
 import org.apollo.game.model.Position;
 import org.apollo.game.model.def.GameObjectDefinition;
 import org.apollo.game.model.def.MapDefinition;
-import org.apollo.game.model.def.StaticObjectDefinition;
+import org.apollo.game.model.obj.GameObject;
 import org.apollo.game.model.obj.ObjectOrientation;
 import org.apollo.game.model.obj.ObjectType;
 import org.apollo.game.model.pf.TraversalMap;
 import org.apollo.util.ByteBufferUtil;
 import org.apollo.util.CompressionUtil;
-
-import com.google.common.collect.ArrayListMultimap;
-import com.google.common.collect.Multimap;
 
 /**
  * A class which parses static object definitions, which include map tiles and
@@ -49,9 +48,9 @@ public final class StaticObjectDefinitionParser {
 	private static final TraversalMap TRAVERSAL_MAP = TraversalMap.getInstance();
 
 	/**
-	 * A multimap of static object definitions.
+	 * A set of {@link GameObject}s.
 	 */
-	private static final Multimap<Integer, StaticObjectDefinition> definitions = ArrayListMultimap.create();
+	private static final Set<GameObject> GAME_OBJECTS = new HashSet<>();
 
 	/**
 	 * Parses the landscape files from the specified file system.
@@ -60,7 +59,7 @@ public final class StaticObjectDefinitionParser {
 	 * @return A multimap of static object definitions.
 	 * @throws IOException If some I/O exception occurs.
 	 */
-	public static Multimap<Integer, StaticObjectDefinition> parse(FileSystem fs) throws IOException {
+	public static GameObject[] parse(FileSystem fs) throws IOException {
 		Map<Integer, MapDefinition> defs = MapDefinitionParser.parse(fs);
 
 		for (Entry<Integer, MapDefinition> entry : defs.entrySet()) {
@@ -79,7 +78,7 @@ public final class StaticObjectDefinitionParser {
 			loadMaps(mapBuffer, x, y);
 		}
 
-		return definitions;
+		return GAME_OBJECTS.toArray(new GameObject[GAME_OBJECTS.size()]);
 	}
 
 	/**
@@ -170,7 +169,6 @@ public final class StaticObjectDefinitionParser {
 	 */
 	private static void objectDecoded(int id, ObjectOrientation orientation, ObjectType type, Position position) {
 		GameObjectDefinition def = GameObjectDefinition.forId(id);
-		def.addPosition(position);
 
 		if (!TRAVERSAL_MAP.regionInitialized(position.getX(), position.getY())) {
 			TRAVERSAL_MAP.initializeRegion(position.getX(), position.getY());
@@ -192,7 +190,7 @@ public final class StaticObjectDefinitionParser {
 			TRAVERSAL_MAP.markBlocked(position.getHeight(), position.getX(), position.getY());
 		}
 
-		definitions.put(id, new StaticObjectDefinition(id, position, type, orientation));
+		GAME_OBJECTS.add(new GameObject(id, position, type, orientation));
 	}
 
 }

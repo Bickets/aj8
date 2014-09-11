@@ -92,14 +92,14 @@ public final class WalkingQueue {
 
 		Point next = points.poll();
 		if (next != null) {
-			boolean traversable = Direction.isTraversable(position, next.direction, gameCharacter.size());
+			boolean traversable = Direction.isTraversable(position, next.direction, gameCharacter.getSize());
 			if (traversable) {
 				first = next.direction;
 				position = next.position;
 				if (runningQueue/* or run toggled AND enough energy */) {
 					next = points.poll();
 					if (next != null) {
-						traversable = Direction.isTraversable(position, next.direction, gameCharacter.size());
+						traversable = Direction.isTraversable(position, next.direction, gameCharacter.getSize());
 						if (traversable) {
 							second = next.direction;
 							position = next.position;

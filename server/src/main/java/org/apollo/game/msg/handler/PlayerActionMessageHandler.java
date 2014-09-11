@@ -2,7 +2,7 @@ package org.apollo.game.msg.handler;
 
 import org.apollo.game.action.DistancedAction;
 import org.apollo.game.interact.PlayerActionEvent;
-import org.apollo.game.model.EntityRepository;
+import org.apollo.game.model.GameCharacterRepository;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.World;
 import org.apollo.game.msg.MessageHandler;
@@ -38,7 +38,7 @@ public final class PlayerActionMessageHandler implements MessageHandler<PlayerAc
 			return;
 		}
 
-		EntityRepository<Player> repository = world.getPlayerRepository();
+		GameCharacterRepository<Player> repository = world.getPlayerRepository();
 
 		int index = msg.getIndex();
 		if (index < 1 || index >= repository.capacity()) {
@@ -59,7 +59,7 @@ public final class PlayerActionMessageHandler implements MessageHandler<PlayerAc
 			return;
 		}
 
-		player.startAction(new DistancedAction<Player>(0, true, player, other.getPosition(), other.size()) {
+		player.startAction(new DistancedAction<Player>(0, true, player, other.getPosition(), other.getSize()) {
 			@Override
 			public void executeAction() {
 				player.turnTo(other.getPosition());

@@ -1,5 +1,7 @@
 package org.apollo.game.model;
 
+import org.apollo.game.model.obj.GameObject;
+
 /**
  * Represents an entity within the game world.
  *
@@ -8,18 +10,31 @@ package org.apollo.game.model;
 public abstract class Entity {
 
 	/**
-	 * Represents the type of this entity.
+	 * Represents the category this entity falls under.
 	 *
 	 * @author Ryley Kimmel <ryley.kimmel@live.com>
 	 */
-	public enum EntityType {
-		PLAYER, MOB, GROUND_ITEM, GAME_OBJECT, PROJECTILE
-	}
+	public enum EntityCategory {
+		/**
+		 * Represents a {@link Player} entity.
+		 */
+		PLAYER,
 
-	/**
-	 * The index of this entity in the {@link EntityRepository} it belongs to.
-	 */
-	private int index = -1;
+		/**
+		 * Represents a {@link Mob} entity.
+		 */
+		MOB,
+
+		/**
+		 * Represents a {@link GroundItem} entity.
+		 */
+		GROUND_ITEM,
+
+		/**
+		 * Represents a {@link GameObject} entity.
+		 */
+		GAME_OBJECT
+	}
 
 	/**
 	 * The current position of this entity.
@@ -27,71 +42,26 @@ public abstract class Entity {
 	private Position position;
 
 	/**
-	 * Creates a new entity with the specified initial position.
+	 * Constructs a new {@link Entity} with the specified position.
 	 *
-	 * @param position The initial position of this entity.
+	 * @param position The position of this entity.
 	 */
 	public Entity(Position position) {
 		setPosition(position);
 	}
 
 	/**
-	 * Checks if this entity is active.
-	 *
-	 * @return {@code true} if so, {@code false} if not.
+	 * Returns the category of this entity.
 	 */
-	public boolean isActive() {
-		return index != -1;
-	}
+	public abstract EntityCategory getCategory();
 
 	/**
-	 * Gets the index of this entity.
-	 *
-	 * @return The index of this entity.
-	 */
-	public int getIndex() {
-		synchronized (this) {
-			return index;
-		}
-	}
-
-	/**
-	 * Sets the index of this entity.
-	 *
-	 * @param index The index of this entity.
-	 */
-	public void setIndex(int index) {
-		synchronized (this) {
-			this.index = index;
-		}
-	}
-
-	/**
-	 * Resets the index of this entity, freeing it within its
-	 * {@link EntityRepository}.
-	 */
-	public void resetIndex() {
-		synchronized (this) {
-			index = -1;
-		}
-	}
-
-	/**
-	 * Returns the type of this entity.
-	 */
-	public abstract EntityType type();
-
-	/**
-	 * Returns an integer representation of this entity size, in tiles.
-	 *
-	 * @return The size of this entity.
+	 * Returns the size of this entity in tiles.
 	 */
 	public abstract int getSize();
 
 	/**
-	 * Gets the position of this entity.
-	 *
-	 * @return The position of this entity.
+	 * Returns the position of this entity.
 	 */
 	public Position getPosition() {
 		return position;
@@ -99,8 +69,6 @@ public abstract class Entity {
 
 	/**
 	 * Sets the position of this entity.
-	 *
-	 * @param position The position of this entity.
 	 */
 	public void setPosition(Position position) {
 		this.position = position;
