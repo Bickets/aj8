@@ -17,23 +17,10 @@ import org.apollo.game.msg.impl.PlayerActionMessage;
 @HandlesMessage(PlayerActionMessage.class)
 public final class PlayerActionMessageHandler implements MessageHandler<PlayerActionMessage> {
 
-	/**
-	 * The world used to post player action events to this worlds event
-	 * provider.
-	 */
-	private final World world;
-
-	/**
-	 * Constructs a new {@link PlayerActionMessageHandler}.
-	 *
-	 * @param world The world.
-	 */
-	public PlayerActionMessageHandler(World world) {
-		this.world = world;
-	}
-
 	@Override
 	public void handle(Player player, PlayerActionMessage msg) {
+		World world = player.getWorld();
+
 		if (player.getInterfaceSet().isOpen()) {
 			return;
 		}

@@ -2,7 +2,6 @@ package org.apollo.game.msg.handler;
 
 import org.apollo.game.command.CommandEvent;
 import org.apollo.game.model.Player;
-import org.apollo.game.model.World;
 import org.apollo.game.msg.MessageHandler;
 import org.apollo.game.msg.annotate.HandlesMessage;
 import org.apollo.game.msg.impl.CommandMessage;
@@ -15,20 +14,6 @@ import org.apollo.game.msg.impl.CommandMessage;
 @HandlesMessage(CommandMessage.class)
 public final class CommandMessageHandler implements MessageHandler<CommandMessage> {
 
-	/**
-	 * The world used to post command events to this worlds event provider.
-	 */
-	private final World world;
-
-	/**
-	 * Constructs a new {@link CommandMessageHandler}.
-	 *
-	 * @param world The world.
-	 */
-	public CommandMessageHandler(World world) {
-		this.world = world;
-	}
-
 	@Override
 	public void handle(Player player, CommandMessage message) {
 		/* Could a null string be sent? */
@@ -40,7 +25,7 @@ public final class CommandMessageHandler implements MessageHandler<CommandMessag
 
 		System.arraycopy(components, 1, arguments, 0, arguments.length);
 
-		world.post(new CommandEvent(player, name, arguments));
+		player.getWorld().post(new CommandEvent(player, name, arguments));
 	}
 
 }

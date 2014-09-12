@@ -1,4 +1,4 @@
-package org.apollo.game.model.pf;
+package org.apollo.game.model.region;
 
 import static org.apollo.game.model.pf.TraversalConstants.NONE;
 
@@ -7,6 +7,7 @@ import static org.apollo.game.model.pf.TraversalConstants.NONE;
  *
  * @author Graham
  * @author Hadyn Richard
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class Tile {
 
@@ -74,8 +75,34 @@ public final class Tile {
 	/**
 	 * Returns the flags for this tile.
 	 */
-	public int flags() {
+	public int getFlags() {
 		return flags;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + flags;
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj) {
+			return true;
+		}
+		if (obj == null) {
+			return false;
+		}
+		if (getClass() != obj.getClass()) {
+			return false;
+		}
+		Tile other = (Tile) obj;
+		if (flags != other.flags) {
+			return false;
+		}
+		return true;
 	}
 
 }

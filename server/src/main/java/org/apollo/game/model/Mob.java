@@ -36,9 +36,10 @@ public final class Mob extends GameCharacter {
 	 *
 	 * @param id The id of the mob.
 	 * @param position The position of the mob.
+	 * @param world The world this mob is in.
 	 */
-	public Mob(int id, Position position) {
-		this(MobDefinition.forId(id), position);
+	public Mob(int id, Position position, World world) {
+		this(MobDefinition.forId(id), position, world);
 	}
 
 	/**
@@ -46,9 +47,10 @@ public final class Mob extends GameCharacter {
 	 *
 	 * @param definition The mobs definitions.
 	 * @param position The position of the mob.
+	 * @param world The world this mob is in.
 	 */
-	public Mob(MobDefinition definition, Position position) {
-		super(position);
+	public Mob(MobDefinition definition, Position position, World world) {
+		super(position, world);
 		this.definition = definition;
 		spawnPosition = position;
 	}

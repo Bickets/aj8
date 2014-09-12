@@ -6,7 +6,6 @@ import java.util.concurrent.Executors;
 
 import org.apollo.fs.FileSystem;
 import org.apollo.game.model.Player;
-import org.apollo.io.player.bin.BinaryPlayerSerializer;
 import org.apollo.net.codec.login.LoginConstants;
 import org.apollo.net.codec.login.LoginRequest;
 import org.apollo.net.session.GameSession;
@@ -27,11 +26,6 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
 public final class PlayerSerializerWorker {
 
 	/**
-	 * The default player serializer if one was not instantiated.
-	 */
-	private static final PlayerSerializer DEFAULT_SERIALIZER = new BinaryPlayerSerializer();
-
-	/**
 	 * The logger used to print information and debug messages to the console.
 	 */
 	private final Logger logger = LoggerFactory.getLogger(PlayerSerializerWorker.class);
@@ -40,16 +34,6 @@ public final class PlayerSerializerWorker {
 	 * The player serializer.
 	 */
 	private final PlayerSerializer serializer;
-
-	/**
-	 * Constructs a new {@link PlayerSerializerWorker} with the default
-	 * serializer.
-	 *
-	 * @see {@link #DEFAULT_SERIALIZER}.
-	 */
-	public PlayerSerializerWorker() {
-		this(DEFAULT_SERIALIZER);
-	}
 
 	/**
 	 * Constructs a new {@link PlayerSerializerWorker} with specified

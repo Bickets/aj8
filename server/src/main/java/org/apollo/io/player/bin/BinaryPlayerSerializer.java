@@ -17,6 +17,7 @@ import org.apollo.game.model.PlayerConstants;
 import org.apollo.game.model.Position;
 import org.apollo.game.model.Skill;
 import org.apollo.game.model.SkillSet;
+import org.apollo.game.model.World;
 import org.apollo.io.player.PlayerSerializer;
 import org.apollo.io.player.PlayerSerializerResponse;
 import org.apollo.net.codec.login.LoginConstants;
@@ -30,10 +31,19 @@ import org.apollo.util.StreamUtil;
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  * @author Graham Edgecombe
  */
-public final class BinaryPlayerSerializer implements PlayerSerializer {
+public final class BinaryPlayerSerializer extends PlayerSerializer {
+
+	/**
+	 * Constructs a new {@link BinaryPlayerSerializer} with the specified world.
+	 *
+	 * @param world The world this player is in.
+	 */
+	public BinaryPlayerSerializer(World world) {
+		super(world);
+	}
 
 	@Override
-	public void savePlayer(Player player) throws IOException {
+	protected void savePlayer(Player player) throws IOException {
 		File f = BinaryPlayerUtil.getFile(player.getName());
 
 		try (DataOutputStream out = new DataOutputStream(new FileOutputStream(f))) {
@@ -103,10 +113,10 @@ public final class BinaryPlayerSerializer implements PlayerSerializer {
 	}
 
 	@Override
-	public PlayerSerializerResponse loadPlayer(PlayerCredentials credentials) throws IOException {
+	protected PlayerSerializerResponse loadPlayer(PlayerCredentials credentials) throws IOException {
 		File f = BinaryPlayerUtil.getFile(credentials.getUsername());
 		if (!f.exists()) {
-			return new PlayerSerializerResponse(LoginConstants.STATUS_OK, new Player(credentials, PlayerConstants.SPAWN_POSITION));
+			return new PlayerSerializerResponse(LoginConstants.STATUS_OK, new Player(credentials, PlayerConstants.SPAWN_POSITION, world));
 		}
 
 		try (DataInputStream in = new DataInputStream(new FileInputStream(f))) {
@@ -140,7 +150,7 @@ public final class BinaryPlayerSerializer implements PlayerSerializer {
 				colors[i] = in.readUnsignedByte();
 			}
 
-			Player p = new Player(credentials, new Position(x, y, height));
+			Player p = new Player(credentials, new Position(x, y, height), world);
 			p.setPrivilegeLevel(privilegeLevel);
 			p.setMembers(members);
 			p.setDesignedCharacter(designedCharacter);

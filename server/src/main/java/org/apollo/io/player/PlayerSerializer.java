@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.sql.SQLException;
 
 import org.apollo.game.model.Player;
+import org.apollo.game.model.World;
 import org.apollo.security.PlayerCredentials;
 
 /**
@@ -13,7 +14,21 @@ import org.apollo.security.PlayerCredentials;
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  * @author Graham
  */
-public interface PlayerSerializer {
+public abstract class PlayerSerializer {
+
+	/**
+	 * The world this player is in.
+	 */
+	protected final World world;
+
+	/**
+	 * Constructs a new {@link PlayerSerializer}.
+	 *
+	 * @param world The world this player is in.
+	 */
+	public PlayerSerializer(World world) {
+		this.world = world;
+	}
 
 	/**
 	 * This event is fired when a player attempts to log-in to the game,
@@ -26,7 +41,7 @@ public interface PlayerSerializer {
 	 * @throws SQLException If some database access error occurs.
 	 * @throws IOException If some I/O exception occurs.
 	 */
-	PlayerSerializerResponse loadPlayer(PlayerCredentials credentials) throws SQLException, IOException;
+	protected abstract PlayerSerializerResponse loadPlayer(PlayerCredentials credentials) throws SQLException, IOException;
 
 	/**
 	 * This event is fired when a player is logged out of the game naturally.
@@ -35,6 +50,13 @@ public interface PlayerSerializer {
 	 * @throws SQLException If some database access error occurs.
 	 * @throws IOException If some I/O exception occurs.
 	 */
-	void savePlayer(Player player) throws SQLException, IOException;
+	protected abstract void savePlayer(Player player) throws SQLException, IOException;
+
+	/**
+	 * Returns the world this player is in.
+	 */
+	public World getWorld() {
+		return world;
+	}
 
 }

@@ -1,9 +1,7 @@
 package plugin.mobs
 
-import org.apollo.game.model.Direction
 import org.apollo.game.model.Mob
 import org.apollo.game.model.Position
-import org.apollo.game.model.pf.AStarPathFinder
 import org.apollo.game.task.Task
 import org.eclipse.xtend.lib.annotations.Data
 
@@ -13,8 +11,6 @@ import static plugin.mobs.MobMovementTask.Stage.*
 @Data class MobMovementTask extends Task {
 
 	val Mob mob
-
-	static val pathFinder = new AStarPathFinder
 
 	enum Stage {
 		NONE,
@@ -50,7 +46,7 @@ import static plugin.mobs.MobMovementTask.Stage.*
 				mob.walkingQueue.clear
 				mob.stopAction
 
-				val path = pathFinder.find(mob, mob.spawnPosition.x, mob.spawnPosition.y)
+				val path = mob.world.pathFinder.find(mob, mob.spawnPosition.x, mob.spawnPosition.y)
 				if (path != null) {
 					mob.walkingQueue.addFirstStep(path.poll)
 					while (!path.empty) {
@@ -67,7 +63,7 @@ import static plugin.mobs.MobMovementTask.Stage.*
 				oldPositions += currentPosition
 
 				for (var step = 0; step < steps; step++) {
-					val positions = Direction.getNearbyTraversableTiles(currentPosition, mob.size)
+					val positions = mob.world.traversalMap.getNearbyTraversableTiles(currentPosition, mob.size)
 					val iterator = positions.iterator
 					while (iterator.hasNext) {
 						val pos = iterator.next

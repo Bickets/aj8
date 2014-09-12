@@ -8,13 +8,14 @@ import static org.apollo.game.model.obj.ObjectType.WALKABLE_PROP;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
-import java.util.Set;
 
 import org.apollo.fs.FileSystem;
 import org.apollo.game.model.Position;
+import org.apollo.game.model.World;
 import org.apollo.game.model.def.GameObjectDefinition;
 import org.apollo.game.model.def.MapDefinition;
 import org.apollo.game.model.obj.GameObject;
@@ -43,14 +44,23 @@ public final class StaticObjectDefinitionParser {
 	public static final int FLAG_BRIDGE = 0x2;
 
 	/**
-	 * The traversal map.
+	 * A set of game objects
 	 */
-	private static final TraversalMap TRAVERSAL_MAP = TraversalMap.getInstance();
+	private final List<GameObject> gameObjects = new ArrayList<>();
 
 	/**
-	 * A set of {@link GameObject}s.
+	 * The world.
 	 */
-	private static final Set<GameObject> GAME_OBJECTS = new HashSet<>();
+	private final World world;
+
+	/**
+	 * Constructs a new {@link StaticObjectDefinition} with the specified world.
+	 *
+	 * @param world The world.
+	 */
+	public StaticObjectDefinitionParser(World world) {
+		this.world = world;
+	}
 
 	/**
 	 * Parses the landscape files from the specified file system.
@@ -59,7 +69,7 @@ public final class StaticObjectDefinitionParser {
 	 * @return A multimap of static object definitions.
 	 * @throws IOException If some I/O exception occurs.
 	 */
-	public static GameObject[] parse(FileSystem fs) throws IOException {
+	public List<GameObject> parse(FileSystem fs) throws IOException {
 		Map<Integer, MapDefinition> defs = MapDefinitionParser.parse(fs);
 
 		for (Entry<Integer, MapDefinition> entry : defs.entrySet()) {
@@ -78,7 +88,7 @@ public final class StaticObjectDefinitionParser {
 			loadMaps(mapBuffer, x, y);
 		}
 
-		return GAME_OBJECTS.toArray(new GameObject[GAME_OBJECTS.size()]);
+		return gameObjects;
 	}
 
 	/**
@@ -88,7 +98,7 @@ public final class StaticObjectDefinitionParser {
 	 * @param x The x coordinate of this landscape.
 	 * @param y The y coordinate of this landscape.
 	 */
-	private static void loadLandscapes(ByteBuffer landscapeBuffer, int x, int y) {
+	private void loadLandscapes(ByteBuffer landscapeBuffer, int x, int y) {
 		for (int deltaId, id = -1; (deltaId = ByteBufferUtil.readSmart(landscapeBuffer)) != 0;) {
 			id += deltaId;
 
@@ -116,7 +126,7 @@ public final class StaticObjectDefinitionParser {
 	 * @param x The x coordinate of this map entry.
 	 * @param y The y coordinate of this map entry.
 	 */
-	private static void loadMaps(ByteBuffer mapBuffer, int x, int y) {
+	private void loadMaps(ByteBuffer mapBuffer, int x, int y) {
 		for (int height = 0; height < 4; height++) {
 			for (int localX = 0; localX < 64; localX++) {
 				for (int localY = 0; localY < 64; localY++) {
@@ -149,13 +159,13 @@ public final class StaticObjectDefinitionParser {
 	 * @param flags The map configs.
 	 * @param position The position of the tile.
 	 */
-	private static void mapDecoded(int flags, Position position) {
+	private void mapDecoded(int flags, Position position) {
 		if ((flags & FLAG_CLIP) != 0) {
-			TRAVERSAL_MAP.markBlocked(position.getHeight(), position.getX(), position.getY());
+			world.getTraversalMap().markBlocked(position.getHeight(), position.getX(), position.getY());
 		}
 
 		if ((flags & FLAG_BRIDGE) != 0) {
-			TRAVERSAL_MAP.markBridge(position.getHeight(), position.getX(), position.getY());
+			world.getTraversalMap().markBridge(position.getHeight(), position.getX(), position.getY());
 		}
 	}
 
@@ -167,30 +177,27 @@ public final class StaticObjectDefinitionParser {
 	 * @param type The type of the object.
 	 * @param position The position of the object.
 	 */
-	private static void objectDecoded(int id, ObjectOrientation orientation, ObjectType type, Position position) {
+	private void objectDecoded(int id, ObjectOrientation orientation, ObjectType type, Position position) {
+		TraversalMap traversalMap = world.getTraversalMap();
 		GameObjectDefinition def = GameObjectDefinition.forId(id);
-
-		if (!TRAVERSAL_MAP.regionInitialized(position.getX(), position.getY())) {
-			TRAVERSAL_MAP.initializeRegion(position.getX(), position.getY());
-		}
 
 		if (type == GROUND_PROP) {
 			if (def.hasActions()) {
-				TRAVERSAL_MAP.markBlocked(position.getHeight(), position.getX(), position.getY());
+				traversalMap.markBlocked(position.getHeight(), position.getX(), position.getY());
 			}
 		} else if (type == GENERAL_PROP || type == WALKABLE_PROP) {
 			if (def.getSize() > 0 || !def.isSolid()) {
-				TRAVERSAL_MAP.markBlocked(position.getHeight(), position.getX(), position.getY());
+				traversalMap.markBlocked(position.getHeight(), position.getX(), position.getY());
 			}
 		} else if (type.getId() >= 12) {
-			TRAVERSAL_MAP.markBlocked(position.getHeight(), position.getX(), position.getY());
+			traversalMap.markBlocked(position.getHeight(), position.getX(), position.getY());
 		} else if (type.getGroup() == WALL) {
-			TRAVERSAL_MAP.markWall(orientation, position.getHeight(), position.getX(), position.getY(), type, def.isWalkable());
+			traversalMap.markWall(orientation, position.getHeight(), position.getX(), position.getY(), type, def.isWalkable());
 		} else if (type == DIAGONAL_WALL) {
-			TRAVERSAL_MAP.markBlocked(position.getHeight(), position.getX(), position.getY());
+			traversalMap.markBlocked(position.getHeight(), position.getX(), position.getY());
 		}
 
-		GAME_OBJECTS.add(new GameObject(id, position, type, orientation));
+		gameObjects.add(new GameObject(id, position, world, type, orientation));
 	}
 
 }

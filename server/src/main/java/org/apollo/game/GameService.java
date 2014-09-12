@@ -133,11 +133,4 @@ public final class GameService implements Service {
 		}
 	}
 
-	/**
-	 * Returns the world instance.
-	 */
-	public World getWorld() {
-		return world;
-	}
-
 }

@@ -1,12 +1,13 @@
 package org.apollo.game.model;
 
 import java.util.LinkedHashSet;
-import java.util.Objects;
 import java.util.Set;
 
 import org.apollo.game.action.Action;
 import org.apollo.game.attribute.AttributeKey;
 import org.apollo.game.attribute.AttributeMap;
+import org.apollo.game.model.region.Region;
+import org.apollo.game.model.region.RegionRepository;
 import org.apollo.game.msg.Message;
 import org.apollo.game.msg.impl.ServerMessageMessage;
 import org.apollo.game.sync.block.SynchronizationBlock;
@@ -74,7 +75,7 @@ public abstract class GameCharacter extends Entity {
 	private SynchronizationBlockSet blockSet = new SynchronizationBlockSet();
 
 	/**
-	 * The centre of the last region the client has loaded.
+	 * The center of the last region the client has loaded.
 	 */
 	private Position lastKnownRegion;
 
@@ -98,9 +99,10 @@ public abstract class GameCharacter extends Entity {
 	 * Creates a new character with the specified initial position.
 	 *
 	 * @param position The initial position of this character.
+	 * @param world The world this character is in.
 	 */
-	protected GameCharacter(Position position) {
-		super(position);
+	protected GameCharacter(Position position, World world) {
+		super(position, world);
 	}
 
 	/**
@@ -341,6 +343,33 @@ public abstract class GameCharacter extends Entity {
 	}
 
 	/**
+	 * Sets the position of this entity.
+	 */
+	public void setPosition(Position position) {
+		this.position = position;
+		updateRegion(position);
+	}
+
+	/**
+	 * Updates the current {@link Region} from the specified {@link Position}.
+	 *
+	 * @param position The position.
+	 */
+	public void updateRegion(Position position) {
+		RegionRepository repository = world.getRegionRepository();
+		Region oldRegion = repository.getRegion(getPosition());
+		Region newRegion = repository.getRegion(position);
+
+		if (oldRegion != newRegion) {
+			oldRegion.removeEntity(this);
+		} else {
+			newRegion.removeEntity(this);
+		}
+
+		newRegion.addEntity(this);
+	}
+
+	/**
 	 * Forces a game character to chat.
 	 *
 	 * @param text The text to chat.
@@ -434,7 +463,7 @@ public abstract class GameCharacter extends Entity {
 	 * @param message The type of message to send.
 	 */
 	public <T> void sendMessage(T message) {
-		send(new ServerMessageMessage(Objects.toString(message)));
+		send(new ServerMessageMessage(message.toString()));
 	}
 
 }

@@ -39,15 +39,22 @@ public abstract class Entity {
 	/**
 	 * The current position of this entity.
 	 */
-	private Position position;
+	protected Position position;
+
+	/**
+	 * The world this entity is in.
+	 */
+	protected final World world;
 
 	/**
 	 * Constructs a new {@link Entity} with the specified position.
 	 *
 	 * @param position The position of this entity.
+	 * @param world The world this entity is in.
 	 */
-	protected Entity(Position position) {
-		setPosition(position);
+	protected Entity(Position position, World world) {
+		this.position = position;
+		this.world = world;
 	}
 
 	/**
@@ -68,10 +75,10 @@ public abstract class Entity {
 	}
 
 	/**
-	 * Sets the position of this entity.
+	 * Returns the world this entity is in.
 	 */
-	public void setPosition(Position position) {
-		this.position = position;
+	public World getWorld() {
+		return world;
 	}
 
 }

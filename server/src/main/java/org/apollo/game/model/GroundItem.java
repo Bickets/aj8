@@ -5,53 +5,92 @@ package org.apollo.game.model;
  * world.
  *
  * @author Tyler Buchanan <https://www.github.com/TylerBuchanan97>
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public class GroundItem extends Entity {
+public final class GroundItem extends Entity {
 
 	/**
-	 * The owner of the ground item.
-	 */
-	private final Player owner;
-
-	/**
-	 * The actual item on the ground.
+	 * The item displayed on the ground.
 	 */
 	private final Item item;
 
 	/**
-	 * Constructs a new ground item.
-	 *
-	 * @param owner The owner of the ground item.
-	 * @param item The item on the ground.
-	 * @param position The position of the item.
+	 * The owner of this ground item represented by the name hash of a
+	 * {@link Player}, <tt>-1</tt> if this ground item has no owner, global.
 	 */
-	public GroundItem(Player owner, Item item, Position position) {
-		super(position);
-		this.owner = owner;
+	private final int owner;
+
+	/**
+	 * A flag denoting whether or not this ground item is global.
+	 */
+	private final boolean global;
+
+	/**
+	 * Constructs a new {@link GroundItem} with the specified position, item
+	 * owner and global flag.
+	 *
+	 * @param position The position of this ground item.
+	 * @param world The world this ground item is in.
+	 * @param item The ground item.
+	 * @param owner The owner of the ground item, <tt>-1</tt> denotes no owner
+	 *            and that the item is global.
+	 * @param global The global status of this item.
+	 */
+	public GroundItem(Position position, World world, Item item, int owner, boolean global) {
+		super(position, world);
 		this.item = item;
+		this.owner = owner;
+		this.global = global;
 	}
 
 	/**
-	 * Returns the owner of the ground item.
+	 * Constructs a new {@link GroundItem} that is not global, it is assiged to
+	 * the specified {@link Player}.
 	 *
-	 * @return The owner of the item.
+	 * @param position The position of the ground item.
+	 * @param world The world this ground item is in.
+	 * @param item The ground item.
+	 * @param player The player this ground item is assigned to.
 	 */
-	public Player getOwner() {
-		return owner;
+	public GroundItem(Position position, World world, Item item, Player player) {
+		this(position, world, item, player.hashCode(), false);
 	}
 
 	/**
-	 * Returns the item on the ground.
+	 * Constructs a new {@link GroundItem} that is global.
 	 *
-	 * @return The item.
+	 * @param position The position of the ground item.
+	 * @param world The world this ground item is in.
+	 * @param item The ground item.
+	 */
+	public GroundItem(Position position, World world, Item item) {
+		this(position, world, item, -1, true);
+	}
+
+	/**
+	 * Returns the ground item.
 	 */
 	public Item getItem() {
 		return item;
 	}
 
+	/**
+	 * Returns the owner of this ground item.
+	 */
+	public int getOwner() {
+		return owner;
+	}
+
+	/**
+	 * Returns whether or not this ground item is global.
+	 */
+	public boolean isGlobal() {
+		return global;
+	}
+
 	@Override
-	public EntityType type() {
-		return EntityType.GROUND_ITEM;
+	public EntityCategory getCategory() {
+		return EntityCategory.GROUND_ITEM;
 	}
 
 	@Override

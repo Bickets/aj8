@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.List;
 
 import org.apollo.fs.FileSystem;
 import org.apollo.fs.parser.GameObjectDefinitionParser;
@@ -22,18 +23,19 @@ import org.apollo.game.model.def.InterfaceDefinition;
 import org.apollo.game.model.def.ItemDefinition;
 import org.apollo.game.model.def.LevelUpDefinition;
 import org.apollo.game.model.def.MobDefinition;
-import org.apollo.game.model.def.StaticObjectDefinition;
 import org.apollo.game.model.obj.GameObject;
+import org.apollo.game.model.pf.AStarPathFinder;
+import org.apollo.game.model.pf.PathFinder;
+import org.apollo.game.model.pf.TraversalMap;
+import org.apollo.game.model.region.RegionRepository;
 import org.apollo.io.EquipmentDefinitionParser;
 import org.apollo.service.Service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import com.google.common.collect.Multimap;
-
 /**
  * The world class is a singleton which contains objects like the
- * {@link CharacterRepository} for players and mobs. It should only contain
+ * {@link GameCharacterRepository} for players and mobs. It should only contain
  * things relevant to the in-game world and not classes which deal with I/O and
  * such (these may be better off inside some custom {@link Service} or other
  * code, however, the circumstances are rare).
@@ -71,36 +73,34 @@ public final class World {
 	}
 
 	/**
-	 * The {@link EntityRepository} of {@link Mob}s.
+	 * The {@link GameCharacterRepository} of {@link Mob}s.
 	 */
-	private final EntityRepository<Mob> mobRepository = new EntityRepository<>(WorldConstants.MAXIMUM_MOBS);
+	private final GameCharacterRepository<Mob> mobRepository = new GameCharacterRepository<>(WorldConstants.MAXIMUM_MOBS);
 
 	/**
-	 * The {@link EntityRepository} of {@link Player}s.
+	 * The {@link GameCharacterRepository} of {@link Player}s.
 	 */
-	private final EntityRepository<Player> playerRepository = new EntityRepository<>(WorldConstants.MAXIMUM_PLAYERS);
+	private final GameCharacterRepository<Player> playerRepository = new GameCharacterRepository<>(WorldConstants.MAXIMUM_PLAYERS);
 
 	/**
-	 * The {@link EntityRepository} of {@link GameObject}s.
+	 * This world's {@link RegionRepository}.
 	 */
-	private final EntityRepository<GameObject> objectRepository = new EntityRepository<>(WorldConstants.MAXIMUM_GAME_OBJECTS);
+	private final RegionRepository regionRepository = new RegionRepository();
 
 	/**
-	 * The {@link EntityRepository} of {@link GroundItem}s.
+	 * This world's {@link TraversalMap}.
 	 */
-	private final EntityRepository<GroundItem> groundItemRepository = new EntityRepository<>(WorldConstants.MAXIMUM_GROUND_ITEMS);
+	private final TraversalMap traversalMap = new TraversalMap(this);
+
+	/**
+	 * This world's {@link PathFinder}.
+	 */
+	private final PathFinder pathFinder = new AStarPathFinder(traversalMap);
 
 	/**
 	 * This worlds event provider.
 	 */
 	private final EventProvider eventProvider = new UniversalEventProvider();
-
-	/**
-	 * Creates the world.
-	 */
-	public World() {
-
-	}
 
 	/**
 	 * Initializes the world by loading definitions from the specified file
@@ -110,6 +110,7 @@ public final class World {
 	 * @throws IOException if an I/O error occurs.
 	 */
 	public void init(FileSystem fileSystem) throws IOException {
+		// TODO: Create a cache system to load this neatly!!
 		logger.info("Loading item definitions...");
 		ItemDefinition[] itemDefs = ItemDefinitionParser.parse(fileSystem);
 		ItemDefinition.init(itemDefs);
@@ -139,9 +140,12 @@ public final class World {
 		logger.info("Done (loaded {} game object definitions).", gameObjDefs.length);
 
 		logger.info("Loading static object definitions...");
-		Multimap<Integer, StaticObjectDefinition> objDefs = StaticObjectDefinitionParser.parse(fileSystem);
-		StaticObjectDefinition.init(objDefs);
-		logger.info("Done (loaded {} static object definitions).", objDefs.size());
+		StaticObjectDefinitionParser parser = new StaticObjectDefinitionParser(this);
+		List<GameObject> gameObjs = parser.parse(fileSystem);
+		for (GameObject obj : gameObjs) {
+			regionRepository.getRegion(obj.getPosition()).addEntity(obj);
+		}
+		logger.info("Done (loaded {} static object definitions).", gameObjs.size());
 
 		logger.info("Loading interface definitions...");
 		InterfaceDefinition[] interfaceDefs = InterfaceDefinitionParser.parse(fileSystem);
@@ -156,38 +160,37 @@ public final class World {
 	}
 
 	/**
-	 * Attempts to register some entity to a specified entity repository.
+	 * Attempts to register some character to a specified character repository.
 	 *
-	 * @param entity The entity to register.
-	 * @param repo The entity repository to register the entity to.
-	 * @return A flag denoting whether or not the entity was successfully added
-	 *         to the repository.
+	 * @param character The character to register.
+	 * @param repo The character repository to register the character to.
+	 * @return A flag denoting whether or not the character was successfully
+	 *         added to the repository.
 	 */
-	private <T extends Entity> boolean register(T entity, EntityRepository<T> repo) {
-		boolean success = repo.add(entity);
-		if (success) {
-			logger.info("Registered entity: {} [online={}]", entity, repo.size());
-		} else {
-			logger.error("Failed to register entity (server full): {} [online={}]", entity, repo.size());
+	private <T extends GameCharacter> boolean register(T character, GameCharacterRepository<T> repo) {
+		boolean success = repo.add(character);
+
+		if (!success) {
+			logger.error("Failed to register character (server full): {} [online={}]", character, repo.size());
 		}
 
 		return success;
 	}
 
 	/**
-	 * Attempts to unregister some entity from a specified entity repository.
+	 * Attempts to unregister some character from a specified character
+	 * repository.
 	 *
-	 * @param entity The entity to unregister.
-	 * @param repo The entity repository to unregister the entity to.
-	 * @return A flag denoting whether or not the entity was successfully
+	 * @param character The character to unregister.
+	 * @param repo The character repository to unregister the character to.
+	 * @return A flag denoting whether or not the character was successfully
 	 *         unregistered to the repository.
 	 */
-	private <T extends Entity> boolean unregister(T entity, EntityRepository<T> repo) {
-		boolean success = repo.remove(entity);
-		if (success) {
-			logger.info("Unregistered entity: {} [online={}]", entity, repo.size());
-		} else {
-			logger.error("Could not find entity to unregister: {}", entity);
+	private <T extends GameCharacter> boolean unregister(T character, GameCharacterRepository<T> repo) {
+		boolean success = repo.remove(character);
+
+		if (!success) {
+			logger.error("Could not find character to unregister: {}", character);
 		}
 
 		return success;
@@ -221,28 +224,6 @@ public final class World {
 	}
 
 	/**
-	 * Registers the specified game object.
-	 *
-	 * @param object The object.
-	 * @return {@code true} if the game object registered successfully,
-	 *         otherwise {@code false}.
-	 */
-	public boolean register(GameObject object) {
-		return register(object, objectRepository);
-	}
-
-	/**
-	 * Registers a ground item.
-	 *
-	 * @param item The item to add to the {@link EntityRepository}.
-	 * @return {@code true} if the ground item registered successfully,
-	 *         otherwise {@code false}.
-	 */
-	public boolean register(GroundItem item) {
-		return register(item, groundItemRepository);
-	}
-
-	/**
 	 * Unregisters the specified player.
 	 *
 	 * @param player The player.
@@ -258,24 +239,6 @@ public final class World {
 	 */
 	public void unregister(Mob mob) {
 		unregister(mob, mobRepository);
-	}
-
-	/**
-	 * Unregisters the specified {@link GameObject}.
-	 *
-	 * @param object The object.
-	 */
-	public void unregister(GameObject object) {
-		unregister(object, objectRepository);
-	}
-
-	/**
-	 * Unregisters a ground item.
-	 *
-	 * @param item The item to remove from the {@link EntityRepository}.
-	 */
-	public void unregister(GroundItem item) {
-		unregister(item, groundItemRepository);
 	}
 
 	/**
@@ -323,15 +286,36 @@ public final class World {
 	/**
 	 * Returns this worlds player repository.
 	 */
-	public EntityRepository<Player> getPlayerRepository() {
+	public GameCharacterRepository<Player> getPlayerRepository() {
 		return playerRepository;
 	}
 
 	/**
 	 * Returns this worlds mob repository.
 	 */
-	public EntityRepository<Mob> getMobRepository() {
+	public GameCharacterRepository<Mob> getMobRepository() {
 		return mobRepository;
+	}
+
+	/**
+	 * Returns this world's {@link RegionRepository}.
+	 */
+	public RegionRepository getRegionRepository() {
+		return regionRepository;
+	}
+
+	/**
+	 * Returns this world's {@link TraversalMap}.
+	 */
+	public TraversalMap getTraversalMap() {
+		return traversalMap;
+	}
+
+	/**
+	 * Returns this world's {@link PathFinder}.
+	 */
+	public PathFinder getPathFinder() {
+		return pathFinder;
 	}
 
 }

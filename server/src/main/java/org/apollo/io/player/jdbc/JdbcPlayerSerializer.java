@@ -17,6 +17,7 @@ import org.apollo.game.crypto.BCrypt;
 import org.apollo.game.model.Inventory;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.PlayerConstants;
+import org.apollo.game.model.World;
 import org.apollo.io.player.PlayerSanctionProvider;
 import org.apollo.io.player.PlayerSanctionResponse;
 import org.apollo.io.player.PlayerSerializer;
@@ -32,7 +33,7 @@ import org.slf4j.LoggerFactory;
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public final class JdbcPlayerSerializer implements Closeable, PlayerSerializer {
+public final class JdbcPlayerSerializer extends PlayerSerializer implements Closeable {
 
 	/**
 	 * Represents the maximum amount of failed logins.
@@ -89,9 +90,11 @@ public final class JdbcPlayerSerializer implements Closeable, PlayerSerializer {
 	 * @param url The database url.
 	 * @param username The database username.
 	 * @param password The database password.
+	 * @param world The world this player is in.
 	 * @throws SQLException If some database access error occurs.
 	 */
-	public JdbcPlayerSerializer(String url, String username, String password) throws SQLException {
+	public JdbcPlayerSerializer(String url, String username, String password, World world) throws SQLException {
+		super(world);
 		connection = DriverManager.getConnection(url, username, password);
 		connection.setAutoCommit(false);
 		sanctionProvider = new JdbcSanctionProvider(connection);
@@ -131,7 +134,7 @@ public final class JdbcPlayerSerializer implements Closeable, PlayerSerializer {
 			}
 
 			try (ResultSet set = loginStatement.executeQuery()) {
-				Player player = new Player(credentials, PlayerConstants.SPAWN_POSITION);
+				Player player = new Player(credentials, PlayerConstants.SPAWN_POSITION, world);
 
 				/* The account doesn't exist, let's create it. */
 				if (!set.first()) {

@@ -63,7 +63,7 @@ public final class WalkingQueue {
 	private final Deque<Point> oldPoints = new ArrayDeque<>();
 
 	/**
-	 * The gameCharacter whose walking queue this is.
+	 * The game character whose walking queue this is.
 	 */
 	private final GameCharacter gameCharacter;
 
@@ -73,9 +73,9 @@ public final class WalkingQueue {
 	private boolean runningQueue;
 
 	/**
-	 * Creates a walking queue for the specified gameCharacter.
+	 * Creates a walking queue for the specified game character.
 	 *
-	 * @param gameCharacter The gameCharacter.
+	 * @param game character The gameCharacter.
 	 */
 	public WalkingQueue(GameCharacter gameCharacter) {
 		this.gameCharacter = gameCharacter;
@@ -91,15 +91,16 @@ public final class WalkingQueue {
 		Direction second = Direction.NONE;
 
 		Point next = points.poll();
+		World world = gameCharacter.getWorld();
 		if (next != null) {
-			boolean traversable = Direction.isTraversable(position, next.direction, gameCharacter.getSize());
+			boolean traversable = world.getTraversalMap().isTraversable(position, next.direction, gameCharacter.getSize());
 			if (traversable) {
 				first = next.direction;
 				position = next.position;
 				if (runningQueue/* or run toggled AND enough energy */) {
 					next = points.poll();
 					if (next != null) {
-						traversable = Direction.isTraversable(position, next.direction, gameCharacter.getSize());
+						traversable = world.getTraversalMap().isTraversable(position, next.direction, gameCharacter.getSize());
 						if (traversable) {
 							second = next.direction;
 							position = next.position;

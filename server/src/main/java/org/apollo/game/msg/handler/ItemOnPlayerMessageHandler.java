@@ -22,22 +22,10 @@ import org.apollo.game.msg.impl.ItemOnPlayerMessage;
 @HandlesMessage(ItemOnPlayerMessage.class)
 public final class ItemOnPlayerMessageHandler implements MessageHandler<ItemOnPlayerMessage> {
 
-	/**
-	 * The main world object.
-	 */
-	private final World world;
-
-	/**
-	 * Constructs a new instance of this class.
-	 *
-	 * @param world The world.
-	 */
-	public ItemOnPlayerMessageHandler(World world) {
-		this.world = world;
-	}
-
 	@Override
 	public void handle(Player player, ItemOnPlayerMessage message) {
+		World world = player.getWorld();
+
 		if (player.getInterfaceSet().isOpen()) {
 			return;
 		}

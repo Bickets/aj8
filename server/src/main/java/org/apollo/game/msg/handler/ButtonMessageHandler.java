@@ -2,7 +2,6 @@ package org.apollo.game.msg.handler;
 
 import org.apollo.game.interact.ButtonActionEvent;
 import org.apollo.game.model.Player;
-import org.apollo.game.model.World;
 import org.apollo.game.model.def.InterfaceDefinition;
 import org.apollo.game.msg.MessageHandler;
 import org.apollo.game.msg.annotate.HandlesMessage;
@@ -16,28 +15,13 @@ import org.apollo.game.msg.impl.ButtonMessage;
 @HandlesMessage(ButtonMessage.class)
 public final class ButtonMessageHandler implements MessageHandler<ButtonMessage> {
 
-	/**
-	 * The world used to post button action events to this worlds event
-	 * provider.
-	 */
-	private final World world;
-
-	/**
-	 * Constructs a new {@link ButtonMessageHandler}.
-	 *
-	 * @param world The world.
-	 */
-	public ButtonMessageHandler(World world) {
-		this.world = world;
-	}
-
 	@Override
 	public void handle(Player player, ButtonMessage message) {
 		if (message.getInterfaceId() < 0 || message.getInterfaceId() > InterfaceDefinition.count()) {
 			return;
 		}
 
-		world.post(new ButtonActionEvent(player, message.getInterfaceId()));
+		player.getWorld().post(new ButtonActionEvent(player, message.getInterfaceId()));
 	}
 
 }

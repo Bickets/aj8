@@ -98,7 +98,7 @@ final class Server {
 	/**
 	 * The {@link MessageTranslator} for translating messages to their handlers.
 	 */
-	private final MessageTranslator messageTranslator = new MessageTranslator(world);
+	private final MessageTranslator messageTranslator = new MessageTranslator();
 
 	/**
 	 * The {@link FileSystem} for building the servers file system.
@@ -125,7 +125,7 @@ final class Server {
 		logger.info("Starting Apollo...");
 
 		fileSystem = FileSystem.create("data/fs");
-		serializerWorker = new PlayerSerializerWorker(new BinaryPlayerSerializer());
+		serializerWorker = new PlayerSerializerWorker(new BinaryPlayerSerializer(world));
 		gameService = new GameService(world, serializerWorker);
 	}
 

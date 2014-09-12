@@ -5,6 +5,7 @@ import static org.apollo.game.model.obj.ObjectOrientation.SOUTH;
 
 import org.apollo.game.model.Entity;
 import org.apollo.game.model.Position;
+import org.apollo.game.model.World;
 import org.apollo.game.model.def.GameObjectDefinition;
 
 /**
@@ -36,9 +37,10 @@ public final class GameObject extends Entity {
 	 *
 	 * @param id The id of this game object.
 	 * @param position The position of this game object.
+	 * @param world The world this game object is in.
 	 */
-	public GameObject(int id, Position position) {
-		this(id, position, ObjectOrientation.NORTH);
+	public GameObject(int id, Position position, World world) {
+		this(id, position, world, ObjectOrientation.NORTH);
 	}
 
 	/**
@@ -47,10 +49,11 @@ public final class GameObject extends Entity {
 	 *
 	 * @param id The id of this game object.
 	 * @param position The position of this game object.
+	 * @param world The world this game object is in.
 	 * @param orientation The orientation of this object.
 	 */
-	public GameObject(int id, Position position, ObjectOrientation orientation) {
-		this(id, position, ObjectType.GENERAL_PROP, orientation);
+	public GameObject(int id, Position position, World world, ObjectOrientation orientation) {
+		this(id, position, world, ObjectType.GENERAL_PROP, orientation);
 	}
 
 	/**
@@ -59,11 +62,12 @@ public final class GameObject extends Entity {
 	 *
 	 * @param id The id of this game object.
 	 * @param position The position of this game object.
+	 * @param world The world this game object is in.
 	 * @param type The type of this object.
 	 * @param orientation The orientation of this object.
 	 */
-	public GameObject(int id, Position position, ObjectType type, ObjectOrientation orientation) {
-		super(position);
+	public GameObject(int id, Position position, World world, ObjectType type, ObjectOrientation orientation) {
+		super(position, world);
 		this.id = id;
 		this.type = type;
 		this.orientation = orientation;

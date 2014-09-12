@@ -4,7 +4,6 @@ import java.util.HashMap;
 import java.util.Map;
 
 import org.apollo.game.model.Player;
-import org.apollo.game.model.World;
 import org.apollo.game.msg.annotate.DecodesMessage;
 import org.apollo.game.msg.annotate.EncodesMessage;
 import org.apollo.game.msg.annotate.HandlesMessage;
@@ -123,17 +122,9 @@ public final class MessageTranslator {
 	private final Map<Class<?>, MessageHandler<?>> handlers = new HashMap<>();
 
 	/**
-	 * The world used for world message handlers.
-	 */
-	private final World world;
-
-	/**
 	 * Constructs a new {@link MessageTranslator}.
-	 *
-	 * @param world The world used for world message handlers.
 	 */
-	public MessageTranslator(World world) {
-		this.world = world;
+	public MessageTranslator() {
 		registerAll();
 	}
 
@@ -225,17 +216,15 @@ public final class MessageTranslator {
 		register(new ClosedInterfaceMessageHandler());
 		register(new EnteredAmountMessageHandler());
 		register(new DialogueContinueMessageHandler());
-
-		// world handlers
-		register(new ObjectMessageHandler(world));
-		register(new ButtonMessageHandler(world));
-		register(new CommandMessageHandler(world));
-		register(new ItemActionMessageHandler(world));
-		register(new ItemOnItemMessageHandler(world));
-		register(new ItemOnPlayerMessageHandler(world));
-		register(new PlayerActionMessageHandler(world));
-		register(new MobActionMessageHandler(world));
-		register(new RegionLoadedMessageHandler(world));
+		register(new ObjectMessageHandler());
+		register(new ButtonMessageHandler());
+		register(new CommandMessageHandler());
+		register(new ItemActionMessageHandler());
+		register(new ItemOnItemMessageHandler());
+		register(new ItemOnPlayerMessageHandler());
+		register(new PlayerActionMessageHandler());
+		register(new MobActionMessageHandler());
+		register(new RegionLoadedMessageHandler());
 	}
 
 	/**

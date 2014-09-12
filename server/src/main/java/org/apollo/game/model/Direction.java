@@ -1,10 +1,5 @@
 package org.apollo.game.model;
 
-import java.util.LinkedList;
-import java.util.List;
-
-import org.apollo.game.model.pf.TraversalMap;
-
 /**
  * Represents a single movement direction.
  *
@@ -106,89 +101,6 @@ public enum Direction {
 			}
 		}
 		return Direction.NONE;
-	}
-
-	/**
-	 * Tests whether or not a specified position is traversable in the specified
-	 * direction.
-	 *
-	 * @param from The position.
-	 * @param direction The direction to traverse.
-	 * @param size The size of the entity attempting to traverse.
-	 * @return <code>true</code> if the direction is traversable otherwise
-	 *         <code>false</code>.
-	 */
-	public static boolean isTraversable(Position from, Direction direction, int size) {
-		TraversalMap traversalMap = TraversalMap.getInstance();
-		switch (direction) {
-		case NORTH:
-			return traversalMap.isTraversableNorth(from.getHeight(), from.getX(), from.getY(), size);
-		case SOUTH:
-			return traversalMap.isTraversableSouth(from.getHeight(), from.getX(), from.getY(), size);
-		case EAST:
-			return traversalMap.isTraversableEast(from.getHeight(), from.getX(), from.getY(), size);
-		case WEST:
-			return traversalMap.isTraversableWest(from.getHeight(), from.getX(), from.getY(), size);
-		case NORTH_EAST:
-			return traversalMap.isTraversableNorthEast(from.getHeight(), from.getX(), from.getY(), size);
-		case NORTH_WEST:
-			return traversalMap.isTraversableNorthWest(from.getHeight(), from.getX(), from.getY(), size);
-		case SOUTH_EAST:
-			return traversalMap.isTraversableSouthEast(from.getHeight(), from.getX(), from.getY(), size);
-		case SOUTH_WEST:
-			return traversalMap.isTraversableSouthWest(from.getHeight(), from.getX(), from.getY(), size);
-		case NONE:
-			return true;
-		default:
-			throw new IllegalArgumentException("direction: " + direction + " is not valid");
-		}
-	}
-
-	/**
-	 * Returns a {@link List} of positions that are traversable from the
-	 * specified position.
-	 *
-	 * @param from The position.
-	 * @param size The size of the mob attempting to traverse.
-	 * @return A {@link List} of positions.
-	 */
-	public static List<Position> getNearbyTraversableTiles(Position from, int size) {
-		TraversalMap traversalMap = TraversalMap.getInstance();
-		List<Position> positions = new LinkedList<>();
-
-		if (traversalMap.isTraversableNorth(from.getHeight(), from.getX(), from.getY(), size)) {
-			positions.add(new Position(from.getX(), from.getY() + 1, from.getHeight()));
-		}
-
-		if (traversalMap.isTraversableSouth(from.getHeight(), from.getX(), from.getY(), size)) {
-			positions.add(new Position(from.getX(), from.getY() - 1, from.getHeight()));
-		}
-
-		if (traversalMap.isTraversableEast(from.getHeight(), from.getX(), from.getY(), size)) {
-			positions.add(new Position(from.getX() + 1, from.getY(), from.getHeight()));
-		}
-
-		if (traversalMap.isTraversableWest(from.getHeight(), from.getX(), from.getY(), size)) {
-			positions.add(new Position(from.getX() - 1, from.getY(), from.getHeight()));
-		}
-
-		if (traversalMap.isTraversableNorthEast(from.getHeight(), from.getX(), from.getY(), size)) {
-			positions.add(new Position(from.getX() + 1, from.getY() + 1, from.getHeight()));
-		}
-
-		if (traversalMap.isTraversableNorthWest(from.getHeight(), from.getX(), from.getY(), size)) {
-			positions.add(new Position(from.getX() - 1, from.getY() + 1, from.getHeight()));
-		}
-
-		if (traversalMap.isTraversableSouthEast(from.getHeight(), from.getX(), from.getY(), size)) {
-			positions.add(new Position(from.getX() + 1, from.getY() - 1, from.getHeight()));
-		}
-
-		if (traversalMap.isTraversableSouthWest(from.getHeight(), from.getX(), from.getY(), size)) {
-			positions.add(new Position(from.getX() - 1, from.getY() - 1, from.getHeight()));
-		}
-
-		return positions;
 	}
 
 	/**

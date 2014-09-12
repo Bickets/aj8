@@ -1,6 +1,5 @@
 package org.apollo.game.model.pf;
 
-import static org.apollo.game.model.Position.MAXIMUM_HEIGHT_LEVELS;
 import static org.apollo.game.model.obj.ObjectOrientation.EAST;
 import static org.apollo.game.model.obj.ObjectOrientation.NORTH;
 import static org.apollo.game.model.obj.ObjectOrientation.SOUTH;
@@ -26,8 +25,15 @@ import static org.apollo.game.model.pf.TraversalConstants.WALL_SOUTH_EAST;
 import static org.apollo.game.model.pf.TraversalConstants.WALL_SOUTH_WEST;
 import static org.apollo.game.model.pf.TraversalConstants.WALL_WEST;
 
+import java.util.LinkedList;
+import java.util.List;
+
+import org.apollo.game.model.Direction;
+import org.apollo.game.model.Position;
+import org.apollo.game.model.World;
 import org.apollo.game.model.obj.ObjectOrientation;
 import org.apollo.game.model.obj.ObjectType;
+import org.apollo.game.model.region.Region;
 
 /**
  * Contains traversal data for a set of regions.
@@ -38,99 +44,17 @@ import org.apollo.game.model.obj.ObjectType;
 public final class TraversalMap {
 
 	/**
-	 * A singleton instance of this class.
+	 * The world.
 	 */
-	private static final TraversalMap INSTANCE = new TraversalMap();
+	private final World world;
 
 	/**
-	 * The size of one side of the region array.
-	 */
-	public static final int SIZE = 256;
-
-	/**
-	 * The size of a region.
-	 */
-	public static final int REGION_SIZE = 64;
-
-	/**
-	 * The regions for the traversal data.
-	 */
-	private final Region[] regions = new Region[SIZE * SIZE];
-
-	/**
-	 * Represents a single region.
+	 * Constructs a new {@link TraversalMap} with the specified world.
 	 *
-	 * @author Ryley Kimmel <ryley.kimmel@live.com>
-	 * @author Hadyn Richard
+	 * @param world The world.
 	 */
-	private final class Region {
-
-		/**
-		 * The flags within the region.
-		 */
-		private final Tile[][] tiles;
-
-		/**
-		 * Constructs a new {@link Region}.
-		 */
-		private Region() {
-			tiles = new Tile[MAXIMUM_HEIGHT_LEVELS][REGION_SIZE * REGION_SIZE];
-			for (int height = 0; height < MAXIMUM_HEIGHT_LEVELS; height++) {
-				for (int regionId = 0; regionId < REGION_SIZE * REGION_SIZE; regionId++) {
-					tiles[height][regionId] = new Tile();
-				}
-			}
-		}
-
-		/**
-		 * Gets a single tile in this region from the specified height, x and y
-		 * coordinates.
-		 *
-		 * @param height The height.
-		 * @param x The x coordinate.
-		 * @param y The y coordinate.
-		 * @return The tile in this region for the specified attributes.
-		 */
-		public Tile getTile(int height, int x, int y) {
-			return tiles[height][x + y * REGION_SIZE];
-		}
-	}
-
-	/**
-	 * Returns the region for the specified coordinates, may be {@code null}.
-	 *
-	 * @param x The x coordinate.
-	 * @param y The y coordinate.
-	 * @return The region for the specified coordinates.
-	 */
-	private Region getRegion(int x, int y) {
-		int regionX = x >> 6;
-		int regionY = y >> 6;
-
-		return regions[regionX + regionY * SIZE];
-	}
-
-	/**
-	 * Initializes the region at the specified coordinates.
-	 *
-	 * @param x The x coordinate.
-	 * @param y The y coordinate.
-	 */
-	public void initializeRegion(int x, int y) {
-		int regionX = x >> 6;
-		int regionY = y >> 6;
-
-		regions[regionX + regionY * SIZE] = new Region();
-	}
-
-	/**
-	 * Gets if the set contains a region for the specified coordinates.
-	 *
-	 * @param x The x coordinate.
-	 * @param y The y coordinate.
-	 */
-	public boolean regionInitialized(int x, int y) {
-		return getRegion(x, y) != null;
+	public TraversalMap(World world) {
+		this.world = world;
 	}
 
 	/**
@@ -405,7 +329,7 @@ public final class TraversalMap {
 		int localX = x & 0x3F;
 		int localY = y & 0x3F;
 
-		Region region = getRegion(x, y);
+		Region region = world.getRegionRepository().getRegion(new Position(x, y));
 		if (region == null) {
 			return;
 		}
@@ -867,7 +791,7 @@ public final class TraversalMap {
 	 * @param flag The flag to put on this tile.
 	 */
 	public void set(int height, int x, int y, int flag) {
-		Region region = getRegion(x, y);
+		Region region = world.getRegionRepository().getRegion(new Position(x, y));
 		if (region == null) {
 			return;
 		}
@@ -890,7 +814,7 @@ public final class TraversalMap {
 		int localX = x & 0x3F;
 		int localY = y & 0x3F;
 
-		Region region = getRegion(x, y);
+		Region region = world.getRegionRepository().getRegion(new Position(x, y));
 		if (region == null) {
 			return false;
 		}
@@ -912,7 +836,7 @@ public final class TraversalMap {
 	 * @param flag The flag to unset from the specified position.
 	 */
 	public void unset(int height, int x, int y, int flag) {
-		Region region = getRegion(x, y);
+		Region region = world.getRegionRepository().getRegion(new Position(x, y));
 		if (region == null) {
 			return;
 		}
@@ -921,10 +845,84 @@ public final class TraversalMap {
 	}
 
 	/**
-	 * Returns the singleton instance.
+	 * Tests whether or not a specified position is traversable in the specified
+	 * direction.
+	 *
+	 * @param from The position.
+	 * @param direction The direction to traverse.
+	 * @param size The size of the entity attempting to traverse.
+	 * @return <code>true</code> if the direction is traversable otherwise
+	 *         <code>false</code>.
 	 */
-	public static TraversalMap getInstance() {
-		return INSTANCE;
+	public boolean isTraversable(Position from, Direction direction, int size) {
+		switch (direction) {
+		case NORTH:
+			return isTraversableNorth(from.getHeight(), from.getX(), from.getY(), size);
+		case SOUTH:
+			return isTraversableSouth(from.getHeight(), from.getX(), from.getY(), size);
+		case EAST:
+			return isTraversableEast(from.getHeight(), from.getX(), from.getY(), size);
+		case WEST:
+			return isTraversableWest(from.getHeight(), from.getX(), from.getY(), size);
+		case NORTH_EAST:
+			return isTraversableNorthEast(from.getHeight(), from.getX(), from.getY(), size);
+		case NORTH_WEST:
+			return isTraversableNorthWest(from.getHeight(), from.getX(), from.getY(), size);
+		case SOUTH_EAST:
+			return isTraversableSouthEast(from.getHeight(), from.getX(), from.getY(), size);
+		case SOUTH_WEST:
+			return isTraversableSouthWest(from.getHeight(), from.getX(), from.getY(), size);
+		case NONE:
+			return true;
+		default:
+			throw new IllegalArgumentException("direction: " + direction + " is not valid");
+		}
+	}
+
+	/**
+	 * Returns a {@link List} of positions that are traversable from the
+	 * specified position.
+	 *
+	 * @param from The position.
+	 * @param size The size of the mob attempting to traverse.
+	 * @return A {@link List} of positions.
+	 */
+	public List<Position> getNearbyTraversableTiles(Position from, int size) {
+		List<Position> positions = new LinkedList<>();
+
+		if (isTraversableNorth(from.getHeight(), from.getX(), from.getY(), size)) {
+			positions.add(new Position(from.getX(), from.getY() + 1, from.getHeight()));
+		}
+
+		if (isTraversableSouth(from.getHeight(), from.getX(), from.getY(), size)) {
+			positions.add(new Position(from.getX(), from.getY() - 1, from.getHeight()));
+		}
+
+		if (isTraversableEast(from.getHeight(), from.getX(), from.getY(), size)) {
+			positions.add(new Position(from.getX() + 1, from.getY(), from.getHeight()));
+		}
+
+		if (isTraversableWest(from.getHeight(), from.getX(), from.getY(), size)) {
+			positions.add(new Position(from.getX() - 1, from.getY(), from.getHeight()));
+		}
+
+		if (isTraversableNorthEast(from.getHeight(), from.getX(), from.getY(), size)) {
+			positions.add(new Position(from.getX() + 1, from.getY() + 1, from.getHeight()));
+		}
+
+		if (isTraversableNorthWest(from.getHeight(), from.getX(), from.getY(), size)) {
+			positions.add(new Position(from.getX() - 1, from.getY() + 1, from.getHeight()));
+		}
+
+		if (isTraversableSouthEast(from.getHeight(), from.getX(), from.getY(), size)) {
+			positions.add(new Position(from.getX() + 1, from.getY() - 1, from.getHeight()));
+		}
+
+		if (isTraversableSouthWest(from.getHeight(), from.getX(), from.getY(), size)) {
+			positions.add(new Position(from.getX() - 1, from.getY() - 1, from.getHeight()));
+		}
+
+		return positions;
 	}
 
 }

@@ -194,11 +194,13 @@ public final class Player extends GameCharacter {
 	 *
 	 * @param credentials The players credentials.
 	 * @param position The initial position.
+	 * @param world The world this player is in.
 	 */
-	public Player(PlayerCredentials credentials, Position position) {
-		super(position);
-		init();
+	public Player(PlayerCredentials credentials, Position position, World world) {
+		super(position, world);
 		this.credentials = credentials;
+
+		init();
 	}
 
 	/**
@@ -420,6 +422,7 @@ public final class Player extends GameCharacter {
 	private void init() {
 		initInventories();
 		initSkills();
+		updateRegion(position);
 
 		TaskScheduler.getInstance().schedule(new SkillNormalizationTask(this));
 	}
@@ -430,10 +433,7 @@ public final class Player extends GameCharacter {
 	private void initSkills() {
 		SkillSet skills = getSkillSet();
 
-		// synchronization listener
 		SkillListener syncListener = new SynchronizationSkillListener(this);
-
-		// add the listeners
 		skills.addListener(syncListener);
 	}
 
@@ -475,11 +475,9 @@ public final class Player extends GameCharacter {
 	 * Sends the initial messages.
 	 */
 	private void sendInitialMessages() {
-		// vital initial stuff
 		send(new IdAssignmentMessage(getIndex(), members));
 		sendMessage("Welcome to RuneScape.");
 
-		// character design screen
 		if (!designedCharacter) {
 			interfaceSet.openWindow(Interfaces.CHARACTER_DESIGN_INTERFACE_ID);
 		}
@@ -488,12 +486,10 @@ public final class Player extends GameCharacter {
 			send(new SwitchTabInterfaceMessage(i, Interfaces.TAB_INTERFACE_IDS[i]));
 		}
 
-		// force inventories to update
 		getInventory().forceRefresh();
 		getEquipment().forceRefresh();
 		getBank().forceRefresh();
 
-		// force skills to update
 		getSkillSet().forceRefresh();
 	}
 

@@ -35,7 +35,7 @@ import static org.apollo.game.model.Direction.*
 			spawnPosition = new Position(position.x, position.y + direction.toInteger, position.height)
 		}
 
-		val mob = new Mob(id, spawnPosition)
+		val mob = new Mob(id, spawnPosition, world)
 		mob.movementArea = movementArea
 		mob.movementDistance = movementDistance
 

@@ -180,7 +180,17 @@ public final class AStarPathFinder extends PathFinder {
 	/**
 	 * The traversal map used for making sure any direction is traversable.
 	 */
-	private static final TraversalMap TRAVERSAL_MAP = TraversalMap.getInstance();
+	private final TraversalMap traversalMap;
+
+	/**
+	 * Constructs a new {@link AStarPathFinder} with the specified traversal
+	 * map.
+	 *
+	 * @param traversalMap The traversal map.
+	 */
+	public AStarPathFinder(TraversalMap traversalMap) {
+		this.traversalMap = traversalMap;
+	}
 
 	/**
 	 * A set of open nodes.
@@ -224,43 +234,43 @@ public final class AStarPathFinder extends PathFinder {
 			int y = current.getY();
 
 			// south
-			if (y > 0 && TRAVERSAL_MAP.isTraversableSouth(height, position.getX() + x, position.getY() + y, size)) {
+			if (y > 0 && traversalMap.isTraversableSouth(height, position.getX() + x, position.getY() + y, size)) {
 				Node n = nodes[x][y - 1];
 				examineNode(n);
 			}
 			// west
-			if (x > 0 && TRAVERSAL_MAP.isTraversableWest(height, position.getX() + x, position.getY() + y, size)) {
+			if (x > 0 && traversalMap.isTraversableWest(height, position.getX() + x, position.getY() + y, size)) {
 				Node n = nodes[x - 1][y];
 				examineNode(n);
 			}
 			// north
-			if (y < length - 1 && TRAVERSAL_MAP.isTraversableNorth(height, position.getX() + x, position.getY() + y, size)) {
+			if (y < length - 1 && traversalMap.isTraversableNorth(height, position.getX() + x, position.getY() + y, size)) {
 				Node n = nodes[x][y + 1];
 				examineNode(n);
 			}
 			// east
-			if (x < width - 1 && TRAVERSAL_MAP.isTraversableEast(height, position.getX() + x, position.getY() + y, size)) {
+			if (x < width - 1 && traversalMap.isTraversableEast(height, position.getX() + x, position.getY() + y, size)) {
 				Node n = nodes[x + 1][y];
 				examineNode(n);
 			}
 			// south west
-			if (x > 0 && y > 0 && TRAVERSAL_MAP.isTraversableSouthWest(height, position.getX() + x, position.getY() + y, size)) {
+			if (x > 0 && y > 0 && traversalMap.isTraversableSouthWest(height, position.getX() + x, position.getY() + y, size)) {
 				Node n = nodes[x - 1][y - 1];
 				examineNode(n);
 			}
 			// north west
-			if (x > 0 && y < length - 1 && TRAVERSAL_MAP.isTraversableNorthWest(height, position.getX() + x, position.getY() + y, size)) {
+			if (x > 0 && y < length - 1 && traversalMap.isTraversableNorthWest(height, position.getX() + x, position.getY() + y, size)) {
 				Node n = nodes[x - 1][y + 1];
 				examineNode(n);
 			}
 
 			// south east
-			if (x < width - 1 && y > 0 && TRAVERSAL_MAP.isTraversableSouthEast(height, position.getX() + x, position.getY() + y, size)) {
+			if (x < width - 1 && y > 0 && traversalMap.isTraversableSouthEast(height, position.getX() + x, position.getY() + y, size)) {
 				Node n = nodes[x + 1][y - 1];
 				examineNode(n);
 			}
 			// north east
-			if (x < width - 1 && y < length - 1 && TRAVERSAL_MAP.isTraversableNorthEast(height, position.getX() + x, position.getY() + y, size)) {
+			if (x < width - 1 && y < length - 1 && traversalMap.isTraversableNorthEast(height, position.getX() + x, position.getY() + y, size)) {
 				Node n = nodes[x + 1][y + 1];
 				examineNode(n);
 			}
