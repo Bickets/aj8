@@ -80,14 +80,36 @@ public final class Region {
 	}
 
 	/**
+	 * Gets the entities within this region.
+	 *
+	 * @return A {@link Set} of entities in this region.
+	 */
+	@SuppressWarnings("unchecked")
+	public <T extends Entity> Set<T> getEntities() {
+		return (Set<T>) entities;
+	}
+
+	/**
+	 * Gets the entities of the specified {@link EntityCategory} within this
+	 * region.
+	 *
+	 * @param category The category of entity to get.
+	 * @return A {@link Set} of entities in this region.
+	 */
+	public <T extends Entity> Set<T> getEntities(EntityCategory category) {
+		Set<T> entities = getEntities();
+		return entities.stream().filter(e -> e.getCategory() == category).collect(Collectors.toSet());
+	}
+
+	/**
 	 * Gets the entities on the specified {@link Position}.
 	 *
 	 * @param position The position.
 	 * @return A {@link Set} of entities on the specified position.
 	 */
-	@SuppressWarnings("unchecked")
 	public <T extends Entity> Set<T> getEntities(Position position) {
-		return (Set<T>) entities.stream().filter(e -> e.getPosition().equals(position)).collect(Collectors.toSet());
+		Set<T> entities = getEntities();
+		return entities.stream().filter(e -> e.getPosition().equals(position)).collect(Collectors.toSet());
 	}
 
 	/**
