@@ -17,6 +17,9 @@ import java.net.Socket;
 import java.net.URL;
 import java.util.zip.CRC32;
 
+import javax.sound.midi.InvalidMidiDataException;
+import javax.sound.midi.MidiUnavailableException;
+
 import com.runescape.cache.Archive;
 import com.runescape.cache.Index;
 import com.runescape.cache.cfg.ChatCensor;
@@ -120,7 +123,6 @@ public class Game extends GameShell {
 	private ImageRGB anImageRGB896;
 	private boolean aBoolean897 = true;
 	private final int[] anIntArray898 = new int[5];
-	private int anInt899 = -1;
 	private final int anInt900 = -680;
 	private final boolean[] aBooleanArray901 = new boolean[5];
 	private int playerWeight;
@@ -517,7 +519,6 @@ public class Game extends GameShell {
 	protected String aString1311;
 	private int publicChatSetting;
 	private static int currentWalkingQueueSize;
-	private int anInt1314 = -1;
 
 	private static final String formatAmount(int amount) {
 		String formatedAmount = String.valueOf(amount);
@@ -533,6 +534,7 @@ public class Game extends GameShell {
 	}
 
 	public final void stopMidi() {
+		Signlink.music.stop();
 		Signlink.midiFade = 0;
 		Signlink.midi = "stop";
 	}
@@ -1562,26 +1564,27 @@ public class Game extends GameShell {
 					redraw = true;
 				}
 				if (type == 3) {
+					boolean enabled = musicEnabled;
 					if (setting == 0) {
-						setMidiVolume(musicEnabled, 0);
+						setMidiVolume(musicEnabled, 500);
 						musicEnabled = true;
 					}
 					if (setting == 1) {
-						setMidiVolume(musicEnabled, -400);
+						setMidiVolume(musicEnabled, 300);
 						musicEnabled = true;
 					}
 					if (setting == 2) {
-						setMidiVolume(musicEnabled, -800);
+						setMidiVolume(musicEnabled, 100);
 						musicEnabled = true;
 					}
 					if (setting == 3) {
-						setMidiVolume(musicEnabled, -1200);
+						setMidiVolume(musicEnabled, 0);
 						musicEnabled = true;
 					}
 					if (setting == 4) {
 						musicEnabled = false;
 					}
-					if (!Game.lowMemory) {
+					if (musicEnabled != enabled) {
 						if (musicEnabled) {
 							onDemandRequesterId = songId;
 							midiFade = true;
@@ -1589,8 +1592,8 @@ public class Game extends GameShell {
 						} else {
 							stopMidi();
 						}
-						songFadeCycle = 0;
 					}
+					songFadeCycle = 0;
 				}
 				if (type == 4) {
 					TrackPlayer.setVolume(setting);
@@ -9133,20 +9136,16 @@ public class Game extends GameShell {
 		return super.getParameter(string);
 	}
 
-	public final void setMidiVolume(boolean bool, int volume) {
-		do {
-			try {
-				Signlink.midiVolume = volume;
-				if (!bool) {
-					break;
-				}
+	public final void setMidiVolume(boolean update, int volume) {
+		try {
+			Signlink.setVolume(volume);
+			if (update) {
 				Signlink.midi = "voladjust";
-			} catch (RuntimeException runtimeexception) {
-				Signlink.reportError("30156, " + bool + ", " + volume + ", " + runtimeexception.toString());
-				throw new RuntimeException();
 			}
-			break;
-		} while (false);
+		} catch (InvalidMidiDataException | MidiUnavailableException e) {
+			Signlink.reportError("30156, " + update + ", " + volume + ", " + e.toString());
+			throw new RuntimeException(e);
+		}
 	}
 
 	public final int parseWidgetOpcode(Widget widget, int widgetId) {
@@ -10670,7 +10669,7 @@ public class Game extends GameShell {
 					if (songId == 0xFFFF) {
 						songId = -1;
 					}
-					if (songId != this.songId && musicEnabled && !Game.lowMemory && songFadeCycle == 0) {
+					if (songId != this.songId && songFadeCycle == 0) {
 						onDemandRequesterId = songId;
 						midiFade = true;
 						onDemandRequester.request(2, onDemandRequesterId);
