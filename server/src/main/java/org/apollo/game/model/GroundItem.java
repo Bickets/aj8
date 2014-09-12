@@ -10,6 +10,16 @@ package org.apollo.game.model;
 public final class GroundItem extends Entity {
 
 	/**
+	 * How many pulses until this ground item becomes global, 60 seconds.
+	 */
+	public static final int PULSES_UNTIL_GLOBAL = 60 * 1000 / 600;
+
+	/**
+	 * How many pulses until this ground item becomes invalid, 150 seconds.
+	 */
+	public static final int PULSES_UNTIL_INVALID = 150 * 1000 / 600;
+
+	/**
 	 * The item displayed on the ground.
 	 */
 	private final Item item;
