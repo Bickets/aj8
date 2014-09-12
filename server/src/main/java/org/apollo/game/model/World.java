@@ -143,9 +143,7 @@ public final class World {
 		logger.info("Loading static object definitions...");
 		StaticObjectDefinitionParser parser = new StaticObjectDefinitionParser(this);
 		List<GameObject> gameObjs = parser.parse(fileSystem);
-		for (GameObject obj : gameObjs) {
-			regionRepository.getRegion(obj.getPosition()).addEntity(obj);
-		}
+		gameObjs.forEach(obj -> regionRepository.getRegion(obj.getPosition()).addEntity(obj));
 		logger.info("Done (loaded {} static object definitions).", gameObjs.size());
 
 		logger.info("Loading interface definitions...");
