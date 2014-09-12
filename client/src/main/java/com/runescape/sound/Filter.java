@@ -98,4 +98,5 @@ public class Filter {
 			unity[0] = unity[1] = 0;
 		}
 	}
+
 }

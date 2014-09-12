@@ -273,4 +273,5 @@ public class Instrument {
 		filterEnvelope = new Envelope();
 		filter.decode(buffer, false, filterEnvelope);
 	}
+
 }

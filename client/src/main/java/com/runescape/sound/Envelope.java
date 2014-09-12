@@ -56,4 +56,5 @@ public class Envelope {
 		ticks++;
 		return amplitude - step >> 15;
 	}
+
 }

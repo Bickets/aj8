@@ -6,6 +6,7 @@ import java.awt.Component;
 import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.event.KeyEvent;
+import java.io.ByteArrayInputStream;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -59,6 +60,7 @@ import com.runescape.scene.tile.Wall;
 import com.runescape.scene.tile.WallDecoration;
 import com.runescape.scene.util.TraversalMap;
 import com.runescape.sound.Track;
+import com.runescape.sound.TrackPlayer;
 import com.runescape.tools.ModelUtilities;
 import com.runescape.util.MouseRecorder;
 import com.runescape.util.PacketConstants;
@@ -479,6 +481,7 @@ public class Game extends GameShell {
 	private int tradeSetting;
 	private int anInt1274;
 	private final int[] trackDelay = new int[50];
+	private final int[] trackVolume = new int[50];
 	private int inTutorial;
 	private final boolean aBoolean1277 = false;
 	private int anInt1278;
@@ -1590,6 +1593,7 @@ public class Game extends GameShell {
 					}
 				}
 				if (type == 4) {
+					TrackPlayer.setVolume(setting);
 					if (setting == 0) {
 						aBoolean873 = true;
 						setWaveVolume(0);
@@ -6664,60 +6668,48 @@ public class Game extends GameShell {
 		spawnOjectNode.face = face;
 	}
 
+	public void addTrack(int id, int loop, int delay, int volume) {
+		trackIds[trackCount] = id;
+		trackLoop[trackCount] = loop;
+		trackDelay[trackCount] = delay + Track.trackDelays[id];
+		trackVolume[trackCount] = volume;
+		trackCount++;
+	}
+
 	public final void method90() {
 		try {
 			for (int track = 0; track < trackCount; track++) {
-				if (trackDelay[track] <= 0) {
-					boolean flag = false;
-					try {
-						if (trackIds[track] == anInt899 && trackLoop[track] == anInt1314) {
-							if (!Signlink.waveReplay()) {
-								flag = true;
-							}
-						} else {
-							Buffer buffer = Track.data(trackIds[track], trackLoop[track]);
-							if (System.currentTimeMillis() + buffer.offset / 22 > aLong1197 + anInt1282 / 22) {
-								anInt1282 = buffer.offset;
-								aLong1197 = System.currentTimeMillis();
-								if (Signlink.waveSave(buffer.payload, buffer.offset)) {
-									anInt899 = trackIds[track];
-									anInt1314 = trackLoop[track];
-								} else {
-									flag = true;
-								}
-							}
-						}
-					} catch (Exception exception) {
-						/* empty */
+				Buffer buffer = Track.data(trackIds[track], trackLoop[track]);
+				TrackPlayer player = new TrackPlayer(new ByteArrayInputStream(buffer.payload, 0, buffer.offset), trackVolume[track], trackDelay[track]);
+				player.start();
+				if (System.currentTimeMillis() + buffer.offset / 22 > aLong1197 + anInt1282 / 22) {
+					anInt1282 = buffer.offset;
+					aLong1197 = System.currentTimeMillis();
+				}
+				if (false || trackDelay[track] == -5) {
+					trackCount--;
+					for (int i_539_ = track; i_539_ < trackCount; i_539_++) {
+						trackIds[i_539_] = trackIds[i_539_ + 1];
+						trackLoop[i_539_] = trackLoop[i_539_ + 1];
+						trackDelay[i_539_] = trackDelay[i_539_ + 1];
+						trackVolume[i_539_] = trackVolume[i_539_ + 1];
 					}
-					if (!flag || trackDelay[track] == -5) {
-						trackCount--;
-						for (int i_539_ = track; i_539_ < trackCount; i_539_++) {
-							trackIds[i_539_] = trackIds[i_539_ + 1];
-							trackLoop[i_539_] = trackLoop[i_539_ + 1];
-							trackDelay[i_539_] = trackDelay[i_539_ + 1];
-						}
-						track--;
-					} else {
-						trackDelay[track] = -5;
-					}
+					track--;
 				} else {
-					trackDelay[track]--;
+					trackDelay[track] = -5;
 				}
 			}
-			if (songFadeCycle <= 0) {
-				return;
+			if (songFadeCycle > 0) {
+				songFadeCycle -= 20;
+				if (songFadeCycle < 0) {
+					songFadeCycle = 0;
+				}
+				if (songFadeCycle == 0 && musicEnabled) {
+					onDemandRequesterId = songId;
+					midiFade = true;
+					onDemandRequester.request(2, onDemandRequesterId);
+				}
 			}
-			songFadeCycle -= 20;
-			if (songFadeCycle < 0) {
-				songFadeCycle = 0;
-			}
-			if (songFadeCycle != 0 || !musicEnabled || Game.lowMemory) {
-				return;
-			}
-			onDemandRequesterId = songId;
-			midiFade = true;
-			onDemandRequester.request(2, onDemandRequesterId);
 		} catch (RuntimeException runtimeexception) {
 			Signlink.reportError("65150, " + runtimeexception.toString());
 			throw new RuntimeException();
@@ -10990,17 +10982,13 @@ public class Game extends GameShell {
 					return true;
 				}
 
-				/* Adds a track? */
+				/* Adds a track. */
 				if (opcode == 174) {
 					int trackId = inBuffer.getUnsignedLEShort();
 					int loop = inBuffer.getUnsignedByte();
 					int delay = inBuffer.getUnsignedLEShort();
-					if (aBoolean873 && !Game.lowMemory && trackCount < 50) {
-						trackIds[trackCount] = trackId;
-						trackLoop[trackCount] = loop;
-						trackDelay[trackCount] = delay + Track.trackDelays[trackId];
-						trackCount++;
-					}
+					int volume = inBuffer.getUnsignedLEShort();
+					addTrack(trackId, loop, delay, volume);
 					opcode = -1;
 					return true;
 				}
