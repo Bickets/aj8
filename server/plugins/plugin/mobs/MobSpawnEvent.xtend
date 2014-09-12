@@ -7,7 +7,6 @@ import org.apollo.game.model.Position
 import org.apollo.game.model.World
 import org.apollo.game.model.area.Area
 import org.apollo.game.model.area.PositionArea
-import org.apollo.game.task.TaskScheduler
 import org.eclipse.xtend.lib.annotations.Data
 
 import static org.apollo.game.model.Direction.*
@@ -40,8 +39,7 @@ import static org.apollo.game.model.Direction.*
 		mob.movementDistance = movementDistance
 
 		world.register(mob)
-
-		TaskScheduler.instance.schedule(new MobMovementTask(1, true, mob))
+		world.submit(new MobMovementTask(1, true, mob))
 	}
 
 }

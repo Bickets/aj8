@@ -12,7 +12,6 @@ import org.apollo.game.msg.Message;
 import org.apollo.game.msg.impl.ServerMessageMessage;
 import org.apollo.game.sync.block.SynchronizationBlock;
 import org.apollo.game.sync.block.SynchronizationBlockSet;
-import org.apollo.game.task.TaskScheduler;
 
 /**
  * A {@link GameCharacter} is a living creature in the world, such as a player
@@ -433,7 +432,7 @@ public abstract class GameCharacter extends Entity {
 			stopAction();
 		}
 		currentAction = action;
-		TaskScheduler.getInstance().schedule(action);
+		world.submit(action);
 		return true;
 	}
 

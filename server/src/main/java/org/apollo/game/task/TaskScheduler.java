@@ -12,11 +12,6 @@ import java.util.LinkedList;
 public final class TaskScheduler {
 
 	/**
-	 * Singleton instance of {@link TaskScheduler}.
-	 */
-	private static final TaskScheduler INSTANCE = new TaskScheduler();
-
-	/**
 	 * A {@link Deque} of currently active tasks.
 	 */
 	private final Deque<Task> tasks = new LinkedList<>();
@@ -44,21 +39,6 @@ public final class TaskScheduler {
 			}
 			task.pulse();
 		}
-	}
-
-	/**
-	 * Default private constructor used to prevent this class from being
-	 * instantiated by other classes.
-	 */
-	private TaskScheduler() {
-
-	}
-
-	/**
-	 * Returns the instance of {@link TaskScheduler}.
-	 */
-	public static TaskScheduler getInstance() {
-		return INSTANCE;
 	}
 
 }

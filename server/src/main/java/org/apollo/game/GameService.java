@@ -10,7 +10,6 @@ import org.apollo.game.model.Player;
 import org.apollo.game.model.World;
 import org.apollo.game.model.World.RegistrationStatus;
 import org.apollo.game.sync.ClientSynchronizer;
-import org.apollo.game.task.TaskScheduler;
 import org.apollo.io.player.PlayerSerializerWorker;
 import org.apollo.net.session.GameSession;
 import org.apollo.service.Service;
@@ -94,7 +93,7 @@ public final class GameService implements Service {
 				}
 			}
 
-			TaskScheduler.getInstance().pulse();
+			world.pulse();
 
 			clientSynchronizer.synchronize();
 		}

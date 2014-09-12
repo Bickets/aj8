@@ -18,7 +18,6 @@ import org.apollo.game.msg.impl.IdAssignmentMessage;
 import org.apollo.game.msg.impl.LogoutMessage;
 import org.apollo.game.msg.impl.SwitchTabInterfaceMessage;
 import org.apollo.game.sync.block.SynchronizationBlock;
-import org.apollo.game.task.TaskScheduler;
 import org.apollo.game.task.impl.SkillNormalizationTask;
 import org.apollo.net.session.GameSession;
 import org.apollo.security.PlayerCredentials;
@@ -424,7 +423,7 @@ public final class Player extends GameCharacter {
 		initSkills();
 		updateRegion(position);
 
-		TaskScheduler.getInstance().schedule(new SkillNormalizationTask(this));
+		world.submit(new SkillNormalizationTask(this));
 	}
 
 	/**

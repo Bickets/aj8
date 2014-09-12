@@ -28,6 +28,8 @@ import org.apollo.game.model.pf.AStarPathFinder;
 import org.apollo.game.model.pf.PathFinder;
 import org.apollo.game.model.pf.TraversalMap;
 import org.apollo.game.model.region.RegionRepository;
+import org.apollo.game.task.Task;
+import org.apollo.game.task.TaskScheduler;
 import org.apollo.io.EquipmentDefinitionParser;
 import org.apollo.service.Service;
 import org.slf4j.Logger;
@@ -83,6 +85,11 @@ public final class World {
 	private final GameCharacterRepository<Player> playerRepository = new GameCharacterRepository<>(WorldConstants.MAXIMUM_PLAYERS);
 
 	/**
+	 * The task scheduler for this world.
+	 */
+	private final TaskScheduler taskScheduler = new TaskScheduler();
+
+	/**
 	 * This world's {@link RegionRepository}.
 	 */
 	private final RegionRepository regionRepository = new RegionRepository();
@@ -117,17 +124,11 @@ public final class World {
 		logger.info("Done (loaded {} item definitions).", itemDefs.length);
 
 		logger.info("Loading equipment definitions...");
-		int nonNull = 0;
 		try (InputStream is = Files.newInputStream(Paths.get("data", "equipment.dat"))) {
 			EquipmentDefinition[] equipDefs = EquipmentDefinitionParser.parse(is);
-			for (EquipmentDefinition def : equipDefs) {
-				if (def != null) {
-					nonNull++;
-				}
-			}
 			EquipmentDefinition.init(equipDefs);
+			logger.info("Done (loaded {} equipment definitions).", equipDefs.length);
 		}
-		logger.info("Done (loaded {} equipment definitions).", nonNull);
 
 		logger.info("Loading mob definitions...");
 		MobDefinition[] mobDefs = MobDefinitionParser.parse(fileSystem);
@@ -242,6 +243,15 @@ public final class World {
 	}
 
 	/**
+	 * Submits a {@link Task} to the {@link #taskScheduler}.
+	 *
+	 * @param task The task to submit.
+	 */
+	public void submit(Task task) {
+		taskScheduler.schedule(task);
+	}
+
+	/**
 	 * Posts an event to this worlds event provider.
 	 *
 	 * @param event The event to post.
@@ -266,6 +276,13 @@ public final class World {
 	 */
 	public <E extends Event> void depriveSubscriber(EventSubscriber<E> subscriber) {
 		eventProvider.depriveSubscriber(subscriber);
+	}
+
+	/**
+	 * Pulses the {@link #taskScheduler}.
+	 */
+	public void pulse() {
+		taskScheduler.pulse();
 	}
 
 	/**
