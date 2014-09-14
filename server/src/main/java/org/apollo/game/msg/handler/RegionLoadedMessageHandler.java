@@ -15,7 +15,6 @@ public final class RegionLoadedMessageHandler implements MessageHandler<RegionLo
 
 	@Override
 	public void handle(Player player, RegionLoadedMessage msg) {
-
 	}
 
 }
