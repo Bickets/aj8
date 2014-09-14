@@ -31,11 +31,12 @@ public final class RegionRepository {
 		int id = regionX + regionY * SIZE;
 
 		Region region = regions.get(id);
-		if (region != null) {
-			return region;
+		if (region == null) {
+			regions.put(id, new Region());
+			return regions.get(id);
 		}
 
-		return regions.put(id, new Region());
+		return region;
 	}
 
 }

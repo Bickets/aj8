@@ -12,6 +12,16 @@ import static org.apollo.game.model.pf.TraversalConstants.NONE;
 public final class Tile {
 
 	/**
+	 * The map flag which represents a clipped tile.
+	 */
+	public static final int FLAG_BLOCKED = 0x1;
+
+	/**
+	 * The map flag which represents a bridge tile.
+	 */
+	public static final int FLAG_BRIDGE = 0x2;
+
+	/**
 	 * The flags for this tile.
 	 */
 	private int flags;
