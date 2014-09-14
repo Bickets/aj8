@@ -8,64 +8,64 @@ package org.apollo.game.model.def;
 public final class MapDefinition {
 
 	/**
-	 * The hash of the region coordinates within this map entry.
+	 * The hash of the region coordinates.
 	 */
 	private final int hash;
 
 	/**
-	 * The map file id in this map entry.
+	 * The terrain file id.
 	 */
-	private final int mapFile;
+	private final int terrainFile;
 
 	/**
-	 * The landscape file id in this map entry.
+	 * The object file id.
 	 */
-	private final int landscapeFile;
+	private final int objectFile;
 
 	/**
-	 * Represents whether or not this map is preloaded.
+	 * Whether or not this map is preloaded.
 	 */
 	private final boolean preload;
 
 	/**
-	 * Constructs a new {@link MapDefinition} with the specified hash, map file
-	 * id, landscape file id, and preload state.
+	 * Constructs a new {@link MapDefinition} with the specified hash, terrain
+	 * file id, object file id and preload state.
 	 *
-	 * @param hash The hash of the region coordinates within this map entry.
-	 * @param mapFile The map file id in this map entry.
-	 * @param landscapeFile The landscape file id in this map entry.
-	 * @param preload Represents whether or not this map is preloaded.
+	 * @param hash The hash of the region coordinates.
+	 * @param terrainFile The terrain file id.
+	 * @param objectFile The object file id.
+	 * @param preload Whether or not this map is preloaded.
 	 */
-	public MapDefinition(int hash, int mapFile, int landscapeFile, boolean preload) {
+	public MapDefinition(int hash, int terrainFile, int objectFile, boolean preload) {
 		this.hash = hash;
-		this.mapFile = mapFile;
-		this.landscapeFile = landscapeFile;
+		this.terrainFile = terrainFile;
+		this.objectFile = objectFile;
 		this.preload = preload;
 	}
 
 	/**
-	 * Returns this map entries hash.
+	 * Returns the coordinate hash.
 	 */
 	public int getHash() {
 		return hash;
 	}
 
 	/**
-	 * Returns this map entries map id.
+	 * Returns the terrain file id.
 	 */
-	public int getMapFile() {
-		return mapFile;
+	public int getTerrainFile() {
+		return terrainFile;
 	}
 
 	/**
-	 * Returns this map entries landscape id.
+	 * Returns the object file id.
 	 */
-	public int getLandscapeFile() {
-		return landscapeFile;
+	public int getObjectFile() {
+		return objectFile;
 	}
 
 	/**
-	 * Returns whether or not this map entry is preloaded.
+	 * Returns whether or not this map is preloaded.
 	 */
 	public boolean isPreload() {
 		return preload;

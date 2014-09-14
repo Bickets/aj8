@@ -10,19 +10,18 @@ import org.apollo.fs.FileSystem;
 import org.apollo.game.model.def.MapDefinition;
 
 /**
- * Represents the map index manifest archive entry.
+ * A class which parses {@link MapDefinition}s
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class MapDefinitionParser {
 
 	/**
-	 * Parses and returns a map of map definitions from the specified file
-	 * system.
+	 * Parses {@link MapDefinition}s from the specified {@link FileSystem}.
 	 *
-	 * @param fs The file system in which to read the map data from.
-	 * @throws IOException If some I/O exception occurs.
-	 * @return A map of parsed map definitions.
+	 * @param fs The file system.
+	 * @return A {@link Map} of parsed map definitions.
+	 * @throws IOException If some I/O error occurs.
 	 */
 	protected static Map<Integer, MapDefinition> parse(FileSystem fs) throws IOException {
 		Archive archive = fs.getArchive(FileSystem.MANIFEST_ARCHIVE);
@@ -32,11 +31,11 @@ public final class MapDefinitionParser {
 		int count = buffer.capacity() / 7;
 		for (int i = 0; i < count; i++) {
 			int hash = buffer.getShort() & 0xFFFF;
-			int mapFile = buffer.getShort() & 0xFFFF;
-			int landscapeFile = buffer.getShort() & 0xFFFF;
+			int terrainFile = buffer.getShort() & 0xFFFF;
+			int objectFile = buffer.getShort() & 0xFFFF;
 			boolean preload = buffer.get() == 1;
 
-			defs.put(hash, new MapDefinition(hash, mapFile, landscapeFile, preload));
+			defs.put(hash, new MapDefinition(hash, terrainFile, objectFile, preload));
 		}
 
 		return defs;

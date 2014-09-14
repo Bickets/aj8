@@ -5,6 +5,8 @@ import static org.apollo.game.model.obj.ObjectType.DIAGONAL_WALL;
 import static org.apollo.game.model.obj.ObjectType.GENERAL_PROP;
 import static org.apollo.game.model.obj.ObjectType.GROUND_PROP;
 import static org.apollo.game.model.obj.ObjectType.WALKABLE_PROP;
+import static org.apollo.game.model.region.Tile.FLAG_BLOCKED;
+import static org.apollo.game.model.region.Tile.FLAG_BRIDGE;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
@@ -34,16 +36,6 @@ import org.apollo.util.CompressionUtil;
 public final class StaticObjectDefinitionParser {
 
 	/**
-	 * The map config which represents a clipped tile.
-	 */
-	public static final int FLAG_CLIP = 0x1;
-
-	/**
-	 * The map config which represents a bridged tile.
-	 */
-	public static final int FLAG_BRIDGE = 0x2;
-
-	/**
 	 * A set of game objects
 	 */
 	private final List<GameObject> gameObjects = new ArrayList<>();
@@ -63,10 +55,10 @@ public final class StaticObjectDefinitionParser {
 	}
 
 	/**
-	 * Parses the landscape files from the specified file system.
+	 * Parses the map definition files from the {@link FileSystem}.
 	 *
 	 * @param fs The file system.
-	 * @return A multimap of static object definitions.
+	 * @return A {@link List} of parsed {@link GameObject}s
 	 * @throws IOException If some I/O exception occurs.
 	 */
 	public List<GameObject> parse(FileSystem fs) throws IOException {
@@ -79,42 +71,42 @@ public final class StaticObjectDefinitionParser {
 			int x = (hash >> 8 & 0xFF) * 64;
 			int y = (hash & 0xFF) * 64;
 
-			byte[] landscapeData = fs.getFile(FileSystem.MAP_IDX, def.getLandscapeFile());
-			ByteBuffer landscapeBuffer = ByteBuffer.wrap(CompressionUtil.ungzip(landscapeData));
-			loadLandscapes(landscapeBuffer, x, y);
+			byte[] gameObjectData = fs.getFile(FileSystem.MAP_IDX, def.getObjectFile());
+			ByteBuffer gameObjectBuffer = ByteBuffer.wrap(CompressionUtil.ungzip(gameObjectData));
+			parseGameObject(gameObjectBuffer, x, y);
 
-			byte[] mapData = fs.getFile(FileSystem.MAP_IDX, def.getMapFile());
-			ByteBuffer mapBuffer = ByteBuffer.wrap(CompressionUtil.ungzip(mapData));
-			loadMaps(mapBuffer, x, y);
+			byte[] terrainData = fs.getFile(FileSystem.MAP_IDX, def.getTerrainFile());
+			ByteBuffer terrainBuffer = ByteBuffer.wrap(CompressionUtil.ungzip(terrainData));
+			parseTerrain(terrainBuffer, x, y);
 		}
 
 		return gameObjects;
 	}
 
 	/**
-	 * Loads all of the landscapes and decodes the objects within them.
+	 * Parses a {@link GameObject} on the specified coordinates.
 	 *
-	 * @param landscapeBuffer The uncompressed landscape data buffer.
-	 * @param x The x coordinate of this landscape.
-	 * @param y The y coordinate of this landscape.
+	 * @param gameObjectBuffer The uncompressed game object data buffer.
+	 * @param x The x coordinate this object is on.
+	 * @param y The y coordinate this object is on.
 	 */
-	private void loadLandscapes(ByteBuffer landscapeBuffer, int x, int y) {
-		for (int deltaId, id = -1; (deltaId = ByteBufferUtil.readSmart(landscapeBuffer)) != 0;) {
+	private void parseGameObject(ByteBuffer gameObjectBuffer, int x, int y) {
+		for (int deltaId, id = -1; (deltaId = ByteBufferUtil.readSmart(gameObjectBuffer)) != 0;) {
 			id += deltaId;
 
-			for (int deltaPos, hash = 0; (deltaPos = ByteBufferUtil.readSmart(landscapeBuffer)) != 0;) {
+			for (int deltaPos, hash = 0; (deltaPos = ByteBufferUtil.readSmart(gameObjectBuffer)) != 0;) {
 				hash += deltaPos - 1;
 
 				int localX = hash >> 6 & 0x3F;
 				int localY = hash & 0x3F;
 				int height = hash >> 12 & 0x3;
 
-				int attributeHashCode = landscapeBuffer.get() & 0xFF;
+				int attributeHashCode = gameObjectBuffer.get() & 0xFF;
 				ObjectType type = ObjectType.forId(attributeHashCode >> 2);
 				ObjectOrientation orientation = ObjectOrientation.forId(attributeHashCode & 0x3);
 				Position position = new Position(x + localX, y + localY, height);
 
-				objectDecoded(id, orientation, type, position);
+				gameObjectDecoded(id, orientation, type, position);
 			}
 		}
 	}
@@ -126,7 +118,7 @@ public final class StaticObjectDefinitionParser {
 	 * @param x The x coordinate of this map entry.
 	 * @param y The y coordinate of this map entry.
 	 */
-	private void loadMaps(ByteBuffer mapBuffer, int x, int y) {
+	private void parseTerrain(ByteBuffer mapBuffer, int x, int y) {
 		for (int height = 0; height < 4; height++) {
 			for (int localX = 0; localX < 64; localX++) {
 				for (int localY = 0; localY < 64; localY++) {
@@ -134,18 +126,18 @@ public final class StaticObjectDefinitionParser {
 
 					int flags = 0;
 					for (;;) {
-						int config = mapBuffer.get() & 0xFF;
-						if (config == 0) {
-							mapDecoded(flags, position);
+						int attributeId = mapBuffer.get() & 0xFF;
+						if (attributeId == 0) {
+							terrainDecoded(flags, position);
 							break;
-						} else if (config == 1) {
+						} else if (attributeId == 1) {
 							mapBuffer.get();
-							mapDecoded(flags, position);
+							terrainDecoded(flags, position);
 							break;
-						} else if (config <= 49) {
+						} else if (attributeId <= 49) {
 							mapBuffer.get();
-						} else if (config <= 81) {
-							flags = config - 49;
+						} else if (attributeId <= 81) {
+							flags = attributeId - 49;
 						}
 					}
 				}
@@ -154,13 +146,13 @@ public final class StaticObjectDefinitionParser {
 	}
 
 	/**
-	 * Marks traversal flags based on the map config received for some map file.
+	 * Decodes the terrains {@link Position}.
 	 *
-	 * @param flags The map configs.
-	 * @param position The position of the tile.
+	 * @param flags The flags for the specified position.
+	 * @param position The decoded position.
 	 */
-	private void mapDecoded(int flags, Position position) {
-		if ((flags & FLAG_CLIP) != 0) {
+	private void terrainDecoded(int flags, Position position) {
+		if ((flags & FLAG_BLOCKED) != 0) {
 			world.getTraversalMap().markBlocked(position.getHeight(), position.getX(), position.getY());
 		}
 
@@ -170,14 +162,15 @@ public final class StaticObjectDefinitionParser {
 	}
 
 	/**
-	 * Marks traversable objects based on their definitions.
+	 * Decodes a {@link GameObject} with the specified attributes on the
+	 * specified {@link Position}.
 	 *
-	 * @param id The id of the object.
-	 * @param orientation The orientation of the object.
-	 * @param type The type of the object.
-	 * @param position The position of the object.
+	 * @param id The id of the game object.
+	 * @param orientation The orientation of the game object.
+	 * @param type The type of the game object.
+	 * @param position The position the game object lies on.
 	 */
-	private void objectDecoded(int id, ObjectOrientation orientation, ObjectType type, Position position) {
+	private void gameObjectDecoded(int id, ObjectOrientation orientation, ObjectType type, Position position) {
 		TraversalMap traversalMap = world.getTraversalMap();
 		GameObjectDefinition def = GameObjectDefinition.forId(id);
 
