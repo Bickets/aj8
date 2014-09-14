@@ -3,6 +3,7 @@ package plugin.items
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ItemActionEvent
+import org.apollo.game.model.Interfaces.InterfaceOption
 import org.apollo.game.model.InventoryConstants
 import org.apollo.game.model.Item
 import org.apollo.game.model.Player
@@ -53,7 +54,7 @@ class RemoveEquipment implements EventSubscriber<ItemActionEvent> {
 	}
 
 	override test(ItemActionEvent event) {
-		event.interfaceId == InventoryConstants.EQUIPMENT_INVENTORY_ID
+		event.interfaceId == InventoryConstants.EQUIPMENT_INVENTORY_ID && event.option == InterfaceOption.OPTION_ONE
 	}
 
 }

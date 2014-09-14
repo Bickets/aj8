@@ -3,6 +3,7 @@ package plugin.items
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ItemActionEvent
+import org.apollo.game.model.Interfaces.InterfaceOption
 import org.apollo.game.model.InventoryConstants
 import org.apollo.game.model.Player
 import org.apollo.game.model.Skill
@@ -127,7 +128,7 @@ class WearEquipment implements EventSubscriber<ItemActionEvent> {
 		if (!definition.inventoryActions.contains("Wield") && !definition.inventoryActions.contains("Wear")) {
 			return false
 		}
-		event.interfaceId == InventoryConstants.INVENTORY_ID
+		event.interfaceId == InventoryConstants.INVENTORY_ID && event.option == InterfaceOption.OPTION_ONE
 	}
 
 }
