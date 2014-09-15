@@ -23,6 +23,7 @@ public final class HeadIcon<E extends Enum<E> & Icon> {
 	 *
 	 * @author Ryley Kimmel <ryley.kimmel@live.com>
 	 */
+	@FunctionalInterface
 	protected interface Icon {
 
 		/**
