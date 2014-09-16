@@ -32,9 +32,4 @@ public final class JagGrabResponse {
 		return fileData;
 	}
 
-	@Override
-	public String toString() {
-		return "JagGrabResponse [fileData=" + fileData + "]";
-	}
-
 }

@@ -1,5 +1,8 @@
 package org.apollo.game.model;
 
+import static com.google.common.base.MoreObjects.toStringHelper;
+import static com.google.common.base.Preconditions.checkArgument;
+
 /**
  * Represents a position in the world.
  *
@@ -50,9 +53,8 @@ public final class Position {
 	 * @param height The height.
 	 */
 	public Position(int x, int y, int height) {
-		if (height < 0 || height >= MAXIMUM_HEIGHT_LEVELS) {
-			throw new IllegalArgumentException("Height out of bounds");
-		}
+		checkArgument(height < 0 || height >= MAXIMUM_HEIGHT_LEVELS, "Height : " + height + " is out of bounds.");
+
 		this.x = x;
 		this.y = y;
 		this.height = height;
@@ -248,7 +250,7 @@ public final class Position {
 
 	@Override
 	public String toString() {
-		return getClass().getName() + " [x=" + x + ", y=" + y + ", height=" + height + "]";
+		return toStringHelper(this).add("x", x).add("y", y).add("height", height).toString();
 	}
 
 }

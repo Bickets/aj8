@@ -1,7 +1,11 @@
 package org.apollo.game.model;
 
-import java.util.ArrayList;
-import java.util.List;
+import static com.google.common.base.Preconditions.checkArgument;
+import static java.util.Arrays.setAll;
+import static java.util.stream.Stream.of;
+
+import java.util.HashSet;
+import java.util.Set;
 
 import org.apollo.game.model.skill.SkillListener;
 
@@ -20,12 +24,12 @@ public final class SkillSet {
 	/**
 	 * The maximum allowed experience.
 	 */
-	public static final double MAXIMUM_EXP = 200000000;
+	public static final double MAXIMUM_EXP = 200_000_000;
 
 	/**
 	 * A list of skill listeners.
 	 */
-	private final List<SkillListener> listeners = new ArrayList<>();
+	private final Set<SkillListener> listeners = new HashSet<>();
 
 	/**
 	 * A array of {@code Skill[]}s which represents each skill.
@@ -54,17 +58,10 @@ public final class SkillSet {
 	}
 
 	/**
-	 * Initialises the skill set.
+	 * Initializes the skill set.
 	 */
 	private void init() {
-		for (int i = 0; i < skills.length; i++) {
-			if (i == Skill.HITPOINTS) {
-				skills[i] = new Skill(1154, 10, 10);
-			} else {
-				skills[i] = new Skill(0, 1, 1);
-			}
-			// DO NOT CALL notifyXXX here!!
-		}
+		setAll(skills, skill -> skill == Skill.HITPOINTS ? new Skill(1154, 10, 10) : new Skill(0, 1, 1));
 	}
 
 	/**
@@ -107,7 +104,6 @@ public final class SkillSet {
 		setSkill(id, new Skill(newExperience, newCurrentLevel, newMaximumLevel));
 
 		if (delta > 0) {
-			// here so it gets updated skill
 			notifyLevelledUp(id);
 		}
 	}
@@ -118,11 +114,7 @@ public final class SkillSet {
 	 * @return The total level.
 	 */
 	public int getTotalLevel() {
-		int total = 0;
-		for (Skill skill : skills) {
-			total += skill.getMaximumLevel();
-		}
-		return total;
+		return of(skills).map(skill -> skill.getMaximumLevel()).reduce(0, (total, current) -> total + current);
 	}
 
 	/**
@@ -192,26 +184,19 @@ public final class SkillSet {
 	 * Normalizes the skills in this set.
 	 */
 	public void normalize() {
-		for (int skill = 0; skill < skills.length; skill++) {
-
-			if (skill == Skill.PRAYER) {
-				continue;
-			}
+		for (int id = 0; id < skills.length; id++) {
+			int current = skills[id].getCurrentLevel();
+			int max = skills[id].getMaximumLevel();
 
 			// TODO: if player in wilderness and skill is hp, do not normalize.
 
-			int cur = skills[skill].getCurrentLevel();
-			int max = skills[skill].getMaximumLevel();
-
-			if (cur > max) {
-				cur--;
-			} else if (max > cur) {
-				cur++;
-			} else {
+			if (current == max || id == Skill.PRAYER) {
 				continue;
 			}
 
-			setSkill(skill, new Skill(skills[skill].getExperience(), cur, max));
+			current += (current < max ? 1 : -1);
+
+			setSkill(id, new Skill(skills[id].getExperience(), current, max));
 		}
 	}
 
@@ -235,9 +220,7 @@ public final class SkillSet {
 	 * @throws IndexOutOfBoundsException if the id is out of bounds.
 	 */
 	private void checkBounds(int id) {
-		if (id < 0 || id >= skills.length) {
-			throw new IndexOutOfBoundsException();
-		}
+		checkArgument(id < 0 || id >= skills.length, "Skill id : " + id + " is out of bounds.");
 	}
 
 	/**
@@ -249,9 +232,7 @@ public final class SkillSet {
 	private void notifyLevelledUp(int id) {
 		checkBounds(id);
 		if (firingEvents) {
-			for (SkillListener listener : listeners) {
-				listener.leveledUp(this, id, skills[id]);
-			}
+			listeners.forEach(listener -> listener.leveledUp(this, id, skills[id]));
 		}
 	}
 
@@ -264,9 +245,7 @@ public final class SkillSet {
 	private void notifySkillUpdated(int id) {
 		checkBounds(id);
 		if (firingEvents) {
-			for (SkillListener listener : listeners) {
-				listener.skillUpdated(this, id, skills[id]);
-			}
+			listeners.forEach(listener -> listener.skillUpdated(this, id, skills[id]));
 		}
 	}
 
@@ -275,9 +254,7 @@ public final class SkillSet {
 	 */
 	private void notifySkillsUpdated() {
 		if (firingEvents) {
-			for (SkillListener listener : listeners) {
-				listener.skillsUpdated(this);
-			}
+			listeners.forEach(listener -> listener.skillsUpdated(this));
 		}
 	}
 

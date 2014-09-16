@@ -11,6 +11,7 @@ import org.apollo.game.model.Player;
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public enum DialogueExpression {
+
 	/**
 	 * The default expression, none.
 	 */
@@ -47,6 +48,11 @@ public enum DialogueExpression {
 	ANGRY_TWO(617);
 
 	/**
+	 * The animation object constructed with the specified animation id.
+	 */
+	private final Animation animation;
+
+	/**
 	 * Constructs a new {@link DialogueExpression} with the specified animtaion
 	 * id.
 	 *
@@ -55,11 +61,6 @@ public enum DialogueExpression {
 	private DialogueExpression(int animationId) {
 		animation = new Animation(animationId);
 	}
-
-	/**
-	 * The animation object constructed with the specified animation id.
-	 */
-	private final Animation animation;
 
 	/**
 	 * Returns the animation.

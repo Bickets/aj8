@@ -1,5 +1,8 @@
 package org.apollo.game.model.inter.dialog;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static java.util.Objects.requireNonNull;
+import static java.util.stream.IntStream.range;
 import static org.apollo.game.model.inter.dialog.DialogueConstants.OPTION_DIALOGUE_ID;
 
 import org.apollo.game.model.Player;
@@ -18,17 +21,12 @@ public abstract class OptionDialogueListener implements DialogueListener {
 
 	@Override
 	public final int execute(Player player) {
-		String[] lines = lines();
+		String[] lines = requireNonNull(lines());
 		int length = lines.length;
-		if (length < 0 || length >= OPTION_DIALOGUE_ID.length) {
-			throw new DialogueException("line length: (%d) - out of bounds", length);
-		}
-
+		checkArgument(length < 0 || length >= OPTION_DIALOGUE_ID.length, "length : " + length + " is out of bounds.");
 		int dialogueId = OPTION_DIALOGUE_ID[length - 1];
 		player.send(new SetInterfaceTextMessage(dialogueId - 1, getTitle()));
-		for (int i = 0; i < length; i++) {
-			player.send(new SetInterfaceTextMessage(dialogueId + i, lines[i]));
-		}
+		range(0, length).forEach(i -> player.send(new SetInterfaceTextMessage(OPTION_DIALOGUE_ID[length - 1] + i, lines[i])));
 		return dialogueId - 2;
 	}
 
@@ -39,11 +37,6 @@ public abstract class OptionDialogueListener implements DialogueListener {
 	 */
 	public String getTitle() {
 		return "Choose an option";
-	}
-
-	@Override
-	public final DialogueType type() {
-		return DialogueType.OPTION;
 	}
 
 	/* Do not allow method overriding for these methods. */

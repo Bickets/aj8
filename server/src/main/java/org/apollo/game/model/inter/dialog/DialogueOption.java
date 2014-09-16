@@ -9,6 +9,7 @@ import java.util.Set;
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public enum DialogueOption {
+
 	/**
 	 * Represents the first option within a dialogue.
 	 */

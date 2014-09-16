@@ -1,5 +1,8 @@
 package org.apollo.game.model;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static java.util.Objects.requireNonNull;
+
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -86,16 +89,11 @@ public final class Inventory implements Cloneable {
 	 *
 	 * @param capacity The capacity.
 	 * @param mode The stacking mode.
-	 * @throws IllegalArgumentException if the capacity is negative.
-	 * @throws NullPointerException if the mode is {@code null}.
 	 */
 	public Inventory(int capacity, StackMode mode) {
-		if (capacity < 0) {
-			throw new IllegalArgumentException("capacity cannot be negative");
-		}
-		if (mode == null) {
-			throw new NullPointerException("mode cannot be null");
-		}
+		requireNonNull(mode);
+		checkArgument(capacity < 0);
+
 		this.capacity = capacity;
 		items = new Item[capacity];
 		this.mode = mode;
@@ -515,9 +513,7 @@ public final class Inventory implements Cloneable {
 	private void notifyCapacityExceeded() {
 		synchronized (this) {
 			if (firingEvents) {
-				for (InventoryListener listener : listeners) {
-					listener.capacityExceeded(this);
-				}
+				listeners.forEach(listener -> listener.capacityExceeded(this));
 			}
 		}
 	}
@@ -528,9 +524,7 @@ public final class Inventory implements Cloneable {
 	private void notifyItemsUpdated() {
 		synchronized (this) {
 			if (firingEvents) {
-				for (InventoryListener listener : listeners) {
-					listener.itemsUpdated(this);
-				}
+				listeners.forEach(listener -> listener.itemsUpdated(this));
 			}
 		}
 	}
@@ -544,9 +538,7 @@ public final class Inventory implements Cloneable {
 		synchronized (this) {
 			if (firingEvents) {
 				Item item = items[slot];
-				for (InventoryListener listener : listeners) {
-					listener.itemUpdated(this, slot, item);
-				}
+				listeners.forEach(listener -> listener.itemUpdated(this, slot, item));
 			}
 		}
 	}
@@ -555,12 +547,10 @@ public final class Inventory implements Cloneable {
 	 * Checks the bounds of the specified slot.
 	 *
 	 * @param slot The slot.
-	 * @throws IndexOutOfBoundsException if the slot is out of bounds.
+	 * @throws IndexOutOfBoundsException If the slot is out of bounds.
 	 */
 	private void checkBounds(int slot) {
-		if (slot < 0 || slot >= capacity) {
-			throw new IndexOutOfBoundsException("slot out of bounds");
-		}
+		checkArgument(slot < 0 || slot >= capacity, "Slot : " + slot + " is out of bounds.");
 	}
 
 	/**

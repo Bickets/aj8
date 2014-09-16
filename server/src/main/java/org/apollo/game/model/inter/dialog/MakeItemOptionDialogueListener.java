@@ -1,6 +1,9 @@
 package org.apollo.game.model.inter.dialog;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static java.util.Arrays.setAll;
 import static java.util.Objects.requireNonNull;
+import static java.util.stream.IntStream.range;
 import static org.apollo.game.model.inter.dialog.DialogueConstants.MAKE_ITEM_DIALOGUE_ID;
 import static org.apollo.game.model.inter.dialog.DialogueConstants.MAKE_ITEM_MODEL_ID;
 
@@ -29,36 +32,27 @@ public abstract class MakeItemOptionDialogueListener implements DialogueListener
 	 * @throws NullPointerException If the {@code items} are null.
 	 */
 	public MakeItemOptionDialogueListener(Item... items) {
+		checkArgument(items.length < 2 || items.length > 5, "Length : " + items.length + ", must be greater than 2 and less than 6");
 		this.items = requireNonNull(items);
-		if (items.length < 2 || items.length > 5) {
-			throw new DialogueException("length of items must be greater than 2 and less than 6, len: %d", items.length);
-		}
 	}
 
 	@Override
 	public abstract void optionClicked(DialogueOption option);
 
 	@Override
-	public final DialogueType type() {
-		return DialogueType.MAKE_ITEM_OPTION;
-	}
-
-	@Override
 	public final int execute(Player player) {
-		String[] lines = lines();
-		for (int i = 0; i < lines.length; i++) {
+		String[] lines = requireNonNull(lines());
+		range(0, lines.length).forEach(i -> {
 			player.send(new InterfaceItemModelMessage(MAKE_ITEM_MODEL_ID[items.length - 2][i], items[i], getModelZoom()));
 			player.send(new SetInterfaceTextMessage(MAKE_ITEM_DIALOGUE_ID[lines.length - 2][i + 1], lines[i]));
-		}
+		});
 		return MAKE_ITEM_DIALOGUE_ID[items.length - 2][0];
 	}
 
 	@Override
 	public String[] lines() {
 		String[] lines = new String[items.length];
-		for (int i = 0; i < lines.length; i++) {
-			lines[i] = items[i].getDefinition().getName();
-		}
+		setAll(lines, index -> items[index].getDefinition().getName());
 		return lines;
 	}
 

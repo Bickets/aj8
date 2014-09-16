@@ -12,12 +12,6 @@ import org.apollo.game.model.inter.InterfaceListener;
 public interface DialogueListener extends InterfaceListener {
 
 	/**
-	 * Returns the type of this dialogue specified by some {@code enum} constant
-	 * within {@link DialogueType}.
-	 */
-	DialogueType type();
-
-	/**
 	 * Returns the lines of dialogue this dialogue contains. TODO: Perhaps
 	 * create a specific object for containing dialogue information?
 	 */

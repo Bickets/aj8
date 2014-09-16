@@ -46,7 +46,7 @@ public final class InterfaceSet {
 	/**
 	 * A map of open interfaces.
 	 */
-	private final Map<InterfaceType, Integer> interfaces = new HashMap<InterfaceType, Integer>();
+	private final Map<InterfaceType, Integer> interfaces = new HashMap<>();
 
 	/**
 	 * The current listener.
@@ -126,7 +126,6 @@ public final class InterfaceSet {
 			return;
 		}
 
-		// It's safe to execute the continue event.
 		dialogueListener.continued();
 
 		DialogueListener next = dialogueListener.next();
@@ -135,7 +134,6 @@ public final class InterfaceSet {
 			return;
 		}
 
-		// It's safe to open up the next dialogue.
 		openDialogue(next);
 	}
 

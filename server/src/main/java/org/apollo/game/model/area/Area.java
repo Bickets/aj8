@@ -1,5 +1,7 @@
 package org.apollo.game.model.area;
 
+import static com.google.common.base.MoreObjects.toStringHelper;
+
 import org.apollo.game.model.Position;
 
 /**
@@ -76,5 +78,10 @@ public abstract class Area {
 	 * @return The pseudo-random position.
 	 */
 	public abstract Position randomPosition(int height);
+
+	@Override
+	public final String toString() {
+		return toStringHelper(this).add("center()", center()).toString();
+	}
 
 }

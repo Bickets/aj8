@@ -1,5 +1,7 @@
 package org.apollo.game.model;
 
+import static com.google.common.base.MoreObjects.toStringHelper;
+
 import java.util.ArrayDeque;
 import java.util.Queue;
 
@@ -64,7 +66,7 @@ public final class Player extends GameCharacter {
 					return level;
 				}
 			}
-			throw new IllegalArgumentException("invalid numerical level");
+			throw new IllegalArgumentException("Numerical level: " + numericalLevel + " is not valid.");
 		}
 
 		/**
@@ -445,21 +447,17 @@ public final class Player extends GameCharacter {
 		Inventory trade = getTrade();
 		Inventory equipment = getEquipment();
 
-		// inventory full listeners
 		InventoryListener fullInventoryListener = new FullInventoryListener(this, FullInventoryListener.FULL_INVENTORY_MESSAGE);
 		InventoryListener fullBankListener = new FullInventoryListener(this, FullInventoryListener.FULL_BANK_MESSAGE);
 		InventoryListener fullTradeListener = new FullInventoryListener(this, FullInventoryListener.FULL_TRADE_MESSAGE);
 		InventoryListener fullEquipmentListener = new FullInventoryListener(this, FullInventoryListener.FULL_EQUIPMENT_MESSAGE);
 
-		// equipment appearance listener
 		InventoryListener appearanceListener = new AppearanceInventoryListener(this);
 
-		// synchronization listeners
 		InventoryListener syncInventoryListener = new SynchronizationInventoryListener(this, InventoryConstants.INVENTORY_ID);
 		InventoryListener syncBankListener = new SynchronizationInventoryListener(this, InventoryConstants.BANK_INVENTORY_ID);
 		InventoryListener syncEquipmentListener = new SynchronizationInventoryListener(this, InventoryConstants.EQUIPMENT_INVENTORY_ID);
 
-		// add the listeners
 		inventory.addListener(syncInventoryListener);
 		inventory.addListener(fullInventoryListener);
 		bank.addListener(syncBankListener);
@@ -494,7 +492,7 @@ public final class Player extends GameCharacter {
 
 	@Override
 	public String toString() {
-		return getClass().getName() + " [username=" + credentials.getUsername() + ", privilegeLevel=" + privilegeLevel + "]";
+		return toStringHelper(this).add("username", getName()).add("privilegeLevel", privilegeLevel).toString();
 	}
 
 	/**

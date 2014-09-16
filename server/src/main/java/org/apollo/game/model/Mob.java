@@ -1,5 +1,7 @@
 package org.apollo.game.model;
 
+import static com.google.common.base.MoreObjects.toStringHelper;
+
 import org.apollo.game.model.area.Area;
 import org.apollo.game.model.def.MobDefinition;
 import org.apollo.game.msg.Message;
@@ -116,6 +118,11 @@ public final class Mob extends GameCharacter {
 	@Override
 	public int getSize() {
 		return definition.getSize();
+	}
+
+	@Override
+	public String toString() {
+		return toStringHelper(this).add("id", definition.getId()).add("spawnPosition", spawnPosition).add("movementArea", movementArea).add("movementDistance", movementDistance).toString();
 	}
 
 }

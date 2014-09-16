@@ -1,5 +1,6 @@
 package org.apollo.game.model.inter.dialog;
 
+import static java.util.Objects.requireNonNull;
 import static org.apollo.game.model.inter.dialog.DialogueConstants.MAKE_ITEM_INTERFACE_ID;
 import static org.apollo.game.model.inter.dialog.DialogueConstants.MAKE_ITEM_MODEL_INTERFACE_ID;
 import static org.apollo.game.model.inter.dialog.DialogueConstants.MAKE_ITEM_TITLE_INTERFACE_ID;
@@ -29,16 +30,11 @@ public abstract class MakeItemDialogueListener implements DialogueListener {
 	 * @param item The item shown in this make item statement.
 	 */
 	public MakeItemDialogueListener(Item item) {
-		this.item = item;
+		this.item = requireNonNull(item);
 	}
 
 	@Override
 	public abstract void optionClicked(DialogueOption option);
-
-	@Override
-	public final DialogueType type() {
-		return DialogueType.MAKE_ITEM;
-	}
 
 	@Override
 	public final int execute(Player player) {

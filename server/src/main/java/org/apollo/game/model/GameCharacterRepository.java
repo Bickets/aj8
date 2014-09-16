@@ -1,5 +1,7 @@
 package org.apollo.game.model;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 import java.util.AbstractCollection;
 import java.util.Iterator;
 
@@ -45,18 +47,6 @@ public final class GameCharacterRepository<T extends GameCharacter> extends Abst
 	 */
 	public int capacity() {
 		return characters.length;
-	}
-
-	/**
-	 * Tests the specified index to ensure it is valid.
-	 *
-	 * @param index The index to test.
-	 * @throws ArrayIndexOutOfBoundsException If the specified index is invalid.
-	 */
-	private void testIndex(int index) {
-		if (index < 1 || index >= characters.length + 1) {
-			throw new ArrayIndexOutOfBoundsException();
-		}
 	}
 
 	@Override
@@ -108,9 +98,7 @@ public final class GameCharacterRepository<T extends GameCharacter> extends Abst
 			return false;
 		}
 
-		if (character.getIndex() != index) {
-			throw new IllegalStateException("Unexpected index: " + index + ", expected: " + character.getIndex());
-		}
+		checkArgument(character.getIndex() != index, "Unexpected index: " + index + ", expected: " + character.getIndex());
 
 		characters[index - 1] = null;
 		character.resetIndex();
@@ -127,7 +115,7 @@ public final class GameCharacterRepository<T extends GameCharacter> extends Abst
 	 */
 	@SuppressWarnings("unchecked")
 	public T get(int index) {
-		testIndex(index);
+		checkArgument(index < 1 || index >= characters.length + 1);
 		return (T) characters[index - 1];
 	}
 

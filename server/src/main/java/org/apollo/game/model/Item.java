@@ -1,5 +1,8 @@
 package org.apollo.game.model;
 
+import static com.google.common.base.MoreObjects.toStringHelper;
+import static com.google.common.base.Preconditions.checkArgument;
+
 import org.apollo.game.model.def.ItemDefinition;
 
 /**
@@ -36,9 +39,8 @@ public final class Item {
 	 * @throws IllegalArgumentException if the amount is negative.
 	 */
 	public Item(int id, int amount) {
-		if (amount < 0) {
-			throw new IllegalArgumentException("negative amount: " + amount);
-		}
+		checkArgument(amount < 0, "Amount : " + amount + " cannot be negative!");
+
 		this.id = id;
 		this.amount = amount;
 	}
@@ -72,7 +74,7 @@ public final class Item {
 
 	@Override
 	public String toString() {
-		return getClass().getName() + " [id=" + id + ", amount=" + amount + "]";
+		return toStringHelper(this).add("id", id).add("amount", amount).toString();
 	}
 
 }

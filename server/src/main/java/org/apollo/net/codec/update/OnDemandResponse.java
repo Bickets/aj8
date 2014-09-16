@@ -92,9 +92,4 @@ public final class OnDemandResponse {
 		return chunkData;
 	}
 
-	@Override
-	public String toString() {
-		return "OnDemandResponse [index=" + index + ", id=" + id + ", fileSize=" + fileSize + ", chunkId=" + chunkId + ", chunkData=" + chunkData + "]";
-	}
-
 }
