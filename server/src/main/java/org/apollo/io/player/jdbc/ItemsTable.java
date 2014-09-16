@@ -16,7 +16,7 @@ import org.apollo.game.model.Player;
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public abstract class ItemsTable implements Table {
+public abstract class ItemsTable extends Table {
 
 	/**
 	 * A prepared statement which selects the players inventory from the

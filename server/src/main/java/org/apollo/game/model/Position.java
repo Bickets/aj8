@@ -53,7 +53,7 @@ public final class Position {
 	 * @param height The height.
 	 */
 	public Position(int x, int y, int height) {
-		checkArgument(height < 0 || height >= MAXIMUM_HEIGHT_LEVELS, "Height : " + height + " is out of bounds.");
+		checkArgument(height >= 0 && height < MAXIMUM_HEIGHT_LEVELS, "Height : " + height + " is out of bounds.");
 
 		this.x = x;
 		this.y = y;

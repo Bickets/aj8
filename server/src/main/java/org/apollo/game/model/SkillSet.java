@@ -220,7 +220,7 @@ public final class SkillSet {
 	 * @throws IndexOutOfBoundsException if the id is out of bounds.
 	 */
 	private void checkBounds(int id) {
-		checkArgument(id < 0 || id >= skills.length, "Skill id : " + id + " is out of bounds.");
+		checkArgument(id >= 0 && id < skills.length, "Skill id : " + id + " is out of bounds.");
 	}
 
 	/**

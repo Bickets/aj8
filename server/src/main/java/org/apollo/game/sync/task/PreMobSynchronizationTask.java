@@ -8,7 +8,7 @@ import org.apollo.game.model.Mob;
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public final class PreMobSynchronizationTask implements SynchronizationTask {
+public final class PreMobSynchronizationTask extends SynchronizationTask {
 
 	/**
 	 * The mob.

@@ -39,7 +39,7 @@ public final class Item {
 	 * @throws IllegalArgumentException if the amount is negative.
 	 */
 	public Item(int id, int amount) {
-		checkArgument(amount < 0, "Amount : " + amount + " cannot be negative!");
+		checkArgument(amount >= 0, "Amount : " + amount + " cannot be negative!");
 
 		this.id = id;
 		this.amount = amount;

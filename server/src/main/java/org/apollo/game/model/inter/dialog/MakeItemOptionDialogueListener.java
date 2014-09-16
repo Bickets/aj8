@@ -32,7 +32,7 @@ public abstract class MakeItemOptionDialogueListener implements DialogueListener
 	 * @throws NullPointerException If the {@code items} are null.
 	 */
 	public MakeItemOptionDialogueListener(Item... items) {
-		checkArgument(items.length < 2 || items.length > 5, "Length : " + items.length + ", must be greater than 2 and less than 6");
+		checkArgument(items.length >= 2 && items.length < 6, "Length : " + items.length + ", must be greater than 2 and less than 6");
 		this.items = requireNonNull(items);
 	}
 

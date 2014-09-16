@@ -61,12 +61,15 @@ public final class JagGrabChannelHandler extends ChannelInitializer<SocketChanne
 	protected void initChannel(SocketChannel channel) {
 		ChannelPipeline pipeline = channel.pipeline();
 
+		// decoders
 		pipeline.addLast("framer", new DelimiterBasedFrameDecoder(MAX_REQUEST_LENGTH, DOUBLE_LINE_FEED_DELIMITER));
 		pipeline.addLast("string-decoder", new StringDecoder(JAGGRAB_CHARSET));
 		pipeline.addLast("jaggrab-decoder", new JagGrabRequestDecoder());
 
+		// encoders
 		pipeline.addLast("jaggrab-encoder", new JagGrabResponseEncoder());
 
+		// handler
 		pipeline.addLast("timeout", new IdleStateHandler(NetworkConstants.IDLE_TIME, 0, 0));
 		pipeline.addLast("handler", handler);
 	}

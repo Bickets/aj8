@@ -38,7 +38,7 @@ public abstract class ItemStatementDialogueListener implements DialogueListener 
 	public final int execute(Player player) {
 		String[] lines = requireNonNull(lines());
 		int length = lines.length;
-		checkArgument(length < 0 || length >= MOB_DIALOGUE_ID.length, "length : " + length + " is out of bounds.");
+		checkArgument(length >= 0 && length < MOB_DIALOGUE_ID.length, "length : " + length + " is out of bounds.");
 
 		int dialogueId = MOB_DIALOGUE_ID[length - 1];
 		int headChildId = dialogueId - 2;

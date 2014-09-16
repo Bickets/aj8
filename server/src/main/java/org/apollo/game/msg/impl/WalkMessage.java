@@ -1,7 +1,5 @@
 package org.apollo.game.msg.impl;
 
-import static com.google.common.base.Preconditions.checkArgument;
-
 import org.apollo.game.model.Position;
 import org.apollo.game.msg.Message;
 
@@ -29,7 +27,9 @@ public final class WalkMessage implements Message {
 	 * @param running The running flag.
 	 */
 	public WalkMessage(Position[] steps, boolean running) {
-		checkArgument(steps.length < 0, "Number of steps cannot be negative.");
+		if (steps.length < 0) {
+			throw new IllegalArgumentException("number of steps must not be negative");
+		}
 		this.steps = steps;
 		this.running = running;
 	}

@@ -1,10 +1,7 @@
 package org.apollo.io.player;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static org.apollo.net.codec.login.LoginConstants.STATUS_OK;
-import static org.apollo.net.codec.login.LoginConstants.STATUS_RECONNECTION_OK;
-
 import org.apollo.game.model.Player;
+import org.apollo.net.codec.login.LoginConstants;
 
 /**
  * A response for the
@@ -29,9 +26,15 @@ public final class PlayerSerializerResponse {
 	 * Creates a {@link PlayerSerializerResponse} with only a status code.
 	 *
 	 * @param status The status code.
+	 * @throws IllegalArgumentException if the status code needs a
+	 *             {@link Player}.
 	 */
 	public PlayerSerializerResponse(int status) {
-		this(status, null);
+		if (status == LoginConstants.STATUS_OK || status == LoginConstants.STATUS_RECONNECTION_OK) {
+			throw new IllegalArgumentException("player required for this status code");
+		}
+		this.status = status;
+		player = null;
 	}
 
 	/**
@@ -43,7 +46,9 @@ public final class PlayerSerializerResponse {
 	 *             {@link Player}.
 	 */
 	public PlayerSerializerResponse(int status, Player player) {
-		checkArgument((status == STATUS_OK || status == STATUS_RECONNECTION_OK) && player == null, "Status : " + status + " cannot be sent without an instance of Player");
+		if (status != LoginConstants.STATUS_OK && status != LoginConstants.STATUS_RECONNECTION_OK) {
+			throw new IllegalArgumentException("player required for this status code");
+		}
 		this.status = status;
 		this.player = player;
 	}

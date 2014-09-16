@@ -220,7 +220,7 @@ public final class MobSynchronizationMessageEncoder implements MessageEncoder<Mo
 	 * @param builder The builder.
 	 */
 	private void putInteractingCharacterBlock(InteractingCharacterBlock block, GamePacketBuilder builder) {
-		builder.put(DataType.SHORT, block.getCharacterIndex());
+		builder.put(DataType.SHORT, block.getInteractingCharacterIndex());
 	}
 
 	/**

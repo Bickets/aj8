@@ -20,7 +20,7 @@ public abstract class ContinueStatementDialogueListener implements DialogueListe
 	public final int execute(Player player) {
 		String[] lines = requireNonNull(lines());
 		int length = lines.length;
-		checkArgument(length < 0 || length > CONTINUE_STATEMENT_DIALOGUE_ID.length, "length : " + length + " is out of bounds.");
+		checkArgument(length >= 0 && length < CONTINUE_STATEMENT_DIALOGUE_ID.length, "length : " + length + " is out of bounds.");
 		range(0, length).forEach(i -> player.send(new SetInterfaceTextMessage(CONTINUE_STATEMENT_DIALOGUE_ID[length - 1][i + 1], lines[i])));
 		return CONTINUE_STATEMENT_DIALOGUE_ID[length - 1][0];
 	}

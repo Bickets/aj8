@@ -115,7 +115,7 @@ public final class GameCharacterRepository<T extends GameCharacter> extends Abst
 	 */
 	@SuppressWarnings("unchecked")
 	public T get(int index) {
-		checkArgument(index < 1 || index >= characters.length + 1);
+		checkArgument(index >= 1 && index < characters.length + 1);
 		return (T) characters[index - 1];
 	}
 

@@ -165,7 +165,7 @@ public final class LoginSession extends Session {
 		int status = response.getStatus();
 		Player player = response.getPlayer();
 		int rights = player == null ? 0 : player.getPrivilegeLevel().toInteger();
-		boolean flagged = player != null && player.isFlagged();
+		boolean log = player != null && player.isFlagged();
 
 		if (player != null) {
 			GameSession session = new GameSession(ctx(), messageTranslator, player, gameService);
@@ -181,12 +181,12 @@ public final class LoginSession extends Session {
 					status = LoginConstants.STATUS_SERVER_FULL;
 				}
 				rights = 0;
-				flagged = false;
+				log = false;
 			}
 		}
 
 		Channel channel = ctx().channel();
-		ChannelFuture future = channel.writeAndFlush(new LoginResponse(status, rights, flagged));
+		ChannelFuture future = channel.writeAndFlush(new LoginResponse(status, rights, log));
 
 		if (player != null) {
 			IsaacRandomPair randomPair = request.getRandomPair();

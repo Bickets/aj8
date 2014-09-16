@@ -1,7 +1,5 @@
 package org.apollo.game.sync.seg;
 
-import static com.google.common.base.Preconditions.checkArgument;
-
 import org.apollo.game.model.Direction;
 import org.apollo.game.sync.block.SynchronizationBlockSet;
 
@@ -27,7 +25,9 @@ public final class MovementSegment extends SynchronizationSegment {
 	 */
 	public MovementSegment(SynchronizationBlockSet blockSet, Direction[] directions) {
 		super(blockSet);
-		checkArgument(directions.length < 0 || directions.length > 2, "Direction length : " + directions.length + " is out of bounds");
+		if (directions.length < 0 || directions.length > 2) {
+			throw new IllegalArgumentException("directions length must be between 0 and 2 inclusive");
+		}
 		this.directions = directions;
 	}
 

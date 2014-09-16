@@ -263,7 +263,7 @@ public final class FileSystem {
 		}
 
 		int hash = 1234;
-		ByteBuffer buffer = ByteBuffer.allocate(archiveData.length * Integer.BYTES);
+		ByteBuffer buffer = ByteBuffer.allocate(archiveData.length * 4 + 4);
 		for (int element : archiveData) {
 			hash = (hash << 1) + element;
 			buffer.putInt(element);

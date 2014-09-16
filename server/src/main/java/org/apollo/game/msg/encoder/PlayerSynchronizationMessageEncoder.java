@@ -238,7 +238,7 @@ public final class PlayerSynchronizationMessageEncoder implements MessageEncoder
 	 * @param builder The builder.
 	 */
 	private void putInteractingCharacterBlock(InteractingCharacterBlock block, GamePacketBuilder builder) {
-		builder.put(DataType.SHORT, DataOrder.LITTLE, block.getCharacterIndex());
+		builder.put(DataType.SHORT, DataOrder.LITTLE, block.getInteractingCharacterIndex());
 	}
 
 	/**

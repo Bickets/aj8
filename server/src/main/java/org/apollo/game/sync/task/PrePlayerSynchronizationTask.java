@@ -10,7 +10,7 @@ import org.apollo.game.msg.impl.RegionChangeMessage;
  *
  * @author Graham
  */
-public final class PrePlayerSynchronizationTask implements SynchronizationTask {
+public final class PrePlayerSynchronizationTask extends SynchronizationTask {
 
 	/**
 	 * The player.

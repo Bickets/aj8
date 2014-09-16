@@ -3,7 +3,6 @@ package org.apollo.service;
 /**
  * Represents a service that the server provides.
  *
- * <p>
  * This is a functional interface whose functional method is {@link #start()}
  *
  * @author Graham

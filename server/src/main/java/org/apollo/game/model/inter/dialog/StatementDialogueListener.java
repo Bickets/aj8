@@ -19,7 +19,7 @@ public abstract class StatementDialogueListener implements DialogueListener {
 	public final int execute(Player player) {
 		String[] lines = lines();
 		int length = lines.length;
-		checkArgument(length < 0 || length >= STATEMENT_DIALOGUE_ID.length, "length : " + length + " is out of bounds.");
+		checkArgument(length >= 0 && length < STATEMENT_DIALOGUE_ID.length, "length : " + length + " is out of bounds.");
 		range(0, length).forEach(i -> player.send(new SetInterfaceTextMessage(STATEMENT_DIALOGUE_ID[length - 1] + i + 1, lines[i])));
 		return STATEMENT_DIALOGUE_ID[length - 1];
 	}

@@ -10,7 +10,7 @@ import org.apollo.game.model.Player;
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public interface Table {
+public abstract class Table {
 
 	/**
 	 * Loads a table for the specified {@link Player}.
@@ -19,7 +19,7 @@ public interface Table {
 	 * @throws SQLException If some database access error occurs.
 	 * @throws IOException If some I/O exception occurs.
 	 */
-	void load(Player player) throws SQLException, IOException;
+	public abstract void load(Player player) throws SQLException, IOException;
 
 	/**
 	 * Saves a table for the specified {@link Player}.
@@ -28,6 +28,6 @@ public interface Table {
 	 * @throws SQLException If some database access error occurs.
 	 * @throws IOException If some I/O exception occurs.
 	 */
-	void save(Player player) throws SQLException, IOException;
+	public abstract void save(Player player) throws SQLException, IOException;
 
 }

@@ -13,7 +13,7 @@ import org.apollo.game.model.Player;
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public final class SettingsTable implements Table {
+public final class SettingsTable extends Table {
 
 	/**
 	 * A prepared statement which selects the players settings from the

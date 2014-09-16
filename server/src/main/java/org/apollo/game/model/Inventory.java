@@ -92,7 +92,7 @@ public final class Inventory implements Cloneable {
 	 */
 	public Inventory(int capacity, StackMode mode) {
 		requireNonNull(mode);
-		checkArgument(capacity < 0);
+		checkArgument(capacity >= 0);
 
 		this.capacity = capacity;
 		items = new Item[capacity];
@@ -550,7 +550,7 @@ public final class Inventory implements Cloneable {
 	 * @throws IndexOutOfBoundsException If the slot is out of bounds.
 	 */
 	private void checkBounds(int slot) {
-		checkArgument(slot < 0 || slot >= capacity, "Slot : " + slot + " is out of bounds.");
+		checkArgument(slot >= 0 && slot < capacity, "Slot : " + slot + " is out of bounds.");
 	}
 
 	/**

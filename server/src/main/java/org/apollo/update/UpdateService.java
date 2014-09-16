@@ -1,6 +1,5 @@
 package org.apollo.update;
 
-import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.ExecutorService;
@@ -73,7 +72,7 @@ public final class UpdateService implements Service {
 			for (RequestWorker<?, ?> worker : workers) {
 				service.submit(worker);
 			}
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}

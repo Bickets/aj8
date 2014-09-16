@@ -26,7 +26,7 @@ public final class InteractingCharacterBlock extends SynchronizationBlock {
 	 *
 	 * @return The index of the character.
 	 */
-	public int getCharacterIndex() {
+	public int getInteractingCharacterIndex() {
 		return characterIndex;
 	}
 
