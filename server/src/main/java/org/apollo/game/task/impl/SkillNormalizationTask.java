@@ -28,10 +28,10 @@ public final class SkillNormalizationTask extends Task {
 
 	@Override
 	public void execute() {
-		if (!player.isActive()) {
-			stop();
-		} else {
+		if (player.isActive()) {
 			player.getSkillSet().normalize();
+		} else {
+			stop();
 		}
 	}
 

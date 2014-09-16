@@ -12,7 +12,7 @@ import java.util.concurrent.Phaser;
  *
  * @author Graham
  */
-public final class PhasedSynchronizationTask extends SynchronizationTask {
+public final class PhasedSynchronizationTask implements SynchronizationTask {
 
 	/**
 	 * The phaser.

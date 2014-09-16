@@ -1,5 +1,6 @@
 package org.apollo.net.codec.game;
 
+import static java.util.Objects.requireNonNull;
 import static org.apollo.game.model.def.GamePacketDefinition.VAR_BYTE;
 import static org.apollo.game.model.def.GamePacketDefinition.incomingDefinition;
 import static org.apollo.net.codec.game.GameDecoderState.GAME_LENGTH;
@@ -69,9 +70,7 @@ public final class GamePacketDecoder extends ByteToMessageDecoder {
 				opcode = buffer.readUnsignedByte() - random.nextInt() & 0xFF;
 
 				GamePacketDefinition def = incomingDefinition(opcode);
-				if (def == null) {
-					throw new RuntimeException("Illegal opcode: " + opcode);
-				}
+				requireNonNull(def, "Illegal opcode: " + opcode);
 
 				length = actualLength = def.getLength();
 				type = def.getType();

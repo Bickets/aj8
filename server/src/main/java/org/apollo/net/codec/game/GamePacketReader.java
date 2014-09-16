@@ -1,5 +1,6 @@
 package org.apollo.net.codec.game;
 
+import static com.google.common.base.Preconditions.checkArgument;
 import io.netty.buffer.ByteBuf;
 
 import org.apollo.util.ByteBufUtil;
@@ -47,28 +48,18 @@ public final class GamePacketReader {
 
 	/**
 	 * Switches this builder's mode to the byte access mode.
-	 *
-	 * @throws IllegalStateException if the builder is already in byte access
-	 *             mode.
 	 */
 	public void switchToByteAccess() {
-		if (mode == AccessMode.BYTE_ACCESS) {
-			throw new IllegalStateException("Already in byte access mode");
-		}
+		checkArgument(mode == AccessMode.BYTE_ACCESS, "Already in byte access mode");
 		mode = AccessMode.BYTE_ACCESS;
 		buffer.readerIndex((bitIndex + 7) / 8);
 	}
 
 	/**
 	 * Switches this builder's mode to the bit access mode.
-	 *
-	 * @throws IllegalStateException if the builder is already in bit access
-	 *             mode.
 	 */
 	public void switchToBitAccess() {
-		if (mode == AccessMode.BIT_ACCESS) {
-			throw new IllegalStateException("Already in bit access mode");
-		}
+		checkArgument(mode == AccessMode.BIT_ACCESS, "Already in bit access mode");
 		mode = AccessMode.BIT_ACCESS;
 		bitIndex = buffer.readerIndex() * 8;
 	}
@@ -77,7 +68,6 @@ public final class GamePacketReader {
 	 * Gets a string from the buffer.
 	 *
 	 * @return The string.
-	 * @throws IllegalStateException if this reader is not in byte access mode.
 	 */
 	public String getString() {
 		checkByteAccess();
@@ -88,7 +78,6 @@ public final class GamePacketReader {
 	 * Gets a signed smart from the buffer.
 	 *
 	 * @return The smart.
-	 * @throws IllegalStateException if this reader is not in byte access mode.
 	 */
 	public int getSignedSmart() {
 		checkByteAccess();
@@ -104,7 +93,6 @@ public final class GamePacketReader {
 	 * Gets an unsigned smart from the buffer.
 	 *
 	 * @return The smart.
-	 * @throws IllegalStateException if this reader is not in byte access mode.
 	 */
 	public int getUnsignedSmart() {
 		checkByteAccess();
@@ -121,7 +109,6 @@ public final class GamePacketReader {
 	 *
 	 * @param type The data type.
 	 * @return The value.
-	 * @throws IllegalStateException if this reader is not in byte access mode.
 	 */
 	public long getSigned(DataType type) {
 		return getSigned(type, DataOrder.BIG, DataTransformation.NONE);
@@ -133,8 +120,6 @@ public final class GamePacketReader {
 	 * @param type The data type.
 	 * @param order The byte order.
 	 * @return The value.
-	 * @throws IllegalStateException if this reader is not in byte access mode.
-	 * @throws IllegalArgumentException if the combination is invalid.
 	 */
 	public long getSigned(DataType type, DataOrder order) {
 		return getSigned(type, order, DataTransformation.NONE);
@@ -147,8 +132,6 @@ public final class GamePacketReader {
 	 * @param type The data type.
 	 * @param transformation The data transformation.
 	 * @return The value.
-	 * @throws IllegalStateException if this reader is not in byte access mode.
-	 * @throws IllegalArgumentException if the combination is invalid.
 	 */
 	public long getSigned(DataType type, DataTransformation transformation) {
 		return getSigned(type, DataOrder.BIG, transformation);
@@ -162,8 +145,6 @@ public final class GamePacketReader {
 	 * @param order The byte order.
 	 * @param transformation The data transformation.
 	 * @return The value.
-	 * @throws IllegalStateException if this reader is not in byte access mode.
-	 * @throws IllegalArgumentException if the combination is invalid.
 	 */
 	public long getSigned(DataType type, DataOrder order, DataTransformation transformation) {
 		long longValue = get(type, order, transformation);
@@ -181,7 +162,6 @@ public final class GamePacketReader {
 	 *
 	 * @param type The data type.
 	 * @return The value.
-	 * @throws IllegalStateException if this reader is not in byte access mode.
 	 */
 	public long getUnsigned(DataType type) {
 		return getUnsigned(type, DataOrder.BIG, DataTransformation.NONE);
@@ -193,8 +173,6 @@ public final class GamePacketReader {
 	 * @param type The data type.
 	 * @param order The byte order.
 	 * @return The value.
-	 * @throws IllegalStateException if this reader is not in byte access mode.
-	 * @throws IllegalArgumentException if the combination is invalid.
 	 */
 	public long getUnsigned(DataType type, DataOrder order) {
 		return getUnsigned(type, order, DataTransformation.NONE);
@@ -207,8 +185,6 @@ public final class GamePacketReader {
 	 * @param type The data type.
 	 * @param transformation The data transformation.
 	 * @return The value.
-	 * @throws IllegalStateException if this reader is not in byte access mode.
-	 * @throws IllegalArgumentException if the combination is invalid.
 	 */
 	public long getUnsigned(DataType type, DataTransformation transformation) {
 		return getUnsigned(type, DataOrder.BIG, transformation);
@@ -222,8 +198,6 @@ public final class GamePacketReader {
 	 * @param order The byte order.
 	 * @param transformation The data transformation.
 	 * @return The value.
-	 * @throws IllegalStateException if this reader is not in byte access mode.
-	 * @throws IllegalArgumentException if the combination is invalid.
 	 */
 	public long getUnsigned(DataType type, DataOrder order, DataTransformation transformation) {
 		long longValue = get(type, order, transformation);
@@ -241,7 +215,6 @@ public final class GamePacketReader {
 	 * @param order The data order.
 	 * @param transformation The data transformation.
 	 * @return The value.
-	 * @throws IllegalStateException if this reader is not in byte access mode.
 	 * @throws IllegalArgumentException if the combination is invalid.
 	 */
 	private long get(DataType type, DataOrder order, DataTransformation transformation) {
@@ -312,7 +285,6 @@ public final class GamePacketReader {
 	 * Gets bytes.
 	 *
 	 * @param bytes The target byte array.
-	 * @throws IllegalStateException if this reader is not in byte access mode.
 	 */
 	public void getBytes(byte[] bytes) {
 		checkByteAccess();
@@ -342,7 +314,6 @@ public final class GamePacketReader {
 	 * Gets bytes in reverse.
 	 *
 	 * @param bytes The target byte array.
-	 * @throws IllegalStateException if this reader is not in byte access mode.
 	 */
 	public void getBytesReverse(byte[] bytes) {
 		checkByteAccess();
@@ -356,7 +327,6 @@ public final class GamePacketReader {
 	 *
 	 * @param transformation The transformation.
 	 * @param bytes The target byte array.
-	 * @throws IllegalStateException if this reader is not in byte access mode.
 	 */
 	public void getBytesReverse(DataTransformation transformation, byte[] bytes) {
 		if (transformation == DataTransformation.NONE) {
@@ -369,32 +339,23 @@ public final class GamePacketReader {
 	}
 
 	/**
-	 * Checks that this reader is in the byte access mode.
-	 *
-	 * @throws IllegalStateException if the reader is not in byte access mode.
+	 * Checks that this builder is in the byte access mode.
 	 */
 	private void checkByteAccess() {
-		if (mode != AccessMode.BYTE_ACCESS) {
-			throw new IllegalStateException("For byte-based calls to work, the mode must be byte access");
-		}
+		checkArgument(mode != AccessMode.BYTE_ACCESS, "For byte-based calls to work, the mode must be byte access");
 	}
 
 	/**
-	 * Checks that this reader is in the bit access mode.
-	 *
-	 * @throws IllegalStateException if the reader is not in bit access mode.
+	 * Checks that this builder is in the bit access mode.
 	 */
 	private void checkBitAccess() {
-		if (mode != AccessMode.BIT_ACCESS) {
-			throw new IllegalStateException("For bit-based calls to work, the mode must be bit access");
-		}
+		checkArgument(mode != AccessMode.BIT_ACCESS, "For bit-based calls to work, the mode must be bit access");
 	}
 
 	/**
 	 * Gets a bit from the buffer.
 	 *
 	 * @return The value.
-	 * @throws IllegalStateException if the reader is not in bit access mode.
 	 */
 	public int getBit() {
 		return getBits(1);
@@ -403,32 +364,27 @@ public final class GamePacketReader {
 	/**
 	 * Gets {@code numBits} from the buffer.
 	 *
-	 * @param numBits The number of bits.
+	 * @param amount The number of bits.
 	 * @return The value.
-	 * @throws IllegalStateException if the reader is not in bit access mode.
-	 * @throws IllegalArgumentException if the number of bits is not between 1
-	 *             and 31 inclusive.
 	 */
-	public int getBits(int numBits) {
-		if (numBits < 0 || numBits > 32) {
-			throw new IllegalArgumentException("Number of bits must be between 1 and 32 inclusive");
-		}
+	public int getBits(int amount) {
+		checkArgument(amount < 0 || amount > 32, "Amount of bits must be between 1 and 32 inclusive.");
 
 		checkBitAccess();
 
 		int bytePos = bitIndex >> 3;
 		int bitOffset = 8 - (bitIndex & 7);
 		int value = 0;
-		bitIndex += numBits;
+		bitIndex += amount;
 
-		for (; numBits > bitOffset; bitOffset = 8) {
-			value += (buffer.getByte(bytePos++) & DataConstants.BIT_MASK[bitOffset]) << numBits - bitOffset;
-			numBits -= bitOffset;
+		for (; amount > bitOffset; bitOffset = 8) {
+			value += (buffer.getByte(bytePos++) & DataConstants.BIT_MASK[bitOffset]) << amount - bitOffset;
+			amount -= bitOffset;
 		}
-		if (numBits == bitOffset) {
+		if (amount == bitOffset) {
 			value += buffer.getByte(bytePos) & DataConstants.BIT_MASK[bitOffset];
 		} else {
-			value += buffer.getByte(bytePos) >> bitOffset - numBits & DataConstants.BIT_MASK[numBits];
+			value += buffer.getByte(bytePos) >> bitOffset - amount & DataConstants.BIT_MASK[amount];
 		}
 		return value;
 	}

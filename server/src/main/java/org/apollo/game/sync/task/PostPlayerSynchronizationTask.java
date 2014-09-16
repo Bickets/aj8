@@ -8,7 +8,7 @@ import org.apollo.game.model.Player;
  *
  * @author Graham
  */
-public final class PostPlayerSynchronizationTask extends SynchronizationTask {
+public final class PostPlayerSynchronizationTask implements SynchronizationTask {
 
 	/**
 	 * The player.

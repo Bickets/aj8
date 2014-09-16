@@ -38,14 +38,11 @@ public final class HttpChannelHandler extends ChannelInitializer<SocketChannel> 
 	protected void initChannel(SocketChannel channel) {
 		ChannelPipeline pipeline = channel.pipeline();
 
-		// decoders
 		pipeline.addLast("decoder", new HttpRequestDecoder());
 		pipeline.addLast("chunker", new HttpObjectAggregator(MAX_REQUEST_LENGTH));
 
-		// encoders
 		pipeline.addLast("encoder", new HttpResponseEncoder());
 
-		// handler
 		pipeline.addLast("timeout", new IdleStateHandler(NetworkConstants.IDLE_TIME, 0, 0));
 		pipeline.addLast("handler", handler);
 	}

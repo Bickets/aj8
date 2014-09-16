@@ -25,7 +25,7 @@ import org.apollo.game.sync.seg.TeleportSegment;
  *
  * @author Graham
  */
-public final class PlayerSynchronizationTask extends SynchronizationTask {
+public final class PlayerSynchronizationTask implements SynchronizationTask {
 
 	/**
 	 * The maximum number of players to load per cycle. This prevents the update

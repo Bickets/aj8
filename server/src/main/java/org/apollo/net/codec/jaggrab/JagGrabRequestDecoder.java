@@ -1,5 +1,7 @@
 package org.apollo.net.codec.jaggrab;
 
+import static com.google.common.base.Preconditions.checkArgument;
+import static org.apollo.net.codec.jaggrab.JagGrabRequest.JAGGRAB_ROOT;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.MessageToMessageDecoder;
 
@@ -16,9 +18,7 @@ public final class JagGrabRequestDecoder extends MessageToMessageDecoder<String>
 
 	@Override
 	protected void decode(ChannelHandlerContext ctx, String msg, List<Object> out) {
-		if (!msg.startsWith(JagGrabRequest.JAGGRAB_ROOT)) {
-			throw new RuntimeException("invalid jaggrab request");
-		}
+		checkArgument(!msg.startsWith(JAGGRAB_ROOT), "Request : " + msg + " is not valid.");
 
 		StringTokenizer tokenizer = new StringTokenizer(msg);
 		while (tokenizer.hasMoreTokens()) {

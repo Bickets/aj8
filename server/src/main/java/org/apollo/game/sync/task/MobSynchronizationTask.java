@@ -20,7 +20,7 @@ import org.apollo.game.sync.seg.SynchronizationSegment;
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public final class MobSynchronizationTask extends SynchronizationTask {
+public final class MobSynchronizationTask implements SynchronizationTask {
 
 	/**
 	 * The maximum number of mobs to load per cycle. This prevents the update

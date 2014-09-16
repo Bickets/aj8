@@ -15,7 +15,7 @@ import org.apollo.game.model.SkillSet;
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public final class SkillsTable extends Table {
+public final class SkillsTable implements Table {
 
 	/**
 	 * A prepared statement which selects the players skills from the database.

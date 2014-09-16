@@ -15,7 +15,7 @@ import org.apollo.game.model.Player;
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public final class AppearanceTable extends Table {
+public final class AppearanceTable implements Table {
 
 	/**
 	 * A prepared statement which selects the players gender from the database.

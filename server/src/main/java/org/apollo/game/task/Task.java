@@ -1,5 +1,7 @@
 package org.apollo.game.task;
 
+import static com.google.common.base.Preconditions.checkArgument;
+
 /**
  * A game-related task that is scheduled to run in the future.
  *
@@ -53,9 +55,7 @@ public abstract class Task {
 	 *             zero.
 	 */
 	public final void setDelay(int delay) {
-		if (delay < 0) {
-			throw new IllegalArgumentException();
-		}
+		checkArgument(delay < 0, "Delay : " + delay + " cannot be negative.");
 		this.delay = delay;
 	}
 
