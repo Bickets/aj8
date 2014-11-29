@@ -11,7 +11,6 @@ import java.util.concurrent.BlockingQueue;
 import org.apollo.game.GameService;
 import org.apollo.game.model.Player;
 import org.apollo.game.msg.Message;
-import org.apollo.game.msg.MessageTranslator;
 import org.apollo.game.msg.impl.LogoutMessage;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -34,11 +33,6 @@ public final class GameSession extends Session {
 	private final Logger logger = LoggerFactory.getLogger(GameSession.class);
 
 	/**
-	 * The message translator.
-	 */
-	private final MessageTranslator messageTranslator;
-
-	/**
 	 * The queue of pending {@link Message}s.
 	 */
 	private final BlockingQueue<Message> messageQueue = new ArrayBlockingQueue<>(MESSAGES_PER_PULSE);
@@ -54,16 +48,14 @@ public final class GameSession extends Session {
 	private final GameService gameService;
 
 	/**
-	 * Creates a login session for the specified channel context.
+	 * Creates a login session for the specified channel handler context.
 	 *
 	 * @param ctx This sessions channels context.
-	 * @param messageTranslator The message translator.
 	 * @param player The player.
 	 * @param gameService The game service.
 	 */
-	public GameSession(ChannelHandlerContext ctx, MessageTranslator messageTranslator, Player player, GameService gameService) {
+	public GameSession(ChannelHandlerContext ctx, Player player, GameService gameService) {
 		super(ctx);
-		this.messageTranslator = messageTranslator;
 		this.player = player;
 		this.gameService = gameService;
 	}
@@ -72,7 +64,7 @@ public final class GameSession extends Session {
 	public void messageReceived(Object msg) {
 		Message message = (Message) msg;
 		if (messageQueue.size() >= MESSAGES_PER_PULSE) {
-			logger.error("Too many messages in queue for game session, dropping...");
+			logger.trace("Too many messages in queue for game session, dropping...");
 		} else {
 			messageQueue.add(message);
 		}
@@ -97,8 +89,12 @@ public final class GameSession extends Session {
 	 * Handles pending messages for this session.
 	 */
 	public void handlePendingMessages() {
-		for (Message message; (message = messageQueue.poll()) != null;) {
-			messageTranslator.handle(player, message);
+		for (;;) {
+			Message message = messageQueue.poll();
+			if (message == null) {
+				break;
+			}
+			gameService.getMessageTranslator().handle(player, message);
 		}
 	}
 

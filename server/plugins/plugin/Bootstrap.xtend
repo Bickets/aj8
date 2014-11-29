@@ -13,6 +13,7 @@ import org.apollo.game.model.World
 import plugin.mobs.MobSpawnEvent
 
 import static java.nio.file.FileVisitResult.*
+import org.apollo.ServerContext
 
 class Bootstrap {
 
@@ -73,9 +74,9 @@ class Bootstrap {
 		world.post(new MobSpawnEvent(world))
 	}
 
-	new(World world) {
-		world.init
-		world.spawnMobs
+	new(ServerContext ctx) {
+		init(ctx.world)
+		spawnMobs(ctx.world)
 	}
 
 }

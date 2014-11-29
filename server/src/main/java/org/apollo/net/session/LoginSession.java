@@ -11,13 +11,10 @@ import java.util.Arrays;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import org.apollo.fs.FileSystem;
 import org.apollo.game.GameService;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.World.RegistrationStatus;
-import org.apollo.game.msg.MessageTranslator;
 import org.apollo.io.player.PlayerSerializerResponse;
-import org.apollo.io.player.PlayerSerializerWorker;
 import org.apollo.net.NetworkConstants;
 import org.apollo.net.codec.game.GameMessageDecoder;
 import org.apollo.net.codec.game.GameMessageEncoder;
@@ -46,39 +43,18 @@ public final class LoginSession extends Session {
 	public static final int VERSION = 317;
 
 	/**
-	 * The message translator.
-	 */
-	private final MessageTranslator messageTranslator;
-
-	/**
-	 * The file system.
-	 */
-	private final FileSystem fileSystem;
-
-	/**
-	 * The player synchronizer.
-	 */
-	private final PlayerSerializerWorker playerSerializer;
-
-	/**
 	 * The game service.
 	 */
 	private final GameService gameService;
 
 	/**
-	 * Creates a login session for the specified channel.
+	 * Creates a login session for the specified channel handler context.
 	 *
 	 * @param ctx The channels context.
-	 * @param messageTranslator The message translator.
-	 * @param fileSystem The file system
-	 * @param playerSerializer The player serializer.
 	 * @param gameService The game service.
 	 */
-	public LoginSession(ChannelHandlerContext ctx, MessageTranslator messageTranslator, FileSystem fileSystem, PlayerSerializerWorker playerSerializer, GameService gameService) {
+	public LoginSession(ChannelHandlerContext ctx, GameService gameService) {
 		super(ctx);
-		this.messageTranslator = messageTranslator;
-		this.fileSystem = fileSystem;
-		this.playerSerializer = playerSerializer;
 		this.gameService = gameService;
 	}
 
@@ -105,7 +81,7 @@ public final class LoginSession extends Session {
 		}
 
 		if (code == LoginConstants.STATUS_OK) {
-			playerSerializer.submitLoadRequest(this, request, fileSystem);
+			gameService.getSerializerWorker().submitLoadRequest(this, request, gameService.getFileSystem());
 		} else {
 			handlePlayerLoaderResponse(request, new PlayerSerializerResponse(code));
 		}
@@ -125,7 +101,7 @@ public final class LoginSession extends Session {
 			return true;
 		}
 
-		ByteBuffer buffer = fileSystem.getArchiveHashes();
+		ByteBuffer buffer = gameService.getFileSystem().getArchiveHashes();
 
 		int[] clientCrcs = request.getArchiveCrcs();
 		int[] serverCrcs = new int[clientCrcs.length];
@@ -167,37 +143,38 @@ public final class LoginSession extends Session {
 		int status = response.getStatus();
 		Player player = response.getPlayer();
 		int rights = player == null ? 0 : player.getPrivilegeLevel().toInteger();
-		boolean log = player != null && player.isFlagged();
+		boolean flagged = player != null && player.isFlagged();
 
 		if (player != null) {
-			GameSession session = new GameSession(ctx(), messageTranslator, player, gameService);
+			GameSession session = new GameSession(ctx(), player, gameService);
 			player.setSession(session, request.isReconnecting());
 
 			RegistrationStatus registrationStatus = gameService.registerPlayer(player);
 
 			if (registrationStatus != RegistrationStatus.OK) {
-				player = null;
 				if (registrationStatus == RegistrationStatus.ALREADY_ONLINE) {
 					status = LoginConstants.STATUS_ACCOUNT_ONLINE;
 				} else {
 					status = LoginConstants.STATUS_SERVER_FULL;
 				}
+
+				player = null;
 				rights = 0;
-				log = false;
+				flagged = false;
 			}
 		}
 
 		Channel channel = ctx().channel();
-		ChannelFuture future = channel.writeAndFlush(new LoginResponse(status, rights, log));
+		ChannelFuture future = channel.writeAndFlush(new LoginResponse(status, rights, flagged));
 
 		if (player != null) {
 			IsaacRandomPair randomPair = request.getRandomPair();
 
-			channel.pipeline().addFirst("messageEncoder", new GameMessageEncoder(messageTranslator));
+			channel.pipeline().addFirst("messageEncoder", new GameMessageEncoder(gameService.getMessageTranslator()));
 			channel.pipeline().addBefore("messageEncoder", "gameEncoder", new GamePacketEncoder(randomPair.getEncodingRandom()));
 
 			channel.pipeline().addBefore("handler", "gameDecoder", new GamePacketDecoder(randomPair.getDecodingRandom()));
-			channel.pipeline().addAfter("gameDecoder", "messageDecoder", new GameMessageDecoder(messageTranslator));
+			channel.pipeline().addAfter("gameDecoder", "messageDecoder", new GameMessageDecoder(gameService.getMessageTranslator()));
 
 			channel.pipeline().remove("loginDecoder");
 			channel.pipeline().remove("loginEncoder");

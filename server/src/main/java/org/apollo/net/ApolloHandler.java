@@ -8,10 +8,8 @@ import io.netty.handler.codec.http.HttpRequest;
 import io.netty.util.Attribute;
 import io.netty.util.ReferenceCountUtil;
 
-import org.apollo.fs.FileSystem;
+import org.apollo.ServerContext;
 import org.apollo.game.GameService;
-import org.apollo.game.msg.MessageTranslator;
-import org.apollo.io.player.PlayerSerializerWorker;
 import org.apollo.net.codec.handshake.HandshakeConstants;
 import org.apollo.net.codec.handshake.HandshakeMessage;
 import org.apollo.net.codec.jaggrab.JagGrabRequest;
@@ -38,45 +36,18 @@ public final class ApolloHandler extends ChannelInboundHandlerAdapter {
 	private final Logger logger = LoggerFactory.getLogger(ApolloHandler.class);
 
 	/**
-	 * The message translator.
+	 * The context of this server.
 	 */
-	private final MessageTranslator messageTranslator;
+	private final ServerContext context;
 
 	/**
-	 * The file system.
+	 * Constructs a new {@link ApolloHandler} with the specified
+	 * {@link ServerContext}.
+	 * 
+	 * @param context The context of this server.
 	 */
-	private final FileSystem fileSystem;
-
-	/**
-	 * The player serializer.
-	 */
-	private final PlayerSerializerWorker playerSerializer;
-
-	/**
-	 * The game service.
-	 */
-	private final GameService gameService;
-
-	/**
-	 * The update service.
-	 */
-	private final UpdateService updateService;
-
-	/**
-	 * Creates the Apollo event handler.
-	 *
-	 * @param messageTranslator The message translator.
-	 * @param fileSystem The file system
-	 * @param playerSerializer The player serializer.
-	 * @param gameService The game service.
-	 * @param updateService The update service.
-	 */
-	public ApolloHandler(MessageTranslator messageTranslator, FileSystem fileSystem, PlayerSerializerWorker playerSerializer, GameService gameService, UpdateService updateService) {
-		this.messageTranslator = messageTranslator;
-		this.fileSystem = fileSystem;
-		this.playerSerializer = playerSerializer;
-		this.gameService = gameService;
-		this.updateService = updateService;
+	public ApolloHandler(ServerContext context) {
+		this.context = context;
 	}
 
 	@Override
@@ -96,7 +67,7 @@ public final class ApolloHandler extends ChannelInboundHandlerAdapter {
 			Session session = attribute.get();
 
 			if (msg instanceof HttpRequest || msg instanceof JagGrabRequest) {
-				session = new UpdateSession(ctx, updateService);
+				session = new UpdateSession(ctx, context.getService(UpdateService.class));
 			}
 
 			if (session != null) {
@@ -107,10 +78,10 @@ public final class ApolloHandler extends ChannelInboundHandlerAdapter {
 			HandshakeMessage handshakeMessage = (HandshakeMessage) msg;
 			switch (handshakeMessage.getServiceId()) {
 			case HandshakeConstants.SERVICE_GAME:
-				attribute.set(new LoginSession(ctx, messageTranslator, fileSystem, playerSerializer, gameService));
+				attribute.set(new LoginSession(ctx, context.getService(GameService.class)));
 				break;
 			case HandshakeConstants.SERVICE_UPDATE:
-				attribute.set(new UpdateSession(ctx, updateService));
+				attribute.set(new UpdateSession(ctx, context.getService(UpdateService.class)));
 				break;
 			default:
 				throw new UnsupportedOperationException("Unexpected service id: " + handshakeMessage.getServiceId());

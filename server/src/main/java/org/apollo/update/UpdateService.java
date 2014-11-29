@@ -5,7 +5,6 @@ import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
-import org.apollo.fs.FileSystem;
 import org.apollo.service.Service;
 
 /**
@@ -13,7 +12,7 @@ import org.apollo.service.Service;
  *
  * @author Graham
  */
-public final class UpdateService implements Service {
+public final class UpdateService extends Service {
 
 	/**
 	 * The number of threads per request type.
@@ -58,20 +57,14 @@ public final class UpdateService implements Service {
 	}
 
 	@Override
-	public void start() {
-		try {
-			for (int i = 0; i < THREADS_PER_REQUEST_TYPE; i++) {
-				workers.add(new JagGrabRequestWorker(dispatcher, FileSystem.create("data/fs")));
-				workers.add(new OnDemandRequestWorker(dispatcher, FileSystem.create("data/fs")));
-				workers.add(new HttpRequestWorker(dispatcher, FileSystem.create("data/fs")));
-			}
-
-			for (RequestWorker<?, ?> worker : workers) {
-				service.submit(worker);
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
+	public void init() {
+		for (int i = 0; i < THREADS_PER_REQUEST_TYPE; i++) {
+			workers.add(new JagGrabRequestWorker(dispatcher, getFileSystem()));
+			workers.add(new OnDemandRequestWorker(dispatcher, getFileSystem()));
+			workers.add(new HttpRequestWorker(dispatcher, getFileSystem()));
 		}
+
+		workers.forEach(service::submit);
 	}
 
 }

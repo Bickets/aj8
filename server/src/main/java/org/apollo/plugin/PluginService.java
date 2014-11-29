@@ -3,7 +3,7 @@ package org.apollo.plugin;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 
-import org.apollo.game.model.World;
+import org.apollo.ServerContext;
 import org.apollo.service.Service;
 
 /**
@@ -15,28 +15,14 @@ import org.apollo.service.Service;
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public final class PluginService implements Service {
-
-	/**
-	 * The world.
-	 */
-	private final World world;
-
-	/**
-	 * Constructs a new {@link PluginService}.
-	 *
-	 * @param world The world.
-	 */
-	public PluginService(World world) {
-		this.world = world;
-	}
+public final class PluginService extends Service {
 
 	@Override
-	public void start() {
+	public void init() {
 		try {
 			Class<?> clazz = Class.forName("plugin.Bootstrap");
-			Constructor<?> bootstrap = clazz.getConstructor(World.class);
-			bootstrap.newInstance(world);
+			Constructor<?> bootstrap = clazz.getConstructor(ServerContext.class);
+			bootstrap.newInstance(getContext());
 		} catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
 			e.printStackTrace();
 		}
