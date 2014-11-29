@@ -113,7 +113,7 @@ public final class SkillSet {
 	 * @return The total level.
 	 */
 	public int getTotalLevel() {
-		return of(skills).map(skill -> skill.getMaximumLevel()).reduce(0, (total, current) -> total + current);
+		return of(skills).mapToInt(skill -> skill.getMaximumLevel()).sum();
 	}
 
 	/**

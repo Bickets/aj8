@@ -37,6 +37,7 @@ public abstract class ItemStatementDialogueListener implements DialogueListener 
 	public final int send(Player player) {
 		String[] lines = getLines();
 		int length = lines.length;
+
 		int dialogueId = MOB_DIALOGUE_ID[length - 1];
 
 		player.send(new InterfaceItemModelMessage(dialogueId - 2, item, getModelZoom()));

@@ -41,6 +41,7 @@ public final class Item {
 		if (amount < 0) {
 			throw new IllegalArgumentException("Amount must be positive");
 		}
+
 		this.id = id;
 		this.amount = amount;
 	}
