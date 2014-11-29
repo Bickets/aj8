@@ -30,7 +30,7 @@ public final class GameService implements Service {
 	 * down.
 	 */
 	private static final int UNREGISTERS_PER_CYCLE = 50;
-	
+
 	/**
 	 * The delay between consecutive pulses, in milliseconds.
 	 */

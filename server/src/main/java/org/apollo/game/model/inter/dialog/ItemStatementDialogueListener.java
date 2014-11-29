@@ -1,9 +1,8 @@
 package org.apollo.game.model.inter.dialog;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static java.util.Objects.requireNonNull;
-import static java.util.stream.IntStream.range;
 import static org.apollo.game.model.inter.dialog.DialogueConstants.MOB_DIALOGUE_ID;
+
+import java.util.Objects;
 
 import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
@@ -31,23 +30,28 @@ public abstract class ItemStatementDialogueListener implements DialogueListener 
 	 * @throws NullPointerException If the specified item is null.
 	 */
 	public ItemStatementDialogueListener(Item item) {
-		this.item = requireNonNull(item);
+		this.item = Objects.requireNonNull(item);
 	}
 
 	@Override
-	public final int execute(Player player) {
-		String[] lines = requireNonNull(lines());
+	public final int send(Player player) {
+		String[] lines = getLines();
 		int length = lines.length;
-		checkArgument(length < 0 || length >= MOB_DIALOGUE_ID.length, "length : " + length + " is out of bounds.");
-
 		int dialogueId = MOB_DIALOGUE_ID[length - 1];
-		int headChildId = dialogueId - 2;
-		player.send(new InterfaceItemModelMessage(headChildId, item, getModelZoom()));
+
+		player.send(new InterfaceItemModelMessage(dialogueId - 2, item, getModelZoom()));
 		player.send(new SetInterfaceTextMessage(dialogueId - 1, getTitle()));
 
-		range(0, length).forEach(i -> player.send(new SetInterfaceTextMessage(MOB_DIALOGUE_ID[length - 1] + i, lines[i])));
+		for (int index = 0; index < length; index++) {
+			player.send(new SetInterfaceTextMessage(MOB_DIALOGUE_ID[length - 1] + index, lines[index]));
+		}
 
 		return dialogueId -= 3;
+	}
+
+	@Override
+	public final int getMaximumEntries() {
+		return MOB_DIALOGUE_ID.length;
 	}
 
 	/**

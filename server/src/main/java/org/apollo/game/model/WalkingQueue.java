@@ -1,7 +1,5 @@
 package org.apollo.game.model;
 
-import static com.google.common.base.MoreObjects.toStringHelper;
-
 import java.util.ArrayDeque;
 import java.util.Deque;
 import java.util.Queue;
@@ -24,7 +22,7 @@ public final class WalkingQueue {
 	 *
 	 * @author Graham
 	 */
-	private final class Point {
+	private static final class Point {
 
 		/**
 		 * The point's position.
@@ -48,8 +46,20 @@ public final class WalkingQueue {
 		}
 
 		@Override
-		public String toString() {
-			return toStringHelper(this).add("position", position).add("direction", direction).toString();
+		public int hashCode() {
+			return position.hashCode() ^ direction.toInteger();
+		}
+
+		@Override
+		public boolean equals(Object obj) {
+			if (this == obj) {
+				return true;
+			}
+			if (!(obj instanceof Point)) {
+				return false;
+			}
+			Point other = (Point) obj;
+			return position.equals(other.position) && direction == other.direction;
 		}
 
 	}

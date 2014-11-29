@@ -64,7 +64,6 @@ import com.runescape.scene.tile.WallDecoration;
 import com.runescape.scene.util.TraversalMap;
 import com.runescape.sound.Track;
 import com.runescape.sound.TrackPlayer;
-import com.runescape.tools.ModelUtilities;
 import com.runescape.util.MouseRecorder;
 import com.runescape.util.PacketConstants;
 import com.runescape.util.Signlink;
@@ -6874,7 +6873,6 @@ public class Game extends GameShell {
 				}
 			}
 			onDemandRequester.preloadRegions(Game.membersWorld);
-			ModelUtilities.loadModels();
 			if (!Game.lowMemory) {
 				fileRequestCount = onDemandRequester.fileCount(2);
 				for (int id = 1; id < fileRequestCount; id++) {

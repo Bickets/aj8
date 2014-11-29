@@ -1,7 +1,7 @@
 package org.apollo.update;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.HashSet;
+import java.util.Set;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -31,9 +31,9 @@ public final class UpdateService implements Service {
 	private final ExecutorService service;
 
 	/**
-	 * A list of request workers.
+	 * A {@link Set} of request workers.
 	 */
-	private final List<RequestWorker<?, ?>> workers = new ArrayList<RequestWorker<?, ?>>();
+	private final Set<RequestWorker<?, ?>> workers = new HashSet<>();
 
 	/**
 	 * The update dispatcher.
@@ -57,9 +57,6 @@ public final class UpdateService implements Service {
 		return dispatcher;
 	}
 
-	/**
-	 * Starts the threads in the pool.
-	 */
 	@Override
 	public void start() {
 		try {
@@ -75,17 +72,6 @@ public final class UpdateService implements Service {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-	}
-
-	/**
-	 * Stops the threads in the pool.
-	 */
-	public void stop() {
-		for (RequestWorker<?, ?> worker : workers) {
-			worker.stop();
-		}
-
-		service.shutdownNow();
 	}
 
 }

@@ -1,7 +1,6 @@
 package org.apollo.game.model;
 
-import static com.google.common.base.MoreObjects.toStringHelper;
-import static com.google.common.base.Preconditions.checkArgument;
+import io.netty.util.internal.StringUtil;
 
 /**
  * Represents a position in the world.
@@ -9,11 +8,6 @@ import static com.google.common.base.Preconditions.checkArgument;
  * @author Graham
  */
 public final class Position {
-
-	/**
-	 * The number of height levels.
-	 */
-	public static final int MAXIMUM_HEIGHT_LEVELS = 4;
 
 	/**
 	 * The maximum distance players/mobs can 'see'.
@@ -53,8 +47,6 @@ public final class Position {
 	 * @param height The height.
 	 */
 	public Position(int x, int y, int height) {
-		checkArgument(height < 0 || height >= MAXIMUM_HEIGHT_LEVELS, "Height : " + height + " is out of bounds.");
-
 		this.x = x;
 		this.y = y;
 		this.height = height;
@@ -181,11 +173,6 @@ public final class Position {
 		return getTopLeftRegionY() * 8;
 	}
 
-	@Override
-	public int hashCode() {
-		return height << 30 & 0xC0000000 | y << 15 & 0x3FFF8000 | x & 0x7FFF;
-	}
-
 	/**
 	 * Gets the distance between this position and another position. Only X and
 	 * Y are considered (i.e. 2 dimensions).
@@ -229,28 +216,21 @@ public final class Position {
 		if (this == obj) {
 			return true;
 		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
+		if (!(obj instanceof Position)) {
 			return false;
 		}
 		Position other = (Position) obj;
-		if (height != other.height) {
-			return false;
-		}
-		if (x != other.x) {
-			return false;
-		}
-		if (y != other.y) {
-			return false;
-		}
-		return true;
+		return height == other.height && y == other.y && x == other.x;
+	}
+
+	@Override
+	public int hashCode() {
+		return height << 30 & 0xC0000000 | y << 15 & 0x3FFF8000 | x & 0x7FFF;
 	}
 
 	@Override
 	public String toString() {
-		return toStringHelper(this).add("x", x).add("y", y).add("height", height).toString();
+		return StringUtil.simpleClassName(this) + " [x=" + x + ", y=" + y + ", height=" + height + "]";
 	}
 
 }

@@ -21,6 +21,8 @@ import org.apollo.update.resource.HypertextResourceProvider;
 import org.apollo.update.resource.ResourceProvider;
 import org.apollo.update.resource.VirtualResourceProvider;
 
+import com.google.common.base.Charsets;
+
 /**
  * A worker which services HTTP requests.
  *
@@ -41,7 +43,7 @@ public final class HttpRequestWorker extends RequestWorker<HttpRequest, Resource
 	/**
 	 * The default character set.
 	 */
-	private static final Charset CHARACTER_SET = Charset.forName("ISO-8859-1");
+	private static final Charset CHARACTER_SET = Charsets.ISO_8859_1;
 
 	/**
 	 * Creates the HTTP request worker.

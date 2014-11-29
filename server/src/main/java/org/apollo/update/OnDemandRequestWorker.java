@@ -5,7 +5,6 @@ import io.netty.buffer.Unpooled;
 import io.netty.channel.Channel;
 
 import java.io.IOException;
-import java.nio.ByteBuffer;
 
 import org.apollo.fs.FileSystem;
 import org.apollo.net.codec.update.OnDemandRequest;
@@ -40,20 +39,12 @@ public final class OnDemandRequestWorker extends RequestWorker<OnDemandRequest, 
 
 	@Override
 	protected void service(FileSystem fs, Channel channel, OnDemandRequest request) throws IOException {
-		ByteBuffer buf = fs.getFile(request.getIndex(), request.getId());
-		int length = buf.remaining();
+		ByteBuf buf = Unpooled.wrappedBuffer(fs.getFile(request.getIndex(), request.getId()));
+		int length = buf.readableBytes();
 
-		for (int chunk = 0; buf.remaining() > 0; chunk++) {
-			int chunkSize = buf.remaining();
-			if (chunkSize > CHUNK_LENGTH) {
-				chunkSize = CHUNK_LENGTH;
-			}
-
-			byte[] tmp = new byte[chunkSize];
-			buf.get(tmp, 0, tmp.length);
-			ByteBuf chunkData = Unpooled.wrappedBuffer(tmp, 0, chunkSize);
-
-			OnDemandResponse response = new OnDemandResponse(request.getIndex(), request.getId(), length, chunk, chunkData);
+		for (int chunk = 0; buf.readableBytes() > 0; chunk++) {
+			int chunkSize = Math.min(buf.readableBytes(), CHUNK_LENGTH);
+			OnDemandResponse response = new OnDemandResponse(request.getIndex(), request.getId(), length, chunk, buf.readBytes(chunkSize));
 			channel.writeAndFlush(response);
 		}
 	}

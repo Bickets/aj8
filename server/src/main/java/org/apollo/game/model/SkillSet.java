@@ -1,6 +1,5 @@
 package org.apollo.game.model;
 
-import static com.google.common.base.Preconditions.checkArgument;
 import static java.util.Arrays.setAll;
 import static java.util.stream.Stream.of;
 
@@ -220,7 +219,9 @@ public final class SkillSet {
 	 * @throws IndexOutOfBoundsException if the id is out of bounds.
 	 */
 	private void checkBounds(int id) {
-		checkArgument(id < 0 || id >= skills.length, "Skill id : " + id + " is out of bounds.");
+		if (id < 0 || id >= skills.length) {
+			throw new IndexOutOfBoundsException("Skill id: " + id + " is out of bounds");
+		}
 	}
 
 	/**

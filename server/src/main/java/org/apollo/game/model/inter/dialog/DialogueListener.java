@@ -3,6 +3,7 @@ package org.apollo.game.model.inter.dialog;
 import org.apollo.game.model.Mob;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.inter.InterfaceListener;
+import org.apollo.game.msg.Message;
 
 /**
  * An {@link InterfaceListener} which listens for dialogue events.
@@ -12,19 +13,32 @@ import org.apollo.game.model.inter.InterfaceListener;
 public interface DialogueListener extends InterfaceListener {
 
 	/**
-	 * Returns the lines of dialogue this dialogue contains. TODO: Perhaps
-	 * create a specific object for containing dialogue information?
+	 * Returns the lines of dialogue this dialogue contains.
 	 */
-	String[] lines();
+	String[] getLines();
 
 	/**
-	 * Executes any prerequisite logic for this dialogue listener, returns the
-	 * id of this dialogue, for tracking.
+	 * Sends any {@link Message}s for this dialogue listener prior to execution.
+	 * Interface models, text and animations should be sent here.
 	 *
-	 * @param player The player who owns this dialogue listener.
-	 * @return The id of this dialogue, for tracking.
+	 * @param player The player to send the messages for.
+	 * @return The id of the finalized dialogue interface.
 	 */
-	int execute(Player player);
+	int send(Player player);
+
+	/**
+	 * Returns the maximum amount of entries that can be placed on this
+	 * dialogue.
+	 */
+	int getMaximumEntries();
+
+	/**
+	 * Returns the minimum amount of entries that can be placed on this
+	 * dialogue.
+	 */
+	default int getMinimumEntries() {
+		return 0;
+	}
 
 	@Override
 	default void close() {

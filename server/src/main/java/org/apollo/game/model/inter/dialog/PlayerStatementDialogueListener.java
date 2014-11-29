@@ -1,7 +1,5 @@
 package org.apollo.game.model.inter.dialog;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static java.util.stream.IntStream.range;
 import static org.apollo.game.model.inter.dialog.DialogueConstants.PLAYER_DIALOGUE_ID;
 
 import org.apollo.game.model.Player;
@@ -18,20 +16,27 @@ import org.apollo.game.msg.impl.SetInterfaceTextMessage;
 public abstract class PlayerStatementDialogueListener implements DialogueListener {
 
 	@Override
-	public final int execute(Player player) {
-		String[] lines = lines();
+	public final int send(Player player) {
+		String[] lines = getLines();
 		int length = lines.length;
-		checkArgument(length < 0 || length >= PLAYER_DIALOGUE_ID.length, "length : " + length + " is out of bounds.");
 
 		int dialogueId = PLAYER_DIALOGUE_ID[length - 1];
 		int headChildId = dialogueId - 2;
+
 		player.send(new PlayerModelOnInterfaceMessage(headChildId));
 		player.send(new InterfaceModelAnimationMessage(expression().getAnimation(), headChildId));
 		player.send(new SetInterfaceTextMessage(dialogueId - 1, player.getDisplayName()));
 
-		range(0, length).forEach(i -> player.send(new SetInterfaceTextMessage(PLAYER_DIALOGUE_ID[length - 1] + i, lines[i])));
+		for (int index = 0; index < length; index++) {
+			player.send(new SetInterfaceTextMessage(PLAYER_DIALOGUE_ID[length - 1] + index, lines[index]));
+		}
 
 		return dialogueId -= 3;
+	}
+
+	@Override
+	public final int getMaximumEntries() {
+		return PLAYER_DIALOGUE_ID.length;
 	}
 
 	/* Do not allow method overriding for these methods. */

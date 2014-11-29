@@ -1,7 +1,5 @@
 package org.apollo.game.model.region;
 
-import static org.apollo.game.model.Position.MAXIMUM_HEIGHT_LEVELS;
-
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
@@ -29,9 +27,14 @@ public final class Region {
 	public static final int REGION_SIZE = 64;
 
 	/**
+	 * The maximum level a floor can be.
+	 */
+	public static final int MAXIMUM_HEIGHT_LEVEL = 4;
+
+	/**
 	 * The tiles within the region.
 	 */
-	private final Tile[][] tiles = new Tile[MAXIMUM_HEIGHT_LEVELS][REGION_SIZE * REGION_SIZE];
+	private final Tile[][] tiles = new Tile[MAXIMUM_HEIGHT_LEVEL][REGION_SIZE * REGION_SIZE];
 
 	/**
 	 * A set of entities within this region.
@@ -42,7 +45,7 @@ public final class Region {
 	 * Constructs a new {@link Region}.
 	 */
 	protected Region() {
-		for (int height = 0; height < MAXIMUM_HEIGHT_LEVELS; height++) {
+		for (int height = 0; height < MAXIMUM_HEIGHT_LEVEL; height++) {
 			for (int regionId = 0; regionId < REGION_SIZE * REGION_SIZE; regionId++) {
 				tiles[height][regionId] = new Tile();
 			}

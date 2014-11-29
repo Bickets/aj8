@@ -1,11 +1,9 @@
 package org.apollo.game.model;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static java.util.Objects.requireNonNull;
-
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Objects;
 import java.util.Set;
 
 import org.apollo.game.model.def.ItemDefinition;
@@ -91,12 +89,12 @@ public final class Inventory implements Cloneable {
 	 * @param mode The stacking mode.
 	 */
 	public Inventory(int capacity, StackMode mode) {
-		requireNonNull(mode);
-		checkArgument(capacity < 0);
-
+		if (capacity < 0) {
+			throw new IllegalArgumentException();
+		}
 		this.capacity = capacity;
+		this.mode = Objects.requireNonNull(mode);
 		items = new Item[capacity];
-		this.mode = mode;
 	}
 
 	@Override
@@ -511,10 +509,8 @@ public final class Inventory implements Cloneable {
 	 * Notifies listeners that the capacity of this inventory has been exceeded.
 	 */
 	private void notifyCapacityExceeded() {
-		synchronized (this) {
-			if (firingEvents) {
-				listeners.forEach(listener -> listener.capacityExceeded(this));
-			}
+		if (firingEvents) {
+			listeners.forEach(listener -> listener.capacityExceeded(this));
 		}
 	}
 
@@ -522,10 +518,8 @@ public final class Inventory implements Cloneable {
 	 * Notifies listeners that all the items have been updated.
 	 */
 	private void notifyItemsUpdated() {
-		synchronized (this) {
-			if (firingEvents) {
-				listeners.forEach(listener -> listener.itemsUpdated(this));
-			}
+		if (firingEvents) {
+			listeners.forEach(listener -> listener.itemsUpdated(this));
 		}
 	}
 
@@ -535,11 +529,9 @@ public final class Inventory implements Cloneable {
 	 * @param slot The slot.
 	 */
 	private void notifyItemUpdated(int slot) {
-		synchronized (this) {
-			if (firingEvents) {
-				Item item = items[slot];
-				listeners.forEach(listener -> listener.itemUpdated(this, slot, item));
-			}
+		if (firingEvents) {
+			Item item = items[slot];
+			listeners.forEach(listener -> listener.itemUpdated(this, slot, item));
 		}
 	}
 
@@ -550,7 +542,9 @@ public final class Inventory implements Cloneable {
 	 * @throws IndexOutOfBoundsException If the slot is out of bounds.
 	 */
 	private void checkBounds(int slot) {
-		checkArgument(slot < 0 || slot >= capacity, "Slot : " + slot + " is out of bounds.");
+		if (slot < 0 || slot >= capacity) {
+			throw new IndexOutOfBoundsException("Slot " + slot + " is out of bounds");
+		}
 	}
 
 	/**
@@ -585,18 +579,14 @@ public final class Inventory implements Cloneable {
 	 * Stops the firing of events.
 	 */
 	public void stopFiringEvents() {
-		synchronized (this) {
-			firingEvents = false;
-		}
+		firingEvents = false;
 	}
 
 	/**
 	 * Starts the firing of events.
 	 */
 	public void startFiringEvents() {
-		synchronized (this) {
-			firingEvents = true;
-		}
+		firingEvents = true;
 	}
 
 	/**

@@ -1,7 +1,5 @@
 package org.apollo.game.model;
 
-import static com.google.common.base.Preconditions.checkArgument;
-
 import java.util.AbstractCollection;
 import java.util.Iterator;
 
@@ -98,7 +96,7 @@ public final class GameCharacterRepository<T extends GameCharacter> extends Abst
 			return false;
 		}
 
-		checkArgument(character.getIndex() != index, "Unexpected index: " + index + ", expected: " + character.getIndex());
+		assert index == character.getIndex();
 
 		characters[index - 1] = null;
 		character.resetIndex();
@@ -115,13 +113,15 @@ public final class GameCharacterRepository<T extends GameCharacter> extends Abst
 	 */
 	@SuppressWarnings("unchecked")
 	public T get(int index) {
-		checkArgument(index < 1 || index >= characters.length + 1);
+		if (index < 1 || index >= characters.length + 1) {
+			throw new IndexOutOfBoundsException();
+		}
 		return (T) characters[index - 1];
 	}
 
 	@Override
 	public Iterator<T> iterator() {
-		return new GameCharacterRepositoryIterator();
+		return new GameCharacterRepositoryIterator<>(this);
 	}
 
 	/**
@@ -131,7 +131,13 @@ public final class GameCharacterRepository<T extends GameCharacter> extends Abst
 	 * @author Graham
 	 * @author Ryley Kimmel <ryley.kimmel@live.com>
 	 */
-	private final class GameCharacterRepositoryIterator implements Iterator<T> {
+	private static final class GameCharacterRepositoryIterator<T extends GameCharacter> implements Iterator<T> {
+
+		/**
+		 * The repository of {@link GameCharacter}s this {@link Iterator}
+		 * iterates over.
+		 */
+		private final GameCharacterRepository<T> repository;
 
 		/**
 		 * The current index of this iterator.
@@ -143,14 +149,25 @@ public final class GameCharacterRepository<T extends GameCharacter> extends Abst
 		 */
 		private int foundIndex;
 
+		/**
+		 * Creates a new {@link GameCharacterRepositoryIterator} with the
+		 * specified {@link GameCharacterRepository}.
+		 *
+		 * @param repository The game character repository this iterator
+		 *            iterates over.
+		 */
+		protected GameCharacterRepositoryIterator(GameCharacterRepository<T> repository) {
+			this.repository = repository;
+		}
+
 		@Override
 		public boolean hasNext() {
-			if (foundIndex == size) {
+			if (foundIndex == repository.size()) {
 				return false;
 			}
 
-			while (currentIndex < capacity()) {
-				if (characters[currentIndex++] != null) {
+			while (currentIndex < repository.capacity()) {
+				if (repository.characters[currentIndex++] != null) {
 					foundIndex++;
 					return true;
 				}
@@ -160,12 +177,12 @@ public final class GameCharacterRepository<T extends GameCharacter> extends Abst
 
 		@Override
 		public T next() {
-			return get(currentIndex);
+			return repository.get(currentIndex);
 		}
 
 		@Override
 		public void remove() {
-			GameCharacterRepository.this.remove(currentIndex + 1);
+			repository.remove(currentIndex + 1);
 		}
 	}
 

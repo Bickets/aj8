@@ -1,9 +1,10 @@
 package org.apollo.game.model.inter.dialog;
 
-import static java.util.Objects.requireNonNull;
 import static org.apollo.game.model.inter.dialog.DialogueConstants.MAKE_ITEM_INTERFACE_ID;
 import static org.apollo.game.model.inter.dialog.DialogueConstants.MAKE_ITEM_MODEL_INTERFACE_ID;
 import static org.apollo.game.model.inter.dialog.DialogueConstants.MAKE_ITEM_TITLE_INTERFACE_ID;
+
+import java.util.Objects;
 
 import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
@@ -30,17 +31,22 @@ public abstract class MakeItemDialogueListener implements DialogueListener {
 	 * @param item The item shown in this make item statement.
 	 */
 	public MakeItemDialogueListener(Item item) {
-		this.item = requireNonNull(item);
+		this.item = Objects.requireNonNull(item);
 	}
 
 	@Override
 	public abstract void optionClicked(DialogueOption option);
 
 	@Override
-	public final int execute(Player player) {
+	public final int send(Player player) {
 		player.send(new InterfaceItemModelMessage(MAKE_ITEM_MODEL_INTERFACE_ID, item, getModelZoom()));
 		player.send(new SetInterfaceTextMessage(MAKE_ITEM_TITLE_INTERFACE_ID, getTitle()));
 		return MAKE_ITEM_INTERFACE_ID;
+	}
+
+	@Override
+	public final int getMaximumEntries() {
+		return -1;
 	}
 
 	/**
@@ -70,7 +76,7 @@ public abstract class MakeItemDialogueListener implements DialogueListener {
 	}
 
 	@Override
-	public final String[] lines() {
+	public final String[] getLines() {
 		return null;
 	}
 

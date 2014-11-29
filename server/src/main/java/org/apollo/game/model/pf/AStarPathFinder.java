@@ -23,7 +23,7 @@ public final class AStarPathFinder extends PathFinder {
 	 *
 	 * @author Graham
 	 */
-	private final class Node implements Comparable<Node> {
+	private static final class Node implements Comparable<Node> {
 
 		/**
 		 * The parent node.

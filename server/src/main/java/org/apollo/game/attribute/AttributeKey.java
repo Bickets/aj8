@@ -64,7 +64,7 @@ public final class AttributeKey<T> {
 	 * @see {@link #AttributeKey(String)}
 	 */
 	public static <T> AttributeKey<T> valueOf(String name, T initial) {
-		return new AttributeKey<T>(name, initial);
+		return new AttributeKey<>(name, initial);
 	}
 
 }

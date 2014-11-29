@@ -96,11 +96,18 @@ public final class InterfaceSet {
 	public void openDialogue(DialogueListener listener) {
 		closeAndNotify();
 
+		/* Verify the listener before continuing */
+		if (listener.getMaximumEntries() != -1) {
+			String[] lines = listener.getLines();
+			if (lines.length < listener.getMinimumEntries() || lines.length >= listener.getMaximumEntries()) {
+				throw new IllegalArgumentException("Amount of dialogue is out of bounds: " + lines.length);
+			}
+		}
+
 		dialogueListener = listener;
 		this.listener = listener;
 
-		int dialogueId = listener.execute(player);
-
+		int dialogueId = listener.send(player);
 		interfaces.put(InterfaceType.DIALOGUE, dialogueId);
 		player.send(new OpenDialogueInterfaceMessage(dialogueId));
 	}

@@ -1,8 +1,5 @@
 package org.apollo.game.model.inter.dialog;
 
-import static com.google.common.base.Preconditions.checkArgument;
-import static java.util.Objects.requireNonNull;
-import static java.util.stream.IntStream.range;
 import static org.apollo.game.model.inter.dialog.DialogueConstants.OPTION_DIALOGUE_ID;
 
 import org.apollo.game.model.Player;
@@ -20,14 +17,24 @@ public abstract class OptionDialogueListener implements DialogueListener {
 	public abstract void optionClicked(DialogueOption option);
 
 	@Override
-	public final int execute(Player player) {
-		String[] lines = requireNonNull(lines());
+	public final int send(Player player) {
+		String[] lines = getLines();
+
 		int length = lines.length;
-		checkArgument(length < 0 || length >= OPTION_DIALOGUE_ID.length, "length : " + length + " is out of bounds.");
 		int dialogueId = OPTION_DIALOGUE_ID[length - 1];
+
 		player.send(new SetInterfaceTextMessage(dialogueId - 1, getTitle()));
-		range(0, length).forEach(i -> player.send(new SetInterfaceTextMessage(OPTION_DIALOGUE_ID[length - 1] + i, lines[i])));
+
+		for (int index = 0; index < length; index++) {
+			player.send(new SetInterfaceTextMessage(OPTION_DIALOGUE_ID[length - 1] + index, lines[index]));
+		}
+
 		return dialogueId - 2;
+	}
+
+	@Override
+	public final int getMaximumEntries() {
+		return OPTION_DIALOGUE_ID.length;
 	}
 
 	/**

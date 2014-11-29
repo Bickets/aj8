@@ -1,6 +1,6 @@
 package org.apollo.game.model;
 
-import static com.google.common.base.MoreObjects.toStringHelper;
+import io.netty.util.internal.StringUtil;
 
 import org.apollo.game.model.area.Area;
 import org.apollo.game.model.def.MobDefinition;
@@ -122,7 +122,7 @@ public final class Mob extends GameCharacter {
 
 	@Override
 	public String toString() {
-		return toStringHelper(this).add("id", definition.getId()).add("spawnPosition", spawnPosition).add("movementArea", movementArea).add("movementDistance", movementDistance).toString();
+		return StringUtil.simpleClassName(this) + " [spawnPosition=" + spawnPosition + ", movementArea=" + movementArea + ", movementDistance=" + movementDistance + "]";
 	}
 
 }

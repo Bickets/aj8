@@ -66,9 +66,10 @@ class ChristmasCracker implements EventSubscriber<ItemOnPlayerActionEvent> {
 					}
 				}
 
-				override lines() {
+				override getLines() {
 					#["That's okay, I might get a party hat!", "Stop, I want to keep my cracker."]
 				}
+
 			})
 
 	}

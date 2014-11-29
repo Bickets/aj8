@@ -4,6 +4,9 @@ import io.netty.channel.Channel;
 
 import java.io.IOException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
  * The base class for request workers.
  *
@@ -12,6 +15,11 @@ import java.io.IOException;
  * @param <P> The type of provider.
  */
 public abstract class RequestWorker<T, P> implements Runnable {
+
+	/**
+	 * The logger used to print information and debug messages to the console.
+	 */
+	private final Logger logger = LoggerFactory.getLogger(RequestWorker.class);
 
 	/**
 	 * The resource provider.
@@ -50,7 +58,7 @@ public abstract class RequestWorker<T, P> implements Runnable {
 
 	@Override
 	public final void run() {
-		while (true) {
+		for (;;) {
 			synchronized (this) {
 				if (!running) {
 					break;
@@ -68,9 +76,9 @@ public abstract class RequestWorker<T, P> implements Runnable {
 
 			try {
 				service(provider, channel, request.getRequest());
-			} catch (IOException e) {
-				e.printStackTrace();
+			} catch (IOException reason) {
 				channel.close();
+				logger.error("Error whilst servicing provider", reason);
 			}
 		}
 	}

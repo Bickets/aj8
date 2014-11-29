@@ -1,5 +1,9 @@
 package org.apollo.util;
 
+import java.util.stream.IntStream;
+
+import org.apollo.fs.FileSystem;
+
 /**
  * A class which contains name-related utility methods.
  *
@@ -63,18 +67,39 @@ public final class NameUtil {
 	}
 
 	/**
-	 * Returns a hashed version the specified <code>name</code>.
+	 * Hashes a {@code String} using Jagex's algorithm, this method should be
+	 * used to convert actual names to hashed names to lookup files within the
+	 * {@link FileSystem}.
 	 *
-	 * @param name The name to hash.
-	 * @return The hashed name.
+	 * @param string The string to hash.
+	 * @return The hashed string.
 	 */
-	public static int hash(String name) {
-		int hash = 0;
-		name = name.toUpperCase();
-		for (int index = 0; index < name.length(); index++) {
-			hash = hash * 61 + name.charAt(index) - 32;
-		}
-		return hash;
+	public static int hash(String string) {
+		return _hash(string.toUpperCase());
+	}
+
+	/**
+	 * Hashes a {@code String} using Jagex's algorithm, this method should be
+	 * used to convert actual names to hashed names to lookup files within the
+	 * {@link FileSystem}.
+	 *
+	 * <p>
+	 * This method should <i>only</i> be used internally, it is marked
+	 * deprecated as it does not properly hash the specified {@code String}. The
+	 * functionality of this method is used to create a proper {@code String}
+	 * {@link #hash(String) <i>hashing method</i>}. The scope of this method has
+	 * been marked as {@code private} to prevent confusion.
+	 * </p>
+	 *
+	 * @param string The string to hash.
+	 * @return The hashed string.
+	 * @deprecated This method should only be used internally as it does not
+	 *             correctly hash the specified {@code String}. See the note
+	 *             below for more information.
+	 */
+	@Deprecated
+	private static int _hash(String string) {
+		return IntStream.range(0, string.length()).reduce(0, (hash, index) -> hash * 61 + string.charAt(index) - 32);
 	}
 
 	/**

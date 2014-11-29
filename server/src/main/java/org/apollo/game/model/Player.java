@@ -1,6 +1,6 @@
 package org.apollo.game.model;
 
-import static com.google.common.base.MoreObjects.toStringHelper;
+import io.netty.util.internal.StringUtil;
 
 import java.util.ArrayDeque;
 import java.util.Queue;
@@ -409,8 +409,12 @@ public final class Player extends GameCharacter {
 		}
 
 		if (!queuedMessages.isEmpty()) {
-			for (Message msg; (msg = queuedMessages.poll()) != null;) {
-				session.dispatchMessage(msg);
+			for (;;) {
+				Message queuedMessage = queuedMessages.poll();
+				if (queuedMessage == null) {
+					break;
+				}
+				session.dispatchMessage(queuedMessage);
 			}
 		}
 
@@ -488,11 +492,6 @@ public final class Player extends GameCharacter {
 		getBank().forceRefresh();
 
 		getSkillSet().forceRefresh();
-	}
-
-	@Override
-	public String toString() {
-		return toStringHelper(this).add("username", getName()).add("privilegeLevel", privilegeLevel).toString();
 	}
 
 	/**
@@ -626,22 +625,21 @@ public final class Player extends GameCharacter {
 		if (this == obj) {
 			return true;
 		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
+		if (!(obj instanceof Player)) {
 			return false;
 		}
 		Player other = (Player) obj;
-		if (other.hashCode() != hashCode()) {
-			return false;
-		}
-		return true;
+		return other.getEncodedName() == other.getEncodedName();
 	}
 
 	@Override
 	public int hashCode() {
-		return credentials.getUsernameHash();
+		return (int) (getEncodedName() ^ getEncodedName() >>> 32L);
+	}
+
+	@Override
+	public String toString() {
+		return StringUtil.simpleClassName(this) + " [privilegeLevel=" + privilegeLevel + ", flagged=" + flagged + ", name=" + getName() + ", displayName=" + getDisplayName() + "]";
 	}
 
 	@Override
