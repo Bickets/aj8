@@ -12,7 +12,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import org.apollo.fs.FileSystem;
-import org.apollo.game.GameConstants;
 import org.apollo.game.GameService;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.World.RegistrationStatus;
@@ -37,9 +36,14 @@ import org.apollo.security.IsaacRandomPair;
 public final class LoginSession extends Session {
 
 	/**
-	 * The regex pattern used to determine valid credentials.
+	 * The regular expression pattern used to determine valid credentials.
 	 */
 	private static final Pattern PATTERN = Pattern.compile("\\w(\\w| (?! )){2,10}\\w");
+
+	/**
+	 * The current version number.
+	 */
+	public static final int VERSION = 317;
 
 	/**
 	 * The message translator.
@@ -117,7 +121,7 @@ public final class LoginSession extends Session {
 	 * @throws IOException If some I/O exception occurs.
 	 */
 	private boolean requiresUpdate(LoginRequest request) throws IOException {
-		if (GameConstants.VERSION != request.getCurrentVersion()) {
+		if (VERSION != request.getCurrentVersion()) {
 			return true;
 		}
 

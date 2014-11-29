@@ -30,6 +30,11 @@ public final class GameService implements Service {
 	 * down.
 	 */
 	private static final int UNREGISTERS_PER_CYCLE = 50;
+	
+	/**
+	 * The delay between consecutive pulses, in milliseconds.
+	 */
+	public static final int PULSE_DELAY = 600;
 
 	/**
 	 * The scheduled executor service.
@@ -71,7 +76,7 @@ public final class GameService implements Service {
 
 	@Override
 	public void start() {
-		scheduledExecutor.scheduleAtFixedRate(new GamePulseHandler(this), GameConstants.PULSE_DELAY, GameConstants.PULSE_DELAY, TimeUnit.MILLISECONDS);
+		scheduledExecutor.scheduleAtFixedRate(new GamePulseHandler(this), PULSE_DELAY, PULSE_DELAY, TimeUnit.MILLISECONDS);
 	}
 
 	/**

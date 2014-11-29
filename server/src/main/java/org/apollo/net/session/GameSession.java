@@ -8,7 +8,6 @@ import io.netty.channel.ChannelHandlerContext;
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
 
-import org.apollo.game.GameConstants;
 import org.apollo.game.GameService;
 import org.apollo.game.model.Player;
 import org.apollo.game.msg.Message;
@@ -25,6 +24,11 @@ import org.slf4j.LoggerFactory;
 public final class GameSession extends Session {
 
 	/**
+	 * The maximum message per pulse per session.
+	 */
+	public static final int MESSAGES_PER_PULSE = 10;
+
+	/**
 	 * The logger used to print information and debug messages to the console.
 	 */
 	private final Logger logger = LoggerFactory.getLogger(GameSession.class);
@@ -37,7 +41,7 @@ public final class GameSession extends Session {
 	/**
 	 * The queue of pending {@link Message}s.
 	 */
-	private final BlockingQueue<Message> messageQueue = new ArrayBlockingQueue<>(GameConstants.MESSAGES_PER_PULSE);
+	private final BlockingQueue<Message> messageQueue = new ArrayBlockingQueue<>(MESSAGES_PER_PULSE);
 
 	/**
 	 * The player.
@@ -67,7 +71,7 @@ public final class GameSession extends Session {
 	@Override
 	public void messageReceived(Object msg) {
 		Message message = (Message) msg;
-		if (messageQueue.size() >= GameConstants.MESSAGES_PER_PULSE) {
+		if (messageQueue.size() >= MESSAGES_PER_PULSE) {
 			logger.error("Too many messages in queue for game session, dropping...");
 		} else {
 			messageQueue.add(message);
