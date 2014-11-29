@@ -26,8 +26,9 @@ public final class MobDefinitionParser {
 	 */
 	public static MobDefinition[] parse(FileSystem fs) throws IOException {
 		Archive archive = fs.getArchive(FileSystem.CONFIG_ARCHIVE);
-		byte[] dataBuffer = archive.get("npc.dat");
-		ByteBuffer buffer = ByteBuffer.wrap(archive.get("npc.idx"));
+		ByteBuffer dataBuffer = archive.getData("npc.dat");
+		ByteBuffer buffer = archive.getData("npc.idx");
+
 		int count = buffer.getShort() & 0xffff;
 		int[] offsets = new int[count];
 		int offset = 2;
@@ -37,10 +38,9 @@ public final class MobDefinitionParser {
 		}
 
 		MobDefinition[] defs = new MobDefinition[count];
-		ByteBuffer buf = ByteBuffer.wrap(dataBuffer);
 		for (int i = 0; i < count; i++) {
-			buf.position(offsets[i]);
-			defs[i] = parseDefinition(i, buf);
+			dataBuffer.position(offsets[i]);
+			defs[i] = parseDefinition(i, dataBuffer);
 		}
 
 		return defs;

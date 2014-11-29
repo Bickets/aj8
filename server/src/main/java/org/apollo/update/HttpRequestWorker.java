@@ -61,7 +61,7 @@ public final class HttpRequestWorker extends RequestWorker<HttpRequest, Resource
 	@Override
 	protected void service(ResourceProvider provider, Channel channel, HttpRequest request) throws IOException {
 		String path = request.getUri();
-		ByteBuffer buf = ByteBuffer.wrap(provider.get(path));
+		ByteBuffer buf = provider.get(path);
 
 		ByteBuf wrappedBuf;
 		HttpResponseStatus status = HttpResponseStatus.OK;

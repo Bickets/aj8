@@ -6,6 +6,7 @@ import io.netty.channel.Channel;
 import io.netty.channel.ChannelFutureListener;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 
 import org.apollo.fs.FileSystem;
 import org.apollo.net.codec.jaggrab.JagGrabRequest;
@@ -37,7 +38,7 @@ public final class JagGrabRequestWorker extends RequestWorker<JagGrabRequest, Re
 
 	@Override
 	protected void service(ResourceProvider provider, Channel channel, JagGrabRequest request) throws IOException {
-		byte[] buf = provider.get(request.getFilePath());
+		ByteBuffer buf = provider.get(request.getFilePath());
 		if (buf == null) {
 			channel.close();
 		} else {

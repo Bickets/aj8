@@ -1,109 +1,124 @@
 package org.apollo.fs;
 
-import static java.util.Objects.requireNonNull;
+import static org.apollo.fs.Cache.INDEX_SIZE;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Optional;
 
 import org.apollo.util.ByteBufferUtil;
 import org.apollo.util.CompressionUtil;
 import org.apollo.util.NameUtil;
 
+import com.google.common.base.Preconditions;
+
 /**
- * Represents an archive within the file system.
+ * Represents an archive within the {@link Cache}.
+ *
+ * <p>
+ * An archive contains varied amounts of {@link ArchiveSector}s which contain
+ * compressed file system data.
+ * </p>
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
- * @author Hadyn Richard
  */
 public final class Archive {
 
 	/**
-	 * A map of integer keys to entries within this archive.
+	 * A {@link Map} of {@link ArchiveSector} hashes to {@link ArchiveSector}s.
 	 */
-	private final Map<Integer, ArchiveEntry> entries = new HashMap<>();
+	private final Map<Integer, ArchiveSector> sectors;
 
 	/**
-	 * The bytes within this archive.
+	 * Constructs a new {@link Archive} with the specified {@link Map} of
+	 * {@link ArchiveSector}s.
+	 * 
+	 * @param sectors The {@link Map} of sectors within this archive.
 	 */
-	private final byte[] bytes;
-
-	/**
-	 * Denotes whether or not this archive is compressed.
-	 */
-	private boolean packed;
-
-	/**
-	 * Constructs a new {@link Archive} with the expected data.
-	 *
-	 * @param bytes The archives data.
-	 */
-	public Archive(byte[] bytes) {
-		this.bytes = bytes;
+	private Archive(Map<Integer, ArchiveSector> sectors) {
+		this.sectors = sectors;
 	}
 
 	/**
-	 * Decodes this archives contents into {@link ArchiveEntry}s
+	 * Decodes the data within this {@link Archive}.
 	 *
-	 * @return An instance of this archive.
+	 * @param data The encoded data within this archive.
+	 * @return Returns an {@link Archive} with the decoded data, never
+	 *         {@code null}.
 	 * @throws IOException If some I/O exception occurs.
 	 */
-	public Archive decode() throws IOException {
-		ByteBuffer buffer = ByteBuffer.wrap(bytes);
-		int unpackedSize = ByteBufferUtil.readMedium(buffer);
-		int packedSize = ByteBufferUtil.readMedium(buffer);
+	public static Archive decode(ByteBuffer data) throws IOException {
+		int length = ByteBufferUtil.readMedium(data);
+		int compressedLength = ByteBufferUtil.readMedium(data);
 
-		byte[] unpackedBytes = bytes;
+		byte[] uncompressedData = data.array();
 
-		packed = packedSize != unpackedSize;
-
-		if (packed) {
-			unpackedBytes = CompressionUtil.unbzip2(bytes, 6, packedSize);
-			buffer = ByteBuffer.wrap(unpackedBytes);
+		if (compressedLength != length) {
+			uncompressedData = CompressionUtil.unbzip2Headerless(data.array(), INDEX_SIZE, compressedLength);
+			data = ByteBuffer.wrap(uncompressedData);
 		}
 
-		int amountEntries = buffer.getShort() & 0xff;
-		int offset = buffer.position() + amountEntries * 10;
+		int total = data.getShort() & 0xFF;
+		int offset = data.position() + total * 10;
 
-		for (int i = 0; i < amountEntries; i++) {
-			int name = buffer.getInt();
-			int unpacked = ByteBufferUtil.readMedium(buffer);
-			int packed = ByteBufferUtil.readMedium(buffer);
+		Map<Integer, ArchiveSector> sectors = new HashMap<>(total);
+		for (int i = 0; i < total; i++) {
+			int hash = data.getInt();
+			length = ByteBufferUtil.readMedium(data);
+			compressedLength = ByteBufferUtil.readMedium(data);
 
-			byte[] entryBytes;
+			byte[] sectorData = new byte[length];
 
-			if (unpacked != packed) {
-				entryBytes = CompressionUtil.unbzip2(unpackedBytes, offset, packed);
+			if (length != compressedLength) {
+				sectorData = CompressionUtil.unbzip2Headerless(uncompressedData, offset, compressedLength);
 			} else {
-				entryBytes = new byte[unpacked];
-				System.arraycopy(unpackedBytes, offset, entryBytes, 0, unpacked);
+				System.arraycopy(uncompressedData, offset, sectorData, 0, length);
 			}
 
-			offset += packed;
-
-			entries.put(name, new ArchiveEntry(entryBytes, name));
+			sectors.put(hash, new ArchiveSector(ByteBuffer.wrap(sectorData), hash));
+			offset += compressedLength;
 		}
 
-		return this;
+		return new Archive(sectors);
 	}
 
 	/**
-	 * Returns an the data of an archive entry based on its name.
+	 * Retrieves an {@link Optional<ArchiveSector>} for the specified hash.
 	 *
-	 * @param name The name of the archive entry.
-	 * @return The archive entries name.
+	 * @param hash The archive sectors hash.
+	 * @return The optional container.
 	 */
-	public byte[] get(String name) {
-		ArchiveEntry entry = requireNonNull(entries.get(NameUtil.hash(name)));
-		return entry.getBytes();
+	private Optional<ArchiveSector> getSector(int hash) {
+		return Optional.ofNullable(sectors.get(hash));
 	}
 
 	/**
-	 * Returns whether or not this archive is compressed.
+	 * Retrieves an {@link Optional<ArchiveSector>} for the specified name.
+	 *
+	 * @param hash The archive sectors name.
+	 * @return The optional container.
 	 */
-	public boolean isPacked() {
-		return packed;
+	private Optional<ArchiveSector> getSector(String name) {
+		int hash = NameUtil.hash(name);
+		return getSector(hash);
+	}
+
+	/**
+	 * Returns the data within the {@link ArchiveSector} for the specified
+	 * {@code String} name.
+	 * 
+	 * @param name The name of the {@link ArchiveSector}.
+	 * @return The data within the {@link ArchiveSector} or nothing, this method
+	 *         fails-fast if no {@link ArchiveSector} exists for the specified
+	 *         {@code name}.
+	 */
+	public ByteBuffer getData(String name) {
+		Optional<ArchiveSector> optionalData = getSector(name);
+		Preconditions.checkArgument(optionalData.isPresent());
+		ArchiveSector dataSector = optionalData.get();
+		return dataSector.getData();
 	}
 
 }

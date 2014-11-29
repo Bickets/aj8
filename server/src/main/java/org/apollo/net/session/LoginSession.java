@@ -121,7 +121,7 @@ public final class LoginSession extends Session {
 			return true;
 		}
 
-		ByteBuffer buffer = ByteBuffer.wrap(fileSystem.getArchiveHashes());
+		ByteBuffer buffer = fileSystem.getArchiveHashes();
 
 		int[] clientCrcs = request.getArchiveCrcs();
 		int[] serverCrcs = new int[clientCrcs.length];
@@ -130,9 +130,7 @@ public final class LoginSession extends Session {
 			return true;
 		}
 
-		for (int crc = 0, len = serverCrcs.length; crc < len; crc++) {
-			serverCrcs[crc] = buffer.getInt();
-		}
+		Arrays.setAll(serverCrcs, crc -> buffer.getInt());
 
 		return !Arrays.equals(clientCrcs, serverCrcs);
 	}

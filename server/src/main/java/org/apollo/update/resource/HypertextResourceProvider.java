@@ -43,7 +43,7 @@ public final class HypertextResourceProvider implements ResourceProvider {
 	}
 
 	@Override
-	public byte[] get(String path) throws IOException {
+	public ByteBuffer get(String path) throws IOException {
 		File f = new File(base, path);
 		if (f.isDirectory()) {
 			f = new File(f, "index.html");
@@ -54,7 +54,7 @@ public final class HypertextResourceProvider implements ResourceProvider {
 
 		try (RandomAccessFile raf = new RandomAccessFile(f, "r")) {
 			ByteBuffer buf = raf.getChannel().map(MapMode.READ_ONLY, 0, raf.length());
-			return buf.array();
+			return buf;
 		}
 	}
 

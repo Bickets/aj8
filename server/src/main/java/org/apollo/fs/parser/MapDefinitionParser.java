@@ -25,7 +25,7 @@ public final class MapDefinitionParser {
 	 */
 	protected static Map<Integer, MapDefinition> parse(FileSystem fs) throws IOException {
 		Archive archive = fs.getArchive(FileSystem.MANIFEST_ARCHIVE);
-		ByteBuffer buffer = ByteBuffer.wrap(archive.get("map_index"));
+		ByteBuffer buffer = archive.getData("map_index");
 		Map<Integer, MapDefinition> defs = new HashMap<>();
 
 		int count = buffer.capacity() / 7;

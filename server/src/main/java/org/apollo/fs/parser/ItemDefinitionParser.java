@@ -26,8 +26,9 @@ public final class ItemDefinitionParser {
 	 */
 	public static ItemDefinition[] parse(FileSystem fs) throws IOException {
 		Archive archive = fs.getArchive(FileSystem.CONFIG_ARCHIVE);
-		byte[] dataBuffer = archive.get("obj.dat");
-		ByteBuffer buffer = ByteBuffer.wrap(archive.get("obj.idx"));
+		ByteBuffer dataBuffer = archive.getData("obj.dat");
+		ByteBuffer buffer = archive.getData("obj.idx");
+
 		int count = buffer.getShort() & 0xffff;
 		int[] offsets = new int[count];
 		int offset = 2;
@@ -37,10 +38,9 @@ public final class ItemDefinitionParser {
 		}
 
 		ItemDefinition[] defs = new ItemDefinition[count];
-		ByteBuffer buf = ByteBuffer.wrap(dataBuffer);
 		for (int i = 0; i < count; i++) {
-			buf.position(offsets[i]);
-			defs[i] = parseDefinition(i, buf);
+			dataBuffer.position(offsets[i]);
+			defs[i] = parseDefinition(i, dataBuffer);
 		}
 
 		return defs;

@@ -71,12 +71,12 @@ public final class StaticObjectDefinitionParser {
 			int x = (hash >> 8 & 0xFF) * 64;
 			int y = (hash & 0xFF) * 64;
 
-			byte[] gameObjectData = fs.getFile(FileSystem.MAP_IDX, def.getObjectFile());
-			ByteBuffer gameObjectBuffer = ByteBuffer.wrap(CompressionUtil.ungzip(gameObjectData));
+			ByteBuffer gameObjectData = fs.getFile(FileSystem.MAP_INDEX, def.getObjectFile());
+			ByteBuffer gameObjectBuffer = ByteBuffer.wrap(CompressionUtil.ungzip(gameObjectData.array()));
 			parseGameObject(gameObjectBuffer, x, y);
 
-			byte[] terrainData = fs.getFile(FileSystem.MAP_IDX, def.getTerrainFile());
-			ByteBuffer terrainBuffer = ByteBuffer.wrap(CompressionUtil.ungzip(terrainData));
+			ByteBuffer terrainData = fs.getFile(FileSystem.MAP_INDEX, def.getTerrainFile());
+			ByteBuffer terrainBuffer = ByteBuffer.wrap(CompressionUtil.ungzip(terrainData.array()));
 			parseTerrain(terrainBuffer, x, y);
 		}
 

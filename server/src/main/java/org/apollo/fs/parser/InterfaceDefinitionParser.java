@@ -25,7 +25,8 @@ public final class InterfaceDefinitionParser {
 	 */
 	public static InterfaceDefinition[] parse(FileSystem fs) throws IOException {
 		Archive archive = fs.getArchive(FileSystem.INTERFACE_ARCHIVE);
-		ByteBuffer buffer = ByteBuffer.wrap(archive.get("data"));
+		ByteBuffer buffer = archive.getData("data");
+
 		int count = buffer.getShort() & 0xFFFF;
 		InterfaceDefinition[] defs = new InterfaceDefinition[count];
 

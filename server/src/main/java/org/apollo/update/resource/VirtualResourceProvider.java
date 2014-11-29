@@ -1,6 +1,7 @@
 package org.apollo.update.resource;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 
 import org.apollo.fs.FileSystem;
 
@@ -44,7 +45,7 @@ public final class VirtualResourceProvider implements ResourceProvider {
 	}
 
 	@Override
-	public byte[] get(String path) throws IOException {
+	public ByteBuffer get(String path) throws IOException {
 		if (path.startsWith("/crc")) {
 			return fs.getArchiveHashes();
 		} else if (path.startsWith("/title")) {

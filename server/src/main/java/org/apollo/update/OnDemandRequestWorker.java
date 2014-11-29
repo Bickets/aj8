@@ -40,8 +40,7 @@ public final class OnDemandRequestWorker extends RequestWorker<OnDemandRequest, 
 
 	@Override
 	protected void service(FileSystem fs, Channel channel, OnDemandRequest request) throws IOException {
-		byte[] fileData = fs.getFile(request.getIndex(), request.getId());
-		ByteBuffer buf = ByteBuffer.wrap(fileData);
+		ByteBuffer buf = fs.getFile(request.getIndex(), request.getId());
 		int length = buf.remaining();
 
 		for (int chunk = 0; buf.remaining() > 0; chunk++) {

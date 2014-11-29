@@ -1,6 +1,10 @@
 package org.apollo.update.resource;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
+import java.util.Set;
+
+import com.google.common.collect.ImmutableSet;
 
 /**
  * A resource provider composed of multiple resource providers.
@@ -10,9 +14,9 @@ import java.io.IOException;
 public final class CombinedResourceProvider implements ResourceProvider {
 
 	/**
-	 * An array of resource providers.
+	 * A {@link Set} of resource providers.
 	 */
-	private final ResourceProvider[] providers;
+	private final Set<ResourceProvider> providers;
 
 	/**
 	 * Creates the combined resource providers.
@@ -20,7 +24,7 @@ public final class CombinedResourceProvider implements ResourceProvider {
 	 * @param providers The providers this provider delegates to.
 	 */
 	public CombinedResourceProvider(ResourceProvider... providers) {
-		this.providers = providers;
+		this.providers = ImmutableSet.copyOf(providers);
 	}
 
 	@Override
@@ -29,7 +33,7 @@ public final class CombinedResourceProvider implements ResourceProvider {
 	}
 
 	@Override
-	public byte[] get(String path) throws IOException {
+	public ByteBuffer get(String path) throws IOException {
 		for (ResourceProvider provider : providers) {
 			if (provider.accept(path)) {
 				return provider.get(path);

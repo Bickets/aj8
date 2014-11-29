@@ -1,6 +1,7 @@
 package org.apollo.update.resource;
 
 import java.io.IOException;
+import java.nio.ByteBuffer;
 
 /**
  * A class which provides resources.
@@ -27,6 +28,6 @@ public interface ResourceProvider {
 	 * @return The resource, or {@code null} if it doesn't exist.
 	 * @throws IOException if an I/O error occurs.
 	 */
-	byte[] get(String path) throws IOException;
+	ByteBuffer get(String path) throws IOException;
 
 }

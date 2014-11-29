@@ -25,23 +25,23 @@ public final class GameObjectDefinitionParser {
 	 * @throws IOException If some I/O exception occurs.
 	 */
 	public static GameObjectDefinition[] parse(FileSystem fs) throws IOException {
-		Archive config = fs.getArchive(FileSystem.CONFIG_ARCHIVE);
-		ByteBuffer dat = ByteBuffer.wrap(config.get("loc.dat"));
-		ByteBuffer idx = ByteBuffer.wrap(config.get("loc.idx"));
+		Archive archive = fs.getArchive(FileSystem.CONFIG_ARCHIVE);
+		ByteBuffer dataBuffer = archive.getData("loc.dat");
+		ByteBuffer buffer = archive.getData("loc.idx");
 
-		int count = idx.getShort();
+		int count = buffer.getShort();
 		int[] indices = new int[count];
 
 		int index = 2;
 		for (int i = 0; i < count; i++) {
 			indices[i] = index;
-			index += idx.getShort();
+			index += buffer.getShort();
 		}
 
 		GameObjectDefinition[] defs = new GameObjectDefinition[count];
 		for (int i = 0; i < count; i++) {
-			dat.position(indices[i]);
-			defs[i] = parseDefinition(i, dat);
+			dataBuffer.position(indices[i]);
+			defs[i] = parseDefinition(i, dataBuffer);
 		}
 
 		return defs;

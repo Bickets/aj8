@@ -4,142 +4,102 @@ import java.io.ByteArrayInputStream;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.OutputStream;
 import java.util.zip.GZIPInputStream;
-import java.util.zip.GZIPOutputStream;
 
 import org.apache.tools.bzip2.CBZip2InputStream;
-import org.apache.tools.bzip2.CBZip2OutputStream;
+import org.apollo.fs.FileSystem;
 
 /**
- * A utility class for performing compression/uncompression.
+ * A static-utility class containing containing extension or helper methods for
+ * <b>co</b>mpressor-<b>dec</b>compressor<b>'s</b>.
  *
- * @author Graham
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class CompressionUtil {
 
 	/**
-	 * Compresses a GZIP file.
-	 *
-	 * @param bytes The uncompressed bytes.
-	 * @return The compressed bytes.
-	 * @throws IOException if an I/O error occurs.
+	 * The default allocation length, equivalent to <tt>1</tt> megabyte or
+	 * <tt>1024</tt> {@code byte}s.
 	 */
-	public static byte[] gzip(byte[] bytes) throws IOException {
-		/* create the streams */
-		InputStream is = new ByteArrayInputStream(bytes);
-		try {
-			ByteArrayOutputStream bout = new ByteArrayOutputStream();
-			OutputStream os = new GZIPOutputStream(bout);
-			try {
-				/* copy data between the streams */
-				byte[] buf = new byte[4096];
-				int len;
-				while ((len = is.read(buf, 0, buf.length)) != -1) {
-					os.write(buf, 0, len);
-				}
-			} finally {
-				os.close();
-			}
+	private static final int DEFAULT_ALLOCATION_LENGTH = 1024;
 
-			/* return the compressed bytes */
-			return bout.toByteArray();
-		} finally {
-			is.close();
-		}
+	/**
+	 * Uncompresses a {@code byte} array of g-zipped data.
+	 *
+	 * @param data The compressed, g-zipped data.
+	 * @return The uncompressed data.
+	 * @throws IOException If some I/O exception occurs.
+	 */
+	public static byte[] ungzip(byte[] data) throws IOException {
+		return uncompress(new GZIPInputStream(new ByteArrayInputStream(data)));
 	}
 
 	/**
-	 * Uncompresses a GZIP file.
+	 * Uncompresses a {@code byte} array of b-zipped data that does not contain
+	 * a header.
+	 * 
+	 * <p>
+	 * A b-zip header block consists of <tt>2</tt> {@code byte}s, they are
+	 * replaced with 'h' and '1' as that is what our {@link FileSystem file
+	 * system} compresses the header as.
+	 * </p>
 	 *
-	 * @param bytes The compressed bytes.
-	 * @return The uncompressed bytes.
-	 * @throws IOException if an I/O error occurs.
+	 * @param data The compressed, b-zipped data.
+	 * @param offset The offset position of the data.
+	 * @param length The length of the data.
+	 * @return The uncompressed data.
+	 * @throws IOException If some I/O exception occurs.
 	 */
-	public static byte[] ungzip(byte[] bytes) throws IOException {
-		/* create the streams */
-		InputStream is = new GZIPInputStream(new ByteArrayInputStream(bytes));
-		try {
-			ByteArrayOutputStream os = new ByteArrayOutputStream();
-			try {
-				/* copy data between the streams */
-				byte[] buf = new byte[4096];
-				int len;
-				while ((len = is.read(buf, 0, buf.length)) != -1) {
-					os.write(buf, 0, len);
-				}
-			} finally {
-				os.close();
-			}
-
-			/* return the uncompressed bytes */
-			return os.toByteArray();
-		} finally {
-			is.close();
-		}
-	}
-
-	/**
-	 * Compresses a BZIP2 file.
-	 *
-	 * @param bytes The uncompressed bytes.
-	 * @return The compressed bytes without the header.
-	 * @throws IOException if an I/O erorr occurs.
-	 */
-	public static byte[] bzip2(byte[] bytes) throws IOException {
-		InputStream is = new ByteArrayInputStream(bytes);
-		try {
-			ByteArrayOutputStream bout = new ByteArrayOutputStream();
-			OutputStream os = new CBZip2OutputStream(bout, 1);
-			try {
-				byte[] buf = new byte[4096];
-				int len;
-				while ((len = is.read(buf, 0, buf.length)) != -1) {
-					os.write(buf, 0, len);
-				}
-			} finally {
-				os.close();
-			}
-
-			/* strip the header from the byte array and return it */
-			bytes = bout.toByteArray();
-			byte[] bzip2 = new byte[bytes.length - 2];
-			System.arraycopy(bytes, 2, bzip2, 0, bzip2.length);
-			return bzip2;
-		} finally {
-			is.close();
-		}
-	}
-
-	/**
-	 * Uncompresses a BZIP2 file.
-	 *
-	 * @param bytes The compressed bytes without the header.
-	 * @param off The offset.
-	 * @param length The length.
-	 * @return The uncompressed bytes.
-	 * @throws IOException if an I/O error occurs.
-	 */
-	public static byte[] unbzip2(byte[] bytes, int off, int length) throws IOException {
-		/* prepare a new byte array with the bzip2 header at the start */
+	public static byte[] unbzip2Headerless(byte[] data, int offset, int length) throws IOException {
+		/* Strip the header from the data. */
 		byte[] bzip2 = new byte[length + 2];
 		bzip2[0] = 'h';
 		bzip2[1] = '1';
-		System.arraycopy(bytes, off, bzip2, 2, length);
+		System.arraycopy(data, offset, bzip2, 2, length);
 
-		InputStream is = new CBZip2InputStream(new ByteArrayInputStream(bzip2));
-		try {
-			ByteArrayOutputStream os = new ByteArrayOutputStream();
-			try {
-				byte[] buf = new byte[4096];
-				int len;
-				while ((len = is.read(buf, 0, buf.length)) != -1) {
-					os.write(buf, 0, len);
-				}
-			} finally {
-				os.close();
+		/* Uncompress the headerless data */
+		return unbzip2(bzip2, offset, length);
+	}
+
+	/**
+	 * Uncompresses a {@code byte} array of b-zipped data.
+	 *
+	 * @param data The compressed, b-zipped data.
+	 * @param offset The offset position of the data.
+	 * @param length The length of the data.
+	 * @return The uncompressed data.
+	 * @throws IOException If some I/O exception occurs.
+	 */
+	public static byte[] unbzip2(byte[] data, int offset, int length) throws IOException {
+		return uncompress(new CBZip2InputStream(new ByteArrayInputStream(data)));
+	}
+
+	/**
+	 * Uncompresses a {@code byte} array from the specified {@link InputStream}
+	 * with a fixed data length of {@link #DEFAULT_ALLOCATION_LENGTH}.
+	 *
+	 * @param is The input stream to uncompress the data from.
+	 * @return The uncompressed data.
+	 * @throws IOException If some I/O exception occurs.
+	 */
+	private static byte[] uncompress(InputStream is) throws IOException {
+		return uncompress(is, DEFAULT_ALLOCATION_LENGTH);
+	}
+
+	/**
+	 * Uncompresses a {@code byte} array from the specified {@link InputStream}.
+	 *
+	 * @param is The input stream to uncompress the data from.
+	 * @param length The length of the data to uncompress.
+	 * @return The uncompressed data.
+	 * @throws IOException If some I/O exception occurs.
+	 */
+	private static byte[] uncompress(InputStream is, int length) throws IOException {
+		try (ByteArrayOutputStream os = new ByteArrayOutputStream()) {
+			byte[] buf = new byte[length];
+			for (int len; (len = is.read(buf, 0, buf.length)) != -1;) {
+				os.write(buf, 0, len);
 			}
-
 			return os.toByteArray();
 		} finally {
 			is.close();
