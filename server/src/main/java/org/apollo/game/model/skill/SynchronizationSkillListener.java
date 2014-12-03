@@ -8,7 +8,6 @@ import org.apollo.game.model.def.LevelUpDefinition;
 import org.apollo.game.msg.impl.OpenDialogueInterfaceMessage;
 import org.apollo.game.msg.impl.SetInterfaceTextMessage;
 import org.apollo.game.msg.impl.UpdateSkillMessage;
-import org.apollo.game.sync.block.SynchronizationBlock;
 import org.apollo.util.LanguageUtil;
 
 /**
@@ -50,7 +49,7 @@ public final class SynchronizationSkillListener implements SkillListener {
 
 		// Only update appearance if we level up a combat skill
 		if (id < 7) {
-			player.getBlockSet().add(SynchronizationBlock.createAppearanceBlock(player));
+			player.updateApprarance();
 		}
 	}
 

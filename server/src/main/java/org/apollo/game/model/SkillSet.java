@@ -193,7 +193,7 @@ public final class SkillSet {
 				continue;
 			}
 
-			current += (current < max ? 1 : -1);
+			current += current < max ? 1 : -1;
 
 			setSkill(id, new Skill(skills[id].getExperience(), current, max));
 		}

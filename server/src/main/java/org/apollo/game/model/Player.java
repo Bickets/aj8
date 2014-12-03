@@ -389,7 +389,7 @@ public final class Player extends GameCharacter {
 		if (!reconnecting) {
 			sendInitialMessages();
 		}
-		getBlockSet().add(SynchronizationBlock.createAppearanceBlock(this));
+		updateApprarance();
 	}
 
 	/**
@@ -495,6 +495,13 @@ public final class Player extends GameCharacter {
 	}
 
 	/**
+	 * Sends the appearance block for this {@link Player}.
+	 */
+	public void updateApprarance() {
+		getBlockSet().add(SynchronizationBlock.createAppearanceBlock(this));
+	}
+
+	/**
 	 * Gets the players appearance.
 	 *
 	 * @return The appearance.
@@ -510,7 +517,7 @@ public final class Player extends GameCharacter {
 	 */
 	public void setAppearance(Appearance appearance) {
 		this.appearance = appearance;
-		getBlockSet().add(SynchronizationBlock.createAppearanceBlock(this));
+		updateApprarance();
 	}
 
 	/**

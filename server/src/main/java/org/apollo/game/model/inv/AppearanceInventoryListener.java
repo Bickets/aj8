@@ -3,7 +3,6 @@ package org.apollo.game.model.inv;
 import org.apollo.game.model.Inventory;
 import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
-import org.apollo.game.sync.block.SynchronizationBlock;
 
 /**
  * An {@link InventoryListener} which updates the players appearance when any
@@ -31,7 +30,7 @@ public final class AppearanceInventoryListener extends InventoryAdapter {
 	 * Updates the players appearance.
 	 */
 	private void update() {
-		player.getBlockSet().add(SynchronizationBlock.createAppearanceBlock(player));
+		player.updateApprarance();
 	}
 
 	@Override
