@@ -97,7 +97,7 @@ final class Server {
 
 	/**
 	 * Constructs a new {@link Server} with the specified {@link FileSystem}.
-	 * 
+	 *
 	 * @param fileSystem This servers file system.
 	 */
 	protected Server(FileSystem fileSystem) {
@@ -108,7 +108,7 @@ final class Server {
 	/**
 	 * Appends the specified {@link Service} to the service map and sets the
 	 * services context.
-	 * 
+	 *
 	 * @param service The service to append.
 	 */
 	public void appendService(Service service) {
@@ -118,7 +118,7 @@ final class Server {
 
 	/**
 	 * Checks if the specified service class exists.
-	 * 
+	 *
 	 * @param clazz The services class.
 	 * @return {@code true} if and only if the service exists otherwise
 	 *         {@code false}.
@@ -129,7 +129,7 @@ final class Server {
 
 	/**
 	 * Returns the {@link Service} for the specified service class.
-	 * 
+	 *
 	 * @param clazz The services class.
 	 * @return The {@link Service} object for the specified service class.
 	 */

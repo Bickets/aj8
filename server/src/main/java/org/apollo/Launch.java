@@ -13,7 +13,7 @@ import org.slf4j.LoggerFactory;
 /**
  * The entry point of this application, this class is responsible for
  * initializing the Apollo server.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 final class Launch {

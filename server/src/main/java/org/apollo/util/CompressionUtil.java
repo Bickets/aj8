@@ -37,7 +37,7 @@ public final class CompressionUtil {
 	/**
 	 * Uncompresses a {@code byte} array of b-zipped data that does not contain
 	 * a header.
-	 * 
+	 *
 	 * <p>
 	 * A b-zip header block consists of <tt>2</tt> {@code byte}s, they are
 	 * replaced with 'h' and '1' as that is what our {@link FileSystem file

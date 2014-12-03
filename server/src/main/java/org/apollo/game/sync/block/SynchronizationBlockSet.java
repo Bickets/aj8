@@ -23,7 +23,6 @@ public final class SynchronizationBlockSet implements Cloneable {
 	public void add(SynchronizationBlock block) {
 		Class<? extends SynchronizationBlock> clazz = block.getClass();
 		blocks.put(clazz, block);
-		// TODO: Cache old blocks!!!
 	}
 
 	@Override

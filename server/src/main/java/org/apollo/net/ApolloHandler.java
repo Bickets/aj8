@@ -43,7 +43,7 @@ public final class ApolloHandler extends ChannelInboundHandlerAdapter {
 	/**
 	 * Constructs a new {@link ApolloHandler} with the specified
 	 * {@link ServerContext}.
-	 * 
+	 *
 	 * @param context The context of this server.
 	 */
 	public ApolloHandler(ServerContext context) {

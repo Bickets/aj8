@@ -34,7 +34,7 @@ public final class Archive {
 	/**
 	 * Constructs a new {@link Archive} with the specified {@link Map} of
 	 * {@link ArchiveSector}s.
-	 * 
+	 *
 	 * @param sectors The {@link Map} of sectors within this archive.
 	 */
 	private Archive(Map<Integer, ArchiveSector> sectors) {
@@ -108,7 +108,7 @@ public final class Archive {
 	/**
 	 * Returns the data within the {@link ArchiveSector} for the specified
 	 * {@code String} name.
-	 * 
+	 *
 	 * @param name The name of the {@link ArchiveSector}.
 	 * @return The data within the {@link ArchiveSector} or nothing, this method
 	 *         fails-fast if no {@link ArchiveSector} exists for the specified

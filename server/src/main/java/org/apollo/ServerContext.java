@@ -9,7 +9,7 @@ import org.apollo.service.Service;
 
 /**
  * Represents the context of this {@link Server}.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class ServerContext {
