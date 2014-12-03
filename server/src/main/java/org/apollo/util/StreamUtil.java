@@ -1,5 +1,6 @@
 package org.apollo.util;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
@@ -34,12 +35,17 @@ public final class StreamUtil {
 	 * @throws IOException if an I/O error occurs.
 	 */
 	public static String readString(InputStream is) throws IOException {
-		StringBuilder builder = new StringBuilder();
-		int character;
-		while ((character = is.read()) != -1 && character != '\0') {
-			builder.append((char) character);
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
+
+		for (;;) {
+			int read = is.read() & 0xFF;
+			if (read == -1 || read == '\0') {
+				break;
+			}
+			os.write(read);
 		}
-		return builder.toString();
+
+		return new String(os.toByteArray());
 	}
 
 	/**

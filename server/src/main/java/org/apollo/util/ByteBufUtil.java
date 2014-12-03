@@ -1,5 +1,7 @@
 package org.apollo.util;
 
+import java.io.ByteArrayOutputStream;
+
 import io.netty.buffer.ByteBuf;
 
 import org.apollo.net.NetworkConstants;
@@ -15,16 +17,21 @@ public final class ByteBufUtil {
 	/**
 	 * Reads a string from the specified buffer.
 	 *
-	 * @param in The buffer.
+	 * @param buffer The buffer.
 	 * @return The string.
 	 */
-	public static String readString(ByteBuf in) {
-		StringBuilder bldr = new StringBuilder();
-		int character;
-		while (in.isReadable() && (character = in.readUnsignedByte()) != NetworkConstants.STRING_TERMINATOR) {
-			bldr.append((char) character);
+	public static String readString(ByteBuf buffer) {
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
+
+		for (;;) {
+			int read = buffer.readUnsignedByte();
+			if (read == NetworkConstants.STRING_TERMINATOR) {
+				break;
+			}
+			os.write(read);
 		}
-		return bldr.toString();
+
+		return new String(os.toByteArray());
 	}
 
 	/**

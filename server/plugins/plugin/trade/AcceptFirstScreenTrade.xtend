@@ -115,9 +115,9 @@ class AcceptFirstScreenTrade implements EventSubscriber<ButtonActionEvent> {
 			bldr.append("@or1@").append(it.definition.name)
 			if (it.amount > 1) {
 				bldr.append(" @whi@x ")
-				bldr.append(if(it.amount > 1000) NumberUtil.format(it.amount) else it.amount)
+				bldr.append(if(it.amount >= 1000) NumberUtil.format(it.amount) else it.amount)
 			}
-			bldr.append("\\n")
+			bldr.append(System::lineSeparator)
 		]
 
 		return bldr.toString

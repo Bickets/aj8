@@ -1,5 +1,6 @@
 package org.apollo.util;
 
+import java.io.ByteArrayOutputStream;
 import java.nio.ByteBuffer;
 
 import org.apollo.net.NetworkConstants;
@@ -33,7 +34,7 @@ public final class ByteBufferUtil {
 	 * @return The medium.
 	 */
 	public static int readMedium(ByteBuffer buffer) {
-		return (buffer.get() & 0xFF) << 16 | (buffer.get() & 0xFF) << 8 | buffer.get() & 0xFF;
+		return (buffer.getShort() & 0xFFFF) << 8 | buffer.get() & 0xFF;
 	}
 
 	/**
@@ -43,12 +44,17 @@ public final class ByteBufferUtil {
 	 * @return The string.
 	 */
 	public static String readString(ByteBuffer buffer) {
-		StringBuilder bldr = new StringBuilder();
-		char c;
-		while ((c = (char) buffer.get()) != NetworkConstants.STRING_TERMINATOR) {
-			bldr.append(c);
+		ByteArrayOutputStream os = new ByteArrayOutputStream();
+
+		for (;;) {
+			int read = buffer.get() & 0xFF;
+			if (read == NetworkConstants.STRING_TERMINATOR) {
+				break;
+			}
+			os.write(read);
 		}
-		return bldr.toString();
+
+		return new String(os.toByteArray());
 	}
 
 	/**

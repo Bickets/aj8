@@ -12,6 +12,21 @@ import java.util.Locale;
 public final class NumberUtil {
 
 	/**
+	 * A format for representing thousands, millions and billions.
+	 */
+	private static final String FORMAT = " KMB";
+
+	/**
+	 * The default number decimal format.
+	 */
+	private static final NumberFormat DECIMAL_FORMAT = new DecimalFormat("#,###.#");
+
+	/**
+	 * The default number format.
+	 */
+	private static final NumberFormat NUMBER_FORMAT = NumberFormat.getInstance(Locale.US);
+
+	/**
 	 * Formats the specified number to be readable to the human eye. The number
 	 * may not be larger than that of 2<sup>31</sup>.
 	 *
@@ -19,14 +34,11 @@ public final class NumberUtil {
 	 * @return The formatted number, represented as a {@code String}.
 	 */
 	public static String format(Number number) {
-		String suffix = " KMB";
 		StringBuilder bldr = new StringBuilder();
-		NumberFormat decimalFormatter = new DecimalFormat("#,###.#");
-		NumberFormat valueFormatter = NumberFormat.getInstance(Locale.US);
 		int power = (int) Math.log10(number.doubleValue());
 		double value = Math.floor(number.doubleValue() / Math.pow(10, power / 3 * 3));
-		bldr.append(decimalFormatter.format(value)).append(suffix.charAt(power / 3));
-		bldr.append(" (").append(valueFormatter.format(number)).append(")");
+		bldr.append(DECIMAL_FORMAT.format(value)).append(FORMAT.charAt(power / 3));
+		bldr.append(" (").append(NUMBER_FORMAT.format(number)).append(")");
 		return bldr.toString();
 	}
 
