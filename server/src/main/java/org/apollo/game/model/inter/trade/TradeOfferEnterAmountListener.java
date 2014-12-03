@@ -4,7 +4,7 @@ import org.apollo.game.model.Player;
 import org.apollo.game.model.inter.EnterAmountListener;
 
 /**
- * An {@link EnterAmountListener} for offernig items in a trade.
+ * An {@link EnterAmountListener} for offering items in a trade.
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */

@@ -3,6 +3,8 @@ package org.apollo.util;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.google.common.collect.Iterables;
+
 /**
  * A class which contains text-related utility methods.
  *
@@ -148,67 +150,49 @@ public final class TextUtil {
 	}
 
 	/**
-	 * Splits a {@code String} with a delimiter of ({@code "}).
+	 * Parses a single {@code String} by splitting them into arguments delimited
+	 * by a quote character <tt>"</tt>.
 	 *
 	 * @param source The source string.
-	 * @return A split up {@code String} array based on the specified source.
+	 * @return The parsed arguments.
 	 */
-	public static String[] split(String source) {
-		return split(source, '"');
+	public static String[] parse(String source) {
+		return parse(source, '"');
 	}
 
 	/**
-	 * Splits a {@code String} based on the specified delimiter.
+	 * Parses a single {@code String} by splitting them into arguments delimited
+	 * by the specified character.
 	 *
 	 * @param source The source string.
-	 * @param delim The delimiter.
-	 * @return A split up {@code String} array based on the specified source and
-	 *         delimiter.
+	 * @param delim The delimiter of the string.
+	 * @return The parsed arguments.
 	 */
-	public static String[] split(String source, char delim) {
-		List<String> out = new ArrayList<>();
-		StringBuilder entry = new StringBuilder();
-		source = source.trim();
-		byte[] str = source.getBytes();
-		for (int i = 0; i < str.length; ++i) {
-			char c = (char) str[i];
-			if (c != delim) {
-				for (; i < str.length; ++i) {
-					c = (char) str[i];
-					if (c != ' ' && c != delim) {
-						entry.append(c);
-					} else {
-						out.add(entry.toString());
-						entry.delete(0, entry.length());
-						break;
-					}
-				}
+	public static String[] parse(String source, char delim) {
+		List<String> arguments = new ArrayList<>();
+		StringBuilder bldr = new StringBuilder();
+		boolean quoted = false, escaped = false;
+
+		for (int i = 0, len = source.length(); i < len; i++) {
+			char c = source.charAt(i);
+			if (c == ' ' && !quoted) {
+				arguments.add(bldr.toString());
+				bldr.setLength(0);
+			} else if (c == delim && !escaped) {
+				quoted = !quoted;
+			} else if (c == '\\') {
+				escaped = true;
 			} else {
-				i += 1;
-				for (; i < str.length; ++i) {
-					c = (char) str[i];
-					if (c != delim) {
-						entry.append(c);
-					} else {
-						for (; i < str.length; ++i) {
-							c = (char) str[i];
-							if (c != ' ' && c != delim) {
-								i -= 1;
-								out.add(entry.toString());
-								entry.delete(0, entry.length());
-								break;
-							}
-						}
-						break;
-					}
-				}
-				if (entry.length() > 0) {
-					out.add(entry.toString());
-					entry.delete(0, entry.length());
-				}
+				escaped = false;
+				bldr.append(c);
 			}
 		}
-		return out.toArray(new String[out.size()]);
+
+		if (bldr.length() > 0) {
+			arguments.add(bldr.toString());
+		}
+
+		return Iterables.toArray(arguments, String.class);
 	}
 
 	/**
