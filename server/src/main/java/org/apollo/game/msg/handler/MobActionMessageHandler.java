@@ -23,22 +23,25 @@ public final class MobActionMessageHandler implements MessageHandler<MobActionMe
 		World world = player.getWorld();
 
 		if (player.getInterfaceSet().isOpen()) {
-			return;
+			player.getInterfaceSet().close();
 		}
 
 		GameCharacterRepository<Mob> repository = world.getMobRepository();
 
 		int index = msg.getIndex();
 		if (index < 1 || index >= repository.capacity()) {
+			player.getWalkingQueue().clear();
 			return;
 		}
 
 		Mob mob = repository.get(index);
 		if (mob == null || index != mob.getIndex()) {
+			player.getWalkingQueue().clear();
 			return;
 		}
 
 		if (!player.getPosition().isWithinDistance(mob.getPosition(), player.getViewingDistance() + 1)) {
+			player.getWalkingQueue().clear();
 			return;
 		}
 

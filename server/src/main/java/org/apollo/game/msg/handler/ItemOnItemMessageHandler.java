@@ -24,7 +24,7 @@ public final class ItemOnItemMessageHandler implements MessageHandler<ItemOnItem
 		Inventory inventory = player.getInventory();
 
 		if (player.getInterfaceSet().isOpen()) {
-			return;
+			player.getInterfaceSet().close();
 		}
 
 		if (msg.getReceiverSlot() < 0 || msg.getSenderSlot() < 0) {

@@ -24,6 +24,10 @@ public final class ItemActionMessageHandler implements MessageHandler<ItemAction
 	public void handle(Player player, ItemActionMessage message) {
 		World world = player.getWorld();
 
+		if (player.getInterfaceSet().isOpen()) {
+			player.getInterfaceSet().close();
+		}
+
 		if (message.getInterfaceId() < 0 || message.getInterfaceId() > InterfaceDefinition.count()) {
 			return;
 		}
@@ -37,12 +41,12 @@ public final class ItemActionMessageHandler implements MessageHandler<ItemAction
 			return;
 		}
 
-		if (!inventory.contains(message.getId())) {
+		Item item = inventory.get(message.getSlot());
+		if (item == null) {
 			return;
 		}
 
-		Item item = inventory.get(message.getSlot());
-		if (item == null || message.getId() != item.getId()) {
+		if (!inventory.contains(item.getId())) {
 			return;
 		}
 

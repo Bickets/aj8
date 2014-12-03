@@ -28,7 +28,7 @@ public final class ObjectMessageHandler implements MessageHandler<ObjectActionMe
 		World world = player.getWorld();
 
 		if (player.getInterfaceSet().isOpen()) {
-			return;
+			player.getInterfaceSet().close();
 		}
 
 		GameObject object = new GameObject(message.getId(), message.getPosition(), world);
@@ -39,18 +39,17 @@ public final class ObjectMessageHandler implements MessageHandler<ObjectActionMe
 		Set<GameObject> objects = region.getEntities(position, EntityCategory.GAME_OBJECT);
 
 		if (!containsObject(message.getId(), objects)) {
+			player.getWalkingQueue().clear();
 			return;
 		}
 
 		if (!definition.isInteractable()) {
-			return;
-		}
-
-		if (definition.getActions()[message.getOption().getId()] == null) {
+			player.getWalkingQueue().clear();
 			return;
 		}
 
 		if (!player.getPosition().isWithinDistance(position, player.getViewingDistance() + 1)) {
+			player.getWalkingQueue().clear();
 			return;
 		}
 
@@ -74,7 +73,7 @@ public final class ObjectMessageHandler implements MessageHandler<ObjectActionMe
 	 *         specified id, otherwise {@code false}.
 	 */
 	private boolean containsObject(int id, Set<GameObject> objects) {
-		return objects.stream().filter(o -> o.getId() == id).count() > 0;
+		return objects.stream().anyMatch(obj -> obj.getId() == id);
 	}
 
 }

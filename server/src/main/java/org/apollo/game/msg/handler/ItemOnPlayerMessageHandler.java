@@ -27,18 +27,20 @@ public final class ItemOnPlayerMessageHandler implements MessageHandler<ItemOnPl
 		World world = player.getWorld();
 
 		if (player.getInterfaceSet().isOpen()) {
-			return;
+			player.getInterfaceSet().close();
 		}
 
 		GameCharacterRepository<Player> repository = world.getPlayerRepository();
 
 		int victimIndex = message.getVictimIndex();
 		if (victimIndex < 1 || victimIndex >= repository.capacity()) {
+			player.getWalkingQueue().clear();
 			return;
 		}
 
 		Player victim = repository.get(victimIndex);
 		if (victim == null || victimIndex != victim.getIndex()) {
+			player.getWalkingQueue().clear();
 			return;
 		}
 
@@ -48,28 +50,34 @@ public final class ItemOnPlayerMessageHandler implements MessageHandler<ItemOnPl
 		}
 
 		if (!player.getPosition().isWithinDistance(victim.getPosition(), player.getViewingDistance() + 1)) {
+			player.getWalkingQueue().clear();
 			return;
 		}
 
 		if (message.getInterfaceId() < 0 || message.getInterfaceId() > InterfaceDefinition.count()) {
+			player.getWalkingQueue().clear();
 			return;
 		}
 
 		Inventory inventory = Interfaces.getInventoryForInterface(player, message.getInterfaceId());
 		if (inventory == null) {
+			player.getWalkingQueue().clear();
 			return;
 		}
 
 		if (message.getSlot() < 0 || message.getSlot() >= inventory.capacity()) {
-			return;
-		}
-
-		if (!inventory.contains(message.getId())) {
+			player.getWalkingQueue().clear();
 			return;
 		}
 
 		Item item = inventory.get(message.getSlot());
-		if (item == null || message.getId() != item.getId()) {
+		if (item == null) {
+			player.getWalkingQueue().clear();
+			return;
+		}
+
+		if (!inventory.contains(item.getId())) {
+			player.getWalkingQueue().clear();
 			return;
 		}
 

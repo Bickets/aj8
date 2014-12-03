@@ -22,18 +22,20 @@ public final class PlayerActionMessageHandler implements MessageHandler<PlayerAc
 		World world = player.getWorld();
 
 		if (player.getInterfaceSet().isOpen()) {
-			return;
+			player.getInterfaceSet().close();
 		}
 
 		GameCharacterRepository<Player> repository = world.getPlayerRepository();
 
 		int index = msg.getIndex();
 		if (index < 1 || index >= repository.capacity()) {
+			player.getWalkingQueue().clear();
 			return;
 		}
 
 		Player other = repository.get(index);
 		if (other == null || index != other.getIndex()) {
+			player.getWalkingQueue().clear();
 			return;
 		}
 
@@ -43,6 +45,7 @@ public final class PlayerActionMessageHandler implements MessageHandler<PlayerAc
 		}
 
 		if (!player.getPosition().isWithinDistance(other.getPosition(), player.getViewingDistance() + 1)) {
+			player.getWalkingQueue().clear();
 			return;
 		}
 
