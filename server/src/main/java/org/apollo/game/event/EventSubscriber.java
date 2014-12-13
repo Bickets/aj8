@@ -1,5 +1,9 @@
 package org.apollo.game.event;
 
+import java.util.function.Predicate;
+
+import org.apollo.game.model.Player;
+
 /**
  * Represents a single subscriber for some {@link Event}.
  *
@@ -7,15 +11,17 @@ package org.apollo.game.event;
  *
  * @param <E> The type of event to the subscriber.
  */
-public interface EventSubscriber<E extends Event> extends EventPredicate<E> {
+public interface EventSubscriber<E extends Event> extends Predicate<E> {
 
 	/**
 	 * A handler method which executes event specific logic if and only if
 	 * {@link #test(Event)} returns {@code true}.
 	 *
+	 * @param context The context of the event.
+	 * @param player The player to subscribe the event for.
 	 * @param event The event to subscribe.
 	 */
-	void subscribe(E event);
+	void subscribe(EventContext context, Player player, E event);
 
 	@Override
 	default boolean test(E event) {

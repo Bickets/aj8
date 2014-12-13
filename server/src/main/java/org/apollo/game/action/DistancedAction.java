@@ -60,9 +60,10 @@ public abstract class DistancedAction<T extends GameCharacter> extends Action<T>
 	@Override
 	public final void execute() {
 		if (reached) {
-			// some actions (e.g. agility) will cause the player to move away
-			// again
-			// so we don't check once the player got close enough once
+			/*
+			 * some actions (e.g. agility) will cause the player to move away
+			 * again so we don't check once the player got close enough once
+			 */
 			executeAction();
 		} else if (getCharacter().getPosition().getDistance(position) <= distance) {
 			reached = true;

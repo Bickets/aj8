@@ -1,5 +1,6 @@
 package plugin.items
 
+import org.apollo.game.event.EventContext
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ItemActionEvent
@@ -117,8 +118,9 @@ class WearEquipment implements EventSubscriber<ItemActionEvent> {
 		}
 	}
 
-	override subscribe(ItemActionEvent event) {
-		if (wear(event.player, event.id, event.slot)) {
+	override subscribe(EventContext context, Player player, ItemActionEvent event) {
+		if (!wear(player, event.id, event.slot)) {
+			context.breakSubscriberChain
 			return
 		}
 	}

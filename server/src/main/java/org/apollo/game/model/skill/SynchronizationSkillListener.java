@@ -47,7 +47,7 @@ public final class SynchronizationSkillListener implements SkillListener {
 
 		player.sendMessage("You've just advanced " + article + " " + name + " level! You have reached level " + level + ".");
 
-		if (level == 99) {
+		if (level == SkillSet.MAXIMUM_LEVEL) {
 			player.sendMessage("Well done! You've achieved the highest possible level in this skill.");
 		}
 

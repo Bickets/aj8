@@ -2,7 +2,6 @@ package org.apollo.game.interact;
 
 import org.apollo.game.event.Event;
 import org.apollo.game.model.Interfaces.InterfaceOption;
-import org.apollo.game.model.Player;
 
 /**
  * An event which manages single item actions.
@@ -10,11 +9,6 @@ import org.apollo.game.model.Player;
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class ItemActionEvent implements Event {
-
-	/**
-	 * The player to perform the item action for.
-	 */
-	private final Player player;
 
 	/**
 	 * The clicked interface option.
@@ -40,25 +34,16 @@ public final class ItemActionEvent implements Event {
 	 * Constructs a new {@link ItemActionEvent} with the specified player,
 	 * interface id, item id and item slot.
 	 *
-	 * @param player The player performing this event.
 	 * @param option The clicked interface option.
 	 * @param interfaceId The interface id.
 	 * @param id The items id.
 	 * @param slot The items slot.
 	 */
-	public ItemActionEvent(Player player, InterfaceOption option, int interfaceId, int id, int slot) {
-		this.player = player;
+	public ItemActionEvent(InterfaceOption option, int interfaceId, int id, int slot) {
 		this.option = option;
 		this.interfaceId = interfaceId;
 		this.id = id;
 		this.slot = slot;
-	}
-
-	/**
-	 * Returns the player performing this event.
-	 */
-	public Player getPlayer() {
-		return player;
 	}
 
 	/**

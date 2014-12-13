@@ -21,7 +21,7 @@ public final class ButtonMessageHandler implements MessageHandler<ButtonMessage>
 			return;
 		}
 
-		player.getWorld().post(new ButtonActionEvent(player, message.getInterfaceId()));
+		player.post(new ButtonActionEvent(message.getInterfaceId()));
 	}
 
 }

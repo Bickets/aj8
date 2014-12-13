@@ -53,7 +53,7 @@ public final class PlayerActionMessageHandler implements MessageHandler<PlayerAc
 			@Override
 			public void executeAction() {
 				player.turnTo(other.getPosition());
-				world.post(new PlayerActionEvent(player, other, msg.getOption()));
+				player.post(new PlayerActionEvent(other, msg.getOption()));
 				stop();
 			}
 		});

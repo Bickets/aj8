@@ -85,7 +85,7 @@ public final class ItemOnPlayerMessageHandler implements MessageHandler<ItemOnPl
 			@Override
 			public void executeAction() {
 				player.turnTo(victim.getPosition());
-				world.post(new ItemOnPlayerActionEvent(player, victim, item, message.getInterfaceId()));
+				player.post(new ItemOnPlayerActionEvent(victim, item, message.getInterfaceId()));
 				stop();
 			}
 		});

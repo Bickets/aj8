@@ -12,11 +12,6 @@ import org.apollo.game.model.Player;
 public final class PlayerActionEvent implements Event {
 
 	/**
-	 * The player interacting with the other player.
-	 */
-	private final Player player;
-
-	/**
 	 * The player being interacted with.
 	 */
 	private final Player other;
@@ -29,21 +24,12 @@ public final class PlayerActionEvent implements Event {
 	/**
 	 * Constructs a new {@link PlayerActionEvent}.
 	 *
-	 * @param player The player interacting with the other player.
 	 * @param other The player being interacted with.
 	 * @param option The interface option clicked.
 	 */
-	public PlayerActionEvent(Player player, Player other, InterfaceOption option) {
-		this.player = player;
+	public PlayerActionEvent(Player other, InterfaceOption option) {
 		this.other = other;
 		this.option = option;
-	}
-
-	/**
-	 * Returns the player who is interacting with the other player.
-	 */
-	public Player getPlayer() {
-		return player;
 	}
 
 	/**

@@ -1,5 +1,6 @@
 package plugin.items
 
+import org.apollo.game.event.EventContext
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ItemActionEvent
@@ -24,7 +25,7 @@ class RemoveEquipment implements EventSubscriber<ItemActionEvent> {
 
 		if (inventory.freeSlots == 0 && !itemDef.stackable) {
 			inventory.forceCapacityExceeded
-			return
+			return false
 		}
 
 		inventory.stopFiringEvents
@@ -47,10 +48,15 @@ class RemoveEquipment implements EventSubscriber<ItemActionEvent> {
 		} else {
 			inventory.forceCapacityExceeded
 		}
+
+		return true
 	}
 
-	override subscribe(ItemActionEvent event) {
-		remove(event.player, event.id, event.slot)
+	override subscribe(EventContext context, Player player, ItemActionEvent event) {
+		if (!remove(player, event.id, event.slot)) {
+			context.breakSubscriberChain
+			return
+		}
 	}
 
 	override test(ItemActionEvent event) {

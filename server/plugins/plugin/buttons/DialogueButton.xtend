@@ -1,8 +1,10 @@
 package plugin.buttons
 
+import org.apollo.game.event.EventContext
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ButtonActionEvent
+import org.apollo.game.model.Player
 import org.apollo.game.model.inter.InterfaceType
 import org.apollo.game.model.inter.dialog.DialogueOption
 
@@ -11,8 +13,12 @@ class DialogueButton implements EventSubscriber<ButtonActionEvent> {
 
 	val static ids = buildIds;
 
-	override subscribe(ButtonActionEvent event) {
-		val player = event.player
+	override subscribe(EventContext context, Player player, ButtonActionEvent event) {
+		if (!player.interfaceSet.contains(InterfaceType.DIALOGUE)) {
+			context.breakSubscriberChain
+			return
+		}
+
 		val option = DialogueOption.fromId(event.id)
 		player.interfaceSet.optionClicked(option)
 		player.interfaceSet.continueRequested
@@ -26,10 +32,7 @@ class DialogueButton implements EventSubscriber<ButtonActionEvent> {
 	}
 
 	override test(ButtonActionEvent event) {
-		val player = event.player
-		val hasId = ids.filter[it == event.id].size > 0
-
-		player.interfaceSet.contains(InterfaceType.DIALOGUE) && hasId
+		ids.filter[it == event.id].size > 0
 	}
 
 }

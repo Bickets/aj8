@@ -6,6 +6,7 @@ import java.nio.file.Path
 import java.nio.file.Paths
 import java.nio.file.SimpleFileVisitor
 import java.nio.file.attribute.BasicFileAttributes
+import org.apollo.ServerContext
 import org.apollo.game.event.Event
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
@@ -13,7 +14,6 @@ import org.apollo.game.model.World
 import plugin.mobs.MobSpawnEvent
 
 import static java.nio.file.FileVisitResult.*
-import org.apollo.ServerContext
 
 class Bootstrap {
 
@@ -71,7 +71,7 @@ class Bootstrap {
 	}
 
 	def spawnMobs(World world) {
-		world.post(new MobSpawnEvent(world))
+		world.post(null, new MobSpawnEvent(world))
 	}
 
 	new(ServerContext ctx) {

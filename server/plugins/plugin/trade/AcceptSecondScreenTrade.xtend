@@ -1,5 +1,6 @@
 package plugin.trade
 
+import org.apollo.game.event.EventContext
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ButtonActionEvent
@@ -16,29 +17,36 @@ import static plugin.Plugin.*
 @SubscribesTo(ButtonActionEvent)
 class AcceptSecondScreenTrade implements EventSubscriber<ButtonActionEvent> {
 
-	override subscribe(ButtonActionEvent event) {
-		val plr = event.player
-		val session = plr.fields.tradeSession
+	override subscribe(EventContext context, Player player, ButtonActionEvent event) {
+		val session = player.fields.tradeSession
+
+		if (!player.interfaceSet.contains(CONFIRM_TRADE_WINDOW_ID, CONFIRM_SIDEBAR_ID)) {
+			context.breakSubscriberChain
+			return
+		}
 
 		if (session == null) {
+			context.breakSubscriberChain
 			return
 		}
 
 		val other = session.other
 
-		if (other == null || session.player != plr || other == plr) {
+		if (other == null || session.player != player || other == player) {
+			context.breakSubscriberChain
 			return
 		}
 
 		val otherSession = other.fields.tradeSession
 
 		if (otherSession == null) {
+			context.breakSubscriberChain
 			return
 		}
 
 		if (validStatus(session.status) && validStatus(otherSession.status) && validStage(session.stage) &&
 			validStage(otherSession.stage)) {
-			plr.send(new SetInterfaceTextMessage(SECOND_SCREEN_TITLE_ID, "Waiting for other player..."))
+			player.send(new SetInterfaceTextMessage(SECOND_SCREEN_TITLE_ID, "Waiting for other player..."))
 			other.send(new SetInterfaceTextMessage(SECOND_SCREEN_TITLE_ID, "Other player has accepted."))
 
 			session.checkpoint(ACCEPTED_SECOND)
@@ -52,7 +60,7 @@ class AcceptSecondScreenTrade implements EventSubscriber<ButtonActionEvent> {
 				session.checkpoint(FINISHED)
 				otherSession.checkpoint(FINISHED)
 
-				finish(plr, other)
+				finish(player, other)
 			}
 		}
 	}
@@ -84,13 +92,12 @@ class AcceptSecondScreenTrade implements EventSubscriber<ButtonActionEvent> {
 		val cloned = trade.clone
 
 		trade.clear
-		trade.forceRefresh
 
 		return cloned.items
 	}
 
 	override test(ButtonActionEvent event) {
-		event.id == 3546 && event.player.interfaceSet.contains(CONFIRM_TRADE_WINDOW_ID, CONFIRM_SIDEBAR_ID)
+		event.id == 3546
 	}
 
 }

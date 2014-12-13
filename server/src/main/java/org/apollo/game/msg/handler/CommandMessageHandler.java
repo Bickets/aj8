@@ -25,7 +25,7 @@ public final class CommandMessageHandler implements MessageHandler<CommandMessag
 
 		System.arraycopy(components, 1, arguments, 0, arguments.length);
 
-		player.getWorld().post(new CommandEvent(player, name, arguments));
+		player.post(new CommandEvent(name, arguments));
 	}
 
 }

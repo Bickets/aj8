@@ -1,7 +1,6 @@
 package org.apollo.game.command;
 
 import org.apollo.game.event.Event;
-import org.apollo.game.model.Player;
 
 /**
  * Represents a command event.
@@ -10,11 +9,6 @@ import org.apollo.game.model.Player;
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class CommandEvent implements Event {
-
-	/**
-	 * The player executing this command.
-	 */
-	private final Player player;
 
 	/**
 	 * The name of the command.
@@ -29,21 +23,12 @@ public final class CommandEvent implements Event {
 	/**
 	 * Creates the command.
 	 *
-	 * @param player The player executing this command.
 	 * @param name The name of the command.
 	 * @param arguments The command's arguments.
 	 */
-	public CommandEvent(Player player, String name, String[] arguments) {
-		this.player = player;
+	public CommandEvent(String name, String[] arguments) {
 		this.name = name;
 		this.arguments = arguments;
-	}
-
-	/**
-	 * Returns the player executing this command.
-	 */
-	public Player getPlayer() {
-		return player;
 	}
 
 	/**

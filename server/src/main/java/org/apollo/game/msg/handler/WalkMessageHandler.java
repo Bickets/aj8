@@ -23,7 +23,6 @@ public final class WalkMessageHandler implements MessageHandler<WalkMessage> {
 		WalkingQueue queue = player.getWalkingQueue();
 		Position[] steps = message.getSteps();
 
-		
 		if (!queue.addFirstStep(steps[0])) {
 			return;
 		}

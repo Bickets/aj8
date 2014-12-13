@@ -1,5 +1,6 @@
 package plugin.trade
 
+import org.apollo.game.event.EventContext
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ButtonActionEvent
@@ -19,29 +20,36 @@ import static org.apollo.game.model.inter.trade.TradeStatus.*
 @SubscribesTo(ButtonActionEvent)
 class AcceptFirstScreenTrade implements EventSubscriber<ButtonActionEvent> {
 
-	override subscribe(ButtonActionEvent event) {
-		val plr = event.player
-		val session = plr.fields.tradeSession
+	override subscribe(EventContext context, Player player, ButtonActionEvent event) {
+		val session = player.fields.tradeSession
 
 		if (session == null) {
+			context.breakSubscriberChain
+			return
+		}
+
+		if (!player.interfaceSet.contains(TRADE_WINDOW_ID, SIDEBAR_ID)) {
+			context.breakSubscriberChain
 			return
 		}
 
 		val other = session.other
 
-		if (other == null || session.player != plr || other == plr) {
+		if (other == null || session.player != player || other == player) {
+			context.breakSubscriberChain
 			return
 		}
 
 		val otherSession = other.fields.tradeSession
 
 		if (otherSession == null) {
+			context.breakSubscriberChain
 			return
 		}
 
 		if (validStatus(session.status) && validStatus(otherSession.status) && validStage(session.stage) &&
 			validStage(otherSession.stage)) {
-			plr.send(new SetInterfaceTextMessage(FIRST_SCREEN_MESSAGE_ID, "Waiting for other player..."))
+			player.send(new SetInterfaceTextMessage(FIRST_SCREEN_MESSAGE_ID, "Waiting for other player..."))
 			other.send(new SetInterfaceTextMessage(FIRST_SCREEN_MESSAGE_ID, "Other player has accepted."))
 
 			session.checkpoint(ACCEPTED_FIRST)
@@ -55,7 +63,7 @@ class AcceptFirstScreenTrade implements EventSubscriber<ButtonActionEvent> {
 				session.checkpoint(SECOND_SCREEN)
 				otherSession.checkpoint(SECOND_SCREEN)
 
-				openSecond(plr, other)
+				openSecond(player, other)
 			}
 		}
 	}
@@ -124,7 +132,7 @@ class AcceptFirstScreenTrade implements EventSubscriber<ButtonActionEvent> {
 	}
 
 	override test(ButtonActionEvent event) {
-		event.id == 3420 && event.player.interfaceSet.contains(TRADE_WINDOW_ID, SIDEBAR_ID)
+		event.id == 3420
 	}
 
 }

@@ -49,7 +49,7 @@ public final class MobActionMessageHandler implements MessageHandler<MobActionMe
 			@Override
 			public void executeAction() {
 				player.turnTo(mob.getPosition());
-				world.post(new MobActionEvent(player, mob, msg.getOption()));
+				player.post(new MobActionEvent(mob, msg.getOption()));
 				stop();
 			}
 		});

@@ -252,10 +252,11 @@ public final class World {
 	/**
 	 * Posts an event to this worlds event provider.
 	 *
+	 * @param player The player to post the event for.
 	 * @param event The event to post.
 	 */
-	public <E extends Event> void post(E event) {
-		eventProvider.post(event);
+	public <E extends Event> void post(Player player, E event) {
+		eventProvider.post(player, event);
 	}
 
 	/**

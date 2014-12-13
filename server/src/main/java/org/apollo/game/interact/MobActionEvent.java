@@ -3,7 +3,6 @@ package org.apollo.game.interact;
 import org.apollo.game.event.Event;
 import org.apollo.game.model.Interfaces.InterfaceOption;
 import org.apollo.game.model.Mob;
-import org.apollo.game.model.Player;
 
 /**
  * An event which is invoked when interacting with some {@link Mob}.
@@ -11,11 +10,6 @@ import org.apollo.game.model.Player;
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class MobActionEvent implements Event {
-
-	/**
-	 * The player interacting with the mob.
-	 */
-	private final Player player;
 
 	/**
 	 * The mob being interacted with.
@@ -30,21 +24,12 @@ public final class MobActionEvent implements Event {
 	/**
 	 * Constructs a new {@link MobActionEvent}.
 	 *
-	 * @param player The player interacting with the mob.
 	 * @param mob The mob who is being interacted with.
 	 * @param option The clicked interface option.
 	 */
-	public MobActionEvent(Player player, Mob mob, InterfaceOption option) {
-		this.player = player;
+	public MobActionEvent(Mob mob, InterfaceOption option) {
 		this.mob = mob;
 		this.option = option;
-	}
-
-	/**
-	 * Returns the player interacting with the mob.
-	 */
-	public Player getPlayer() {
-		return player;
 	}
 
 	/**

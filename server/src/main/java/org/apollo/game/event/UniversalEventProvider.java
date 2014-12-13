@@ -1,10 +1,9 @@
 package org.apollo.game.event;
 
-import static java.util.Objects.requireNonNull;
-
 import java.util.Collection;
 
 import org.apollo.game.event.annotate.SubscribesTo;
+import org.apollo.game.model.Player;
 
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
@@ -22,10 +21,13 @@ public final class UniversalEventProvider implements EventProvider {
 	@SuppressWarnings("rawtypes")
 	private final Multimap<Class<? extends Event>, EventSubscriber> events = ArrayListMultimap.create();
 
-	@Override
-	public <E extends Event> void provideSubscriber(EventSubscriber<E> subscriber) {
-		requireNonNull(subscriber);
+	/**
+	 * The universal context of this event provider.
+	 */
+	private final EventContext context = new UniversalEventContext();
 
+	@Override
+	public void provideSubscriber(EventSubscriber<?> subscriber) {
 		SubscribesTo annotation = subscriber.getClass().getAnnotation(SubscribesTo.class);
 		if (annotation == null) {
 			throw new NullPointerException(subscriber.toString() + " is not annotated with @SubscribesTo");
@@ -35,9 +37,7 @@ public final class UniversalEventProvider implements EventProvider {
 	}
 
 	@Override
-	public <E extends Event> void depriveSubscriber(EventSubscriber<E> subscriber) {
-		requireNonNull(subscriber);
-
+	public void depriveSubscriber(EventSubscriber<?> subscriber) {
 		SubscribesTo annotation = subscriber.getClass().getAnnotation(SubscribesTo.class);
 		if (annotation == null) {
 			throw new NullPointerException(subscriber.toString() + " is not annotated with @SubscribesTo");
@@ -46,16 +46,24 @@ public final class UniversalEventProvider implements EventProvider {
 		events.remove(annotation.value(), subscriber);
 	}
 
-	@SuppressWarnings({ "unchecked", "rawtypes" })
+	@SuppressWarnings({ "rawtypes", "unchecked" })
 	@Override
-	public <E extends Event> void post(E event) {
+	public <E extends Event> void post(Player player, E event) {
 		Collection<EventSubscriber> subscribers = events.get(event.getClass());
 
-		subscribers.forEach(subscriber -> {
+		for (EventSubscriber<E> subscriber : subscribers) {
+			/* Check to be sure we can subscribe to the event. */
 			if (subscriber.test(event)) {
-				subscriber.subscribe(event);
+				subscriber.subscribe(context, player, event);
+
+				/* If the chain is broken, don't continue parsing subscribers. */
+				if (context.isChainBroken()) {
+					break;
+				}
 			}
-		});
+		}
+
+		context.repairSubscriberChain();
 	}
 
 }

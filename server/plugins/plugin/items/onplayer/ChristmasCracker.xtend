@@ -1,6 +1,7 @@
 package plugin.items.onplayer
 
 import java.util.Map
+import org.apollo.game.event.EventContext
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ItemOnPlayerActionEvent
@@ -39,10 +40,21 @@ class ChristmasCracker implements EventSubscriber<ItemOnPlayerActionEvent> {
 		563 -> 1 -> 3.96
 	)
 
-	override subscribe(ItemOnPlayerActionEvent event) {
-		val player = event.player
-		val other = event.otherPlayer
+	override subscribe(EventContext context, Player player, ItemOnPlayerActionEvent event) {
+		val other = event.other
 
+		if (player.inventory.freeSlots < 1) {
+			player.sendMessage("You do not have enough inventory space to do that.")
+			context.breakSubscriberChain
+			return
+		}
+
+		if (other.inventory.freeSlots < 2) {
+			player.sendMessage("Other player does not have enough inventory space to do that.")
+			context.breakSubscriberChain
+			return
+		}
+		
 		player.interfaceSet.openDialogue(
 			new OptionDialogueListener() {
 				override optionClicked(DialogueOption option) {
@@ -94,24 +106,7 @@ class ChristmasCracker implements EventSubscriber<ItemOnPlayerActionEvent> {
 	}
 
 	override test(ItemOnPlayerActionEvent event) {
-		if (event.item.id != 962 || event.interfaceId != InventoryConstants.INVENTORY_ID) {
-			return false
-		}
-
-		val player = event.player
-		val other = event.otherPlayer
-
-		if (player.inventory.freeSlots < 1) {
-			player.sendMessage("You do not have enough inventory space to do that.")
-			return false
-		}
-
-		if (other.inventory.freeSlots < 2) {
-			player.sendMessage("Other player does not have enough inventory space to do that.")
-			return false
-		}
-
-		return true
+		return event.item.id == 962 || event.interfaceId == InventoryConstants.INVENTORY_ID
 	}
 
 }

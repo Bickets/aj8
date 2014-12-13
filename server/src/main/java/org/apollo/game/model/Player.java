@@ -5,6 +5,7 @@ import io.netty.util.internal.StringUtil;
 import java.util.ArrayDeque;
 import java.util.Queue;
 
+import org.apollo.game.event.Event;
 import org.apollo.game.model.HeadIcon.Prayer;
 import org.apollo.game.model.HeadIcon.Skull;
 import org.apollo.game.model.Inventory.StackMode;
@@ -492,6 +493,15 @@ public final class Player extends GameCharacter {
 		getBank().forceRefresh();
 
 		getSkillSet().forceRefresh();
+	}
+
+	/**
+	 * Posts an event to this world's event provider.
+	 * 
+	 * @param event The event to post.
+	 */
+	public <E extends Event> void post(E event) {
+		world.post(this, event);
 	}
 
 	/**

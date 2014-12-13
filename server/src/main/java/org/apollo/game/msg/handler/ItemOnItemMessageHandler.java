@@ -4,7 +4,6 @@ import org.apollo.game.interact.ItemOnItemActionEvent;
 import org.apollo.game.model.Inventory;
 import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
-import org.apollo.game.model.World;
 import org.apollo.game.msg.MessageHandler;
 import org.apollo.game.msg.annotate.HandlesMessage;
 import org.apollo.game.msg.impl.ItemOnItemMessage;
@@ -19,8 +18,6 @@ public final class ItemOnItemMessageHandler implements MessageHandler<ItemOnItem
 
 	@Override
 	public void handle(Player player, ItemOnItemMessage msg) {
-		World world = player.getWorld();
-
 		Inventory inventory = player.getInventory();
 
 		if (player.getInterfaceSet().isOpen()) {
@@ -46,7 +43,7 @@ public final class ItemOnItemMessageHandler implements MessageHandler<ItemOnItem
 			return;
 		}
 
-		world.post(new ItemOnItemActionEvent(player, receiver, sender));
+		player.post(new ItemOnItemActionEvent(receiver, sender));
 	}
 
 }

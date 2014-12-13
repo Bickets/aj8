@@ -1,5 +1,7 @@
 package org.apollo.game.event;
 
+import org.apollo.game.model.Player;
+
 /**
  * An event provider provides support for dynamic {@link Event} posting,
  * depriving and providing {@link EventSubscriber}s
@@ -13,20 +15,22 @@ public interface EventProvider {
 	 *
 	 * @param subscriber The subscriber to provide.
 	 */
-	<E extends Event> void provideSubscriber(EventSubscriber<E> subscriber);
+	void provideSubscriber(EventSubscriber<?> subscriber);
 
 	/**
 	 * Deprives an {@link EventSubscriber} for the specified event.
 	 *
 	 * @param subscriber The subscriber to deprive.
 	 */
-	<E extends Event> void depriveSubscriber(EventSubscriber<E> subscriber);
+	void depriveSubscriber(EventSubscriber<?> subscriber);
 
 	/**
 	 * Posts an {@link Event}, notifying all provided subscribers.
 	 *
+	 * @param <E> The event type reference.
+	 * @param player The player to post the event for.
 	 * @param event The event to post.
 	 */
-	<E extends Event> void post(E event);
+	<E extends Event> void post(Player player, E event);
 
 }

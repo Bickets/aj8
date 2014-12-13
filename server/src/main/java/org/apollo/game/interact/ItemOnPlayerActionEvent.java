@@ -13,14 +13,9 @@ import org.apollo.game.model.Player;
 public final class ItemOnPlayerActionEvent implements Event {
 
 	/**
-	 * The player.
-	 */
-	private final Player player;
-
-	/**
 	 * The other player.
 	 */
-	private final Player otherPlayer;
+	private final Player other;
 
 	/**
 	 * The item.
@@ -35,25 +30,14 @@ public final class ItemOnPlayerActionEvent implements Event {
 	/**
 	 * Constructs a new instance of this event.
 	 *
-	 * @param player The player.
-	 * @param otherPlayer The other player.
+	 * @param other The other player.
 	 * @param item The item.
 	 * @param interfaceId The interface id.
 	 */
-	public ItemOnPlayerActionEvent(Player player, Player otherPlayer, Item item, int interfaceId) {
-		this.player = player;
-		this.otherPlayer = otherPlayer;
+	public ItemOnPlayerActionEvent(Player other, Item item, int interfaceId) {
+		this.other = other;
 		this.item = item;
 		this.interfaceId = interfaceId;
-	}
-
-	/**
-	 * Gets the player.
-	 *
-	 * @return The player.
-	 */
-	public Player getPlayer() {
-		return player;
 	}
 
 	/**
@@ -61,8 +45,8 @@ public final class ItemOnPlayerActionEvent implements Event {
 	 *
 	 * @return The other player.
 	 */
-	public Player getOtherPlayer() {
-		return otherPlayer;
+	public Player getOther() {
+		return other;
 	}
 
 	/**

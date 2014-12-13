@@ -1,15 +1,17 @@
 package plugin.items.onplayer
 
+import org.apollo.game.event.EventContext
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ItemOnPlayerActionEvent
 import org.apollo.game.model.InventoryConstants
+import org.apollo.game.model.Player
 
 @SubscribesTo(ItemOnPlayerActionEvent)
 class TinderboxOnPlayer implements EventSubscriber<ItemOnPlayerActionEvent> {
 
-	override subscribe(ItemOnPlayerActionEvent event) {
-		event.player.sendMessage("Why would you do that to someone? You're sick.")
+	override subscribe(EventContext context, Player player, ItemOnPlayerActionEvent event) {
+		player.sendMessage("Why would you do that to someone? You're sick.")
 	}
 
 	override test(ItemOnPlayerActionEvent event) {

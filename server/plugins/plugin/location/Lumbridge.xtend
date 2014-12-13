@@ -1,14 +1,16 @@
 package plugin.location
 
+import org.apollo.game.event.EventContext
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
+import org.apollo.game.model.Player
 import org.apollo.game.model.Position
 import plugin.mobs.MobSpawnEvent
 
 @SubscribesTo(MobSpawnEvent)
 class Lumbridge implements EventSubscriber<MobSpawnEvent> {
 
-	override subscribe(MobSpawnEvent event) {
+	override subscribe(EventContext context, Player player, MobSpawnEvent event) {
 		event.spawn("Lumbridge Guide", 2244, new Position(3232, 3232, 0), 4)
 		event.spawn("Farmer", 7, new Position(3251, 3326, 0), 4)
 		event.spawn("Butterfly", 154, new Position(3224, 3223, 0), 4)
