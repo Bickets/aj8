@@ -1,6 +1,6 @@
 package org.apollo.game.attribute;
 
-import static java.util.Objects.requireNonNull;
+import java.util.Objects;
 
 /**
  * Represents a key for an {@link Attribute<T>}
@@ -24,20 +24,19 @@ public final class AttributeKey<T> {
 	private final T initial;
 
 	/**
-	 * Constructs a new {@link AttributeKey<T>} with the specified name.
+	 * Constructs a new {@link AttributeKey} with the specified name and initial
+	 * value.
 	 *
 	 * @param name The name of this attribute, may not be {@code null}.
 	 * @param initial The initial value of the specified type reference.
-	 * @throws NullPointerException If the specified name or initial is
-	 *             {@code null}.
 	 *
-	 *             <p>
-	 *             This constructor should not be invoked directly, use
-	 *             {@link #valueOf(String)} instead!
-	 *             </p>
+	 *            <p>
+	 *            This constructor should not be invoked directly, use
+	 *            {@link #valueOf(String, Object)} instead!
+	 *            </p>
 	 */
 	private AttributeKey(String name, T initial) {
-		this.name = requireNonNull(name);
+		this.name = Objects.requireNonNull(name);
 		this.initial = initial;
 	}
 
@@ -56,12 +55,13 @@ public final class AttributeKey<T> {
 	}
 
 	/**
-	 * Constructs a new {@link AttributeKey<T>} with the specified name.
+	 * Constructs a new {@link AttributeKey<T>} with the specified name and
+	 * initial value.
 	 *
+	 * @param <T> The attributes values type reference.
 	 * @param name The name of this attribute, may not be {@code null}.
 	 * @param initial The initial value of the specified type reference.
-	 * @throws NullPointerException If the specified name is {@code null}.
-	 * @see {@link #AttributeKey(String)}
+	 * @see {@link AttributeKey(String, T)}
 	 */
 	public static <T> AttributeKey<T> valueOf(String name, T initial) {
 		return new AttributeKey<>(name, initial);

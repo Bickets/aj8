@@ -1,6 +1,6 @@
 package org.apollo.game.attribute;
 
-import static java.util.Objects.requireNonNull;
+import java.util.Objects;
 
 /**
  * Represents a single attribute.
@@ -27,15 +27,13 @@ final class Attribute<T> {
 	private final T value;
 
 	/**
-	 * Constructs a new {@link Attribute<T>} with the specified key and value.
+	 * Constructs a new {@link Attribute} with the specified key and value.
 	 *
 	 * @param key This attributes key, may not be {@code null}.
 	 * @param value This attributes value.
-	 * @throws NullPointerException If the specified key or value is
-	 *             {@code null}.
 	 */
 	protected Attribute(AttributeKey<T> key, T value) {
-		this.key = requireNonNull(key);
+		this.key = Objects.requireNonNull(key);
 		this.value = value;
 	}
 
