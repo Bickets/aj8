@@ -316,7 +316,7 @@ public final class SkillSet {
 		int points = 0;
 		for (int index = 0; index < experiences.length; index++) {
 			int level = index + 1;
-			points += Math.round(level + 300.0 * Math.pow(2D, level / 7.0));
+			points += Math.round(level + 300.0 * Math.pow(2.0, level / 7.0));
 			experiences[index] = points / 4;
 		}
 	}
