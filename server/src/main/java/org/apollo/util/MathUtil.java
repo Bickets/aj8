@@ -3,7 +3,7 @@ package org.apollo.util;
 /**
  * A utility-class for dealing with math functions not native to the
  * {@link Math} class.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class MathUtil {
@@ -12,7 +12,7 @@ public final class MathUtil {
 	 * Returns the greater of three {@code int} values. That is, the result is
 	 * the argument closer to the value of {@link Integer#MAX_VALUE}. If the
 	 * arguments have the same value, the result is that same value.
-	 * 
+	 *
 	 * @param a The first {@code int} value to compare.
 	 * @param b The second {@code int} value to compare.
 	 * @param c The third {@code int} value to compare.

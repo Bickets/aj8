@@ -1,8 +1,8 @@
 package org.apollo.util;
 
-import java.io.ByteArrayOutputStream;
-
 import io.netty.buffer.ByteBuf;
+
+import java.io.ByteArrayOutputStream;
 
 import org.apollo.net.NetworkConstants;
 
