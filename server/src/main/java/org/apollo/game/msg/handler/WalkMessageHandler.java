@@ -1,6 +1,6 @@
 package org.apollo.game.msg.handler;
 
-import static java.util.stream.IntStream.range;
+import java.util.stream.IntStream;
 
 import org.apollo.game.model.Player;
 import org.apollo.game.model.Position;
@@ -23,13 +23,14 @@ public final class WalkMessageHandler implements MessageHandler<WalkMessage> {
 		WalkingQueue queue = player.getWalkingQueue();
 		Position[] steps = message.getSteps();
 
+		
 		if (!queue.addFirstStep(steps[0])) {
 			return;
 		}
 
 		queue.setRunningQueue(message.isRunning());
 
-		range(1, steps.length).forEach(index -> queue.addStep(steps[index]));
+		IntStream.range(1, steps.length).forEach(index -> queue.addStep(steps[index]));
 
 		player.stopAction();
 		player.getInterfaceSet().close();

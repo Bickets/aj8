@@ -1,6 +1,6 @@
 package org.apollo.game.model.area;
 
-import static com.google.common.base.MoreObjects.toStringHelper;
+import io.netty.util.internal.StringUtil;
 
 import org.apollo.game.model.Position;
 
@@ -80,8 +80,8 @@ public abstract class Area {
 	public abstract Position randomPosition(int height);
 
 	@Override
-	public final String toString() {
-		return toStringHelper(this).add("center()", center()).toString();
+	public String toString() {
+		return StringUtil.simpleClassName(this) + " [center()=" + center() + "]";
 	}
 
 }

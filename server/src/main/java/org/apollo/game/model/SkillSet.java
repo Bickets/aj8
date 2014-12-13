@@ -1,12 +1,12 @@
 package org.apollo.game.model;
 
-import static java.util.Arrays.setAll;
-import static java.util.stream.Stream.of;
-
+import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Stream;
 
 import org.apollo.game.model.skill.SkillListener;
+import org.apollo.util.MathUtil;
 
 /**
  * Represents the set of the players skills.
@@ -19,6 +19,11 @@ public final class SkillSet {
 	 * The number of skills.
 	 */
 	public static final int SKILL_COUNT = 21;
+
+	/**
+	 * The maximum level.
+	 */
+	public static final int MAXIMUM_LEVEL = 99;
 
 	/**
 	 * The maximum allowed experience.
@@ -34,6 +39,11 @@ public final class SkillSet {
 	 * A array of {@code Skill[]}s which represents each skill.
 	 */
 	private final Skill[] skills = new Skill[SKILL_COUNT];
+
+	/**
+	 * The cached experiences for every level.
+	 */
+	private static final int[] experiences = new int[MAXIMUM_LEVEL];
 
 	/**
 	 * A flag indicating if events are being fired.
@@ -60,7 +70,7 @@ public final class SkillSet {
 	 * Initializes the skill set.
 	 */
 	private void init() {
-		setAll(skills, skill -> skill == Skill.HITPOINTS ? new Skill(1154, 10, 10) : new Skill(0, 1, 1));
+		Arrays.setAll(skills, skill -> skill == Skill.HITPOINTS ? new Skill(1154, 10, 10) : new Skill(0, 1, 1));
 	}
 
 	/**
@@ -86,11 +96,7 @@ public final class SkillSet {
 
 		Skill old = skills[id];
 
-		double newExperience = old.getExperience() + experience;
-
-		if (newExperience > MAXIMUM_EXP) {
-			newExperience = MAXIMUM_EXP;
-		}
+		double newExperience = Math.max(old.getExperience() + experience, MAXIMUM_EXP);
 
 		int newCurrentLevel = old.getCurrentLevel();
 		int newMaximumLevel = getLevelForExperience(newExperience);
@@ -108,12 +114,24 @@ public final class SkillSet {
 	}
 
 	/**
+	 * Checks whether or not the specified skill is a combat related skill or
+	 * not.
+	 *
+	 * @param id The id of the skill to check.
+	 * @return {@code true} if and only if the specified skill is a combat
+	 *         related skill, otherwise {@code false}.
+	 */
+	public boolean isCombatSkill(int id) {
+		return id < 7;
+	}
+
+	/**
 	 * Gets the total level for this skill set.
 	 *
 	 * @return The total level.
 	 */
 	public int getTotalLevel() {
-		return of(skills).mapToInt(skill -> skill.getMaximumLevel()).sum();
+		return Stream.of(skills).mapToInt(skill -> skill.getMaximumLevel()).sum();
 	}
 
 	/**
@@ -130,15 +148,11 @@ public final class SkillSet {
 		int ranged = skills[Skill.RANGED].getMaximumLevel();
 		int magic = skills[Skill.MAGIC].getMaximumLevel();
 
-		double combatLevel = (defence + hitpoints + Math.floor(prayer / 2)) * 0.25;
+		int baseLevel = defence + hitpoints + prayer / 2;
+		int classLevel = MathUtil.max(attack + strength, 2 * magic, 2 * ranged) * 13 / 10;
+		int combatLevel = baseLevel + classLevel / 4;
 
-		double melee = (attack + strength) * 0.325;
-
-		double range = ranged * 0.4875;
-
-		double mage = magic * 0.4875;
-
-		return (int) (combatLevel + Math.max(melee, Math.max(range, mage)));
+		return combatLevel;
 	}
 
 	/**
@@ -148,16 +162,7 @@ public final class SkillSet {
 	 * @return The minimum experience.
 	 */
 	public static double getExperienceForLevel(int level) {
-		int points = 0;
-		int output = 0;
-		for (int lvl = 1; lvl <= level; lvl++) {
-			points += Math.floor(lvl + 300.0 * Math.pow(2.0, lvl / 7.0));
-			if (lvl >= level) {
-				return output;
-			}
-			output = (int) Math.floor(points / 4);
-		}
-		return 0;
+		return experiences[--level > 98 ? 98 : level];
 	}
 
 	/**
@@ -167,16 +172,12 @@ public final class SkillSet {
 	 * @return The minimum level.
 	 */
 	public static int getLevelForExperience(double experience) {
-		int points = 0;
-		int output;
-		for (int lvl = 1; lvl <= 99; lvl++) {
-			points += Math.floor(lvl + 300.0 * Math.pow(2.0, lvl / 7.0));
-			output = (int) Math.floor(points / 4);
-			if (output >= experience + 1) {
-				return lvl;
+		for (int level = 98; level != -1; level--) {
+			if (experiences[level] <= experience) {
+				return level + 1;
 			}
 		}
-		return 99;
+		return 0;
 	}
 
 	/**
@@ -303,6 +304,21 @@ public final class SkillSet {
 	 */
 	public void removeAllListeners() {
 		listeners.clear();
+	}
+
+	/**
+	 * Lazily initializes the {@link experiences} array and caches the values
+	 * for use later in the {@link getLevelForExperience(double)} and {@link
+	 * getExperienceForLevel(int)} methods. This is to speed up calculation of
+	 * the specified operations which may be costly if calculated on-demand.
+	 */
+	static {
+		int points = 0;
+		for (int index = 0; index < experiences.length; index++) {
+			int level = index + 1;
+			points += Math.round(level + 300.0 * Math.pow(2D, level / 7.0));
+			experiences[index] = points / 4;
+		}
 	}
 
 }

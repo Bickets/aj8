@@ -1,5 +1,7 @@
 package org.apollo.game.model.skill;
 
+import java.util.stream.IntStream;
+
 import org.apollo.game.model.Graphic;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.Skill;
@@ -38,17 +40,20 @@ public final class SynchronizationSkillListener implements SkillListener {
 		String article = LanguageUtil.getIndefiniteArticle(name);
 		int level = skill.getMaximumLevel();
 		LevelUpDefinition definition = LevelUpDefinition.fromId(id);
+
 		player.send(new SetInterfaceTextMessage(definition.getFirstChildId(), "Congratulations! You've just advanced " + article + " " + name + " level!"));
 		player.send(new SetInterfaceTextMessage(definition.getSecondChildId(), "You have now reached level " + level + "!"));
 		player.send(new OpenDialogueInterfaceMessage(definition.getInterfaceId()));
+
 		player.sendMessage("You've just advanced " + article + " " + name + " level! You have reached level " + level + ".");
+
 		if (level == 99) {
 			player.sendMessage("Well done! You've achieved the highest possible level in this skill.");
 		}
+
 		player.playGraphic(new Graphic(199, 0, 100));
 
-		// Only update appearance if we level up a combat skill
-		if (id < 7) {
+		if (set.isCombatSkill(id)) {
 			player.updateApprarance();
 		}
 	}
@@ -60,9 +65,7 @@ public final class SynchronizationSkillListener implements SkillListener {
 
 	@Override
 	public void skillsUpdated(SkillSet set) {
-		for (int id = 0; id < set.size(); id++) {
-			player.send(new UpdateSkillMessage(id, set.getSkill(id)));
-		}
+		IntStream.range(0, set.size()).forEach(id -> player.send(new UpdateSkillMessage(id, set.getSkill(id))));
 	}
 
 }
