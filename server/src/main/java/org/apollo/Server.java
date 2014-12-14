@@ -201,10 +201,10 @@ final class Server {
 	 * @throws IOException If some I/O error occurs.
 	 */
 	public void start() throws IOException {
+		world.init(fileSystem);
+
 		services().forEach(service -> service.init());
 		services().forEach(service -> service.start());
-
-		world.init(fileSystem);
 	}
 
 	/**

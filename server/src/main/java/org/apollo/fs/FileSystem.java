@@ -9,6 +9,7 @@ import java.nio.channels.SeekableByteChannel;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
 import java.util.zip.CRC32;
 
 import com.google.common.base.Preconditions;
@@ -120,19 +121,19 @@ public final class FileSystem {
 	 */
 	public Archive getArchive(int id) {
 		Preconditions.checkElementIndex(id, archives.length);
-		Preconditions.checkNotNull(archives[id]);
-		return archives[id];
+		return Objects.requireNonNull(archives[id]);
 	}
 
 	public Cache getCache(int id) {
 		Preconditions.checkElementIndex(id, caches.length);
-		Preconditions.checkNotNull(caches[id]);
-		return caches[id];
+		return Objects.requireNonNull(caches[id]);
 	}
 
 	public ByteBuffer getFile(int cacheId, int indexId) throws IOException {
 		Cache cache = getCache(cacheId);
-		return cache.get(indexId);
+		synchronized (cache) {
+			return cache.get(indexId);
+		}
 	}
 
 	public ByteBuffer getArchiveHashes() throws IOException {
