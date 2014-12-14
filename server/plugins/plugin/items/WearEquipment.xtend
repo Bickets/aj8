@@ -127,10 +127,24 @@ class WearEquipment implements EventSubscriber<ItemActionEvent> {
 
 	override test(ItemActionEvent event) {
 		val definition = ItemDefinition.forId(event.id)
-		if (!definition.inventoryActions.contains("Wield") && !definition.inventoryActions.contains("Wear")) {
-			return false
+
+		wearable(definition) && event.interfaceId == InventoryConstants.INVENTORY_ID &&
+			event.option == InterfaceOption.OPTION_ONE
+	}
+
+	// TODO: Maybe move this into the definition class itself..
+	def wearable(ItemDefinition ^def) {
+		val actions = def.inventoryActions
+
+		if(actions.size == 0) return false
+
+		return switch actions.get(1) {
+			case "Wield": true
+			case "Wear": true
+			case "Ride": true
+			case "Hold": true
+			default: false
 		}
-		event.interfaceId == InventoryConstants.INVENTORY_ID && event.option == InterfaceOption.OPTION_ONE
 	}
 
 }
