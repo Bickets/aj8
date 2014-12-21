@@ -96,7 +96,7 @@ public final class SkillSet {
 
 		Skill old = skills[id];
 
-		double newExperience = Math.max(old.getExperience() + experience, MAXIMUM_EXP);
+		double newExperience = Math.min(old.getExperience() + experience, MAXIMUM_EXP);
 
 		int newCurrentLevel = old.getCurrentLevel();
 		int newMaximumLevel = getLevelForExperience(newExperience);
@@ -148,9 +148,8 @@ public final class SkillSet {
 		int ranged = skills[Skill.RANGED].getMaximumLevel();
 		int magic = skills[Skill.MAGIC].getMaximumLevel();
 
-		int baseLevel = defence + hitpoints + prayer / 2;
-		int classLevel = MathUtil.max(attack + strength, 2 * magic, 2 * ranged) * 13 / 10;
-		int combatLevel = baseLevel + classLevel / 4;
+		int baseLevel = MathUtil.max(strength + attack, magic * 2, ranged * 2);
+		int combatLevel = (int) (baseLevel * 1.3 + defence + hitpoints + prayer / 2) / 4;
 
 		return combatLevel;
 	}
@@ -187,8 +186,6 @@ public final class SkillSet {
 		for (int id = 0; id < skills.length; id++) {
 			int current = skills[id].getCurrentLevel();
 			int max = skills[id].getMaximumLevel();
-
-			// TODO: if player in wilderness and skill is hp, do not normalize.
 
 			if (current == max || id == Skill.PRAYER) {
 				continue;
