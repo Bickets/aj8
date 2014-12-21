@@ -67,4 +67,16 @@ public final class AttributeKey<T> {
 		return new AttributeKey<>(name, initial);
 	}
 
+	/**
+	 * Constructs a new {@link AttributeKey<T>} with the specified name and
+	 * {@code null} for the initial value.
+	 *
+	 * @param <T> The attributes values type reference.
+	 * @param name The name of this attribute, may not be {@code null}.
+	 * @see {@link AttributeKey(String, T)}
+	 */
+	public static <T> AttributeKey<T> valueOf(String name) {
+		return new AttributeKey<>(name, null);
+	}
+
 }

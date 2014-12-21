@@ -31,7 +31,7 @@ public final class PrePlayerSynchronizationTask extends SynchronizationTask {
 	public void run() {
 		player.getWalkingQueue().pulse();
 
-		if (player.isTeleporting()) {
+		if (player.getAttributes().isTeleporting()) {
 			player.resetViewingDistance();
 		}
 

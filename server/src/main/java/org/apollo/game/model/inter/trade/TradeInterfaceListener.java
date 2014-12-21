@@ -45,8 +45,8 @@ public final class TradeInterfaceListener implements InterfaceListener {
 
 	@Override
 	public void close() {
-		TradeSession session = player.getFields().getTradeSession();
-		TradeSession otherSession = session.getOther().getFields().getTradeSession();
+		TradeSession session = player.getAttributes().getTradeSession();
+		TradeSession otherSession = session.getOther().getAttributes().getTradeSession();
 
 		if (validStage(session.getStage()) && validStage(otherSession.getStage())) {
 			session.decline();

@@ -68,7 +68,7 @@ public final class PlayerSynchronizationTask extends SynchronizationTask {
 
 		SynchronizationSegment segment;
 
-		if (player.isTeleporting() || player.hasRegionChanged()) {
+		if (player.getAttributes().isTeleporting() || player.hasRegionChanged()) {
 			segment = new TeleportSegment(blockSet, player.getPosition());
 		} else {
 			segment = new MovementSegment(blockSet, player.getDirections());
@@ -81,7 +81,7 @@ public final class PlayerSynchronizationTask extends SynchronizationTask {
 		Iterator<Player> it = localPlayers.iterator();
 		while (it.hasNext()) {
 			Player p = it.next();
-			if (!p.isActive() || p.isTeleporting() || p.getPosition().getLongestDelta(player.getPosition()) > player.getViewingDistance()) {
+			if (!p.isActive() || p.getAttributes().isTeleporting() || p.getPosition().getLongestDelta(player.getPosition()) > player.getViewingDistance()) {
 				it.remove();
 				segments.add(new RemoveCharacterSegment());
 			} else {

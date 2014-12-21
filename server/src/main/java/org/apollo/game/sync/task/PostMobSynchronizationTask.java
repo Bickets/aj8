@@ -26,7 +26,7 @@ public final class PostMobSynchronizationTask extends SynchronizationTask {
 
 	@Override
 	public void run() {
-		mob.setTeleporting(false);
+		mob.getAttributes().setTeleporting(false);
 		mob.resetBlockSet();
 	}
 

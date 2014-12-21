@@ -16,7 +16,7 @@ class WithdrawAsItemButton implements EventSubscriber<ButtonActionEvent> {
 			return
 		}
 
-		player.fields.withdrawingNotes = false
+		player.attributes.withdrawingNotes = false
 	}
 
 	override test(ButtonActionEvent event) {

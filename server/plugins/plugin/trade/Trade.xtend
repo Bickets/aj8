@@ -13,8 +13,8 @@ import static org.apollo.game.model.inter.trade.TradeConstants.*
 class Trade {
 
 	def static openTrade(Player player, Player other) {
-		var session = player.fields.tradeSession
-		var otherSession = other.fields.tradeSession
+		var session = player.attributes.tradeSession
+		var otherSession = other.attributes.tradeSession
 
 		if (session != null || otherSession != null) {
 			return
@@ -31,8 +31,8 @@ class Trade {
 		player.initialize(TRADE_WINDOW_ID, SIDEBAR_ID)
 		other.initialize(TRADE_WINDOW_ID, SIDEBAR_ID)
 
-		player.fields.tradeSession = session
-		other.fields.tradeSession = otherSession
+		player.attributes.tradeSession = session
+		other.attributes.tradeSession = otherSession
 	}
 
 	def static initialize(Player player, int windowId, int sidebarId) {

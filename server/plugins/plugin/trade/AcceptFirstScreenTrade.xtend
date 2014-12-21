@@ -21,7 +21,7 @@ import static org.apollo.game.model.inter.trade.TradeStatus.*
 class AcceptFirstScreenTrade implements EventSubscriber<ButtonActionEvent> {
 
 	override subscribe(EventContext context, Player player, ButtonActionEvent event) {
-		val session = player.fields.tradeSession
+		val session = player.attributes.tradeSession
 
 		if (session == null) {
 			context.breakSubscriberChain
@@ -40,7 +40,7 @@ class AcceptFirstScreenTrade implements EventSubscriber<ButtonActionEvent> {
 			return
 		}
 
-		val otherSession = other.fields.tradeSession
+		val otherSession = other.attributes.tradeSession
 
 		if (otherSession == null) {
 			context.breakSubscriberChain
@@ -97,8 +97,8 @@ class AcceptFirstScreenTrade implements EventSubscriber<ButtonActionEvent> {
 		val Player player
 
 		override close() {
-			val session = player.fields.tradeSession
-			val otherSession = session.other.fields.tradeSession
+			val session = player.attributes.tradeSession
+			val otherSession = session.other.attributes.tradeSession
 
 			if (validStage(session.stage) && validStage(otherSession.stage)) {
 				session.decline();

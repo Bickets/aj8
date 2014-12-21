@@ -16,7 +16,7 @@ class WithdrawFromBankButton implements EventSubscriber<ButtonActionEvent> {
 			return
 		}
 
-		player.fields.withdrawingNotes = true
+		player.attributes.withdrawingNotes = true
 	}
 
 	override test(ButtonActionEvent event) {

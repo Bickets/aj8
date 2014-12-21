@@ -132,7 +132,7 @@ public final class TradeSession {
 		player.getInterfaceSet().removeListener();
 		player.getInterfaceSet().close();
 
-		player.getFields().setTradeSession(null);
+		player.getAttributes().setTradeSession(null);
 
 		Inventory inventory = player.getInventory();
 		Inventory trade = player.getTrade();

@@ -18,7 +18,7 @@ import static plugin.Plugin.*
 class AcceptSecondScreenTrade implements EventSubscriber<ButtonActionEvent> {
 
 	override subscribe(EventContext context, Player player, ButtonActionEvent event) {
-		val session = player.fields.tradeSession
+		val session = player.attributes.tradeSession
 
 		if (!player.interfaceSet.contains(CONFIRM_TRADE_WINDOW_ID, CONFIRM_SIDEBAR_ID)) {
 			context.breakSubscriberChain
@@ -37,7 +37,7 @@ class AcceptSecondScreenTrade implements EventSubscriber<ButtonActionEvent> {
 			return
 		}
 
-		val otherSession = other.fields.tradeSession
+		val otherSession = other.attributes.tradeSession
 
 		if (otherSession == null) {
 			context.breakSubscriberChain
@@ -83,7 +83,7 @@ class AcceptSecondScreenTrade implements EventSubscriber<ButtonActionEvent> {
 
 	def close(Player player) {
 		closeInterfaces(player)
-		player.fields.tradeSession = null
+		player.attributes.tradeSession = null
 		player.sendMessage("Accepted trade.")
 	}
 

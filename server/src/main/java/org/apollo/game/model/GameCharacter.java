@@ -4,7 +4,6 @@ import java.util.LinkedHashSet;
 import java.util.Set;
 
 import org.apollo.game.action.Action;
-import org.apollo.game.attribute.AttributeKey;
 import org.apollo.game.attribute.AttributeMap;
 import org.apollo.game.model.region.Region;
 import org.apollo.game.model.region.RegionRepository;
@@ -22,12 +21,6 @@ import org.apollo.game.sync.block.SynchronizationBlockSet;
 public abstract class GameCharacter extends Entity {
 
 	/**
-	 * An attribute key representing whether or not this character is
-	 * teleporting.
-	 */
-	private static final AttributeKey<Boolean> TELEPORTING = AttributeKey.valueOf("teleporting", false);
-
-	/**
 	 * This characters walking queue.
 	 */
 	private final WalkingQueue walkingQueue = new WalkingQueue(this);
@@ -36,7 +29,7 @@ public abstract class GameCharacter extends Entity {
 	 * A character fields class used to store, modify and get character
 	 * attributes.
 	 */
-	private final GameCharacterFields fields = new GameCharacterFields(this);
+	private final GameCharacterAttributes attributes = new GameCharacterAttributes(new AttributeMap());
 
 	/**
 	 * A set of local players.
@@ -47,11 +40,6 @@ public abstract class GameCharacter extends Entity {
 	 * A set of local mobs.
 	 */
 	private final Set<Mob> localMobs = new LinkedHashSet<>();
-
-	/**
-	 * A map of attributes.
-	 */
-	private final AttributeMap attributes = new AttributeMap();
 
 	/**
 	 * The character's skill set.
@@ -146,15 +134,6 @@ public abstract class GameCharacter extends Entity {
 	}
 
 	/**
-	 * Returns the game character fields instance.
-	 *
-	 * @return The instance of game character fields.
-	 */
-	public GameCharacterFields getFields() {
-		return fields;
-	}
-
-	/**
 	 * Gets the local player set.
 	 *
 	 * @return The local player set.
@@ -170,32 +149,6 @@ public abstract class GameCharacter extends Entity {
 	 */
 	public Set<Mob> getLocalMobs() {
 		return localMobs;
-	}
-
-	/**
-	 * Checks if this player is currently teleporting.
-	 *
-	 * @return {@code true} if so, {@code false} if not.
-	 */
-	public boolean isTeleporting() {
-		return attributes.get(TELEPORTING);
-	}
-
-	/**
-	 * Returns the attribute map.
-	 */
-	public AttributeMap getAttributes() {
-		return attributes;
-	}
-
-	/**
-	 * Sets the teleporting attribute.
-	 *
-	 * @param value {@code true} if the player is teleporting, {@code false} if
-	 *            not.
-	 */
-	public void setTeleporting(boolean value) {
-		attributes.set(TELEPORTING, value);
 	}
 
 	/**
@@ -334,7 +287,7 @@ public abstract class GameCharacter extends Entity {
 	 * @param position The position.
 	 */
 	public void teleport(Position position) {
-		setTeleporting(true);
+		attributes.setTeleporting(true);
 		setPosition(position);
 
 		walkingQueue.clear();
@@ -366,6 +319,13 @@ public abstract class GameCharacter extends Entity {
 		}
 
 		newRegion.addEntity(this);
+	}
+
+	/**
+	 * Returns the attributes for this {@link GameCharacter}.
+	 */
+	public GameCharacterAttributes getAttributes() {
+		return attributes;
 	}
 
 	/**
