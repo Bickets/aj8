@@ -1,8 +1,5 @@
 package com.runescape.media;
 
-/* Rasterizer3D - Decompiled by JODE
- * Visit http://jode.sourceforge.net/
- */
 import com.runescape.cache.Archive;
 import com.runescape.cache.media.IndexedImage;
 import com.runescape.util.Signlink;

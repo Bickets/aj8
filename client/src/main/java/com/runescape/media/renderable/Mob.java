@@ -11,16 +11,16 @@ public class Mob extends GameCharacter {
 
 	private final Model getChildModel() {
 		if (animation >= 0 && aniomationDelay == 0) {
-			int frameId = AnimationSequence.cache[animation].frame2Ids[anInt1547];
+			int frameId = AnimationSequence.cache[animation].primaryFrames[anInt1547];
 			int frameId2 = -1;
 			if (anInt1537 >= 0 && anInt1537 != standAnimationId) {
-				frameId2 = AnimationSequence.cache[anInt1537].frame2Ids[anInt1538];
+				frameId2 = AnimationSequence.cache[anInt1537].primaryFrames[anInt1538];
 			}
-			return npcDefinition.getChildModel(frameId2, frameId, AnimationSequence.cache[animation].flowControl);
+			return npcDefinition.getChildModel(frameId2, frameId, AnimationSequence.cache[animation].interleaveOrder);
 		}
 		int i_3_ = -1;
 		if (anInt1537 >= 0) {
-			i_3_ = AnimationSequence.cache[anInt1537].frame2Ids[anInt1538];
+			i_3_ = AnimationSequence.cache[anInt1537].primaryFrames[anInt1538];
 		}
 		return npcDefinition.getChildModel(-1, i_3_, null);
 	}
@@ -39,7 +39,7 @@ public class Mob extends GameCharacter {
 			SpotAnimation spotanimation = SpotAnimation.cache[spotAnimationId];
 			Model model_4_ = spotanimation.getModel();
 			if (model_4_ != null) {
-				int animationId = spotanimation.sequences.frame2Ids[currentAnimationFrame];
+				int animationId = spotanimation.sequences.primaryFrames[currentAnimationFrame];
 				Model animationModel = new Model(true, Animation.exists(animationId), false, model_4_);
 				animationModel.translate(0, -spotAnimationDelay, 0);
 				animationModel.createBones();

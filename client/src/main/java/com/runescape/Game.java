@@ -2982,7 +2982,7 @@ public class Game extends GameShell {
 					}
 				}
 				if (ondemandnode.type == 1 && ondemandnode.buffer != null) {
-					Animation.method149(ondemandnode.buffer, false);
+					Animation.load(ondemandnode.buffer);
 				}
 				if (ondemandnode.type == 2 && ondemandnode.id == onDemandRequesterId && ondemandnode.buffer != null) {
 					saveMidi(midiFade, ondemandnode.buffer);
@@ -5452,7 +5452,7 @@ public class Game extends GameShell {
 							}
 						}
 						model.createBones();
-						model.applyTransform(AnimationSequence.cache[Game.localPlayer.standAnimationId].frame2Ids[0]);
+						model.applyTransform(AnimationSequence.cache[Game.localPlayer.standAnimationId].primaryFrames[0]);
 						model.applyLighting(64, 850, -30, -50, -30, true);
 						widget.modelType = 5;
 						widget.modelId = 0;
@@ -6380,7 +6380,7 @@ public class Game extends GameShell {
 					}
 					int i_516_ = buffer.getUnsignedByte();
 					if (i_515_ == npc.animation && i_515_ != -1) {
-						int i_517_ = AnimationSequence.cache[i_515_].anInt63;
+						int i_517_ = AnimationSequence.cache[i_515_].replayMode;
 						if (i_517_ == 1) {
 							npc.anInt1547 = 0;
 							npc.anInt1548 = 0;
@@ -6390,7 +6390,7 @@ public class Game extends GameShell {
 						if (i_517_ == 2) {
 							npc.anInt1550 = 0;
 						}
-					} else if (i_515_ == -1 || npc.animation == -1 || AnimationSequence.cache[i_515_].anInt57 >= AnimationSequence.cache[npc.animation].anInt57) {
+					} else if (i_515_ == -1 || npc.animation == -1 || AnimationSequence.cache[i_515_].priority >= AnimationSequence.cache[npc.animation].priority) {
 						npc.animation = i_515_;
 						npc.anInt1547 = 0;
 						npc.anInt1548 = 0;
@@ -6752,7 +6752,7 @@ public class Game extends GameShell {
 			drawLoadingText(60, "Connecting to update server");
 			onDemandRequester = new OnDemandController();
 			onDemandRequester.init(archiveCRC, this);
-			Animation.method148(onDemandRequester.animCount());
+			Animation.init(onDemandRequester.animCount());
 			Model.init(onDemandRequester.fileCount(0), onDemandRequester);
 			if (!Game.lowMemory) {
 				onDemandRequesterId = 0;
@@ -7367,7 +7367,7 @@ public class Game extends GameShell {
 	public final void method98(GameCharacter mob, byte b) {
 		do {
 			try {
-				if (mob.anInt1568 == Game.currentCycle || mob.animation == -1 || mob.aniomationDelay != 0 || mob.anInt1548 + 1 > AnimationSequence.cache[mob.animation].getFrameLength(mob.anInt1547)) {
+				if (mob.anInt1568 == Game.currentCycle || mob.animation == -1 || mob.aniomationDelay != 0 || mob.anInt1548 + 1 > AnimationSequence.cache[mob.animation].getDuration(mob.anInt1547)) {
 					int i = mob.anInt1568 - mob.anInt1567;
 					int i_603_ = Game.currentCycle - mob.anInt1567;
 					int i_604_ = mob.anInt1563 * 128 + mob.boundaryDimension * 64;
@@ -7411,11 +7411,11 @@ public class Game extends GameShell {
 				} else {
 					if (mob.animation != -1 && mob.aniomationDelay == 0) {
 						AnimationSequence animationsequence = AnimationSequence.cache[mob.animation];
-						if (mob.anInt1562 > 0 && animationsequence.anInt61 == 0) {
+						if (mob.anInt1562 > 0 && animationsequence.animatingPrecedence == 0) {
 							mob.anInt1523++;
 							break;
 						}
-						if (mob.anInt1562 <= 0 && animationsequence.priority == 0) {
+						if (mob.anInt1562 <= 0 && animationsequence.walkingPrecedence == 0) {
 							mob.anInt1523++;
 							break;
 						}
@@ -7598,7 +7598,7 @@ public class Game extends GameShell {
 				if (mob.anInt1537 != -1) {
 					AnimationSequence animationsequence = AnimationSequence.cache[mob.anInt1537];
 					mob.anInt1539++;
-					if (mob.anInt1538 < animationsequence.frameCount && mob.anInt1539 > animationsequence.getFrameLength(mob.anInt1538)) {
+					if (mob.anInt1538 < animationsequence.frameCount && mob.anInt1539 > animationsequence.getDuration(mob.anInt1538)) {
 						mob.anInt1539 = 0;
 						mob.anInt1538++;
 					}
@@ -7612,8 +7612,8 @@ public class Game extends GameShell {
 						mob.currentAnimationFrame = 0;
 					}
 					AnimationSequence animationsequence = SpotAnimation.cache[mob.spotAnimationId].sequences;
-					for (mob.anInt1542++; mob.currentAnimationFrame < animationsequence.frameCount && mob.anInt1542 > animationsequence.getFrameLength(mob.currentAnimationFrame); mob.currentAnimationFrame++) {
-						mob.anInt1542 -= animationsequence.getFrameLength(mob.currentAnimationFrame);
+					for (mob.anInt1542++; mob.currentAnimationFrame < animationsequence.frameCount && mob.anInt1542 > animationsequence.getDuration(mob.currentAnimationFrame); mob.currentAnimationFrame++) {
+						mob.anInt1542 -= animationsequence.getDuration(mob.currentAnimationFrame);
 					}
 					if (mob.currentAnimationFrame >= animationsequence.frameCount && (mob.currentAnimationFrame < 0 || mob.currentAnimationFrame >= animationsequence.frameCount)) {
 						mob.spotAnimationId = -1;
@@ -7621,27 +7621,27 @@ public class Game extends GameShell {
 				}
 				if (mob.animation != -1 && mob.aniomationDelay <= 1) {
 					AnimationSequence animationsequence = AnimationSequence.cache[mob.animation];
-					if (animationsequence.anInt61 == 1 && mob.anInt1562 > 0 && mob.anInt1567 <= Game.currentCycle && mob.anInt1568 < Game.currentCycle) {
+					if (animationsequence.animatingPrecedence == 1 && mob.anInt1562 > 0 && mob.anInt1567 <= Game.currentCycle && mob.anInt1568 < Game.currentCycle) {
 						mob.aniomationDelay = 1;
 						break;
 					}
 				}
 				if (mob.animation != -1 && mob.aniomationDelay == 0) {
 					AnimationSequence animationsequence = AnimationSequence.cache[mob.animation];
-					for (mob.anInt1548++; mob.anInt1547 < animationsequence.frameCount && mob.anInt1548 > animationsequence.getFrameLength(mob.anInt1547); mob.anInt1547++) {
-						mob.anInt1548 -= animationsequence.getFrameLength(mob.anInt1547);
+					for (mob.anInt1548++; mob.anInt1547 < animationsequence.frameCount && mob.anInt1548 > animationsequence.getDuration(mob.anInt1547); mob.anInt1547++) {
+						mob.anInt1548 -= animationsequence.getDuration(mob.anInt1547);
 					}
 					if (mob.anInt1547 >= animationsequence.frameCount) {
-						mob.anInt1547 -= animationsequence.frameStep;
+						mob.anInt1547 -= animationsequence.loopOffset;
 						mob.anInt1550++;
-						if (mob.anInt1550 >= animationsequence.anInt60) {
+						if (mob.anInt1550 >= animationsequence.maximumLoops) {
 							mob.animation = -1;
 						}
 						if (mob.anInt1547 < 0 || mob.anInt1547 >= animationsequence.frameCount) {
 							mob.animation = -1;
 						}
 					}
-					mob.aBoolean1561 = animationsequence.aBoolean56;
+					mob.aBoolean1561 = animationsequence.stretches;
 				}
 				if (mob.aniomationDelay <= 0) {
 					break;
@@ -8205,7 +8205,7 @@ public class Game extends GameShell {
 								model = widget_635_.getAnimatedModel(-1, -1, bool);
 							} else {
 								AnimationSequence animationsequence = AnimationSequence.cache[i_662_];
-								model = widget_635_.getAnimatedModel(animationsequence.frame1Ids[widget_635_.animationFrame], animationsequence.frame2Ids[widget_635_.animationFrame], bool);
+								model = widget_635_.getAnimatedModel(animationsequence.secondaryFrames[widget_635_.animationFrame], animationsequence.primaryFrames[widget_635_.animationFrame], bool);
 							}
 							if (model != null) {
 								model.method430(0, widget_635_.rotationY, 0, widget_635_.rotationX, 0, i_660_, i_661_);
@@ -8329,7 +8329,7 @@ public class Game extends GameShell {
 					}
 					int animationDelay = buffer.getUnsignedByteC();
 					if (animationId == player.animation && animationId != -1) {
-						int i_686_ = AnimationSequence.cache[animationId].anInt63;
+						int i_686_ = AnimationSequence.cache[animationId].replayMode;
 						if (i_686_ == 1) {
 							player.anInt1547 = 0;
 							player.anInt1548 = 0;
@@ -8339,7 +8339,7 @@ public class Game extends GameShell {
 						if (i_686_ == 2) {
 							player.anInt1550 = 0;
 						}
-					} else if (animationId == -1 || player.animation == -1 || AnimationSequence.cache[animationId].anInt57 >= AnimationSequence.cache[player.animation].anInt57) {
+					} else if (animationId == -1 || player.animation == -1 || AnimationSequence.cache[animationId].priority >= AnimationSequence.cache[player.animation].priority) {
 						player.animation = animationId;
 						player.anInt1547 = 0;
 						player.anInt1548 = 0;
@@ -8979,11 +8979,11 @@ public class Game extends GameShell {
 					if (i_746_ != -1) {
 						AnimationSequence animationsequence = AnimationSequence.cache[i_746_];
 						widget_744_.animationDuration += i;
-						while (widget_744_.animationDuration > animationsequence.getFrameLength(widget_744_.animationFrame)) {
-							widget_744_.animationDuration -= animationsequence.getFrameLength(widget_744_.animationFrame) + 1;
+						while (widget_744_.animationDuration > animationsequence.getDuration(widget_744_.animationFrame)) {
+							widget_744_.animationDuration -= animationsequence.getDuration(widget_744_.animationFrame) + 1;
 							widget_744_.animationFrame++;
 							if (widget_744_.animationFrame >= animationsequence.frameCount) {
-								widget_744_.animationFrame -= animationsequence.frameStep;
+								widget_744_.animationFrame -= animationsequence.loopOffset;
 								if (widget_744_.animationFrame < 0 || widget_744_.animationFrame >= animationsequence.frameCount) {
 									widget_744_.animationFrame = 0;
 								}

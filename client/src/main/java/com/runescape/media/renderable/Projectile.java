@@ -57,7 +57,7 @@ public class Projectile extends Renderable {
 		}
 		int frameId = -1;
 		if (animation.sequences != null) {
-			frameId = animation.sequences.frame2Ids[animationFrame];
+			frameId = animation.sequences.primaryFrames[animationFrame];
 		}
 		Model projectileModel = new Model(true, Animation.exists(frameId), false, model);
 		if (frameId != -1) {
@@ -101,8 +101,8 @@ public class Projectile extends Renderable {
 			return;
 		}
 		duration += time;
-		while (duration > animation.sequences.getFrameLength(animationFrame)) {
-			duration -= animation.sequences.getFrameLength(animationFrame) + 1;
+		while (duration > animation.sequences.getDuration(animationFrame)) {
+			duration -= animation.sequences.getDuration(animationFrame) + 1;
 			animationFrame++;
 			if (animationFrame >= animation.sequences.frameCount) {
 				animationFrame = 0;

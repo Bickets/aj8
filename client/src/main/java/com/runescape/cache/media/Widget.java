@@ -16,7 +16,6 @@ public class Widget {
 	public int animationDuration;
 	public ImageRGB[] images;
 	public static Widget[] cache;
-	public int unknownOne;
 	public int[] conditionValues;
 	public int contentType;
 	public int[] imageX;
@@ -54,7 +53,6 @@ public class Widget {
 	public String disabledText;
 	public boolean isInventory;
 	public int id;
-	public boolean unknownTwo;
 	public int[] itemAmounts;
 	public int[] items;
 	public byte alpha;
@@ -147,8 +145,8 @@ public class Widget {
 				}
 			}
 			if (widget.type == 1) {
-				widget.unknownOne = buffer.getUnsignedLEShort();
-				widget.unknownTwo = buffer.getUnsignedByte() == 1;
+				buffer.getUnsignedLEShort();
+				buffer.getUnsignedByte();
 			}
 			if (widget.type == 2) {
 				widget.items = new int[widget.width * widget.height];

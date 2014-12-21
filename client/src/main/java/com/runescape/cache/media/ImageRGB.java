@@ -9,7 +9,6 @@ import java.awt.image.PixelGrabber;
 import com.runescape.cache.Archive;
 import com.runescape.media.Rasterizer;
 import com.runescape.net.Buffer;
-import com.runescape.util.Signlink;
 
 public class ImageRGB extends Rasterizer {
 
@@ -28,9 +27,9 @@ public class ImageRGB extends Rasterizer {
 		offsetX = offsetY = 0;
 	}
 
-	public ImageRGB(byte[] imagedata, Component component) {
+	public ImageRGB(byte[] data, Component component) {
 		try {
-			Image image = Toolkit.getDefaultToolkit().createImage(imagedata);
+			Image image = Toolkit.getDefaultToolkit().createImage(data);
 			MediaTracker mediaTracker = new MediaTracker(component);
 			mediaTracker.addImage(image, 0);
 			mediaTracker.waitForAll();
@@ -43,8 +42,8 @@ public class ImageRGB extends Rasterizer {
 			pixels = new int[width * height];
 			PixelGrabber pixelgrabber = new PixelGrabber(image, 0, 0, width, height, pixels, 0, width);
 			pixelgrabber.grabPixels();
-		} catch (Exception exception) {
-			System.out.println("Error converting jpg");
+		} catch (InterruptedException e) {
+			return; // can't happen
 		}
 	}
 
@@ -357,89 +356,75 @@ public class ImageRGB extends Rasterizer {
 	}
 
 	public void method350(int i, int i_109_, int i_110_, int i_111_, int i_112_, int i_113_, int i_114_, double d, int i_115_) {
-		try {
-			if (i_112_ == 41960) {
-				try {
-					int i_116_ = -i_110_ / 2;
-					int i_117_ = -i_114_ / 2;
-					int i_118_ = (int) (Math.sin(d) * 65536.0);
-					int i_119_ = (int) (Math.cos(d) * 65536.0);
-					i_118_ = i_118_ * i_113_ >> 8;
-					i_119_ = i_119_ * i_113_ >> 8;
-					int i_120_ = (i_111_ << 16) + i_117_ * i_118_ + i_116_ * i_119_;
-					int i_121_ = (i_109_ << 16) + i_117_ * i_119_ - i_116_ * i_118_;
-					int i_122_ = i_115_ + i * Rasterizer.width;
-					for (i = 0; i < i_114_; i++) {
-						int i_123_ = i_122_;
-						int i_124_ = i_120_;
-						int i_125_ = i_121_;
-						for (i_115_ = -i_110_; i_115_ < 0; i_115_++) {
-							int i_126_ = pixels[(i_124_ >> 16) + (i_125_ >> 16) * width];
-							if (i_126_ != 0) {
-								Rasterizer.pixels[i_123_++] = i_126_;
-							} else {
-								i_123_++;
-							}
-							i_124_ += i_119_;
-							i_125_ -= i_118_;
-						}
-						i_120_ += i_118_;
-						i_121_ += i_119_;
-						i_122_ += Rasterizer.width;
+		if (i_112_ == 41960) {
+			int i_116_ = -i_110_ / 2;
+			int i_117_ = -i_114_ / 2;
+			int i_118_ = (int) (Math.sin(d) * 65536.0);
+			int i_119_ = (int) (Math.cos(d) * 65536.0);
+			i_118_ = i_118_ * i_113_ >> 8;
+			i_119_ = i_119_ * i_113_ >> 8;
+			int i_120_ = (i_111_ << 16) + i_117_ * i_118_ + i_116_ * i_119_;
+			int i_121_ = (i_109_ << 16) + i_117_ * i_119_ - i_116_ * i_118_;
+			int i_122_ = i_115_ + i * Rasterizer.width;
+			for (i = 0; i < i_114_; i++) {
+				int i_123_ = i_122_;
+				int i_124_ = i_120_;
+				int i_125_ = i_121_;
+				for (i_115_ = -i_110_; i_115_ < 0; i_115_++) {
+					int i_126_ = pixels[(i_124_ >> 16) + (i_125_ >> 16) * width];
+					if (i_126_ != 0) {
+						Rasterizer.pixels[i_123_++] = i_126_;
+					} else {
+						i_123_++;
 					}
-				} catch (Exception exception) {
-					/* empty */
+					i_124_ += i_119_;
+					i_125_ -= i_118_;
 				}
+				i_120_ += i_118_;
+				i_121_ += i_119_;
+				i_122_ += Rasterizer.width;
 			}
-		} catch (RuntimeException runtimeexception) {
-			Signlink.reportError("71953, " + i + ", " + i_109_ + ", " + i_110_ + ", " + i_111_ + ", " + i_112_ + ", " + i_113_ + ", " + i_114_ + ", " + d + ", " + i_115_ + ", " + runtimeexception.toString());
-			throw new RuntimeException();
 		}
 	}
 
 	public void method351(IndexedImage indexedimage, boolean bool, int i, int i_127_) {
-		try {
-			i_127_ += offsetX;
-			i += offsetY;
-			int i_128_ = i_127_ + i * Rasterizer.width;
-			int i_129_ = 0;
-			if (bool) {
-			}
-			int i_130_ = height;
-			int i_131_ = width;
-			int i_132_ = Rasterizer.width - i_131_;
-			int i_133_ = 0;
-			if (i < Rasterizer.topY) {
-				int i_134_ = Rasterizer.topY - i;
-				i_130_ -= i_134_;
-				i = Rasterizer.topY;
-				i_129_ += i_134_ * i_131_;
-				i_128_ += i_134_ * Rasterizer.width;
-			}
-			if (i + i_130_ > Rasterizer.bottomY) {
-				i_130_ -= i + i_130_ - Rasterizer.bottomY;
-			}
-			if (i_127_ < Rasterizer.topX) {
-				int i_135_ = Rasterizer.topX - i_127_;
-				i_131_ -= i_135_;
-				i_127_ = Rasterizer.topX;
-				i_129_ += i_135_;
-				i_128_ += i_135_;
-				i_133_ += i_135_;
-				i_132_ += i_135_;
-			}
-			if (i_127_ + i_131_ > Rasterizer.bottomX) {
-				int i_136_ = i_127_ + i_131_ - Rasterizer.bottomX;
-				i_131_ -= i_136_;
-				i_133_ += i_136_;
-				i_132_ += i_136_;
-			}
-			if (i_131_ > 0 && i_130_ > 0) {
-				method352(pixels, i_131_, indexedimage.pixels, i_130_, Rasterizer.pixels, 0, i_132_, i_128_, i_133_, i_129_);
-			}
-		} catch (RuntimeException runtimeexception) {
-			Signlink.reportError("70668, " + indexedimage + ", " + bool + ", " + i + ", " + i_127_ + ", " + runtimeexception.toString());
-			throw new RuntimeException();
+		i_127_ += offsetX;
+		i += offsetY;
+		int i_128_ = i_127_ + i * Rasterizer.width;
+		int i_129_ = 0;
+		if (bool) {
+		}
+		int i_130_ = height;
+		int i_131_ = width;
+		int i_132_ = Rasterizer.width - i_131_;
+		int i_133_ = 0;
+		if (i < Rasterizer.topY) {
+			int i_134_ = Rasterizer.topY - i;
+			i_130_ -= i_134_;
+			i = Rasterizer.topY;
+			i_129_ += i_134_ * i_131_;
+			i_128_ += i_134_ * Rasterizer.width;
+		}
+		if (i + i_130_ > Rasterizer.bottomY) {
+			i_130_ -= i + i_130_ - Rasterizer.bottomY;
+		}
+		if (i_127_ < Rasterizer.topX) {
+			int i_135_ = Rasterizer.topX - i_127_;
+			i_131_ -= i_135_;
+			i_127_ = Rasterizer.topX;
+			i_129_ += i_135_;
+			i_128_ += i_135_;
+			i_133_ += i_135_;
+			i_132_ += i_135_;
+		}
+		if (i_127_ + i_131_ > Rasterizer.bottomX) {
+			int i_136_ = i_127_ + i_131_ - Rasterizer.bottomX;
+			i_131_ -= i_136_;
+			i_133_ += i_136_;
+			i_132_ += i_136_;
+		}
+		if (i_131_ > 0 && i_130_ > 0) {
+			method352(pixels, i_131_, indexedimage.pixels, i_130_, Rasterizer.pixels, 0, i_132_, i_128_, i_133_, i_129_);
 		}
 	}
 

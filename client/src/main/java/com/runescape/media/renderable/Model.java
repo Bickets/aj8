@@ -945,13 +945,13 @@ public class Model extends Renderable {
 		if (vectorSkin != null && frameId != -1) {
 			Animation animation = Animation.getAnimation(frameId);
 			if (animation != null) {
-				Skins skins = animation.animationSkins;
+				Skins skins = animation.skins;
 				Model.vertexXModifier = 0;
 				Model.vertexYModifier = 0;
 				Model.vertexZModifier = 0;
-				for (int stepId = 0; stepId < animation.stepCount; stepId++) {
-					int opcode = animation.opcodeTable[stepId];
-					transformStep(skins.opcodes[opcode], skins.skinList[opcode], animation.modifier1[stepId], animation.modifier2[stepId], animation.modifier3[stepId]);
+				for (int stepId = 0; stepId < animation.transformationCount; stepId++) {
+					int opcode = animation.translations[stepId];
+					transformStep(skins.opcodes[opcode], skins.skinList[opcode], animation.translationX[stepId], animation.translationY[stepId], animation.translationZ[stepId]);
 				}
 			}
 		}
@@ -970,19 +970,19 @@ public class Model extends Renderable {
 							if (animation_116_ == null) {
 								applyTransform(i_115_);
 							} else {
-								Skins skins = animation.animationSkins;
+								Skins skins = animation.skins;
 								Model.vertexXModifier = 0;
 								Model.vertexYModifier = 0;
 								Model.vertexZModifier = 0;
 								int i_117_ = 0;
 								int i_118_ = is[i_117_++];
-								for (int i_119_ = 0; i_119_ < animation.stepCount; i_119_++) {
+								for (int i_119_ = 0; i_119_ < animation.transformationCount; i_119_++) {
 									int i_120_;
-									for (i_120_ = animation.opcodeTable[i_119_]; i_120_ > i_118_; i_118_ = is[i_117_++]) {
+									for (i_120_ = animation.translations[i_119_]; i_120_ > i_118_; i_118_ = is[i_117_++]) {
 										/* empty */
 									}
 									if (i_120_ != i_118_ || skins.opcodes[i_120_] == 0) {
-										transformStep(skins.opcodes[i_120_], skins.skinList[i_120_], animation.modifier1[i_119_], animation.modifier2[i_119_], animation.modifier3[i_119_]);
+										transformStep(skins.opcodes[i_120_], skins.skinList[i_120_], animation.translationX[i_119_], animation.translationY[i_119_], animation.translationZ[i_119_]);
 									}
 								}
 								Model.vertexXModifier = 0;
@@ -990,13 +990,13 @@ public class Model extends Renderable {
 								Model.vertexZModifier = 0;
 								i_117_ = 0;
 								i_118_ = is[i_117_++];
-								for (int i_121_ = 0; i_121_ < animation_116_.stepCount; i_121_++) {
+								for (int i_121_ = 0; i_121_ < animation_116_.transformationCount; i_121_++) {
 									int i_122_;
-									for (i_122_ = animation_116_.opcodeTable[i_121_]; i_122_ > i_118_; i_118_ = is[i_117_++]) {
+									for (i_122_ = animation_116_.translations[i_121_]; i_122_ > i_118_; i_118_ = is[i_117_++]) {
 										/* empty */
 									}
 									if (i_122_ == i_118_ || skins.opcodes[i_122_] == 0) {
-										transformStep(skins.opcodes[i_122_], skins.skinList[i_122_], animation_116_.modifier1[i_121_], animation_116_.modifier2[i_121_], animation_116_.modifier3[i_121_]);
+										transformStep(skins.opcodes[i_122_], skins.skinList[i_122_], animation_116_.translationX[i_121_], animation_116_.translationY[i_121_], animation_116_.translationZ[i_121_]);
 									}
 								}
 							}

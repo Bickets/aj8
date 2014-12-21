@@ -27,14 +27,14 @@ public class GameObject extends Renderable {
 		int animation = -1;
 		if (animationSequence != null) {
 			int step = Game.currentCycle - animationCycleDelay;
-			if (step > 100 && animationSequence.frameStep > 0) {
+			if (step > 100 && animationSequence.loopOffset > 0) {
 				step = 100;
 			}
-			while (step > animationSequence.getFrameLength(animationFrame)) {
-				step -= animationSequence.getFrameLength(animationFrame);
+			while (step > animationSequence.getDuration(animationFrame)) {
+				step -= animationSequence.getDuration(animationFrame);
 				animationFrame++;
 				if (animationFrame >= animationSequence.frameCount) {
-					animationFrame -= animationSequence.frameStep;
+					animationFrame -= animationSequence.loopOffset;
 					if (animationFrame < 0 || animationFrame >= animationSequence.frameCount) {
 						animationSequence = null;
 						break;
@@ -43,7 +43,7 @@ public class GameObject extends Renderable {
 			}
 			animationCycleDelay = Game.currentCycle - step;
 			if (animationSequence != null) {
-				animation = animationSequence.frame2Ids[animationFrame];
+				animation = animationSequence.primaryFrames[animationFrame];
 			}
 		}
 		GameObjectDefinition gameObjectDefinition;
@@ -89,9 +89,9 @@ public class GameObject extends Renderable {
 			animationSequence = AnimationSequence.cache[animationId];
 			animationFrame = 0;
 			animationCycleDelay = Game.currentCycle;
-			if (bool && animationSequence.frameStep != -1) {
+			if (bool && animationSequence.loopOffset != -1) {
 				animationFrame = (int) (Math.random() * animationSequence.frameCount);
-				animationCycleDelay -= (int) (Math.random() * animationSequence.getFrameLength(animationFrame));
+				animationCycleDelay -= (int) (Math.random() * animationSequence.getDuration(animationFrame));
 			}
 		}
 		GameObjectDefinition gameObjectDefinition = GameObjectDefinition.getDefinition(id);

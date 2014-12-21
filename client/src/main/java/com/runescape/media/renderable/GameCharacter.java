@@ -61,7 +61,7 @@ public class GameCharacter extends Renderable {
 	public int turnLeftAnimationId = -1;
 
 	public final void setPosition(int x, int y) {
-		if (animation != -1 && AnimationSequence.cache[animation].priority == 1) {
+		if (animation != -1 && AnimationSequence.cache[animation].walkingPrecedence == 1) {
 			animation = -1;
 		}
 		int xOffset = x - pathX[0];
@@ -136,7 +136,7 @@ public class GameCharacter extends Renderable {
 			x++;
 			y--;
 		}
-		if (animation != -1 && AnimationSequence.cache[animation].priority == 1) {
+		if (animation != -1 && AnimationSequence.cache[animation].walkingPrecedence == 1) {
 			animation = -1;
 		}
 		if (pathLength < 9) {

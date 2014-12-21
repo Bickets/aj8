@@ -31,7 +31,7 @@ public class GameAnimableObject extends Renderable {
 		if (model == null) {
 			return null;
 		}
-		int frame = animation.sequences.frame2Ids[eclapsedFrames];
+		int frame = animation.sequences.primaryFrames[eclapsedFrames];
 		Model animatedModel = new Model(true, Animation.exists(frame), false, model);
 		if (!transformCompleted) {
 			animatedModel.createBones();
@@ -62,8 +62,8 @@ public class GameAnimableObject extends Renderable {
 
 	public final void nextFrame(int frame) {
 		duration += frame;
-		while (duration > animation.sequences.getFrameLength(eclapsedFrames)) {
-			duration -= animation.sequences.getFrameLength(eclapsedFrames) + 1;
+		while (duration > animation.sequences.getDuration(eclapsedFrames)) {
+			duration -= animation.sequences.getDuration(eclapsedFrames) + 1;
 			eclapsedFrames++;
 			if (eclapsedFrames >= animation.sequences.frameCount && (eclapsedFrames < 0 || eclapsedFrames >= animation.sequences.frameCount)) {
 				eclapsedFrames = 0;

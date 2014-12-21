@@ -1,127 +1,130 @@
 package com.runescape.media;
 
 import com.runescape.net.Buffer;
-import com.runescape.util.Signlink;
 
 public class Animation {
 
 	private static Animation[] cache;
-	public int displayLength;
-	public Skins animationSkins;
-	public int stepCount;
-	public int[] opcodeTable;
-	public int[] modifier1;
-	public int[] modifier2;
-	public int[] modifier3;
-	private static boolean[] aBooleanArray45;
 
-	public static void method148(int i) {
-		Animation.cache = new Animation[i + 1];
-		Animation.aBooleanArray45 = new boolean[i + 1];
-		for (int i_0_ = 0; i_0_ < i + 1; i_0_++) {
-			Animation.aBooleanArray45[i_0_] = true;
-		}
+	public int duration;
+	public Skins skins;
+	public int transformationCount;
+	public int[] translations;
+	public int[] translationX;
+	public int[] translationY;
+	public int[] translationZ;
+
+	public static void init(int size) {
+		Animation.cache = new Animation[size + 1];
 	}
 
-	public static void method149(byte[] bs, boolean bool) {
-		try {
-			Buffer buffer = new Buffer(bs);
-			buffer.offset = bs.length - 8;
-			int i = buffer.getUnsignedLEShort();
-			int i_1_ = buffer.getUnsignedLEShort();
-			int i_2_ = buffer.getUnsignedLEShort();
-			int i_3_ = buffer.getUnsignedLEShort();
-			int i_4_ = 0;
-			Buffer buffer_5_ = new Buffer(bs);
-			buffer_5_.offset = i_4_;
-			i_4_ += i + 2;
-			Buffer buffer_6_ = new Buffer(bs);
-			buffer_6_.offset = i_4_;
-			i_4_ += i_1_;
-			Buffer buffer_7_ = new Buffer(bs);
-			buffer_7_.offset = i_4_;
-			i_4_ += i_2_;
-			Buffer buffer_8_ = new Buffer(bs);
-			buffer_8_.offset = i_4_;
-			i_4_ += i_3_;
-			Buffer buffer_9_ = new Buffer(bs);
-			buffer_9_.offset = i_4_;
-			if (bool) {
-				for (int i_10_ = 1; i_10_ > 0; i_10_++) {
-					/* empty */
-				}
-			}
-			Skins skins = new Skins(buffer_9_);
-			int animationAmount = buffer_5_.getUnsignedLEShort();
-			int[] is = new int[500];
-			int[] is_12_ = new int[500];
-			int[] is_13_ = new int[500];
-			int[] is_14_ = new int[500];
-			for (int animationCounter = 0; animationCounter < animationAmount; animationCounter++) {
-				int animationId = buffer_5_.getUnsignedLEShort();
-				Animation animation = Animation.cache[animationId] = new Animation();
-				animation.displayLength = buffer_8_.getUnsignedByte();
-				animation.animationSkins = skins;
-				int i_17_ = buffer_5_.getUnsignedByte();
-				int i_18_ = -1;
-				int stepCount = 0;
-				for (int i_20_ = 0; i_20_ < i_17_; i_20_++) {
-					int i_21_ = buffer_6_.getUnsignedByte();
-					if (i_21_ > 0) {
-						if (skins.opcodes[i_20_] != 0) {
-							for (int i_22_ = i_20_ - 1; i_22_ > i_18_; i_22_--) {
-								if (skins.opcodes[i_22_] == 0) {
-									is[stepCount] = i_22_;
-									is_12_[stepCount] = 0;
-									is_13_[stepCount] = 0;
-									is_14_[stepCount] = 0;
-									stepCount++;
-									break;
-								}
+	public static void load(byte[] data) {
+		Buffer buffer = new Buffer(data);
+		buffer.offset = data.length - 8;
+
+		int attributesOffset = buffer.getUnsignedLEShort();
+		int translationsOffset = buffer.getUnsignedLEShort();
+		int durationsOffset = buffer.getUnsignedLEShort();
+		int baseOffset = buffer.getUnsignedLEShort();
+		int offset = 0;
+
+		Buffer idBuffer = new Buffer(data);
+		idBuffer.offset = offset;
+		offset += attributesOffset + 2;
+
+		Buffer attributeBuffer = new Buffer(data);
+		attributeBuffer.offset = offset;
+		offset += translationsOffset;
+
+		Buffer translationsBuffer = new Buffer(data);
+		translationsBuffer.offset = offset;
+		offset += durationsOffset;
+
+		Buffer durationsBuffer = new Buffer(data);
+		durationsBuffer.offset = offset;
+		offset += baseOffset;
+
+		Buffer baseBuffer = new Buffer(data);
+		baseBuffer.offset = offset;
+
+		Skins skins = new Skins(baseBuffer);
+		int animationAmount = idBuffer.getUnsignedLEShort();
+
+		int[] transformations = new int[500];
+		int[] transformationX = new int[500];
+		int[] transformationY = new int[500];
+		int[] transformationZ = new int[500];
+
+		for (int animationCount = 0; animationCount < animationAmount; animationCount++) {
+			int animationId = idBuffer.getUnsignedLEShort();
+
+			Animation animation = Animation.cache[animationId] = new Animation();
+			animation.duration = durationsBuffer.getUnsignedByte();
+			animation.skins = skins;
+
+			int transformationAmount = idBuffer.getUnsignedByte();
+			int lastIndex = -1;
+			int transformationCount = 0;
+
+			for (int index = 0; index < transformationAmount; index++) {
+				int attributeId = attributeBuffer.getUnsignedByte();
+
+				if (attributeId > 0) {
+					if (skins.opcodes[index] != 0) {
+						for (int nextIndex = index - 1; nextIndex > lastIndex; nextIndex--) {
+							if (skins.opcodes[nextIndex] == 0) {
+								transformations[transformationCount] = nextIndex;
+								transformationX[transformationCount] = 0;
+								transformationY[transformationCount] = 0;
+								transformationZ[transformationCount] = 0;
+								transformationCount++;
+								break;
 							}
 						}
-						is[stepCount] = i_20_;
-						int i_23_ = 0;
-						if (skins.opcodes[i_20_] == 3) {
-							i_23_ = 128;
-						}
-						if ((i_21_ & 0x1) != 0) {
-							is_12_[stepCount] = buffer_7_.getSmartA();
-						} else {
-							is_12_[stepCount] = i_23_;
-						}
-						if ((i_21_ & 0x2) != 0) {
-							is_13_[stepCount] = buffer_7_.getSmartA();
-						} else {
-							is_13_[stepCount] = i_23_;
-						}
-						if ((i_21_ & 0x4) != 0) {
-							is_14_[stepCount] = buffer_7_.getSmartA();
-						} else {
-							is_14_[stepCount] = i_23_;
-						}
-						i_18_ = i_20_;
-						stepCount++;
-						if (skins.opcodes[i_20_] == 5) {
-							Animation.aBooleanArray45[animationId] = false;
-						}
 					}
-				}
-				animation.stepCount = stepCount;
-				animation.opcodeTable = new int[stepCount];
-				animation.modifier1 = new int[stepCount];
-				animation.modifier2 = new int[stepCount];
-				animation.modifier3 = new int[stepCount];
-				for (int i_24_ = 0; i_24_ < stepCount; i_24_++) {
-					animation.opcodeTable[i_24_] = is[i_24_];
-					animation.modifier1[i_24_] = is_12_[i_24_];
-					animation.modifier2[i_24_] = is_13_[i_24_];
-					animation.modifier3[i_24_] = is_14_[i_24_];
+
+					transformations[transformationCount] = index;
+
+					int value = 0;
+					if (skins.opcodes[index] == 3) {
+						value = 128;
+					}
+
+					if ((attributeId & 0x1) != 0) {
+						transformationX[transformationCount] = translationsBuffer.getSmartA();
+					} else {
+						transformationX[transformationCount] = value;
+					}
+
+					if ((attributeId & 0x2) != 0) {
+						transformationY[transformationCount] = translationsBuffer.getSmartA();
+					} else {
+						transformationY[transformationCount] = value;
+					}
+
+					if ((attributeId & 0x4) != 0) {
+						transformationZ[transformationCount] = translationsBuffer.getSmartA();
+					} else {
+						transformationZ[transformationCount] = value;
+					}
+
+					lastIndex = index;
+					transformationCount++;
 				}
 			}
-		} catch (RuntimeException runtimeexception) {
-			Signlink.reportError("72235, " + bs + ", " + bool + ", " + runtimeexception.toString());
-			throw new RuntimeException();
+
+			animation.transformationCount = transformationCount;
+			animation.translations = new int[transformationCount];
+			animation.translationX = new int[transformationCount];
+			animation.translationY = new int[transformationCount];
+			animation.translationZ = new int[transformationCount];
+
+			for (int index = 0; index < transformationCount; index++) {
+				animation.translations[index] = transformations[index];
+				animation.translationX[index] = transformationX[index];
+				animation.translationY[index] = transformationY[index];
+				animation.translationZ[index] = transformationZ[index];
+			}
 		}
 	}
 
@@ -137,9 +140,7 @@ public class Animation {
 	}
 
 	public static boolean exists(int i) {
-		if (i == -1) {
-			return true;
-		}
-		return false;
+		return i == -1;
 	}
+
 }
