@@ -8,7 +8,7 @@ import org.apollo.game.model.Player
 class PositionCommand extends Command {
 
 	override execute(Player player, String[] args) {
-		player.sendMessage(player.position.x + ", " + player.position.y + ", " + player.position.height)
+		player.sendMessage(player.position)
 	}
 
 	override test(CommandEvent event) {

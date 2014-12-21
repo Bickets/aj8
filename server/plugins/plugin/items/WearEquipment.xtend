@@ -27,8 +27,7 @@ class WearEquipment implements EventSubscriber<ItemActionEvent> {
 
 		if (equipDef == null) {
 			player.sendMessage(
-				id + " - " + itemDef.name +
-					" is not wearable, if you think this is a mistake please report this message.")
+				"[id=" + id + ", name=" + itemDef.name + "]: is not wearable, if it should be report this message.")
 			return false
 		}
 

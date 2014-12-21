@@ -32,7 +32,7 @@ class ItemCommand extends Command {
 		}
 
 		if (id < 0 || amount < 0 || id > ItemDefinition.count || amount > Integer.MAX_VALUE) {
-			plr.sendMessage("Item [id=" + id + ", amount=" + amount + "] ")
+			plr.sendMessage("Item [id=" + id + ", amount=" + amount + "] is not valid.")
 			return
 		}
 
