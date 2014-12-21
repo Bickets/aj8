@@ -1,7 +1,7 @@
 package org.apollo.game.model.obj;
 
-import static org.apollo.game.model.obj.ObjectOrientation.NORTH;
-import static org.apollo.game.model.obj.ObjectOrientation.SOUTH;
+import static org.apollo.game.model.obj.GameObjectOrientation.NORTH;
+import static org.apollo.game.model.obj.GameObjectOrientation.SOUTH;
 
 import org.apollo.game.model.Entity;
 import org.apollo.game.model.Position;
@@ -23,12 +23,12 @@ public final class GameObject extends Entity {
 	/**
 	 * Represents the type of this object.
 	 */
-	private final ObjectType type;
+	private final GameObjectType type;
 
 	/**
 	 * Represents the orientation of this object.
 	 */
-	private final ObjectOrientation orientation;
+	private final GameObjectOrientation orientation;
 
 	/**
 	 * Constructs a new {@link GameObject} with the specified id and position.
@@ -40,7 +40,7 @@ public final class GameObject extends Entity {
 	 * @param world The world this game object is in.
 	 */
 	public GameObject(int id, Position position, World world) {
-		this(id, position, world, ObjectOrientation.NORTH);
+		this(id, position, world, NORTH);
 	}
 
 	/**
@@ -52,8 +52,8 @@ public final class GameObject extends Entity {
 	 * @param world The world this game object is in.
 	 * @param orientation The orientation of this object.
 	 */
-	public GameObject(int id, Position position, World world, ObjectOrientation orientation) {
-		this(id, position, world, ObjectType.GENERAL_PROP, orientation);
+	public GameObject(int id, Position position, World world, GameObjectOrientation orientation) {
+		this(id, position, world, GameObjectType.GENERAL_PROP, orientation);
 	}
 
 	/**
@@ -66,7 +66,7 @@ public final class GameObject extends Entity {
 	 * @param type The type of this object.
 	 * @param orientation The orientation of this object.
 	 */
-	public GameObject(int id, Position position, World world, ObjectType type, ObjectOrientation orientation) {
+	public GameObject(int id, Position position, World world, GameObjectType type, GameObjectOrientation orientation) {
 		super(position, world);
 		this.id = id;
 		this.type = type;
@@ -83,14 +83,14 @@ public final class GameObject extends Entity {
 	/**
 	 * Returns the type of this object.
 	 */
-	public ObjectType getType() {
+	public GameObjectType getType() {
 		return type;
 	}
 
 	/**
 	 * Returns the orientation of this object.
 	 */
-	public ObjectOrientation getOrientation() {
+	public GameObjectOrientation getOrientation() {
 		return orientation;
 	}
 

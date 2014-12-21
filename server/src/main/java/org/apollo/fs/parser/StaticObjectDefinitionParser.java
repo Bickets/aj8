@@ -1,10 +1,10 @@
 package org.apollo.fs.parser;
 
-import static org.apollo.game.model.obj.ObjectGroup.WALL;
-import static org.apollo.game.model.obj.ObjectType.DIAGONAL_WALL;
-import static org.apollo.game.model.obj.ObjectType.GENERAL_PROP;
-import static org.apollo.game.model.obj.ObjectType.GROUND_PROP;
-import static org.apollo.game.model.obj.ObjectType.WALKABLE_PROP;
+import static org.apollo.game.model.obj.GameObjectGroup.WALL;
+import static org.apollo.game.model.obj.GameObjectType.DIAGONAL_WALL;
+import static org.apollo.game.model.obj.GameObjectType.GENERAL_PROP;
+import static org.apollo.game.model.obj.GameObjectType.GROUND_PROP;
+import static org.apollo.game.model.obj.GameObjectType.WALKABLE_PROP;
 import static org.apollo.game.model.region.Tile.FLAG_BLOCKED;
 import static org.apollo.game.model.region.Tile.FLAG_BRIDGE;
 
@@ -14,6 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
+import java.util.Optional;
 
 import org.apollo.fs.FileSystem;
 import org.apollo.game.model.Position;
@@ -21,8 +22,9 @@ import org.apollo.game.model.World;
 import org.apollo.game.model.def.GameObjectDefinition;
 import org.apollo.game.model.def.MapDefinition;
 import org.apollo.game.model.obj.GameObject;
-import org.apollo.game.model.obj.ObjectOrientation;
-import org.apollo.game.model.obj.ObjectType;
+import org.apollo.game.model.obj.GameObjectGroup;
+import org.apollo.game.model.obj.GameObjectOrientation;
+import org.apollo.game.model.obj.GameObjectType;
 import org.apollo.game.model.pf.TraversalMap;
 import org.apollo.util.ByteBufferUtil;
 import org.apollo.util.CompressionUtil;
@@ -102,11 +104,13 @@ public final class StaticObjectDefinitionParser {
 				int height = hash >> 12 & 0x3;
 
 				int attributeHashCode = gameObjectBuffer.get() & 0xFF;
-				ObjectType type = ObjectType.forId(attributeHashCode >> 2);
-				ObjectOrientation orientation = ObjectOrientation.forId(attributeHashCode & 0x3);
+				Optional<GameObjectType> type = GameObjectType.valueOf(attributeHashCode >> 2);
+				Optional<GameObjectOrientation> orientation = GameObjectOrientation.valueOf(attributeHashCode & 0x3);
 				Position position = new Position(x + localX, y + localY, height);
 
-				gameObjectDecoded(id, orientation, type, position);
+				if (type.isPresent() && orientation.isPresent()) {
+					gameObjectDecoded(id, orientation.get(), type.get(), position);
+				}
 			}
 		}
 	}
@@ -170,9 +174,10 @@ public final class StaticObjectDefinitionParser {
 	 * @param type The type of the game object.
 	 * @param position The position the game object lies on.
 	 */
-	private void gameObjectDecoded(int id, ObjectOrientation orientation, ObjectType type, Position position) {
+	private void gameObjectDecoded(int id, GameObjectOrientation orientation, GameObjectType type, Position position) {
 		TraversalMap traversalMap = world.getTraversalMap();
 		GameObjectDefinition def = GameObjectDefinition.forId(id);
+		Optional<GameObjectGroup> optionalGroup = type.getGroup();
 
 		if (type == GROUND_PROP) {
 			if (def.hasActions()) {
@@ -184,8 +189,11 @@ public final class StaticObjectDefinitionParser {
 			}
 		} else if (type.getId() >= 12) {
 			traversalMap.markBlocked(position.getHeight(), position.getX(), position.getY());
-		} else if (type.getGroup() == WALL) {
-			traversalMap.markWall(orientation, position.getHeight(), position.getX(), position.getY(), type, def.isWalkable());
+		} else if (optionalGroup.isPresent()) {
+			GameObjectGroup group = optionalGroup.get();
+			if (group == WALL) {
+				traversalMap.markWall(orientation, position.getHeight(), position.getX(), position.getY(), type, def.isWalkable());
+			}
 		} else if (type == DIAGONAL_WALL) {
 			traversalMap.markBlocked(position.getHeight(), position.getX(), position.getY());
 		}

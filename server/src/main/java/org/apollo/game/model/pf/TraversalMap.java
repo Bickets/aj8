@@ -1,9 +1,9 @@
 package org.apollo.game.model.pf;
 
-import static org.apollo.game.model.obj.ObjectOrientation.EAST;
-import static org.apollo.game.model.obj.ObjectOrientation.NORTH;
-import static org.apollo.game.model.obj.ObjectOrientation.SOUTH;
-import static org.apollo.game.model.obj.ObjectOrientation.WEST;
+import static org.apollo.game.model.obj.GameObjectOrientation.EAST;
+import static org.apollo.game.model.obj.GameObjectOrientation.NORTH;
+import static org.apollo.game.model.obj.GameObjectOrientation.SOUTH;
+import static org.apollo.game.model.obj.GameObjectOrientation.WEST;
 import static org.apollo.game.model.pf.TraversalConstants.BLOCKED;
 import static org.apollo.game.model.pf.TraversalConstants.BRIDGE;
 import static org.apollo.game.model.pf.TraversalConstants.IMPENETRABLE_OCCUPANT;
@@ -31,8 +31,8 @@ import java.util.List;
 import org.apollo.game.model.Direction;
 import org.apollo.game.model.Position;
 import org.apollo.game.model.World;
-import org.apollo.game.model.obj.ObjectOrientation;
-import org.apollo.game.model.obj.ObjectType;
+import org.apollo.game.model.obj.GameObjectOrientation;
+import org.apollo.game.model.obj.GameObjectType;
 import org.apollo.game.model.region.Region;
 
 /**
@@ -67,7 +67,7 @@ public final class TraversalMap {
 	 * @param type The type of wall.
 	 * @param impenetrable Whether or not this wall can be passed through.
 	 */
-	public void markWall(ObjectOrientation orientation, int height, int x, int y, ObjectType type, boolean impenetrable) {
+	public void markWall(GameObjectOrientation orientation, int height, int x, int y, GameObjectType type, boolean impenetrable) {
 		switch (type) {
 		case STRAIGHT_WALL:
 			if (orientation == WEST) {
@@ -197,7 +197,7 @@ public final class TraversalMap {
 	 * @param type The type of wall.
 	 * @param impenetrable Whether or not this wall can be passed through.
 	 */
-	public void unmarkWall(ObjectOrientation orientation, int height, int x, int y, ObjectType type, boolean impenetrable) {
+	public void unmarkWall(GameObjectOrientation orientation, int height, int x, int y, GameObjectType type, boolean impenetrable) {
 		switch (type) {
 		case STRAIGHT_WALL:
 			if (orientation == WEST) {

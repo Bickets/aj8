@@ -1,12 +1,16 @@
 package org.apollo.game.model.obj;
 
+import java.util.HashMap;
+import java.util.Map;
+import java.util.Optional;
+
 /**
- * Represents an objects type.
+ * Represents a {@link GameObject}s type.
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  * @author Maxi <http://www.rune-server.org/members/maxi/>
  */
-public enum ObjectType {
+public enum GameObjectType {
 
 	/**
 	 * Represents straight walls, fences etc.
@@ -130,11 +134,11 @@ public enum ObjectType {
 	private final int id;
 
 	/**
-	 * Constructs a new {@link ObjectType} with the specified id.
+	 * Constructs a new {@link GameObjectType} with the specified id.
 	 *
 	 * @param id The id of this object type.
 	 */
-	private ObjectType(int id) {
+	private GameObjectType(int id) {
 		this.id = id;
 	}
 
@@ -146,25 +150,37 @@ public enum ObjectType {
 	}
 
 	/**
-	 * Returns the object group this type of object belongs to.
+	 * Returns the {@link GameObjectGroup} wrapped in an {@link Optional} for
+	 * this object type.
 	 */
-	public ObjectGroup getGroup() {
-		return ObjectGroup.forType(this);
+	public Optional<GameObjectGroup> getGroup() {
+		return GameObjectGroup.valueOf(this);
 	}
 
 	/**
-	 * Returns a single object type for the specified id.
-	 *
-	 * @param id The types id.
-	 * @return The objects type if possible.
+	 * A mutable {@link Map} of {@code int} keys to {@link GameObjectType}
+	 * values.
 	 */
-	public static ObjectType forId(int id) {
-		for (ObjectType type : values()) {
-			if (type.getId() == id) {
-				return type;
-			}
+	private static final Map<Integer, GameObjectType> values = new HashMap<>();
+
+	/**
+	 * Populates the {@link #values} cache.
+	 */
+	static {
+		for (GameObjectType type : values()) {
+			values.put(type.getId(), type);
 		}
-		throw new IllegalArgumentException("no type found for id: " + id);
+	}
+
+	/**
+	 * Returns a {@link GameObjectType} wrapped in an {@link Optional} for the
+	 * specified {@code id}.
+	 * 
+	 * @param id The game object type id.
+	 * @return The optional game object type.
+	 */
+	public static Optional<GameObjectType> valueOf(int id) {
+		return Optional.ofNullable(values.get(id));
 	}
 
 }
