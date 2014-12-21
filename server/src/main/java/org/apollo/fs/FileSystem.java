@@ -14,6 +14,11 @@ import java.util.zip.CRC32;
 
 import com.google.common.base.Preconditions;
 
+/**
+ * Represents a file system of {@link Cache}s and {@link Archive}s.
+ * 
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
+ */
 public final class FileSystem {
 
 	public static final int CONFIG_INDEX = 0;
@@ -45,14 +50,14 @@ public final class FileSystem {
 	private static final String INDEX_PREFIX = "main_file_cache.idx";
 
 	/**
-	 * All of the {@link Archive}s within this {@link FileSystem}.
-	 */
-	private final Archive[] archives;
-
-	/**
 	 * All of the {@link Cache}s within this {@link FileSystem}.
 	 */
 	private final Cache[] caches;
+
+	/**
+	 * All of the {@link Archive}s within this {@link FileSystem}.
+	 */
+	private final Archive[] archives;
 
 	/**
 	 * The cached archive hashes.
@@ -102,8 +107,7 @@ public final class FileSystem {
 
 		// We don't use index 0
 		for (int id = 1; id < archives.length; id++) {
-			Cache cache = caches[CONFIG_INDEX];
-			Preconditions.checkNotNull(cache, "Configuration cache is null - unable to decode archives");
+			Cache cache = Objects.requireNonNull(caches[CONFIG_INDEX], "Configuration cache is null - unable to decode archives");
 			archives[id] = Archive.decode(cache.get(id));
 		}
 
@@ -113,17 +117,26 @@ public final class FileSystem {
 	}
 
 	/**
-	 * Gets an {@link Archive} for the specified {@code id}.
+	 * Gets an {@link Archive} for the specified {@code id}, this method
+	 * fails-fast if no archive can be found.
 	 *
 	 * @param id The id of the {@link Archive} to fetch.
-	 * @return The {@link Archive} for the specified {@code id} or {@code null}
-	 *         if it doesn't exist.
+	 * @return The {@link Archive} for the specified {@code id}.
+	 * @throws NullPointerException If the archive cannot be found.
 	 */
 	public Archive getArchive(int id) {
 		Preconditions.checkElementIndex(id, archives.length);
 		return Objects.requireNonNull(archives[id]);
 	}
 
+	/**
+	 * Gets a {@link Cache} for the specified {@code id}, this method fails-fast
+	 * if no cache can be found.
+	 * 
+	 * @param id The id of the {@link Cache} to fetch.
+	 * @return The {@link Cache} for the specified {@code id}.
+	 * @throws NullPointerException If the cache cannot be found.
+	 */
 	public Cache getCache(int id) {
 		Preconditions.checkElementIndex(id, caches.length);
 		return Objects.requireNonNull(caches[id]);
