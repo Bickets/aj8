@@ -6,9 +6,7 @@ import org.apollo.game.model.Graphic;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.Skill;
 import org.apollo.game.model.SkillSet;
-import org.apollo.game.model.def.LevelUpDefinition;
-import org.apollo.game.msg.impl.OpenDialogueInterfaceMessage;
-import org.apollo.game.msg.impl.SetInterfaceTextMessage;
+import org.apollo.game.model.inter.dialog.SkillLevelUpDialogueListener;
 import org.apollo.game.msg.impl.UpdateSkillMessage;
 import org.apollo.util.LanguageUtil;
 
@@ -39,12 +37,8 @@ public final class SynchronizationSkillListener implements SkillListener {
 		String name = Skill.getName(id);
 		String article = LanguageUtil.getIndefiniteArticle(name);
 		int level = skill.getMaximumLevel();
-		LevelUpDefinition definition = LevelUpDefinition.fromId(id);
 
-		player.send(new SetInterfaceTextMessage(definition.getFirstChildId(), "Congratulations! You've just advanced " + article + " " + name + " level!"));
-		player.send(new SetInterfaceTextMessage(definition.getSecondChildId(), "You have now reached level " + level + "!"));
-		player.send(new OpenDialogueInterfaceMessage(definition.getInterfaceId()));
-
+		player.getInterfaceSet().openDialogue(new SkillLevelUpDialogueListener(id, skill));
 		player.sendMessage("You've just advanced " + article + " " + name + " level! You have reached level " + level + ".");
 
 		if (level == SkillSet.MAXIMUM_LEVEL) {

@@ -99,7 +99,7 @@ public final class InterfaceSet {
 		/* Verify the listener before continuing */
 		if (listener.getMaximumEntries() != -1) {
 			String[] lines = listener.getLines();
-			if (lines.length < listener.getMinimumEntries() || lines.length >= listener.getMaximumEntries()) {
+			if (lines.length < listener.getMinimumEntries() || lines.length > listener.getMaximumEntries()) {
 				throw new IllegalArgumentException("Amount of dialogue is out of bounds: " + lines.length);
 			}
 		}
