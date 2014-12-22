@@ -527,9 +527,9 @@ public class Game extends GameShell {
 			formatedAmount = formatedAmount.substring(0, i) + "," + formatedAmount.substring(i);
 		}
 		if (formatedAmount.length() > 8) {
-			formatedAmount = "@gre@" + formatedAmount.substring(0, formatedAmount.length() - 8) + " million @whi@(" + formatedAmount + ")";
+			formatedAmount = "<col=65280>" + formatedAmount.substring(0, formatedAmount.length() - 8) + " million <col=ffffff>(" + formatedAmount + ")";
 		} else if (formatedAmount.length() > 4) {
-			formatedAmount = "@cya@" + formatedAmount.substring(0, formatedAmount.length() - 4) + "K @whi@(" + formatedAmount + ")";
+			formatedAmount = "<col=65535>" + formatedAmount.substring(0, formatedAmount.length() - 4) + "K <col=ffffff>(" + formatedAmount + ")";
 		}
 		return " " + formatedAmount;
 	}
@@ -650,11 +650,11 @@ public class Game extends GameShell {
 						String chatboxMessageName = chatboxMessageNames[chatboxMessage];
 
 						int playerRights = 0;
-						if (chatboxMessageName != null && chatboxMessageName.startsWith("@cr1@")) {
+						if (chatboxMessageName != null && chatboxMessageName.startsWith("<img=0>")) {
 							chatboxMessageName = chatboxMessageName.substring(5);
 							playerRights = 1;
 						}
-						if (chatboxMessageName != null && chatboxMessageName.startsWith("@cr2@")) {
+						if (chatboxMessageName != null && chatboxMessageName.startsWith("<img=1>")) {
 							chatboxMessageName = chatboxMessageName.substring(5);
 							playerRights = 2;
 						}
@@ -1294,7 +1294,7 @@ public class Game extends GameShell {
 							if (string.indexOf(" ") != -1) {
 								string = string.substring(0, string.indexOf(" "));
 							}
-							menuActionNames[menuActionRow] = string + " @gre@" + widgetChild.spellName;
+							menuActionNames[menuActionRow] = string + " <col=65280>" + widgetChild.spellName;
 							menuActionIds[menuActionRow] = 626;
 							menuActionIds3[menuActionRow] = widgetChild.id;
 							menuActionRow++;
@@ -1340,7 +1340,7 @@ public class Game extends GameShell {
 											ItemDefinition itemdefinition = ItemDefinition.getDefinition(widgetChild.items[i_121_] - 1);
 											if (anInt1307 == 1 && widgetChild.isInventory) {
 												if (widgetChild.id != anInt1309 || i_121_ != anInt1308) {
-													menuActionNames[menuActionRow] = "Use " + aString1311 + " with @lre@" + itemdefinition.name;
+													menuActionNames[menuActionRow] = "Use " + aString1311 + " with <col=ff9040>" + itemdefinition.name;
 													menuActionIds[menuActionRow] = 870;
 													menuActionIds1[menuActionRow] = itemdefinition.id;
 													menuActionIds2[menuActionRow] = i_121_;
@@ -1349,7 +1349,7 @@ public class Game extends GameShell {
 												}
 											} else if (anInt1161 == 1 && widgetChild.isInventory) {
 												if ((anInt1163 & 0x10) == 16) {
-													menuActionNames[menuActionRow] = aString1164 + " @lre@" + itemdefinition.name;
+													menuActionNames[menuActionRow] = aString1164 + " <col=ff9040>" + itemdefinition.name;
 													menuActionIds[menuActionRow] = 543;
 													menuActionIds1[menuActionRow] = itemdefinition.id;
 													menuActionIds2[menuActionRow] = i_121_;
@@ -1360,7 +1360,7 @@ public class Game extends GameShell {
 												if (widgetChild.isInventory) {
 													for (int i_126_ = 4; i_126_ >= 3; i_126_--) {
 														if (itemdefinition.inventoryActions != null && itemdefinition.inventoryActions[i_126_] != null) {
-															menuActionNames[menuActionRow] = itemdefinition.inventoryActions[i_126_] + " @lre@" + itemdefinition.name;
+															menuActionNames[menuActionRow] = itemdefinition.inventoryActions[i_126_] + " <col=ff9040>" + itemdefinition.name;
 															if (i_126_ == 3) {
 																menuActionIds[menuActionRow] = 493;
 															}
@@ -1372,7 +1372,7 @@ public class Game extends GameShell {
 															menuActionIds3[menuActionRow] = widgetChild.id;
 															menuActionRow++;
 														} else if (i_126_ == 4) {
-															menuActionNames[menuActionRow] = "Drop @lre@" + itemdefinition.name;
+															menuActionNames[menuActionRow] = "Drop <col=ff9040>" + itemdefinition.name;
 															menuActionIds[menuActionRow] = 847;
 															menuActionIds1[menuActionRow] = itemdefinition.id;
 															menuActionIds2[menuActionRow] = i_121_;
@@ -1382,7 +1382,7 @@ public class Game extends GameShell {
 													}
 												}
 												if (widgetChild.itemUsable) {
-													menuActionNames[menuActionRow] = "Use @lre@" + itemdefinition.name;
+													menuActionNames[menuActionRow] = "Use <col=ff9040>" + itemdefinition.name;
 													menuActionIds[menuActionRow] = 447;
 													menuActionIds1[menuActionRow] = itemdefinition.id;
 													menuActionIds2[menuActionRow] = i_121_;
@@ -1392,7 +1392,7 @@ public class Game extends GameShell {
 												if (widgetChild.isInventory && itemdefinition.inventoryActions != null) {
 													for (int i_127_ = 2; i_127_ >= 0; i_127_--) {
 														if (itemdefinition.inventoryActions[i_127_] != null) {
-															menuActionNames[menuActionRow] = itemdefinition.inventoryActions[i_127_] + " @lre@" + itemdefinition.name;
+															menuActionNames[menuActionRow] = itemdefinition.inventoryActions[i_127_] + " <col=ff9040>" + itemdefinition.name;
 															if (i_127_ == 0) {
 																menuActionIds[menuActionRow] = 74;
 															}
@@ -1412,7 +1412,7 @@ public class Game extends GameShell {
 												if (widgetChild.actions != null) {
 													for (int i_128_ = 4; i_128_ >= 0; i_128_--) {
 														if (widgetChild.actions[i_128_] != null) {
-															menuActionNames[menuActionRow] = widgetChild.actions[i_128_] + " @lre@" + itemdefinition.name;
+															menuActionNames[menuActionRow] = widgetChild.actions[i_128_] + " <col=ff9040>" + itemdefinition.name;
 															if (i_128_ == 0) {
 																menuActionIds[menuActionRow] = 632;
 															}
@@ -1435,7 +1435,7 @@ public class Game extends GameShell {
 														}
 													}
 												}
-												menuActionNames[menuActionRow] = "Examine @lre@" + itemdefinition.name;
+												menuActionNames[menuActionRow] = "Examine <col=ff9040>" + itemdefinition.name;
 												menuActionIds[menuActionRow] = 1125;
 												menuActionIds1[menuActionRow] = itemdefinition.id;
 												menuActionIds2[menuActionRow] = i_121_;
@@ -3997,7 +3997,7 @@ public class Game extends GameShell {
 				}
 				if (menuActionId == 337 || menuActionId == 42 || menuActionId == 792 || menuActionId == 322) {
 					String string = menuActionNames[pressedRow];
-					int i_378_ = string.indexOf("@whi@");
+					int i_378_ = string.indexOf("<col=ffffff>");
 					if (i_378_ != -1) {
 						long l = TextUtils.nameToLong(string.substring(i_378_ + 5).trim());
 						if (menuActionId == 337) {
@@ -4048,7 +4048,7 @@ public class Game extends GameShell {
 				}
 				if (menuActionId == 484 || menuActionId == 6) {
 					String string = menuActionNames[pressedRow];
-					int i_379_ = string.indexOf("@whi@");
+					int i_379_ = string.indexOf("<col=ffffff>");
 					if (i_379_ != -1) {
 						string = string.substring(i_379_ + 5).trim();
 						String string_380_ = TextUtils.formatName(TextUtils.longToName(TextUtils.nameToLong(string)));
@@ -4448,7 +4448,7 @@ public class Game extends GameShell {
 					}
 					if (menuActionId == 606) {
 						String string = menuActionNames[pressedRow];
-						int i_389_ = string.indexOf("@whi@");
+						int i_389_ = string.indexOf("<col=ffffff>");
 						if (i_389_ != -1) {
 							if (openWidgetId == -1) {
 								closeWidgets();
@@ -4482,7 +4482,7 @@ public class Game extends GameShell {
 					}
 					if (menuActionId == 639) {
 						String string = menuActionNames[pressedRow];
-						int i_391_ = string.indexOf("@whi@");
+						int i_391_ = string.indexOf("<col=ffffff>");
 						if (i_391_ != -1) {
 							long l = TextUtils.nameToLong(string.substring(i_391_ + 5).trim());
 							int i_392_ = -1;
@@ -4705,7 +4705,7 @@ public class Game extends GameShell {
 								continue;
 							}
 							if (anInt1307 == 1) {
-								menuActionNames[menuActionRow] = "Use " + aString1311 + " with @cya@" + gameobjectdefinition.name;
+								menuActionNames[menuActionRow] = "Use " + aString1311 + " with <col=65535>" + gameobjectdefinition.name;
 								menuActionIds[menuActionRow] = 62;
 								menuActionIds1[menuActionRow] = i_401_;
 								menuActionIds2[menuActionRow] = i_402_;
@@ -4713,7 +4713,7 @@ public class Game extends GameShell {
 								menuActionRow++;
 							} else if (anInt1161 == 1) {
 								if ((anInt1163 & 0x4) == 4) {
-									menuActionNames[menuActionRow] = aString1164 + " @cya@" + gameobjectdefinition.name;
+									menuActionNames[menuActionRow] = aString1164 + " <col=65535>" + gameobjectdefinition.name;
 									menuActionIds[menuActionRow] = 956;
 									menuActionIds1[menuActionRow] = i_401_;
 									menuActionIds2[menuActionRow] = i_402_;
@@ -4724,7 +4724,7 @@ public class Game extends GameShell {
 								if (gameobjectdefinition.actions != null) {
 									for (int i_406_ = 4; i_406_ >= 0; i_406_--) {
 										if (gameobjectdefinition.actions[i_406_] != null) {
-											menuActionNames[menuActionRow] = gameobjectdefinition.actions[i_406_] + " @cya@" + gameobjectdefinition.name;
+											menuActionNames[menuActionRow] = gameobjectdefinition.actions[i_406_] + " <col=65535>" + gameobjectdefinition.name;
 											if (i_406_ == 0) {
 												menuActionIds[menuActionRow] = 502;
 											}
@@ -4747,7 +4747,7 @@ public class Game extends GameShell {
 										}
 									}
 								}
-								menuActionNames[menuActionRow] = "Examine @cya@" + gameobjectdefinition.name;
+								menuActionNames[menuActionRow] = "Examine <col=65535>" + gameobjectdefinition.name;
 								menuActionIds[menuActionRow] = 1226;
 								menuActionIds1[menuActionRow] = gameobjectdefinition.id << 14;
 								menuActionIds2[menuActionRow] = i_402_;
@@ -4797,7 +4797,7 @@ public class Game extends GameShell {
 								for (Item item = (Item) linkedlist.getFront(); item != null; item = (Item) linkedlist.getNext()) {
 									ItemDefinition itemdefinition = ItemDefinition.getDefinition(item.itemId);
 									if (anInt1307 == 1) {
-										menuActionNames[menuActionRow] = "Use " + aString1311 + " with @lre@" + itemdefinition.name;
+										menuActionNames[menuActionRow] = "Use " + aString1311 + " with <col=ff9040>" + itemdefinition.name;
 										menuActionIds[menuActionRow] = 511;
 										menuActionIds1[menuActionRow] = item.itemId;
 										menuActionIds2[menuActionRow] = i_402_;
@@ -4805,7 +4805,7 @@ public class Game extends GameShell {
 										menuActionRow++;
 									} else if (anInt1161 == 1) {
 										if ((anInt1163 & 0x1) == 1) {
-											menuActionNames[menuActionRow] = aString1164 + " @lre@" + itemdefinition.name;
+											menuActionNames[menuActionRow] = aString1164 + " <col=ff9040>" + itemdefinition.name;
 											menuActionIds[menuActionRow] = 94;
 											menuActionIds1[menuActionRow] = item.itemId;
 											menuActionIds2[menuActionRow] = i_402_;
@@ -4815,7 +4815,7 @@ public class Game extends GameShell {
 									} else {
 										for (int i_413_ = 4; i_413_ >= 0; i_413_--) {
 											if (itemdefinition.groundActions != null && itemdefinition.groundActions[i_413_] != null) {
-												menuActionNames[menuActionRow] = itemdefinition.groundActions[i_413_] + " @lre@" + itemdefinition.name;
+												menuActionNames[menuActionRow] = itemdefinition.groundActions[i_413_] + " <col=ff9040>" + itemdefinition.name;
 												if (i_413_ == 0) {
 													menuActionIds[menuActionRow] = 652;
 												}
@@ -4836,7 +4836,7 @@ public class Game extends GameShell {
 												menuActionIds3[menuActionRow] = i_403_;
 												menuActionRow++;
 											} else if (i_413_ == 2) {
-												menuActionNames[menuActionRow] = "Take @lre@" + itemdefinition.name;
+												menuActionNames[menuActionRow] = "Take <col=ff9040>" + itemdefinition.name;
 												menuActionIds[menuActionRow] = 234;
 												menuActionIds1[menuActionRow] = item.itemId;
 												menuActionIds2[menuActionRow] = i_402_;
@@ -4844,7 +4844,7 @@ public class Game extends GameShell {
 												menuActionRow++;
 											}
 										}
-										menuActionNames[menuActionRow] = "Examine @lre@" + itemdefinition.name;
+										menuActionNames[menuActionRow] = "Examine <col=ff9040>" + itemdefinition.name;
 										menuActionIds[menuActionRow] = 1448;
 										menuActionIds1[menuActionRow] = item.itemId;
 										menuActionIds2[menuActionRow] = i_402_;
@@ -5242,9 +5242,9 @@ public class Game extends GameShell {
 							Game.localPlayer.chatEffect = i_422_;
 							Game.localPlayer.anInt1555 = 150;
 							if (playerRights == 2) {
-								sendMessage(Game.localPlayer.forcedChat, 2, "@cr2@" + Game.localPlayer.playerName);
+								sendMessage(Game.localPlayer.forcedChat, 2, "<img=1>" + Game.localPlayer.playerName);
 							} else if (playerRights == 1) {
-								sendMessage(Game.localPlayer.forcedChat, 2, "@cr1@" + Game.localPlayer.playerName);
+								sendMessage(Game.localPlayer.forcedChat, 2, "<img=0>" + Game.localPlayer.playerName);
 							} else {
 								sendMessage(Game.localPlayer.forcedChat, 2, Game.localPlayer.playerName);
 							}
@@ -5279,10 +5279,10 @@ public class Game extends GameShell {
 						break;
 					}
 					String name = chatboxMessageNames[i_427_];
-					if (name != null && name.startsWith("@cr1@")) {
+					if (name != null && name.startsWith("<img=0>")) {
 						name = name.substring(5);
 					}
-					if (name != null && name.startsWith("@cr2@")) {
+					if (name != null && name.startsWith("<img=1>")) {
 						name = name.substring(5);
 					}
 					if (i_428_ == 0) {
@@ -5291,14 +5291,14 @@ public class Game extends GameShell {
 					if ((i_428_ == 1 || i_428_ == 2) && (i_428_ == 1 || publicChatSetting == 0 || publicChatSetting == 1 && method109(false, name))) {
 						if (i_424_ > i_429_ - 14 && i_424_ <= i_429_ && !name.equals(Game.localPlayer.playerName)) {
 							if (playerRights >= 1) {
-								menuActionNames[menuActionRow] = "Report abuse @whi@" + name;
+								menuActionNames[menuActionRow] = "Report abuse <col=ffffff>" + name;
 								menuActionIds[menuActionRow] = 606;
 								menuActionRow++;
 							}
-							menuActionNames[menuActionRow] = "Add ignore @whi@" + name;
+							menuActionNames[menuActionRow] = "Add ignore <col=ffffff>" + name;
 							menuActionIds[menuActionRow] = 42;
 							menuActionRow++;
-							menuActionNames[menuActionRow] = "Add friend @whi@" + name;
+							menuActionNames[menuActionRow] = "Add friend <col=ffffff>" + name;
 							menuActionIds[menuActionRow] = 337;
 							menuActionRow++;
 						}
@@ -5307,14 +5307,14 @@ public class Game extends GameShell {
 					if ((i_428_ == 3 || i_428_ == 7) && anInt1220 == 0 && (i_428_ == 7 || privateChatSetting == 0 || privateChatSetting == 1 && method109(false, name))) {
 						if (i_424_ > i_429_ - 14 && i_424_ <= i_429_) {
 							if (playerRights >= 1) {
-								menuActionNames[menuActionRow] = "Report abuse @whi@" + name;
+								menuActionNames[menuActionRow] = "Report abuse <col=ffffff>" + name;
 								menuActionIds[menuActionRow] = 606;
 								menuActionRow++;
 							}
-							menuActionNames[menuActionRow] = "Add ignore @whi@" + name;
+							menuActionNames[menuActionRow] = "Add ignore <col=ffffff>" + name;
 							menuActionIds[menuActionRow] = 42;
 							menuActionRow++;
-							menuActionNames[menuActionRow] = "Add friend @whi@" + name;
+							menuActionNames[menuActionRow] = "Add friend <col=ffffff>" + name;
 							menuActionIds[menuActionRow] = 337;
 							menuActionRow++;
 						}
@@ -5322,7 +5322,7 @@ public class Game extends GameShell {
 					}
 					if (i_428_ == 4 && (tradeSetting == 0 || tradeSetting == 1 && method109(false, name))) {
 						if (i_424_ > i_429_ - 14 && i_424_ <= i_429_) {
-							menuActionNames[menuActionRow] = "Accept trade @whi@" + name;
+							menuActionNames[menuActionRow] = "Accept trade <col=ffffff>" + name;
 							menuActionIds[menuActionRow] = 484;
 							menuActionRow++;
 						}
@@ -5333,7 +5333,7 @@ public class Game extends GameShell {
 					}
 					if (i_428_ == 8 && (tradeSetting == 0 || tradeSetting == 1 && method109(false, name))) {
 						if (i_424_ > i_429_ - 14 && i_424_ <= i_429_) {
-							menuActionNames[menuActionRow] = "Accept challenge @whi@" + name;
+							menuActionNames[menuActionRow] = "Accept challenge <col=ffffff>" + name;
 							menuActionIds[menuActionRow] = 6;
 							menuActionRow++;
 						}
@@ -5394,11 +5394,11 @@ public class Game extends GameShell {
 						widget.actionType = 0;
 					} else {
 						if (friendsListWorlds[type] == 0) {
-							widget.disabledText = "@red@Offline";
+							widget.disabledText = "<col=ff0000>Offline";
 						} else if (friendsListWorlds[type] == Game.nodeId) {
-							widget.disabledText = "@gre@World-" + (friendsListWorlds[type] - 9);
+							widget.disabledText = "<col=65280>World-" + (friendsListWorlds[type] - 9);
 						} else {
-							widget.disabledText = "@yel@World-" + (friendsListWorlds[type] - 9);
+							widget.disabledText = "<col=ffff00>World-" + (friendsListWorlds[type] - 9);
 						}
 						widget.actionType = 1;
 					}
@@ -5545,7 +5545,7 @@ public class Game extends GameShell {
 					if (type == 652) {
 						if (lastRecoveryChange == 201) {
 							if (membershipAdviser == 1) {
-								widget.disabledText = "@yel@This is a non-members world: @whi@Since you are a member we";
+								widget.disabledText = "<col=ffff00>This is a non-members world: <col=ffffff>Since you are a member we";
 							} else {
 								widget.disabledText = "";
 							}
@@ -5566,7 +5566,7 @@ public class Game extends GameShell {
 					if (type == 653) {
 						if (lastRecoveryChange == 201) {
 							if (membershipAdviser == 1) {
-								widget.disabledText = "@whi@recommend you use a members world instead. You may use";
+								widget.disabledText = "<col=ffffff>recommend you use a members world instead. You may use";
 							} else {
 								widget.disabledText = "";
 							}
@@ -5581,7 +5581,7 @@ public class Game extends GameShell {
 					}
 					if (lastRecoveryChange == 201) {
 						if (membershipAdviser == 1) {
-							widget.disabledText = "@whi@this world but member benefits are unavailable whilst here.";
+							widget.disabledText = "<col=ffffff>this world but member benefits are unavailable whilst here.";
 						} else {
 							widget.disabledText = "";
 						}
@@ -5613,8 +5613,8 @@ public class Game extends GameShell {
 						String name = chatboxMessageNames[i];
 						int rights = 0;
 						if (name != null) {
-							if (name.startsWith("@cr")) {
-								rights = Integer.parseInt(name.substring(3, name.lastIndexOf("@")));
+							if (name.startsWith("<img")) {
+								rights = Integer.parseInt(name.substring(3, name.lastIndexOf("=")));
 								name = name.substring(5);
 							}
 						}
@@ -6490,7 +6490,7 @@ public class Game extends GameShell {
 						string += Game.method110(Game.localPlayer.combatLevel, npcdefinition.combatLevel, true) + " (level-" + npcdefinition.combatLevel + ")";
 					}
 					if (anInt1307 == 1) {
-						menuActionNames[menuActionRow] = "Use " + aString1311 + " with @yel@" + string;
+						menuActionNames[menuActionRow] = "Use " + aString1311 + " with <col=ffff00>" + string;
 						menuActionIds[menuActionRow] = 582;
 						menuActionIds1[menuActionRow] = i;
 						menuActionIds2[menuActionRow] = i_524_;
@@ -6498,7 +6498,7 @@ public class Game extends GameShell {
 						menuActionRow++;
 					} else if (anInt1161 == 1) {
 						if ((anInt1163 & 0x2) == 2) {
-							menuActionNames[menuActionRow] = aString1164 + " @yel@" + string;
+							menuActionNames[menuActionRow] = aString1164 + " <col=ffff00>" + string;
 							menuActionIds[menuActionRow] = 413;
 							menuActionIds1[menuActionRow] = i;
 							menuActionIds2[menuActionRow] = i_524_;
@@ -6509,7 +6509,7 @@ public class Game extends GameShell {
 						if (npcdefinition.actions != null) {
 							for (int i_525_ = 4; i_525_ >= 0; i_525_--) {
 								if (npcdefinition.actions[i_525_] != null && !npcdefinition.actions[i_525_].equalsIgnoreCase("attack")) {
-									menuActionNames[menuActionRow] = npcdefinition.actions[i_525_] + " @yel@" + string;
+									menuActionNames[menuActionRow] = npcdefinition.actions[i_525_] + " <col=ffff00>" + string;
 									if (i_525_ == 0) {
 										menuActionIds[menuActionRow] = 20;
 									}
@@ -6539,7 +6539,7 @@ public class Game extends GameShell {
 									if (npcdefinition.combatLevel > Game.localPlayer.combatLevel) {
 										i_527_ = 2000;
 									}
-									menuActionNames[menuActionRow] = npcdefinition.actions[i_526_] + " @yel@" + string;
+									menuActionNames[menuActionRow] = npcdefinition.actions[i_526_] + " <col=ffff00>" + string;
 									if (i_526_ == 0) {
 										menuActionIds[menuActionRow] = 20 + i_527_;
 									}
@@ -6562,7 +6562,7 @@ public class Game extends GameShell {
 								}
 							}
 						}
-						menuActionNames[menuActionRow] = "Examine @yel@" + string;
+						menuActionNames[menuActionRow] = "Examine <col=ffff00>" + string;
 						menuActionIds[menuActionRow] = 1025;
 						menuActionIds1[menuActionRow] = i;
 						menuActionIds2[menuActionRow] = i_524_;
@@ -6587,7 +6587,7 @@ public class Game extends GameShell {
 					string = player.playerName + " (skill-" + player.anInt1743 + ")";
 				}
 				if (anInt1307 == 1) {
-					menuActionNames[menuActionRow] = "Use " + aString1311 + " with @whi@" + string;
+					menuActionNames[menuActionRow] = "Use " + aString1311 + " with <col=ffffff>" + string;
 					menuActionIds[menuActionRow] = 491;
 					menuActionIds1[menuActionRow] = i_528_;
 					menuActionIds2[menuActionRow] = i;
@@ -6595,7 +6595,7 @@ public class Game extends GameShell {
 					menuActionRow++;
 				} else if (anInt1161 == 1) {
 					if ((anInt1163 & 0x8) == 8) {
-						menuActionNames[menuActionRow] = aString1164 + " @whi@" + string;
+						menuActionNames[menuActionRow] = aString1164 + " <col=ffffff>" + string;
 						menuActionIds[menuActionRow] = 365;
 						menuActionIds1[menuActionRow] = i_528_;
 						menuActionIds2[menuActionRow] = i;
@@ -6605,7 +6605,7 @@ public class Game extends GameShell {
 				} else {
 					for (int action = 4; action >= 0; action--) {
 						if (playerActions[action] != null) {
-							menuActionNames[menuActionRow] = playerActions[action] + " @whi@" + string;
+							menuActionNames[menuActionRow] = playerActions[action] + " <col=ffffff>" + string;
 							int i_531_ = 0;
 							if (playerActions[action].equalsIgnoreCase("attack")) {
 								if (player.combatLevel > Game.localPlayer.combatLevel) {
@@ -6645,7 +6645,7 @@ public class Game extends GameShell {
 				}
 				for (int i_532_ = 0; i_532_ < menuActionRow; i_532_++) {
 					if (menuActionIds[i_532_] == 516) {
-						menuActionNames[i_532_] = "Walk here @whi@" + string;
+						menuActionNames[i_532_] = "Walk here <col=ffffff>" + string;
 						break;
 					}
 				}
@@ -7928,16 +7928,16 @@ public class Game extends GameShell {
 				} else {
 					i--;
 				}
-				menuActionNames[menuActionRow] = "Remove @whi@" + friendsListNames[i];
+				menuActionNames[menuActionRow] = "Remove <col=ffffff>" + friendsListNames[i];
 				menuActionIds[menuActionRow] = 792;
 				menuActionRow++;
-				menuActionNames[menuActionRow] = "Message @whi@" + friendsListNames[i];
+				menuActionNames[menuActionRow] = "Message <col=ffffff>" + friendsListNames[i];
 				menuActionIds[menuActionRow] = 639;
 				menuActionRow++;
 				return true;
 			}
 			if (i >= 401 && i <= 500) {
-				menuActionNames[menuActionRow] = "Remove @whi@" + widget.disabledText;
+				menuActionNames[menuActionRow] = "Remove <col=ffffff>" + widget.disabledText;
 				menuActionIds[menuActionRow] = 322;
 				menuActionRow++;
 				return true;
@@ -8410,9 +8410,9 @@ public class Game extends GameShell {
 								player.chatEffect = chatEffects & 0xff;
 								player.anInt1555 = 150;
 								if (playerRights == 2 || playerRights == 3) {
-									sendMessage(forcedChat, 1, "@cr2@" + player.playerName);
+									sendMessage(forcedChat, 1, "<img=1>" + player.playerName);
 								} else if (playerRights == 1) {
-									sendMessage(forcedChat, 1, "@cr1@" + player.playerName);
+									sendMessage(forcedChat, 1, "<img=0>" + player.playerName);
 								} else {
 									sendMessage(forcedChat, 2, player.playerName);
 								}
@@ -8622,30 +8622,30 @@ public class Game extends GameShell {
 			}
 			int i_711_ = i - i_710_;
 			if (i_711_ < -9) {
-				return "@red@";
+				return "<col=ff0000>";
 			}
 			if (i_711_ < -6) {
-				return "@or3@";
+				return "<col=ff3000>";
 			}
 			if (i_711_ < -3) {
-				return "@or2@";
+				return "<col=ff7000>";
 			}
 			if (i_711_ < 0) {
-				return "@or1@";
+				return "<col=ffb000>";
 			}
 			if (i_711_ > 9) {
-				return "@gre@";
+				return "<col=65280>";
 			}
 			if (i_711_ > 6) {
-				return "@gr3@";
+				return "<col=40ff00>";
 			}
 			if (i_711_ > 3) {
-				return "@gr2@";
+				return "<col=80ff00>";
 			}
 			if (i_711_ > 0) {
-				return "@gr1@";
+				return "<col=c0ff00>";
 			}
-			return "@yel@";
+			return "<col=ffff00>";
 		} catch (RuntimeException runtimeexception) {
 			Signlink.reportError("19760, " + i + ", " + i_710_ + ", " + bool + ", " + runtimeexception.toString());
 			throw new RuntimeException();
@@ -9310,7 +9310,7 @@ public class Game extends GameShell {
 						action = menuActionNames[menuActionRow - 1];
 					}
 					if (menuActionRow > 2) {
-						action += "@whi@ / " + (menuActionRow - 2) + " more options";
+						action += "<col=ffffff> / " + (menuActionRow - 2) + " more options";
 					}
 					fontBold.drawString(action, 4, 15, 0xFFFFFF, -1);
 				}
@@ -9507,7 +9507,7 @@ public class Game extends GameShell {
 						int messageType = chatboxMessageTypes[i];
 						String name = chatboxMessageNames[i];
 						if (name != null) {
-							if (name.startsWith("@cr1@") || name.startsWith("@cr2@")) {
+							if (name.startsWith("<img=0>") || name.startsWith("<img=1>")) {
 								name = name.substring(5);
 							}
 						}
@@ -9520,14 +9520,14 @@ public class Game extends GameShell {
 								}
 								if (mouseEventX < 4 + areaWidth) {
 									if (playerRights >= 1) {
-										menuActionNames[menuActionRow] = "Report abuse @whi@" + name;
+										menuActionNames[menuActionRow] = "Report abuse <col=ffffff>" + name;
 										menuActionIds[menuActionRow] = 2606;
 										menuActionRow++;
 									}
-									menuActionNames[menuActionRow] = "Add ignore @whi@" + name;
+									menuActionNames[menuActionRow] = "Add ignore <col=ffffff>" + name;
 									menuActionIds[menuActionRow] = 2042;
 									menuActionRow++;
-									menuActionNames[menuActionRow] = "Add friend @whi@" + name;
+									menuActionNames[menuActionRow] = "Add friend <col=ffffff>" + name;
 									menuActionIds[menuActionRow] = 2337;
 									menuActionRow++;
 								}
@@ -9793,9 +9793,9 @@ public class Game extends GameShell {
 						fontBold.drawStringCenter(loginMessage2, i / 2, i_860_ - 7, 0xFFFF00, -1);
 						i_860_ += 30;
 					}
-					fontBold.drawString("Username: " + username + (anInt1241 == 0 & Game.currentCycle % 40 < 20 ? "@yel@|" : ""), i / 2 - 90, i_860_, 0xFFFFFF, -1);
+					fontBold.drawString("Username: " + username + (anInt1241 == 0 & Game.currentCycle % 40 < 20 ? "<col=ffff00>|" : ""), i / 2 - 90, i_860_, 0xFFFFFF, -1);
 					i_860_ += 15;
-					fontBold.drawString("Password: " + TextUtils.censorPassword(password) + (anInt1241 == 1 & Game.currentCycle % 40 < 20 ? "@yel@|" : ""), i / 2 - 88, i_860_, 0xFFFFFF, -1);
+					fontBold.drawString("Password: " + TextUtils.censorPassword(password) + (anInt1241 == 1 & Game.currentCycle % 40 < 20 ? "<col=ffff00>|" : ""), i / 2 - 88, i_860_, 0xFFFFFF, -1);
 					i_860_ += 15;
 					if (!hideButtons) {
 						int i_861_ = i / 2 - 80;
@@ -11282,9 +11282,9 @@ public class Game extends GameShell {
 								string = ChatCensor.censorString(string);
 							}
 							if (senderPlayerRights == 2 || senderPlayerRights == 3) {
-								sendMessage(string, 7, "@cr2@" + TextUtils.formatName(TextUtils.longToName(nameLong)));
+								sendMessage(string, 7, "<img=1>" + TextUtils.formatName(TextUtils.longToName(nameLong)));
 							} else if (senderPlayerRights == 1) {
-								sendMessage(string, 7, "@cr1@" + TextUtils.formatName(TextUtils.longToName(nameLong)));
+								sendMessage(string, 7, "<img=0>" + TextUtils.formatName(TextUtils.longToName(nameLong)));
 							} else {
 								sendMessage(string, 3, TextUtils.formatName(TextUtils.longToName(nameLong)));
 							}
