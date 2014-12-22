@@ -15,6 +15,8 @@ import java.math.BigInteger;
 import java.net.InetAddress;
 import java.net.Socket;
 import java.net.URL;
+import java.text.NumberFormat;
+import java.util.Locale;
 import java.util.zip.CRC32;
 
 import javax.sound.midi.InvalidMidiDataException;
@@ -635,14 +637,18 @@ public class Game extends GameShell {
 			} else if (chatboxOverlay != -1) {
 				method105(0, 0, Widget.cache[chatboxOverlay], 0);
 			} else {
-				TypeFace typeFace = fontNormal;
-				int i = 0;
+				TypeFace currentFont = fontNormal;
+				int line = 0;
 				Rasterizer.setCoordinates(0, 0, 463, 77);
+
 				for (int chatboxMessage = 0; chatboxMessage < 100; chatboxMessage++) {
 					if (chatboxMessages[chatboxMessage] != null) {
+
 						int chatboxMessageType = chatboxMessageTypes[chatboxMessage];
-						int i_14_ = 70 - i * 14 + anInt1114;
+						int yPos = 70 - line * 14 + anInt1114;
+
 						String chatboxMessageName = chatboxMessageNames[chatboxMessage];
+
 						int playerRights = 0;
 						if (chatboxMessageName != null && chatboxMessageName.startsWith("@cr1@")) {
 							chatboxMessageName = chatboxMessageName.substring(5);
@@ -652,77 +658,85 @@ public class Game extends GameShell {
 							chatboxMessageName = chatboxMessageName.substring(5);
 							playerRights = 2;
 						}
+
 						if (chatboxMessageType == 0) {
-							if (i_14_ > 0 && i_14_ < 110) {
-								typeFace.drawString(chatboxMessages[chatboxMessage], 4, i_14_, 0);
+							if (yPos > 0 && yPos < 110) {
+								currentFont.drawString(chatboxMessages[chatboxMessage], 4, yPos, 0);
 							}
-							i++;
+							line++;
 						}
+
 						if ((chatboxMessageType == 1 || chatboxMessageType == 2) && (chatboxMessageType == 1 || publicChatSetting == 0 || publicChatSetting == 1 && method109(false, chatboxMessageName))) {
-							if (i_14_ > 0 && i_14_ < 110) {
-								int i_16_ = 4;
+							if (yPos > 0 && yPos < 110) {
+								int xPos = 4;
 								if (playerRights == 1) {
-									moderatorIcon[0].drawImage(i_16_, i_14_ - 12);
-									i_16_ += 14;
+									moderatorIcon[0].drawImage(xPos, yPos - 12);
+									xPos += 14;
 								}
 								if (playerRights == 2) {
-									moderatorIcon[1].drawImage(i_16_, i_14_ - 12);
-									i_16_ += 14;
+									moderatorIcon[1].drawImage(xPos, yPos - 12);
+									xPos += 14;
 								}
-								typeFace.drawString(chatboxMessageName + ":", i_16_, i_14_, 0);
-								i_16_ += typeFace.getStringEffectWidth(chatboxMessageName) + 8;
-								typeFace.drawString(chatboxMessages[chatboxMessage], i_16_, i_14_, 255);
+								currentFont.drawString(chatboxMessageName + ":", xPos, yPos, 0);
+								xPos += currentFont.getStringEffectWidth(chatboxMessageName) + 8;
+								currentFont.drawString(chatboxMessages[chatboxMessage], xPos, yPos, 255);
 							}
-							i++;
+							line++;
 						}
+
 						if ((chatboxMessageType == 3 || chatboxMessageType == 7) && anInt1220 == 0 && (chatboxMessageType == 7 || privateChatSetting == 0 || privateChatSetting == 1 && method109(false, chatboxMessageName))) {
-							if (i_14_ > 0 && i_14_ < 110) {
-								int i_17_ = 4;
-								typeFace.drawString("From", i_17_, i_14_, 0);
-								i_17_ += typeFace.getStringEffectWidth("From ");
+							if (yPos > 0 && yPos < 110) {
+								int xPos = 4;
+								currentFont.drawString("From", xPos, yPos, 0);
+								xPos += currentFont.getStringEffectWidth("From ");
 								if (playerRights == 1) {
-									moderatorIcon[0].drawImage(i_17_, i_14_ - 12);
-									i_17_ += 14;
+									moderatorIcon[0].drawImage(xPos, yPos - 12);
+									xPos += 14;
 								}
 								if (playerRights == 2) {
-									moderatorIcon[1].drawImage(i_17_, i_14_ - 12);
-									i_17_ += 14;
+									moderatorIcon[1].drawImage(xPos, yPos - 12);
+									xPos += 14;
 								}
-								typeFace.drawString(chatboxMessageName + ":", i_17_, i_14_, 0);
-								i_17_ += typeFace.getStringEffectWidth(chatboxMessageName) + 8;
-								typeFace.drawString(chatboxMessages[chatboxMessage], i_17_, i_14_, 8388608);
+								currentFont.drawString(chatboxMessageName + ":", xPos, yPos, 0);
+								xPos += currentFont.getStringEffectWidth(chatboxMessageName) + 8;
+								currentFont.drawString(chatboxMessages[chatboxMessage], xPos, yPos, 8388608);
 							}
-							i++;
+							line++;
 						}
+
 						if (chatboxMessageType == 4 && (tradeSetting == 0 || tradeSetting == 1 && method109(false, chatboxMessageName))) {
-							if (i_14_ > 0 && i_14_ < 110) {
-								typeFace.drawString(chatboxMessageName + " " + chatboxMessages[chatboxMessage], 4, i_14_, 8388736);
+							if (yPos > 0 && yPos < 110) {
+								currentFont.drawString(chatboxMessageName + " " + chatboxMessages[chatboxMessage], 4, yPos, 8388736);
 							}
-							i++;
+							line++;
 						}
+
 						if (chatboxMessageType == 5 && anInt1220 == 0 && privateChatSetting < 2) {
-							if (i_14_ > 0 && i_14_ < 110) {
-								typeFace.drawString(chatboxMessages[chatboxMessage], 4, i_14_, 8388608);
+							if (yPos > 0 && yPos < 110) {
+								currentFont.drawString(chatboxMessages[chatboxMessage], 4, yPos, 8388608);
 							}
-							i++;
+							line++;
 						}
+
 						if (chatboxMessageType == 6 && anInt1220 == 0 && privateChatSetting < 2) {
-							if (i_14_ > 0 && i_14_ < 110) {
-								typeFace.drawString("To " + chatboxMessageName + ":", 4, i_14_, 0);
-								typeFace.drawString(chatboxMessages[chatboxMessage], 12 + typeFace.getStringEffectWidth("To " + chatboxMessageName), i_14_, 8388608);
+							if (yPos > 0 && yPos < 110) {
+								currentFont.drawString("To " + chatboxMessageName + ":", 4, yPos, 0);
+								currentFont.drawString(chatboxMessages[chatboxMessage], 12 + currentFont.getStringEffectWidth("To " + chatboxMessageName), yPos, 8388608);
 							}
-							i++;
+							line++;
 						}
+
 						if (chatboxMessageType == 8 && (tradeSetting == 0 || tradeSetting == 1 && method109(false, chatboxMessageName))) {
-							if (i_14_ > 0 && i_14_ < 110) {
-								typeFace.drawString(chatboxMessageName + " " + chatboxMessages[chatboxMessage], 4, i_14_, 8270336);
+							if (yPos > 0 && yPos < 110) {
+								currentFont.drawString(chatboxMessageName + " " + chatboxMessages[chatboxMessage], 4, yPos, 8270336);
 							}
-							i++;
+							line++;
 						}
+
 					}
 				}
 				Rasterizer.resetCoordinates();
-				anInt1236 = i * 14 + 7;
+				anInt1236 = line * 14 + 7;
 				if (anInt1236 < 78) {
 					anInt1236 = 78;
 				}
@@ -733,8 +747,8 @@ public class Game extends GameShell {
 				} else {
 					string = TextUtils.formatName(username);
 				}
-				typeFace.drawString(string + ":", 4, 90, 0);
-				typeFace.drawString(chatboxInput + "*", 6 + typeFace.getStringEffectWidth(string + ": "), 90, 255);
+				currentFont.drawString(string + ":", 4, 90, 0);
+				currentFont.drawString(chatboxInput + "*", 6 + currentFont.getStringEffectWidth(string + ": "), 90, 255);
 				Rasterizer.drawHorizontalLine(0, 77, 479, 0);
 			}
 			if (actionMenuOpen && actionMenuArea == 2) {
@@ -3132,12 +3146,12 @@ public class Game extends GameShell {
 				if (loggedIn) {
 					synchronized (mouseCapturer.objectLock) {
 						if (Game.flagged) {
-							if (clickType != 0 || mouseCapturer.coord >= 40) {
+							if (clickType != 0 || mouseCapturer.recordedCoordinates >= 40) {
 								outBuffer.putOpcode(45);
 								outBuffer.put(0);
 								int offset = outBuffer.offset;
 								int count = 0;
-								for (int index = 0; index < mouseCapturer.coord; index++) {
+								for (int index = 0; index < mouseCapturer.recordedCoordinates; index++) {
 									if (offset - outBuffer.offset >= 240) {
 										break;
 									}
@@ -3184,18 +3198,18 @@ public class Game extends GameShell {
 									}
 								}
 								outBuffer.putSizeByte(outBuffer.offset - offset);
-								if (count >= mouseCapturer.coord) {
-									mouseCapturer.coord = 0;
+								if (count >= mouseCapturer.recordedCoordinates) {
+									mouseCapturer.recordedCoordinates = 0;
 								} else {
-									mouseCapturer.coord -= count;
-									for (int index = 0; index < mouseCapturer.coord; index++) {
+									mouseCapturer.recordedCoordinates -= count;
+									for (int index = 0; index < mouseCapturer.recordedCoordinates; index++) {
 										mouseCapturer.coordsX[index] = mouseCapturer.coordsX[index + count];
 										mouseCapturer.coordsY[index] = mouseCapturer.coordsY[index + count];
 									}
 								}
 							}
 						} else {
-							mouseCapturer.coord = 0;
+							mouseCapturer.recordedCoordinates = 0;
 						}
 					}
 					if (clickType != 0) {
@@ -5987,7 +6001,7 @@ public class Game extends GameShell {
 				Game.flagged = bufferedConnection.read() == 1;
 				lastClickTime = 0L;
 				recordedCoordinates = 0;
-				mouseCapturer.coord = 0;
+				mouseCapturer.recordedCoordinates = 0;
 				awtFocus = true;
 				aBoolean979 = true;
 				loggedIn = true;
@@ -8684,20 +8698,23 @@ public class Game extends GameShell {
 			int y = 20;
 			int color = fps > 15 ? 0xFFFF00 : 0xFF0000;
 			Runtime runtime = Runtime.getRuntime();
-			int usage = (int) ((runtime.totalMemory() - runtime.freeMemory()) / 1024L);
+			NumberFormat format = NumberFormat.getInstance(Locale.US);
+			int usedMemory = (int) ((runtime.totalMemory() - runtime.freeMemory()) / 1024L);
+			int maxMemory = (int) (runtime.totalMemory() / 1024L);
 
 			fontNormal.drawStringRight("FPS: " + fps, x, y, color);
 			y += 15;
 
-			color = 0xFFFF00;
-
-			if (usage > 0x2000000 && Game.lowMemory) {
-				color = 0xFF0000;
-			}
-			fontNormal.drawStringRight("Mem: " + usage + "k (" + usage / 1024L + "MB)", x, y, 0xFFFF00);
+			fontNormal.drawStringRight("Mem: (MB) " + format.format(usedMemory / 1024L) + " / " + format.format(maxMemory / 1024L), x, y, 0xFFFF00);
 			y += 15;
 
 			fontNormal.drawStringRight("Menu area: " + actionMenuArea, x, y, 0xFFFF00);
+			y += 15;
+
+			fontNormal.drawStringRight("Mouse: " + mouseEventX + ", " + mouseEventY, x, y, 0xFFFF00);
+			y += 15;
+
+			fontNormal.drawStringRight("Coords: " + destinationX + ", " + destinationY, x, y, 0xFFFF00);
 			y += 15;
 		}
 
