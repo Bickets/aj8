@@ -1,28 +1,57 @@
 package com.runescape.cache.media;
 
-import java.util.Random;
+import java.awt.Color;
 
 import com.runescape.cache.Archive;
 import com.runescape.media.Rasterizer;
 import com.runescape.net.Buffer;
 
-public class TypeFace extends Rasterizer {
+public final class TypeFace extends Rasterizer {
 
-	protected byte[][] characterPixels = new byte[256][];
-	protected int[] characterWidths = new int[256];
-	protected int[] characterHeights = new int[256];
-	protected int[] characterXOffsets = new int[256];
-	protected int[] characterYOffsets = new int[256];
-	public int[] characterScreenWidths = new int[256];
-	public int characterDefaultHeight;
-	protected Random random = new Random();
-	protected boolean strikeThrough = false;
+	public static final String NBSP_EFFECT = "nbsp";
+	public static final String START_TRANSPARENCY_EFFECT = "trans=";
+	public static final String DEFAULT_SHADOW_EFFECT = "shad";
+	public static final String END_SHADOW_EFFECT = "/shad";
+	public static final String GT_EFFECT = "gt";
+	public static final String END_STRIKE_THROUGH_EFFECT = "/str";
+	public static final String EURO_EFFECT = "euro";
+	public static final String START_COLOR_EFFECT = "col=";
+	public static final String BREAK_LINE_EFFECT = "br";
+	public static final String START_STRIKE_THROUGH_EFFECT = "str=";
+	public static final String END_COLOR_EFFECT = "/col";
+	public static final String START_IMAGE_EFFECT = "img=";
+	public static final String END_UNDERLINE_EFFECT = "/u";
+	public static final String DEFAULT_STRIKE_THROUGH_EFFECT = "str";
+	public static final String START_SHADOW_EFFECT = "shad=";
+	public static final String LT_EFFECT = "lt";
+	public static final String END_TRANSPARENCY_EFFECT = "/trans";
+	public static final String START_UNDERLINE_EFFECT = "u=";
+	public static final String DEFAULT_UNDERLINE_EFFECT = "u";
+
+	public final byte[][] characterPixels = new byte[256][];
+	public final int[] characterHeights = new int[256];
+	public final int[] characterWidths = new int[256];
+	public final int[] characterXOffsets = new int[256];
+	public final int[] characterYOffsets = new int[256];
+	public final int[] characterScreenWidths = new int[256];
+	private IndexedImage[] chatImages;
+
+	public int characterDefaultHeight = 0;
+	private int defaultColor = 0;
+	private int textShadowColor = -1;
+	private int strikethroughColor = -1;
+	private int defaultTransparency = 256;
+	private int underlineColor = -1;
+	private int defaultShadow = -1;
+	private int transparency = 256;
+	private int textColor = 0;
 
 	public TypeFace(boolean large, String archiveName, Archive archive) {
 		Buffer dataBuffer = new Buffer(archive.getFile(archiveName + ".dat"));
 		Buffer indexBuffer = new Buffer(archive.getFile("index.dat"));
+
 		indexBuffer.offset = dataBuffer.getUnsignedLEShort() + 7;
-		indexBuffer.getUnsignedByte(); // dummy
+		indexBuffer.getUnsignedByte();
 
 		for (int character = 0; character < 256; character++) {
 			characterXOffsets[character] = indexBuffer.getUnsignedByte();
@@ -31,7 +60,9 @@ public class TypeFace extends Rasterizer {
 			int characterHeight = characterHeights[character] = indexBuffer.getUnsignedLEShort();
 			int characterType = indexBuffer.getUnsignedByte();
 			int characterSize = characterWidth * characterHeight;
+
 			characterPixels[character] = new byte[characterSize];
+
 			if (characterType == 0) {
 				for (int pixel = 0; pixel < characterSize; pixel++) {
 					characterPixels[character][pixel] = dataBuffer.get();
@@ -43,27 +74,34 @@ public class TypeFace extends Rasterizer {
 					}
 				}
 			}
+
 			if (characterHeight > characterDefaultHeight && character < 128) {
 				characterDefaultHeight = characterHeight;
 			}
+
 			characterXOffsets[character] = 1;
 			characterScreenWidths[character] = characterWidth + 2;
+
 			int pixelCount = 0;
 			for (int characterY = characterHeight / 7; characterY < characterHeight; characterY++) {
 				pixelCount += characterPixels[character][characterY * characterWidth];
 			}
+
 			if (pixelCount <= characterHeight / 7) {
 				characterScreenWidths[character]--;
 				characterXOffsets[character] = 0;
 			}
+
 			pixelCount = 0;
 			for (int characterY = characterHeight / 7; characterY < characterHeight; characterY++) {
 				pixelCount += characterPixels[character][characterWidth - 1 + characterY * characterWidth];
 			}
+
 			if (pixelCount <= characterHeight / 7) {
 				characterScreenWidths[character]--;
 			}
 		}
+
 		if (large) {
 			characterScreenWidths[32] = characterScreenWidths[73];
 		} else {
@@ -71,65 +109,14 @@ public class TypeFace extends Rasterizer {
 		}
 	}
 
-	public void drawStringRight(String string, int x, int y, int color) {
-		drawString(string, x - getStringWidth(string), y, color);
-	}
-
-	public void drawStringLeft(String string, int x, int y, int color) {
-		drawString(string, x - getStringWidth(string) / 2, y, color);
-	}
-
-	public void drawStringCenter(String string, int x, int y, int color, boolean shadowed) {
-		drawShadowedString(string, x - getStringEffectWidth(string) / 2, y, shadowed, color);
-	}
-
-	public int getStringEffectWidth(String string) {
-		if (string == null) {
-			return 0;
-		}
-		int width = 0;
-		for (int character = 0; character < string.length(); character++) {
-			if (string.charAt(character) == '@' && character + 4 < string.length() && string.charAt(character + 4) == '@') {
-				character += 4;
-			} else {
-				width += characterScreenWidths[string.charAt(character)];
-			}
-		}
-		return width;
-	}
-
-	public int getStringWidth(String string) {
-		if (string == null) {
-			return 0;
-		}
-		int width = 0;
-		for (int character = 0; character < string.length(); character++) {
-			width += characterScreenWidths[string.charAt(character)];
-		}
-		return width;
-	}
-
-	public void drawString(String string, int x, int y, int color) {
-		if (string != null) {
-			y -= characterDefaultHeight;
-			for (int index = 0; index < string.length(); index++) {
-				char character = string.charAt(index);
-				if (character != ' ') {
-					drawCharacter(characterPixels[character], x + characterXOffsets[character], y + characterYOffsets[character], characterWidths[character], characterHeights[character], color);
-				}
-				x += characterScreenWidths[character];
-			}
-		}
-	}
-
 	public void drawCenteredStringWaveY(String string, int x, int y, int wave, int color) {
 		if (string != null) {
-			x -= getStringWidth(string) / 2;
-			y -= characterDefaultHeight;
+			x = getTextWidth(string) / 2;
+			y = characterDefaultHeight;
 			for (int index = 0; index < string.length(); index++) {
 				char character = string.charAt(index);
 				if (character != ' ') {
-					drawCharacter(characterPixels[character], x + characterXOffsets[character], y + characterYOffsets[character] + (int) (Math.sin(index / 2.0 + wave / 5.0) * 5.0), characterWidths[character], characterHeights[character], color);
+					drawCharacter(character, x + characterXOffsets[character], y + characterYOffsets[character] + (int) (Math.sin(index / 2.0 + wave / 5.0) * 5.0), characterWidths[character], characterHeights[character], color);
 				}
 				x += characterScreenWidths[character];
 			}
@@ -138,12 +125,12 @@ public class TypeFace extends Rasterizer {
 
 	public void drawCeneteredStringWaveXY(String string, int x, int y, int wave, int color) {
 		if (string != null) {
-			x -= getStringWidth(string) / 2;
+			x -= getTextWidth(string) / 2;
 			y -= characterDefaultHeight;
 			for (int index = 0; index < string.length(); index++) {
 				char character = string.charAt(index);
 				if (character != ' ') {
-					drawCharacter(characterPixels[character], x + characterXOffsets[character] + (int) (Math.sin(index / 5.0 + wave / 5.0) * 5.0), y + characterYOffsets[character] + (int) (Math.sin(index / 3.0 + wave / 5.0) * 5.0), characterWidths[character], characterHeights[character], color);
+					drawCharacter(character, x + characterXOffsets[character] + (int) (Math.sin(index / 5.0 + wave / 5.0) * 5.0), y + characterYOffsets[character] + (int) (Math.sin(index / 3.0 + wave / 5.0) * 5.0), characterWidths[character], characterHeights[character], color);
 				}
 				x += characterScreenWidths[character];
 			}
@@ -156,12 +143,12 @@ public class TypeFace extends Rasterizer {
 			if (speed < 0.0) {
 				speed = 0.0;
 			}
-			x -= getStringWidth(string) / 2;
+			x -= getTextWidth(string) / 2;
 			y -= characterDefaultHeight;
 			for (int index = 0; index < string.length(); index++) {
 				char character = string.charAt(index);
 				if (character != ' ') {
-					drawCharacter(characterPixels[character], x + characterXOffsets[character], y + characterYOffsets[character] + (int) (Math.sin(index / 1.5 + waveAmount) * speed), characterWidths[character], characterHeights[character], color);
+					drawCharacter(character, x + characterXOffsets[character], y + characterYOffsets[character] + (int) (Math.sin(index / 1.5 + waveAmount) * speed), characterWidths[character], characterHeights[character], color);
 				}
 				x += characterScreenWidths[character];
 			}
@@ -169,126 +156,238 @@ public class TypeFace extends Rasterizer {
 	}
 
 	public void drawShadowedString(String string, int x, int y, boolean shadow, int color) {
-		strikeThrough = false;
+		strikethroughColor = -1;
 		int originalX = x;
 		if (string != null) {
 			y -= characterDefaultHeight;
 			for (int character = 0; character < string.length(); character++) {
-				if (string.charAt(character) == '@' && character + 4 < string.length() && string.charAt(character + 4) == '@') {
-					int stringColor = getColor(string.substring(character + 1, character + 4));
-					if (stringColor != -1) {
-						color = stringColor;
+				char c = string.charAt(character);
+				if (c != ' ') {
+					if (shadow) {
+						drawCharacter(c, x + characterXOffsets[c] + 1, y + characterYOffsets[c] + 1, characterWidths[c], characterHeights[c], 0);
 					}
-					character += 4;
-				} else {
-					char c = string.charAt(character);
-					if (c != ' ') {
-						if (shadow) {
-							drawCharacter(characterPixels[c], x + characterXOffsets[c] + 1, y + characterYOffsets[c] + 1, characterWidths[c], characterHeights[c], 0);
+					drawCharacter(c, x + characterXOffsets[c], y + characterYOffsets[c], characterWidths[c], characterHeights[c], color);
+				}
+				x += characterScreenWidths[c];
+			}
+			if (strikethroughColor != -1) {
+				Rasterizer.drawHorizontalLine(originalX, y + (int) (characterDefaultHeight * 0.7), x - originalX, 8388608);
+			}
+		}
+	}
+
+	public void unpackChatImages(IndexedImage[] chatImages) {
+		this.chatImages = chatImages;
+	}
+
+	public int getCharacterWidth(int character) {
+		return characterScreenWidths[character & 0xFF];
+	}
+
+	public void setDefaults(int color, int shadow) {
+		setDefaults(color, shadow, 256);
+	}
+
+	public void setDefaults(int color, int shadow, int trans) {
+		strikethroughColor = -1;
+		underlineColor = -1;
+		textShadowColor = defaultShadow = shadow;
+		textColor = defaultColor = color;
+		transparency = defaultTransparency = trans;
+	}
+
+	public void drawString(String string, int x, int y, int color, int shadow) {
+		if (string != null) {
+			setDefaults(color, shadow);
+			drawString(string, x, y);
+		}
+	}
+
+	public void drawStringCenter(String string, int drawX, int drawY, int color, int shadow) {
+		if (string != null) {
+			setDefaults(color, shadow);
+			drawString(string, drawX - getTextWidth(string) / 2, drawY);
+		}
+	}
+
+	public void drawStringRight(String string, int x, int y, int color, int shadow) {
+		if (string != null) {
+			setDefaults(color, shadow);
+			drawString(string, x - getTextWidth(string), y);
+		}
+	}
+
+	public void drawString(String string, int x, int y) {
+		y -= characterDefaultHeight;
+		int startIndex = -1;
+		for (int currentCharacter = 0; currentCharacter < string.length(); currentCharacter++) {
+			int character = string.charAt(currentCharacter);
+			if (character > 255) {
+				character = 32;
+			}
+			if (character == 60) {
+				startIndex = currentCharacter;
+			} else {
+				if (character == 62 && startIndex != -1) {
+					String effectString = string.substring(startIndex + 1, currentCharacter);
+					startIndex = -1;
+					if (effectString.equals(LT_EFFECT)) {
+						character = 60;
+					} else if (effectString.equals(GT_EFFECT)) {
+						character = 62;
+					} else if (effectString.equals(NBSP_EFFECT)) {
+						character = 160;
+					} else if (effectString.equals(EURO_EFFECT)) {
+						character = 128;
+					} else {
+						if (effectString.startsWith(START_IMAGE_EFFECT)) {
+							int index = Integer.valueOf(effectString.substring(4));
+							if (index < 0 || index >= chatImages.length) {
+								return;
+							}
+							IndexedImage image = chatImages[index];
+							int iconModY = image.height;
+							if (transparency == 256) {
+								image.drawImage(x, y + characterDefaultHeight - iconModY);
+							} else {
+								image.drawImage(x, y + characterDefaultHeight - iconModY, transparency);
+							}
+							x += image.width;
+						} else {
+							setTextEffects(effectString);
 						}
-						drawCharacter(characterPixels[c], x + characterXOffsets[c], y + characterYOffsets[c], characterWidths[c], characterHeights[c], color);
+						continue;
 					}
-					x += characterScreenWidths[c];
+				}
+				if (startIndex == -1) {
+					int width = characterWidths[character];
+					int height = characterHeights[character];
+					if (character != 32) {
+						if (transparency == 256) {
+							if (textShadowColor != -1) {
+								drawCharacter(character, x + characterXOffsets[character] + 1, y + characterYOffsets[character] + 1, width, height, textShadowColor);
+							}
+							drawCharacter(character, x + characterXOffsets[character], y + characterYOffsets[character], width, height, textColor);
+						} else {
+							if (textShadowColor != -1) {
+								drawAlphaCharacter(character, x + characterXOffsets[character] + 1, y + characterYOffsets[character] + 1, width, height, textShadowColor, transparency);
+							}
+							drawAlphaCharacter(character, x + characterXOffsets[character], y + characterYOffsets[character], width, height, textColor, transparency);
+						}
+					}
+					int lineWidth = characterScreenWidths[character];
+					if (strikethroughColor != -1) {
+						Rasterizer.drawHorizontalLine(x, y + (int) (characterDefaultHeight * 0.69999999999999996D), lineWidth, strikethroughColor);
+					}
+					if (underlineColor != -1) {
+						Rasterizer.drawHorizontalLine(x, y + characterDefaultHeight, lineWidth, underlineColor);
+					}
+					x += lineWidth;
 				}
 			}
-			if (!strikeThrough) {
+		}
+	}
+
+	public void setTextEffects(String string) {
+		if (string.startsWith(START_COLOR_EFFECT)) {
+			String color = string.substring(4);
+			textColor = color.length() < 6 ? Color.decode(color).getRGB() : Integer.parseInt(color, 16);
+		} else if (string.equals(END_COLOR_EFFECT)) {
+			textColor = defaultColor;
+		} else if (string.startsWith(START_TRANSPARENCY_EFFECT)) {
+			transparency = Integer.valueOf(string.substring(6));
+		} else if (string.equals(END_TRANSPARENCY_EFFECT)) {
+			transparency = defaultTransparency;
+		} else if (string.startsWith(START_STRIKE_THROUGH_EFFECT)) {
+			strikethroughColor = Integer.valueOf(string.substring(4));
+		} else if (string.equals(DEFAULT_STRIKE_THROUGH_EFFECT)) {
+			strikethroughColor = 8388608;
+		} else if (string.equals(END_STRIKE_THROUGH_EFFECT)) {
+			strikethroughColor = -1;
+		} else if (string.startsWith(START_UNDERLINE_EFFECT)) {
+			underlineColor = Integer.valueOf(string.substring(2));
+		} else if (string.equals(DEFAULT_UNDERLINE_EFFECT)) {
+			underlineColor = 0;
+		} else if (string.equals(END_UNDERLINE_EFFECT)) {
+			underlineColor = -1;
+		} else if (string.startsWith(START_SHADOW_EFFECT)) {
+			textShadowColor = Integer.valueOf(string.substring(5));
+		} else if (string.equals(DEFAULT_SHADOW_EFFECT)) {
+			textShadowColor = 0;
+		} else if (string.equals(END_SHADOW_EFFECT)) {
+			textShadowColor = defaultShadow;
+		} else {
+			if (!string.equals(BREAK_LINE_EFFECT)) {
 				return;
 			}
-			Rasterizer.drawHorizontalLine(originalX, y + (int) (characterDefaultHeight * 0.7), x - originalX, 8388608);
+			setDefaults(defaultColor, defaultShadow, defaultTransparency);
 		}
 	}
 
-	public void drawShadowedSeededAlphaString(String string, int x, int y, int seed, int color) {
-		if (string != null) {
-			random.setSeed(seed);
-			int alpha = 192 + (random.nextInt() & 0x1f);
-			y -= characterDefaultHeight;
-			for (int index = 0; index < string.length(); index++) {
-				if (string.charAt(index) == '@' && index + 4 < string.length() && string.charAt(index + 4) == '@') {
-					int stringColor = getColor(string.substring(index + 1, index + 4));
-					if (stringColor != -1) {
-						color = stringColor;
+	public int getTextWidth(String string) {
+		if (string == null) {
+			return 0;
+		}
+		int startIndex = -1;
+		int finalWidth = 0;
+		for (int currentCharacter = 0; currentCharacter < string.length(); currentCharacter++) {
+			int character = string.charAt(currentCharacter);
+			if (character > 255) {
+				character = 32;
+			}
+			if (character == 60) {
+				startIndex = currentCharacter;
+			} else {
+				if (character == 62 && startIndex != -1) {
+					String effectString = string.substring(startIndex + 1, currentCharacter);
+					startIndex = -1;
+					if (effectString.equals(LT_EFFECT)) {
+						character = 60;
+					} else if (effectString.equals(GT_EFFECT)) {
+						character = 62;
+					} else if (effectString.equals(NBSP_EFFECT)) {
+						character = 160;
+					} else if (effectString.equals(EURO_EFFECT)) {
+						character = 128;
+					} else {
+						if (effectString.startsWith(START_IMAGE_EFFECT)) {
+							int index = Integer.valueOf(effectString.substring(4));
+							if (index < 0 || index >= chatImages.length) {
+								return finalWidth;
+							}
+							finalWidth += chatImages[index].width;
+						}
+						continue;
 					}
-					index += 4;
-				} else {
-					char c = string.charAt(index);
-					if (c != ' ') {
-						drawAlphaCharacter(192, x + characterXOffsets[c] + 1, characterPixels[c], characterWidths[c], y + characterYOffsets[c] + 1, characterHeights[c], 0);
-						drawAlphaCharacter(alpha, x + characterXOffsets[c], characterPixels[c], characterWidths[c], y + characterYOffsets[c], characterHeights[c], color);
-					}
-					x += characterScreenWidths[c];
-					if ((random.nextInt() & 0x3) == 0) {
-						x++;
-					}
+				}
+				if (startIndex == -1) {
+					finalWidth += characterScreenWidths[character];
 				}
 			}
 		}
+		return finalWidth;
 	}
 
-	public int getColor(String color) {
-		if (color.equals("red")) {
-			return 16711680;
+	public static void drawCharacterPixelsAlpha(int[] rasterizerPixels, byte[] characterPixels, int color, int characterPixel, int rasterizerPixel, int width, int height, int rasterizerPixelOffset, int characterPixelOffset, int alpha) {
+		color = ((color & 0xff00ff) * alpha & ~0xff00ff) + ((color & 0xff00) * alpha & 0xff0000) >> 8;
+		alpha = 256 - alpha;
+		for (int heightCounter = -height; heightCounter < 0; heightCounter++) {
+			for (int widthCounter = -width; widthCounter < 0; widthCounter++) {
+				if (characterPixels[characterPixel++] != 0) {
+					int rasterizerPixelColor = rasterizerPixels[rasterizerPixel];
+					rasterizerPixels[rasterizerPixel++] = (((rasterizerPixelColor & 0xff00ff) * alpha & ~0xff00ff) + ((rasterizerPixelColor & 0xff00) * alpha & 0xff0000) >> 8) + color;
+				} else {
+					rasterizerPixel++;
+				}
+			}
+			rasterizerPixel += rasterizerPixelOffset;
+			characterPixel += characterPixelOffset;
 		}
-		if (color.equals("gre")) {
-			return 65280;
-		}
-		if (color.equals("blu")) {
-			return 255;
-		}
-		if (color.equals("yel")) {
-			return 16776960;
-		}
-		if (color.equals("cya")) {
-			return 65535;
-		}
-		if (color.equals("mag")) {
-			return 16711935;
-		}
-		if (color.equals("whi")) {
-			return 16777215;
-		}
-		if (color.equals("bla")) {
-			return 0;
-		}
-		if (color.equals("lre")) {
-			return 16748608;
-		}
-		if (color.equals("dre")) {
-			return 8388608;
-		}
-		if (color.equals("dbl")) {
-			return 128;
-		}
-		if (color.equals("or1")) {
-			return 16756736;
-		}
-		if (color.equals("or2")) {
-			return 16740352;
-		}
-		if (color.equals("or3")) {
-			return 16723968;
-		}
-		if (color.equals("gr1")) {
-			return 12648192;
-		}
-		if (color.equals("gr2")) {
-			return 8453888;
-		}
-		if (color.equals("gr3")) {
-			return 4259584;
-		}
-		if (color.equals("str")) {
-			strikeThrough = true;
-		}
-		if (color.equals("end")) {
-			strikeThrough = false;
-		}
-		return -1;
 	}
 
-	private void drawCharacter(byte[] pixels, int x, int y, int width, int height, int color) {
+	public void drawAlphaCharacter(int character, int x, int y, int width, int height, int color, int alpha) {
 		int rasterizerPixel = x + y * Rasterizer.width;
-		int remainingWidth = Rasterizer.width - width;
+		int rasterizerPixelOffset = Rasterizer.width - width;
 		int characterPixelOffset = 0;
 		int characterPixel = 0;
 		if (y < Rasterizer.topY) {
@@ -298,8 +397,8 @@ public class TypeFace extends Rasterizer {
 			characterPixel += offsetY * width;
 			rasterizerPixel += offsetY * Rasterizer.width;
 		}
-		if (y + height >= Rasterizer.bottomY) {
-			height -= y + height - Rasterizer.bottomY + 1;
+		if (y + height > Rasterizer.bottomY) {
+			height -= y + height - Rasterizer.bottomY;
 		}
 		if (x < Rasterizer.topX) {
 			int offsetX = Rasterizer.topX - x;
@@ -308,20 +407,20 @@ public class TypeFace extends Rasterizer {
 			characterPixel += offsetX;
 			rasterizerPixel += offsetX;
 			characterPixelOffset += offsetX;
-			remainingWidth += offsetX;
+			rasterizerPixelOffset += offsetX;
 		}
-		if (x + width >= Rasterizer.bottomX) {
-			int endOffsetX = x + width - Rasterizer.bottomX + 1;
-			width -= endOffsetX;
-			characterPixelOffset += endOffsetX;
-			remainingWidth += endOffsetX;
+		if (x + width > Rasterizer.bottomX) {
+			int widthOffset = x + width - Rasterizer.bottomX;
+			width -= widthOffset;
+			characterPixelOffset += widthOffset;
+			rasterizerPixelOffset += widthOffset;
 		}
 		if (width > 0 && height > 0) {
-			drawCharacterPixels(pixels, Rasterizer.pixels, characterPixel, rasterizerPixel, characterPixelOffset, remainingWidth, width, height, color);
+			drawCharacterPixelsAlpha(Rasterizer.pixels, characterPixels[character], color, characterPixel, rasterizerPixel, width, height, rasterizerPixelOffset, characterPixelOffset, alpha);
 		}
 	}
 
-	private void drawCharacterPixels(byte[] characterPixels, int[] rasterizerPixels, int characterPixel, int rasterizerPixel, int characterPixelOffset, int rasterizerPixelOffset, int width, int height, int color) {
+	public static void drawCharacterPixels(int[] rasterizerPixels, byte[] characterPixels, int color, int characterPixel, int rasterizerPixel, int width, int height, int rasterizerPixelOffset, int characterPixelOffset) {
 		int negativeQuaterWidth = -(width >> 2);
 		int negativeFirstTwoWidthBits = -(width & 0x3);
 		for (int heightCounter = -height; heightCounter < 0; heightCounter++) {
@@ -359,55 +458,39 @@ public class TypeFace extends Rasterizer {
 		}
 	}
 
-	private void drawAlphaCharacter(int alpha, int x, byte[] characterPixels, int width, int y, int height, int color) {
+	public void drawCharacter(int character, int x, int y, int width, int height, int color) {
 		int rasterizerPixel = x + y * Rasterizer.width;
 		int rasterizerPixelOffset = Rasterizer.width - width;
 		int characterPixelOffset = 0;
 		int characterPixel = 0;
 		if (y < Rasterizer.topY) {
-			int yOffset = Rasterizer.topY - y;
-			height -= yOffset;
+			int offsetY = Rasterizer.topY - y;
+			height -= offsetY;
 			y = Rasterizer.topY;
-			characterPixel += yOffset * width;
-			rasterizerPixel += yOffset * Rasterizer.width;
+			characterPixel += offsetY * width;
+			rasterizerPixel += offsetY * Rasterizer.width;
 		}
-		if (y + height >= Rasterizer.bottomY) {
-			height -= y + height - Rasterizer.bottomY + 1;
+		if (y + height > Rasterizer.bottomY) {
+			height -= y + height - Rasterizer.bottomY;
 		}
 		if (x < Rasterizer.topX) {
-			int xOffset = Rasterizer.topX - x;
-			width -= xOffset;
+			int offsetX = Rasterizer.topX - x;
+			width -= offsetX;
 			x = Rasterizer.topX;
-			characterPixel += xOffset;
-			rasterizerPixel += xOffset;
-			characterPixelOffset += xOffset;
-			rasterizerPixelOffset += xOffset;
+			characterPixel += offsetX;
+			rasterizerPixel += offsetX;
+			characterPixelOffset += offsetX;
+			rasterizerPixelOffset += offsetX;
 		}
-		if (x + width >= Rasterizer.bottomX) {
-			int widthoffset = x + width - Rasterizer.bottomX + 1;
-			width -= widthoffset;
-			characterPixelOffset += widthoffset;
-			rasterizerPixelOffset += widthoffset;
+		if (x + width > Rasterizer.bottomX) {
+			int endOffsetX = x + width - Rasterizer.bottomX;
+			width -= endOffsetX;
+			characterPixelOffset += endOffsetX;
+			rasterizerPixelOffset += endOffsetX;
 		}
 		if (width > 0 && height > 0) {
-			drawCharacterPixelsAlpha(characterPixels, Rasterizer.pixels, characterPixel, rasterizerPixel, characterPixelOffset, rasterizerPixelOffset, width, height, color, alpha);
+			drawCharacterPixels(Rasterizer.pixels, characterPixels[character], color, characterPixel, rasterizerPixel, width, height, rasterizerPixelOffset, characterPixelOffset);
 		}
 	}
 
-	private void drawCharacterPixelsAlpha(byte[] characterPixels, int[] rasterizerPixels, int characterPixel, int rasterizerPixel, int characterPixelOffset, int rasterizerPixelOffset, int width, int height, int color, int alpha) {
-		color = ((color & 0xff00ff) * alpha & ~0xff00ff) + ((color & 0xff00) * alpha & 0xff0000) >> 8;
-		alpha = 256 - alpha;
-		for (int heightCounter = -height; heightCounter < 0; heightCounter++) {
-			for (int widthCounter = -width; widthCounter < 0; widthCounter++) {
-				if (characterPixels[characterPixel++] != 0) {
-					int rasterizerPixelColor = rasterizerPixels[rasterizerPixel];
-					rasterizerPixels[rasterizerPixel++] = (((rasterizerPixelColor & 0xff00ff) * alpha & ~0xff00ff) + ((rasterizerPixelColor & 0xff00) * alpha & 0xff0000) >> 8) + color;
-				} else {
-					rasterizerPixel++;
-				}
-			}
-			rasterizerPixel += rasterizerPixelOffset;
-			characterPixel += characterPixelOffset;
-		}
-	}
 }

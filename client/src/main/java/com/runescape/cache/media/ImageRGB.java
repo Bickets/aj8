@@ -428,7 +428,7 @@ public class ImageRGB extends Rasterizer {
 		}
 	}
 
-	private void method352(int[] is, int i, byte[] bs, int i_137_, int[] is_138_, int i_139_, int i_140_, int i_141_, int i_142_, int i_143_) {
+	private void method352(int[] is, int i, int[] bs, int i_137_, int[] is_138_, int i_139_, int i_140_, int i_141_, int i_142_, int i_143_) {
 		int i_144_ = -(i >> 2);
 		i = -(i & 0x3);
 		for (int i_146_ = -i_137_; i_146_ < 0; i_146_++) {

@@ -6,7 +6,7 @@ import com.runescape.net.Buffer;
 
 public class IndexedImage extends Rasterizer {
 
-	public byte[] pixels;
+	public int[] pixels;
 	public int[] palette;
 	public int width;
 	public int height;
@@ -37,7 +37,7 @@ public class IndexedImage extends Rasterizer {
 		height = indexBuffer.getUnsignedLEShort();
 		int type = indexBuffer.getUnsignedByte();
 		int pixelLength = width * height;
-		pixels = new byte[pixelLength];
+		pixels = new int[pixelLength];
 		if (type == 0) {
 			for (int pixel = 0; pixel < pixelLength; pixel++) {
 				pixels[pixel] = dataBuffer.get();
@@ -54,7 +54,7 @@ public class IndexedImage extends Rasterizer {
 	public void resizeToHalfMax() {
 		maxWidth /= 2;
 		maxHeight /= 2;
-		byte[] resizedPixels = new byte[maxWidth * maxHeight];
+		int[] resizedPixels = new int[maxWidth * maxHeight];
 		int pixelCount = 0;
 		for (int y = 0; y < height; y++) {
 			for (int x = 0; x < width; x++) {
@@ -70,7 +70,7 @@ public class IndexedImage extends Rasterizer {
 
 	public void resizeToMax() {
 		if (width != maxWidth || height != maxHeight) {
-			byte[] resizedPixels = new byte[maxWidth * maxHeight];
+			int[] resizedPixels = new int[maxWidth * maxHeight];
 			int pixelCount = 0;
 			for (int y = 0; y < height; y++) {
 				for (int x = 0; x < width; x++) {
@@ -86,7 +86,7 @@ public class IndexedImage extends Rasterizer {
 	}
 
 	public void flipHorizontal() {
-		byte[] flipedPixels = new byte[width * height];
+		int[] flipedPixels = new int[width * height];
 		int pixelCount = 0;
 		for (int y = 0; y < height; y++) {
 			for (int x = width - 1; x >= 0; x--) {
@@ -98,7 +98,7 @@ public class IndexedImage extends Rasterizer {
 	}
 
 	public void flipVertical() {
-		byte[] flipedPixels = new byte[width * height];
+		int[] flipedPixels = new int[width * height];
 		int pixelCount = 0;
 		for (int y = height - 1; y >= 0; y--) {
 			for (int x = 0; x < width; x++) {
@@ -175,7 +175,75 @@ public class IndexedImage extends Rasterizer {
 		}
 	}
 
-	private void copyPixels(byte[] pixels, int[] rasterizerPixels, int width, int height, int offset, int originalOffset, int deviation, int originalDeviation, int[] pallete) {
+	public void drawImage(int i, int k, int color) {
+		int tempWidth = width + 2;
+		int tempHeight = height + 2;
+		int[] tempArray = new int[tempWidth * tempHeight];
+		for (int x = 0; x < width; x++) {
+			for (int y = 0; y < height; y++) {
+				if (pixels[x + y * width] != 0)
+					tempArray[(x + 1) + (y + 1) * tempWidth] = pixels[x + y * width];
+			}
+		}
+		for (int x = 0; x < tempWidth; x++) {
+			for (int y = 0; y < tempHeight; y++) {
+				if (tempArray[(x) + (y) * tempWidth] == 0) {
+					if (x < tempWidth - 1 && tempArray[(x + 1) + ((y) * tempWidth)] > 0 && tempArray[(x + 1) + ((y) * tempWidth)] != 0xffffff) {
+						tempArray[(x) + (y) * tempWidth] = color;
+					}
+					if (x > 0 && tempArray[(x - 1) + ((y) * tempWidth)] > 0 && tempArray[(x - 1) + ((y) * tempWidth)] != 0xffffff) {
+						tempArray[(x) + (y) * tempWidth] = color;
+					}
+					if (y < tempHeight - 1 && tempArray[(x) + ((y + 1) * tempWidth)] > 0 && tempArray[(x) + ((y + 1) * tempWidth)] != 0xffffff) {
+						tempArray[(x) + (y) * tempWidth] = color;
+					}
+					if (y > 0 && tempArray[(x) + ((y - 1) * tempWidth)] > 0 && tempArray[(x) + ((y - 1) * tempWidth)] != 0xffffff) {
+						tempArray[(x) + (y) * tempWidth] = color;
+					}
+				}
+			}
+		}
+		i--;
+		k--;
+		i += xDrawOffset;
+		k += yDrawOffset;
+		int l = i + k * Rasterizer.width;
+		int i1 = 0;
+		int j1 = tempHeight;
+		int k1 = tempWidth;
+		int l1 = Rasterizer.width - k1;
+		int i2 = 0;
+		if (k < Rasterizer.topY) {
+			int j2 = Rasterizer.topY - k;
+			j1 -= j2;
+			k = Rasterizer.topY;
+			i1 += j2 * k1;
+			l += j2 * Rasterizer.width;
+		}
+		if (k + j1 > Rasterizer.bottomY) {
+			j1 -= (k + j1) - Rasterizer.bottomY;
+		}
+		if (i < Rasterizer.topX) {
+			int k2 = Rasterizer.topX - i;
+			k1 -= k2;
+			i = Rasterizer.topX;
+			i1 += k2;
+			l += k2;
+			i2 += k2;
+			l1 += k2;
+		}
+		if (i + k1 > Rasterizer.bottomX) {
+			int l2 = (i + k1) - Rasterizer.bottomX;
+			k1 -= l2;
+			i2 += l2;
+			l1 += l2;
+		}
+		if (!(k1 <= 0 || j1 <= 0)) {
+			copyPixels(tempArray, Rasterizer.pixels, i1, l, k1, j1, l1, i2, palette);
+		}
+	}
+
+	private void copyPixels(int[] pixels, int[] rasterizerPixels, int width, int height, int offset, int originalOffset, int deviation, int originalDeviation, int[] pallete) {
 		int shiftedWidth = -(width >> 2);
 		width = -(width & 0x3);
 		for (int heightCounter = -height; heightCounter < 0; heightCounter++) {

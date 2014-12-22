@@ -157,7 +157,7 @@ public class Game extends GameShell {
 	private ProducingGraphicsBuffer aProducingGraphicsBuffer934;
 	private ProducingGraphicsBuffer aProducingGraphicsBuffer935;
 	private ProducingGraphicsBuffer aProducingGraphicsBuffer936;
-	private byte[] aByteArray937 = new byte[16384];
+	private int[] anIntArray937 = new int[16384];
 	private int anInt938;
 	private int lastClickX;
 	private int lastClickY;
@@ -621,17 +621,17 @@ public class Game extends GameShell {
 			Rasterizer3D.lineOffsets = chatboxLineOffsets;
 			chatboxBackgroundImage.drawImage(0, 0);
 			if (messagePromptRaised) {
-				fontBold.drawStringLeft(chatboxInputMessage, 239, 40, 0);
-				fontBold.drawStringLeft(chatMessage + "*", 239, 60, 128);
+				fontBold.drawStringCenter(chatboxInputMessage, 239, 40, 0, -1);
+				fontBold.drawStringCenter(chatMessage + "*", 239, 60, 128, -1);
 			} else if (inputType == 1) {
-				fontBold.drawStringLeft("Enter amount:", 239, 40, 0);
-				fontBold.drawStringLeft(inputInputMessage + "*", 239, 60, 128);
+				fontBold.drawStringCenter("Enter amount:", 239, 40, 0, -1);
+				fontBold.drawStringCenter(inputInputMessage + "*", 239, 60, 128, -1);
 			} else if (inputType == 2) {
-				fontBold.drawStringLeft("Enter name:", 239, 40, 0);
-				fontBold.drawStringLeft(inputInputMessage + "*", 239, 60, 128);
+				fontBold.drawStringCenter("Enter name:", 239, 40, 0, -1);
+				fontBold.drawStringCenter(inputInputMessage + "*", 239, 60, 128, -1);
 			} else if (aString869 != null) {
-				fontBold.drawStringLeft(aString869, 239, 40, 0);
-				fontBold.drawStringLeft("Click to continue", 239, 60, 128);
+				fontBold.drawStringCenter(aString869, 239, 40, 0, -1);
+				fontBold.drawStringCenter("Click to continue", 239, 60, 128, -1);
 			} else if (chatboxWidgetId != -1) {
 				method105(0, 0, Widget.cache[chatboxWidgetId], 0);
 			} else if (chatboxOverlay != -1) {
@@ -661,7 +661,7 @@ public class Game extends GameShell {
 
 						if (chatboxMessageType == 0) {
 							if (yPos > 0 && yPos < 110) {
-								currentFont.drawString(chatboxMessages[chatboxMessage], 4, yPos, 0);
+								currentFont.drawString(chatboxMessages[chatboxMessage], 4, yPos, 0, -1);
 							}
 							line++;
 						}
@@ -677,9 +677,9 @@ public class Game extends GameShell {
 									moderatorIcon[1].drawImage(xPos, yPos - 12);
 									xPos += 14;
 								}
-								currentFont.drawString(chatboxMessageName + ":", xPos, yPos, 0);
-								xPos += currentFont.getStringEffectWidth(chatboxMessageName) + 8;
-								currentFont.drawString(chatboxMessages[chatboxMessage], xPos, yPos, 255);
+								currentFont.drawString(chatboxMessageName + ":", xPos, yPos, 0, -1);
+								xPos += currentFont.getTextWidth(chatboxMessageName) + 8;
+								currentFont.drawString(chatboxMessages[chatboxMessage], xPos, yPos, 255, -1);
 							}
 							line++;
 						}
@@ -687,8 +687,8 @@ public class Game extends GameShell {
 						if ((chatboxMessageType == 3 || chatboxMessageType == 7) && anInt1220 == 0 && (chatboxMessageType == 7 || privateChatSetting == 0 || privateChatSetting == 1 && method109(false, chatboxMessageName))) {
 							if (yPos > 0 && yPos < 110) {
 								int xPos = 4;
-								currentFont.drawString("From", xPos, yPos, 0);
-								xPos += currentFont.getStringEffectWidth("From ");
+								currentFont.drawString("From", xPos, yPos, 0, -1);
+								xPos += currentFont.getTextWidth("From ");
 								if (playerRights == 1) {
 									moderatorIcon[0].drawImage(xPos, yPos - 12);
 									xPos += 14;
@@ -697,38 +697,38 @@ public class Game extends GameShell {
 									moderatorIcon[1].drawImage(xPos, yPos - 12);
 									xPos += 14;
 								}
-								currentFont.drawString(chatboxMessageName + ":", xPos, yPos, 0);
-								xPos += currentFont.getStringEffectWidth(chatboxMessageName) + 8;
-								currentFont.drawString(chatboxMessages[chatboxMessage], xPos, yPos, 8388608);
+								currentFont.drawString(chatboxMessageName + ":", xPos, yPos, 0, -1);
+								xPos += currentFont.getTextWidth(chatboxMessageName) + 8;
+								currentFont.drawString(chatboxMessages[chatboxMessage], xPos, yPos, 8388608, -1);
 							}
 							line++;
 						}
 
 						if (chatboxMessageType == 4 && (tradeSetting == 0 || tradeSetting == 1 && method109(false, chatboxMessageName))) {
 							if (yPos > 0 && yPos < 110) {
-								currentFont.drawString(chatboxMessageName + " " + chatboxMessages[chatboxMessage], 4, yPos, 8388736);
+								currentFont.drawString(chatboxMessageName + " " + chatboxMessages[chatboxMessage], 4, yPos, 8388736, -1);
 							}
 							line++;
 						}
 
 						if (chatboxMessageType == 5 && anInt1220 == 0 && privateChatSetting < 2) {
 							if (yPos > 0 && yPos < 110) {
-								currentFont.drawString(chatboxMessages[chatboxMessage], 4, yPos, 8388608);
+								currentFont.drawString(chatboxMessages[chatboxMessage], 4, yPos, 8388608, -1);
 							}
 							line++;
 						}
 
 						if (chatboxMessageType == 6 && anInt1220 == 0 && privateChatSetting < 2) {
 							if (yPos > 0 && yPos < 110) {
-								currentFont.drawString("To " + chatboxMessageName + ":", 4, yPos, 0);
-								currentFont.drawString(chatboxMessages[chatboxMessage], 12 + currentFont.getStringEffectWidth("To " + chatboxMessageName), yPos, 8388608);
+								currentFont.drawString("To " + chatboxMessageName + ":", 4, yPos, 0, -1);
+								currentFont.drawString(chatboxMessages[chatboxMessage], 12 + currentFont.getTextWidth("To " + chatboxMessageName), yPos, 8388608, -1);
 							}
 							line++;
 						}
 
 						if (chatboxMessageType == 8 && (tradeSetting == 0 || tradeSetting == 1 && method109(false, chatboxMessageName))) {
 							if (yPos > 0 && yPos < 110) {
-								currentFont.drawString(chatboxMessageName + " " + chatboxMessages[chatboxMessage], 4, yPos, 8270336);
+								currentFont.drawString(chatboxMessageName + " " + chatboxMessages[chatboxMessage], 4, yPos, 8270336, -1);
 							}
 							line++;
 						}
@@ -747,8 +747,8 @@ public class Game extends GameShell {
 				} else {
 					string = TextUtils.formatName(username);
 				}
-				currentFont.drawString(string + ":", 4, 90, 0);
-				currentFont.drawString(chatboxInput + "*", 6 + currentFont.getStringEffectWidth(string + ": "), 90, 255);
+				currentFont.drawString(string + ":", 4, 90, 0, -1);
+				currentFont.drawString(chatboxInput + "*", 6 + currentFont.getTextWidth(string + ": "), 90, 255, -1);
 				Rasterizer.drawHorizontalLine(0, 77, 479, 0);
 			}
 			if (actionMenuOpen && actionMenuArea == 2) {
@@ -1722,7 +1722,7 @@ public class Game extends GameShell {
 				if (character.forcedChat != null && (index >= playerCount || publicChatSetting == 0 || publicChatSetting == 3 || publicChatSetting == 1 && method109(false, ((Player) character).playerName))) {
 					method127(true, character, character.modelHeight);
 					if (headIconDrawX > -1 && anInt999 < anInt1000) {
-						anIntArray1004[anInt999] = fontBold.getStringWidth(character.forcedChat) / 2;
+						anIntArray1004[anInt999] = fontBold.getTextWidth(character.forcedChat) / 2;
 						anIntArray1003[anInt999] = fontBold.characterDefaultHeight;
 						anIntArray1001[anInt999] = headIconDrawX;
 						anIntArray1002[anInt999] = headIconDrawY;
@@ -1769,8 +1769,8 @@ public class Game extends GameShell {
 								headIconDrawY -= 10;
 							}
 							anImageRGBArray1012[character.hitTypes[i_147_]].drawImage(headIconDrawX - 12, headIconDrawY - 12);
-							fontSmall.drawStringLeft(String.valueOf(character.hitDamages[i_147_]), headIconDrawX, headIconDrawY + 4, 0);
-							fontSmall.drawStringLeft(String.valueOf(character.hitDamages[i_147_]), headIconDrawX - 1, headIconDrawY + 3, 0xFFFFFF);
+							fontSmall.drawStringCenter(String.valueOf(character.hitDamages[i_147_]), headIconDrawX, headIconDrawY + 4, 0, -1);
+							fontSmall.drawStringCenter(String.valueOf(character.hitDamages[i_147_]), headIconDrawX - 1, headIconDrawY + 3, 0xFFFFFF, -1);
 						}
 					}
 				}
@@ -1838,8 +1838,8 @@ public class Game extends GameShell {
 						}
 					}
 					if (anIntArray1006[i_148_] == 0) {
-						fontBold.drawStringLeft(string, headIconDrawX, headIconDrawY + 1, 0);
-						fontBold.drawStringLeft(string, headIconDrawX, headIconDrawY, i_154_);
+						fontBold.drawStringCenter(string, headIconDrawX, headIconDrawY + 1, 0, -1);
+						fontBold.drawStringCenter(string, headIconDrawX, headIconDrawY, i_154_, -1);
 					}
 					if (anIntArray1006[i_148_] == 1) {
 						fontBold.drawCenteredStringWaveY(string, headIconDrawX, headIconDrawY + 1, anInt1290, 0);
@@ -1854,11 +1854,11 @@ public class Game extends GameShell {
 						fontBold.drawCenteredStringWaveXYMove(string, headIconDrawX, headIconDrawY, anInt1290, 150 - anIntArray1007[i_148_], i_154_);
 					}
 					if (anIntArray1006[i_148_] == 4) {
-						int i_158_ = fontBold.getStringWidth(string);
+						int i_158_ = fontBold.getTextWidth(string);
 						int i_159_ = (150 - anIntArray1007[i_148_]) * (i_158_ + 100) / 150;
 						Rasterizer.setCoordinates(headIconDrawX - 50, 0, headIconDrawX + 50, 334);
-						fontBold.drawString(string, headIconDrawX + 50 - i_159_, headIconDrawY + 1, 0);
-						fontBold.drawString(string, headIconDrawX + 50 - i_159_, headIconDrawY, i_154_);
+						fontBold.drawString(string, headIconDrawX + 50 - i_159_, headIconDrawY + 1, 0, -1);
+						fontBold.drawString(string, headIconDrawX + 50 - i_159_, headIconDrawY, i_154_, -1);
 						Rasterizer.resetCoordinates();
 					}
 					if (anIntArray1006[i_148_] == 5) {
@@ -1870,13 +1870,13 @@ public class Game extends GameShell {
 							i_161_ = i_160_ - 125;
 						}
 						Rasterizer.setCoordinates(0, headIconDrawY - fontBold.characterDefaultHeight - 1, 512, headIconDrawY + 5);
-						fontBold.drawStringLeft(string, headIconDrawX, headIconDrawY + 1 + i_161_, 0);
-						fontBold.drawStringLeft(string, headIconDrawX, headIconDrawY + i_161_, i_154_);
+						fontBold.drawStringCenter(string, headIconDrawX, headIconDrawY + 1 + i_161_, 0, -1);
+						fontBold.drawStringCenter(string, headIconDrawX, headIconDrawY + i_161_, i_154_, -1);
 						Rasterizer.resetCoordinates();
 					}
 				} else {
-					fontBold.drawStringLeft(string, headIconDrawX, headIconDrawY + 1, 0);
-					fontBold.drawStringLeft(string, headIconDrawX, headIconDrawY, 0xFFFF00);
+					fontBold.drawStringCenter(string, headIconDrawX, headIconDrawY + 1, 0, -1);
+					fontBold.drawStringCenter(string, headIconDrawX, headIconDrawY, 0xFFFF00, -1);
 				}
 			}
 		} catch (RuntimeException runtimeexception) {
@@ -1947,13 +1947,13 @@ public class Game extends GameShell {
 					IndexedImage indexedimage = Rasterizer3D.indexedImages[17];
 					int i_164_ = indexedimage.width * indexedimage.height - 1;
 					int i_165_ = indexedimage.width * anInt970 * 2;
-					byte[] bs = indexedimage.pixels;
-					byte[] bs_166_ = aByteArray937;
+					int[] bs = indexedimage.pixels;
+					int[] bs_166_ = anIntArray937;
 					for (int i_167_ = 0; i_167_ <= i_164_; i_167_++) {
 						bs_166_[i_167_] = bs[i_167_ - i_165_ & i_164_];
 					}
 					indexedimage.pixels = bs_166_;
-					aByteArray937 = bs;
+					anIntArray937 = bs;
 					Rasterizer3D.method367(17, -477);
 					Game.anInt879++;
 					if (Game.anInt879 > 1235) {
@@ -1980,13 +1980,13 @@ public class Game extends GameShell {
 					IndexedImage indexedimage = Rasterizer3D.indexedImages[24];
 					int i_169_ = indexedimage.width * indexedimage.height - 1;
 					int i_170_ = indexedimage.width * anInt970 * 2;
-					byte[] bs = indexedimage.pixels;
-					byte[] bs_171_ = aByteArray937;
+					int[] bs = indexedimage.pixels;
+					int[] bs_171_ = anIntArray937;
 					for (int i_172_ = 0; i_172_ <= i_169_; i_172_++) {
 						bs_171_[i_172_] = bs[i_172_ - i_170_ & i_169_];
 					}
 					indexedimage.pixels = bs_171_;
-					aByteArray937 = bs;
+					anIntArray937 = bs;
 					Rasterizer3D.method367(24, -477);
 				}
 				if (Rasterizer3D.anIntArray1500[34] < i_163_) {
@@ -1995,13 +1995,13 @@ public class Game extends GameShell {
 				IndexedImage indexedimage = Rasterizer3D.indexedImages[34];
 				int i_173_ = indexedimage.width * indexedimage.height - 1;
 				int i_174_ = indexedimage.width * anInt970 * 2;
-				byte[] bs = indexedimage.pixels;
-				byte[] bs_175_ = aByteArray937;
+				int[] bs = indexedimage.pixels;
+				int[] bs_175_ = anIntArray937;
 				for (int i_176_ = 0; i_176_ <= i_173_; i_176_++) {
 					bs_175_[i_176_] = bs[i_176_ - i_174_ & i_173_];
 				}
 				indexedimage.pixels = bs_175_;
-				aByteArray937 = bs;
+				anIntArray937 = bs;
 				Rasterizer3D.method367(34, -477);
 			} catch (RuntimeException runtimeexception) {
 				Signlink.reportError("86342, " + i + ", " + i_163_ + ", " + runtimeexception.toString());
@@ -2153,7 +2153,7 @@ public class Game extends GameShell {
 			Rasterizer.drawFilledRectangle(x, y, width, height, rgb);
 			Rasterizer.drawFilledRectangle(x + 1, y + 1, width - 2, 16, 0);
 			Rasterizer.drawUnfilledRectangle(x + 1, y + 18, width - 2, height - 19, 0);
-			fontBold.drawString("Choose Option", x + 3, y + 14, rgb);
+			fontBold.drawString("Choose Option", x + 3, y + 14, rgb, -1);
 			int mouseX = mouseEventX;
 			int mouseY = mouseEventY;
 			if (actionMenuArea == 0) {
@@ -2174,7 +2174,7 @@ public class Game extends GameShell {
 				if (mouseX > x && mouseX < x + width && mouseY > yOffset - 13 && mouseY < yOffset + 3) {
 					fontColor = 0xFFFF00;
 				}
-				fontBold.drawShadowedString(menuActionNames[i], x + 3, yOffset, true, fontColor);
+				fontBold.drawString(menuActionNames[i], x + 3, yOffset, fontColor, -1);
 			}
 		} catch (RuntimeException runtimeexception) {
 			Signlink.reportError("82996, " + runtimeexception.toString());
@@ -2809,8 +2809,8 @@ public class Game extends GameShell {
 		try {
 			if (Game.lowMemory && anInt1048 == 2 && Region.onBuildTimePlane != currentSceneId) {
 				currentSceneBuffer.createRasterizer();
-				fontNormal.drawStringLeft("Loading - please wait.", 257, 151, 0);
-				fontNormal.drawStringLeft("Loading - please wait.", 256, 150, 0xFFFFFF);
+				fontNormal.drawStringCenter("Loading - please wait.", 257, 151, 0, -1);
+				fontNormal.drawStringCenter("Loading - please wait.", 256, 150, 0xFFFFFF, -1);
 				currentSceneBuffer.drawGraphics(4, 4, gameGraphics);
 				anInt1048 = 1;
 				aLong849 = System.currentTimeMillis();
@@ -3550,13 +3550,13 @@ public class Game extends GameShell {
 				int i_330_ = 360;
 				int i_331_ = 200;
 				int i_332_ = 20;
-				fontBold.drawStringLeft("RuneScape is loading - please wait...", i_330_ / 2, i_331_ / 2 - 26 - i_332_, 0xFFFFFF);
+				fontBold.drawStringCenter("RuneScape is loading - please wait...", i_330_ / 2, i_331_ / 2 - 26 - i_332_, 0xFFFFFF, -1);
 				int i_333_ = i_331_ / 2 - 18 - i_332_;
 				Rasterizer.drawUnfilledRectangle(i_330_ / 2 - 152, i_333_, 304, 34, 9179409);
 				Rasterizer.drawUnfilledRectangle(i_330_ / 2 - 151, i_333_ + 1, 302, 32, 0);
 				Rasterizer.drawFilledRectangle(i_330_ / 2 - 150, i_333_ + 2, i * 3, 30, 9179409);
 				Rasterizer.drawFilledRectangle(i_330_ / 2 - 150 + i * 3, i_333_ + 2, 300 - i * 3, 30, 0);
-				fontBold.drawStringLeft(string, i_330_ / 2, i_331_ / 2 + 5 - i_332_, 0xFFFFFF);
+				fontBold.drawStringCenter(string, i_330_ / 2, i_331_ / 2 + 5 - i_332_, 0xFFFFFF, -1);
 				aProducingGraphicsBuffer1134.drawGraphics(202, 171, gameGraphics);
 				if (!redraw) {
 					break;
@@ -3788,10 +3788,10 @@ public class Game extends GameShell {
 				logout();
 			} else {
 				currentSceneBuffer.createRasterizer();
-				fontNormal.drawStringLeft("Connection lost", 257, 144, 0);
-				fontNormal.drawStringLeft("Connection lost", 256, 143, 0xFFFFFF);
-				fontNormal.drawStringLeft("Please wait - attempting to reestablish", 257, 159, 0);
-				fontNormal.drawStringLeft("Please wait - attempting to reestablish", 256, 158, 0xFFFFFF);
+				fontNormal.drawStringCenter("Connection lost", 257, 144, 0, -1);
+				fontNormal.drawStringCenter("Connection lost", 256, 143, 0xFFFFFF, -1);
+				fontNormal.drawStringCenter("Please wait - attempting to reestablish", 257, 159, 0, -1);
+				fontNormal.drawStringCenter("Please wait - attempting to reestablish", 256, 158, 0xFFFFFF, -1);
 				while (i >= 0) {
 					outBuffer.put(164);
 				}
@@ -4899,7 +4899,7 @@ public class Game extends GameShell {
 		distanceValues = null;
 		walkingQueueX = null;
 		walkingQueueY = null;
-		aByteArray937 = null;
+		anIntArray937 = null;
 		aProducingGraphicsBuffer1188 = null;
 		aProducingGraphicsBuffer1189 = null;
 		currentSceneBuffer = null;
@@ -5621,31 +5621,31 @@ public class Game extends GameShell {
 						if ((type == 3 || type == 7) && (type == 7 || privateChatSetting == 0 || privateChatSetting == 1 && method109(false, name))) {
 							int y = 329 - row * 13;
 							int x = 4;
-							font.drawString("From", x, y, 0);
-							font.drawString("From", x, y - 1, 0xFFFF);
-							x += font.getStringEffectWidth("From ");
+							font.drawString("From", x, y, 0, -1);
+							font.drawString("From", x, y - 1, 0xFFFF, -1);
+							x += font.getTextWidth("From ");
 							if (rights > 0) {
 								moderatorIcon[rights - 1].drawImage(x, y - 12);
 								x += 14;
 							}
-							font.drawString(name + ": " + chatboxMessages[i], x, y, 0);
-							font.drawString(name + ": " + chatboxMessages[i], x, y - 1, 0xFFFF);
+							font.drawString(name + ": " + chatboxMessages[i], x, y, 0, -1);
+							font.drawString(name + ": " + chatboxMessages[i], x, y - 1, 0xFFFF, -1);
 							if (++row >= 5) {
 								break;
 							}
 						}
 						if (type == 5 && privateChatSetting < 2) {
 							int y = 329 - row * 13;
-							font.drawString(chatboxMessages[i], 4, y, 0);
-							font.drawString(chatboxMessages[i], 4, y - 1, 0xFFFF);
+							font.drawString(chatboxMessages[i], 4, y, 0, -1);
+							font.drawString(chatboxMessages[i], 4, y - 1, 0xFFFF, -1);
 							if (++row >= 5) {
 								break;
 							}
 						}
 						if (type == 6 && privateChatSetting < 2) {
 							int y = 329 - row * 13;
-							font.drawString("To " + name + ": " + chatboxMessages[i], 4, y, 0);
-							font.drawString("To " + name + ": " + chatboxMessages[i], 4, y - 1, 0xFFFF);
+							font.drawString("To " + name + ": " + chatboxMessages[i], 4, y, 0, -1);
+							font.drawString("To " + name + ": " + chatboxMessages[i], 4, y - 1, 0xFFFF, -1);
 							if (++row >= 5) {
 								break;
 							}
@@ -7004,6 +7004,12 @@ public class Game extends GameShell {
 					anIndexedImageArray1085[i_566_].mixPalette(i_562_ + i_565_, i_563_ + i_565_, i_564_ + i_565_);
 				}
 			}
+
+			fontSmall.unpackChatImages(moderatorIcon);
+			fontNormal.unpackChatImages(moderatorIcon);
+			fontBold.unpackChatImages(moderatorIcon);
+			fontFancy.unpackChatImages(moderatorIcon);
+
 			drawLoadingText(83, "Unpacking textures");
 			Rasterizer3D.loadIndexedImages(archiveTextures);
 			Rasterizer3D.method369(0.8);
@@ -7866,40 +7872,40 @@ public class Game extends GameShell {
 			redrawChatSettings = false;
 			aProducingGraphicsBuffer1148.createRasterizer();
 			anIndexedImage1052.drawImage(0, 0);
-			fontNormal.drawStringCenter("Public chat", 55, 28, 0xFFFFFF, true);
+			fontNormal.drawStringCenter("Public chat", 55, 28, 0xFFFFFF, -1);
 			if (publicChatSetting == 0) {
-				fontNormal.drawStringCenter("On", 55, 41, 0x00FF00, true);
+				fontNormal.drawStringCenter("On", 55, 41, 0x00FF00, -1);
 			}
 			if (publicChatSetting == 1) {
-				fontNormal.drawStringCenter("Friends", 55, 41, 0xFFFF00, true);
+				fontNormal.drawStringCenter("Friends", 55, 41, 0xFFFF00, -1);
 			}
 			if (publicChatSetting == 2) {
-				fontNormal.drawStringCenter("Off", 55, 41, 0xFF0000, true);
+				fontNormal.drawStringCenter("Off", 55, 41, 0xFF0000, -1);
 			}
 			if (publicChatSetting == 3) {
-				fontNormal.drawStringCenter("Hide", 55, 41, 0xFFFF, true);
+				fontNormal.drawStringCenter("Hide", 55, 41, 0xFFFF, -1);
 			}
-			fontNormal.drawStringCenter("Private chat", 184, 28, 0xFFFFFF, true);
+			fontNormal.drawStringCenter("Private chat", 184, 28, 0xFFFFFF, -1);
 			if (privateChatSetting == 0) {
-				fontNormal.drawStringCenter("On", 184, 41, 0x00FF00, true);
+				fontNormal.drawStringCenter("On", 184, 41, 0x00FF00, -1);
 			}
 			if (privateChatSetting == 1) {
-				fontNormal.drawStringCenter("Friends", 184, 41, 0xFFFF00, true);
+				fontNormal.drawStringCenter("Friends", 184, 41, 0xFFFF00, -1);
 			}
 			if (privateChatSetting == 2) {
-				fontNormal.drawStringCenter("Off", 184, 41, 0xFF0000, true);
+				fontNormal.drawStringCenter("Off", 184, 41, 0xFF0000, -1);
 			}
-			fontNormal.drawStringCenter("Trade/compete", 324, 28, 0xFFFFFF, true);
+			fontNormal.drawStringCenter("Trade/compete", 324, 28, 0xFFFFFF, -1);
 			if (tradeSetting == 0) {
-				fontNormal.drawStringCenter("On", 324, 41, 0x00FF00, true);
+				fontNormal.drawStringCenter("On", 324, 41, 0x00FF00, -1);
 			}
 			if (tradeSetting == 1) {
-				fontNormal.drawStringCenter("Friends", 324, 41, 0xFFFF00, true);
+				fontNormal.drawStringCenter("Friends", 324, 41, 0xFFFF00, -1);
 			}
 			if (tradeSetting == 2) {
-				fontNormal.drawStringCenter("Off", 324, 41, 0xFF0000, true);
+				fontNormal.drawStringCenter("Off", 324, 41, 0xFF0000, -1);
 			}
-			fontNormal.drawStringCenter("Report abuse", 458, 33, 0xFFFFFF, true);
+			fontNormal.drawStringCenter("Report abuse", 458, 33, 0xFFFFFF, -1);
 			aProducingGraphicsBuffer1148.drawGraphics(0, 453, gameGraphics);
 			currentSceneBuffer.createRasterizer();
 		}
@@ -8059,8 +8065,8 @@ public class Game extends GameShell {
 												}
 												if (imagergb.maxWidth == 33 || widget_635_.itemAmounts[i_636_] != 1) {
 													int i_647_ = widget_635_.itemAmounts[i_636_];
-													fontSmall.drawString(Game.method43(-33245, i_647_), i_639_ + 1 + i_641_, i_640_ + 10 + i_642_, 0);
-													fontSmall.drawString(Game.method43(-33245, i_647_), i_639_ + i_641_, i_640_ + 9 + i_642_, 0xFFFF00);
+													fontSmall.drawString(Game.method43(-33245, i_647_), i_639_ + 1 + i_641_, i_640_ + 10 + i_642_, 0, -1);
+													fontSmall.drawString(Game.method43(-33245, i_647_), i_639_ + i_641_, i_640_ + 9 + i_642_, 0xFFFF00, -1);
 												}
 											}
 										}
@@ -8184,7 +8190,7 @@ public class Game extends GameShell {
 									string = "";
 								}
 								if (widget_635_.typeFaceCentered) {
-									typeface.drawStringCenter(string_657_, i_633_ + widget_635_.width / 2, i_650_, i_649_, widget_635_.typeFaceShadowed);
+									typeface.drawStringCenter(string_657_, i_633_ + widget_635_.width / 2, i_650_, i_649_, -1);
 								} else {
 									typeface.drawShadowedString(string_657_, i_633_, i_650_, widget_635_.typeFaceShadowed, i_649_);
 								}
@@ -8240,7 +8246,7 @@ public class Game extends GameShell {
 										int i_666_ = i_633_ + i_665_ * (115 + widget_635_.itemSpritePadsX);
 										int i_667_ = i_634_ + i_664_ * (12 + widget_635_.itemSpritePadsY);
 										if (widget_635_.typeFaceCentered) {
-											typeface.drawStringCenter(string, i_666_ + widget_635_.width / 2, i_667_, widget_635_.disabledColor, widget_635_.typeFaceShadowed);
+											typeface.drawStringCenter(string, i_666_ + widget_635_.width / 2, i_667_, widget_635_.disabledColor, -1);
 										} else {
 											typeface.drawShadowedString(string, i_666_, i_667_, widget_635_.typeFaceShadowed, widget_635_.disabledColor);
 										}
@@ -8702,19 +8708,19 @@ public class Game extends GameShell {
 			int usedMemory = (int) ((runtime.totalMemory() - runtime.freeMemory()) / 1024L);
 			int maxMemory = (int) (runtime.totalMemory() / 1024L);
 
-			fontNormal.drawStringRight("FPS: " + fps, x, y, color);
+			fontNormal.drawStringRight("FPS: " + fps, x, y, color, -1);
 			y += 15;
 
-			fontNormal.drawStringRight("Mem: (MB) " + format.format(usedMemory / 1024L) + " / " + format.format(maxMemory / 1024L), x, y, 0xFFFF00);
+			fontNormal.drawStringRight("Mem: (MB) " + format.format(usedMemory / 1024L) + " / " + format.format(maxMemory / 1024L), x, y, 0xFFFF00, -1);
 			y += 15;
 
-			fontNormal.drawStringRight("Menu area: " + actionMenuArea, x, y, 0xFFFF00);
+			fontNormal.drawStringRight("Menu area: " + actionMenuArea, x, y, 0xFFFF00, -1);
 			y += 15;
 
-			fontNormal.drawStringRight("Mouse: " + mouseEventX + ", " + mouseEventY, x, y, 0xFFFF00);
+			fontNormal.drawStringRight("Mouse: " + mouseEventX + ", " + mouseEventY, x, y, 0xFFFF00, -1);
 			y += 15;
 
-			fontNormal.drawStringRight("Coords: " + destinationX + ", " + destinationY, x, y, 0xFFFF00);
+			fontNormal.drawStringRight("Coords: " + destinationX + ", " + destinationY, x, y, 0xFFFF00, -1);
 			y += 15;
 		}
 
@@ -8722,7 +8728,7 @@ public class Game extends GameShell {
 			int seconds = systemUpdateTime / 50;
 			int minutes = seconds / 60;
 			seconds %= 60;
-			fontNormal.drawString("System update in: " + minutes + ":" + (seconds > 10 ? seconds : "0" + seconds), 4, 329, 0xFFFF00);
+			fontNormal.drawString("System update in: " + minutes + ":" + (seconds > 10 ? seconds : "0" + seconds), 4, 329, 0xFFFF00, -1);
 		}
 	}
 
@@ -8820,9 +8826,9 @@ public class Game extends GameShell {
 	public final void processMenuHovering() {
 		do {
 			try {
-				int width = fontBold.getStringEffectWidth("Choose Option");
+				int width = fontBold.getTextWidth("Choose Option");
 				for (int i = 0; i < menuActionRow; i++) {
-					int actionWidth = fontBold.getStringEffectWidth(menuActionNames[i]);
+					int actionWidth = fontBold.getTextWidth(menuActionNames[i]);
 					if (actionWidth > width) {
 						width = actionWidth;
 					}
@@ -9306,7 +9312,7 @@ public class Game extends GameShell {
 					if (menuActionRow > 2) {
 						action += "@whi@ / " + (menuActionRow - 2) + " more options";
 					}
-					fontBold.drawShadowedSeededAlphaString(action, 4, 15, Game.currentCycle / 1000, 0xFFFFFF);
+					fontBold.drawString(action, 4, 15, 0xFFFFFF, -1);
 				}
 			} catch (RuntimeException runtimeexception) {
 				Signlink.reportError("86922, " + runtimeexception.toString());
@@ -9320,7 +9326,7 @@ public class Game extends GameShell {
 		try {
 			aProducingGraphicsBuffer1189.createRasterizer();
 			if (minimapState == 2) {
-				byte[] mapbackPixels = minimapBackgroundImage.pixels;
+				int[] mapbackPixels = minimapBackgroundImage.pixels;
 				int[] rasterPixels = Rasterizer.pixels;
 				int length = mapbackPixels.length;
 				for (int i = 0; i < length; i++) {
@@ -9508,7 +9514,7 @@ public class Game extends GameShell {
 						if ((messageType == 3 || messageType == 7) && (messageType == 7 || privateChatSetting == 0 || privateChatSetting == 1 && method109(false, name))) {
 							int areaHeight = 329 - lineId * 13;
 							if (mouseEventX > 4 && mouseEventY - 4 > areaHeight - 10 && mouseEventY - 4 <= areaHeight + 3) {
-								int areaWidth = fontNormal.getStringEffectWidth("From:  " + name + chatboxMessages[i]) + 25;
+								int areaWidth = fontNormal.getTextWidth("From:  " + name + chatboxMessages[i]) + 25;
 								if (areaWidth > 450) {
 									areaWidth = 450;
 								}
@@ -9765,57 +9771,57 @@ public class Game extends GameShell {
 				int i_856_ = 200;
 				if (loginScreenState == 0) {
 					int i_857_ = i_856_ / 2 + 80;
-					fontSmall.drawStringCenter(onDemandRequester.message, i / 2, i_857_, 0x75A9A9, true);
+					fontSmall.drawStringCenter(onDemandRequester.message, i / 2, i_857_, 0x75A9A9, -1);
 					i_857_ = i_856_ / 2 - 20;
-					fontBold.drawStringCenter("Welcome to RuneScape", i / 2, i_857_, 0xFFFF00, true);
+					fontBold.drawStringCenter("Welcome to RuneScape", i / 2, i_857_, 0xFFFF00, -1);
 					i_857_ += 30;
 					int x = i / 2 - 80;
 					int y = i_856_ / 2 + 20;
 					titleboxButtonImage.drawImage(x - 73, y - 20);
-					fontBold.drawStringCenter("New User", x, y + 5, 0xFFFFFF, true);
+					fontBold.drawStringCenter("New User", x, y + 5, 0xFFFFFF, -1);
 					x = i / 2 + 80;
 					titleboxButtonImage.drawImage(x - 73, y - 20);
-					fontBold.drawStringCenter("Existing User", x, y + 5, 0xFFFFFF, true);
+					fontBold.drawStringCenter("Existing User", x, y + 5, 0xFFFFFF, -1);
 				}
 				if (loginScreenState == 2) {
 					int i_860_ = i_856_ / 2 - 40;
 					if (loginMessage1.length() > 0) {
-						fontBold.drawStringCenter(loginMessage1, i / 2, i_860_ - 15, 0xFFFF00, true);
-						fontBold.drawStringCenter(loginMessage2, i / 2, i_860_, 0xFFFF00, true);
+						fontBold.drawStringCenter(loginMessage1, i / 2, i_860_ - 15, 0xFFFF00, -1);
+						fontBold.drawStringCenter(loginMessage2, i / 2, i_860_, 0xFFFF00, -1);
 						i_860_ += 30;
 					} else {
-						fontBold.drawStringCenter(loginMessage2, i / 2, i_860_ - 7, 0xFFFF00, true);
+						fontBold.drawStringCenter(loginMessage2, i / 2, i_860_ - 7, 0xFFFF00, -1);
 						i_860_ += 30;
 					}
-					fontBold.drawShadowedString("Username: " + username + (anInt1241 == 0 & Game.currentCycle % 40 < 20 ? "@yel@|" : ""), i / 2 - 90, i_860_, true, 0xFFFFFF);
+					fontBold.drawString("Username: " + username + (anInt1241 == 0 & Game.currentCycle % 40 < 20 ? "@yel@|" : ""), i / 2 - 90, i_860_, 0xFFFFFF, -1);
 					i_860_ += 15;
-					fontBold.drawShadowedString("Password: " + TextUtils.censorPassword(password) + (anInt1241 == 1 & Game.currentCycle % 40 < 20 ? "@yel@|" : ""), i / 2 - 88, i_860_, true, 0xFFFFFF);
+					fontBold.drawString("Password: " + TextUtils.censorPassword(password) + (anInt1241 == 1 & Game.currentCycle % 40 < 20 ? "@yel@|" : ""), i / 2 - 88, i_860_, 0xFFFFFF, -1);
 					i_860_ += 15;
 					if (!hideButtons) {
 						int i_861_ = i / 2 - 80;
 						int i_862_ = i_856_ / 2 + 50;
 						titleboxButtonImage.drawImage(i_861_ - 73, i_862_ - 20);
-						fontBold.drawStringCenter("Login", i_861_, i_862_ + 5, 0xFFFFFF, true);
+						fontBold.drawStringCenter("Login", i_861_, i_862_ + 5, 0xFFFFFF, -1);
 						i_861_ = i / 2 + 80;
 						titleboxButtonImage.drawImage(i_861_ - 73, i_862_ - 20);
-						fontBold.drawStringCenter("Cancel", i_861_, i_862_ + 5, 0xFFFFFF, true);
+						fontBold.drawStringCenter("Cancel", i_861_, i_862_ + 5, 0xFFFFFF, -1);
 					}
 				}
 				if (loginScreenState == 3) {
-					fontBold.drawStringCenter("Create a free account", i / 2, i_856_ / 2 - 60, 0xFFFF00, true);
+					fontBold.drawStringCenter("Create a free account", i / 2, i_856_ / 2 - 60, 0xFFFF00, -1);
 					int i_863_ = i_856_ / 2 - 35;
-					fontBold.drawStringCenter("To create a new account you need to", i / 2, i_863_, 0xFFFFFF, true);
+					fontBold.drawStringCenter("To create a new account you need to", i / 2, i_863_, 0xFFFFFF, -1);
 					i_863_ += 15;
-					fontBold.drawStringCenter("go back to the main RuneScape webpage", i / 2, i_863_, 0xFFFFFF, true);
+					fontBold.drawStringCenter("go back to the main RuneScape webpage", i / 2, i_863_, 0xFFFFFF, -1);
 					i_863_ += 15;
-					fontBold.drawStringCenter("and choose the red 'create account'", i / 2, i_863_, 0xFFFFFF, true);
+					fontBold.drawStringCenter("and choose the red 'create account'", i / 2, i_863_, 0xFFFFFF, -1);
 					i_863_ += 15;
-					fontBold.drawStringCenter("button at the top right of that page.", i / 2, i_863_, 0xFFFFFF, true);
+					fontBold.drawStringCenter("button at the top right of that page.", i / 2, i_863_, 0xFFFFFF, -1);
 					i_863_ += 15;
 					int i_864_ = i / 2;
 					int i_865_ = i_856_ / 2 + 50;
 					titleboxButtonImage.drawImage(i_864_ - 73, i_865_ - 20);
-					fontBold.drawStringCenter("Cancel", i_864_, i_865_ + 5, 0xFFFFFF, true);
+					fontBold.drawStringCenter("Cancel", i_864_, i_865_ + 5, 0xFFFFFF, -1);
 				}
 				aProducingGraphicsBuffer1134.drawGraphics(202, 171, gameGraphics);
 				if (!redraw) {
@@ -10776,8 +10782,8 @@ public class Game extends GameShell {
 					anInt1048 = 1;
 					aLong849 = System.currentTimeMillis();
 					currentSceneBuffer.createRasterizer();
-					fontNormal.drawStringLeft("Loading - please wait.", 257, 151, 0);
-					fontNormal.drawStringLeft("Loading - please wait.", 256, 150, 0xFFFFFF);
+					fontNormal.drawStringCenter("Loading - please wait.", 257, 151, 0, -1);
+					fontNormal.drawStringCenter("Loading - please wait.", 256, 150, 0xFFFFFF, -1);
 					currentSceneBuffer.drawGraphics(4, 4, gameGraphics);
 					if (opcode == 73) {
 						int i_1056_ = 0;
