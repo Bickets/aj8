@@ -175,72 +175,39 @@ public class IndexedImage extends Rasterizer {
 		}
 	}
 
-	public void drawImage(int i, int k, int color) {
-		int tempWidth = width + 2;
-		int tempHeight = height + 2;
-		int[] tempArray = new int[tempWidth * tempHeight];
-		for (int x = 0; x < width; x++) {
-			for (int y = 0; y < height; y++) {
-				if (pixels[x + y * width] != 0)
-					tempArray[(x + 1) + (y + 1) * tempWidth] = pixels[x + y * width];
+	public void drawImage(int x, int y, int color) {
+		int imageWidth = width + 2;
+		int imageHeight = height + 2;
+		int[] pixels = new int[imageWidth * imageHeight];
+
+		for (int currentX = 0; currentX < width; currentX++) {
+			for (int currentY = 0; currentY < height; currentY++) {
+				if (pixels[currentX + currentY * width] != 0) {
+					pixels[currentX + 1 + (currentY + 1) * imageWidth] = pixels[currentX + currentY * width];
+				}
 			}
 		}
-		for (int x = 0; x < tempWidth; x++) {
-			for (int y = 0; y < tempHeight; y++) {
-				if (tempArray[(x) + (y) * tempWidth] == 0) {
-					if (x < tempWidth - 1 && tempArray[(x + 1) + ((y) * tempWidth)] > 0 && tempArray[(x + 1) + ((y) * tempWidth)] != 0xffffff) {
-						tempArray[(x) + (y) * tempWidth] = color;
+
+		for (int currentX = 0; currentX < imageWidth; currentX++) {
+			for (int currentY = 0; currentY < imageHeight; currentY++) {
+				if (pixels[currentX + currentY * imageWidth] == 0) {
+					if (currentX < imageWidth - 1 && pixels[currentX + 1 + currentY * imageWidth] > 0 && pixels[currentX + 1 + currentY * imageWidth] != 0xffffff) {
+						pixels[currentX + currentY * imageWidth] = color;
 					}
-					if (x > 0 && tempArray[(x - 1) + ((y) * tempWidth)] > 0 && tempArray[(x - 1) + ((y) * tempWidth)] != 0xffffff) {
-						tempArray[(x) + (y) * tempWidth] = color;
+					if (currentX > 0 && pixels[currentX - 1 + currentY * imageWidth] > 0 && pixels[currentX - 1 + currentY * imageWidth] != 0xffffff) {
+						pixels[currentX + currentY * imageWidth] = color;
 					}
-					if (y < tempHeight - 1 && tempArray[(x) + ((y + 1) * tempWidth)] > 0 && tempArray[(x) + ((y + 1) * tempWidth)] != 0xffffff) {
-						tempArray[(x) + (y) * tempWidth] = color;
+					if (currentY < imageHeight - 1 && pixels[currentX + (currentY + 1) * imageWidth] > 0 && pixels[currentX + (currentY + 1) * imageWidth] != 0xffffff) {
+						pixels[currentX + currentY * imageWidth] = color;
 					}
-					if (y > 0 && tempArray[(x) + ((y - 1) * tempWidth)] > 0 && tempArray[(x) + ((y - 1) * tempWidth)] != 0xffffff) {
-						tempArray[(x) + (y) * tempWidth] = color;
+					if (currentY > 0 && pixels[currentX + (currentY - 1) * imageWidth] > 0 && pixels[currentX + (currentY - 1) * imageWidth] != 0xffffff) {
+						pixels[currentX + currentY * imageWidth] = color;
 					}
 				}
 			}
 		}
-		i--;
-		k--;
-		i += xDrawOffset;
-		k += yDrawOffset;
-		int l = i + k * Rasterizer.width;
-		int i1 = 0;
-		int j1 = tempHeight;
-		int k1 = tempWidth;
-		int l1 = Rasterizer.width - k1;
-		int i2 = 0;
-		if (k < Rasterizer.topY) {
-			int j2 = Rasterizer.topY - k;
-			j1 -= j2;
-			k = Rasterizer.topY;
-			i1 += j2 * k1;
-			l += j2 * Rasterizer.width;
-		}
-		if (k + j1 > Rasterizer.bottomY) {
-			j1 -= (k + j1) - Rasterizer.bottomY;
-		}
-		if (i < Rasterizer.topX) {
-			int k2 = Rasterizer.topX - i;
-			k1 -= k2;
-			i = Rasterizer.topX;
-			i1 += k2;
-			l += k2;
-			i2 += k2;
-			l1 += k2;
-		}
-		if (i + k1 > Rasterizer.bottomX) {
-			int l2 = (i + k1) - Rasterizer.bottomX;
-			k1 -= l2;
-			i2 += l2;
-			l1 += l2;
-		}
-		if (!(k1 <= 0 || j1 <= 0)) {
-			copyPixels(tempArray, Rasterizer.pixels, i1, l, k1, j1, l1, i2, palette);
-		}
+
+		drawImage(x--, y--);
 	}
 
 	private void copyPixels(int[] pixels, int[] rasterizerPixels, int width, int height, int offset, int originalOffset, int deviation, int originalDeviation, int[] pallete) {
