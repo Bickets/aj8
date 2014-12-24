@@ -789,10 +789,7 @@ public class Game extends GameShell {
 	}
 
 	public final Socket openSocket(int port) throws IOException {
-		if (Signlink.applet != null) {
-			return Signlink.openSocket(port);
-		}
-		return new Socket(InetAddress.getByName(getCodeBase().getHost()), port);
+		return new Socket("127.0.0.1", port);
 	}
 
 	public final void method20() {
@@ -6914,21 +6911,6 @@ public class Game extends GameShell {
 		i_597_ += 30;
 	}
 
-	@Override
-	public final URL getCodeBase() {
-		if (Signlink.applet != null) {
-			return Signlink.applet.getCodeBase();
-		}
-		if (gameFrame != null) {
-			try {
-				return new URL("http://127.0.0.1:" + (80 + Game.portOffset));
-			} catch (MalformedURLException e) {
-				e.printStackTrace();
-			}
-		}
-		return super.getCodeBase();
-	}
-
 	public final void method95() {
 		for (int i = 0; i < actorCount; i++) {
 			int actorId = anIntArray862[i];
@@ -9004,12 +8986,6 @@ public class Game extends GameShell {
 	}
 
 	public final DataInputStream jaggrabRequest(String file) throws IOException {
-		if (!aBoolean897) {
-			if (Signlink.applet != null) {
-				return Signlink.openURL(file);
-			}
-			return new DataInputStream(new URL(getCodeBase(), file).openStream());
-		}
 		if (jaggrabSocket != null) {
 			jaggrabSocket.close();
 			jaggrabSocket = null;

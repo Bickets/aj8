@@ -58,7 +58,7 @@ public class FloorDefinition {
 				this.luminance = luminance;
 				this.weightedHue = weightedHue;
 				chroma = weightedHue;
-			} else {
+			} else if (attributeId != 3) {
 				System.out.println("Error unrecognised config code: " + attributeId);
 			}
 		}
