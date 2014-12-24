@@ -12,6 +12,7 @@ import org.apollo.fs.parser.InterfaceDefinitionParser;
 import org.apollo.fs.parser.ItemDefinitionParser;
 import org.apollo.fs.parser.MobDefinitionParser;
 import org.apollo.fs.parser.StaticObjectDefinitionParser;
+import org.apollo.game.GameUpdateHandler;
 import org.apollo.game.event.Event;
 import org.apollo.game.event.EventProvider;
 import org.apollo.game.event.EventSubscriber;
@@ -108,6 +109,11 @@ public final class World {
 	 * This worlds event provider.
 	 */
 	private final EventProvider eventProvider = new UniversalEventProvider();
+
+	/**
+	 * This worlds update handler, set to 10 minutes, in seconds.
+	 */
+	private GameUpdateHandler updateHandler = new GameUpdateHandler(this, 10_000);
 
 	/**
 	 * Initializes the world by loading definitions from the specified file
@@ -250,6 +256,32 @@ public final class World {
 	}
 
 	/**
+	 * Schedules the current {@link GameUpdateHandler}.
+	 */
+	public void scheduleUpdate() {
+		updateHandler.schedule();
+	}
+
+	/**
+	 * Schedules a new {@link GameUpdateHandler} for the specified duration of
+	 * seconds.
+	 * 
+	 * @param seconds The amount of seconds the update is delayed for.
+	 */
+	public void scheduleUpdate(int seconds) {
+		updateHandler = new GameUpdateHandler(this, seconds);
+		updateHandler.schedule();
+	}
+
+	/**
+	 * Returns {@code true} if an update is currently active otherwise
+	 * {@code false}.
+	 */
+	public boolean isUpdateActive() {
+		return updateHandler.isActive();
+	}
+
+	/**
 	 * Posts an event to this worlds event provider.
 	 *
 	 * @param player The player to post the event for.
@@ -278,6 +310,15 @@ public final class World {
 	}
 
 	/**
+	 * Sends a message to this entire {@link World}.
+	 * 
+	 * @param message The message to send to the world.
+	 */
+	public <T> void sendGlobalMessage(T message) {
+		playerRepository.forEach(plr -> plr.sendMessage(message));
+	}
+
+	/**
 	 * Pulses the {@link #taskScheduler}.
 	 */
 	public void pulse() {
@@ -291,12 +332,7 @@ public final class World {
 	 * @return {@code true} if so, {@code false} if not.
 	 */
 	public boolean isPlayerOnline(long name) {
-		for (Player p : playerRepository) {
-			if (p.getEncodedName() == name) {
-				return true;
-			}
-		}
-		return false;
+		return playerRepository.stream().anyMatch(plr -> plr.getEncodedName() == name);
 	}
 
 	/**

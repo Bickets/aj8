@@ -78,6 +78,8 @@ public final class LoginSession extends Session {
 			code = LoginConstants.STATUS_GAME_UPDATED;
 		} else if (badCredentials(request)) {
 			code = LoginConstants.STATUS_INVALID_CREDENTIALS;
+		} else if (gameService.getWorld().isUpdateActive()) {
+			code = LoginConstants.STATUS_UPDATING;
 		}
 
 		if (code == LoginConstants.STATUS_OK) {

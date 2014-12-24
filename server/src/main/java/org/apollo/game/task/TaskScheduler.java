@@ -1,43 +1,61 @@
 package org.apollo.game.task;
 
-import java.util.Deque;
+import java.util.ArrayDeque;
+import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.LinkedList;
+import java.util.List;
+import java.util.Queue;
 
 /**
  * A class which manages {@link Task}s.
  *
  * @author Graham
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class TaskScheduler {
 
 	/**
-	 * A {@link Deque} of currently active tasks.
+	 * A {@link ArrayDeque} of new tasks currently waiting to be added.
 	 */
-	private final Deque<Task> tasks = new LinkedList<>();
+	private final Queue<Task> pendingTasks = new ArrayDeque<>();
 
 	/**
-	 * Schedules a new task.
-	 *
-	 * @param task The task to schedule.
+	 * An {@link ArrayList} of currently active tasks.
 	 */
-	public void schedule(Task task) {
-		tasks.addFirst(task);
+	private final List<Task> tasks = new ArrayList<>();
+
+	/**
+	 * Schedules a new pending {@link Task}.
+	 * 
+	 * @param task The task to schedule.
+	 * @return {@code true} if and only if the task was added successfully,
+	 *         otherwise {@code false}.
+	 */
+	public boolean schedule(Task task) {
+		return pendingTasks.add(task);
 	}
 
 	/**
-	 * Called every pulse: executes tasks that are still pending, adds new tasks
-	 * and stops old tasks.
+	 * Pulses all active tasks, adds pending tasks, executes active tasks and
+	 * removes inactive tasks.
 	 */
 	public void pulse() {
-		Iterator<Task> it = tasks.iterator();
-		while (it.hasNext()) {
-			Task task = it.next();
-			if (!task.isRunning()) {
-				it.remove();
-				continue;
+		for (;;) {
+			Task task = pendingTasks.poll();
+			if (task == null) {
+				break;
 			}
+			tasks.add(task);
+		}
+
+		Iterator<Task> iterator = tasks.iterator();
+		while (iterator.hasNext()) {
+			Task task = iterator.next();
 			task.pulse();
+
+			if (!task.isRunning()) {
+				iterator.remove();
+			}
 		}
 	}
 
