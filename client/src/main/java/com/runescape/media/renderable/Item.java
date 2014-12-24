@@ -9,7 +9,7 @@ public class Item extends Renderable {
 
 	@Override
 	public final Model getRotatedModel() {
-		ItemDefinition itemdefinition = ItemDefinition.getDefinition(itemId);
-		return itemdefinition.getAmountModel(itemCount);
+		ItemDefinition def = ItemDefinition.getDefinition(itemId);
+		return def.getAmountModel(itemCount);
 	}
 }

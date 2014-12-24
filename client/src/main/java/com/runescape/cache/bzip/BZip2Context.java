@@ -1,9 +1,5 @@
 package com.runescape.cache.bzip;
 
-/* BZip2Context - Decompiled by JODE
- * Visit http://jode.sourceforge.net/
- */
-
 class BZip2Context {
 
 	final int anInt88 = 4096;

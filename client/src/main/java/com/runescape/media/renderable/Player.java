@@ -69,7 +69,7 @@ public class Player extends GameCharacter {
 				}
 				spotAnimationModel2.applyLighting(64 + spotAnimation.modelLightFalloff, 850 + spotAnimation.modelLightAmbient, -30, -50, -30, true);
 				Model[] models = { model, spotAnimationModel2 };
-				model = new Model(2, -819, true, models);
+				model = new Model(2, true, models);
 			}
 		}
 		if (playerModel != null) {
@@ -80,26 +80,26 @@ public class Player extends GameCharacter {
 				Model model_2_ = playerModel;
 				model_2_.translate(anInt1731 - xWithBoundary, anInt1732 - anInt1729, anInt1733 - yWithBoundary);
 				if (anInt1530 == 512) {
-					model_2_.rotate90Degrees(360);
-					model_2_.rotate90Degrees(360);
-					model_2_.rotate90Degrees(360);
+					model_2_.rotate90Degrees();
+					model_2_.rotate90Degrees();
+					model_2_.rotate90Degrees();
 				} else if (anInt1530 == 1024) {
-					model_2_.rotate90Degrees(360);
-					model_2_.rotate90Degrees(360);
+					model_2_.rotate90Degrees();
+					model_2_.rotate90Degrees();
 				} else if (anInt1530 == 1536) {
-					model_2_.rotate90Degrees(360);
+					model_2_.rotate90Degrees();
 				}
 				Model[] models = { model, model_2_ };
-				model = new Model(2, -819, true, models);
+				model = new Model(2, true, models);
 				if (anInt1530 == 512) {
-					model_2_.rotate90Degrees(360);
+					model_2_.rotate90Degrees();
 				} else if (anInt1530 == 1024) {
-					model_2_.rotate90Degrees(360);
-					model_2_.rotate90Degrees(360);
+					model_2_.rotate90Degrees();
+					model_2_.rotate90Degrees();
 				} else if (anInt1530 == 1536) {
-					model_2_.rotate90Degrees(360);
-					model_2_.rotate90Degrees(360);
-					model_2_.rotate90Degrees(360);
+					model_2_.rotate90Degrees();
+					model_2_.rotate90Degrees();
+					model_2_.rotate90Degrees();
 				}
 				model_2_.translate(xWithBoundary - anInt1731, anInt1729 - anInt1732, yWithBoundary - anInt1733);
 			}
@@ -298,7 +298,7 @@ public class Player extends GameCharacter {
 		Model model_25_ = Model.aModel1614;
 		model_25_.replaceWithModel(model, Animation.exists(i_12_) & Animation.exists(i_13_));
 		if (i_12_ != -1 && i_13_ != -1) {
-			model_25_.mixAnimationFrames(-20491, AnimationSequence.cache[animation].interleaveOrder, i_13_, i_12_);
+			model_25_.mixAnimationFrames(AnimationSequence.cache[animation].interleaveOrder, i_13_, i_12_);
 		} else if (i_12_ != -1) {
 			model_25_.applyTransform(i_12_);
 		}

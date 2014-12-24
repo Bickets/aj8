@@ -4,9 +4,6 @@ import com.runescape.cache.bzip.BZip2Decompressor;
 import com.runescape.net.Buffer;
 import com.runescape.util.TextUtils;
 
-/**
- * Represents an archive in the cache.
- */
 public class Archive {
 
 	public byte[] archiveBuffer;
@@ -17,11 +14,6 @@ public class Archive {
 	public int[] startOffsets;
 	private boolean compressed;
 
-	/**
-	 * Creates the archive.
-	 *
-	 * @param dataBuffer The buffer of the archive.
-	 */
 	public Archive(byte[] dataBuffer) {
 		Buffer buffer = new Buffer(dataBuffer);
 		int uncompressed = buffer.get24BitInt();
@@ -51,12 +43,6 @@ public class Archive {
 		}
 	}
 
-	/**
-	 * Gets a file by its name.
-	 *
-	 * @param file The file name.
-	 * @return The file contents.
-	 */
 	public byte[] getFile(String file) {
 		byte dataBuffer[] = null;
 		int hash = TextUtils.fileToHash(file);
@@ -75,4 +61,5 @@ public class Archive {
 		}
 		return null;
 	}
+
 }

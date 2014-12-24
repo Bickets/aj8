@@ -8,16 +8,15 @@ public class FloorDefinition {
 	public static int count;
 	public static FloorDefinition[] cache;
 	public String name;
-	public int rgbColor;
+	public int rgb;
 	public int textureId = -1;
-	public boolean aBoolean227 = false;
-	public boolean occlude = true;
-	public int hue2;
-	public int saturation;
-	public int lightness;
+	public boolean shadowing = true;
 	public int hue;
-	public int hueDivisor;
-	public int hslColor2;
+	public int saturation;
+	public int luminance;
+	public int weightedHue;
+	public int chroma;
+	public int color;
 
 	public static void load(Archive archive) {
 		Buffer buffer = new Buffer(archive.getFile("flo.dat"));
@@ -40,127 +39,118 @@ public class FloorDefinition {
 				break;
 			}
 			if (attributeId == 1) {
-				rgbColor = buffer.get24BitInt();
-				shiftRGBColors(rgbColor);
+				rgb = buffer.get24BitInt();
+				blend(rgb);
 			} else if (attributeId == 2) {
 				textureId = buffer.getUnsignedByte();
-			} else if (attributeId == 3) {
-				aBoolean227 = true;
 			} else if (attributeId == 5) {
-				occlude = false;
+				shadowing = false;
 			} else if (attributeId == 6) {
 				name = buffer.getString();
 			} else if (attributeId == 7) {
-				int oldHue2 = hue2;
-				int oldSaturation = saturation;
-				int oldLightness = lightness;
-				int oldHue = hue;
-				shiftRGBColors(buffer.get24BitInt());
-				hue2 = oldHue2;
-				saturation = oldSaturation;
-				lightness = oldLightness;
-				hue = oldHue;
-				hueDivisor = oldHue;
+				int hue = this.hue;
+				int saturation = this.saturation;
+				int luminance = this.luminance;
+				int weightedHue = this.weightedHue;
+				blend(buffer.get24BitInt());
+				this.hue = hue;
+				this.saturation = saturation;
+				this.luminance = luminance;
+				this.weightedHue = weightedHue;
+				chroma = weightedHue;
 			} else {
 				System.out.println("Error unrecognised config code: " + attributeId);
 			}
 		}
 	}
 
-	private void shiftRGBColors(int color) {
+	private void blend(int color) {
 		double r = (color >> 16 & 0xff) / 256.0;
 		double b = (color >> 8 & 0xff) / 256.0;
 		double g = (color & 0xff) / 256.0;
-		double cmin = r;
-		if (b < cmin) {
-			cmin = b;
+		double darkest = r;
+
+		if (b < darkest) {
+			darkest = b;
 		}
-		if (g < cmin) {
-			cmin = g;
+		if (g < darkest) {
+			darkest = g;
 		}
-		double cmax = r;
-		if (b > cmax) {
-			cmax = b;
+
+		double brightest = r;
+		if (b > brightest) {
+			brightest = b;
 		}
-		if (g > cmax) {
-			cmax = g;
+		if (g > brightest) {
+			brightest = g;
 		}
-		double d_11_ = 0.0;
-		double d_12_ = 0.0;
-		double d_13_ = (cmin + cmax) / 2.0;
-		if (cmin != cmax) {
-			if (d_13_ < 0.5) {
-				d_12_ = (cmax - cmin) / (cmax + cmin);
+
+		double hue = 0.0;
+		double saturation = 0.0;
+		double lumination = (darkest + brightest) / 2.0;
+
+		if (darkest != brightest) {
+			if (lumination < 0.5) {
+				saturation = (brightest - darkest) / (brightest + darkest);
 			}
-			if (d_13_ >= 0.5) {
-				d_12_ = (cmax - cmin) / (2.0 - cmax - cmin);
+			if (lumination >= 0.5) {
+				saturation = (brightest - darkest) / (2.0 - brightest - darkest);
 			}
-			if (r == cmax) {
-				d_11_ = (b - g) / (cmax - cmin);
-			} else if (b == cmax) {
-				d_11_ = 2.0 + (g - r) / (cmax - cmin);
-			} else if (g == cmax) {
-				d_11_ = 4.0 + (r - b) / (cmax - cmin);
+			if (r == brightest) {
+				hue = (b - g) / (brightest - darkest);
+			} else if (b == brightest) {
+				hue = 2.0 + (g - r) / (brightest - darkest);
+			} else if (g == brightest) {
+				hue = 4.0 + (r - b) / (brightest - darkest);
 			}
 		}
-		d_11_ /= 6.0;
-		hue2 = (int) (d_11_ * 256.0);
-		saturation = (int) (d_12_ * 256.0);
-		lightness = (int) (d_13_ * 256.0);
-		if (saturation < 0) {
-			saturation = 0;
-		} else if (saturation > 255) {
-			saturation = 255;
+
+		hue /= 6.0;
+
+		this.hue = (int) (hue * 256.0);
+		this.saturation = (int) (saturation * 256.0);
+		this.luminance = (int) (lumination * 256.0);
+
+		if (this.saturation < 0) {
+			this.saturation = 0;
+		} else if (this.saturation > 255) {
+			this.saturation = 255;
 		}
-		if (lightness < 0) {
-			lightness = 0;
-		} else if (lightness > 255) {
-			lightness = 255;
+
+		if (this.luminance < 0) {
+			this.luminance = 0;
+		} else if (this.luminance > 255) {
+			this.luminance = 255;
 		}
-		if (d_13_ > 0.5) {
-			hueDivisor = (int) ((1.0 - d_13_) * d_12_ * 512.0);
+
+		if (lumination > 0.5) {
+			this.chroma = (int) ((1.0 - lumination) * saturation * 512.0);
 		} else {
-			hueDivisor = (int) (d_13_ * d_12_ * 512.0);
+			this.chroma = (int) (lumination * saturation * 512.0);
 		}
-		if (hueDivisor < 1) {
-			hueDivisor = 1;
+
+		if (this.chroma < 1) {
+			this.chroma = 1;
 		}
-		hue = (int) (d_11_ * hueDivisor);
-		int huerand = hue2 + (int) (Math.random() * 16.0) - 8;
-		if (huerand < 0) {
-			huerand = 0;
-		} else if (huerand > 255) {
-			huerand = 255;
-		}
-		int satrand = saturation + (int) (Math.random() * 48.0) - 24;
-		if (satrand < 0) {
-			satrand = 0;
-		} else if (satrand > 255) {
-			satrand = 255;
-		}
-		int lightrand = lightness + (int) (Math.random() * 48.0) - 24;
-		if (lightrand < 0) {
-			lightrand = 0;
-		} else if (lightrand > 255) {
-			lightrand = 255;
-		}
-		hslColor2 = shiftHSLColors(huerand, satrand, lightrand);
+
+		this.weightedHue = (int) (hue * this.chroma);
+		this.color = encode(this.weightedHue, this.saturation, this.luminance);
 	}
 
-	private final int shiftHSLColors(int i, int i_17_, int i_18_) {
-		if (i_18_ > 179) {
-			i_17_ /= 2;
+	private final int encode(int hue, int saturation, int luminance) {
+		if (luminance > 179) {
+			saturation /= 2;
 		}
-		if (i_18_ > 192) {
-			i_17_ /= 2;
+		if (luminance > 192) {
+			saturation /= 2;
 		}
-		if (i_18_ > 217) {
-			i_17_ /= 2;
+		if (luminance > 217) {
+			saturation /= 2;
 		}
-		if (i_18_ > 243) {
-			i_17_ /= 2;
+		if (luminance > 243) {
+			saturation /= 2;
 		}
-		int i_19_ = (i / 4 << 10) + (i_17_ / 32 << 7) + i_18_ / 2;
-		return i_19_;
+		return (hue / 4 << 10) + (saturation / 32 << 7) + luminance / 2;
 	}
+
 }

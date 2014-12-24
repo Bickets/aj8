@@ -1,9 +1,5 @@
 package com.runescape.collection;
 
-/* Node - Decompiled by JODE
- * Visit http://jode.sourceforge.net/
- */
-
 public class Node {
 
 	public long nodeId;

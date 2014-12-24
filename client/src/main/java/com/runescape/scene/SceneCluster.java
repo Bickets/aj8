@@ -1,9 +1,5 @@
 package com.runescape.scene;
 
-/* SceneCluster - Decompiled by JODE
- * Visit http://jode.sourceforge.net/
- */
-
 public class SceneCluster {
 
 	protected int anInt579;
@@ -24,8 +20,4 @@ public class SceneCluster {
 	protected int anInt594;
 	protected int anInt595;
 	protected int anInt596;
-
-	SceneCluster() {
-		/* empty */
-	}
 }

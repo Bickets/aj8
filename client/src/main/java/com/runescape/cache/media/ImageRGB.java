@@ -43,7 +43,7 @@ public class ImageRGB extends Rasterizer {
 			PixelGrabber pixelgrabber = new PixelGrabber(image, 0, 0, width, height, pixels, 0, width);
 			pixelgrabber.grabPixels();
 		} catch (InterruptedException e) {
-			return; // can't happen
+			return;
 		}
 	}
 
