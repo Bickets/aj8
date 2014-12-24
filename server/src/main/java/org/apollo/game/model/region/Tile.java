@@ -91,10 +91,7 @@ public final class Tile {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + flags;
-		return result;
+		return flags;
 	}
 
 	@Override
@@ -102,17 +99,11 @@ public final class Tile {
 		if (this == obj) {
 			return true;
 		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
+		if (!(obj instanceof Tile)) {
 			return false;
 		}
 		Tile other = (Tile) obj;
-		if (flags != other.flags) {
-			return false;
-		}
-		return true;
+		return flags == other.getFlags();
 	}
 
 }

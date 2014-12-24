@@ -143,10 +143,8 @@ public final class Region {
 
 	@Override
 	public int hashCode() {
-		final int prime = 31;
-		int result = 1;
-		result = prime * result + (entities == null ? 0 : entities.hashCode());
-		result = prime * result + Arrays.hashCode(tiles);
+		int result = 31 + entities.hashCode();
+		result = 31 * result + Arrays.hashCode(tiles);
 		return result;
 	}
 
@@ -155,24 +153,11 @@ public final class Region {
 		if (this == obj) {
 			return true;
 		}
-		if (obj == null) {
-			return false;
-		}
-		if (getClass() != obj.getClass()) {
+		if (!(obj instanceof Region)) {
 			return false;
 		}
 		Region other = (Region) obj;
-		if (entities == null) {
-			if (other.entities != null) {
-				return false;
-			}
-		} else if (!entities.equals(other.entities)) {
-			return false;
-		}
-		if (!Arrays.deepEquals(tiles, other.tiles)) {
-			return false;
-		}
-		return true;
+		return entities.equals(other.entities) && !Arrays.deepEquals(tiles, other.tiles);
 	}
 
 }
