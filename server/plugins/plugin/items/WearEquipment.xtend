@@ -7,9 +7,9 @@ import org.apollo.game.interact.ItemActionEvent
 import org.apollo.game.model.Interfaces.InterfaceOption
 import org.apollo.game.model.InventoryConstants
 import org.apollo.game.model.Player
-import org.apollo.game.model.Skill
 import org.apollo.game.model.^def.EquipmentDefinition
 import org.apollo.game.model.^def.ItemDefinition
+import org.apollo.game.model.skill.Skill
 
 import static org.apollo.game.model.EquipmentConstants.*
 import static plugin.Plugin.*

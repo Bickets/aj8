@@ -3,8 +3,8 @@ package plugin.commands
 import org.apollo.game.command.CommandEvent
 import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.model.Player
-import org.apollo.game.model.Skill
-import org.apollo.game.model.SkillSet
+import org.apollo.game.model.skill.Skill
+import org.apollo.game.model.skill.SkillSet
 
 import static plugin.Plugin.*
 

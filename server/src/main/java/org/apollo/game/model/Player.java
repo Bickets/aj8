@@ -15,6 +15,7 @@ import org.apollo.game.model.inv.FullInventoryListener;
 import org.apollo.game.model.inv.InventoryListener;
 import org.apollo.game.model.inv.SynchronizationInventoryListener;
 import org.apollo.game.model.skill.SkillListener;
+import org.apollo.game.model.skill.SkillSet;
 import org.apollo.game.model.skill.SynchronizationSkillListener;
 import org.apollo.game.msg.Message;
 import org.apollo.game.msg.impl.IdAssignmentMessage;

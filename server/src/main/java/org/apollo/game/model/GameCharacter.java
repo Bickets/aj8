@@ -7,6 +7,7 @@ import org.apollo.game.action.Action;
 import org.apollo.game.attribute.AttributeMap;
 import org.apollo.game.model.region.Region;
 import org.apollo.game.model.region.RegionRepository;
+import org.apollo.game.model.skill.SkillSet;
 import org.apollo.game.msg.Message;
 import org.apollo.game.msg.impl.ServerMessageMessage;
 import org.apollo.game.sync.block.SynchronizationBlock;

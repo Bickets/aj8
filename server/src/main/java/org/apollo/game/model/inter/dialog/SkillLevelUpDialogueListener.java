@@ -1,8 +1,8 @@
 package org.apollo.game.model.inter.dialog;
 
 import org.apollo.game.model.Player;
-import org.apollo.game.model.Skill;
 import org.apollo.game.model.def.LevelUpDefinition;
+import org.apollo.game.model.skill.Skill;
 import org.apollo.game.msg.impl.SetInterfaceTextMessage;
 import org.apollo.util.LanguageUtil;
 

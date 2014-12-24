@@ -4,8 +4,6 @@ import java.util.stream.IntStream;
 
 import org.apollo.game.model.Graphic;
 import org.apollo.game.model.Player;
-import org.apollo.game.model.Skill;
-import org.apollo.game.model.SkillSet;
 import org.apollo.game.model.inter.dialog.SkillLevelUpDialogueListener;
 import org.apollo.game.msg.impl.UpdateSkillMessage;
 import org.apollo.util.LanguageUtil;

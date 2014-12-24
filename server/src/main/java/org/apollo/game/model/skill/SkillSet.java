@@ -1,11 +1,10 @@
-package org.apollo.game.model;
+package org.apollo.game.model.skill;
 
 import java.util.Arrays;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import org.apollo.game.model.skill.SkillListener;
 import org.apollo.util.MathUtil;
 
 /**

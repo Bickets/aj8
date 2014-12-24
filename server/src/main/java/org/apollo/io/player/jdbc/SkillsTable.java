@@ -7,8 +7,8 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 import org.apollo.game.model.Player;
-import org.apollo.game.model.Skill;
-import org.apollo.game.model.SkillSet;
+import org.apollo.game.model.skill.Skill;
+import org.apollo.game.model.skill.SkillSet;
 
 /**
  * A {@link Table} which serializes players skills.

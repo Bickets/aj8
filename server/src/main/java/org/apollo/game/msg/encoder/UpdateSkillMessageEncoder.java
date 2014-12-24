@@ -1,6 +1,6 @@
 package org.apollo.game.msg.encoder;
 
-import org.apollo.game.model.Skill;
+import org.apollo.game.model.skill.Skill;
 import org.apollo.game.msg.MessageEncoder;
 import org.apollo.game.msg.annotate.EncodesMessage;
 import org.apollo.game.msg.impl.UpdateSkillMessage;

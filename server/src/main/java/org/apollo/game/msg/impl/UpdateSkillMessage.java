@@ -1,6 +1,6 @@
 package org.apollo.game.msg.impl;
 
-import org.apollo.game.model.Skill;
+import org.apollo.game.model.skill.Skill;
 import org.apollo.game.msg.Message;
 
 /**
