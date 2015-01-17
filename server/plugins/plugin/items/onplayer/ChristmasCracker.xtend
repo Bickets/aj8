@@ -66,7 +66,7 @@ class ChristmasCracker implements EventSubscriber<ItemOnPlayerActionEvent> {
 						player.playAnimation(new Animation(451))
 						player.inventory.remove(event.item)
 
-						if (random(100) < 50) {
+						if (random(1) == 0) {
 							player.sendMessage("You get the prize from the cracker.")
 							other.sendMessage("The person you pull the cracker with gets the prize.")
 							player.give
