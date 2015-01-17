@@ -1,6 +1,6 @@
 package org.apollo.game.msg.impl;
 
-import org.apollo.game.model.GroundItem;
+import org.apollo.game.model.grounditem.GroundItem;
 import org.apollo.game.msg.Message;
 
 /**
@@ -9,7 +9,7 @@ import org.apollo.game.msg.Message;
  *
  * @author Tyler Buchanan <https://www.github.com/TylerBuchanan97>
  */
-public final class GroundItemMessage implements Message {
+abstract class GroundItemMessage implements Message {
 
 	/**
 	 * The ground item.
@@ -22,12 +22,13 @@ public final class GroundItemMessage implements Message {
 	private final int positionOffset;
 
 	/**
-	 * This constructs a new ground item message.
+	 * Constructs a new {@link GroundItemMessage} with the specified ground item
+	 * and position offset.
 	 *
 	 * @param groundItem The ground item.
 	 * @param positionOffset The position offset.
 	 */
-	public GroundItemMessage(GroundItem groundItem, int positionOffset) {
+	protected GroundItemMessage(GroundItem groundItem, int positionOffset) {
 		this.groundItem = groundItem;
 		this.positionOffset = positionOffset;
 	}

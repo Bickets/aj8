@@ -25,6 +25,23 @@ public final class MathUtil {
 	}
 
 	/**
+	 * Returns the amount of overflow from the addition of the two specified
+	 * {@code int}s.
+	 * 
+	 * @param a The first integer.
+	 * @param b The second integer.
+	 * @return The amount of overflow or <tt>0</tt> if the {@code int}s can be
+	 *         added without overflow.
+	 */
+	public static int calculateOverflow(int a, int b) {
+		long value = (long) a + b;
+		if (value <= Integer.MAX_VALUE) {
+			return 0;
+		}
+		return (int) (value - Integer.MAX_VALUE);
+	}
+
+	/**
 	 * Suppresses the default-public constructor preventing this class from
 	 * being instantiated by other classes.
 	 *
