@@ -95,21 +95,33 @@ public final class SkillSet {
 
 		Skill old = skills[id];
 
-		double newExperience = Math.min(old.getExperience() + experience, MAXIMUM_EXP);
-
-		int newCurrentLevel = old.getCurrentLevel();
+		int currentLevel = old.getCurrentLevel();
+		double experienceGained = getExperienceModifier(currentLevel) * experience;
+		double newExperience = Math.max(MAXIMUM_EXP, old.getExperience() + experienceGained);
 		int newMaximumLevel = getLevelForExperience(newExperience);
 
 		int delta = newMaximumLevel - old.getMaximumLevel();
 		if (delta > 0) {
-			newCurrentLevel += delta;
+			currentLevel += delta;
 		}
 
-		setSkill(id, new Skill(newExperience, newCurrentLevel, newMaximumLevel));
+		setSkill(id, new Skill(newExperience, currentLevel, newMaximumLevel));
 
 		if (delta > 0) {
 			notifyLevelledUp(id);
 		}
+	}
+
+	/**
+	 * Returns the experience modifier for the specified level.
+	 * 
+	 * @param level The level to get the experience modifier for.
+	 * @return The experience modifier.
+	 */
+	public int getExperienceModifier(int level) {
+		int minMod = 2;
+		int maxMod = (level / 20) + 1;
+		return Math.max(maxMod, minMod);
 	}
 
 	/**

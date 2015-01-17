@@ -36,7 +36,6 @@ public final class SynchronizationSkillListener implements SkillListener {
 		String article = LanguageUtil.getIndefiniteArticle(name);
 		int level = skill.getMaximumLevel();
 
-		player.getInterfaceSet().openDialogue(new SkillLevelUpDialogueListener(id, skill));
 		player.sendMessage("You've just advanced " + article + " " + name + " level! You have reached level " + level + ".");
 
 		if (level == SkillSet.MAXIMUM_LEVEL) {
@@ -48,6 +47,8 @@ public final class SynchronizationSkillListener implements SkillListener {
 		if (set.isCombatSkill(id)) {
 			player.updateApprarance();
 		}
+
+		player.getInterfaceSet().openDialogue(new SkillLevelUpDialogueListener(id, skill));
 	}
 
 	@Override
