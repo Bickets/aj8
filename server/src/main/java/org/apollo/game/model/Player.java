@@ -14,6 +14,7 @@ import org.apollo.game.model.inv.AppearanceInventoryListener;
 import org.apollo.game.model.inv.FullInventoryListener;
 import org.apollo.game.model.inv.InventoryListener;
 import org.apollo.game.model.inv.SynchronizationInventoryListener;
+import org.apollo.game.model.region.Region;
 import org.apollo.game.model.skill.SkillListener;
 import org.apollo.game.model.skill.SkillSet;
 import org.apollo.game.model.skill.SynchronizationSkillListener;
@@ -156,6 +157,16 @@ public final class Player extends GameCharacter {
 	 * identify where to save.
 	 */
 	private int databaseId;
+
+	/**
+	 * The center of the last region the client has loaded.
+	 */
+	private Position lastKnownRegion;
+
+	/**
+	 * A flag indicating if the region changed in the last cycle.
+	 */
+	private boolean regionChanged = false;
 
 	/**
 	 * This players interface set.
@@ -345,6 +356,59 @@ public final class Player extends GameCharacter {
 	}
 
 	/**
+	 * Checks if this player has ever known a region.
+	 *
+	 * @return {@code true} if so, {@code false} if not.
+	 */
+	public boolean hasLastKnownRegion() {
+		return lastKnownRegion != null;
+	}
+
+	/**
+	 * Gets the last known region.
+	 *
+	 * @return The last known region, or {@code null} if the player has never
+	 *         known a region.
+	 */
+	public Position getLastKnownRegion() {
+		return lastKnownRegion;
+	}
+
+	/**
+	 * Sets the last known region.
+	 *
+	 * @param lastKnownRegion The last known region.
+	 */
+	public void setLastKnownRegion(Position lastKnownRegion) {
+		this.lastKnownRegion = lastKnownRegion;
+	}
+
+	/**
+	 * Sets the region changed flag.
+	 *
+	 * @param regionChanged A flag indicating if the region has changed.
+	 */
+	public void setRegionChanged(boolean regionChanged) {
+		this.regionChanged = regionChanged;
+	}
+
+	/**
+	 * Checks if the region has changed.
+	 *
+	 * @return {@code true} if so, {@code false} if not.
+	 */
+	public boolean hasRegionChanged() {
+		return regionChanged;
+	}
+
+	/**
+	 * Returns the last {@link Region} this player was in.
+	 */
+	public Region getLastRegion() {
+		return world.getRegionRepository().getRegion(getLastKnownRegion());
+	}
+
+	/**
 	 * Gets the privilege level.
 	 *
 	 * @return The privilege level.
@@ -429,7 +493,6 @@ public final class Player extends GameCharacter {
 	private void init() {
 		initInventories();
 		initSkills();
-		updateRegion(position);
 
 		world.submit(new SkillNormalizationTask(this));
 	}

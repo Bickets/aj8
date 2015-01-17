@@ -5,8 +5,6 @@ import java.util.Set;
 
 import org.apollo.game.action.Action;
 import org.apollo.game.attribute.AttributeMap;
-import org.apollo.game.model.region.Region;
-import org.apollo.game.model.region.RegionRepository;
 import org.apollo.game.model.skill.SkillSet;
 import org.apollo.game.msg.Message;
 import org.apollo.game.msg.impl.ServerMessageMessage;
@@ -61,16 +59,6 @@ public abstract class GameCharacter extends Entity {
 	 * A set of {@link SynchronizationBlock}s.
 	 */
 	private SynchronizationBlockSet blockSet = new SynchronizationBlockSet();
-
-	/**
-	 * The center of the last region the client has loaded.
-	 */
-	private Position lastKnownRegion;
-
-	/**
-	 * A flag indicating if the region changed in the last cycle.
-	 */
-	private boolean regionChanged = false;
 
 	/**
 	 * The character's current action.
@@ -209,52 +197,6 @@ public abstract class GameCharacter extends Entity {
 	}
 
 	/**
-	 * Checks if this player has ever known a region.
-	 *
-	 * @return {@code true} if so, {@code false} if not.
-	 */
-	public boolean hasLastKnownRegion() {
-		return lastKnownRegion != null;
-	}
-
-	/**
-	 * Gets the last known region.
-	 *
-	 * @return The last known region, or {@code null} if the player has never
-	 *         known a region.
-	 */
-	public Position getLastKnownRegion() {
-		return lastKnownRegion;
-	}
-
-	/**
-	 * Sets the last known region.
-	 *
-	 * @param lastKnownRegion The last known region.
-	 */
-	public void setLastKnownRegion(Position lastKnownRegion) {
-		this.lastKnownRegion = lastKnownRegion;
-	}
-
-	/**
-	 * Sets the region changed flag.
-	 *
-	 * @param regionChanged A flag indicating if the region has changed.
-	 */
-	public void setRegionChanged(boolean regionChanged) {
-		this.regionChanged = regionChanged;
-	}
-
-	/**
-	 * Checks if the region has changed.
-	 *
-	 * @return {@code true} if so, {@code false} if not.
-	 */
-	public boolean hasRegionChanged() {
-		return regionChanged;
-	}
-
-	/**
 	 * Gets the {@link SynchronizationBlockSet}.
 	 *
 	 * @return The block set.
@@ -300,26 +242,6 @@ public abstract class GameCharacter extends Entity {
 	 */
 	public void setPosition(Position position) {
 		this.position = position;
-		updateRegion(position);
-	}
-
-	/**
-	 * Updates the current {@link Region} from the specified {@link Position}.
-	 *
-	 * @param position The position.
-	 */
-	public void updateRegion(Position position) {
-		RegionRepository repository = world.getRegionRepository();
-		Region oldRegion = repository.getRegion(getPosition());
-		Region newRegion = repository.getRegion(position);
-
-		if (oldRegion != newRegion) {
-			oldRegion.removeEntity(this);
-		} else {
-			newRegion.removeEntity(this);
-		}
-
-		newRegion.addEntity(this);
 	}
 
 	/**

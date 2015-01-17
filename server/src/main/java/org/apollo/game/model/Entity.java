@@ -1,6 +1,10 @@
 package org.apollo.game.model;
 
+import java.util.Set;
+
+import org.apollo.game.model.grounditem.GroundItem;
 import org.apollo.game.model.obj.GameObject;
+import org.apollo.game.model.region.Region;
 
 /**
  * Represents an entity within the game world.
@@ -66,6 +70,32 @@ public abstract class Entity {
 	 * Returns the size of this entity in tiles.
 	 */
 	public abstract int getSize();
+
+	/**
+	 * Returns the region this {@link Entity} is currently in.
+	 */
+	public Region getRegion() {
+		return world.getRegionRepository().getRegion(getPosition());
+	}
+
+	/**
+	 * Returns a {@link Set} of surrounding {@link Entity}s
+	 */
+	public <T extends Entity> Set<T> getSurrounding() {
+		return getRegion().getEntities();
+	}
+
+	/**
+	 * Returns a {@link Set} of surrounding {@link Entity}s based on their
+	 * {@link EntityCategory}.
+	 * 
+	 * @param category The category of the entity that is surrounding this
+	 *            entity.
+	 * @return A {@link Set} of {@link Entity}s of the specified category.
+	 */
+	public <T extends Entity> Set<T> getSurrounding(EntityCategory category) {
+		return getRegion().getEntities(category);
+	}
 
 	/**
 	 * Returns the position of this entity.
