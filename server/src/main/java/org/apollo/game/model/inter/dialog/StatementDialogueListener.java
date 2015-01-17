@@ -7,7 +7,7 @@ import org.apollo.game.msg.impl.SetInterfaceTextMessage;
 
 /**
  * An abstract implementation of a {@link DialogueListener} which manages
- * dialogue statements that are not containable.
+ * dialogue statements that are not continuable.
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
