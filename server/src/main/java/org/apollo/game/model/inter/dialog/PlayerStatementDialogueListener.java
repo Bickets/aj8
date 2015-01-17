@@ -8,8 +8,8 @@ import org.apollo.game.msg.impl.PlayerModelOnInterfaceMessage;
 import org.apollo.game.msg.impl.SetInterfaceTextMessage;
 
 /**
- * A dialogue listener which manages the {@link DialogueType#PLAYER_STATEMENT}
- * dialogue type.
+ * An abstract implementation of a {@link DialogueListener} which manages
+ * dialogue statements that show a player model.
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */

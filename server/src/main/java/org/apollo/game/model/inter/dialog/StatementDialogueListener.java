@@ -6,8 +6,8 @@ import org.apollo.game.model.Player;
 import org.apollo.game.msg.impl.SetInterfaceTextMessage;
 
 /**
- * A dialogue listener which manages the {@link DialogueType#STATEMENT} dialogue
- * type.
+ * An abstract implementation of a {@link DialogueListener} which manages
+ * dialogue statements that are not containable.
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */

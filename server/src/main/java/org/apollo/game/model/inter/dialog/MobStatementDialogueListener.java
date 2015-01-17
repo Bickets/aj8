@@ -9,8 +9,8 @@ import org.apollo.game.msg.impl.MobModelOnInterfaceMessage;
 import org.apollo.game.msg.impl.SetInterfaceTextMessage;
 
 /**
- * A dialogue listener which manages the {@link DialogueType#MOB_STATEMENT}
- * dialogue.
+ * An abstract implementation of a {@link DialogueListener} which manages
+ * dialogue statements that show a mob model.
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */

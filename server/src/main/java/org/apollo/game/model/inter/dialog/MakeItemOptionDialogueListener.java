@@ -12,8 +12,9 @@ import org.apollo.game.msg.impl.InterfaceItemModelMessage;
 import org.apollo.game.msg.impl.SetInterfaceTextMessage;
 
 /**
- * A dialogue listener which manages the {@link DialogueType#MAKE_ITEM_OPTION}
- * dialogue type.
+ * An abstract implementation of a {@link DialogueListener} which manages
+ * dialogue widgets that show 2 or more item models and ask how many you would
+ * like to make.
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
@@ -68,7 +69,7 @@ public abstract class MakeItemOptionDialogueListener implements DialogueListener
 
 	/**
 	 * Returns the zoom of the items model upon this statement. The default zoom
-	 * is <tt>210</tt>. This method may be overridden to provide a user specific
+	 * is <tt>150</tt>. This method may be overridden to provide a user specific
 	 * functionality.
 	 */
 	public int getModelZoom() {

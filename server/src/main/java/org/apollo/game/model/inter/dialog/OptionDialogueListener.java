@@ -6,8 +6,8 @@ import org.apollo.game.model.Player;
 import org.apollo.game.msg.impl.SetInterfaceTextMessage;
 
 /**
- * A dialgoue listener which manages the {@link DialogueType#OPTION} dialogue
- * type.
+ * An abstract implementation of a {@link DialogueListener} which manages
+ * dialogue widgets that show a series of selectable options.
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */

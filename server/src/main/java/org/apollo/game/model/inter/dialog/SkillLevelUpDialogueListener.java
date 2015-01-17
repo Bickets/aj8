@@ -7,7 +7,7 @@ import org.apollo.game.msg.impl.SetInterfaceTextMessage;
 import org.apollo.util.LanguageUtil;
 
 /**
- * A dialogue listener which display skill level-up dialogues.
+ * A dialogue listener which manages skill level-up dialogues.
  * 
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */

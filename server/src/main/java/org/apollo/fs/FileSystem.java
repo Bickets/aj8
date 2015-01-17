@@ -21,22 +21,80 @@ import com.google.common.base.Preconditions;
  */
 public final class FileSystem {
 
+	/**
+	 * Represents the id of the configurations cache.
+	 */
 	public static final int CONFIG_INDEX = 0;
+
+	/**
+	 * Represents the id of the model cache.
+	 */
 	public static final int MODEL_INDEX = 1;
+
+	/**
+	 * Represents the id of the animations cache.
+	 */
 	public static final int ANIMATION_INDEX = 2;
+
+	/**
+	 * Represents the id of the sounds and music cache.
+	 */
 	public static final int MIDI_INDEX = 3;
+
+	/**
+	 * Represents the id of the map and landscape cache.
+	 */
 	public static final int MAP_INDEX = 4;
 
+	/**
+	 * Represents the id of the title screen archive.
+	 */
 	public static final int TITLE_ARCHIVE = 1;
+
+	/**
+	 * Represents the id of the configurations archive.
+	 */
 	public static final int CONFIG_ARCHIVE = 2;
+
+	/**
+	 * Represents the id of the interface archive.
+	 */
 	public static final int INTERFACE_ARCHIVE = 3;
+
+	/**
+	 * Represents the id of the media and sprite archive.
+	 */
 	public static final int MEDIA_ARCHIVE = 4;
+
+	/**
+	 * Represents the id of the manifest archive.
+	 */
 	public static final int MANIFEST_ARCHIVE = 5;
+
+	/**
+	 * Represents the id of the textures archive.
+	 */
 	public static final int TEXTURES_ARCHIVE = 6;
+
+	/**
+	 * Represents the id of the word archive - user for storing profane or
+	 * illegal words not allowed to be spoken in-game.
+	 */
 	public static final int WORD_ARCHIVE = 7;
+
+	/**
+	 * Represents the id of the sound and music archive.
+	 */
 	public static final int SOUND_ARCHIVE = 8;
 
+	/**
+	 * Represents the maximum amount of archives within this file system.
+	 */
 	private static final int MAXIMUM_ARCHIVES = 9;
+
+	/**
+	 * Represents the maximum amount of indices within this file system.
+	 */
 	private static final int MAXIMUM_INDICES = 256;
 
 	/**
@@ -142,6 +200,15 @@ public final class FileSystem {
 		return Objects.requireNonNull(caches[id]);
 	}
 
+	/**
+	 * Returns a {@link ByteBuffer} of file data for the specified index within
+	 * the specified {@link Cache}.
+	 * 
+	 * @param cacheId The id of the cache.
+	 * @param indexId The id of the index within the cache.
+	 * @return A {@link ByteBuffer} of file data for the specified index.
+	 * @throws IOException If some I/O exception occurs.
+	 */
 	public ByteBuffer getFile(int cacheId, int indexId) throws IOException {
 		Cache cache = getCache(cacheId);
 		synchronized (cache) {
@@ -149,6 +216,13 @@ public final class FileSystem {
 		}
 	}
 
+	/**
+	 * Returns the cached {@link #archiveHashes} if they exist, otherwise they
+	 * are calculated and cached for future use.
+	 * 
+	 * @return The hashes of each {@link Archive}.
+	 * @throws IOException If some I/O exception occurs.
+	 */
 	public ByteBuffer getArchiveHashes() throws IOException {
 		synchronized (this) {
 			if (archiveHashes != null) {

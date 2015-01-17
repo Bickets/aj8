@@ -13,8 +13,9 @@ import org.apollo.game.msg.impl.InterfaceItemModelMessage;
 import org.apollo.game.msg.impl.SetInterfaceTextMessage;
 
 /**
- * A dialogue listener which manages the {@link DialogueType#MAKE_ITEM} dialogue
- * type.
+ * An abstract implementation of a {@link DialogueListener} which manages
+ * dialogue widgets that show an item model and ask how many you would like to
+ * make.
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
