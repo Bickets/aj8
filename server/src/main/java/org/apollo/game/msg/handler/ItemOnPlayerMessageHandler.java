@@ -30,6 +30,10 @@ public final class ItemOnPlayerMessageHandler implements MessageHandler<ItemOnPl
 			player.getInterfaceSet().close();
 		}
 
+		if (!player.getAttributes().isClientWindowFocused()) {
+			return;
+		}
+
 		GameCharacterRepository<Player> repository = world.getPlayerRepository();
 
 		int victimIndex = message.getVictimIndex();

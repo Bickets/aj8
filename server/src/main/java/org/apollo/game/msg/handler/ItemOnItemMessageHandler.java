@@ -24,6 +24,10 @@ public final class ItemOnItemMessageHandler implements MessageHandler<ItemOnItem
 			player.getInterfaceSet().close();
 		}
 
+		if (!player.getAttributes().isClientWindowFocused()) {
+			return;
+		}
+
 		if (msg.getReceiverSlot() < 0 || msg.getSenderSlot() < 0) {
 			return;
 		}

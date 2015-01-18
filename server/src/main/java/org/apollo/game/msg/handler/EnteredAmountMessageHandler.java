@@ -17,6 +17,10 @@ public final class EnteredAmountMessageHandler implements MessageHandler<Entered
 	public void handle(Player player, EnteredAmountMessage message) {
 		int amount = Math.abs(message.getAmount());
 
+		if (!player.getAttributes().isClientWindowFocused()) {
+			return;
+		}
+
 		player.getInterfaceSet().enteredAmount(amount);
 	}
 

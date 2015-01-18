@@ -25,6 +25,10 @@ public final class CommandMessageHandler implements MessageHandler<CommandMessag
 
 		System.arraycopy(components, 1, arguments, 0, arguments.length);
 
+		if (!player.getAttributes().isClientWindowFocused()) {
+			return;
+		}
+
 		player.post(new CommandEvent(name, arguments));
 	}
 

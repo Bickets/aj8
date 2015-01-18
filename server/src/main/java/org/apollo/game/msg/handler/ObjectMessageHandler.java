@@ -31,6 +31,10 @@ public final class ObjectMessageHandler implements MessageHandler<ObjectActionMe
 			player.getInterfaceSet().close();
 		}
 
+		if (!player.getAttributes().isClientWindowFocused()) {
+			return;
+		}
+
 		GameObject object = new GameObject(message.getId(), message.getPosition(), world);
 		GameObjectDefinition definition = object.getDefinition();
 

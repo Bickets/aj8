@@ -25,6 +25,10 @@ public final class DialogueContinueMessageHandler implements MessageHandler<Dial
 			return;
 		}
 
+		if (!player.getAttributes().isClientWindowFocused()) {
+			return;
+		}
+
 		player.getInterfaceSet().continueRequested();
 	}
 

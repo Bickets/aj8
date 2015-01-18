@@ -26,6 +26,10 @@ public final class MobActionMessageHandler implements MessageHandler<MobActionMe
 			player.getInterfaceSet().close();
 		}
 
+		if (!player.getAttributes().isClientWindowFocused()) {
+			return;
+		}
+
 		GameCharacterRepository<Mob> repository = world.getMobRepository();
 
 		int index = msg.getIndex();

@@ -28,6 +28,10 @@ public final class SwitchItemMessageHandler implements MessageHandler<SwitchItem
 			return;
 		}
 
+		if (!player.getAttributes().isClientWindowFocused()) {
+			return;
+		}
+
 		InterfaceDefinition def = InterfaceDefinition.forId(message.getInterfaceId());
 		if (!def.isInventory()) {
 			return;

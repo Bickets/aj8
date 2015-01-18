@@ -25,6 +25,10 @@ public final class PlayerActionMessageHandler implements MessageHandler<PlayerAc
 			player.getInterfaceSet().close();
 		}
 
+		if (!player.getAttributes().isClientWindowFocused()) {
+			return;
+		}
+
 		GameCharacterRepository<Player> repository = world.getPlayerRepository();
 
 		int index = msg.getIndex();

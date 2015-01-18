@@ -18,7 +18,12 @@ public final class ChatMessageHandler implements MessageHandler<ChatMessage> {
 	public void handle(Player player, ChatMessage message) {
 		int color = message.getTextColor();
 		int effects = message.getTextEffects();
+
 		if (color < 0 || color > 11 || effects < 0 || effects > 5) {
+			return;
+		}
+
+		if (!player.getAttributes().isClientWindowFocused()) {
 			return;
 		}
 

@@ -29,6 +29,10 @@ public final class ItemActionMessageHandler implements MessageHandler<ItemAction
 			return;
 		}
 
+		if (!player.getAttributes().isClientWindowFocused()) {
+			return;
+		}
+
 		Inventory inventory = Interfaces.getInventoryForInterface(player, message.getInterfaceId());
 		if (inventory == null) {
 			return;

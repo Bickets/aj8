@@ -52,6 +52,10 @@ public final class CharacterDesignMessageHandler implements MessageHandler<Chara
 			return;
 		}
 
+		if (!player.getAttributes().isClientWindowFocused()) {
+			return;
+		}
+
 		player.setAppearance(message.getAppearance());
 		player.setDesignedCharacter(true);
 		player.send(new CloseInterfaceMessage());

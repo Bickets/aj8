@@ -21,6 +21,10 @@ public final class ButtonMessageHandler implements MessageHandler<ButtonMessage>
 			return;
 		}
 
+		if (!player.getAttributes().isClientWindowFocused()) {
+			return;
+		}
+
 		player.post(new ButtonActionEvent(message.getInterfaceId()));
 	}
 
