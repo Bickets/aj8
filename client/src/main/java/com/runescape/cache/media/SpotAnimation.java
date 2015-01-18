@@ -5,6 +5,7 @@ import com.runescape.collection.Cache;
 import com.runescape.media.renderable.Model;
 import com.runescape.net.Buffer;
 
+// actually is graphical effects
 public class SpotAnimation {
 
 	public static int spotAnimationCount;

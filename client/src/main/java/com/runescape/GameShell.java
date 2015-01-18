@@ -59,7 +59,7 @@ public class GameShell extends Applet implements Runnable, MouseListener, MouseM
 		this.height = height;
 		gameFrame = new GameFrame(this, width, height);
 		gameGraphics = getComponent().getGraphics();
-		producingGraphicsBuffer = new ProducingGraphicsBuffer(width, height);
+		producingGraphicsBuffer = new ProducingGraphicsBuffer(width, height, getComponent());
 		startRunnable(this, 1);
 	}
 
@@ -67,7 +67,7 @@ public class GameShell extends Applet implements Runnable, MouseListener, MouseM
 		this.width = width;
 		this.height = height;
 		gameGraphics = getComponent().getGraphics();
-		producingGraphicsBuffer = new ProducingGraphicsBuffer(width, height);
+		producingGraphicsBuffer = new ProducingGraphicsBuffer(width, height, getComponent());
 		startRunnable(this, 1);
 	}
 
@@ -489,11 +489,10 @@ public class GameShell extends Applet implements Runnable, MouseListener, MouseM
 	public void drawLoadingText(int percentage, String string) {
 		while (gameGraphics == null) {
 			gameGraphics = getComponent().getGraphics();
-			getComponent().repaint();
 			try {
+				getComponent().repaint();
 				Thread.sleep(1000L);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+			} catch (Exception exception) {
 			}
 		}
 		Font helveticaBold = new Font("Helvetica", 1, 13);

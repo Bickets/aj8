@@ -178,7 +178,7 @@ public class MobDefinition {
 		Model childModel = Model.aModel1614;
 		childModel.replaceWithModel(childIdModel, Animation.exists(frameId) & Animation.exists(frameId2));
 		if (frameId != -1 && frameId2 != -1) {
-			childModel.mixAnimationFrames(framesFrom2, frameId2, frameId);
+			childModel.mixAnimationFrames(-20491, framesFrom2, frameId2, frameId);
 		} else if (frameId != -1) {
 			childModel.applyTransform(frameId);
 		}

@@ -1,5 +1,9 @@
 package com.runescape.cache.bzip;
 
+/* BZip2Decompressor - Decompiled by JODE
+ * Visit http://jode.sourceforge.net/
+ */
+
 public class BZip2Decompressor {
 
 	private static BZip2Context aBZip2Context136 = new BZip2Context();

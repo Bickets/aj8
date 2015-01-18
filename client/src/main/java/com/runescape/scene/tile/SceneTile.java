@@ -6,9 +6,10 @@ import com.runescape.scene.SceneSpawnRequest;
 
 public class SceneTile extends Node {
 
-	public int plane;
-	public int x;
-	public int y;
+	public int anInt1318;
+	public int anInt1319;
+	public int anInt1320;
+	public int anInt1321;
 	public GenericTile genericTile;
 	public ComplexTile complexTile;
 	public Wall wall;
@@ -29,9 +30,9 @@ public class SceneTile extends Node {
 	public int anInt1339;
 	public SceneTile sceneTile;
 
-	public SceneTile(int plane, int x, int y) {
-		this.plane = plane;
-		this.x = x;
-		this.y = y;
+	public SceneTile(int i, int i_0_, int i_1_) {
+		anInt1321 = anInt1318 = i;
+		anInt1319 = i_0_;
+		anInt1320 = i_1_;
 	}
 }

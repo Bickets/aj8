@@ -2,6 +2,7 @@ package com.runescape.media;
 
 import com.runescape.cache.Archive;
 import com.runescape.cache.media.IndexedImage;
+import com.runescape.util.Signlink;
 
 public class Rasterizer3D extends Rasterizer {
 
@@ -54,35 +55,62 @@ public class Rasterizer3D extends Rasterizer {
 		Rasterizer3D.centerY = Rasterizer.height / 2;
 	}
 
-	public static final void method362(int i_1_, int i_2_) {
-		Rasterizer3D.lineOffsets = new int[i_2_];
-		for (int i_3_ = 0; i_3_ < i_2_; i_3_++) {
-			Rasterizer3D.lineOffsets[i_3_] = i_1_ * i_3_;
+	public static final void method362(int i, int i_1_, int i_2_) {
+		try {
+			Rasterizer3D.lineOffsets = new int[i_2_];
+			if (i < 0) {
+				for (int i_3_ = 0; i_3_ < i_2_; i_3_++) {
+					Rasterizer3D.lineOffsets[i_3_] = i_1_ * i_3_;
+				}
+				Rasterizer3D.centerX = i_1_ / 2;
+				Rasterizer3D.centerY = i_2_ / 2;
+			}
+		} catch (RuntimeException runtimeexception) {
+			Signlink.reportError("8612, " + i + ", " + i_1_ + ", " + i_2_ + ", " + runtimeexception.toString());
+			throw new RuntimeException();
 		}
-		Rasterizer3D.centerX = i_1_ / 2;
-		Rasterizer3D.centerY = i_2_ / 2;
 	}
 
-	public static final void method363() {
-		Rasterizer3D.anIntArrayArray1498 = null;
-		for (int i_4_ = 0; i_4_ < 50; i_4_++) {
-			Rasterizer3D.anIntArrayArray1499[i_4_] = null;
+	public static final void method363(int i) {
+		try {
+			if (i >= 0 && i <= 0) {
+				Rasterizer3D.anIntArrayArray1498 = null;
+				for (int i_4_ = 0; i_4_ < 50; i_4_++) {
+					Rasterizer3D.anIntArrayArray1499[i_4_] = null;
+				}
+			}
+		} catch (RuntimeException runtimeexception) {
+			Signlink.reportError("84003, " + i + ", " + runtimeexception.toString());
+			throw new RuntimeException();
 		}
 	}
 
-	public static final void method364(int i) {
-		if (Rasterizer3D.anIntArrayArray1498 != null) {
-			return;
-		}
-		Rasterizer3D.anInt1497 = i;
-		if (Rasterizer3D.lowMemory) {
-			Rasterizer3D.anIntArrayArray1498 = new int[Rasterizer3D.anInt1497][16384];
-		} else {
-			Rasterizer3D.anIntArrayArray1498 = new int[Rasterizer3D.anInt1497][65536];
-		}
-		for (int i_6_ = 0; i_6_ < 50; i_6_++) {
-			Rasterizer3D.anIntArrayArray1499[i_6_] = null;
-		}
+	public static final void method364(int i, boolean bool) {
+		do {
+			try {
+				if (!bool) {
+					for (int i_5_ = 1; i_5_ > 0; i_5_++) {
+						/* empty */
+					}
+				}
+				if (Rasterizer3D.anIntArrayArray1498 != null) {
+					break;
+				}
+				Rasterizer3D.anInt1497 = i;
+				if (Rasterizer3D.lowMemory) {
+					Rasterizer3D.anIntArrayArray1498 = new int[Rasterizer3D.anInt1497][16384];
+				} else {
+					Rasterizer3D.anIntArrayArray1498 = new int[Rasterizer3D.anInt1497][65536];
+				}
+				for (int i_6_ = 0; i_6_ < 50; i_6_++) {
+					Rasterizer3D.anIntArrayArray1499[i_6_] = null;
+				}
+			} catch (RuntimeException runtimeexception) {
+				Signlink.reportError("54075, " + i + ", " + bool + ", " + runtimeexception.toString());
+				throw new RuntimeException();
+			}
+			break;
+		} while (false);
 	}
 
 	public static final void loadIndexedImages(Archive archive) {
@@ -98,32 +126,47 @@ public class Rasterizer3D extends Rasterizer {
 		}
 	}
 
-	public static final int getAverageRgbColorForTexture(int i) {
-		if (Rasterizer3D.anIntArray1496[i] != 0) {
-			return Rasterizer3D.anIntArray1496[i];
+	public static final int getAverageRgbColorForTexture(int i, int i_8_) {
+		try {
+			if (i_8_ != 12660) {
+				return 2;
+			}
+			if (Rasterizer3D.anIntArray1496[i] != 0) {
+				return Rasterizer3D.anIntArray1496[i];
+			}
+			int i_9_ = 0;
+			int i_10_ = 0;
+			int i_11_ = 0;
+			int i_12_ = Rasterizer3D.anIntArrayArray1503[i].length;
+			for (int i_13_ = 0; i_13_ < i_12_; i_13_++) {
+				i_9_ += Rasterizer3D.anIntArrayArray1503[i][i_13_] >> 16 & 0xff;
+				i_10_ += Rasterizer3D.anIntArrayArray1503[i][i_13_] >> 8 & 0xff;
+				i_11_ += Rasterizer3D.anIntArrayArray1503[i][i_13_] & 0xff;
+			}
+			int i_14_ = (i_9_ / i_12_ << 16) + (i_10_ / i_12_ << 8) + i_11_ / i_12_;
+			i_14_ = Rasterizer3D.method370(i_14_, 1.4);
+			if (i_14_ == 0) {
+				i_14_ = 1;
+			}
+			Rasterizer3D.anIntArray1496[i] = i_14_;
+			return i_14_;
+		} catch (RuntimeException runtimeexception) {
+			Signlink.reportError("10237, " + i + ", " + i_8_ + ", " + runtimeexception.toString());
+			throw new RuntimeException();
 		}
-		int i_9_ = 0;
-		int i_10_ = 0;
-		int i_11_ = 0;
-		int i_12_ = Rasterizer3D.anIntArrayArray1503[i].length;
-		for (int i_13_ = 0; i_13_ < i_12_; i_13_++) {
-			i_9_ += Rasterizer3D.anIntArrayArray1503[i][i_13_] >> 16 & 0xff;
-			i_10_ += Rasterizer3D.anIntArrayArray1503[i][i_13_] >> 8 & 0xff;
-			i_11_ += Rasterizer3D.anIntArrayArray1503[i][i_13_] & 0xff;
-		}
-		int i_14_ = (i_9_ / i_12_ << 16) + (i_10_ / i_12_ << 8) + i_11_ / i_12_;
-		i_14_ = Rasterizer3D.method370(i_14_, 1.4);
-		if (i_14_ == 0) {
-			i_14_ = 1;
-		}
-		Rasterizer3D.anIntArray1496[i] = i_14_;
-		return i_14_;
 	}
 
-	public static final void method367(int i) {
-		if (Rasterizer3D.anIntArrayArray1499[i] != null) {
-			Rasterizer3D.anIntArrayArray1498[Rasterizer3D.anInt1497++] = Rasterizer3D.anIntArrayArray1499[i];
-			Rasterizer3D.anIntArrayArray1499[i] = null;
+	public static final void method367(int i, int i_15_) {
+		try {
+			if (Rasterizer3D.anIntArrayArray1499[i] != null) {
+				Rasterizer3D.anIntArrayArray1498[Rasterizer3D.anInt1497++] = Rasterizer3D.anIntArrayArray1499[i];
+				while (i_15_ >= 0) {
+				}
+				Rasterizer3D.anIntArrayArray1499[i] = null;
+			}
+		} catch (RuntimeException runtimeexception) {
+			Signlink.reportError("64331, " + i + ", " + i_15_ + ", " + runtimeexception.toString());
+			throw new RuntimeException();
 		}
 	}
 
@@ -190,85 +233,91 @@ public class Rasterizer3D extends Rasterizer {
 	}
 
 	public static final void method369(double d) {
-		int i = 0;
-		for (int i_27_ = 0; i_27_ < 512; i_27_++) {
-			double d_28_ = i_27_ / 8 / 64.0 + 0.0078125;
-			double d_29_ = (i_27_ & 0x7) / 8.0 + 0.0625;
-			for (int i_30_ = 0; i_30_ < 128; i_30_++) {
-				double d_31_ = i_30_ / 128.0;
-				double d_32_ = d_31_;
-				double d_33_ = d_31_;
-				double d_34_ = d_31_;
-				if (d_29_ != 0.0) {
-					double d_35_;
-					if (d_31_ < 0.5) {
-						d_35_ = d_31_ * (1.0 + d_29_);
-					} else {
-						d_35_ = d_31_ + d_29_ - d_31_ * d_29_;
+		try {
+			d += Math.random() * 0.03 - 0.015;
+			int i = 0;
+			for (int i_27_ = 0; i_27_ < 512; i_27_++) {
+				double d_28_ = i_27_ / 8 / 64.0 + 0.0078125;
+				double d_29_ = (i_27_ & 0x7) / 8.0 + 0.0625;
+				for (int i_30_ = 0; i_30_ < 128; i_30_++) {
+					double d_31_ = i_30_ / 128.0;
+					double d_32_ = d_31_;
+					double d_33_ = d_31_;
+					double d_34_ = d_31_;
+					if (d_29_ != 0.0) {
+						double d_35_;
+						if (d_31_ < 0.5) {
+							d_35_ = d_31_ * (1.0 + d_29_);
+						} else {
+							d_35_ = d_31_ + d_29_ - d_31_ * d_29_;
+						}
+						double d_36_ = 2.0 * d_31_ - d_35_;
+						double d_37_ = d_28_ + 0.3333333333333333;
+						if (d_37_ > 1.0) {
+							d_37_--;
+						}
+						double d_38_ = d_28_;
+						double d_39_ = d_28_ - 0.3333333333333333;
+						if (d_39_ < 0.0) {
+							d_39_++;
+						}
+						if (6.0 * d_37_ < 1.0) {
+							d_32_ = d_36_ + (d_35_ - d_36_) * 6.0 * d_37_;
+						} else if (2.0 * d_37_ < 1.0) {
+							d_32_ = d_35_;
+						} else if (3.0 * d_37_ < 2.0) {
+							d_32_ = d_36_ + (d_35_ - d_36_) * (0.6666666666666666 - d_37_) * 6.0;
+						} else {
+							d_32_ = d_36_;
+						}
+						if (6.0 * d_38_ < 1.0) {
+							d_33_ = d_36_ + (d_35_ - d_36_) * 6.0 * d_38_;
+						} else if (2.0 * d_38_ < 1.0) {
+							d_33_ = d_35_;
+						} else if (3.0 * d_38_ < 2.0) {
+							d_33_ = d_36_ + (d_35_ - d_36_) * (0.6666666666666666 - d_38_) * 6.0;
+						} else {
+							d_33_ = d_36_;
+						}
+						if (6.0 * d_39_ < 1.0) {
+							d_34_ = d_36_ + (d_35_ - d_36_) * 6.0 * d_39_;
+						} else if (2.0 * d_39_ < 1.0) {
+							d_34_ = d_35_;
+						} else if (3.0 * d_39_ < 2.0) {
+							d_34_ = d_36_ + (d_35_ - d_36_) * (0.6666666666666666 - d_39_) * 6.0;
+						} else {
+							d_34_ = d_36_;
+						}
 					}
-					double d_36_ = 2.0 * d_31_ - d_35_;
-					double d_37_ = d_28_ + 0.3333333333333333;
-					if (d_37_ > 1.0) {
-						d_37_--;
+					int i_40_ = (int) (d_32_ * 256.0);
+					int i_41_ = (int) (d_33_ * 256.0);
+					int i_42_ = (int) (d_34_ * 256.0);
+					int i_43_ = (i_40_ << 16) + (i_41_ << 8) + i_42_;
+					i_43_ = Rasterizer3D.method370(i_43_, d);
+					if (i_43_ == 0) {
+						i_43_ = 1;
 					}
-					double d_38_ = d_28_;
-					double d_39_ = d_28_ - 0.3333333333333333;
-					if (d_39_ < 0.0) {
-						d_39_++;
-					}
-					if (6.0 * d_37_ < 1.0) {
-						d_32_ = d_36_ + (d_35_ - d_36_) * 6.0 * d_37_;
-					} else if (2.0 * d_37_ < 1.0) {
-						d_32_ = d_35_;
-					} else if (3.0 * d_37_ < 2.0) {
-						d_32_ = d_36_ + (d_35_ - d_36_) * (0.6666666666666666 - d_37_) * 6.0;
-					} else {
-						d_32_ = d_36_;
-					}
-					if (6.0 * d_38_ < 1.0) {
-						d_33_ = d_36_ + (d_35_ - d_36_) * 6.0 * d_38_;
-					} else if (2.0 * d_38_ < 1.0) {
-						d_33_ = d_35_;
-					} else if (3.0 * d_38_ < 2.0) {
-						d_33_ = d_36_ + (d_35_ - d_36_) * (0.6666666666666666 - d_38_) * 6.0;
-					} else {
-						d_33_ = d_36_;
-					}
-					if (6.0 * d_39_ < 1.0) {
-						d_34_ = d_36_ + (d_35_ - d_36_) * 6.0 * d_39_;
-					} else if (2.0 * d_39_ < 1.0) {
-						d_34_ = d_35_;
-					} else if (3.0 * d_39_ < 2.0) {
-						d_34_ = d_36_ + (d_35_ - d_36_) * (0.6666666666666666 - d_39_) * 6.0;
-					} else {
-						d_34_ = d_36_;
-					}
-				}
-				int i_40_ = (int) (d_32_ * 256.0);
-				int i_41_ = (int) (d_33_ * 256.0);
-				int i_42_ = (int) (d_34_ * 256.0);
-				int i_43_ = (i_40_ << 16) + (i_41_ << 8) + i_42_;
-				i_43_ = Rasterizer3D.method370(i_43_, d);
-				if (i_43_ == 0) {
-					i_43_ = 1;
-				}
-				Rasterizer3D.getRgbLookupTableId[i++] = i_43_;
-			}
-		}
-		for (int i_44_ = 0; i_44_ < 50; i_44_++) {
-			if (Rasterizer3D.indexedImages[i_44_] != null) {
-				int[] is = Rasterizer3D.indexedImages[i_44_].palette;
-				Rasterizer3D.anIntArrayArray1503[i_44_] = new int[is.length];
-				for (int i_45_ = 0; i_45_ < is.length; i_45_++) {
-					Rasterizer3D.anIntArrayArray1503[i_44_][i_45_] = Rasterizer3D.method370(is[i_45_], d);
-					if ((Rasterizer3D.anIntArrayArray1503[i_44_][i_45_] & 0xf8f8ff) == 0 && i_45_ != 0) {
-						Rasterizer3D.anIntArrayArray1503[i_44_][i_45_] = 1;
-					}
+					Rasterizer3D.getRgbLookupTableId[i++] = i_43_;
 				}
 			}
-		}
-		for (int i_46_ = 0; i_46_ < 50; i_46_++) {
-			Rasterizer3D.method367(i_46_);
+			for (int i_44_ = 0; i_44_ < 50; i_44_++) {
+				if (Rasterizer3D.indexedImages[i_44_] != null) {
+					int[] is = Rasterizer3D.indexedImages[i_44_].palette;
+					Rasterizer3D.anIntArrayArray1503[i_44_] = new int[is.length];
+					for (int i_45_ = 0; i_45_ < is.length; i_45_++) {
+						Rasterizer3D.anIntArrayArray1503[i_44_][i_45_] = Rasterizer3D.method370(is[i_45_], d);
+						if ((Rasterizer3D.anIntArrayArray1503[i_44_][i_45_] & 0xf8f8ff) == 0 && i_45_ != 0) {
+							Rasterizer3D.anIntArrayArray1503[i_44_][i_45_] = 1;
+						}
+					}
+				}
+			}
+			for (int i_46_ = 0; i_46_ < 50; i_46_++) {
+				Rasterizer3D.method367(i_46_, -477);
+			}
+		} catch (RuntimeException runtimeexception) {
+			Signlink.reportError("71578, " + d + ", " + runtimeexception.toString());
+			throw new RuntimeException();
 		}
 	}
 

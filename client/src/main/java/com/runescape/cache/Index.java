@@ -184,8 +184,8 @@ public class Index {
 			position = 62914560;
 			try {
 				Thread.sleep(1000L);
-			} catch (InterruptedException e) {
-				e.printStackTrace();
+			} catch (Exception exception) {
+				/* empty */
 			}
 		}
 		dataFile.seek(position);

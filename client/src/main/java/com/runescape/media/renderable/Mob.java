@@ -51,7 +51,7 @@ public class Mob extends GameCharacter {
 				}
 				animationModel.applyLighting(64 + spotanimation.modelLightFalloff, 850 + spotanimation.modelLightAmbient, -30, -50, -30, true);
 				Model[] models = { model, animationModel };
-				model = new Model(2, true, models);
+				model = new Model(2, -819, true, models);
 			}
 		}
 		if (npcDefinition.boundaryDimension == 1) {

@@ -173,7 +173,7 @@ public class GameObjectDefinition {
 			return null;
 		}
 		if (adjustToTerrain || nonFlatShading) {
-			model = new Model(adjustToTerrain, nonFlatShading, model);
+			model = new Model(adjustToTerrain, -819, nonFlatShading, model);
 		}
 		if (adjustToTerrain) {
 			int i_13_ = (i_8_ + i_9_ + i_10_ + i_11_) / 4;
@@ -185,7 +185,7 @@ public class GameObjectDefinition {
 				int i_19_ = i_17_ + (i_18_ - i_17_) * (vertexY + 64) / 128;
 				model.verticesY[vertex] += i_19_ - i_13_;
 			}
-			model.normalise();
+			model.normalise(false);
 		}
 		return model;
 	}
@@ -248,7 +248,7 @@ public class GameObjectDefinition {
 						return null;
 					}
 					if (mirror) {
-						subModel.mirror();
+						subModel.mirror(0);
 					}
 					GameObjectDefinition.modelCache.put(subModel, subModelId);
 				}
@@ -287,7 +287,7 @@ public class GameObjectDefinition {
 					return null;
 				}
 				if (mirror) {
-					subModel.mirror();
+					subModel.mirror(0);
 				}
 				GameObjectDefinition.modelCache.put(subModel, modelId);
 			}
@@ -312,7 +312,7 @@ public class GameObjectDefinition {
 			animtedModel.vectorSkin = null;
 		}
 		while (face-- > 0) {
-			animtedModel.rotate90Degrees();
+			animtedModel.rotate90Degrees(360);
 		}
 		if (modifiedModelColors != null) {
 			for (int i_38_ = 0; i_38_ < modifiedModelColors.length; i_38_++) {

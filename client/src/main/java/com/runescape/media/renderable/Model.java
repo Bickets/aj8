@@ -7,9 +7,12 @@ import com.runescape.media.Skins;
 import com.runescape.media.VertexNormal;
 import com.runescape.net.Buffer;
 import com.runescape.net.ondemand.Requester;
+import com.runescape.util.Signlink;
 
 public class Model extends Renderable {
 
+	private boolean aBoolean1608 = false;
+	private int anInt1610 = 1;
 	public static Model aModel1614 = new Model();
 	private static int[] anIntArray1615 = new int[2000];
 	private static int[] anIntArray1616 = new int[2000];
@@ -210,9 +213,6 @@ public class Model extends Renderable {
 			return false;
 		}
 		return true;
-	}
-
-	public Model() {
 	}
 
 	private Model(int modelId) {
@@ -464,121 +464,131 @@ public class Model extends Renderable {
 		}
 	}
 
-	public Model(int i, boolean bool, Model[] models) {
-		boolean bool_49_ = false;
-		boolean bool_50_ = false;
-		boolean bool_51_ = false;
-		boolean bool_52_ = false;
-		vertexCount = 0;
-		triangleCount = 0;
-		texturedTriangleCount = 0;
-		anInt1634 = -1;
-		for (int i_53_ = 0; i_53_ < i; i_53_++) {
-			Model model_54_ = models[i_53_];
-			if (model_54_ != null) {
-				vertexCount += model_54_.vertexCount;
-				triangleCount += model_54_.triangleCount;
-				texturedTriangleCount += model_54_.texturedTriangleCount;
-				bool_49_ = bool_49_ | model_54_.texturePoints != null;
-				if (model_54_.trianglePriorities != null) {
-					bool_50_ = true;
-				} else {
-					if (anInt1634 == -1) {
-						anInt1634 = model_54_.anInt1634;
-					}
-					if (anInt1634 != model_54_.anInt1634) {
+	public Model(int i, int i_48_, boolean bool, Model[] models) {
+		try {
+			boolean bool_49_ = false;
+			boolean bool_50_ = false;
+			boolean bool_51_ = false;
+			boolean bool_52_ = false;
+			vertexCount = 0;
+			triangleCount = 0;
+			texturedTriangleCount = 0;
+			anInt1634 = -1;
+			for (int i_53_ = 0; i_53_ < i; i_53_++) {
+				Model model_54_ = models[i_53_];
+				if (model_54_ != null) {
+					vertexCount += model_54_.vertexCount;
+					triangleCount += model_54_.triangleCount;
+					texturedTriangleCount += model_54_.texturedTriangleCount;
+					bool_49_ = bool_49_ | model_54_.texturePoints != null;
+					if (model_54_.trianglePriorities != null) {
 						bool_50_ = true;
+					} else {
+						if (anInt1634 == -1) {
+							anInt1634 = model_54_.anInt1634;
+						}
+						if (anInt1634 != model_54_.anInt1634) {
+							bool_50_ = true;
+						}
 					}
+					bool_51_ = bool_51_ | model_54_.triangleAlphaValues != null;
+					bool_52_ = bool_52_ | model_54_.triangleColorValues != null;
 				}
-				bool_51_ = bool_51_ | model_54_.triangleAlphaValues != null;
-				bool_52_ = bool_52_ | model_54_.triangleColorValues != null;
 			}
-		}
-		verticesX = new int[vertexCount];
-		verticesY = new int[vertexCount];
-		verticesZ = new int[vertexCount];
-		trianglePointsX = new int[triangleCount];
-		trianglePointsY = new int[triangleCount];
-		trianglePointsZ = new int[triangleCount];
-		anIntArray1627 = new int[triangleCount];
-		anIntArray1628 = new int[triangleCount];
-		anIntArray1629 = new int[triangleCount];
-		texturedTrianglePointsX = new int[texturedTriangleCount];
-		texturedTrianglePointsY = new int[texturedTriangleCount];
-		texturedTrianglePointsZ = new int[texturedTriangleCount];
-		if (bool_49_) {
-			texturePoints = new int[triangleCount];
-		}
-		if (bool_50_) {
-			trianglePriorities = new int[triangleCount];
-		}
-		if (bool_51_) {
-			triangleAlphaValues = new int[triangleCount];
-		}
-		if (bool_52_) {
-			triangleColorValues = new int[triangleCount];
-		}
-		vertexCount = 0;
-		triangleCount = 0;
-		texturedTriangleCount = 0;
-		int i_56_ = 0;
-		for (int i_57_ = 0; i_57_ < i; i_57_++) {
-			Model model_58_ = models[i_57_];
-			if (model_58_ != null) {
-				int i_59_ = vertexCount;
-				for (int i_60_ = 0; i_60_ < model_58_.vertexCount; i_60_++) {
-					verticesX[vertexCount] = model_58_.verticesX[i_60_];
-					verticesY[vertexCount] = model_58_.verticesY[i_60_];
-					verticesZ[vertexCount] = model_58_.verticesZ[i_60_];
-					vertexCount++;
+			verticesX = new int[vertexCount];
+			verticesY = new int[vertexCount];
+			verticesZ = new int[vertexCount];
+			trianglePointsX = new int[triangleCount];
+			trianglePointsY = new int[triangleCount];
+			trianglePointsZ = new int[triangleCount];
+			anIntArray1627 = new int[triangleCount];
+			anIntArray1628 = new int[triangleCount];
+			anIntArray1629 = new int[triangleCount];
+			texturedTrianglePointsX = new int[texturedTriangleCount];
+			texturedTrianglePointsY = new int[texturedTriangleCount];
+			texturedTrianglePointsZ = new int[texturedTriangleCount];
+			if (i_48_ >= 0) {
+				for (int i_55_ = 1; i_55_ > 0; i_55_++) {
+					/* empty */
 				}
-				for (int i_61_ = 0; i_61_ < model_58_.triangleCount; i_61_++) {
-					trianglePointsX[triangleCount] = model_58_.trianglePointsX[i_61_] + i_59_;
-					trianglePointsY[triangleCount] = model_58_.trianglePointsY[i_61_] + i_59_;
-					trianglePointsZ[triangleCount] = model_58_.trianglePointsZ[i_61_] + i_59_;
-					anIntArray1627[triangleCount] = model_58_.anIntArray1627[i_61_];
-					anIntArray1628[triangleCount] = model_58_.anIntArray1628[i_61_];
-					anIntArray1629[triangleCount] = model_58_.anIntArray1629[i_61_];
-					if (bool_49_) {
-						if (model_58_.texturePoints == null) {
-							texturePoints[triangleCount] = 0;
-						} else {
-							int i_62_ = model_58_.texturePoints[i_61_];
-							if ((i_62_ & 0x2) == 2) {
-								i_62_ += i_56_ << 2;
+			}
+			if (bool_49_) {
+				texturePoints = new int[triangleCount];
+			}
+			if (bool_50_) {
+				trianglePriorities = new int[triangleCount];
+			}
+			if (bool_51_) {
+				triangleAlphaValues = new int[triangleCount];
+			}
+			if (bool_52_) {
+				triangleColorValues = new int[triangleCount];
+			}
+			vertexCount = 0;
+			triangleCount = 0;
+			texturedTriangleCount = 0;
+			int i_56_ = 0;
+			for (int i_57_ = 0; i_57_ < i; i_57_++) {
+				Model model_58_ = models[i_57_];
+				if (model_58_ != null) {
+					int i_59_ = vertexCount;
+					for (int i_60_ = 0; i_60_ < model_58_.vertexCount; i_60_++) {
+						verticesX[vertexCount] = model_58_.verticesX[i_60_];
+						verticesY[vertexCount] = model_58_.verticesY[i_60_];
+						verticesZ[vertexCount] = model_58_.verticesZ[i_60_];
+						vertexCount++;
+					}
+					for (int i_61_ = 0; i_61_ < model_58_.triangleCount; i_61_++) {
+						trianglePointsX[triangleCount] = model_58_.trianglePointsX[i_61_] + i_59_;
+						trianglePointsY[triangleCount] = model_58_.trianglePointsY[i_61_] + i_59_;
+						trianglePointsZ[triangleCount] = model_58_.trianglePointsZ[i_61_] + i_59_;
+						anIntArray1627[triangleCount] = model_58_.anIntArray1627[i_61_];
+						anIntArray1628[triangleCount] = model_58_.anIntArray1628[i_61_];
+						anIntArray1629[triangleCount] = model_58_.anIntArray1629[i_61_];
+						if (bool_49_) {
+							if (model_58_.texturePoints == null) {
+								texturePoints[triangleCount] = 0;
+							} else {
+								int i_62_ = model_58_.texturePoints[i_61_];
+								if ((i_62_ & 0x2) == 2) {
+									i_62_ += i_56_ << 2;
+								}
+								texturePoints[triangleCount] = i_62_;
 							}
-							texturePoints[triangleCount] = i_62_;
 						}
-					}
-					if (bool_50_) {
-						if (model_58_.trianglePriorities == null) {
-							trianglePriorities[triangleCount] = model_58_.anInt1634;
-						} else {
-							trianglePriorities[triangleCount] = model_58_.trianglePriorities[i_61_];
+						if (bool_50_) {
+							if (model_58_.trianglePriorities == null) {
+								trianglePriorities[triangleCount] = model_58_.anInt1634;
+							} else {
+								trianglePriorities[triangleCount] = model_58_.trianglePriorities[i_61_];
+							}
 						}
-					}
-					if (bool_51_) {
-						if (model_58_.triangleAlphaValues == null) {
-							triangleAlphaValues[triangleCount] = 0;
-						} else {
-							triangleAlphaValues[triangleCount] = model_58_.triangleAlphaValues[i_61_];
+						if (bool_51_) {
+							if (model_58_.triangleAlphaValues == null) {
+								triangleAlphaValues[triangleCount] = 0;
+							} else {
+								triangleAlphaValues[triangleCount] = model_58_.triangleAlphaValues[i_61_];
+							}
 						}
+						if (bool_52_ && model_58_.triangleColorValues != null) {
+							triangleColorValues[triangleCount] = model_58_.triangleColorValues[i_61_];
+						}
+						triangleCount++;
 					}
-					if (bool_52_ && model_58_.triangleColorValues != null) {
-						triangleColorValues[triangleCount] = model_58_.triangleColorValues[i_61_];
+					for (int i_63_ = 0; i_63_ < model_58_.texturedTriangleCount; i_63_++) {
+						texturedTrianglePointsX[texturedTriangleCount] = model_58_.texturedTrianglePointsX[i_63_] + i_59_;
+						texturedTrianglePointsY[texturedTriangleCount] = model_58_.texturedTrianglePointsY[i_63_] + i_59_;
+						texturedTrianglePointsZ[texturedTriangleCount] = model_58_.texturedTrianglePointsZ[i_63_] + i_59_;
+						texturedTriangleCount++;
 					}
-					triangleCount++;
+					i_56_ += model_58_.texturedTriangleCount;
 				}
-				for (int i_63_ = 0; i_63_ < model_58_.texturedTriangleCount; i_63_++) {
-					texturedTrianglePointsX[texturedTriangleCount] = model_58_.texturedTrianglePointsX[i_63_] + i_59_;
-					texturedTrianglePointsY[texturedTriangleCount] = model_58_.texturedTrianglePointsY[i_63_] + i_59_;
-					texturedTrianglePointsZ[texturedTriangleCount] = model_58_.texturedTrianglePointsZ[i_63_] + i_59_;
-					texturedTriangleCount++;
-				}
-				i_56_ += model_58_.texturedTriangleCount;
 			}
+			calculateDiagonals();
+		} catch (RuntimeException runtimeexception) {
+			Signlink.reportError("65900, " + i + ", " + i_48_ + ", " + bool + ", " + models + ", " + runtimeexception.toString());
+			throw new RuntimeException();
 		}
-		calculateDiagonals();
 	}
 
 	public Model(boolean bool, boolean bool_64_, boolean bool_65_, Model model) {
@@ -634,74 +644,86 @@ public class Model extends Renderable {
 		texturedTrianglePointsZ = model.texturedTrianglePointsZ;
 	}
 
-	public Model(boolean bool, boolean bool_72_, Model model) {
-		vertexCount = model.vertexCount;
-		triangleCount = model.triangleCount;
-		texturedTriangleCount = model.texturedTriangleCount;
-		if (bool) {
-			verticesY = new int[vertexCount];
-			for (int vertex = 0; vertex < vertexCount; vertex++) {
-				verticesY[vertex] = model.verticesY[vertex];
-			}
-		} else {
-			verticesY = model.verticesY;
-		}
-		if (bool_72_) {
-			anIntArray1627 = new int[triangleCount];
-			anIntArray1628 = new int[triangleCount];
-			anIntArray1629 = new int[triangleCount];
-			for (int i_75_ = 0; i_75_ < triangleCount; i_75_++) {
-				anIntArray1627[i_75_] = model.anIntArray1627[i_75_];
-				anIntArray1628[i_75_] = model.anIntArray1628[i_75_];
-				anIntArray1629[i_75_] = model.anIntArray1629[i_75_];
-			}
-			texturePoints = new int[triangleCount];
-			if (model.texturePoints == null) {
-				for (int i_76_ = 0; i_76_ < triangleCount; i_76_++) {
-					texturePoints[i_76_] = 0;
+	public Model(boolean bool, int i, boolean bool_72_, Model model) {
+		try {
+			vertexCount = model.vertexCount;
+			triangleCount = model.triangleCount;
+			texturedTriangleCount = model.texturedTriangleCount;
+			if (bool) {
+				verticesY = new int[vertexCount];
+				for (int vertex = 0; vertex < vertexCount; vertex++) {
+					verticesY[vertex] = model.verticesY[vertex];
 				}
 			} else {
-				for (int i_77_ = 0; i_77_ < triangleCount; i_77_++) {
-					texturePoints[i_77_] = model.texturePoints[i_77_];
+				verticesY = model.verticesY;
+			}
+			if (bool_72_) {
+				anIntArray1627 = new int[triangleCount];
+				anIntArray1628 = new int[triangleCount];
+				anIntArray1629 = new int[triangleCount];
+				for (int i_75_ = 0; i_75_ < triangleCount; i_75_++) {
+					anIntArray1627[i_75_] = model.anIntArray1627[i_75_];
+					anIntArray1628[i_75_] = model.anIntArray1628[i_75_];
+					anIntArray1629[i_75_] = model.anIntArray1629[i_75_];
 				}
+				texturePoints = new int[triangleCount];
+				if (model.texturePoints == null) {
+					for (int i_76_ = 0; i_76_ < triangleCount; i_76_++) {
+						texturePoints[i_76_] = 0;
+					}
+				} else {
+					for (int i_77_ = 0; i_77_ < triangleCount; i_77_++) {
+						texturePoints[i_77_] = model.texturePoints[i_77_];
+					}
+				}
+				verticesNormal = new VertexNormal[vertexCount];
+				for (int vertex = 0; vertex < vertexCount; vertex++) {
+					VertexNormal vertexnormal = verticesNormal[vertex] = new VertexNormal();
+					VertexNormal vertexnormal_79_ = model.verticesNormal[vertex];
+					vertexnormal.x = vertexnormal_79_.x;
+					vertexnormal.y = vertexnormal_79_.y;
+					vertexnormal.z = vertexnormal_79_.z;
+					vertexnormal.magnitude = vertexnormal_79_.magnitude;
+				}
+				aVertexNormalArray1653 = model.aVertexNormalArray1653;
+			} else {
+				anIntArray1627 = model.anIntArray1627;
+				anIntArray1628 = model.anIntArray1628;
+				anIntArray1629 = model.anIntArray1629;
+				texturePoints = model.texturePoints;
 			}
-			verticesNormal = new VertexNormal[vertexCount];
-			for (int vertex = 0; vertex < vertexCount; vertex++) {
-				VertexNormal vertexnormal = verticesNormal[vertex] = new VertexNormal();
-				VertexNormal vertexnormal_79_ = model.verticesNormal[vertex];
-				vertexnormal.x = vertexnormal_79_.x;
-				vertexnormal.y = vertexnormal_79_.y;
-				vertexnormal.z = vertexnormal_79_.z;
-				vertexnormal.magnitude = vertexnormal_79_.magnitude;
+			verticesX = model.verticesX;
+			verticesZ = model.verticesZ;
+			triangleColorValues = model.triangleColorValues;
+			triangleAlphaValues = model.triangleAlphaValues;
+			trianglePriorities = model.trianglePriorities;
+			anInt1634 = model.anInt1634;
+			trianglePointsX = model.trianglePointsX;
+			trianglePointsY = model.trianglePointsY;
+			trianglePointsZ = model.trianglePointsZ;
+			texturedTrianglePointsX = model.texturedTrianglePointsX;
+			texturedTrianglePointsY = model.texturedTrianglePointsY;
+			texturedTrianglePointsZ = model.texturedTrianglePointsZ;
+			modelHeight = model.modelHeight;
+			maxY = model.maxY;
+			if (i >= 0) {
+				throw new NullPointerException();
 			}
-			aVertexNormalArray1653 = model.aVertexNormalArray1653;
-		} else {
-			anIntArray1627 = model.anIntArray1627;
-			anIntArray1628 = model.anIntArray1628;
-			anIntArray1629 = model.anIntArray1629;
-			texturePoints = model.texturePoints;
+			shadowIntensity = model.shadowIntensity;
+			anInt1646 = model.anInt1646;
+			anInt1645 = model.anInt1645;
+			anInt1639 = model.anInt1639;
+			anInt1641 = model.anInt1641;
+			anInt1642 = model.anInt1642;
+			anInt1640 = model.anInt1640;
+		} catch (RuntimeException runtimeexception) {
+			Signlink.reportError("16425, " + bool + ", " + i + ", " + bool_72_ + ", " + model + ", " + runtimeexception.toString());
+			throw new RuntimeException();
 		}
-		verticesX = model.verticesX;
-		verticesZ = model.verticesZ;
-		triangleColorValues = model.triangleColorValues;
-		triangleAlphaValues = model.triangleAlphaValues;
-		trianglePriorities = model.trianglePriorities;
-		anInt1634 = model.anInt1634;
-		trianglePointsX = model.trianglePointsX;
-		trianglePointsY = model.trianglePointsY;
-		trianglePointsZ = model.trianglePointsZ;
-		texturedTrianglePointsX = model.texturedTrianglePointsX;
-		texturedTrianglePointsY = model.texturedTrianglePointsY;
-		texturedTrianglePointsZ = model.texturedTrianglePointsZ;
-		modelHeight = model.modelHeight;
-		maxY = model.maxY;
-		shadowIntensity = model.shadowIntensity;
-		anInt1646 = model.anInt1646;
-		anInt1645 = model.anInt1645;
-		anInt1639 = model.anInt1639;
-		anInt1641 = model.anInt1641;
-		anInt1642 = model.anInt1642;
-		anInt1640 = model.anInt1640;
+	}
+
+	public Model() {
+		// TODO Auto-generated constructor stub
 	}
 
 	public void replaceWithModel(Model model, boolean replaceAlphaValues) {
@@ -802,60 +824,75 @@ public class Model extends Renderable {
 		anInt1645 = anInt1646 + (int) (Math.sqrt(shadowIntensity * shadowIntensity + maxY * maxY) + 0.99);
 	}
 
-	public void normalise() {
-		modelHeight = 0;
-		maxY = 0;
-		for (int i = 0; i < vertexCount; i++) {
-			int i_95_ = verticesY[i];
-			if (-i_95_ > modelHeight) {
-				modelHeight = -i_95_;
+	public void normalise(boolean bool) {
+		try {
+			modelHeight = 0;
+			maxY = 0;
+			if (bool) {
+				aBoolean1608 = !aBoolean1608;
 			}
-			if (i_95_ > maxY) {
-				maxY = i_95_;
+			for (int i = 0; i < vertexCount; i++) {
+				int i_95_ = verticesY[i];
+				if (-i_95_ > modelHeight) {
+					modelHeight = -i_95_;
+				}
+				if (i_95_ > maxY) {
+					maxY = i_95_;
+				}
 			}
+			anInt1646 = (int) (Math.sqrt(shadowIntensity * shadowIntensity + modelHeight * modelHeight) + 0.99);
+			anInt1645 = anInt1646 + (int) (Math.sqrt(shadowIntensity * shadowIntensity + maxY * maxY) + 0.99);
+		} catch (RuntimeException runtimeexception) {
+			Signlink.reportError("87212, " + bool + ", " + runtimeexception.toString());
+			throw new RuntimeException();
 		}
-		anInt1646 = (int) (Math.sqrt(shadowIntensity * shadowIntensity + modelHeight * modelHeight) + 0.99);
-		anInt1645 = anInt1646 + (int) (Math.sqrt(shadowIntensity * shadowIntensity + maxY * maxY) + 0.99);
 	}
 
-	public void method416() {
-		modelHeight = 0;
-		shadowIntensity = 0;
-		maxY = 0;
-		anInt1639 = 999999;
-		anInt1640 = -999999;
-		anInt1641 = -99999;
-		anInt1642 = 99999;
-		for (int i_96_ = 0; i_96_ < vertexCount; i_96_++) {
-			int i_97_ = verticesX[i_96_];
-			int i_98_ = verticesY[i_96_];
-			int i_99_ = verticesZ[i_96_];
-			if (i_97_ < anInt1639) {
-				anInt1639 = i_97_;
+	public void method416(int i) {
+		try {
+			modelHeight = 0;
+			shadowIntensity = 0;
+			maxY = 0;
+			anInt1639 = 999999;
+			anInt1640 = -999999;
+			anInt1641 = -99999;
+			anInt1642 = 99999;
+			for (int i_96_ = 0; i_96_ < vertexCount; i_96_++) {
+				int i_97_ = verticesX[i_96_];
+				int i_98_ = verticesY[i_96_];
+				int i_99_ = verticesZ[i_96_];
+				if (i_97_ < anInt1639) {
+					anInt1639 = i_97_;
+				}
+				if (i_97_ > anInt1640) {
+					anInt1640 = i_97_;
+				}
+				if (i_99_ < anInt1642) {
+					anInt1642 = i_99_;
+				}
+				if (i_99_ > anInt1641) {
+					anInt1641 = i_99_;
+				}
+				if (-i_98_ > modelHeight) {
+					modelHeight = -i_98_;
+				}
+				if (i_98_ > maxY) {
+					maxY = i_98_;
+				}
+				int i_100_ = i_97_ * i_97_ + i_99_ * i_99_;
+				if (i_100_ > shadowIntensity) {
+					shadowIntensity = i_100_;
+				}
 			}
-			if (i_97_ > anInt1640) {
-				anInt1640 = i_97_;
+			shadowIntensity = (int) Math.sqrt(shadowIntensity);
+			anInt1646 = (int) Math.sqrt(shadowIntensity * shadowIntensity + modelHeight * modelHeight);
+			if (i == 21073) {
+				anInt1645 = anInt1646 + (int) Math.sqrt(shadowIntensity * shadowIntensity + maxY * maxY);
 			}
-			if (i_99_ < anInt1642) {
-				anInt1642 = i_99_;
-			}
-			if (i_99_ > anInt1641) {
-				anInt1641 = i_99_;
-			}
-			if (-i_98_ > modelHeight) {
-				modelHeight = -i_98_;
-			}
-			if (i_98_ > maxY) {
-				maxY = i_98_;
-			}
-			int i_100_ = i_97_ * i_97_ + i_99_ * i_99_;
-			if (i_100_ > shadowIntensity) {
-				shadowIntensity = i_100_;
-			}
+		} catch (RuntimeException runtimeexception) {
+			Signlink.reportError("2042, " + i + ", " + runtimeexception.toString());
+			throw new RuntimeException();
 		}
-		shadowIntensity = (int) Math.sqrt(shadowIntensity);
-		anInt1646 = (int) Math.sqrt(shadowIntensity * shadowIntensity + modelHeight * modelHeight);
-		anInt1645 = anInt1646 + (int) Math.sqrt(shadowIntensity * shadowIntensity + maxY * maxY);
 	}
 
 	public void createBones() {
@@ -920,49 +957,56 @@ public class Model extends Renderable {
 		}
 	}
 
-	public void mixAnimationFrames(int[] is, int i_114_, int i_115_) {
-		if (i_115_ != -1) {
-			if (is == null || i_114_ == -1) {
-				applyTransform(i_115_);
-			} else {
-				Animation animation = Animation.getAnimation(i_115_);
-				if (animation != null) {
-					Animation animation_116_ = Animation.getAnimation(i_114_);
-					if (animation_116_ == null) {
-						applyTransform(i_115_);
-					} else {
-						Skins skins = animation.skins;
-						Model.vertexXModifier = 0;
-						Model.vertexYModifier = 0;
-						Model.vertexZModifier = 0;
-						int i_117_ = 0;
-						int i_118_ = is[i_117_++];
-						for (int i_119_ = 0; i_119_ < animation.transformationCount; i_119_++) {
-							int i_120_;
-							for (i_120_ = animation.translations[i_119_]; i_120_ > i_118_; i_118_ = is[i_117_++]) {
-								/* empty */
-							}
-							if (i_120_ != i_118_ || skins.opcodes[i_120_] == 0) {
-								transformStep(skins.opcodes[i_120_], skins.skinList[i_120_], animation.translationX[i_119_], animation.translationY[i_119_], animation.translationZ[i_119_]);
-							}
-						}
-						Model.vertexXModifier = 0;
-						Model.vertexYModifier = 0;
-						Model.vertexZModifier = 0;
-						i_117_ = 0;
-						i_118_ = is[i_117_++];
-						for (int i_121_ = 0; i_121_ < animation_116_.transformationCount; i_121_++) {
-							int i_122_;
-							for (i_122_ = animation_116_.translations[i_121_]; i_122_ > i_118_; i_118_ = is[i_117_++]) {
-								/* empty */
-							}
-							if (i_122_ == i_118_ || skins.opcodes[i_122_] == 0) {
-								transformStep(skins.opcodes[i_122_], skins.skinList[i_122_], animation_116_.translationX[i_121_], animation_116_.translationY[i_121_], animation_116_.translationZ[i_121_]);
+	public void mixAnimationFrames(int i, int[] is, int i_114_, int i_115_) {
+		try {
+			if (i_115_ != -1) {
+				if (is == null || i_114_ == -1) {
+					applyTransform(i_115_);
+				} else {
+					Animation animation = Animation.getAnimation(i_115_);
+					if (animation != null) {
+						Animation animation_116_ = Animation.getAnimation(i_114_);
+						if (i == -20491) {
+							if (animation_116_ == null) {
+								applyTransform(i_115_);
+							} else {
+								Skins skins = animation.skins;
+								Model.vertexXModifier = 0;
+								Model.vertexYModifier = 0;
+								Model.vertexZModifier = 0;
+								int i_117_ = 0;
+								int i_118_ = is[i_117_++];
+								for (int i_119_ = 0; i_119_ < animation.transformationCount; i_119_++) {
+									int i_120_;
+									for (i_120_ = animation.translations[i_119_]; i_120_ > i_118_; i_118_ = is[i_117_++]) {
+										/* empty */
+									}
+									if (i_120_ != i_118_ || skins.opcodes[i_120_] == 0) {
+										transformStep(skins.opcodes[i_120_], skins.skinList[i_120_], animation.translationX[i_119_], animation.translationY[i_119_], animation.translationZ[i_119_]);
+									}
+								}
+								Model.vertexXModifier = 0;
+								Model.vertexYModifier = 0;
+								Model.vertexZModifier = 0;
+								i_117_ = 0;
+								i_118_ = is[i_117_++];
+								for (int i_121_ = 0; i_121_ < animation_116_.transformationCount; i_121_++) {
+									int i_122_;
+									for (i_122_ = animation_116_.translations[i_121_]; i_122_ > i_118_; i_118_ = is[i_117_++]) {
+										/* empty */
+									}
+									if (i_122_ == i_118_ || skins.opcodes[i_122_] == 0) {
+										transformStep(skins.opcodes[i_122_], skins.skinList[i_122_], animation_116_.translationX[i_121_], animation_116_.translationY[i_121_], animation_116_.translationZ[i_121_]);
+									}
+								}
 							}
 						}
 					}
 				}
 			}
+		} catch (RuntimeException runtimeexception) {
+			Signlink.reportError("63853, " + i + ", " + is + ", " + i_114_ + ", " + i_115_ + ", " + runtimeexception.toString());
+			throw new RuntimeException();
 		}
 	}
 
@@ -1086,21 +1130,36 @@ public class Model extends Renderable {
 		}
 	}
 
-	public void rotate90Degrees() {
-		for (int i_165_ = 0; i_165_ < vertexCount; i_165_++) {
-			int i_166_ = verticesX[i_165_];
-			verticesX[i_165_] = verticesZ[i_165_];
-			verticesZ[i_165_] = -i_166_;
+	public void rotate90Degrees(int i) {
+		try {
+			if (i > 0) {
+				for (int i_165_ = 0; i_165_ < vertexCount; i_165_++) {
+					int i_166_ = verticesX[i_165_];
+					verticesX[i_165_] = verticesZ[i_165_];
+					verticesZ[i_165_] = -i_166_;
+				}
+			}
+		} catch (RuntimeException runtimeexception) {
+			Signlink.reportError("59385, " + i + ", " + runtimeexception.toString());
+			throw new RuntimeException();
 		}
 	}
 
-	public void rotateX(int i) {
-		int i_168_ = Model.SINE[i];
-		int i_169_ = Model.COSINE[i];
-		for (int i_170_ = 0; i_170_ < vertexCount; i_170_++) {
-			int i_171_ = verticesY[i_170_] * i_169_ - verticesZ[i_170_] * i_168_ >> 16;
-			verticesZ[i_170_] = verticesY[i_170_] * i_168_ + verticesZ[i_170_] * i_169_ >> 16;
-			verticesY[i_170_] = i_171_;
+	public void rotateX(int i, int i_167_) {
+		try {
+			int i_168_ = Model.SINE[i];
+			int i_169_ = Model.COSINE[i];
+			for (int i_170_ = 0; i_170_ < vertexCount; i_170_++) {
+				int i_171_ = verticesY[i_170_] * i_169_ - verticesZ[i_170_] * i_168_ >> 16;
+				verticesZ[i_170_] = verticesY[i_170_] * i_168_ + verticesZ[i_170_] * i_169_ >> 16;
+				verticesY[i_170_] = i_171_;
+			}
+			if (i_167_ < anInt1610 || i_167_ > anInt1610) {
+				anInt1610 = 324;
+			}
+		} catch (RuntimeException runtimeexception) {
+			Signlink.reportError("13317, " + i + ", " + i_167_ + ", " + runtimeexception.toString());
+			throw new RuntimeException();
 		}
 	}
 
@@ -1133,15 +1192,26 @@ public class Model extends Renderable {
 		}
 	}
 
-	public void mirror() {
-		for (int i_178_ = 0; i_178_ < vertexCount; i_178_++) {
-			verticesZ[i_178_] = -verticesZ[i_178_];
-		}
-		for (int i_179_ = 0; i_179_ < triangleCount; i_179_++) {
-			int i_180_ = trianglePointsX[i_179_];
-			trianglePointsX[i_179_] = trianglePointsZ[i_179_];
-			trianglePointsZ[i_179_] = i_180_;
-		}
+	public void mirror(int i) {
+		do {
+			try {
+				for (int i_178_ = 0; i_178_ < vertexCount; i_178_++) {
+					verticesZ[i_178_] = -verticesZ[i_178_];
+				}
+				for (int i_179_ = 0; i_179_ < triangleCount; i_179_++) {
+					int i_180_ = trianglePointsX[i_179_];
+					trianglePointsX[i_179_] = trianglePointsZ[i_179_];
+					trianglePointsZ[i_179_] = i_180_;
+				}
+				if (i == 0) {
+					break;
+				}
+			} catch (RuntimeException runtimeexception) {
+				Signlink.reportError("2772, " + i + ", " + runtimeexception.toString());
+				throw new RuntimeException();
+			}
+			break;
+		} while (false);
 	}
 
 	public void scaleT(int i, int i_181_, int i_183_) {
@@ -1227,7 +1297,7 @@ public class Model extends Renderable {
 		if (bool) {
 			calculateDiagonals();
 		} else {
-			method416();
+			method416(21073);
 		}
 	}
 
@@ -1340,7 +1410,11 @@ public class Model extends Renderable {
 				Model.anIntArray1663[i_242_] = i_245_;
 			}
 		}
-		method431(false, false, 0);
+		try {
+			method431(false, false, 0);
+		} catch (Exception exception) {
+			/* empty */
+		}
 	}
 
 	@Override
@@ -1437,7 +1511,11 @@ public class Model extends Renderable {
 									Model.anIntArray1663[i_279_] = i_282_;
 								}
 							}
-							method431(bool, bool_271_, i_257_);
+							try {
+								method431(bool, bool_271_, i_257_);
+							} catch (Exception exception) {
+								/* empty */
+							}
 						}
 					}
 				}

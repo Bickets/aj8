@@ -44,16 +44,16 @@ public class GameAnimableObject extends Renderable {
 		}
 		if (animation.rotation != 0) {
 			if (animation.rotation == 90) {
-				animatedModel.rotate90Degrees();
+				animatedModel.rotate90Degrees(360);
 			}
 			if (animation.rotation == 180) {
-				animatedModel.rotate90Degrees();
-				animatedModel.rotate90Degrees();
+				animatedModel.rotate90Degrees(360);
+				animatedModel.rotate90Degrees(360);
 			}
 			if (animation.rotation == 270) {
-				animatedModel.rotate90Degrees();
-				animatedModel.rotate90Degrees();
-				animatedModel.rotate90Degrees();
+				animatedModel.rotate90Degrees(360);
+				animatedModel.rotate90Degrees(360);
+				animatedModel.rotate90Degrees(360);
 			}
 		}
 		animatedModel.applyLighting(64 + animation.modelLightFalloff, 850 + animation.modelLightAmbient, -30, -50, -30, true);
