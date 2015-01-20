@@ -97,12 +97,12 @@ public final class GameObjectDefinition {
 	/**
 	 * The horizontal size.
 	 */
-	private int sizeX;
+	private int width;
 
 	/**
 	 * The vertical size.
 	 */
-	private int sizeY;
+	private int length;
 
 	/**
 	 * The 'solid object' flag, {@code false} by default.
@@ -110,9 +110,9 @@ public final class GameObjectDefinition {
 	private boolean solid = false;
 
 	/**
-	 * The 'walkable' flag, {@code false} by default.
+	 * The impenetrable flag, {@code false} by default.
 	 */
-	private boolean walkable = false;
+	private boolean impenetrable = false;
 
 	/**
 	 * Denotes some un-interactable solid ground decoration.
@@ -237,25 +237,25 @@ public final class GameObjectDefinition {
 	 * @return The size.
 	 */
 	public int getSize() {
-		return sizeX + sizeY;
+		return width + length;
 	}
 
 	/**
-	 * Gets the object's horizontal X size.
+	 * Gets the object's width.
 	 *
 	 * @return The X size.
 	 */
-	public int getSizeX() {
-		return sizeX;
+	public int getWidth() {
+		return width;
 	}
 
 	/**
-	 * Gets the object's horizontal Y size.
+	 * Gets the object's length.
 	 *
 	 * @return The Y size.
 	 */
-	public int getSizeY() {
-		return sizeY;
+	public int getLength() {
+		return length;
 	}
 
 	/**
@@ -286,12 +286,12 @@ public final class GameObjectDefinition {
 	}
 
 	/**
-	 * Gets the object's walkable flag.
+	 * Gets the object's impenetrable flag.
 	 *
-	 * @return The walkable flag.
+	 * @return The impenetrable flag.
 	 */
-	public boolean isWalkable() {
-		return walkable;
+	public boolean isImpenetrable() {
+		return impenetrable;
 	}
 
 	/**
@@ -392,21 +392,21 @@ public final class GameObjectDefinition {
 	}
 
 	/**
-	 * Sets the horizontal X size.
+	 * Sets the width.
 	 *
-	 * @param sizeX The horizontal size to be set.
+	 * @param width The horizontal size to be set.
 	 */
-	public void setSizeX(int sizeX) {
-		this.sizeX = sizeX;
+	public void setWidth(int width) {
+		this.width = width;
 	}
 
 	/**
-	 * Sets the vertical Y size.
+	 * Sets the length.
 	 *
-	 * @param sizeY The vertical size to be set.
+	 * @param length The vertical size to be set.
 	 */
-	public void setSizeY(int sizeY) {
-		this.sizeY = sizeY;
+	public void setLength(int length) {
+		this.length = length;
 	}
 
 	/**
@@ -419,12 +419,12 @@ public final class GameObjectDefinition {
 	}
 
 	/**
-	 * Sets the object's walkable flag.
+	 * Sets the object's impenetrable flag.
 	 *
-	 * @param walkable The walkable flag.
+	 * @param impenetrable The impenetrable flag.
 	 */
-	public void setWalkable(boolean walkable) {
-		this.walkable = walkable;
+	public void setImpenetrable(boolean impenetrable) {
+		this.impenetrable = impenetrable;
 	}
 
 	/**

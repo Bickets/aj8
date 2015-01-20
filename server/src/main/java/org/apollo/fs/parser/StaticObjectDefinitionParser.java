@@ -192,7 +192,7 @@ public final class StaticObjectDefinitionParser {
 		} else if (optionalGroup.isPresent()) {
 			GameObjectGroup group = optionalGroup.get();
 			if (group == WALL) {
-				traversalMap.markWall(orientation, position.getHeight(), position.getX(), position.getY(), type, def.isWalkable());
+				traversalMap.markWall(orientation, position.getHeight(), position.getX(), position.getY(), type, def.isImpenetrable());
 			}
 		} else if (type == DIAGONAL_WALL) {
 			traversalMap.markBlocked(position.getHeight(), position.getX(), position.getY());

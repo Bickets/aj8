@@ -80,13 +80,13 @@ public final class GameObjectDefinitionParser {
 					buffer.getShort();
 				}
 			} else if (code == 14) {
-				def.setSizeX(buffer.get() & 0xFF);
+				def.setWidth(buffer.get() & 0xFF);
 			} else if (code == 15) {
-				def.setSizeY(buffer.get() & 0xFF);
+				def.setLength(buffer.get() & 0xFF);
 			} else if (code == 17) {
 				def.setSolid(true);
 			} else if (code == 18) {
-				def.setWalkable(true);
+				def.setImpenetrable(true);
 			} else if (code == 19) {
 				interactableValue = buffer.get() & 0xFF;
 				def.setInteractable(interactableValue == 1);

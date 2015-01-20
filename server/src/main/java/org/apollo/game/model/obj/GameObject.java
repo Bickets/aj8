@@ -117,7 +117,7 @@ public final class GameObject extends Entity {
 		GameObjectDefinition def = getDefinition();
 		int distanceX = Math.abs(position.getX() - getPosition().getX());
 		int distanceY = Math.abs(position.getY() - getPosition().getY());
-		int total = distanceX > distanceY ? def.getSizeX() : def.getSizeY();
+		int total = distanceX > distanceY ? def.getWidth() : def.getLength();
 		return total;
 	}
 
@@ -128,11 +128,11 @@ public final class GameObject extends Entity {
 	 */
 	public Position getCenterPosition() {
 		GameObjectDefinition def = getDefinition();
-		int width = def.getSizeX();
-		int length = def.getSizeY();
+		int width = def.getWidth();
+		int length = def.getLength();
 		if (orientation == NORTH || orientation == SOUTH) {
-			width = def.getSizeY();
-			length = def.getSizeX();
+			width = def.getLength();
+			length = def.getWidth();
 		}
 		int centerX = getPosition().getX() + width / 2;
 		int centerY = getPosition().getY() + length / 2;
@@ -149,11 +149,11 @@ public final class GameObject extends Entity {
 	public Position getTurnToPosition(Position from) {
 		GameObjectDefinition def = getDefinition();
 
-		int width = def.getSizeX();
-		int length = def.getSizeY();
+		int width = def.getWidth();
+		int length = def.getLength();
 		if (orientation == NORTH || orientation == SOUTH) {
-			width = def.getSizeY();
-			length = def.getSizeX();
+			width = def.getLength();
+			length = def.getWidth();
 		}
 
 		int turnToX = from.getX();
