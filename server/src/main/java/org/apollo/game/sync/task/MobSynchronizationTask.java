@@ -16,7 +16,7 @@ import org.apollo.game.sync.seg.SynchronizationSegment;
 
 /**
  * A {@link SynchronizationTask} which synchronizes the specified {@link Mob}
- * for a {@link Player}.
+ * for a specified {@link Player}.
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */

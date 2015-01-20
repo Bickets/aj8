@@ -1,7 +1,7 @@
 package org.apollo.game.msg.decoder;
 
-import org.apollo.game.model.Appearance;
-import org.apollo.game.model.Gender;
+import org.apollo.game.model.appearance.Appearance;
+import org.apollo.game.model.appearance.Gender;
 import org.apollo.game.msg.MessageDecoder;
 import org.apollo.game.msg.annotate.DecodesMessage;
 import org.apollo.game.msg.impl.CharacterDesignMessage;

@@ -8,6 +8,8 @@ import java.util.Queue;
 import org.apollo.game.event.Event;
 import org.apollo.game.model.HeadIcon.Prayer;
 import org.apollo.game.model.HeadIcon.Skull;
+import org.apollo.game.model.appearance.Appearance;
+import org.apollo.game.model.appearance.AppearanceSet;
 import org.apollo.game.model.inter.InterfaceSet;
 import org.apollo.game.model.inv.AppearanceInventoryListener;
 import org.apollo.game.model.inv.FullInventoryListener;
@@ -176,6 +178,11 @@ public final class Player extends GameCharacter {
 	private final InterfaceSet interfaceSet = new InterfaceSet(this);
 
 	/**
+	 * This players set of recently seen players.
+	 */
+	private final AppearanceSet appearanceSet = new AppearanceSet();
+
+	/**
 	 * The character's inventory.
 	 */
 	private final Inventory inventory = new Inventory(InventoryConstants.INVENTORY_CAPACITY);
@@ -226,6 +233,13 @@ public final class Player extends GameCharacter {
 	 */
 	public InterfaceSet getInterfaceSet() {
 		return interfaceSet;
+	}
+
+	/**
+	 * Returns this players appearance set.
+	 */
+	public AppearanceSet getAppearanceSet() {
+		return appearanceSet;
 	}
 
 	/**

@@ -1,8 +1,8 @@
 package org.apollo.game.msg.handler;
 
-import org.apollo.game.model.Appearance;
-import org.apollo.game.model.Gender;
 import org.apollo.game.model.Player;
+import org.apollo.game.model.appearance.Appearance;
+import org.apollo.game.model.appearance.Gender;
 import org.apollo.game.msg.MessageHandler;
 import org.apollo.game.msg.annotate.HandlesMessage;
 import org.apollo.game.msg.impl.CharacterDesignMessage;

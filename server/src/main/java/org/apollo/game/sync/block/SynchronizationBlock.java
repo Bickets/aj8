@@ -24,7 +24,7 @@ public abstract class SynchronizationBlock {
 	 * @param animation The animation.
 	 * @return The animation block.
 	 */
-	public static SynchronizationBlock createAnimationBlock(Animation animation) {
+	public static AnimationBlock createAnimationBlock(Animation animation) {
 		return new AnimationBlock(animation);
 	}
 
@@ -34,7 +34,7 @@ public abstract class SynchronizationBlock {
 	 * @param player The player.
 	 * @return The appearance block.
 	 */
-	public static SynchronizationBlock createAppearanceBlock(Player player) {
+	public static AppearanceBlock createAppearanceBlock(Player player) {
 		return new AppearanceBlock(player.getEncodedName(), player.getSkullIcon(), player.getPrayerIcon(), player.getAppearance(), player.getSkillSet().getCombatLevel(), player.getSkillSet().getTotalLevel(), player.getEquipment());
 	}
 
@@ -45,7 +45,7 @@ public abstract class SynchronizationBlock {
 	 * @param chatMessage The chat message.
 	 * @return The chat block.
 	 */
-	public static SynchronizationBlock createChatBlock(Player player, ChatMessage chatMessage) {
+	public static ChatBlock createChatBlock(Player player, ChatMessage chatMessage) {
 		return new ChatBlock(player.getPrivilegeLevel(), chatMessage);
 	}
 
@@ -55,7 +55,7 @@ public abstract class SynchronizationBlock {
 	 * @param text The text to force.
 	 * @return The force chat block.
 	 */
-	public static SynchronizationBlock createForceChatBlock(String text) {
+	public static ForceChatBlock createForceChatBlock(String text) {
 		return new ForceChatBlock(text);
 	}
 
@@ -69,7 +69,7 @@ public abstract class SynchronizationBlock {
 	 * @param direction The direction.
 	 * @return The force movement block.
 	 */
-	public static SynchronizationBlock createForceMovementBlock(Position currentPosition, Position position, int firstSpeed, int secondSpeed, int direction) {
+	public static ForceMovementBlock createForceMovementBlock(Position currentPosition, Position position, int firstSpeed, int secondSpeed, int direction) {
 		return new ForceMovementBlock(currentPosition, position, firstSpeed, secondSpeed, direction);
 	}
 
@@ -79,7 +79,7 @@ public abstract class SynchronizationBlock {
 	 * @param graphic The graphic.
 	 * @return The graphic block.
 	 */
-	public static SynchronizationBlock createGraphicBlock(Graphic graphic) {
+	public static GraphicBlock createGraphicBlock(Graphic graphic) {
 		return new GraphicBlock(graphic);
 	}
 
@@ -92,7 +92,7 @@ public abstract class SynchronizationBlock {
 	 * @param maximumHealth The maximum health.
 	 * @return A new instance of {@link HitBlock}, never {@code null}.
 	 */
-	public static SynchronizationBlock createHitUpdateBlock(int damage, int type, int currentHealth, int maximumHealth) {
+	public static HitBlock createHitUpdateBlock(int damage, int type, int currentHealth, int maximumHealth) {
 		return new HitBlock(damage, type, currentHealth, maximumHealth);
 	}
 
@@ -105,7 +105,7 @@ public abstract class SynchronizationBlock {
 	 * @param maximumHealth The maximum health.
 	 * @return A new instance of {@link SecondHitBlock}, never {@code null}.
 	 */
-	public static SynchronizationBlock createSecondHitUpdateBlock(int damage, int type, int currentHealth, int maximumHealth) {
+	public static SecondHitBlock createSecondHitUpdateBlock(int damage, int type, int currentHealth, int maximumHealth) {
 		return new SecondHitBlock(damage, type, currentHealth, maximumHealth);
 	}
 
@@ -115,7 +115,7 @@ public abstract class SynchronizationBlock {
 	 * @param mobId The mob to transform into.
 	 * @return The transform mob block.
 	 */
-	public static SynchronizationBlock createTransformUpdateBlock(int mobId) {
+	public static TransformBlock createTransformUpdateBlock(int mobId) {
 		return new TransformBlock(mobId);
 	}
 
@@ -125,7 +125,7 @@ public abstract class SynchronizationBlock {
 	 * @param id The entity id to turn to.
 	 * @return The turn to entity block.
 	 */
-	public static SynchronizationBlock createTurnToEntityBlock(int id) {
+	public static InteractingCharacterBlock createTurnToEntityBlock(int id) {
 		return new InteractingCharacterBlock(id);
 	}
 
@@ -135,7 +135,7 @@ public abstract class SynchronizationBlock {
 	 * @param position The position.
 	 * @return The turn to position block.
 	 */
-	public static SynchronizationBlock createTurnToPositionBlock(Position position) {
+	public static TurnToPositionBlock createTurnToPositionBlock(Position position) {
 		return new TurnToPositionBlock(position);
 	}
 
