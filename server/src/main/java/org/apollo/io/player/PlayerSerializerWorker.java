@@ -10,10 +10,9 @@ import org.apollo.net.codec.login.LoginConstants;
 import org.apollo.net.codec.login.LoginRequest;
 import org.apollo.net.session.GameSession;
 import org.apollo.net.session.LoginSession;
+import org.apollo.util.ThreadUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
 
 /**
  * Manages load and save requests from the specified {@link PlayerSerializer}
@@ -48,7 +47,7 @@ public final class PlayerSerializerWorker {
 	/**
 	 * The {@link ExecutorService} to which workers are submitted.
 	 */
-	private final ExecutorService executor = Executors.newCachedThreadPool(new ThreadFactoryBuilder().setNameFormat("PlayerSerializer").build());
+	private final ExecutorService executor = Executors.newCachedThreadPool(ThreadUtil.build("PlayerSerializer"));
 
 	/**
 	 * Submits a login request.

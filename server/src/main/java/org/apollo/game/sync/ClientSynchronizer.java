@@ -16,9 +16,7 @@ import org.apollo.game.sync.task.PostMobSynchronizationTask;
 import org.apollo.game.sync.task.PostPlayerSynchronizationTask;
 import org.apollo.game.sync.task.PreMobSynchronizationTask;
 import org.apollo.game.sync.task.PrePlayerSynchronizationTask;
-import org.apollo.game.sync.task.SynchronizationTask;
-
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import org.apollo.util.ThreadUtil;
 
 /**
  * The {@link ClientSynchronizer} manages the update sequence which keeps
@@ -51,14 +49,13 @@ public final class ClientSynchronizer {
 	/**
 	 * Creates the parallel client synchronizer backed by a thread pool with a
 	 * number of threads equal to the number of processing cores available (this
-	 * is found by the {@link Runtime#availableProcessors()} method.
+	 * is found by {@link ThreadUtil#AVAILABLE_PROCESSORS}.
 	 *
 	 * @param world The world.
 	 */
 	public ClientSynchronizer(World world) {
 		this.world = world;
-		int processors = Runtime.getRuntime().availableProcessors();
-		executor = Executors.newFixedThreadPool(processors, new ThreadFactoryBuilder().setNameFormat("Client-Synchronizer").build());
+		executor = Executors.newFixedThreadPool(ThreadUtil.AVAILABLE_PROCESSORS, ThreadUtil.build("Client-Synchronizer"));
 	}
 
 	/**
@@ -72,45 +69,27 @@ public final class ClientSynchronizer {
 		int mobCount = mobs.size();
 
 		phaser.bulkRegister(playerCount);
-		for (Player player : players) {
-			SynchronizationTask task = new PrePlayerSynchronizationTask(player);
-			executor.submit(new PhasedSynchronizationTask(phaser, task));
-		}
+		players.forEach(player -> executor.submit(new PhasedSynchronizationTask(phaser, new PrePlayerSynchronizationTask(player))));
 		phaser.arriveAndAwaitAdvance();
 
 		phaser.bulkRegister(mobCount);
-		for (Mob mob : mobs) {
-			SynchronizationTask task = new PreMobSynchronizationTask(mob);
-			executor.submit(new PhasedSynchronizationTask(phaser, task));
-		}
+		mobs.forEach(mob -> executor.submit(new PhasedSynchronizationTask(phaser, new PreMobSynchronizationTask(mob))));
 		phaser.arriveAndAwaitAdvance();
 
 		phaser.bulkRegister(playerCount);
-		for (Player player : players) {
-			SynchronizationTask task = new PlayerSynchronizationTask(player, world);
-			executor.submit(new PhasedSynchronizationTask(phaser, task));
-		}
+		players.forEach(player -> executor.submit(new PhasedSynchronizationTask(phaser, new PlayerSynchronizationTask(player, world))));
 		phaser.arriveAndAwaitAdvance();
 
 		phaser.bulkRegister(playerCount);
-		for (Player player : players) {
-			SynchronizationTask task = new MobSynchronizationTask(player, world);
-			executor.submit(new PhasedSynchronizationTask(phaser, task));
-		}
+		players.forEach(player -> executor.submit(new PhasedSynchronizationTask(phaser, new MobSynchronizationTask(player, world))));
 		phaser.arriveAndAwaitAdvance();
 
 		phaser.bulkRegister(playerCount);
-		for (Player player : players) {
-			SynchronizationTask task = new PostPlayerSynchronizationTask(player);
-			executor.submit(new PhasedSynchronizationTask(phaser, task));
-		}
+		players.forEach(player -> executor.submit(new PhasedSynchronizationTask(phaser, new PostPlayerSynchronizationTask(player))));
 		phaser.arriveAndAwaitAdvance();
 
 		phaser.bulkRegister(mobCount);
-		for (Mob mob : mobs) {
-			SynchronizationTask task = new PostMobSynchronizationTask(mob);
-			executor.submit(new PhasedSynchronizationTask(phaser, task));
-		}
+		mobs.forEach(mob -> executor.submit(new PhasedSynchronizationTask(phaser, new PostMobSynchronizationTask(mob))));
 		phaser.arriveAndAwaitAdvance();
 	}
 

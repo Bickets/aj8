@@ -10,8 +10,7 @@ import org.apollo.game.model.Player;
 import org.apollo.game.model.World.RegistrationStatus;
 import org.apollo.net.session.GameSession;
 import org.apollo.service.Service;
-
-import com.google.common.util.concurrent.ThreadFactoryBuilder;
+import org.apollo.util.ThreadUtil;
 
 /**
  * The {@link GameService} class schedules and manages the execution of the
@@ -36,7 +35,7 @@ public final class GameService extends Service {
 	/**
 	 * The scheduled executor service.
 	 */
-	private final ScheduledExecutorService scheduledExecutor = Executors.newSingleThreadScheduledExecutor(new ThreadFactoryBuilder().setNameFormat("GameService").build());
+	private final ScheduledExecutorService scheduledExecutor = Executors.newSingleThreadScheduledExecutor(ThreadUtil.build("GameService"));
 
 	/**
 	 * A queue of players to remove.

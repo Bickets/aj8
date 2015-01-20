@@ -6,6 +6,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 import org.apollo.service.Service;
+import org.apollo.util.ThreadUtil;
 
 /**
  * A class which services file requests.
@@ -15,11 +16,6 @@ import org.apollo.service.Service;
 public final class UpdateService extends Service {
 
 	/**
-	 * The number of threads per request type.
-	 */
-	private static final int THREADS_PER_REQUEST_TYPE = Runtime.getRuntime().availableProcessors();
-
-	/**
 	 * The number of request types.
 	 */
 	private static final int REQUEST_TYPES = 3;
@@ -27,7 +23,7 @@ public final class UpdateService extends Service {
 	/**
 	 * The total number of threads to use for this update service.
 	 */
-	private static final int TOTAL_THREADS = REQUEST_TYPES * THREADS_PER_REQUEST_TYPE;
+	private static final int TOTAL_THREADS = REQUEST_TYPES * ThreadUtil.AVAILABLE_PROCESSORS;
 
 	/**
 	 * The executor service.
@@ -62,7 +58,7 @@ public final class UpdateService extends Service {
 
 	@Override
 	public void init() {
-		for (int i = 0; i < THREADS_PER_REQUEST_TYPE; i++) {
+		for (int i = 0; i < ThreadUtil.AVAILABLE_PROCESSORS; i++) {
 			workers.add(new JagGrabRequestWorker(dispatcher, getFileSystem()));
 			workers.add(new OnDemandRequestWorker(dispatcher, getFileSystem()));
 			workers.add(new HttpRequestWorker(dispatcher, getFileSystem()));
