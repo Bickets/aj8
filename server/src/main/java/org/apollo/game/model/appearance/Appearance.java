@@ -1,4 +1,7 @@
-package org.apollo.game.model;
+package org.apollo.game.model.appearance;
+
+import java.util.Arrays;
+
 
 /**
  * Represents the appearance of a player.
@@ -90,6 +93,34 @@ public final class Appearance {
 		 * feet
 		 */
 		return style;
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = 1;
+		result = prime * result + Arrays.hashCode(colors);
+		result = prime * result + ((gender == null) ? 0 : gender.hashCode());
+		result = prime * result + Arrays.hashCode(style);
+		return result;
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (this == obj)
+			return true;
+		if (obj == null)
+			return false;
+		if (getClass() != obj.getClass())
+			return false;
+		Appearance other = (Appearance) obj;
+		if (!Arrays.equals(colors, other.colors))
+			return false;
+		if (gender != other.gender)
+			return false;
+		if (!Arrays.equals(style, other.style))
+			return false;
+		return true;
 	}
 
 	/**

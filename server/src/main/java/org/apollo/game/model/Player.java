@@ -8,6 +8,7 @@ import java.util.Queue;
 import org.apollo.game.event.Event;
 import org.apollo.game.model.HeadIcon.Prayer;
 import org.apollo.game.model.HeadIcon.Skull;
+import org.apollo.game.model.appearance.Appearance;
 import org.apollo.game.model.inter.InterfaceSet;
 import org.apollo.game.model.inv.AppearanceInventoryListener;
 import org.apollo.game.model.inv.FullInventoryListener;

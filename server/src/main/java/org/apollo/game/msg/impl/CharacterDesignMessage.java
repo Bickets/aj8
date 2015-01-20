@@ -1,6 +1,6 @@
 package org.apollo.game.msg.impl;
 
-import org.apollo.game.model.Appearance;
+import org.apollo.game.model.appearance.Appearance;
 import org.apollo.game.msg.Message;
 
 /**

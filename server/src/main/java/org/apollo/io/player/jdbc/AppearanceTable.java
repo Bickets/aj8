@@ -6,9 +6,9 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
-import org.apollo.game.model.Appearance;
-import org.apollo.game.model.Gender;
 import org.apollo.game.model.Player;
+import org.apollo.game.model.appearance.Appearance;
+import org.apollo.game.model.appearance.Gender;
 
 /**
  * A {@link Table} which serializes player appearance.

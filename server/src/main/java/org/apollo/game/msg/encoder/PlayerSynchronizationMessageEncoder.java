@@ -1,13 +1,13 @@
 package org.apollo.game.msg.encoder;
 
 import org.apollo.game.model.Animation;
-import org.apollo.game.model.Appearance;
 import org.apollo.game.model.Direction;
 import org.apollo.game.model.EquipmentConstants;
-import org.apollo.game.model.Gender;
 import org.apollo.game.model.Graphic;
 import org.apollo.game.model.Item;
 import org.apollo.game.model.Position;
+import org.apollo.game.model.appearance.Appearance;
+import org.apollo.game.model.appearance.Gender;
 import org.apollo.game.model.def.EquipmentDefinition;
 import org.apollo.game.model.inv.Inventory;
 import org.apollo.game.msg.MessageEncoder;
