@@ -1,9 +1,9 @@
 package org.apollo.game.sync.block;
 
-import org.apollo.game.model.Appearance;
 import org.apollo.game.model.HeadIcon;
 import org.apollo.game.model.HeadIcon.Prayer;
 import org.apollo.game.model.HeadIcon.Skull;
+import org.apollo.game.model.appearance.Appearance;
 import org.apollo.game.model.inv.Inventory;
 
 /**
