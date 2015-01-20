@@ -2,7 +2,7 @@ package org.apollo.game.event;
 
 /**
  * An universal implementation of an {@link EventContext}.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class UniversalEventContext implements EventContext {

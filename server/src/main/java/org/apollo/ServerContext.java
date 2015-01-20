@@ -21,7 +21,7 @@ public final class ServerContext {
 
 	/**
 	 * Constructs a new {@link ServerContext} with the specified {@link Server}.
-	 * 
+	 *
 	 * @param server The server this context represents.
 	 */
 	public ServerContext(Server server) {

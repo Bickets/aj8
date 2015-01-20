@@ -26,7 +26,7 @@ public final class TaskScheduler {
 
 	/**
 	 * Schedules a new pending {@link Task}.
-	 * 
+	 *
 	 * @param task The task to schedule.
 	 * @return {@code true} if and only if the task was added successfully,
 	 *         otherwise {@code false}.

@@ -8,7 +8,7 @@ import com.google.common.base.Preconditions;
 
 /**
  * Represents an index within some {@link Cache}.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class Index {
@@ -27,7 +27,7 @@ public final class Index {
 	 * Constructs a new {@link Index} with the expected length and id. This
 	 * constructor is marked {@code private} and should not be modified to be
 	 * invoked directly, use {@link Index#decode(ByteBuffer)} instead.
-	 * 
+	 *
 	 * @param length The length of the index.
 	 * @param id The id of the index.
 	 */
@@ -38,7 +38,7 @@ public final class Index {
 
 	/**
 	 * Decodes an {@link Index} from the specified {@link ByteBuffer}.
-	 * 
+	 *
 	 * @param buffer The {@link ByteBuffer} to get the index from.
 	 * @return The decoded index.
 	 */

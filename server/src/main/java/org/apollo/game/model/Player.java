@@ -564,7 +564,7 @@ public final class Player extends GameCharacter {
 
 	/**
 	 * Posts an event to this world's event provider.
-	 * 
+	 *
 	 * @param event The event to post.
 	 */
 	public <E extends Event> void post(E event) {

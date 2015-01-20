@@ -265,7 +265,7 @@ public final class World {
 	/**
 	 * Schedules a new {@link GameUpdateHandler} for the specified duration of
 	 * seconds.
-	 * 
+	 *
 	 * @param seconds The amount of seconds the update is delayed for.
 	 */
 	public void scheduleUpdate(int seconds) {
@@ -311,7 +311,7 @@ public final class World {
 
 	/**
 	 * Sends a message to this entire {@link World}.
-	 * 
+	 *
 	 * @param message The message to send to the world.
 	 */
 	public <T> void sendGlobalMessage(T message) {

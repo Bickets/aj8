@@ -4,7 +4,7 @@ import org.apollo.game.msg.Message;
 
 /**
  * Represents the system update message.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class SystemUpdateMessage implements Message {
@@ -17,7 +17,7 @@ public final class SystemUpdateMessage implements Message {
 	/**
 	 * Constructs a new {@link SystemUpdateMessage} witht he specified amount of
 	 * seconds.
-	 * 
+	 *
 	 * @param seconds The amount of seconds the specified system update is.
 	 */
 	public SystemUpdateMessage(int seconds) {

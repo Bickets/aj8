@@ -8,7 +8,7 @@ import com.google.common.base.Preconditions;
 
 /**
  * Represents a sector within some {@link Cache}.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class Sector {
@@ -38,7 +38,7 @@ public final class Sector {
 	 * index id and cache id. This constructor is marked {@code private} and
 	 * should not be modified to be invoked directly, use
 	 * {@link Sector#decode(ByteBuffer, byte[], int, int)} instead.
-	 * 
+	 *
 	 * @param indexId The id of the index this sector is within.
 	 * @param chunk This sectors chunk.
 	 * @param nextIndexId The next index within this sector.
@@ -53,7 +53,7 @@ public final class Sector {
 
 	/**
 	 * Decodes a {@link Sector} from the specified {@link ByteBuffer}.
-	 * 
+	 *
 	 * @param buffer The {@link ByteBuffer} to get the sector from.
 	 * @param data The expected data within the sector.
 	 * @param offset The expected offset of the sector.
@@ -71,7 +71,7 @@ public final class Sector {
 
 	/**
 	 * Tests whether or not this sector is valid.
-	 * 
+	 *
 	 * @param cacheId The cache id to test.
 	 * @param indexId The index id to test.
 	 * @param chunk The chunk id to test.

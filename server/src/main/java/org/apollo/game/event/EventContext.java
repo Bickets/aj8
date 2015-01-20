@@ -2,7 +2,7 @@ package org.apollo.game.event;
 
 /**
  * Represents the context of an {@link Event}
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public interface EventContext {
@@ -19,7 +19,7 @@ public interface EventContext {
 
 	/**
 	 * Checks whether or not the subscriber chain is broken.
-	 * 
+	 *
 	 * @return {@code true} if and only if the chain is broken, otherwise
 	 *         {@code false}.
 	 */

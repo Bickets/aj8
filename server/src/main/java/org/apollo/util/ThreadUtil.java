@@ -14,7 +14,7 @@ import com.google.common.util.concurrent.ThreadFactoryBuilder;
 /**
  * A static utility class which provides ease of use functionality for
  * {@link Thread}s
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class ThreadUtil {
@@ -42,7 +42,7 @@ public final class ThreadUtil {
 	/**
 	 * Builds a {@link ThreadFactory} using the specified {@code String}
 	 * name-format, {@link ThreadPriority} and {@link UncaughtExceptionHandler}.
-	 * 
+	 *
 	 * @param name The name-format used when creating threads, may not be
 	 *            {@code null}.
 	 * @param priority The priority used when creating threads, may not be
@@ -66,7 +66,7 @@ public final class ThreadUtil {
 	 * Builds a {@link ThreadFactory} using the specified {@code String}
 	 * name-format, {@link ThreadPriority} and the default
 	 * {@link UncaughtExceptionHandler}.
-	 * 
+	 *
 	 * @param name The name-format used when creating threads, may not be
 	 *            {@code null}.
 	 * @param priority The priority used when creating threads, may not be
@@ -83,7 +83,7 @@ public final class ThreadUtil {
 	 * Builds a {@link ThreadFactory} using the specified {@code String}
 	 * name-format, normal thread priority and the default
 	 * {@link UncaughtExceptionHandler}.
-	 * 
+	 *
 	 * @param name The name-format used when creating threads, may not be
 	 *            {@code null}.
 	 * @return A new {@link ThreadFactory} from the specified parameters, never
@@ -97,7 +97,7 @@ public final class ThreadUtil {
 
 	/**
 	 * An enumeration representing the priority of a {@link Thread}.
-	 * 
+	 *
 	 * @author Ryley Kimmel <ryley.kimmel@live.com>
 	 */
 	public enum ThreadPriority {
@@ -123,7 +123,7 @@ public final class ThreadUtil {
 
 		/**
 		 * Constructs a new {@link ThreadPriority} with the specified value.
-		 * 
+		 *
 		 * @param value The value of this thread priority, must be within the
 		 *            bounds of {@link Thread#MIN_PRIORITY} and
 		 *            {@link Thread#MAX_PRIORITY}.

@@ -175,7 +175,7 @@ public enum GameObjectType {
 	/**
 	 * Returns a {@link GameObjectType} wrapped in an {@link Optional} for the
 	 * specified {@code id}.
-	 * 
+	 *
 	 * @param id The game object type id.
 	 * @return The optional game object type.
 	 */

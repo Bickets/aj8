@@ -71,7 +71,7 @@ public enum GameObjectOrientation {
 	/**
 	 * Returns a {@link GameObjectOrientation} wrapped in an {@link Optional}
 	 * for the specified {@code id}.
-	 * 
+	 *
 	 * @param id The game object orientation id.
 	 * @return The optional game object orientation.
 	 */

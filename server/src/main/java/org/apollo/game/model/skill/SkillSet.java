@@ -114,13 +114,13 @@ public final class SkillSet {
 
 	/**
 	 * Returns the experience modifier for the specified level.
-	 * 
+	 *
 	 * @param level The level to get the experience modifier for.
 	 * @return The experience modifier.
 	 */
 	public int getExperienceModifier(int level) {
 		int minMod = 2;
-		int maxMod = (level / 20) + 1;
+		int maxMod = level / 20 + 1;
 		return Math.max(maxMod, minMod);
 	}
 

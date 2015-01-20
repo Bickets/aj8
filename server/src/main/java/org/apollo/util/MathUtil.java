@@ -27,7 +27,7 @@ public final class MathUtil {
 	/**
 	 * Returns the amount of overflow from the addition of the two specified
 	 * {@code int}s.
-	 * 
+	 *
 	 * @param a The first integer.
 	 * @param b The second integer.
 	 * @return The amount of overflow or <tt>0</tt> if the {@code int}s can be

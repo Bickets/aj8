@@ -76,7 +76,7 @@ public enum GameObjectGroup {
 	/**
 	 * Returns a {@link GameObjectGroup} wrapped in an {@link Optional} for the
 	 * specified {@code type}.
-	 * 
+	 *
 	 * @param type The game object type.
 	 * @return The optional game object group.
 	 */
@@ -88,7 +88,7 @@ public enum GameObjectGroup {
 	/**
 	 * Returns a {@link GameObjectGroup} wrapped in an {@link Optional} for the
 	 * specified {@code id}.
-	 * 
+	 *
 	 * @param id The game object group id.
 	 * @return The optional game object group.
 	 */

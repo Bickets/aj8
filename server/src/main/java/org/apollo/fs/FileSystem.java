@@ -16,7 +16,7 @@ import com.google.common.base.Preconditions;
 
 /**
  * Represents a file system of {@link Cache}s and {@link Archive}s.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class FileSystem {
@@ -190,7 +190,7 @@ public final class FileSystem {
 	/**
 	 * Gets a {@link Cache} for the specified {@code id}, this method fails-fast
 	 * if no cache can be found.
-	 * 
+	 *
 	 * @param id The id of the {@link Cache} to fetch.
 	 * @return The {@link Cache} for the specified {@code id}.
 	 * @throws NullPointerException If the cache cannot be found.
@@ -203,7 +203,7 @@ public final class FileSystem {
 	/**
 	 * Returns a {@link ByteBuffer} of file data for the specified index within
 	 * the specified {@link Cache}.
-	 * 
+	 *
 	 * @param cacheId The id of the cache.
 	 * @param indexId The id of the index within the cache.
 	 * @return A {@link ByteBuffer} of file data for the specified index.
@@ -219,7 +219,7 @@ public final class FileSystem {
 	/**
 	 * Returns the cached {@link #archiveHashes} if they exist, otherwise they
 	 * are calculated and cached for future use.
-	 * 
+	 *
 	 * @return The hashes of each {@link Archive}.
 	 * @throws IOException If some I/O exception occurs.
 	 */

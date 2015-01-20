@@ -5,7 +5,7 @@ import org.apollo.game.model.grounditem.GroundItem;
 /**
  * An implementation of a {@link GroundItemMessage} which sends a removal
  * request for the specified {@link GroundItem}.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class RemoveGroundItemMessage extends GroundItemMessage {

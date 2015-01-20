@@ -88,7 +88,7 @@ public abstract class Entity {
 	/**
 	 * Returns a {@link Set} of surrounding {@link Entity}s based on their
 	 * {@link EntityCategory}.
-	 * 
+	 *
 	 * @param category The category of the entity that is surrounding this
 	 *            entity.
 	 * @return A {@link Set} of {@link Entity}s of the specified category.

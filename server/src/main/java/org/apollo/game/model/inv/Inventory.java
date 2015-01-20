@@ -576,7 +576,7 @@ public final class Inventory implements Cloneable {
 
 	/**
 	 * Returns an {@link InventorySupplier} for the specified interface id.
-	 * 
+	 *
 	 * @param interfaceId The interface id of the inventory.
 	 * @return An {@link InventorySupplier} for the specified interface id if
 	 *         and only if an inventory exists for that interface, otherwise
@@ -590,7 +590,7 @@ public final class Inventory implements Cloneable {
 	 * Adds an {@link Inventory} with the specified interface id to the
 	 * {@link Map} of supported ones, <strong>if</strong> the specified id does
 	 * <strong>not</strong> already have a mapping.
-	 * 
+	 *
 	 * @param id The id of the interface.
 	 * @param supplier The {@link InventorySupplier}.
 	 */

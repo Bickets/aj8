@@ -8,7 +8,7 @@ import org.apollo.util.LanguageUtil;
 
 /**
  * A dialogue listener which manages skill level-up dialogues.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class SkillLevelUpDialogueListener implements DialogueListener {
@@ -26,7 +26,7 @@ public final class SkillLevelUpDialogueListener implements DialogueListener {
 	/**
 	 * Constructs a new {@link SkillLevelUpDialogueListener} with the specified
 	 * id and skill that was leveled up.
-	 * 
+	 *
 	 * @param id The id of the skill that was leveled up.
 	 * @param skill The skill that was leveled up.
 	 */

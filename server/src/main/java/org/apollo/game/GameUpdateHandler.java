@@ -7,7 +7,7 @@ import org.apollo.game.task.Task;
 
 /**
  * Manages game update tasks.
- * 
+ *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class GameUpdateHandler extends Task {
@@ -35,7 +35,7 @@ public final class GameUpdateHandler extends Task {
 	/**
 	 * Constructs a new {@link GameUpdateHandler} with the specified world and
 	 * amount of seconds until the game update.
-	 * 
+	 *
 	 * @param world The world we are updating.
 	 * @param seconds The amount of seconds until the game update.
 	 */
