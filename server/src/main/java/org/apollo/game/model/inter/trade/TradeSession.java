@@ -2,9 +2,9 @@ package org.apollo.game.model.inter.trade;
 
 import java.util.List;
 
-import org.apollo.game.model.Inventory;
 import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
+import org.apollo.game.model.inv.Inventory;
 
 /**
  * Represents a trade session between two {@link Player}s.

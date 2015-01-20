@@ -9,15 +9,15 @@ import java.io.IOException;
 
 import org.apollo.game.model.Appearance;
 import org.apollo.game.model.Gender;
-import org.apollo.game.model.Inventory;
 import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.Player.PrivilegeLevel;
-import org.apollo.game.model.skill.Skill;
-import org.apollo.game.model.skill.SkillSet;
 import org.apollo.game.model.PlayerConstants;
 import org.apollo.game.model.Position;
 import org.apollo.game.model.World;
+import org.apollo.game.model.inv.Inventory;
+import org.apollo.game.model.skill.Skill;
+import org.apollo.game.model.skill.SkillSet;
 import org.apollo.io.player.PlayerSerializer;
 import org.apollo.io.player.PlayerSerializerResponse;
 import org.apollo.net.codec.login.LoginConstants;

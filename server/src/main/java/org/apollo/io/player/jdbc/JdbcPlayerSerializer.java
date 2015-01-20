@@ -14,10 +14,10 @@ import java.sql.Timestamp;
 import java.time.LocalTime;
 
 import org.apollo.game.crypto.BCrypt;
-import org.apollo.game.model.Inventory;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.PlayerConstants;
 import org.apollo.game.model.World;
+import org.apollo.game.model.inv.Inventory;
 import org.apollo.io.player.PlayerSanctionProvider;
 import org.apollo.io.player.PlayerSanctionResponse;
 import org.apollo.io.player.PlayerSerializer;

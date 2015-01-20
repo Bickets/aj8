@@ -7,9 +7,9 @@ import static org.apollo.game.model.inter.trade.TradeStatus.INITIALIZED;
 import static org.apollo.game.model.inter.trade.TradeStatus.UPDATING_ITEMS;
 import static org.apollo.game.model.inter.trade.TradeStatus.VERIFYING;
 
-import org.apollo.game.model.Inventory;
 import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
+import org.apollo.game.model.inv.Inventory;
 import org.apollo.game.model.inv.InventoryAdapter;
 import org.apollo.game.model.inv.InventoryListener;
 import org.apollo.game.msg.impl.SetInterfaceTextMessage;

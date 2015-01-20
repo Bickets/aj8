@@ -4,11 +4,11 @@ import org.apollo.game.event.EventContext
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ButtonActionEvent
-import org.apollo.game.model.Inventory
 import org.apollo.game.model.Player
 import org.apollo.game.model.inter.InterfaceListener
 import org.apollo.game.model.inter.trade.TradeStage
 import org.apollo.game.model.inter.trade.TradeStatus
+import org.apollo.game.model.inv.Inventory
 import org.apollo.game.msg.impl.SetInterfaceTextMessage
 import org.apollo.util.NumberUtil
 import org.eclipse.xtend.lib.annotations.Data

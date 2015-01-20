@@ -1,6 +1,5 @@
 package org.apollo.game.model.skill;
 
-
 /**
  * An interface which listens to events from a {@link SkillSet}.
  *

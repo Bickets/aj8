@@ -4,7 +4,7 @@ import org.apollo.game.model.Appearance;
 import org.apollo.game.model.HeadIcon;
 import org.apollo.game.model.HeadIcon.Prayer;
 import org.apollo.game.model.HeadIcon.Skull;
-import org.apollo.game.model.Inventory;
+import org.apollo.game.model.inv.Inventory;
 
 /**
  * The appearance {@link SynchronizationBlock}.

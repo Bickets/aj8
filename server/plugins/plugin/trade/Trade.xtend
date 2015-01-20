@@ -7,8 +7,8 @@ import org.apollo.game.model.inter.trade.TradeSession
 import org.apollo.game.model.inv.InventoryListener
 import org.apollo.game.model.inv.SynchronizationInventoryListener
 
-import static org.apollo.game.model.InventoryConstants.*
 import static org.apollo.game.model.inter.trade.TradeConstants.*
+import static org.apollo.game.model.inv.InventoryConstants.*
 
 class Trade {
 

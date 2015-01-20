@@ -1,5 +1,7 @@
 package org.apollo.game.model;
 
+import org.apollo.game.model.inv.InventoryConstants;
+
 /**
  * A common static-utility class with helper methods and constants for
  * interfaces.
@@ -94,37 +96,6 @@ public final class Interfaces {
 			}
 			throw new IllegalArgumentException();
 		}
-	}
-
-	/**
-	 * Returns an {@link Inventory} for the specified interface id.
-	 *
-	 * @param player The player who owns the inventory.
-	 * @param id The interface id.
-	 * @return The inventory for the specified interface id, {@code null} if not
-	 *         supported or does not exist.
-	 * @throws IllegalArgumentException If the specified interface id does not
-	 *             exist or is not supported.
-	 */
-	public static Inventory getInventoryForInterface(Player player, int id) {
-		switch (id) {
-		case InventoryConstants.INVENTORY_ID:
-		case InventoryConstants.BANK_SIDEBAR_INVENTORY_ID:
-		case InventoryConstants.TRADE_SIDEBAR_INVENTORY_ID:
-			return player.getInventory();
-
-		case InventoryConstants.EQUIPMENT_INVENTORY_ID:
-			return player.getEquipment();
-
-		case InventoryConstants.BANK_INVENTORY_ID:
-			return player.getBank();
-
-		case InventoryConstants.TRADE_INVENTORY_ID:
-		case InventoryConstants.OTHER_TRADE_INVENTORY_ID:
-			return player.getTrade();
-		}
-
-		throw new IllegalArgumentException("Inventory for interface: " + id + " not supported!");
 	}
 
 	/**

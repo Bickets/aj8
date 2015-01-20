@@ -3,12 +3,12 @@ package org.apollo.game.msg.handler;
 import org.apollo.game.action.DistancedAction;
 import org.apollo.game.interact.ItemOnPlayerActionEvent;
 import org.apollo.game.model.GameCharacterRepository;
-import org.apollo.game.model.Interfaces;
-import org.apollo.game.model.Inventory;
 import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.World;
 import org.apollo.game.model.def.InterfaceDefinition;
+import org.apollo.game.model.inv.Inventory;
+import org.apollo.game.model.inv.InventorySupplier;
 import org.apollo.game.msg.MessageHandler;
 import org.apollo.game.msg.annotate.HandlesMessage;
 import org.apollo.game.msg.impl.ItemOnPlayerMessage;
@@ -63,11 +63,13 @@ public final class ItemOnPlayerMessageHandler implements MessageHandler<ItemOnPl
 			return;
 		}
 
-		Inventory inventory = Interfaces.getInventoryForInterface(player, message.getInterfaceId());
-		if (inventory == null) {
+		InventorySupplier supplier = Inventory.getInventory(message.getInterfaceId());
+		if (supplier == null) {
 			player.getWalkingQueue().clear();
 			return;
 		}
+
+		Inventory inventory = supplier.getInventory(player);
 
 		if (message.getSlot() < 0 || message.getSlot() >= inventory.capacity()) {
 			player.getWalkingQueue().clear();

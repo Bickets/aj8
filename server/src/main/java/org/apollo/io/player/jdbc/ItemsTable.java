@@ -7,9 +7,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
 
-import org.apollo.game.model.Inventory;
 import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
+import org.apollo.game.model.inv.Inventory;
 
 /**
  * A {@link Table} which serializes player inventories.

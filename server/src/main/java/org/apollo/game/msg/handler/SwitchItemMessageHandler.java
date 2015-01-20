@@ -1,9 +1,10 @@
 package org.apollo.game.msg.handler;
 
 import org.apollo.game.model.Interfaces;
-import org.apollo.game.model.Inventory;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.def.InterfaceDefinition;
+import org.apollo.game.model.inv.Inventory;
+import org.apollo.game.model.inv.InventorySupplier;
 import org.apollo.game.msg.MessageHandler;
 import org.apollo.game.msg.annotate.HandlesMessage;
 import org.apollo.game.msg.impl.SwitchItemMessage;
@@ -37,10 +38,12 @@ public final class SwitchItemMessageHandler implements MessageHandler<SwitchItem
 			return;
 		}
 
-		Inventory inventory = Interfaces.getInventoryForInterface(player, def.getId());
-		if (inventory == null) {
+		InventorySupplier supplier = Inventory.getInventory(message.getInterfaceId());
+		if (supplier == null) {
 			return;
 		}
+
+		Inventory inventory = supplier.getInventory(player);
 
 		if (message.getOldSlot() < inventory.capacity() && message.getNewSlot() < inventory.capacity()) {
 			inventory.swap(message.isInserting() && Interfaces.insertPermitted(def.getId()), message.getOldSlot(), message.getNewSlot());

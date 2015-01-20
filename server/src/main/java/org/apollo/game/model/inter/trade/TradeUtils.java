@@ -1,9 +1,9 @@
 package org.apollo.game.model.inter.trade;
 
-import org.apollo.game.model.Inventory;
 import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.def.ItemDefinition;
+import org.apollo.game.model.inv.Inventory;
 
 /**
  * Contains static utility methods for dealing with trade inventories.

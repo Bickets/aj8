@@ -1,9 +1,9 @@
 package org.apollo.game.msg.handler;
 
 import org.apollo.game.interact.ItemOnItemActionEvent;
-import org.apollo.game.model.Inventory;
 import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
+import org.apollo.game.model.inv.Inventory;
 import org.apollo.game.msg.MessageHandler;
 import org.apollo.game.msg.annotate.HandlesMessage;
 import org.apollo.game.msg.impl.ItemOnItemMessage;

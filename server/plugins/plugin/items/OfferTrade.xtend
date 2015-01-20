@@ -5,11 +5,11 @@ import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ItemActionEvent
 import org.apollo.game.model.Interfaces.InterfaceOption
-import org.apollo.game.model.InventoryConstants
 import org.apollo.game.model.Player
 import org.apollo.game.model.inter.trade.TradeConstants
 import org.apollo.game.model.inter.trade.TradeOfferEnterAmountListener
 import org.apollo.game.model.inter.trade.TradeUtils
+import org.apollo.game.model.inv.InventoryConstants
 
 @SubscribesTo(ItemActionEvent)
 class OfferTrade implements EventSubscriber<ItemActionEvent> {

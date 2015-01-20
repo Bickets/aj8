@@ -1,13 +1,16 @@
-package org.apollo.game.model;
+package org.apollo.game.model.inv;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Set;
 
+import org.apollo.game.model.Item;
+import org.apollo.game.model.Player;
 import org.apollo.game.model.def.ItemDefinition;
-import org.apollo.game.model.inv.InventoryListener;
 
 /**
  * Represents an inventory - a collection of {@link Item}s.
@@ -567,6 +570,35 @@ public final class Inventory implements Cloneable {
 	}
 
 	/**
+	 * The map of interface ids to inventories.
+	 */
+	private static final Map<Integer, InventorySupplier> inventories = new HashMap<>();
+
+	/**
+	 * Returns an {@link InventorySupplier} for the specified interface id.
+	 * 
+	 * @param interfaceId The interface id of the inventory.
+	 * @return An {@link InventorySupplier} for the specified interface id if
+	 *         and only if an inventory exists for that interface, otherwise
+	 *         {@code null} is returned.
+	 */
+	public static InventorySupplier getInventory(int interfaceId) {
+		return inventories.get(interfaceId);
+	}
+
+	/**
+	 * Adds an {@link Inventory} with the specified interface id to the
+	 * {@link Map} of supported ones, <strong>if</strong> the specified id does
+	 * <strong>not</strong> already have a mapping.
+	 * 
+	 * @param id The id of the interface.
+	 * @param supplier The {@link InventorySupplier}.
+	 */
+	public static void addInventory(int id, InventorySupplier supplier) {
+		inventories.putIfAbsent(id, supplier);
+	}
+
+	/**
 	 * Gets a clone of the items array.
 	 *
 	 * @return A clone of the items array.
@@ -610,6 +642,19 @@ public final class Inventory implements Cloneable {
 	 */
 	public void forceCapacityExceeded() {
 		notifyCapacityExceeded();
+	}
+
+	static {
+		addInventory(InventoryConstants.INVENTORY_ID, Player::getInventory);
+		addInventory(InventoryConstants.BANK_SIDEBAR_INVENTORY_ID, Player::getInventory);
+		addInventory(InventoryConstants.TRADE_SIDEBAR_INVENTORY_ID, Player::getInventory);
+
+		addInventory(InventoryConstants.EQUIPMENT_INVENTORY_ID, Player::getEquipment);
+
+		addInventory(InventoryConstants.BANK_INVENTORY_ID, Player::getBank);
+
+		addInventory(InventoryConstants.TRADE_INVENTORY_ID, Player::getTrade);
+		addInventory(InventoryConstants.OTHER_TRADE_INVENTORY_ID, Player::getTrade);
 	}
 
 }

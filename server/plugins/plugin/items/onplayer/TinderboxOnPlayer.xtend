@@ -4,8 +4,8 @@ import org.apollo.game.event.EventContext
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ItemOnPlayerActionEvent
-import org.apollo.game.model.InventoryConstants
 import org.apollo.game.model.Player
+import org.apollo.game.model.inv.InventoryConstants
 
 @SubscribesTo(ItemOnPlayerActionEvent)
 class TinderboxOnPlayer implements EventSubscriber<ItemOnPlayerActionEvent> {

@@ -7,10 +7,10 @@ import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ItemOnPlayerActionEvent
 import org.apollo.game.model.Animation
 import org.apollo.game.model.Graphic
-import org.apollo.game.model.InventoryConstants
 import org.apollo.game.model.Player
 import org.apollo.game.model.inter.dialog.DialogueOption
 import org.apollo.game.model.inter.dialog.OptionDialogueListener
+import org.apollo.game.model.inv.InventoryConstants
 
 import static org.apollo.game.model.inter.dialog.DialogueOption.*
 import static plugin.Plugin.*
