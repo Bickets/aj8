@@ -25,8 +25,9 @@ import static org.apollo.game.model.pf.TraversalConstants.WALL_SOUTH_EAST;
 import static org.apollo.game.model.pf.TraversalConstants.WALL_SOUTH_WEST;
 import static org.apollo.game.model.pf.TraversalConstants.WALL_WEST;
 
-import java.util.LinkedList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 import org.apollo.game.model.Direction;
 import org.apollo.game.model.Position;
@@ -887,8 +888,8 @@ public final class TraversalMap {
 	 * @param size The size of the mob attempting to traverse.
 	 * @return A {@link List} of positions.
 	 */
-	public List<Position> getNearbyTraversableTiles(Position from, int size) {
-		List<Position> positions = new LinkedList<>();
+	public Set<Position> getNearbyTraversableTiles(Position from, int size) {
+		Set<Position> positions = new HashSet<>();
 
 		if (isTraversableNorth(from.getHeight(), from.getX(), from.getY(), size)) {
 			positions.add(new Position(from.getX(), from.getY() + 1, from.getHeight()));

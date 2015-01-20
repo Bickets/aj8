@@ -25,6 +25,11 @@ public final class UpdateService extends Service {
 	private static final int REQUEST_TYPES = 3;
 
 	/**
+	 * The total number of threads to use for this update service.
+	 */
+	private static final int TOTAL_THREADS = REQUEST_TYPES * THREADS_PER_REQUEST_TYPE;
+
+	/**
 	 * The executor service.
 	 */
 	private final ExecutorService service;
@@ -43,8 +48,7 @@ public final class UpdateService extends Service {
 	 * Creates the update service.
 	 */
 	public UpdateService() {
-		int totalThreads = REQUEST_TYPES * THREADS_PER_REQUEST_TYPE;
-		service = Executors.newFixedThreadPool(totalThreads);
+		service = Executors.newFixedThreadPool(TOTAL_THREADS);
 	}
 
 	/**

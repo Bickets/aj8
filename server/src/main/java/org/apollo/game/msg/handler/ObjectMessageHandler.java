@@ -76,7 +76,7 @@ public final class ObjectMessageHandler implements MessageHandler<ObjectActionMe
 	 * @return {@code true} if the set does contain the object with the
 	 *         specified id, otherwise {@code false}.
 	 */
-	private boolean containsObject(int id, Set<GameObject> objects) {
+	private static boolean containsObject(int id, Set<GameObject> objects) {
 		return objects.stream().anyMatch(obj -> obj.getId() == id);
 	}
 

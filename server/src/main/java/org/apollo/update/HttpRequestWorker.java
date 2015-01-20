@@ -98,7 +98,7 @@ public final class HttpRequestWorker extends RequestWorker<HttpRequest, Resource
 	 * @param name The file name.
 	 * @return The MIME type.
 	 */
-	private String getMimeType(String name) {
+	private static String getMimeType(String name) {
 		if (name.endsWith("/")) {
 			name = name.concat("index.html");
 		}
@@ -127,7 +127,7 @@ public final class HttpRequestWorker extends RequestWorker<HttpRequest, Resource
 	 * @param description The error description.
 	 * @return The error page as a buffer.
 	 */
-	private ByteBuf createErrorPage(HttpResponseStatus status, String description) {
+	private static ByteBuf createErrorPage(HttpResponseStatus status, String description) {
 		String title = status.code() + " " + status.reasonPhrase();
 
 		return Unpooled.copiedBuffer("<!DOCTYPE html><html><head><title>" + title + "</title></head><body><h1>" + title + "</h1><p>" + description + "</p><hr /><address>" + SERVER_IDENTIFIER + " Server</address></body></html>", Charset.defaultCharset());
