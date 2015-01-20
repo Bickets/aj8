@@ -1,7 +1,5 @@
 package org.apollo.game.model.appearance;
 
-import java.util.Arrays;
-
 /**
  * Represents the appearance of a player.
  *
