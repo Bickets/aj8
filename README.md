@@ -9,15 +9,3 @@ aj8 aims to provide a simple, elegant, robust and easy to use framework utilizin
 * No implicity- we'll explicitly state requirements (whether such statements are forced by code itself or documented) to ensure a surprise-free library for ourselves and other developers
 * Listen for extensive review and feedback to coordinate future development plans of infrastructure- large or small
 * Giving you our one and only plugin system; bringing light to dynamic unattached event dispatches in the community
-
-### Requirements needed to run aj8:
-* jre-8
-* commons-compress-1.5
-* commons-lang3-3.3.2
-* ant-1.9.4
-* gson-2.2.4
-* xtend 2.6.2
-* mysql-connector-java-5.1.18
-* netty-all-4.0.23
-* slf4j-api-1.7.7
-* slf4j-simple-1.7.7
