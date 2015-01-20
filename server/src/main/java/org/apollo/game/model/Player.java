@@ -177,6 +177,11 @@ public final class Player extends GameCharacter {
 	private final InterfaceSet interfaceSet = new InterfaceSet(this);
 
 	/**
+	 * This players set of recently seen players.
+	 */
+	private final AppearanceSet appearanceSet = new AppearanceSet();
+
+	/**
 	 * The character's inventory.
 	 */
 	private final Inventory inventory = new Inventory(InventoryConstants.INVENTORY_CAPACITY);
@@ -227,6 +232,13 @@ public final class Player extends GameCharacter {
 	 */
 	public InterfaceSet getInterfaceSet() {
 		return interfaceSet;
+	}
+
+	/**
+	 * Returns this players appearance set.
+	 */
+	public AppearanceSet getAppearanceSet() {
+		return appearanceSet;
 	}
 
 	/**
