@@ -1,6 +1,6 @@
 package org.apollo.game.msg.impl;
 
-import org.apollo.game.model.Interfaces.InterfaceOption;
+import org.apollo.game.model.inter.Interfaces.InterfaceOption;
 import org.apollo.game.msg.Message;
 
 /**

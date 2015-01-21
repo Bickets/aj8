@@ -1,8 +1,8 @@
 package org.apollo.game.msg.handler;
 
-import org.apollo.game.model.Interfaces;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.def.InterfaceDefinition;
+import org.apollo.game.model.inter.Interfaces;
 import org.apollo.game.model.inv.Inventory;
 import org.apollo.game.model.inv.InventorySupplier;
 import org.apollo.game.msg.MessageHandler;

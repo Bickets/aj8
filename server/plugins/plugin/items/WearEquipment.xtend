@@ -4,10 +4,10 @@ import org.apollo.game.event.EventContext
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ItemActionEvent
-import org.apollo.game.model.Interfaces.InterfaceOption
 import org.apollo.game.model.Player
 import org.apollo.game.model.^def.EquipmentDefinition
 import org.apollo.game.model.^def.ItemDefinition
+import org.apollo.game.model.inter.Interfaces.InterfaceOption
 import org.apollo.game.model.inv.InventoryConstants
 import org.apollo.game.model.skill.Skill
 

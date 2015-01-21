@@ -10,6 +10,7 @@ import org.apollo.game.model.HeadIcon.Prayer;
 import org.apollo.game.model.HeadIcon.Skull;
 import org.apollo.game.model.appearance.Appearance;
 import org.apollo.game.model.inter.InterfaceSet;
+import org.apollo.game.model.inter.Interfaces;
 import org.apollo.game.model.inv.AppearanceInventoryListener;
 import org.apollo.game.model.inv.FullInventoryListener;
 import org.apollo.game.model.inv.Inventory;

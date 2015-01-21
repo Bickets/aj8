@@ -1,4 +1,4 @@
-package org.apollo.game.model;
+package org.apollo.game.model.inter;
 
 import org.apollo.game.model.inv.InventoryConstants;
 
