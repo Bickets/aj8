@@ -48,7 +48,7 @@ public abstract class Service {
 	/**
 	 * Returns the {@link ServerContext} this service is provided by.
 	 */
-	public ServerContext getContext() {
+	public final ServerContext getContext() {
 		return context;
 	}
 
@@ -59,7 +59,7 @@ public abstract class Service {
 	 * @return {@code true} if and only if the service exists otherwise
 	 *         {@code false}.
 	 */
-	public <T extends Service> boolean serviceExists(Class<T> clazz) {
+	public final <T extends Service> boolean serviceExists(Class<T> clazz) {
 		return context.serviceExists(clazz);
 	}
 
@@ -69,42 +69,42 @@ public abstract class Service {
 	 * @param clazz The services class.
 	 * @return The {@link Service} object for the specified service class.
 	 */
-	public <T extends Service> T getService(Class<T> clazz) {
+	public final <T extends Service> T getService(Class<T> clazz) {
 		return context.getService(clazz);
 	}
 
 	/**
 	 * Returns this servers file system.
 	 */
-	public FileSystem getFileSystem() {
+	public final FileSystem getFileSystem() {
 		return context.getFileSystem();
 	}
 
 	/**
 	 * Returns this servers world.
 	 */
-	public World getWorld() {
+	public final World getWorld() {
 		return context.getWorld();
 	}
 
 	/**
 	 * Returns this servers message translator.
 	 */
-	public MessageTranslator getMessageTranslator() {
+	public final MessageTranslator getMessageTranslator() {
 		return context.getMessageTranslator();
 	}
 
 	/**
 	 * Returns this servers player serializer worker.
 	 */
-	public PlayerSerializerWorker getSerializerWorker() {
+	public final PlayerSerializerWorker getSerializerWorker() {
 		return context.getSerializerWorker();
 	}
 
 	/**
 	 * Returns this servers client synchronizer.
 	 */
-	public ClientSynchronizer getClientSynchronizer() {
+	public final ClientSynchronizer getClientSynchronizer() {
 		return context.getClientSynchronizer();
 	}
 
@@ -115,7 +115,7 @@ public abstract class Service {
 	 * @param listener The listener to notify.
 	 * @see {@link State#START}
 	 */
-	public void onStart(ServiceListener listener) {
+	public final void onStart(ServiceListener listener) {
 		on(State.START, listener);
 	}
 
@@ -126,7 +126,7 @@ public abstract class Service {
 	 * @param state The state this service has changed to.
 	 * @param listener The listener to notify.
 	 */
-	public void on(State state, ServiceListener listener) {
+	public final void on(State state, ServiceListener listener) {
 		listeners.put(state, listener);
 	}
 
@@ -136,7 +136,7 @@ public abstract class Service {
 	 *
 	 * @param state The state this service has changed to.
 	 */
-	private void executeListeners(State state) {
+	private final void executeListeners(State state) {
 		listeners.get(state).forEach(initializer -> initializer.execute());
 	}
 
@@ -148,7 +148,7 @@ public abstract class Service {
 	/**
 	 * Notifies all listeners that this service has started,
 	 */
-	public void start() {
+	public final void start() {
 		executeListeners(State.START);
 	}
 

@@ -22,7 +22,7 @@ public abstract class Area {
 	 * @return {@code true} if the square area is entirely within the specified
 	 *         area otherwise {@code false}.
 	 */
-	public boolean allWithinArea(Position position, int offset, int padding) {
+	public final boolean allWithinArea(Position position, int offset, int padding) {
 		for (int xOffset = 0; xOffset < offset; xOffset++) {
 			for (int yOffset = 0; yOffset < offset; yOffset++) {
 				if (!withinArea(position.getX() + xOffset, position.getY() + yOffset, padding)) {
@@ -43,7 +43,7 @@ public abstract class Area {
 	 * @return {@code true} if the square area is at least partially within the
 	 *         specified area otherwise {@code false}.
 	 */
-	public boolean anyWithinArea(Position position, int offset, int padding) {
+	public final boolean anyWithinArea(Position position, int offset, int padding) {
 		for (int xOffset = 0; xOffset < offset; xOffset++) {
 			for (int yOffset = 0; yOffset < offset; yOffset++) {
 				if (withinArea(position.getX() + xOffset, position.getY() + yOffset, padding)) {
@@ -80,7 +80,7 @@ public abstract class Area {
 	public abstract Position randomPosition(int height);
 
 	@Override
-	public String toString() {
+	public final String toString() {
 		return StringUtil.simpleClassName(this) + " [center()=" + center() + "]";
 	}
 

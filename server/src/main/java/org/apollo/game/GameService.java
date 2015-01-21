@@ -52,15 +52,12 @@ public final class GameService extends Service {
 	 */
 	public void pulse() {
 		synchronized (this) {
-			int unregistered = 0;
-
-			for (;;) {
+			for (int unregistered = 0; unregistered <= UNREGISTERS_PER_CYCLE; unregistered++) {
 				Player player = oldPlayers.poll();
-				if (player == null || unregistered >= UNREGISTERS_PER_CYCLE) {
+				if (player == null) {
 					break;
 				}
 				getSerializerWorker().submitSaveRequest(player.getSession(), player);
-				unregistered++;
 			}
 
 			for (Player p : getWorld().getPlayerRepository()) {

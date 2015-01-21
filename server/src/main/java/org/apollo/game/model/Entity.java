@@ -74,14 +74,14 @@ public abstract class Entity {
 	/**
 	 * Returns the region this {@link Entity} is currently in.
 	 */
-	public Region getRegion() {
+	public final Region getRegion() {
 		return world.getRegionRepository().getRegion(getPosition());
 	}
 
 	/**
 	 * Returns a {@link Set} of surrounding {@link Entity}s
 	 */
-	public <T extends Entity> Set<T> getSurrounding() {
+	public final <T extends Entity> Set<T> getSurrounding() {
 		return getRegion().getEntities();
 	}
 
@@ -93,21 +93,21 @@ public abstract class Entity {
 	 *            entity.
 	 * @return A {@link Set} of {@link Entity}s of the specified category.
 	 */
-	public <T extends Entity> Set<T> getSurrounding(EntityCategory category) {
+	public final <T extends Entity> Set<T> getSurrounding(EntityCategory category) {
 		return getRegion().getEntities(category);
 	}
 
 	/**
 	 * Returns the position of this entity.
 	 */
-	public Position getPosition() {
+	public final Position getPosition() {
 		return position;
 	}
 
 	/**
 	 * Returns the world this entity is in.
 	 */
-	public World getWorld() {
+	public final World getWorld() {
 		return world;
 	}
 

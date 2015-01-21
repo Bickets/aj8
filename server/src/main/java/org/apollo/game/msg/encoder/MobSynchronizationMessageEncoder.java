@@ -75,7 +75,7 @@ public final class MobSynchronizationMessageEncoder implements MessageEncoder<Mo
 	 * @param message The message.
 	 * @param builder The builder.
 	 */
-	private void putAddMobUpdate(AddCharacterSegment seg, MobSynchronizationMessage message, GamePacketBuilder builder) {
+	private static void putAddMobUpdate(AddCharacterSegment seg, MobSynchronizationMessage message, GamePacketBuilder builder) {
 		boolean updateRequired = seg.getBlockSet().size() > 0;
 		Position mobPosition = message.getPosition();
 		Position otherPosition = seg.getPosition();
@@ -93,7 +93,7 @@ public final class MobSynchronizationMessageEncoder implements MessageEncoder<Mo
 	 * @param block The block.
 	 * @param blockBuilder The builder.
 	 */
-	private void putAnimationBlock(AnimationBlock block, GamePacketBuilder blockBuilder) {
+	private static void putAnimationBlock(AnimationBlock block, GamePacketBuilder blockBuilder) {
 		Animation animation = block.getAnimation();
 		blockBuilder.put(DataType.SHORT, DataOrder.LITTLE, animation.getId());
 		blockBuilder.put(DataType.BYTE, animation.getDelay());
@@ -105,7 +105,7 @@ public final class MobSynchronizationMessageEncoder implements MessageEncoder<Mo
 	 * @param segment The segment.
 	 * @param blockBuilder The block builder.
 	 */
-	private void putBlocks(SynchronizationSegment segment, GamePacketBuilder blockBuilder) {
+	private static void putBlocks(SynchronizationSegment segment, GamePacketBuilder blockBuilder) {
 		SynchronizationBlockSet blockSet = segment.getBlockSet();
 		if (blockSet.size() > 0) {
 			int mask = 0;
@@ -184,7 +184,7 @@ public final class MobSynchronizationMessageEncoder implements MessageEncoder<Mo
 	 * @param block The block.
 	 * @param builder The builder.
 	 */
-	private void putForceChatBlock(ForceChatBlock block, GamePacketBuilder builder) {
+	private static void putForceChatBlock(ForceChatBlock block, GamePacketBuilder builder) {
 		builder.putString(block.getMessage());
 	}
 
@@ -194,7 +194,7 @@ public final class MobSynchronizationMessageEncoder implements MessageEncoder<Mo
 	 * @param block The block.
 	 * @param blockBuilder The builder.
 	 */
-	private void putGraphicBlock(GraphicBlock block, GamePacketBuilder blockBuilder) {
+	private static void putGraphicBlock(GraphicBlock block, GamePacketBuilder blockBuilder) {
 		Graphic graphic = block.getGraphic();
 		blockBuilder.put(DataType.SHORT, graphic.getId());
 		blockBuilder.put(DataType.INT, graphic.getDelay());
@@ -206,7 +206,7 @@ public final class MobSynchronizationMessageEncoder implements MessageEncoder<Mo
 	 * @param block The block.
 	 * @param builder The builder.
 	 */
-	private void putHitUpdateBlock(HitBlock block, GamePacketBuilder builder) {
+	private static void putHitUpdateBlock(HitBlock block, GamePacketBuilder builder) {
 		builder.put(DataType.BYTE, DataTransformation.ADD, block.getDamage());
 		builder.put(DataType.BYTE, DataTransformation.NEGATE, block.getType());
 		builder.put(DataType.BYTE, DataTransformation.ADD, block.getCurrentHealth());
@@ -219,7 +219,7 @@ public final class MobSynchronizationMessageEncoder implements MessageEncoder<Mo
 	 * @param block The block.
 	 * @param builder The builder.
 	 */
-	private void putInteractingCharacterBlock(InteractingCharacterBlock block, GamePacketBuilder builder) {
+	private static void putInteractingCharacterBlock(InteractingCharacterBlock block, GamePacketBuilder builder) {
 		builder.put(DataType.SHORT, block.getInteractingCharacterIndex());
 	}
 
@@ -230,7 +230,7 @@ public final class MobSynchronizationMessageEncoder implements MessageEncoder<Mo
 	 * @param message The message.
 	 * @param builder The builder.
 	 */
-	private void putMovementUpdate(SynchronizationSegment segment, MobSynchronizationMessage message, GamePacketBuilder builder) {
+	private static void putMovementUpdate(SynchronizationSegment segment, MobSynchronizationMessage message, GamePacketBuilder builder) {
 		boolean updateRequired = segment.getBlockSet().size() > 0;
 		if (segment.getType() == SegmentType.RUN) {
 			Direction[] directions = ((MovementSegment) segment).getDirections();
@@ -260,7 +260,7 @@ public final class MobSynchronizationMessageEncoder implements MessageEncoder<Mo
 	 *
 	 * @param builder The builder.
 	 */
-	private void putRemoveCharacterUpdate(GamePacketBuilder builder) {
+	private static void putRemoveCharacterUpdate(GamePacketBuilder builder) {
 		builder.putBits(1, 1);
 		builder.putBits(2, 3);
 	}
@@ -271,7 +271,7 @@ public final class MobSynchronizationMessageEncoder implements MessageEncoder<Mo
 	 * @param block The block.
 	 * @param builder The builder.
 	 */
-	private void putSecondHitUpdateBlock(SecondHitBlock block, GamePacketBuilder builder) {
+	private static void putSecondHitUpdateBlock(SecondHitBlock block, GamePacketBuilder builder) {
 		builder.put(DataType.BYTE, DataTransformation.NEGATE, block.getDamage());
 		builder.put(DataType.BYTE, DataTransformation.SUBTRACT, block.getType());
 		builder.put(DataType.BYTE, DataTransformation.SUBTRACT, block.getCurrentHealth());
@@ -284,7 +284,7 @@ public final class MobSynchronizationMessageEncoder implements MessageEncoder<Mo
 	 * @param block The block.
 	 * @param builder The builder.
 	 */
-	private void putTransformBlock(TransformBlock block, GamePacketBuilder builder) {
+	private static void putTransformBlock(TransformBlock block, GamePacketBuilder builder) {
 		builder.put(DataType.SHORT, DataOrder.LITTLE, DataTransformation.ADD, block.getId());
 	}
 
@@ -294,7 +294,7 @@ public final class MobSynchronizationMessageEncoder implements MessageEncoder<Mo
 	 * @param block The block.
 	 * @param blockBuilder The builder.
 	 */
-	private void putTurnToPositionBlock(TurnToPositionBlock block, GamePacketBuilder blockBuilder) {
+	private static void putTurnToPositionBlock(TurnToPositionBlock block, GamePacketBuilder blockBuilder) {
 		Position pos = block.getPosition();
 		blockBuilder.put(DataType.SHORT, DataOrder.LITTLE, pos.getX() * 2 + 1);
 		blockBuilder.put(DataType.SHORT, DataOrder.LITTLE, pos.getY() * 2 + 1);

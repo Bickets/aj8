@@ -86,7 +86,7 @@ public abstract class GameCharacter extends Entity {
 	 *
 	 * @return {@code true} if so, {@code false} if not.
 	 */
-	public boolean isActive() {
+	public final boolean isActive() {
 		return index != -1;
 	}
 
@@ -95,7 +95,7 @@ public abstract class GameCharacter extends Entity {
 	 *
 	 * @return The index of this entity.
 	 */
-	public int getIndex() {
+	public final int getIndex() {
 		synchronized (this) {
 			return index;
 		}
@@ -106,7 +106,7 @@ public abstract class GameCharacter extends Entity {
 	 *
 	 * @param index The index of this entity.
 	 */
-	public void setIndex(int index) {
+	public final void setIndex(int index) {
 		synchronized (this) {
 			this.index = index;
 		}
@@ -116,7 +116,7 @@ public abstract class GameCharacter extends Entity {
 	 * Resets the index of this entity, freeing it within its
 	 * {@link GameCharacterRepository}.
 	 */
-	public void resetIndex() {
+	public final void resetIndex() {
 		synchronized (this) {
 			index = -1;
 		}
@@ -127,7 +127,7 @@ public abstract class GameCharacter extends Entity {
 	 *
 	 * @return The local player set.
 	 */
-	public Set<Player> getLocalPlayers() {
+	public final Set<Player> getLocalPlayers() {
 		return localPlayers;
 	}
 
@@ -136,7 +136,7 @@ public abstract class GameCharacter extends Entity {
 	 *
 	 * @return The local mobs set.
 	 */
-	public Set<Mob> getLocalMobs() {
+	public final Set<Mob> getLocalMobs() {
 		return localMobs;
 	}
 
@@ -145,7 +145,7 @@ public abstract class GameCharacter extends Entity {
 	 *
 	 * @return The walking queue.
 	 */
-	public WalkingQueue getWalkingQueue() {
+	public final WalkingQueue getWalkingQueue() {
 		return walkingQueue;
 	}
 
@@ -155,7 +155,7 @@ public abstract class GameCharacter extends Entity {
 	 * @param first The first direction.
 	 * @param second The second direction.
 	 */
-	public void setDirections(Direction first, Direction second) {
+	public final void setDirections(Direction first, Direction second) {
 		firstDirection = first;
 		secondDirection = second;
 	}
@@ -165,7 +165,7 @@ public abstract class GameCharacter extends Entity {
 	 *
 	 * @return The first direction.
 	 */
-	public Direction getFirstDirection() {
+	public final Direction getFirstDirection() {
 		return firstDirection;
 	}
 
@@ -174,7 +174,7 @@ public abstract class GameCharacter extends Entity {
 	 *
 	 * @return The second direction.
 	 */
-	public Direction getSecondDirection() {
+	public final Direction getSecondDirection() {
 		return secondDirection;
 	}
 
@@ -184,7 +184,7 @@ public abstract class GameCharacter extends Entity {
 	 * @return A zero, one or two element array containing the directions (in
 	 *         order).
 	 */
-	public Direction[] getDirections() {
+	public final Direction[] getDirections() {
 		if (firstDirection != Direction.NONE) {
 			if (secondDirection != Direction.NONE) {
 				return new Direction[] { firstDirection, secondDirection };
@@ -201,14 +201,14 @@ public abstract class GameCharacter extends Entity {
 	 *
 	 * @return The block set.
 	 */
-	public SynchronizationBlockSet getBlockSet() {
+	public final SynchronizationBlockSet getBlockSet() {
 		return blockSet;
 	}
 
 	/**
 	 * Resets the block set.
 	 */
-	public void resetBlockSet() {
+	public final void resetBlockSet() {
 		blockSet = new SynchronizationBlockSet();
 	}
 
@@ -247,7 +247,7 @@ public abstract class GameCharacter extends Entity {
 	/**
 	 * Returns the attributes for this {@link GameCharacter}.
 	 */
-	public GameCharacterAttributes getAttributes() {
+	public final GameCharacterAttributes getAttributes() {
 		return attributes;
 	}
 
@@ -256,7 +256,7 @@ public abstract class GameCharacter extends Entity {
 	 *
 	 * @param text The text to chat.
 	 */
-	public void forceChat(String text) {
+	public final void forceChat(String text) {
 		blockSet.add(SynchronizationBlock.createForceChatBlock(text));
 	}
 
@@ -265,14 +265,14 @@ public abstract class GameCharacter extends Entity {
 	 *
 	 * @param animation The animation.
 	 */
-	public void playAnimation(Animation animation) {
+	public final void playAnimation(Animation animation) {
 		blockSet.add(SynchronizationBlock.createAnimationBlock(animation));
 	}
 
 	/**
 	 * Stops the current animation.
 	 */
-	public void stopAnimation() {
+	public final void stopAnimation() {
 		playAnimation(Animation.STOP_ANIMATION);
 	}
 
@@ -281,14 +281,14 @@ public abstract class GameCharacter extends Entity {
 	 *
 	 * @param graphic The graphic.
 	 */
-	public void playGraphic(Graphic graphic) {
+	public final void playGraphic(Graphic graphic) {
 		blockSet.add(SynchronizationBlock.createGraphicBlock(graphic));
 	}
 
 	/**
 	 * Stops the current graphic.
 	 */
-	public void stopGraphic() {
+	public final void stopGraphic() {
 		playGraphic(Graphic.STOP_GRAPHIC);
 	}
 
@@ -297,7 +297,7 @@ public abstract class GameCharacter extends Entity {
 	 *
 	 * @return The character's skill set.
 	 */
-	public SkillSet getSkillSet() {
+	public final SkillSet getSkillSet() {
 		return skillSet;
 	}
 
@@ -307,7 +307,7 @@ public abstract class GameCharacter extends Entity {
 	 * @param action The new action.
 	 * @return A flag indicating if the action was started.
 	 */
-	public boolean startAction(Action<?> action) {
+	public final boolean startAction(Action<?> action) {
 		if (currentAction != null) {
 			if (currentAction.equals(action)) {
 				return false;
@@ -322,7 +322,7 @@ public abstract class GameCharacter extends Entity {
 	/**
 	 * Stops the current action.
 	 */
-	public void stopAction() {
+	public final void stopAction() {
 		if (currentAction != null) {
 			currentAction.stop();
 			currentAction = null;
@@ -334,7 +334,7 @@ public abstract class GameCharacter extends Entity {
 	 *
 	 * @param position The position to face.
 	 */
-	public void turnTo(Position position) {
+	public final void turnTo(Position position) {
 		blockSet.add(SynchronizationBlock.createTurnToPositionBlock(position));
 	}
 
@@ -344,7 +344,7 @@ public abstract class GameCharacter extends Entity {
 	 *
 	 * @param message The type of message to send.
 	 */
-	public <T> void sendMessage(T message) {
+	public final <T> void sendMessage(T message) {
 		send(new ServerMessageMessage(message.toString()));
 	}
 
