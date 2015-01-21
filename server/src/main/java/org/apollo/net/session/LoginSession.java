@@ -114,7 +114,11 @@ public final class LoginSession extends Session {
 
 		Arrays.setAll(serverCrcs, crc -> buffer.getInt());
 
-		return !Arrays.equals(clientCrcs, serverCrcs);
+		if (Arrays.equals(clientCrcs, serverCrcs)) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**
@@ -132,7 +136,11 @@ public final class LoginSession extends Session {
 		Matcher usernameMatcher = PATTERN.matcher(username);
 		Matcher passwordMatcher = PATTERN.matcher(password);
 
-		return !(usernameMatcher.matches() && passwordMatcher.matches());
+		if (usernameMatcher.matches() && passwordMatcher.matches()) {
+			return false;
+		}
+
+		return true;
 	}
 
 	/**

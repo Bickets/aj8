@@ -142,7 +142,6 @@ public final class JdbcPlayerSerializer extends PlayerSerializer implements Clos
 				}
 
 				int id = set.getInt("id");
-				String hashedPassword = set.getString("password");
 
 				/*
 				 * Check to be sure we aren't blocked from logging in.
@@ -155,7 +154,7 @@ public final class JdbcPlayerSerializer extends PlayerSerializer implements Clos
 				 * Wrong password, increment failed count and return invalid
 				 * credentials.
 				 */
-				if (!BCrypt.checkpw(credentials.getPassword(), hashedPassword)) {
+				if (!BCrypt.checkpw(credentials.getPassword(), set.getString("password"))) {
 					incrementFailedAttempts(id);
 					return new PlayerSerializerResponse(LoginConstants.STATUS_INVALID_CREDENTIALS);
 				}
@@ -215,7 +214,7 @@ public final class JdbcPlayerSerializer extends PlayerSerializer implements Clos
 			/* expired, we can remove it. */
 			if (now >= expire) {
 				closeFailedLogins.setInt(1, id);
-				closeFailedLogins.execute();
+				closeFailedLogins.executeUpdate();
 				return 0;
 			}
 
@@ -237,7 +236,7 @@ public final class JdbcPlayerSerializer extends PlayerSerializer implements Clos
 		Timestamp timestamp = new Timestamp(expire.getLong(MILLI_OF_DAY));
 
 		insertFailedLogins.setTimestamp(2, timestamp);
-		insertFailedLogins.execute();
+		insertFailedLogins.executeUpdate();
 	}
 
 	@Override
