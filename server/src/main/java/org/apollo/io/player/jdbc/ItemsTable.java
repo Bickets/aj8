@@ -57,7 +57,7 @@ public abstract class ItemsTable extends Table {
 	public abstract Inventory getInventory(Player player);
 
 	@Override
-	public void load(Player player) throws SQLException, IOException {
+	public final void load(Player player) throws SQLException, IOException {
 		loadStatement.setInt(1, player.getDatabaseId());
 		loadStatement.setString(2, type);
 
@@ -78,7 +78,7 @@ public abstract class ItemsTable extends Table {
 	}
 
 	@Override
-	public void save(Player player) throws SQLException, IOException {
+	public final void save(Player player) throws SQLException, IOException {
 		saveStatement.setInt(1, player.getDatabaseId());
 		saveStatement.setString(2, type);
 

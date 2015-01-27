@@ -27,7 +27,7 @@ public abstract class ActionMessage implements Message {
 	/**
 	 * Returns the interface option clicked.F
 	 */
-	public InterfaceOption getOption() {
+	public final InterfaceOption getOption() {
 		return option;
 	}
 

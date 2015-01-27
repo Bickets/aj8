@@ -29,12 +29,12 @@ public final class ItemDefinitionParser {
 		ByteBuffer dataBuffer = archive.getData("obj.dat");
 		ByteBuffer buffer = archive.getData("obj.idx");
 
-		int count = buffer.getShort() & 0xffff;
+		int count = buffer.getShort() & 0xFFFF;
 		int[] offsets = new int[count];
 		int offset = 2;
 		for (int index = 0; index < count; index++) {
 			offsets[index] = offset;
-			offset += buffer.getShort() & 0xffff;
+			offset += buffer.getShort() & 0xFFFF;
 		}
 
 		ItemDefinition[] defs = new ItemDefinition[count];

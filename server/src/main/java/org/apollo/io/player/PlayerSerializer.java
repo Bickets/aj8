@@ -55,7 +55,7 @@ public abstract class PlayerSerializer {
 	/**
 	 * Returns the world this player is in.
 	 */
-	public World getWorld() {
+	public final World getWorld() {
 		return world;
 	}
 

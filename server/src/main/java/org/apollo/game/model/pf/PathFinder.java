@@ -22,7 +22,7 @@ public abstract class PathFinder {
 	 * @return The path from the characters position to the destination
 	 *         position.
 	 */
-	public Path find(GameCharacter character, int destX, int destY) {
+	public final Path find(GameCharacter character, int destX, int destY) {
 		Position position = character.getPosition();
 
 		int baseLocalX = position.getBaseLocalX();

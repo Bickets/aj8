@@ -38,7 +38,7 @@ abstract class GroundItemMessage implements Message {
 	 *
 	 * @return The ground item.
 	 */
-	public GroundItem getGroundItem() {
+	public final GroundItem getGroundItem() {
 		return groundItem;
 	}
 
@@ -47,7 +47,7 @@ abstract class GroundItemMessage implements Message {
 	 *
 	 * @return The position offset.
 	 */
-	public int getPositionOffset() {
+	public final int getPositionOffset() {
 		return positionOffset;
 	}
 

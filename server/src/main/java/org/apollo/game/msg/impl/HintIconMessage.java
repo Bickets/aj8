@@ -41,7 +41,7 @@ public abstract class HintIconMessage implements Message {
 		 *
 		 * @return The numeric value.
 		 */
-		public int getIndex() {
+		public final int getIndex() {
 			return index;
 		}
 
@@ -64,7 +64,7 @@ public abstract class HintIconMessage implements Message {
 	/**
 	 * Returns the hint icons type.
 	 */
-	public HintIconType getType() {
+	public final HintIconType getType() {
 		return type;
 	}
 

@@ -29,12 +29,12 @@ public final class MobDefinitionParser {
 		ByteBuffer dataBuffer = archive.getData("npc.dat");
 		ByteBuffer buffer = archive.getData("npc.idx");
 
-		int count = buffer.getShort() & 0xffff;
+		int count = buffer.getShort() & 0xFFFF;
 		int[] offsets = new int[count];
 		int offset = 2;
 		for (int index = 0; index < count; index++) {
 			offsets[index] = offset;
-			offset += buffer.getShort() & 0xffff;
+			offset += buffer.getShort() & 0xFFFF;
 		}
 
 		MobDefinition[] defs = new MobDefinition[count];

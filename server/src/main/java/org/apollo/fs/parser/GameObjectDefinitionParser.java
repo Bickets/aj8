@@ -29,13 +29,13 @@ public final class GameObjectDefinitionParser {
 		ByteBuffer dataBuffer = archive.getData("loc.dat");
 		ByteBuffer buffer = archive.getData("loc.idx");
 
-		int count = buffer.getShort();
+		int count = buffer.getShort() & 0xFFFF;
 		int[] indices = new int[count];
 
 		int index = 2;
 		for (int i = 0; i < count; i++) {
 			indices[i] = index;
-			index += buffer.getShort();
+			index += buffer.getShort() & 0xFFFF;
 		}
 
 		GameObjectDefinition[] defs = new GameObjectDefinition[count];
@@ -57,7 +57,6 @@ public final class GameObjectDefinitionParser {
 	 */
 	private static GameObjectDefinition parseDefinition(int id, ByteBuffer buffer) {
 		GameObjectDefinition def = new GameObjectDefinition(id);
-		int interactableValue;
 
 		while (true) {
 			int code = buffer.get() & 0xFF;
@@ -88,7 +87,7 @@ public final class GameObjectDefinitionParser {
 			} else if (code == 18) {
 				def.setImpenetrable(true);
 			} else if (code == 19) {
-				interactableValue = buffer.get() & 0xFF;
+				int interactableValue = buffer.get() & 0xFF;
 				def.setInteractable(interactableValue == 1);
 			} else if (code == 24) {
 				buffer.getShort();

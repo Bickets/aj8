@@ -108,7 +108,7 @@ public final class Cache {
 		int offset = 0;
 
 		for (int chunk = 0; offset < index.getLength(); chunk++) {
-			int read = Math.min(index.getLength() - offset, 512);
+			int read = Math.max(512, index.getLength() - offset);
 
 			Sector sector = readSector(next, data, offset, read);
 			sector.check(id, indexId, chunk);
