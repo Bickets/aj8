@@ -9,8 +9,6 @@ import org.apollo.game.model.Player
 import org.apollo.game.model.inter.Interfaces.InterfaceOption
 import org.apollo.game.model.inv.InventoryConstants
 
-import static plugin.Plugin.*
-
 @SubscribesTo(ItemActionEvent)
 class RemoveEquipment implements EventSubscriber<ItemActionEvent> {
 
@@ -20,8 +18,6 @@ class RemoveEquipment implements EventSubscriber<ItemActionEvent> {
 
 		val item = equipment.get(slot)
 		val itemDef = item.definition
-
-		closeInterfaces(player)
 
 		if (inventory.freeSlots == 0 && !itemDef.stackable) {
 			inventory.forceCapacityExceeded

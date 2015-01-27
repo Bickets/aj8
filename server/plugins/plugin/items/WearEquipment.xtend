@@ -12,7 +12,6 @@ import org.apollo.game.model.inv.InventoryConstants
 import org.apollo.game.model.skill.Skill
 
 import static org.apollo.game.model.EquipmentConstants.*
-import static plugin.Plugin.*
 
 @SubscribesTo(ItemActionEvent)
 class WearEquipment implements EventSubscriber<ItemActionEvent> {
@@ -32,8 +31,6 @@ class WearEquipment implements EventSubscriber<ItemActionEvent> {
 		}
 
 		val equipSlot = equipDef.slot
-
-		closeInterfaces(player)
 
 		if (checkReqs(player, equipDef)) {
 			return false
@@ -89,7 +86,7 @@ class WearEquipment implements EventSubscriber<ItemActionEvent> {
 		equipment.reset(equipSlot)
 		inventory.remove(item)
 		equipment.set(equipSlot, item)
-		if(previous != null) inventory.add(previous)
+		if(previous != null) inventory.set(slot, previous)
 		return true
 	}
 
@@ -131,7 +128,6 @@ class WearEquipment implements EventSubscriber<ItemActionEvent> {
 			event.option == InterfaceOption.OPTION_ONE
 	}
 
-	// TODO: Maybe move this into the definition class itself..
 	def wearable(ItemDefinition ^def) {
 		val actions = def.inventoryActions
 

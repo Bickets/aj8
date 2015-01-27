@@ -12,7 +12,6 @@ import org.apollo.game.msg.impl.SetInterfaceTextMessage
 import static org.apollo.game.model.inter.trade.TradeConstants.*
 import static org.apollo.game.model.inter.trade.TradeStage.*
 import static org.apollo.game.model.inter.trade.TradeStatus.*
-import static plugin.Plugin.*
 
 @SubscribesTo(ButtonActionEvent)
 class AcceptSecondScreenTrade implements EventSubscriber<ButtonActionEvent> {
@@ -82,7 +81,7 @@ class AcceptSecondScreenTrade implements EventSubscriber<ButtonActionEvent> {
 	}
 
 	def close(Player player) {
-		closeInterfaces(player)
+		player.interfaceSet.close
 		player.attributes.tradeSession = null
 		player.sendMessage("Accepted trade.")
 	}
