@@ -49,10 +49,12 @@ public final class CharacterDesignMessageHandler implements MessageHandler<Chara
 	@Override
 	public void handle(Player player, CharacterDesignMessage message) {
 		if (!valid(message.getAppearance()) || player.hasDesignedCharacter()) {
+			player.getInterfaceSet().close();
 			return;
 		}
 
 		if (!player.getAttributes().isClientWindowFocused()) {
+			player.getInterfaceSet().close();
 			return;
 		}
 

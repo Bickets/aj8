@@ -22,30 +22,36 @@ public final class ItemActionMessageHandler implements MessageHandler<ItemAction
 	@Override
 	public void handle(Player player, ItemActionMessage message) {
 		if (message.getInterfaceId() < 0 || message.getInterfaceId() > InterfaceDefinition.count()) {
+			player.getInterfaceSet().close();
 			return;
 		}
 
 		if (!player.getAttributes().isClientWindowFocused()) {
+			player.getInterfaceSet().close();
 			return;
 		}
 
 		InventorySupplier supplier = Inventory.getInventory(message.getInterfaceId());
 		if (supplier == null) {
+			player.getInterfaceSet().close();
 			return;
 		}
 
 		Inventory inventory = supplier.getInventory(player);
 
 		if (message.getSlot() < 0 || message.getSlot() >= inventory.capacity()) {
+			player.getInterfaceSet().close();
 			return;
 		}
 
 		Item item = inventory.get(message.getSlot());
 		if (item == null) {
+			player.getInterfaceSet().close();
 			return;
 		}
 
 		if (!inventory.contains(item.getId())) {
+			player.getInterfaceSet().close();
 			return;
 		}
 

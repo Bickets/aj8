@@ -22,31 +22,30 @@ public final class SwitchItemMessageHandler implements MessageHandler<SwitchItem
 	@Override
 	public void handle(Player player, SwitchItemMessage message) {
 		if (message.getOldSlot() < 0 || message.getNewSlot() < 0) {
+			player.getInterfaceSet().close();
 			return;
 		}
 
 		if (message.getInterfaceId() < 0 || message.getInterfaceId() > InterfaceDefinition.count()) {
+			player.getInterfaceSet().close();
 			return;
 		}
 
 		if (!player.getAttributes().isClientWindowFocused()) {
-			return;
-		}
-
-		InterfaceDefinition def = InterfaceDefinition.forId(message.getInterfaceId());
-		if (!def.isInventory()) {
+			player.getInterfaceSet().close();
 			return;
 		}
 
 		InventorySupplier supplier = Inventory.getInventory(message.getInterfaceId());
 		if (supplier == null) {
+			player.getInterfaceSet().close();
 			return;
 		}
 
 		Inventory inventory = supplier.getInventory(player);
 
 		if (message.getOldSlot() < inventory.capacity() && message.getNewSlot() < inventory.capacity()) {
-			inventory.swap(message.isInserting() && Interfaces.insertPermitted(def.getId()), message.getOldSlot(), message.getNewSlot());
+			inventory.swap(message.isInserting() && Interfaces.insertPermitted(message.getInterfaceId()), message.getOldSlot(), message.getNewSlot());
 		}
 	}
 

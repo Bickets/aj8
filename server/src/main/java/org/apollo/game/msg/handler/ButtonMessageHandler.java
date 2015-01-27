@@ -18,10 +18,12 @@ public final class ButtonMessageHandler implements MessageHandler<ButtonMessage>
 	@Override
 	public void handle(Player player, ButtonMessage message) {
 		if (message.getInterfaceId() < 0 || message.getInterfaceId() > InterfaceDefinition.count()) {
+			player.getInterfaceSet().close();
 			return;
 		}
 
 		if (!player.getAttributes().isClientWindowFocused()) {
+			player.getInterfaceSet().close();
 			return;
 		}
 

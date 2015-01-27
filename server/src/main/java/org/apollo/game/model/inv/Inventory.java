@@ -464,9 +464,6 @@ public final class Inventory implements Cloneable {
 		}
 
 		Item item = get(slot);
-		if (item.getId() != id) {
-			return false;
-		}
 
 		if (to.freeSlots() == 0 && !(to.contains(id) && to.isStackable(item.getDefinition()))) {
 			forceCapacityExceeded();
