@@ -24,6 +24,7 @@ import org.apollo.game.msg.decoder.FirstMobActionMessageDecoder;
 import org.apollo.game.msg.decoder.FirstObjectActionMessageDecoder;
 import org.apollo.game.msg.decoder.FirstPlayerActionMessageDecoder;
 import org.apollo.game.msg.decoder.FirstSingleItemActionMessageDecoder;
+import org.apollo.game.msg.decoder.FourthInventoryItemActionMessageDecoder;
 import org.apollo.game.msg.decoder.FourthItemActionMessageDecoder;
 import org.apollo.game.msg.decoder.FourthMobActionMessageDecoder;
 import org.apollo.game.msg.decoder.FourthPlayerActionMessageDecoder;
@@ -34,7 +35,6 @@ import org.apollo.game.msg.decoder.KeepAliveMessageDecoder;
 import org.apollo.game.msg.decoder.MouseClickMessageDecoder;
 import org.apollo.game.msg.decoder.ObsoleteMessageDecoder;
 import org.apollo.game.msg.decoder.RegionLoadedMessageDecoder;
-import org.apollo.game.msg.decoder.SecondInventoryItemActionMessageDecoder;
 import org.apollo.game.msg.decoder.SecondItemActionMessageDecoder;
 import org.apollo.game.msg.decoder.SecondMobActionMessageDecoder;
 import org.apollo.game.msg.decoder.SecondObjectActionMessageDecoder;
@@ -160,7 +160,7 @@ public final class MessageTranslator {
 		register(new ItemOnPlayerMessageDecoder());
 
 		register(new FirstInventoryItemActionMessageDecoder());
-		register(new SecondInventoryItemActionMessageDecoder());
+		register(new FourthInventoryItemActionMessageDecoder());
 		register(new ThirdInventoryItemActionMessageDecoder());
 
 		register(new FirstSingleItemActionMessageDecoder());

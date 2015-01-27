@@ -45,4 +45,18 @@ public final class SynchronizationInventoryListener extends InventoryAdapter {
 		player.send(new UpdateItemsMessage(interfaceId, inventory.getItems()));
 	}
 
+	/**
+	 * Returns the player who we are synchronization their inventory for.
+	 */
+	public final Player getPlayer() {
+		return player;
+	}
+
+	/**
+	 * Returns the interface id of the inventory to synchronize.
+	 */
+	public final int getInterfaceId() {
+		return interfaceId;
+	}
+
 }

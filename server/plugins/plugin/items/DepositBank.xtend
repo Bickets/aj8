@@ -5,10 +5,10 @@ import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ItemActionEvent
 import org.apollo.game.model.Player
+import org.apollo.game.model.^def.ItemDefinition
 import org.apollo.game.model.inter.Interfaces.InterfaceOption
 import org.apollo.game.model.inter.bank.BankConstants
 import org.apollo.game.model.inter.bank.BankDepositEnterAmountListener
-import org.apollo.game.model.inter.bank.BankUtils
 import org.apollo.game.model.inv.InventoryConstants
 
 @SubscribesTo(ItemActionEvent)
@@ -20,12 +20,13 @@ class DepositBank implements EventSubscriber<ItemActionEvent> {
 			return
 		}
 
-		var amount = InterfaceOption.optionToAmount(event.option)
+		val id = ItemDefinition.noteToItem(event.id)
+		val amount = InterfaceOption.optionToAmount(event.option)
+
 		if (amount == -1) {
-			player.interfaceSet.openEnterAmountDialog(
-				new BankDepositEnterAmountListener(player, event.slot, event.id))
+			player.interfaceSet.openEnterAmountDialog(new BankDepositEnterAmountListener(player, event.slot, id))
 		} else {
-			if (!BankUtils.deposit(player, event.slot, event.id, amount)) {
+			if (!player.inventory.swap(player.bank, event.slot, id, amount, false)) {
 				return
 			}
 		}

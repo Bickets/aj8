@@ -41,7 +41,7 @@ public final class BankDepositEnterAmountListener implements EnterAmountListener
 	@Override
 	public void amountEntered(int amount) {
 		if (player.getInterfaceSet().contains(BankConstants.BANK_WINDOW_ID)) {
-			BankUtils.deposit(player, slot, id, amount);
+			player.getInventory().swap(player.getBank(), slot, id, amount, false);
 		}
 	}
 

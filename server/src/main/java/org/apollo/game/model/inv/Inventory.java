@@ -429,6 +429,77 @@ public final class Inventory implements Cloneable {
 	}
 
 	/**
+	 * Swaps the specified {@link Item item} in the specified {@code slot} to
+	 * the specified {@link Inventory inventory}.
+	 * 
+	 * @param to The inventory to move the item in this inventory to.
+	 * @param slot The slot of the item in this inventory.
+	 * @param id The id of the item in this inventory.
+	 * @param amount The amount of the item in this inventory.
+	 * @param shift A flag denoting whether or not this inventory should be
+	 *            {@link #shift() shifted} after the swap.
+	 * @return {@code true} if and only if the specified item was swapped
+	 *         successfully, otherwise {@code false}.
+	 */
+	public boolean swap(Inventory to, int slot, Item item, boolean shift) {
+		return swap(to, slot, item.getId(), item.getAmount(), shift);
+	}
+
+	/**
+	 * Swaps the specified item with the {@code id} and {@code amount} in the
+	 * specified {@code slot} to the specified {@link Inventory inventory}.
+	 * 
+	 * @param to The inventory to move the item in this inventory to.
+	 * @param slot The slot of the item in this inventory.
+	 * @param id The id of the item in this inventory.
+	 * @param amount The amount of the item in this inventory.
+	 * @param shift A flag denoting whether or not this inventory should be
+	 *            {@link #shift() shifted} after the swap.
+	 * @return {@code true} if and only if the specified item was swapped
+	 *         successfully, otherwise {@code false}.
+	 */
+	public boolean swap(Inventory to, int slot, int id, int amount, boolean shift) {
+		if (amount == 0) {
+			return false;
+		}
+
+		Item item = get(slot);
+		if (item.getId() != id) {
+			return false;
+		}
+
+		if (to.freeSlots() == 0 && !(to.contains(id) && to.isStackable(item.getDefinition()))) {
+			forceCapacityExceeded();
+			return false;
+		}
+
+		if (amount > 1) {
+			stopFiringEvents();
+		}
+
+		int removed;
+		try {
+			removed = remove(item.getId(), amount);
+		} finally {
+			if (amount > 1) {
+				startFiringEvents();
+			}
+		}
+
+		if (amount > 1) {
+			forceRefresh();
+		}
+
+		to.add(id, removed);
+
+		if (shift) {
+			shift();
+		}
+
+		return true;
+	}
+
+	/**
 	 * Shifts all items to the top left of the container, leaving no gaps.
 	 */
 	public void shift() {
@@ -532,9 +603,9 @@ public final class Inventory implements Cloneable {
 	 * @param slot The slot.
 	 */
 	private void notifyItemUpdated(int slot) {
+		checkBounds(slot);
 		if (firingEvents) {
-			Item item = items[slot];
-			listeners.forEach(listener -> listener.itemUpdated(this, slot, item));
+			listeners.forEach(listener -> listener.itemUpdated(this, slot, items[slot]));
 		}
 	}
 

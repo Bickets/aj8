@@ -7,7 +7,6 @@ import org.apollo.game.interact.ItemActionEvent
 import org.apollo.game.model.Player
 import org.apollo.game.model.inter.Interfaces.InterfaceOption
 import org.apollo.game.model.inter.trade.TradeConstants
-import org.apollo.game.model.inter.trade.TradeUtils
 import org.apollo.game.model.inter.trade.TradeWithdrawEnterAmountListener
 import org.apollo.game.model.inv.InventoryConstants
 
@@ -20,12 +19,13 @@ class WithdrawTrade implements EventSubscriber<ItemActionEvent> {
 			return
 		}
 
-		var amount = InterfaceOption.optionToAmount(event.option)
+		val amount = InterfaceOption.optionToAmount(event.option)
+
 		if (amount == -1) {
 			player.interfaceSet.openEnterAmountDialog(
 				new TradeWithdrawEnterAmountListener(player, event.slot, event.id))
 		} else {
-			if (!TradeUtils.withdraw(player, event.slot, event.id, amount)) {
+			if (!player.trade.swap(player.inventory, event.slot, event.id, amount, true)) {
 				return
 			}
 		}

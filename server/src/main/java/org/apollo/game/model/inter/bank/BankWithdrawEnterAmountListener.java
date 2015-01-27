@@ -41,7 +41,7 @@ public final class BankWithdrawEnterAmountListener implements EnterAmountListene
 	@Override
 	public void amountEntered(int amount) {
 		if (player.getInterfaceSet().contains(BankConstants.BANK_WINDOW_ID)) {
-			BankUtils.withdraw(player, slot, id, amount);
+			player.getBank().swap(player.getInventory(), slot, id, amount, true);
 		}
 	}
 

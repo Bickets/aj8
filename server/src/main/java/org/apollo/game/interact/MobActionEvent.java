@@ -1,8 +1,8 @@
 package org.apollo.game.interact;
 
 import org.apollo.game.event.Event;
-import org.apollo.game.model.inter.Interfaces.InterfaceOption;
 import org.apollo.game.model.Mob;
+import org.apollo.game.model.inter.Interfaces.InterfaceOption;
 
 /**
  * An event which is invoked when interacting with some {@link Mob}.

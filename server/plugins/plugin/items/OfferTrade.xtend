@@ -8,7 +8,6 @@ import org.apollo.game.model.Player
 import org.apollo.game.model.inter.Interfaces.InterfaceOption
 import org.apollo.game.model.inter.trade.TradeConstants
 import org.apollo.game.model.inter.trade.TradeOfferEnterAmountListener
-import org.apollo.game.model.inter.trade.TradeUtils
 import org.apollo.game.model.inv.InventoryConstants
 
 @SubscribesTo(ItemActionEvent)
@@ -20,12 +19,13 @@ class OfferTrade implements EventSubscriber<ItemActionEvent> {
 			return
 		}
 
-		var amount = InterfaceOption.optionToAmount(event.option)
+		val amount = InterfaceOption.optionToAmount(event.option)
+
 		if (amount == -1) {
 			player.interfaceSet.openEnterAmountDialog(
 				new TradeOfferEnterAmountListener(player, event.slot, event.id))
 		} else {
-			if (!TradeUtils.offer(player, event.slot, event.id, amount)) {
+			if (!player.inventory.swap(player.trade, event.slot, event.id, amount, false)) {
 				return
 			}
 		}

@@ -42,7 +42,7 @@ public final class TradeWithdrawEnterAmountListener implements EnterAmountListen
 	@Override
 	public void amountEntered(int amount) {
 		if (player.getInterfaceSet().contains(TradeConstants.TRADE_WINDOW_ID)) {
-			TradeUtils.withdraw(player, slot, id, amount);
+			player.getTrade().swap(player.getInventory(), slot, id, amount, true);
 		}
 	}
 

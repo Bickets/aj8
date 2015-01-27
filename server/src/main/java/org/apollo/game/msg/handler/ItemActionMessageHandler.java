@@ -21,10 +21,6 @@ public final class ItemActionMessageHandler implements MessageHandler<ItemAction
 
 	@Override
 	public void handle(Player player, ItemActionMessage message) {
-		if (player.getInterfaceSet().isOpen()) {
-			player.getInterfaceSet().close();
-		}
-
 		if (message.getInterfaceId() < 0 || message.getInterfaceId() > InterfaceDefinition.count()) {
 			return;
 		}

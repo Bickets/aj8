@@ -42,7 +42,7 @@ public final class TradeOfferEnterAmountListener implements EnterAmountListener 
 	@Override
 	public void amountEntered(int amount) {
 		if (player.getInterfaceSet().contains(TradeConstants.TRADE_WINDOW_ID)) {
-			TradeUtils.offer(player, slot, id, amount);
+			player.getInventory().swap(player.getTrade(), slot, id, amount, false);
 		}
 	}
 

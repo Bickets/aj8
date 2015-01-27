@@ -6,13 +6,13 @@ import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ObjectActionEvent
 import org.apollo.game.model.Player
 import org.apollo.game.model.inter.Interfaces.InterfaceOption
-import org.apollo.game.model.inter.bank.BankUtils
+import plugin.bank.Bank
 
 @SubscribesTo(ObjectActionEvent)
 class BankObject implements EventSubscriber<ObjectActionEvent> {
 
 	override subscribe(EventContext context, Player player, ObjectActionEvent event) {
-		BankUtils.openBank(player)
+		Bank.openBank(player)
 	}
 
 	override test(ObjectActionEvent event) {
