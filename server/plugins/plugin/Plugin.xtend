@@ -5,7 +5,7 @@ import java.util.concurrent.ThreadLocalRandom
 
 final class Plugin {
 
-	val static random = ThreadLocalRandom.current
+	val static rand = ThreadLocalRandom.current
 
 	val static (String)=>boolean isNum = [matches("-?\\d+")]
 
@@ -13,12 +13,12 @@ final class Plugin {
 		if(it.isNum) Integer.valueOf(it) else throw new NumberFormatException
 	]
 
-	val static exclusiveRandom = [random.nextInt(it)]
+	val static random = [rand.nextInt(it)]
 
-	val static randomNoZero = [exclusiveRandom.apply(it) + 1]
+	val static randomNoZero = [random.apply(it) + 1]
 
 	val static (int, int)=>int inclusiveRandom = [ min, max |
-		exclusiveRandom.apply((max - min) + 1) + min
+		random.apply((max - min) + 1) + min
 	]
 
 	val static (int, int, List<Integer>)=>int inclusiveRandomExcludes = [ min, max, excludes |
@@ -29,7 +29,7 @@ final class Plugin {
 		return result
 	]
 
-	val static (float)=>float randomFloat = [random.nextFloat * it]
+	val static (float)=>float randomFloat = [rand.nextFloat * it]
 
 	def static toInt(String str) {
 		toInt.apply(str)
@@ -40,7 +40,7 @@ final class Plugin {
 	}
 
 	def static random(int range) {
-		exclusiveRandom.apply(range)
+		random.apply(range)
 	}
 
 	def static randomExcludesZero(int range) {
