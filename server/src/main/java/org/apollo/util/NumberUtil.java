@@ -34,12 +34,13 @@ public final class NumberUtil {
 	 * @return The formatted number, represented as a {@code String}.
 	 */
 	public static String format(Number number) {
-		StringBuilder bldr = new StringBuilder();
 		int power = (int) Math.log10(number.doubleValue());
 		double value = Math.floor(number.doubleValue() / Math.pow(10, power / 3 * 3));
-		bldr.append(DECIMAL_FORMAT.format(value)).append(FORMAT.charAt(power / 3));
-		bldr.append(" (").append(NUMBER_FORMAT.format(number)).append(")");
-		return bldr.toString();
+
+		String formatted = DECIMAL_FORMAT.format(value) + FORMAT.charAt(power / 3);
+		formatted += " (" + NUMBER_FORMAT.format(number) + ")";
+
+		return formatted;
 	}
 
 	/**

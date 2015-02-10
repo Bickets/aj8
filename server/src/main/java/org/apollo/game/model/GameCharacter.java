@@ -96,9 +96,7 @@ public abstract class GameCharacter extends Entity {
 	 * @return The index of this entity.
 	 */
 	public final int getIndex() {
-		synchronized (this) {
-			return index;
-		}
+		return index;
 	}
 
 	/**

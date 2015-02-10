@@ -134,37 +134,41 @@ public final class WalkingQueue {
 	/**
 	 * Sets the running queue flag.
 	 *
-	 * @param running The running queue flag.
+	 * @param runningQueue The running queue flag.
 	 */
-	public void setRunningQueue(boolean running) {
-		runningQueue = running;
+	public void setRunningQueue(boolean runningQueue) {
+		this.runningQueue = runningQueue;
 	}
 
 	/**
 	 * Adds the first step to the queue, attempting to connect the server and
 	 * client position by looking at the previous queue.
 	 *
-	 * @param clientConnectionPosition The first step.
+	 * @param position The first step.
 	 * @return {@code true} if the queues could be connected correctly,
 	 *         {@code false} if not.
 	 */
-	public boolean addFirstStep(Position clientConnectionPosition) {
+	public boolean addFirstStep(Position position) {
 		Position serverPosition = gameCharacter.getPosition();
 
-		int deltaX = clientConnectionPosition.getX() - serverPosition.getX();
-		int deltaY = clientConnectionPosition.getY() - serverPosition.getY();
+		int deltaX = position.getX() - serverPosition.getX();
+		int deltaY = position.getY() - serverPosition.getY();
 
 		if (Direction.isConnectable(deltaX, deltaY)) {
 			clear();
 
-			addStep(clientConnectionPosition);
+			addStep(position);
 			return true;
 		}
 
 		Queue<Position> travelBackQueue = new ArrayDeque<>();
 
-		Point oldPoint;
-		while ((oldPoint = oldPoints.pollLast()) != null) {
+		for (;;) {
+			Point oldPoint = oldPoints.pollLast();
+			if (oldPoint == null) {
+				break;
+			}
+
 			Position oldPosition = oldPoint.position;
 
 			deltaX = oldPosition.getX() - serverPosition.getX();
@@ -177,7 +181,7 @@ public final class WalkingQueue {
 
 				travelBackQueue.forEach(this::addStep);
 
-				addStep(clientConnectionPosition);
+				addStep(position);
 				return true;
 			}
 		}

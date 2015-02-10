@@ -23,8 +23,8 @@ public final class PluginService extends Service {
 			Class<?> clazz = Class.forName("plugin.Bootstrap");
 			Constructor<?> bootstrap = clazz.getConstructor(ServerContext.class);
 			bootstrap.newInstance(getContext());
-		} catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException e) {
-			e.printStackTrace();
+		} catch (ClassNotFoundException | NoSuchMethodException | InstantiationException | IllegalAccessException | InvocationTargetException reason) {
+			throw new RuntimeException(reason);
 		}
 	}
 

@@ -45,14 +45,12 @@ public final class SkillsTable extends Table {
 
 		SkillSet skills = player.getSkillSet();
 		skills.stopFiringEvents();
-		try {
-			try (ResultSet set = loadStatement.executeQuery()) {
-				while (set.next()) {
-					for (int i = 0; i < SkillSet.SKILL_COUNT; i++) {
-						int level = set.getInt("current_level");
-						double experience = set.getDouble("experience");
-						skills.setSkill(i, new Skill(experience, level, SkillSet.getLevelForExperience(experience)));
-					}
+		try (ResultSet set = loadStatement.executeQuery()) {
+			while (set.next()) {
+				for (int i = 0; i < SkillSet.SKILL_COUNT; i++) {
+					int level = set.getInt("current_level");
+					double experience = set.getDouble("experience");
+					skills.setSkill(i, new Skill(experience, level, SkillSet.getLevelForExperience(experience)));
 				}
 			}
 		} finally {
