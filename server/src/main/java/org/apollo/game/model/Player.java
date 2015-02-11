@@ -27,7 +27,7 @@ import org.apollo.game.msg.Message;
 import org.apollo.game.msg.impl.IdAssignmentMessage;
 import org.apollo.game.msg.impl.LogoutMessage;
 import org.apollo.game.msg.impl.PlayerContextMenuOptionMessage;
-import org.apollo.game.msg.impl.SwitchTabInterfaceMessage;
+import org.apollo.game.msg.impl.SetTabInterfaceMessage;
 import org.apollo.game.sync.block.SynchronizationBlock;
 import org.apollo.game.task.impl.SkillNormalizationTask;
 import org.apollo.net.session.GameSession;
@@ -568,7 +568,7 @@ public final class Player extends GameCharacter {
 		}
 
 		for (int i = 0; i < Interfaces.TAB_INTERFACE_IDS.length; i++) {
-			send(new SwitchTabInterfaceMessage(i, Interfaces.TAB_INTERFACE_IDS[i]));
+			send(new SetTabInterfaceMessage(i, Interfaces.TAB_INTERFACE_IDS[i]));
 		}
 
 		getInventory().forceRefresh();

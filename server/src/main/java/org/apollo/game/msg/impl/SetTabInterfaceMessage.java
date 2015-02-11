@@ -3,11 +3,11 @@ package org.apollo.game.msg.impl;
 import org.apollo.game.msg.Message;
 
 /**
- * A message sent to the client to change the interface of a tab.
+ * A message sent to the client to set the interface of a tab.
  *
  * @author Graham
  */
-public final class SwitchTabInterfaceMessage implements Message {
+public final class SetTabInterfaceMessage implements Message {
 
 	/**
 	 * The tab id.
@@ -20,12 +20,12 @@ public final class SwitchTabInterfaceMessage implements Message {
 	private final int interfaceId;
 
 	/**
-	 * Creates the switch interface message.
+	 * Constructs a new {@link SetTabInterfaceMessage}.
 	 *
 	 * @param tab The tab id.
 	 * @param interfaceId The interface id.
 	 */
-	public SwitchTabInterfaceMessage(int tab, int interfaceId) {
+	public SetTabInterfaceMessage(int tab, int interfaceId) {
 		this.tab = tab;
 		this.interfaceId = interfaceId;
 	}

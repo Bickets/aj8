@@ -69,7 +69,7 @@ import org.apollo.game.msg.encoder.RegionChangeMessageEncoder;
 import org.apollo.game.msg.encoder.RemoveGroundItemMessageEncoder;
 import org.apollo.game.msg.encoder.ServerMessageMessageEncoder;
 import org.apollo.game.msg.encoder.SetInterfaceTextMessageEncoder;
-import org.apollo.game.msg.encoder.SwitchTabInterfaceMessageEncoder;
+import org.apollo.game.msg.encoder.SetTabInterfaceMessageEncoder;
 import org.apollo.game.msg.encoder.SystemUpdateMessageEncoder;
 import org.apollo.game.msg.encoder.UpdateItemsMessageEncoder;
 import org.apollo.game.msg.encoder.UpdateSkillMessageEncoder;
@@ -192,7 +192,7 @@ public final class MessageTranslator {
 		register(new PlayerSynchronizationMessageEncoder());
 		register(new OpenInterfaceMessageEncoder());
 		register(new CloseInterfaceMessageEncoder());
-		register(new SwitchTabInterfaceMessageEncoder());
+		register(new SetTabInterfaceMessageEncoder());
 		register(new LogoutMessageEncoder());
 		register(new UpdateItemsMessageEncoder());
 		register(new UpdateSlottedItemsMessageEncoder());
