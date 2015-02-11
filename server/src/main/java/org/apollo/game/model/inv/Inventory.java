@@ -321,21 +321,19 @@ public final class Inventory implements Cloneable {
 				int amount;
 				int remaining;
 
-				if (other != null && other.getId() == id) {
-					long total = (long) item.getAmount() + other.getAmount();
+				long total = (long) item.getAmount() + other.getAmount();
 
-					if (total > Integer.MAX_VALUE) {
-						amount = (int) (total - Integer.MAX_VALUE);
-						remaining = (int) (total - amount);
-						notifyCapacityExceeded();
-					} else {
-						amount = (int) total;
-						remaining = 0;
-					}
-
-					set(slot, new Item(id, amount));
-					return remaining > 0 ? Optional.of(new Item(id, remaining)) : Optional.empty();
+				if (total > Integer.MAX_VALUE) {
+					amount = (int) (total - Integer.MAX_VALUE);
+					remaining = (int) (total - amount);
+					notifyCapacityExceeded();
+				} else {
+					amount = (int) total;
+					remaining = 0;
 				}
+
+				set(slot, new Item(id, amount));
+				return remaining > 0 ? Optional.of(new Item(id, remaining)) : Optional.empty();
 			}
 
 			for (slot = 0; slot < capacity; slot++) {
