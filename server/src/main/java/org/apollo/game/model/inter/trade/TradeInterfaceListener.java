@@ -49,7 +49,7 @@ public final class TradeInterfaceListener implements InterfaceListener {
 		TradeSession otherSession = session.getOther().getAttributes().getTradeSession();
 
 		if (validStage(session.getStage()) && validStage(otherSession.getStage())) {
-			session.decline();
+			session.decline(true);
 		}
 
 		player.getInventory().removeListener(invListener);

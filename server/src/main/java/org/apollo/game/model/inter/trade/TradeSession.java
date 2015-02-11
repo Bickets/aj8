@@ -95,13 +95,6 @@ public final class TradeSession {
 	public boolean verify() {
 		Inventory cloned = player.getInventory().clone();
 
-		List<Item> removed = cloned.removeAll(player.getTrade().getItems());
-		if (removed.size() > 0) {
-			player.sendMessage("There was an issue verifying this trade, please decline and try again.");
-			other.sendMessage("There was an issue verifying this trade, please decline and try again.");
-			return false;
-		}
-
 		List<Item> added = cloned.addAll(other.getTrade().getItems());
 		if (added.size() > 0) {
 			player.sendMessage("You do not have enough free inventory space to complete that transaction.");
@@ -114,10 +107,16 @@ public final class TradeSession {
 
 	/**
 	 * Declines this trade session, the {@code player} declined the trade.
+	 * 
+	 * @param natural A flag representing whether or not this trade was declined
+	 *            by natural causes (clicking decline, closing the window,
+	 *            logging out, etc)
 	 */
-	public void decline() {
-		player.sendMessage("Trade declined.");
-		other.sendMessage("Other player declined the trade.");
+	public void decline(boolean natural) {
+		if (natural) {
+			player.sendMessage("Trade declined.");
+			other.sendMessage("Other player declined the trade.");
+		}
 
 		decline(player);
 		decline(other);

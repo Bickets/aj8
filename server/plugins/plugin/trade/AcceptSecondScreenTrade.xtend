@@ -31,7 +31,7 @@ class AcceptSecondScreenTrade implements EventSubscriber<ButtonActionEvent> {
 
 		val other = session.other
 
-		if (other == null || session.player != player || other == player) {
+		if (other == null || session.player !== player || other === player) {
 			context.breakSubscriberChain
 			return
 		}
@@ -55,11 +55,13 @@ class AcceptSecondScreenTrade implements EventSubscriber<ButtonActionEvent> {
 			session.checkpoint(VERIFYING)
 			otherSession.checkpoint(VERIFYING)
 
-			if (session.verify()) {
+			if (session.verify && otherSession.verify) {
 				session.checkpoint(FINISHED)
 				otherSession.checkpoint(FINISHED)
 
 				finish(player, other)
+			} else {
+				session.decline(false)
 			}
 		}
 	}

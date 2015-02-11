@@ -20,6 +20,10 @@ import static org.apollo.game.model.inter.trade.TradeStatus.*
 @SubscribesTo(ButtonActionEvent)
 class AcceptFirstScreenTrade implements EventSubscriber<ButtonActionEvent> {
 
+	// TODO: Container for colors?
+	static val String WHITE = "<col=FFFFFF>"
+	static val String ORANGE = "<col=FF9040>"
+
 	override subscribe(EventContext context, Player player, ButtonActionEvent event) {
 		val session = player.attributes.tradeSession
 
@@ -35,7 +39,7 @@ class AcceptFirstScreenTrade implements EventSubscriber<ButtonActionEvent> {
 
 		val other = session.other
 
-		if (other == null || session.player != player || other == player) {
+		if (other == null || session.player !== player || other === player) {
 			context.breakSubscriberChain
 			return
 		}
@@ -59,11 +63,13 @@ class AcceptFirstScreenTrade implements EventSubscriber<ButtonActionEvent> {
 			session.checkpoint(VERIFYING)
 			otherSession.checkpoint(VERIFYING)
 
-			if (session.verify()) {
+			if (session.verify && otherSession.verify) {
 				session.checkpoint(SECOND_SCREEN)
 				otherSession.checkpoint(SECOND_SCREEN)
 
 				openSecond(player, other)
+			} else {
+				session.decline(false)
 			}
 		}
 	}
@@ -78,9 +84,9 @@ class AcceptFirstScreenTrade implements EventSubscriber<ButtonActionEvent> {
 
 	def openSecond(Player player, Player other) {
 		player.send(new SetInterfaceTextMessage(VALUES_MESSAGE_ID, buildSecondScreenMessage(player.trade)))
-		other.send(new SetInterfaceTextMessage(VALUES_MESSAGE_ID, buildSecondScreenMessage(other.trade)))
-
 		player.send(new SetInterfaceTextMessage(OTHER_VALUES_MESSAGE_ID, buildSecondScreenMessage(other.trade)))
+
+		other.send(new SetInterfaceTextMessage(VALUES_MESSAGE_ID, buildSecondScreenMessage(other.trade)))
 		other.send(new SetInterfaceTextMessage(OTHER_VALUES_MESSAGE_ID, buildSecondScreenMessage(player.trade)))
 
 		player.openSecondWindow
@@ -101,7 +107,7 @@ class AcceptFirstScreenTrade implements EventSubscriber<ButtonActionEvent> {
 			val otherSession = session.other.attributes.tradeSession
 
 			if (validStage(session.stage) && validStage(otherSession.stage)) {
-				session.decline();
+				session.decline(true)
 			}
 		}
 
@@ -111,7 +117,7 @@ class AcceptFirstScreenTrade implements EventSubscriber<ButtonActionEvent> {
 	}
 
 	def buildSecondScreenMessage(Inventory inventory) {
-		if (inventory.freeSlots == 28) {
+		if (inventory.size == 0) {
 			return "Absolutely nothing!"
 		}
 
@@ -120,12 +126,12 @@ class AcceptFirstScreenTrade implements EventSubscriber<ButtonActionEvent> {
 		val filtered = items.filter[it != null]
 
 		filtered.forEach [
-			bldr.append("@or1@").append(it.definition.name)
+			bldr.append(ORANGE).append(it.definition.name)
 			if (it.amount > 1) {
-				bldr.append(" @whi@x ")
+				bldr.append(" ").append(WHITE).append("x ")
 				bldr.append(if(it.amount >= 1000) NumberUtil.format(it.amount) else it.amount)
 			}
-			bldr.append(System::lineSeparator)
+			bldr.append("\\n")
 		]
 
 		return bldr.toString
