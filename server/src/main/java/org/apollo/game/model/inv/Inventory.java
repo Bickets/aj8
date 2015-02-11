@@ -6,6 +6,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Objects;
+import java.util.Optional;
 import java.util.Set;
 
 import org.apollo.game.model.Item;
@@ -127,12 +128,26 @@ public final class Inventory implements Cloneable {
 	 * @return {@code true} if so, {@code false} if not.
 	 */
 	public boolean contains(int id) {
-		for (Item item : items) {
+		return indexOf(id) != -1;
+	}
+
+	/**
+	 * Returns the index (slot) of the specified item id or <tt>-1</tt> if no
+	 * item exists.
+	 * 
+	 * @param id The id of the item to find the index for.
+	 * @return The index (slot) of the specified item id, if it does not exist
+	 *         <tt>-1</tt> is returned.
+	 */
+	public int indexOf(int id) {
+		for (int slot = 0; slot < items.length; slot++) {
+			Item item = items[slot];
 			if (item != null && item.getId() == id) {
-				return true;
+				return slot;
 			}
 		}
-		return false;
+
+		return -1;
 	}
 
 	/**
@@ -258,24 +273,13 @@ public final class Inventory implements Cloneable {
 		List<Item> failed = new ArrayList<>();
 		for (Item item : items) {
 			if (item != null) {
-				Item added = add(item);
-				if (added == null) {
-					failed.add(added);
+				Optional<Item> added = add(item);
+				if (added.isPresent()) {
+					failed.add(added.get());
 				}
 			}
 		}
 		return failed;
-	}
-
-	/**
-	 * An alias for {@code add(id, 1)}.
-	 *
-	 * @param id The id.
-	 * @return {@code true} if the item was added, {@code false} if there was
-	 *         not enough room.
-	 */
-	public boolean add(int id) {
-		return add(id, 1) == 0;
 	}
 
 	/**
@@ -285,36 +289,41 @@ public final class Inventory implements Cloneable {
 	 * @param amount The amount.
 	 * @return The amount that remains.
 	 */
-	public int add(int id, int amount) {
-		Item item = add(new Item(id, amount));
-		if (item != null) {
-			return item.getAmount();
-		}
-		return 0;
+	public Optional<Item> add(int id, int amount) {
+		return add(new Item(id, amount));
 	}
 
 	/**
-	 * Adds an item to this inventory. This will attempt to add as much of the
-	 * item that is possible. If the item remains, it will be returned (in the
-	 * case of stackable items, any quantity that remains in the stack is
-	 * returned). If nothing remains, the method will return {@code null}. If
-	 * something remains, the listener will also be notified which could be
-	 * used, for example, to send a message to the player.
-	 *
+	 * Attempts to add as much of the specified {@code item} to this inventory
+	 * as possible. If any of the item remains, an {@link Item item with the
+	 * remainder} will be returned (in the case of stack-able items, any
+	 * quantity that remains in the stack is returned). If nothing remains, the
+	 * method will return {@link Optional#empty an empty Optional}.
+	 * 
+	 * <p>
+	 * If anything remains at all, the listener will be notified which could be
+	 * used for notifying a player that their inventory is full, for example.
+	 * 
 	 * @param item The item to add to this inventory.
-	 * @return The item that remains if there is not enough room in the
-	 *         inventory. If nothing remains, {@code null}.
+	 * @return The item that may remain, if nothing remains,
+	 *         {@link Optional#empty an empty Optional} is returned.
 	 */
-	public Item add(Item item) {
+	public Optional<Item> add(Item item) {
 		int id = item.getId();
 		boolean stackable = isStackable(item.getDefinition());
+
 		if (stackable) {
-			for (int slot = 0; slot < capacity; slot++) {
+			int slot = indexOf(id);
+
+			if (slot != -1) {
 				Item other = items[slot];
+
+				int amount;
+				int remaining;
+
 				if (other != null && other.getId() == id) {
-					long total = item.getAmount() + other.getAmount();
-					int amount;
-					int remaining;
+					long total = (long) item.getAmount() + other.getAmount();
+
 					if (total > Integer.MAX_VALUE) {
 						amount = (int) (total - Integer.MAX_VALUE);
 						remaining = (int) (total - amount);
@@ -323,47 +332,59 @@ public final class Inventory implements Cloneable {
 						amount = (int) total;
 						remaining = 0;
 					}
+
 					set(slot, new Item(id, amount));
-					return remaining > 0 ? new Item(id, remaining) : null;
+					return remaining > 0 ? Optional.of(new Item(id, remaining)) : Optional.empty();
 				}
 			}
-			for (int slot = 0; slot < capacity; slot++) {
-				Item other = items[slot];
-				if (other == null) {
+
+			for (slot = 0; slot < capacity; slot++) {
+				if (items[slot] == null) {
 					set(slot, item);
-					return null;
+					return Optional.empty();
 				}
 			}
+
 			notifyCapacityExceeded();
-			return item;
+			return Optional.of(item);
 		}
 
 		int remaining = item.getAmount();
+		if (remaining == 0) {
+			return Optional.empty();
+		}
 
 		stopFiringEvents();
+
 		try {
 			Item single = new Item(item.getId(), 1);
-			for (int slot = 0; slot < capacity; slot++) {
+
+			if (remaining == 0) {
+				return Optional.empty();
+			}
+
+			for (int slot = 0; slot < items.length; slot++) {
 				if (items[slot] == null) {
+					set(slot, single);
 					remaining--;
-					set(slot, single); // share the instances
-					if (remaining <= 0) {
-						break;
-					}
+				}
+
+				if (remaining == 0) {
+					return Optional.empty();
 				}
 			}
+
 		} finally {
 			startFiringEvents();
+
+			if (remaining != item.getAmount()) {
+				notifyItemsUpdated();
+			}
 		}
 
-		if (remaining != item.getAmount()) {
-			notifyItemsUpdated();
-		}
-		if (remaining > 0) {
-			notifyCapacityExceeded();
-		}
+		notifyCapacityExceeded();
 
-		return new Item(item.getId(), remaining);
+		return Optional.of(new Item(id, remaining));
 	}
 
 	/**
@@ -388,8 +409,8 @@ public final class Inventory implements Cloneable {
 
 	/**
 	 * Removes {@code amount} of the item with the specified {@code id}. If the
-	 * item is stackable, it will remove it from the stack. If not, it'll remove
-	 * {@code amount} items.
+	 * item is stack-able, it will remove it from the stack. If not, it'll
+	 * remove {@code amount} items.
 	 *
 	 * @param id The id.
 	 * @param amount The amount.
@@ -398,33 +419,49 @@ public final class Inventory implements Cloneable {
 	public int remove(int id, int amount) {
 		ItemDefinition def = ItemDefinition.forId(id);
 		boolean stackable = isStackable(def);
+
 		if (stackable) {
+			int slot = indexOf(id);
+
+			if (slot != -1) {
+				Item item = items[slot];
+
+				if (amount >= item.getAmount()) {
+					set(slot, null);
+					return item.getAmount();
+				} else {
+					set(slot, new Item(item.getId(), item.getAmount() - amount));
+					return amount;
+				}
+			}
+
+			return 0;
+		}
+
+		int removed = 0;
+
+		stopFiringEvents();
+
+		try {
 			for (int slot = 0; slot < capacity; slot++) {
 				Item item = items[slot];
 				if (item != null && item.getId() == id) {
-					if (amount >= item.getAmount()) {
-						set(slot, null);
-						return item.getAmount();
-					} else {
-						int newAmount = item.getAmount() - amount;
-						set(slot, new Item(item.getId(), newAmount));
-						return amount;
+					set(slot, null);
+
+					if (++removed >= amount) {
+						break;
 					}
 				}
 			}
-			return 0;
-		}
-		int removed = 0;
-		for (int slot = 0; slot < capacity; slot++) {
-			Item item = items[slot];
-			if (item != null && item.getId() == id) {
-				set(slot, null);
-				removed++;
-			}
-			if (removed >= amount) {
-				break;
+
+		} finally {
+			startFiringEvents();
+
+			if (removed != amount) {
+				notifyItemsUpdated();
 			}
 		}
+
 		return removed;
 	}
 

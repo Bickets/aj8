@@ -4,10 +4,9 @@ import org.apollo.game.event.EventContext
 import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ItemActionEvent
-import org.apollo.game.model.Item
 import org.apollo.game.model.Player
-import org.apollo.game.model.inv.InventoryConstants
 import org.apollo.game.model.inter.Interfaces.InventoryAmountOption
+import org.apollo.game.model.inv.InventoryConstants
 
 @SubscribesTo(ItemActionEvent)
 class RemoveEquipment implements EventSubscriber<ItemActionEvent> {
@@ -31,8 +30,8 @@ class RemoveEquipment implements EventSubscriber<ItemActionEvent> {
 
 		try {
 			val remaining = inventory.add(id, item.amount)
-			removed = remaining == 0
-			equipment.set(slot, if(removed) null else new Item(id, remaining))
+			removed = remaining.present
+			equipment.set(slot, if(removed) null else remaining.get)
 		} finally {
 			inventory.startFiringEvents
 			equipment.startFiringEvents
