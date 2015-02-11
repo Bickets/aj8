@@ -25,21 +25,14 @@ public final class AppearanceInventoryListener extends InventoryAdapter {
 		this.player = player;
 	}
 
-	/**
-	 * Updates the players appearance.
-	 */
-	private void update() {
+	@Override
+	public void itemUpdated(Inventory inventory, int slot, Item item) {
 		player.updateApprarance();
 	}
 
 	@Override
-	public void itemUpdated(Inventory inventory, int slot, Item item) {
-		update();
-	}
-
-	@Override
 	public void itemsUpdated(Inventory inventory) {
-		update();
+		player.updateApprarance();
 	}
 
 }
