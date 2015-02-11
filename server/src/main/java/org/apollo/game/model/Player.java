@@ -3,6 +3,8 @@ package org.apollo.game.model;
 import io.netty.util.internal.StringUtil;
 
 import java.util.ArrayDeque;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Queue;
 
 import org.apollo.game.event.Event;
@@ -20,11 +22,11 @@ import org.apollo.game.model.inv.InventoryListener;
 import org.apollo.game.model.inv.SynchronizationInventoryListener;
 import org.apollo.game.model.region.Region;
 import org.apollo.game.model.skill.SkillListener;
-import org.apollo.game.model.skill.SkillSet;
 import org.apollo.game.model.skill.SynchronizationSkillListener;
 import org.apollo.game.msg.Message;
 import org.apollo.game.msg.impl.IdAssignmentMessage;
 import org.apollo.game.msg.impl.LogoutMessage;
+import org.apollo.game.msg.impl.PlayerContextMenuOptionMessage;
 import org.apollo.game.msg.impl.SwitchTabInterfaceMessage;
 import org.apollo.game.sync.block.SynchronizationBlock;
 import org.apollo.game.task.impl.SkillNormalizationTask;
@@ -206,6 +208,12 @@ public final class Player extends GameCharacter {
 	 * An instance of the current prayer head icon.
 	 */
 	private final HeadIcon<Prayer> prayerIcon = new HeadIcon<>();
+
+	/**
+	 * A {@link Map} of context menu positions to context menu options this
+	 * player has.
+	 */
+	private final Map<Integer, PlayerContextMenuOption> options = new HashMap<>();
 
 	/**
 	 * Creates the {@link Player}.
@@ -497,18 +505,25 @@ public final class Player extends GameCharacter {
 	private void init() {
 		initInventories();
 		initSkills();
+		initContextMenus();
 
 		world.submit(new SkillNormalizationTask(this));
+	}
+
+	/**
+	 * Initializes the context menu configurations for this player.
+	 */
+	private void initContextMenus() {
+		showContextMenuOption(PlayerContextMenuOption.TRADE);
+		showContextMenuOption(PlayerContextMenuOption.FOLLOW);
 	}
 
 	/**
 	 * Initializes the players skills.
 	 */
 	private void initSkills() {
-		SkillSet skills = getSkillSet();
-
 		SkillListener syncListener = new SynchronizationSkillListener(this);
-		skills.addListener(syncListener);
+		getSkillSet().addListener(syncListener);
 	}
 
 	/**
@@ -577,6 +592,46 @@ public final class Player extends GameCharacter {
 	 */
 	public void updateApprarance() {
 		getBlockSet().add(SynchronizationBlock.createAppearanceBlock(this));
+	}
+
+	/**
+	 * Shows a context menu option for this {@link Player}.
+	 * 
+	 * @param option The context menu option to show.
+	 */
+	public void showContextMenuOption(PlayerContextMenuOption option) {
+		/* Replace or add the specified option to this players options. */
+		options.put(option.getPosition(), option);
+
+		send(new PlayerContextMenuOptionMessage(option.getPosition(), option.onTop(), option.getName()));
+	}
+
+	/**
+	 * Removes a context menu option for this {@link Player}.
+	 * 
+	 * @param option The context menu option to remove.
+	 */
+	public void removeContextMenuOption(PlayerContextMenuOption option) {
+		/* Remove the specified option from this players options. */
+		options.remove(option.getPosition());
+
+		PlayerContextMenuOption _option = new PlayerContextMenuOption(option.getPosition(), option.onTop(), "null");
+		send(new PlayerContextMenuOptionMessage(_option.getPosition(), _option.onTop(), _option.getName()));
+	}
+
+	/**
+	 * Tests whether or not this {@link Player} has the specified
+	 * 
+	 * @param option The option to test.
+	 * @return {@code true} if and only if the specified option exists on this
+	 *         player; otherwise {@code false}.
+	 */
+	public boolean hasContextMenuOption(PlayerContextMenuOption option) {
+		PlayerContextMenuOption current = options.get(option.getPosition());
+		if (current == null) {
+			return false;
+		}
+		return current.equals(option);
 	}
 
 	/**

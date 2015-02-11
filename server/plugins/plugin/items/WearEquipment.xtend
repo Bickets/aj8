@@ -7,11 +7,11 @@ import org.apollo.game.interact.ItemActionEvent
 import org.apollo.game.model.Player
 import org.apollo.game.model.^def.EquipmentDefinition
 import org.apollo.game.model.^def.ItemDefinition
-import org.apollo.game.model.inter.Interfaces.InterfaceOption
 import org.apollo.game.model.inv.InventoryConstants
 import org.apollo.game.model.skill.Skill
 
 import static org.apollo.game.model.EquipmentConstants.*
+import org.apollo.game.model.inter.Interfaces.InventoryAmountOption
 
 @SubscribesTo(ItemActionEvent)
 class WearEquipment implements EventSubscriber<ItemActionEvent> {
@@ -125,7 +125,7 @@ class WearEquipment implements EventSubscriber<ItemActionEvent> {
 		val definition = ItemDefinition.forId(event.id)
 
 		wearable(definition) && event.interfaceId == InventoryConstants.INVENTORY_ID &&
-			event.option == InterfaceOption.OPTION_ONE
+			event.option == InventoryAmountOption.OPTION_ONE
 	}
 
 	def wearable(ItemDefinition ^def) {

@@ -61,7 +61,7 @@ public final class ObjectMessageHandler implements MessageHandler<ObjectActionMe
 			@Override
 			public void executeAction() {
 				player.turnTo(object.getTurnToPosition(player.getPosition()));
-				player.post(new ObjectActionEvent(message.getId(), message.getOption(), position));
+				player.post(new ObjectActionEvent(message.getId(), message.getAction(), position));
 				stop();
 			}
 		});

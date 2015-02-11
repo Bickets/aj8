@@ -2,7 +2,7 @@ package org.apollo.game.interact;
 
 import org.apollo.game.event.Event;
 import org.apollo.game.model.Mob;
-import org.apollo.game.model.inter.Interfaces.InterfaceOption;
+import org.apollo.game.model.inter.Interfaces.InteractContextMenuAction;
 
 /**
  * An event which is invoked when interacting with some {@link Mob}.
@@ -17,19 +17,19 @@ public final class MobActionEvent implements Event {
 	private final Mob mob;
 
 	/**
-	 * The clicked interface option.
+	 * The clicked interface action.
 	 */
-	private final InterfaceOption option;
+	private final InteractContextMenuAction action;
 
 	/**
 	 * Constructs a new {@link MobActionEvent}.
 	 *
 	 * @param mob The mob who is being interacted with.
-	 * @param option The clicked interface option.
+	 * @param action The clicked interface action.
 	 */
-	public MobActionEvent(Mob mob, InterfaceOption option) {
+	public MobActionEvent(Mob mob, InteractContextMenuAction action) {
 		this.mob = mob;
-		this.option = option;
+		this.action = action;
 	}
 
 	/**
@@ -40,10 +40,10 @@ public final class MobActionEvent implements Event {
 	}
 
 	/**
-	 * Returns the clicked interface option.
+	 * Returns the clicked interface action.
 	 */
-	public InterfaceOption getOption() {
-		return option;
+	public InteractContextMenuAction getAction() {
+		return action;
 	}
 
 }

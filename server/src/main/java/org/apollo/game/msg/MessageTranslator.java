@@ -61,6 +61,7 @@ import org.apollo.game.msg.encoder.MobSynchronizationMessageEncoder;
 import org.apollo.game.msg.encoder.OpenDialogueInterfaceMessageEncoder;
 import org.apollo.game.msg.encoder.OpenInterfaceMessageEncoder;
 import org.apollo.game.msg.encoder.OpenInterfaceSidebarMessageEncoder;
+import org.apollo.game.msg.encoder.PlayerContextMenuOptionMessageEncoder;
 import org.apollo.game.msg.encoder.PlayerSynchronizationMessageEncoder;
 import org.apollo.game.msg.encoder.PositionHintIconMessageEncoder;
 import org.apollo.game.msg.encoder.PositionMessageEncoder;
@@ -211,6 +212,7 @@ public final class MessageTranslator {
 		register(new GameCharacterHintIconMessageEncoder());
 		register(new WelcomeScreenMessageEncoder());
 		register(new SystemUpdateMessageEncoder());
+		register(new PlayerContextMenuOptionMessageEncoder());
 
 		// register handlers
 		register(new CharacterDesignMessageHandler());

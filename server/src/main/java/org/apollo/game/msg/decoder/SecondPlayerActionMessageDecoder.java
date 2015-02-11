@@ -1,6 +1,6 @@
 package org.apollo.game.msg.decoder;
 
-import org.apollo.game.model.inter.Interfaces.InterfaceOption;
+import org.apollo.game.model.inter.Interfaces.InteractContextMenuAction;
 import org.apollo.game.msg.MessageDecoder;
 import org.apollo.game.msg.annotate.DecodesMessage;
 import org.apollo.game.msg.impl.PlayerActionMessage;
@@ -21,7 +21,7 @@ public final class SecondPlayerActionMessageDecoder implements MessageDecoder<Pl
 	public PlayerActionMessage decode(GamePacket packet) {
 		GamePacketReader reader = new GamePacketReader(packet);
 		int index = (int) reader.getUnsigned(DataType.SHORT, DataOrder.LITTLE);
-		return new PlayerActionMessage(InterfaceOption.OPTION_TWO, index);
+		return new PlayerActionMessage(InteractContextMenuAction.ACTION_TWO, index);
 	}
 
 }

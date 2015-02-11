@@ -1,6 +1,6 @@
 package org.apollo.game.msg.impl;
 
-import org.apollo.game.model.inter.Interfaces.InterfaceOption;
+import org.apollo.game.model.inter.Interfaces.InventoryAmountOption;
 import org.apollo.game.msg.Message;
 
 /**
@@ -13,7 +13,7 @@ public class ItemActionMessage implements Message {
 	/**
 	 * The interface option.
 	 */
-	private final InterfaceOption option;
+	private final InventoryAmountOption option;
 
 	/**
 	 * The interface id.
@@ -38,7 +38,7 @@ public class ItemActionMessage implements Message {
 	 * @param id The id.
 	 * @param slot The slot.
 	 */
-	public ItemActionMessage(InterfaceOption option, int interfaceId, int id, int slot) {
+	public ItemActionMessage(InventoryAmountOption option, int interfaceId, int id, int slot) {
 		this.option = option;
 		this.interfaceId = interfaceId;
 		this.id = id;
@@ -50,7 +50,7 @@ public class ItemActionMessage implements Message {
 	 *
 	 * @return The interface option.
 	 */
-	public InterfaceOption getOption() {
+	public InventoryAmountOption getOption() {
 		return option;
 	}
 

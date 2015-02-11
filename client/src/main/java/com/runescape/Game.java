@@ -4050,7 +4050,7 @@ public class Game extends GameShell {
 					String string = menuActionNames[pressedRow];
 					int i_379_ = string.indexOf("<col=ffffff>");
 					if (i_379_ != -1) {
-						string = string.substring(i_379_ + 5).trim();
+						string = string.substring(i_379_ + 12).trim();
 						String string_380_ = TextUtils.formatName(TextUtils.longToName(TextUtils.nameToLong(string)));
 						boolean bool_381_ = false;
 						for (int i_382_ = 0; i_382_ < playerCount; i_382_++) {

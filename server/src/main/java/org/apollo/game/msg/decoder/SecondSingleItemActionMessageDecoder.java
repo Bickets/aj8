@@ -1,6 +1,6 @@
 package org.apollo.game.msg.decoder;
 
-import org.apollo.game.model.inter.Interfaces.InterfaceOption;
+import org.apollo.game.model.inter.Interfaces.InventoryAmountOption;
 import org.apollo.game.msg.MessageDecoder;
 import org.apollo.game.msg.annotate.DecodesMessage;
 import org.apollo.game.msg.impl.ItemActionMessage;
@@ -24,7 +24,7 @@ public final class SecondSingleItemActionMessageDecoder implements MessageDecode
 		int id = (int) reader.getUnsigned(DataType.SHORT, DataTransformation.ADD);
 		int slot = (int) reader.getUnsigned(DataType.SHORT, DataOrder.LITTLE, DataTransformation.ADD);
 		int interfaceId = (int) reader.getUnsigned(DataType.SHORT, DataOrder.LITTLE, DataTransformation.ADD);
-		return new ItemActionMessage(InterfaceOption.OPTION_TWO, interfaceId, id, slot);
+		return new ItemActionMessage(InventoryAmountOption.OPTION_FIVE, interfaceId, id, slot);
 	}
 
 }

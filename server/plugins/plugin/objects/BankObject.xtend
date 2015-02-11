@@ -5,7 +5,7 @@ import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ObjectActionEvent
 import org.apollo.game.model.Player
-import org.apollo.game.model.inter.Interfaces.InterfaceOption
+import org.apollo.game.model.inter.Interfaces.InteractContextMenuAction
 import plugin.bank.Bank
 
 @SubscribesTo(ObjectActionEvent)
@@ -16,7 +16,7 @@ class BankObject implements EventSubscriber<ObjectActionEvent> {
 	}
 
 	override test(ObjectActionEvent event) {
-		event.id == 2213 && event.option == InterfaceOption.OPTION_ONE
+		event.id == 2213 && event.action == InteractContextMenuAction.ACTION_ONE
 	}
 
 }

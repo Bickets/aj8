@@ -2,6 +2,7 @@ package org.apollo.game.model;
 
 import java.util.Set;
 
+import org.apollo.game.model.area.Area;
 import org.apollo.game.model.grounditem.GroundItem;
 import org.apollo.game.model.obj.GameObject;
 import org.apollo.game.model.region.Region;
@@ -95,6 +96,30 @@ public abstract class Entity {
 	 */
 	public final <T extends Entity> Set<T> getSurrounding(EntityCategory category) {
 		return getRegion().getEntities(category);
+	}
+
+	/**
+	 * Tests whether or not this {@link Entity} is within an {@link Area} with
+	 * no padding.
+	 * 
+	 * @param area The {@link Area} to test if this entity is within.
+	 * @return {@code true} if and only if this entity is within the specified
+	 *         {@code area} otherwise {@code false}.
+	 */
+	public boolean withinArea(Area area) {
+		return withinArea(area, 0);
+	}
+
+	/**
+	 * Tests whether or not this {@link Entity} is within an {@link Area}.
+	 * 
+	 * @param area The {@link Area} to test if this entity is within.
+	 * @param padding The padding around the area.
+	 * @return {@code true} if and only if this entity is within the specified
+	 *         {@code area} otherwise {@code false}.
+	 */
+	public boolean withinArea(Area area, int padding) {
+		return area.withinArea(position.getX(), position.getY(), padding);
 	}
 
 	/**

@@ -5,8 +5,8 @@ import org.apollo.game.event.EventSubscriber
 import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ItemActionEvent
 import org.apollo.game.model.Player
-import org.apollo.game.model.inter.Interfaces.InterfaceOption
 import org.apollo.game.model.inv.InventoryConstants
+import org.apollo.game.model.inter.Interfaces.InventoryAmountOption
 
 @SubscribesTo(ItemActionEvent)
 class DropItem implements EventSubscriber<ItemActionEvent> {
@@ -15,7 +15,7 @@ class DropItem implements EventSubscriber<ItemActionEvent> {
 	}
 
 	override test(ItemActionEvent event) {
-		event.interfaceId == InventoryConstants.INVENTORY_ID && event.option == InterfaceOption.OPTION_THREE
+		event.interfaceId == InventoryConstants.INVENTORY_ID && event.option == InventoryAmountOption.OPTION_TEN
 	}
 
 }

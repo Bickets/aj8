@@ -1,6 +1,6 @@
 package org.apollo.game.msg.impl;
 
-import org.apollo.game.model.inter.Interfaces.InterfaceOption;
+import org.apollo.game.model.inter.Interfaces.InteractContextMenuAction;
 import org.apollo.game.msg.Message;
 
 /**
@@ -11,24 +11,24 @@ import org.apollo.game.msg.Message;
 public abstract class ActionMessage implements Message {
 
 	/**
-	 * The interface option clicked which initiated this action.
+	 * The interface action clicked which initiated this action.
 	 */
-	private final InterfaceOption option;
+	private final InteractContextMenuAction action;
 
 	/**
-	 * Constructs a new {@link ActionMessage} with the specified option.
+	 * Constructs a new {@link ActionMessage} with the specified action.
 	 *
-	 * @param option The interface option clicked which initiated this action.
+	 * @param action The interface action clicked which initiated this action.
 	 */
-	protected ActionMessage(InterfaceOption option) {
-		this.option = option;
+	protected ActionMessage(InteractContextMenuAction action) {
+		this.action = action;
 	}
 
 	/**
-	 * Returns the interface option clicked.F
+	 * Returns the interface action clicked.
 	 */
-	public final InterfaceOption getOption() {
-		return option;
+	public final InteractContextMenuAction getAction() {
+		return action;
 	}
 
 }

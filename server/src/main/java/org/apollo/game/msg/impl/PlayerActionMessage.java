@@ -1,6 +1,6 @@
 package org.apollo.game.msg.impl;
 
-import org.apollo.game.model.inter.Interfaces.InterfaceOption;
+import org.apollo.game.model.inter.Interfaces.InteractContextMenuAction;
 
 /**
  * An action message which represents some action at a player.
@@ -18,11 +18,11 @@ public final class PlayerActionMessage extends ActionMessage {
 	 * Constructs a new {@link PlayerActionMessage} with the specified option
 	 * and index.
 	 *
-	 * @param option The interface option clicked.
+	 * @param action The interface action clicked.
 	 * @param index The index of the mob to interact with.
 	 */
-	public PlayerActionMessage(InterfaceOption option, int index) {
-		super(option);
+	public PlayerActionMessage(InteractContextMenuAction action, int index) {
+		super(action);
 		this.index = index;
 	}
 

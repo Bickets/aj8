@@ -1,7 +1,7 @@
 package org.apollo.game.msg.impl;
 
 import org.apollo.game.model.Position;
-import org.apollo.game.model.inter.Interfaces.InterfaceOption;
+import org.apollo.game.model.inter.Interfaces.InteractContextMenuAction;
 import org.apollo.game.msg.Message;
 
 /**
@@ -24,12 +24,12 @@ public final class ObjectActionMessage extends ActionMessage {
 	/**
 	 * Creates a new object action message.
 	 *
-	 * @param option The interface option.
+	 * @param action The interface action clicked.
 	 * @param id The id of the object.
 	 * @param position The position of the object.
 	 */
-	public ObjectActionMessage(InterfaceOption option, int id, Position position) {
-		super(option);
+	public ObjectActionMessage(InteractContextMenuAction action, int id, Position position) {
+		super(action);
 		this.id = id;
 		this.position = position;
 	}

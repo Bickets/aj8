@@ -1,6 +1,7 @@
 package org.apollo.net.codec.game;
 
 import io.netty.buffer.ByteBuf;
+import io.netty.util.internal.StringUtil;
 
 /**
  * Represents a single packet used in the in-game protocol.
@@ -77,6 +78,11 @@ public final class GamePacket {
 	 */
 	public GamePacketType getType() {
 		return type;
+	}
+
+	@Override
+	public String toString() {
+		return StringUtil.simpleClassName(this) + " [opcode=" + opcode + ", type=" + type + ", length=" + length + ", payload=" + payload + "]";
 	}
 
 }

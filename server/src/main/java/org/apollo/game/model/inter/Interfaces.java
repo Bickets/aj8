@@ -1,5 +1,6 @@
 package org.apollo.game.model.inter;
 
+import org.apollo.game.model.Entity;
 import org.apollo.game.model.inv.InventoryConstants;
 
 /**
@@ -20,82 +21,95 @@ public final class Interfaces {
 	 * tab, music disabled 12855 = ancients magic
 	 */
 	public static final int[] TAB_INTERFACE_IDS = { 2423, 3917, 638, 3213,
-			1644, 5608, 1151, -1, 5065, 5715, 2449, 904, 147, 962, };
+			1644, 5608, 1151, -1, 5065, 5715, 2449, 904, 147, 962 };
 
 	/**
-	 * Represents the option clicked on some drop-down interface menu.
-	 *
+	 * Represents an interface context menu action on some {@link Entity}.
+	 * 
 	 * @author Ryley Kimmel <ryley.kimmel@live.com>
 	 */
-	public enum InterfaceOption {
-		/**
-		 * The first drop down menu option.
-		 */
-		OPTION_ONE(0),
+	public enum InteractContextMenuAction {
 
 		/**
-		 * The second drop down menu option.
+		 * The first context menu action.
 		 */
-		OPTION_TWO(1),
+		ACTION_ONE,
 
 		/**
-		 * The third drop down menu option.
+		 * The second context menu action.
 		 */
-		OPTION_THREE(2),
+		ACTION_TWO,
 
 		/**
-		 * The fourth drop down menu option.
+		 * The third context menu action.
 		 */
-		OPTION_FOUR(3),
+		ACTION_THREE,
 
 		/**
-		 * The fifth drop down menu option.
+		 * The fourth context menu action.
 		 */
-		OPTION_FIVE(4);
+		ACTION_FOUR,
 
 		/**
-		 * Represents the id of this option.
+		 * The fifth context menu action.
 		 */
-		private final int id;
+		ACTION_FIVE
+	}
+
+	/**
+	 * Represents an inventory withdraw or deposit option.
+	 * 
+	 * @author Ryley Kimmel <ryley.kimmel@live.com>
+	 */
+	public enum InventoryAmountOption {
 
 		/**
-		 * Constructs a new {@link InterfaceOption} with the specified id.
-		 *
-		 * @param id The id of this option.
+		 * The first menu option, withdraw or deposit 1 item.
 		 */
-		private InterfaceOption(int id) {
-			this.id = id;
+		OPTION_ONE(1),
+
+		/**
+		 * The second menu option, withdraw or deposit 5 items.
+		 */
+		OPTION_FIVE(5),
+
+		/**
+		 * The third menu option, withdraw or deposit 10 items.
+		 */
+		OPTION_TEN(10),
+
+		/**
+		 * The fourth menu option, withdraw or deposit all items.
+		 */
+		OPTION_ALL(Integer.MAX_VALUE),
+
+		/**
+		 * The fifth menu option, withdraw or deposit <tt>n</tt> items.
+		 */
+		OPTION_X(-1);
+
+		/**
+		 * The value this option represents.
+		 */
+		private final int value;
+
+		/**
+		 * Constructs a new {@link InventoryAmountOption} with the specified
+		 * value.
+		 * 
+		 * @param value The value this options represents.
+		 */
+		private InventoryAmountOption(int value) {
+			this.value = value;
 		}
 
 		/**
-		 * Returns the id of this option.
+		 * Returns the value this option represents.
 		 */
-		public final int getId() {
-			return id;
+		public final int getValue() {
+			return value;
 		}
 
-		/**
-		 * Converts an option to an amount.
-		 *
-		 * @param option The option.
-		 * @return The amount.
-		 * @throws IllegalArgumentException if the option is not legal.
-		 */
-		public static int optionToAmount(InterfaceOption option) {
-			switch (option) {
-			case OPTION_ONE:
-				return 1;
-			case OPTION_TWO:
-				return 5;
-			case OPTION_THREE:
-				return 10;
-			case OPTION_FOUR:
-				return Integer.MAX_VALUE;
-			case OPTION_FIVE:
-				return -1;
-			}
-			throw new IllegalArgumentException();
-		}
 	}
 
 	/**

@@ -6,7 +6,6 @@ import org.apollo.game.event.annotate.SubscribesTo
 import org.apollo.game.interact.ItemActionEvent
 import org.apollo.game.model.Player
 import org.apollo.game.model.^def.ItemDefinition
-import org.apollo.game.model.inter.Interfaces.InterfaceOption
 import org.apollo.game.model.inter.bank.BankConstants
 import org.apollo.game.model.inter.bank.BankWithdrawEnterAmountListener
 import org.apollo.game.model.inv.InventoryConstants
@@ -21,7 +20,7 @@ class WithdrawBank implements EventSubscriber<ItemActionEvent> {
 		}
 
 		val id = if(player.attributes.withdrawingNotes) ItemDefinition.itemToNote(event.id) else event.id
-		val amount = InterfaceOption.optionToAmount(event.option)
+		val amount = event.option.value
 
 		if (amount == -1) {
 			player.interfaceSet.openEnterAmountDialog(new BankWithdrawEnterAmountListener(player, event.slot, id))

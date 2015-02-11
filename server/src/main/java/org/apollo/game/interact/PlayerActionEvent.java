@@ -2,7 +2,7 @@ package org.apollo.game.interact;
 
 import org.apollo.game.event.Event;
 import org.apollo.game.model.Player;
-import org.apollo.game.model.inter.Interfaces.InterfaceOption;
+import org.apollo.game.model.inter.Interfaces.InteractContextMenuAction;
 
 /**
  * An event which is invoked when interacting with some {@link Player}.
@@ -17,19 +17,19 @@ public final class PlayerActionEvent implements Event {
 	private final Player other;
 
 	/**
-	 * The interface option clicked.
+	 * The interface action clicked.
 	 */
-	private final InterfaceOption option;
+	private final InteractContextMenuAction action;
 
 	/**
 	 * Constructs a new {@link PlayerActionEvent}.
 	 *
 	 * @param other The player being interacted with.
-	 * @param option The interface option clicked.
+	 * @param action The interface action clicked.
 	 */
-	public PlayerActionEvent(Player other, InterfaceOption option) {
+	public PlayerActionEvent(Player other, InteractContextMenuAction action) {
 		this.other = other;
-		this.option = option;
+		this.action = action;
 	}
 
 	/**
@@ -40,10 +40,10 @@ public final class PlayerActionEvent implements Event {
 	}
 
 	/**
-	 * Returns the clicked interface option.
+	 * Returns the clicked interface action.
 	 */
-	public InterfaceOption getOption() {
-		return option;
+	public InteractContextMenuAction getAction() {
+		return action;
 	}
 
 }

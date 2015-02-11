@@ -1,7 +1,7 @@
 package org.apollo.game.interact;
 
 import org.apollo.game.event.Event;
-import org.apollo.game.model.inter.Interfaces.InterfaceOption;
+import org.apollo.game.model.inter.Interfaces.InventoryAmountOption;
 
 /**
  * An event which manages single item actions.
@@ -13,7 +13,7 @@ public final class ItemActionEvent implements Event {
 	/**
 	 * The clicked interface option.
 	 */
-	private final InterfaceOption option;
+	private final InventoryAmountOption option;
 
 	/**
 	 * The interface id.
@@ -39,7 +39,7 @@ public final class ItemActionEvent implements Event {
 	 * @param id The items id.
 	 * @param slot The items slot.
 	 */
-	public ItemActionEvent(InterfaceOption option, int interfaceId, int id, int slot) {
+	public ItemActionEvent(InventoryAmountOption option, int interfaceId, int id, int slot) {
 		this.option = option;
 		this.interfaceId = interfaceId;
 		this.id = id;
@@ -49,7 +49,7 @@ public final class ItemActionEvent implements Event {
 	/**
 	 * Returns the clicked interface option.
 	 */
-	public InterfaceOption getOption() {
+	public InventoryAmountOption getOption() {
 		return option;
 	}
 
