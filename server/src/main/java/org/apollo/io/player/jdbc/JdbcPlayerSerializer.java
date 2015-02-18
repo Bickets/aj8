@@ -15,7 +15,6 @@ import java.time.LocalTime;
 
 import org.apollo.game.crypto.BCrypt;
 import org.apollo.game.model.Player;
-import org.apollo.game.model.PlayerConstants;
 import org.apollo.game.model.World;
 import org.apollo.game.model.inv.Inventory;
 import org.apollo.io.player.PlayerSanctionProvider;
@@ -134,7 +133,7 @@ public final class JdbcPlayerSerializer extends PlayerSerializer implements Clos
 			}
 
 			try (ResultSet set = loginStatement.executeQuery()) {
-				Player player = new Player(credentials, PlayerConstants.SPAWN_POSITION, world);
+				Player player = new Player(credentials, Player.DEFAULT_SPAWN_POSITION, world);
 
 				/* The account doesn't exist, let's create it. */
 				if (!set.first()) {

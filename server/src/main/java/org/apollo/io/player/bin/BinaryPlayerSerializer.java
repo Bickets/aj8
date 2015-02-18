@@ -10,7 +10,6 @@ import java.io.IOException;
 import org.apollo.game.model.Item;
 import org.apollo.game.model.Player;
 import org.apollo.game.model.Player.PrivilegeLevel;
-import org.apollo.game.model.PlayerConstants;
 import org.apollo.game.model.Position;
 import org.apollo.game.model.World;
 import org.apollo.game.model.appearance.Appearance;
@@ -116,7 +115,7 @@ public final class BinaryPlayerSerializer extends PlayerSerializer {
 	protected PlayerSerializerResponse loadPlayer(PlayerCredentials credentials) throws IOException {
 		File f = BinaryPlayerUtil.getFile(credentials.getUsername());
 		if (!f.exists()) {
-			return new PlayerSerializerResponse(LoginConstants.STATUS_OK, new Player(credentials, PlayerConstants.SPAWN_POSITION, world));
+			return new PlayerSerializerResponse(LoginConstants.STATUS_OK, new Player(credentials, Player.DEFAULT_SPAWN_POSITION, world));
 		}
 
 		try (DataInputStream in = new DataInputStream(new FileInputStream(f))) {

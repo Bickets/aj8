@@ -104,6 +104,11 @@ public final class Player extends GameCharacter {
 	}
 
 	/**
+	 * The default spawn position.
+	 */
+	public static final Position DEFAULT_SPAWN_POSITION = new Position(3222, 3222);
+
+	/**
 	 * A temporary queue of messages sent during the login process.
 	 */
 	private final Queue<Message> queuedMessages = new ArrayDeque<>();

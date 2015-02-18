@@ -20,6 +20,7 @@ public abstract class Entity {
 	 * @author Ryley Kimmel <ryley.kimmel@live.com>
 	 */
 	public enum EntityCategory {
+
 		/**
 		 * Represents a {@link Player} entity.
 		 */

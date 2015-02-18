@@ -37,15 +37,25 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- * The world class is a singleton which contains objects like the
- * {@link GameCharacterRepository} for players and mobs. It should only contain
- * things relevant to the in-game world and not classes which deal with I/O and
- * such (these may be better off inside some custom {@link Service} or other
- * code, however, the circumstances are rare).
+ * This class is a representation of the game world which contains objects like
+ * the {@link GameCharacterRepository} for players and mobs. It should only
+ * contain things relevant to the in-game world and not classes which deal with
+ * I/O and such (these may be better off inside some custom {@link Service} or
+ * other code, however, the circumstances are rare).
  *
  * @author Graham
  */
 public final class World {
+
+	/**
+	 * The maximum number of mobs.
+	 */
+	public static final int MAXIMUM_MOBS = 2048;
+
+	/**
+	 * The maximum number of players.
+	 */
+	public static final int MAXIMUM_PLAYERS = 2000;
 
 	/**
 	 * The logger used to print information and debug messages to the console.
@@ -78,12 +88,12 @@ public final class World {
 	/**
 	 * The {@link GameCharacterRepository} of {@link Mob}s.
 	 */
-	private final GameCharacterRepository<Mob> mobRepository = new GameCharacterRepository<>(WorldConstants.MAXIMUM_MOBS);
+	private final GameCharacterRepository<Mob> mobRepository = new GameCharacterRepository<>(MAXIMUM_MOBS);
 
 	/**
 	 * The {@link GameCharacterRepository} of {@link Player}s.
 	 */
-	private final GameCharacterRepository<Player> playerRepository = new GameCharacterRepository<>(WorldConstants.MAXIMUM_PLAYERS);
+	private final GameCharacterRepository<Player> playerRepository = new GameCharacterRepository<>(MAXIMUM_PLAYERS);
 
 	/**
 	 * The task scheduler for this world.
