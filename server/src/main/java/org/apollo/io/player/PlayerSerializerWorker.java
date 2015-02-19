@@ -1,6 +1,7 @@
 package org.apollo.io.player;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -55,14 +56,13 @@ public final class PlayerSerializerWorker {
 	 * @param session The session submitting this request.
 	 * @param request The login request.
 	 * @param fileSystem The file system
-	 * @throws IOException If some I/O exception occurs.
 	 */
-	public void submitLoadRequest(LoginSession session, LoginRequest request, FileSystem fileSystem) throws IOException {
+	public void submitLoadRequest(LoginSession session, LoginRequest request, FileSystem fileSystem) {
 		executor.submit(() -> {
 			try {
 				PlayerSerializerResponse response = serializer.loadPlayer(request.getCredentials());
 				session.handlePlayerLoaderResponse(request, response);
-			} catch (Exception e) {
+			} catch (IOException | SQLException e) {
 				logger.error("Unable to load players game.", e);
 				session.handlePlayerLoaderResponse(request, new PlayerSerializerResponse(LoginConstants.STATUS_COULD_NOT_COMPLETE));
 			}
@@ -79,7 +79,7 @@ public final class PlayerSerializerWorker {
 		executor.submit(() -> {
 			try {
 				serializer.savePlayer(player);
-			} catch (Exception e) {
+			} catch (IOException | SQLException e) {
 				logger.error("Unable to save players game.", e);
 			} finally {
 				session.handlePlayerSaverResponse();
