@@ -9,10 +9,11 @@ import io.netty.handler.codec.http.HttpRequest;
 import io.netty.handler.codec.http.HttpResponse;
 import io.netty.handler.codec.http.HttpResponseStatus;
 
-import java.io.File;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 import java.util.Date;
 
 import org.apollo.fs.FileSystem;
@@ -38,7 +39,7 @@ public final class HttpRequestWorker extends RequestWorker<HttpRequest, Resource
 	/**
 	 * The directory with web files.
 	 */
-	private static final File WWW_DIRECTORY = new File("./data/www/");
+	private static final Path WWW_PATH = Paths.get("data/www");
 
 	/**
 	 * The default character set.
@@ -52,7 +53,7 @@ public final class HttpRequestWorker extends RequestWorker<HttpRequest, Resource
 	 * @param fs The file system.
 	 */
 	public HttpRequestWorker(UpdateDispatcher dispatcher, FileSystem fs) {
-		super(dispatcher, new CombinedResourceProvider(new VirtualResourceProvider(fs), new HypertextResourceProvider(WWW_DIRECTORY)));
+		super(dispatcher, new CombinedResourceProvider(new VirtualResourceProvider(fs), new HypertextResourceProvider(WWW_PATH)));
 	}
 
 	@Override
@@ -65,19 +66,15 @@ public final class HttpRequestWorker extends RequestWorker<HttpRequest, Resource
 		String path = request.getUri();
 		ByteBuffer buf = provider.get(path);
 
-		ByteBuf wrappedBuf;
 		HttpResponseStatus status = HttpResponseStatus.OK;
-
 		String mimeType = getMimeType(request.getUri());
 
 		if (buf == null) {
 			status = HttpResponseStatus.NOT_FOUND;
-			wrappedBuf = createErrorPage(status, "The page you requested could not be found.");
 			mimeType = "text/html";
-		} else {
-			wrappedBuf = Unpooled.wrappedBuffer(buf);
 		}
 
+		ByteBuf wrappedBuf = buf == null ? createErrorPage(status, "The page you requested could not be found.") : Unpooled.wrappedBuffer(buf);
 		HttpResponse resp = new DefaultHttpResponse(request.getProtocolVersion(), status);
 
 		resp.headers().set("Date", new Date());
@@ -102,6 +99,7 @@ public final class HttpRequestWorker extends RequestWorker<HttpRequest, Resource
 		if (name.endsWith("/")) {
 			name = name.concat("index.html");
 		}
+
 		if (name.endsWith(".htm") || name.endsWith(".html")) {
 			return "text/html";
 		} else if (name.endsWith(".css")) {
@@ -117,6 +115,7 @@ public final class HttpRequestWorker extends RequestWorker<HttpRequest, Resource
 		} else if (name.endsWith(".txt")) {
 			return "text/plain";
 		}
+
 		return "application/octect-stream";
 	}
 

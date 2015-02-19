@@ -1,59 +1,66 @@
 package org.apollo.update.resource;
 
-import java.io.File;
 import java.io.IOException;
-import java.io.RandomAccessFile;
 import java.net.URI;
 import java.nio.ByteBuffer;
+import java.nio.channels.FileChannel;
 import java.nio.channels.FileChannel.MapMode;
+import java.nio.file.Files;
+import java.nio.file.Path;
 
 /**
  * A {@link ResourceProvider} which provides additional hypertext resources.
  *
  * @author Graham
+ * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
 public final class HypertextResourceProvider implements ResourceProvider {
 
 	/**
-	 * The base directory from which documents are served.
+	 * The base {@link Path} from which documents are served.
 	 */
-	private final File base;
+	private final Path base;
 
 	/**
 	 * Creates a new hypertext resource provider with the specified base
 	 * directory.
 	 *
-	 * @param base The base directory.
+	 * @param base The base {@link Path}.
 	 */
-	public HypertextResourceProvider(File base) {
+	public HypertextResourceProvider(Path base) {
 		this.base = base;
 	}
 
 	@Override
 	public boolean accept(String path) throws IOException {
-		File f = new File(base, path);
-		URI target = f.toURI().normalize();
-		if (target.toASCIIString().startsWith(base.toURI().normalize().toASCIIString())) {
-			if (f.isDirectory()) {
-				f = new File(f, "index.html");
-			}
-			return f.exists();
+		Path root = base.resolve(path);
+
+		URI target = root.toUri().normalize();
+		if (!target.toASCIIString().startsWith(base.toUri().normalize().toASCIIString())) {
+			return false;
 		}
-		return false;
+
+		if (Files.isDirectory(root)) {
+			root = root.resolve("index.html");
+		}
+
+		return Files.exists(root);
 	}
 
 	@Override
 	public ByteBuffer get(String path) throws IOException {
-		File f = new File(base, path);
-		if (f.isDirectory()) {
-			f = new File(f, "index.html");
+		Path root = base.resolve(path);
+
+		if (Files.isDirectory(root)) {
+			root = root.resolve("index.html");
 		}
-		if (!f.exists()) {
+
+		if (!Files.exists(root)) {
 			return null;
 		}
 
-		try (RandomAccessFile raf = new RandomAccessFile(f, "r")) {
-			ByteBuffer buf = raf.getChannel().map(MapMode.READ_ONLY, 0, raf.length());
+		try (FileChannel channel = FileChannel.open(root)) {
+			ByteBuffer buf = channel.map(MapMode.READ_ONLY, 0, Files.size(root));
 			return buf;
 		}
 	}
