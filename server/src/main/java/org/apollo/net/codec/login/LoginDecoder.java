@@ -1,7 +1,6 @@
 package org.apollo.net.codec.login;
 
 import io.netty.buffer.ByteBuf;
-import io.netty.channel.ChannelFuture;
 import io.netty.channel.ChannelFutureListener;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.handler.codec.ByteToMessageDecoder;
@@ -216,10 +215,7 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 		ByteBuf resp = ctx.alloc().buffer(1);
 		resp.writeByte(errorCode);
 
-		ChannelFuture future = ctx.writeAndFlush(resp);
-		if (future.isDone()) {
-			future.addListener(ChannelFutureListener.CLOSE);
-		}
+		ctx.writeAndFlush(resp).addListener(ChannelFutureListener.CLOSE);
 	}
 
 }
