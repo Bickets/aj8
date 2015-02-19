@@ -2,6 +2,7 @@ package org.apollo.update.resource;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.Optional;
 
 /**
  * A class which provides resources.
@@ -22,12 +23,13 @@ public interface ResourceProvider {
 	boolean accept(String path) throws IOException;
 
 	/**
-	 * Gets a resource by its path.
+	 * Returns a {@link ByteBuffer} resource wrapped within an {@link Optional}.
 	 *
 	 * @param path The path.
-	 * @return The resource, or {@code null} if it doesn't exist.
-	 * @throws IOException if an I/O error occurs.
+	 * @return The resource or {@link Optional#empty Optional#empty} if it does
+	 *         not exist.
+	 * @throws IOException If some I/O exception occurs.
 	 */
-	ByteBuffer get(String path) throws IOException;
+	Optional<ByteBuffer> get(String path) throws IOException;
 
 }

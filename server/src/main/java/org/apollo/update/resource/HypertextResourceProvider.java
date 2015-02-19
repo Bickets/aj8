@@ -7,6 +7,7 @@ import java.nio.channels.FileChannel;
 import java.nio.channels.FileChannel.MapMode;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.util.Optional;
 
 /**
  * A {@link ResourceProvider} which provides additional hypertext resources.
@@ -48,7 +49,7 @@ public final class HypertextResourceProvider implements ResourceProvider {
 	}
 
 	@Override
-	public ByteBuffer get(String path) throws IOException {
+	public Optional<ByteBuffer> get(String path) throws IOException {
 		Path root = base.resolve(path);
 
 		if (Files.isDirectory(root)) {
@@ -56,12 +57,12 @@ public final class HypertextResourceProvider implements ResourceProvider {
 		}
 
 		if (!Files.exists(root)) {
-			return null;
+			return Optional.empty();
 		}
 
 		try (FileChannel channel = FileChannel.open(root)) {
 			ByteBuffer buf = channel.map(MapMode.READ_ONLY, 0, Files.size(root));
-			return buf;
+			return Optional.of(buf);
 		}
 	}
 

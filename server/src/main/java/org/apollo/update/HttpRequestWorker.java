@@ -15,6 +15,7 @@ import java.nio.charset.Charset;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Date;
+import java.util.Optional;
 
 import org.apollo.fs.FileSystem;
 import org.apollo.update.resource.CombinedResourceProvider;
@@ -64,17 +65,17 @@ public final class HttpRequestWorker extends RequestWorker<HttpRequest, Resource
 	@Override
 	protected void service(ResourceProvider provider, Channel channel, HttpRequest request) throws IOException {
 		String path = request.getUri();
-		ByteBuffer buf = provider.get(path);
+		Optional<ByteBuffer> buf = provider.get(path);
 
 		HttpResponseStatus status = HttpResponseStatus.OK;
 		String mimeType = getMimeType(request.getUri());
 
-		if (buf == null) {
+		if (!buf.isPresent()) {
 			status = HttpResponseStatus.NOT_FOUND;
 			mimeType = "text/html";
 		}
 
-		ByteBuf wrappedBuf = buf == null ? createErrorPage(status, "The page you requested could not be found.") : Unpooled.wrappedBuffer(buf);
+		ByteBuf wrappedBuf = buf.isPresent() ? Unpooled.wrappedBuffer(buf.get()) : createErrorPage(status, "The page you requested could not be found.");
 		HttpResponse resp = new DefaultHttpResponse(request.getProtocolVersion(), status);
 
 		resp.headers().set("Date", new Date());

@@ -2,6 +2,10 @@ package org.apollo.update.resource;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.Arrays;
+import java.util.List;
+import java.util.Objects;
+import java.util.Optional;
 
 import org.apollo.fs.FileSystem;
 
@@ -14,11 +18,9 @@ import org.apollo.fs.FileSystem;
 public final class VirtualResourceProvider implements ResourceProvider {
 
 	/**
-	 * An array of valid prefixes.
+	 * A {@link List} of valid prefixes.
 	 */
-	private static final String[] VALID_PREFIXES = { "crc", "title", "config",
-			"interface", "media", "versionlist", "textures", "wordenc",
-			"sounds" };
+	private static final List<String> VALID_PREFIXES = Arrays.asList("/crc", "/title", "/config", "/interface", "/media", "/versionlist", "/textures", "/wordenc", "/sounds");
 
 	/**
 	 * The file system.
@@ -36,36 +38,36 @@ public final class VirtualResourceProvider implements ResourceProvider {
 
 	@Override
 	public boolean accept(String path) throws IOException {
-		for (String prefix : VALID_PREFIXES) {
-			if (path.startsWith("/" + prefix)) {
-				return true;
-			}
-		}
-		return false;
+		Objects.requireNonNull(path);
+
+		return VALID_PREFIXES.stream().anyMatch(path::startsWith);
 	}
 
 	@Override
-	public ByteBuffer get(String path) throws IOException {
+	public Optional<ByteBuffer> get(String path) throws IOException {
+		Objects.requireNonNull(path);
+
 		if (path.startsWith("/crc")) {
-			return fs.getArchiveHashes();
+			return Optional.of(fs.getArchiveHashes());
 		} else if (path.startsWith("/title")) {
-			return fs.getFile(0, 1);
+			return Optional.of(fs.getFile(0, 1));
 		} else if (path.startsWith("/config")) {
-			return fs.getFile(0, 2);
+			return Optional.of(fs.getFile(0, 2));
 		} else if (path.startsWith("/interface")) {
-			return fs.getFile(0, 3);
+			return Optional.of(fs.getFile(0, 3));
 		} else if (path.startsWith("/media")) {
-			return fs.getFile(0, 4);
+			return Optional.of(fs.getFile(0, 4));
 		} else if (path.startsWith("/versionlist")) {
-			return fs.getFile(0, 5);
+			return Optional.of(fs.getFile(0, 5));
 		} else if (path.startsWith("/textures")) {
-			return fs.getFile(0, 6);
+			return Optional.of(fs.getFile(0, 6));
 		} else if (path.startsWith("/wordenc")) {
-			return fs.getFile(0, 7);
+			return Optional.of(fs.getFile(0, 7));
 		} else if (path.startsWith("/sounds")) {
-			return fs.getFile(0, 8);
+			return Optional.of(fs.getFile(0, 8));
 		}
-		return null;
+
+		return Optional.empty();
 	}
 
 }

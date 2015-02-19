@@ -2,6 +2,7 @@ package org.apollo.update.resource;
 
 import java.io.IOException;
 import java.nio.ByteBuffer;
+import java.util.Optional;
 import java.util.Set;
 
 import com.google.common.collect.ImmutableSet;
@@ -33,13 +34,13 @@ public final class CombinedResourceProvider implements ResourceProvider {
 	}
 
 	@Override
-	public ByteBuffer get(String path) throws IOException {
+	public Optional<ByteBuffer> get(String path) throws IOException {
 		for (ResourceProvider provider : providers) {
 			if (provider.accept(path)) {
 				return provider.get(path);
 			}
 		}
-		return null;
+		return Optional.empty();
 	}
 
 }
