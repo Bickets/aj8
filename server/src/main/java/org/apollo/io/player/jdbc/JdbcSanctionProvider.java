@@ -63,9 +63,14 @@ public final class JdbcSanctionProvider implements PlayerSanctionProvider {
 
 				switch (type) {
 				case "disabled":
-					return response = PlayerSanctionResponse.DISABLED;
+					/*
+					 * Return immediately if the account is disabled, even if
+					 * there are more results.
+					 */
+					return PlayerSanctionResponse.DISABLED;
+
 				case "muted":
-					response = PlayerSanctionResponse.OK;
+					response = PlayerSanctionResponse.MUTED;
 					break;
 				}
 			}

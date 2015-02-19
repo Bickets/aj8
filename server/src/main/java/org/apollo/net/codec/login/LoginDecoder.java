@@ -8,6 +8,7 @@ import io.netty.handler.codec.ByteToMessageDecoder;
 import java.net.InetSocketAddress;
 import java.security.SecureRandom;
 import java.util.List;
+import java.util.stream.IntStream;
 
 import net.burtleburtle.bob.rand.IsaacAlgorithm;
 
@@ -147,10 +148,7 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 
 		boolean lowMemory = lowMemoryFlag == 1;
 
-		int[] archiveCrcs = new int[9];
-		for (int i = 0; i < archiveCrcs.length; i++) {
-			archiveCrcs[i] = payload.readInt();
-		}
+		int[] archiveCrcs = IntStream.iterate(payload.readInt(), n -> payload.readInt()).limit(8).toArray();
 
 		int securePayloadLength = payload.readUnsignedByte();
 		if (securePayloadLength != loginLength - 41) {
@@ -193,9 +191,11 @@ public final class LoginDecoder extends ByteToMessageDecoder {
 		seed[3] = (int) serverSeed;
 
 		IsaacAlgorithm decodingRandom = new IsaacAlgorithm(seed);
+
 		for (int i = 0; i < seed.length; i++) {
 			seed[i] += 50;
 		}
+
 		IsaacAlgorithm encodingRandom = new IsaacAlgorithm(seed);
 
 		PlayerCredentials credentials = new PlayerCredentials(username, password, usernameHash, uid, address);
