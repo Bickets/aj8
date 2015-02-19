@@ -35,9 +35,7 @@ public final class ThreadUtil {
 	 * the logger with the exception and name of the specified thread the
 	 * exception occurred in.
 	 */
-	private static final UncaughtExceptionHandler DEFAULT_EXCEPTION_HANDLER = (thread, exception) -> {
-		LOGGER.error("Exception occured in thread {}", thread.getName(), exception);
-	};
+	private static final UncaughtExceptionHandler DEFAULT_EXCEPTION_HANDLER = (thread, exception) -> LOGGER.error("Exception occured in thread {}", thread.getName(), exception);
 
 	/**
 	 * Builds a {@link ThreadFactory} using the specified {@code String}
@@ -101,6 +99,7 @@ public final class ThreadUtil {
 	 * @author Ryley Kimmel <ryley.kimmel@live.com>
 	 */
 	public enum ThreadPriority {
+
 		/**
 		 * Represents the minimum priority of a thread.
 		 */

@@ -5,7 +5,7 @@ import java.util.HashSet;
 import java.util.Set;
 import java.util.stream.Stream;
 
-import org.apollo.util.MathUtil;
+import com.google.common.primitives.Ints;
 
 /**
  * Represents the set of the players skills.
@@ -142,7 +142,7 @@ public final class SkillSet {
 	 * @return The total level.
 	 */
 	public int getTotalLevel() {
-		return Stream.of(skills).mapToInt(skill -> skill.getMaximumLevel()).sum();
+		return Stream.of(skills).mapToInt(Skill::getMaximumLevel).sum();
 	}
 
 	/**
@@ -159,7 +159,7 @@ public final class SkillSet {
 		int ranged = skills[Skill.RANGED].getMaximumLevel();
 		int magic = skills[Skill.MAGIC].getMaximumLevel();
 
-		int baseLevel = MathUtil.max(strength + attack, magic * 2, ranged * 2);
+		int baseLevel = Ints.max(strength + attack, magic * 2, ranged * 2);
 		int combatLevel = (int) (baseLevel * 1.3 + defence + hitpoints + prayer / 2) / 4;
 
 		return combatLevel;
