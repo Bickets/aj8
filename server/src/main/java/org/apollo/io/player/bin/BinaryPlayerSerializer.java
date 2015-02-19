@@ -85,6 +85,8 @@ public final class BinaryPlayerSerializer extends PlayerSerializer {
 				out.writeByte(skill.getCurrentLevel());
 				out.writeDouble(skill.getExperience());
 			}
+		} finally {
+			appendToCache(player);
 		}
 	}
 
@@ -118,6 +120,27 @@ public final class BinaryPlayerSerializer extends PlayerSerializer {
 			return new PlayerSerializerResponse(LoginConstants.STATUS_OK, new Player(credentials, Player.DEFAULT_SPAWN_POSITION, world));
 		}
 
+		try {
+			/* Attempt to grab the cached player, if it exists. */
+			Player player = getFromCache(credentials.getEncodedUsername());
+
+			if (player != null) {
+				/* It exists, validate the caches credentials to the requested. */
+				if (!player.getName().equalsIgnoreCase(credentials.getUsername()) || !player.getPassword().equals(credentials.getPassword())) {
+					return new PlayerSerializerResponse(LoginConstants.STATUS_INVALID_CREDENTIALS);
+				}
+
+				return new PlayerSerializerResponse(LoginConstants.STATUS_OK, player);
+			}
+
+		} finally {
+			/*
+			 * Invalidate this cache entry, it will be added again when the
+			 * player is saved.
+			 */
+			removeFromCache(credentials.getEncodedUsername());
+		}
+
 		try (DataInputStream in = new DataInputStream(new FileInputStream(f))) {
 			// read credentials and privileges
 			String name = StreamUtil.readString(in);
@@ -149,20 +172,20 @@ public final class BinaryPlayerSerializer extends PlayerSerializer {
 				colors[i] = in.readUnsignedByte();
 			}
 
-			Player p = new Player(credentials, new Position(x, y, height), world);
-			p.setPrivilegeLevel(privilegeLevel);
-			p.setMembers(members);
-			p.setDesignedCharacter(designedCharacter);
-			p.setAppearance(new Appearance(gender, style, colors));
+			Player player = new Player(credentials, new Position(x, y, height), world);
+			player.setPrivilegeLevel(privilegeLevel);
+			player.setMembers(members);
+			player.setDesignedCharacter(designedCharacter);
+			player.setAppearance(new Appearance(gender, style, colors));
 
 			// read inventories
-			readInventory(in, p.getInventory());
-			readInventory(in, p.getEquipment());
-			readInventory(in, p.getBank());
+			readInventory(in, player.getInventory());
+			readInventory(in, player.getEquipment());
+			readInventory(in, player.getBank());
 
 			// read skills
 			int size = in.readUnsignedByte();
-			SkillSet skills = p.getSkillSet();
+			SkillSet skills = player.getSkillSet();
 			skills.stopFiringEvents();
 			try {
 				for (int i = 0; i < size; i++) {
@@ -174,7 +197,7 @@ public final class BinaryPlayerSerializer extends PlayerSerializer {
 				skills.startFiringEvents();
 			}
 
-			return new PlayerSerializerResponse(LoginConstants.STATUS_OK, p);
+			return new PlayerSerializerResponse(LoginConstants.STATUS_OK, player);
 		}
 	}
 
