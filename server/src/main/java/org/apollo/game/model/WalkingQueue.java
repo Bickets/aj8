@@ -52,14 +52,12 @@ public final class WalkingQueue {
 
 		@Override
 		public boolean equals(Object obj) {
-			if (this == obj) {
-				return true;
+			if (obj instanceof Point) {
+				Point other = (Point) obj;
+				return position.equals(other.position) && direction == other.direction;
 			}
-			if (!(obj instanceof Point)) {
-				return false;
-			}
-			Point other = (Point) obj;
-			return position.equals(other.position) && direction == other.direction;
+
+			return false;
 		}
 
 	}

@@ -767,19 +767,17 @@ public final class Player extends GameCharacter {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
+		if (obj instanceof Player) {
+			Player other = (Player) obj;
+			return other.getEncodedName() == other.getEncodedName();
 		}
-		if (!(obj instanceof Player)) {
-			return false;
-		}
-		Player other = (Player) obj;
-		return other.getEncodedName() == other.getEncodedName();
+
+		return false;
 	}
 
 	@Override
 	public int hashCode() {
-		return (int) (getEncodedName() ^ getEncodedName() >>> 32L);
+		return Long.hashCode(getEncodedName());
 	}
 
 	@Override

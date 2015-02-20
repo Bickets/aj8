@@ -58,4 +58,19 @@ public final class GroundItem extends Entity {
 		return 1;
 	}
 
+	@Override
+	public int hashCode() {
+		return item.hashCode();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof GroundItem) {
+			GroundItem other = (GroundItem) obj;
+			return other.item.equals(item);
+		}
+
+		return false;
+	}
+
 }

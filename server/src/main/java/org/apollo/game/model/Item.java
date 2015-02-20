@@ -80,14 +80,12 @@ public final class Item {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
+		if (obj instanceof Item) {
+			Item other = (Item) obj;
+			return other.id == id && other.amount == amount;
 		}
-		if (!(obj instanceof Item)) {
-			return false;
-		}
-		Item other = (Item) obj;
-		return other.id == id && other.amount == amount;
+
+		return false;
 	}
 
 	@Override

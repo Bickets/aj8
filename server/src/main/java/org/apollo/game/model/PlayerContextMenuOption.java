@@ -84,19 +84,17 @@ public final class PlayerContextMenuOption {
 
 	@Override
 	public int hashCode() {
-		return (int) name.hashCode() * position * (top ? 1231 : 1237);
+		return (int) name.hashCode() * position * Boolean.hashCode(top);
 	}
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
+		if (obj instanceof PlayerContextMenuOption) {
+			PlayerContextMenuOption other = (PlayerContextMenuOption) obj;
+			return name.equals(other.name) && top == other.top && position == other.position;
 		}
-		if (!(obj instanceof PlayerContextMenuOption)) {
-			return false;
-		}
-		PlayerContextMenuOption other = (PlayerContextMenuOption) obj;
-		return name.equals(other.name) && top == other.top && position == other.position;
+
+		return false;
 	}
 
 }

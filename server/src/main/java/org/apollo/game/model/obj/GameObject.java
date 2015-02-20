@@ -204,6 +204,16 @@ public final class GameObject extends Entity {
 	}
 
 	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof GameObject) {
+			GameObject other = (GameObject) obj;
+			return other.position.equals(position) && other.id == id && other.orientation == orientation && other.type == type;
+		}
+
+		return false;
+	}
+
+	@Override
 	public int getSize() {
 		return getDefinition().getSize();
 	}

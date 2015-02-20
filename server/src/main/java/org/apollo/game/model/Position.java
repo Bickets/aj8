@@ -213,14 +213,12 @@ public final class Position {
 
 	@Override
 	public boolean equals(Object obj) {
-		if (this == obj) {
-			return true;
+		if (obj instanceof Position) {
+			Position other = (Position) obj;
+			return height == other.height && y == other.y && x == other.x;
 		}
-		if (!(obj instanceof Position)) {
-			return false;
-		}
-		Position other = (Position) obj;
-		return height == other.height && y == other.y && x == other.x;
+
+		return false;
 	}
 
 	@Override

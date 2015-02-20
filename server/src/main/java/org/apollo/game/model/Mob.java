@@ -65,6 +65,13 @@ public final class Mob extends GameCharacter {
 	}
 
 	/**
+	 * Returns the id of this mob.
+	 */
+	public int getId() {
+		return definition.getId();
+	}
+
+	/**
 	 * Returns this mobs spawn position.
 	 */
 	public Position getSpawnPosition() {
@@ -123,6 +130,23 @@ public final class Mob extends GameCharacter {
 	@Override
 	public String toString() {
 		return StringUtil.simpleClassName(this) + " [spawnPosition=" + spawnPosition + ", movementArea=" + movementArea + ", movementDistance=" + movementDistance + "]";
+	}
+
+	@Override
+	public int hashCode() {
+		final int prime = 31;
+		int result = prime * spawnPosition.hashCode() + movementArea.hashCode();
+		return prime * result + getId();
+	}
+
+	@Override
+	public boolean equals(Object obj) {
+		if (obj instanceof Mob) {
+			Mob other = (Mob) obj;
+			return spawnPosition.equals(other.spawnPosition) && movementArea.equals(other.movementArea) && getId() == other.getId();
+		}
+
+		return false;
 	}
 
 }
