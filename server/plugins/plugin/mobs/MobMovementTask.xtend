@@ -1,7 +1,6 @@
 package plugin.mobs
 
 import org.apollo.game.model.Mob
-import org.apollo.game.model.Position
 import org.apollo.game.task.Task
 import org.eclipse.xtend.lib.annotations.Data
 
@@ -55,32 +54,7 @@ import static plugin.mobs.MobMovementTask.Stage.*
 				}
 			}
 			case WALK_IN_AREA: {
-				val steps = randomExcludesZero(3) + 1
 
-				var currentPosition = mob.position
-
-				val oldPositions = <Position>newHashSet
-				oldPositions += currentPosition
-
-				for (var step = 0; step < steps; step++) {
-					val positions = mob.world.traversalMap.getNearbyTraversableTiles(currentPosition, mob.size)
-					val iterator = positions.iterator
-					while (iterator.hasNext) {
-						val pos = iterator.next
-						if (!mob.movementArea.allWithinArea(pos, mob.size, mob.movementDistance) ||
-							oldPositions.contains(pos)) {
-							iterator.remove
-						}
-					}
-
-					val Position[] array = positions.toArray(newArrayOfSize(positions.size))
-					if (array.length > 0) {
-						val position = array.get(random(array.length))
-						mob.walkingQueue.addStep(position)
-						oldPositions += position
-						currentPosition = position
-					}
-				}
 			}
 			default: {
 			}
