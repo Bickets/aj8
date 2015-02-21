@@ -607,7 +607,7 @@ public final class Inventory implements Cloneable {
 		} finally {
 			startFiringEvents();
 
-			if (removed != amount) {
+			if (removed > 0) {
 				notifyItemsUpdated();
 			}
 		}
