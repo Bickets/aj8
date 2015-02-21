@@ -52,6 +52,9 @@ public final class TradeInterfaceListener implements InterfaceListener {
 			session.decline(true);
 		}
 
+		player.getAttributes().setTradeRequest(null);
+		session.getOther().getAttributes().setTradeRequest(null);
+
 		player.getInventory().removeListener(invListener);
 		player.getTrade().removeListener(tradeListener);
 	}

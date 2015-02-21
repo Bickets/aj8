@@ -12,7 +12,7 @@ import static org.apollo.game.model.inv.InventoryConstants.*
 
 class Trade {
 
-	def static openTrade(Player player, Player other) {
+	def static open(Player player, Player other) {
 		var session = player.attributes.tradeSession
 		var otherSession = other.attributes.tradeSession
 

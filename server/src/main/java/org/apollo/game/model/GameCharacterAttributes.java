@@ -52,6 +52,12 @@ public final class GameCharacterAttributes {
 	private static final AttributeKey<TradeSession> TRADE_SESSION = AttributeKey.valueOf("trade_session");
 
 	/**
+	 * An attribute key representing that a request to trade has been
+	 * initialized.
+	 */
+	private static final AttributeKey<Player> TRADE_REQUEST = AttributeKey.valueOf("trade_request");
+
+	/**
 	 * Checks if this player is currently teleporting.
 	 *
 	 * @return {@code true} if so, {@code false} if not.
@@ -110,6 +116,20 @@ public final class GameCharacterAttributes {
 	 */
 	public void setTradeSession(TradeSession session) {
 		attributes.set(TRADE_SESSION, session);
+	}
+
+	/**
+	 * Returns the current trade request.
+	 */
+	public Player getTradeRequest() {
+		return attributes.get(TRADE_REQUEST);
+	}
+
+	/**
+	 * Sets the current trade request.
+	 */
+	public void setTradeRequest(Player player) {
+		attributes.set(TRADE_REQUEST, player);
 	}
 
 }
