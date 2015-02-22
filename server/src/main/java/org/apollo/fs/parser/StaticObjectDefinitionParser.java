@@ -183,18 +183,24 @@ public final class StaticObjectDefinitionParser {
 			if (def.hasActions()) {
 				traversalMap.markBlocked(position.getHeight(), position.getX(), position.getY());
 			}
-		} else if (type == GENERAL_PROP || type == WALKABLE_PROP) {
-			if (def.getSize() > 0 || !def.isSolid()) {
-				traversalMap.markBlocked(position.getHeight(), position.getX(), position.getY());
-			}
-		} else if (type.getId() >= 12) {
+		}
+
+		if (type == GENERAL_PROP) {
 			traversalMap.markBlocked(position.getHeight(), position.getX(), position.getY());
-		} else if (optionalGroup.isPresent()) {
+		}
+
+		if (type.getId() >= 12 && type != GROUND_PROP) {
+			traversalMap.markBlocked(position.getHeight(), position.getX(), position.getY());
+		}
+
+		if (optionalGroup.isPresent()) {
 			GameObjectGroup group = optionalGroup.get();
 			if (group == WALL) {
 				traversalMap.markWall(orientation, position.getHeight(), position.getX(), position.getY(), type, def.isImpenetrable());
 			}
-		} else if (type == DIAGONAL_WALL) {
+		}
+
+		if (type == DIAGONAL_WALL) {
 			traversalMap.markBlocked(position.getHeight(), position.getX(), position.getY());
 		}
 
