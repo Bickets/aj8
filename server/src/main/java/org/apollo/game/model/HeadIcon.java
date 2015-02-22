@@ -39,6 +39,7 @@ public final class HeadIcon<E extends Enum<E> & Icon> {
 	 * @author Ryley Kimmel <ryley.kimmel@live.com>
 	 */
 	public enum Skull implements Icon {
+
 		/**
 		 * Represents a white skull icon.
 		 */
@@ -76,6 +77,7 @@ public final class HeadIcon<E extends Enum<E> & Icon> {
 	 * @author Ryley Kimmel <ryley.kimmel@live.com>
 	 */
 	public enum Prayer implements Icon {
+
 		/**
 		 * Represents the protect melee prayer icon.
 		 */

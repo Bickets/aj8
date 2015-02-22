@@ -4,7 +4,6 @@ import static org.apollo.game.model.obj.GameObjectGroup.WALL;
 import static org.apollo.game.model.obj.GameObjectType.DIAGONAL_WALL;
 import static org.apollo.game.model.obj.GameObjectType.GENERAL_PROP;
 import static org.apollo.game.model.obj.GameObjectType.GROUND_PROP;
-import static org.apollo.game.model.obj.GameObjectType.WALKABLE_PROP;
 import static org.apollo.game.model.region.Tile.FLAG_BLOCKED;
 import static org.apollo.game.model.region.Tile.FLAG_BRIDGE;
 

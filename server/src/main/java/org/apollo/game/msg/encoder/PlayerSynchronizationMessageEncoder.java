@@ -286,8 +286,7 @@ public final class PlayerSynchronizationMessageEncoder implements MessageEncoder
 		GamePacketBuilder playerProperties = new GamePacketBuilder();
 
 		playerProperties.put(DataType.BYTE, appearance.getGender().toInteger());
-		playerProperties.put(DataType.BYTE, block.getSkullIcon().getId());
-		playerProperties.put(DataType.BYTE, block.getPrayerIcon().getId());
+		playerProperties.put(DataType.BYTE, 0);
 
 		Inventory equipment = block.getEquipment();
 		int[] style = appearance.getStyle();

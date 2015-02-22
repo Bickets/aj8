@@ -87,7 +87,7 @@ public abstract class GameCharacter extends Entity {
 	 * @return {@code true} if so, {@code false} if not.
 	 */
 	public final boolean isActive() {
-		return index != -1;
+		return getIndex() != -1;
 	}
 
 	/**
@@ -96,7 +96,9 @@ public abstract class GameCharacter extends Entity {
 	 * @return The index of this entity.
 	 */
 	public final int getIndex() {
-		return index;
+		synchronized (this) {
+			return index;
+		}
 	}
 
 	/**
@@ -115,9 +117,7 @@ public abstract class GameCharacter extends Entity {
 	 * {@link GameCharacterRepository}.
 	 */
 	public final void resetIndex() {
-		synchronized (this) {
-			index = -1;
-		}
+		setIndex(-1);
 	}
 
 	/**
