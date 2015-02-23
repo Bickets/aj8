@@ -23,10 +23,11 @@ public final class LanguageUtil {
 	 * Suppresses the default-public constructor preventing this class from
 	 * being instantiated by other classes.
 	 *
-	 * @throws InstantiationError If this class is instantiated within itself.
+	 * @throws UnsupportedOperationException If this class is instantiated
+	 *             within itself.
 	 */
 	private LanguageUtil() {
-		throw new InstantiationError("static-utility classes may not be instantiated.");
+		throw new UnsupportedOperationException("static-utility classes may not be instantiated.");
 	}
 
 }

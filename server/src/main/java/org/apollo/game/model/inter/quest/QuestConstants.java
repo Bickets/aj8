@@ -36,10 +36,11 @@ public final class QuestConstants {
 	 * Suppresses the default-public constructor preventing this class from
 	 * being instantiated by other classes.
 	 *
-	 * @throws InstantiationError If this class is instantiated within itself.
+	 * @throws UnsupportedOperationException If this class is instantiated
+	 *             within itself.
 	 */
 	private QuestConstants() {
-		throw new InstantiationError("constant-container classes may not be instantiated.");
+		throw new UnsupportedOperationException("constant-container classes may not be instantiated.");
 	}
 
 }
