@@ -1,14 +1,13 @@
 package org.apollo.util;
 
+import static com.google.common.io.ByteStreams.toByteArray;
+
 import java.io.ByteArrayInputStream;
 import java.io.IOException;
-import java.io.InputStream;
 import java.util.zip.GZIPInputStream;
 
 import org.apache.tools.bzip2.CBZip2InputStream;
 import org.apollo.fs.FileSystem;
-
-import com.google.common.io.ByteStreams;
 
 /**
  * A static-utility class containing containing extension or helper methods for
@@ -26,7 +25,7 @@ public final class CompressionUtil {
 	 * @throws IOException If some I/O exception occurs.
 	 */
 	public static byte[] ungzip(byte[] data) throws IOException {
-		return uncompress(new GZIPInputStream(new ByteArrayInputStream(data)));
+		return toByteArray(new GZIPInputStream(new ByteArrayInputStream(data)));
 	}
 
 	/**
@@ -64,18 +63,7 @@ public final class CompressionUtil {
 	 * @throws IOException If some I/O exception occurs.
 	 */
 	public static byte[] unbzip2(byte[] data) throws IOException {
-		return uncompress(new CBZip2InputStream(new ByteArrayInputStream(data)));
-	}
-
-	/**
-	 * Uncompresses a {@code byte} array from the specified {@link InputStream}.
-	 *
-	 * @param is The input stream to uncompress the data from.
-	 * @return The uncompressed data.
-	 * @throws IOException If some I/O exception occurs.
-	 */
-	private static byte[] uncompress(InputStream is) throws IOException {
-		return ByteStreams.toByteArray(is);
+		return toByteArray(new CBZip2InputStream(new ByteArrayInputStream(data)));
 	}
 
 	/**
