@@ -37,11 +37,10 @@ public final class SkillLevelUpDialogueListener implements DialogueListener {
 
 	@Override
 	public String[] getLines() {
-		String name = Skill.getName(id);
-		String article = LanguageUtil.getIndefiniteArticle(name);
+		String article = LanguageUtil.getIndefiniteArticle(Skill.getName(id), true);
 
 		return new String[] {
-				"Congratulations! You've just advanced " + article + " " + name + " level!",
+				"Congratulations! You've just advanced " + article + " level!",
 				"You have now reached level " + skill.getMaximumLevel() + "!" };
 	}
 

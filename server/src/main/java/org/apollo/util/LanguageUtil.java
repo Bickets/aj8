@@ -1,5 +1,9 @@
 package org.apollo.util;
 
+import java.util.List;
+
+import com.google.common.primitives.Chars;
+
 /**
  * A utility class which contains language-related methods.
  *
@@ -8,15 +12,36 @@ package org.apollo.util;
 public final class LanguageUtil {
 
 	/**
-	 * Gets the indefinite article of a 'thing'.
-	 *
-	 * @param thing The thing.
-	 * @return The indefinite article.
+	 * A {@link List} of vowel {@code chars}.
 	 */
-	public static String getIndefiniteArticle(String thing) {
-		char first = thing.toLowerCase().charAt(0);
-		boolean vowel = first == 'a' || first == 'e' || first == 'i' || first == 'o' || first == 'u';
-		return vowel ? "an" : "a";
+	private static final List<Character> VOWELS = Chars.asList('a', 'e', 'i', 'o', 'u');
+
+	/**
+	 * Returns the indefinite article for the specified {@code String}.
+	 * 
+	 * @param string The {@code String} to find the indefinite article for.
+	 * @param join A flag to determine whether or not to join the specified
+	 *            {@code String} and the returned indefinite article.
+	 * @return <b>Only the indefinite article if {@code join} is {@code false}
+	 *         </b>. Otherwise the indefinite article followed by the specified
+	 *         {@link String} will be joined, delimited by a space and returned.
+	 */
+	public static String getIndefiniteArticle(String string, boolean join) {
+		char first = string.toLowerCase().charAt(0);
+		String article = isVowel(first) ? "an" : "a";
+		return article + (join ? " " + string : "");
+	}
+
+	/**
+	 * Returns a flag denoting whether or not the specified {@code char} is a
+	 * vowel.
+	 * 
+	 * @param character The character to check.
+	 * @return {@code true} if and only if the specified {@code char} is a
+	 *         vowel.
+	 */
+	public static boolean isVowel(char character) {
+		return VOWELS.contains(character);
 	}
 
 	/**

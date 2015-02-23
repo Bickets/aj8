@@ -32,11 +32,10 @@ public final class SynchronizationSkillListener implements SkillListener {
 
 	@Override
 	public void leveledUp(SkillSet set, int id, Skill skill) {
-		String name = Skill.getName(id);
-		String article = LanguageUtil.getIndefiniteArticle(name);
+		String article = LanguageUtil.getIndefiniteArticle(Skill.getName(id), true);
 		int level = skill.getMaximumLevel();
 
-		player.sendMessage("You've just advanced " + article + " " + name + " level! You have reached level " + level + ".");
+		player.sendMessage("You've just advanced " + article + " level! You have reached level " + level + ".");
 
 		if (level == SkillSet.MAXIMUM_LEVEL) {
 			player.sendMessage("Well done! You've achieved the highest possible level in this skill.");
