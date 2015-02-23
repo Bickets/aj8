@@ -1,10 +1,14 @@
 package org.apollo.game.event;
 
 import java.util.Collection;
+import java.util.Optional;
+import java.util.function.Consumer;
 
 import org.apollo.game.event.annotate.SubscribesTo;
 import org.apollo.game.model.Player;
+import org.apollo.util.ClassUtil;
 
+import com.google.common.base.Preconditions;
 import com.google.common.collect.ArrayListMultimap;
 import com.google.common.collect.Multimap;
 
@@ -18,40 +22,36 @@ public final class UniversalEventProvider implements EventProvider {
 	/**
 	 * A {@link Multimap} of {@link Event} classes to subscribers.
 	 */
-	@SuppressWarnings("rawtypes")
-	private final Multimap<Class<? extends Event>, EventSubscriber> events = ArrayListMultimap.create();
+	private final Multimap<Class<? extends Event>, EventSubscriber<? super Event>> events = ArrayListMultimap.create();
 
 	/**
 	 * The universal context of this event provider.
 	 */
 	private final EventContext context = new UniversalEventContext();
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void provideSubscriber(EventSubscriber<?> subscriber) {
-		SubscribesTo annotation = subscriber.getClass().getAnnotation(SubscribesTo.class);
-		if (annotation == null) {
-			throw new NullPointerException(subscriber.toString() + " is not annotated with @SubscribesTo");
-		}
-
-		events.put(annotation.value(), subscriber);
+		checkSubscriber(subscriber, annotation -> events.put(annotation.value(), (EventSubscriber<? super Event>) subscriber));
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public void depriveSubscriber(EventSubscriber<?> subscriber) {
-		SubscribesTo annotation = subscriber.getClass().getAnnotation(SubscribesTo.class);
-		if (annotation == null) {
-			throw new NullPointerException(subscriber.toString() + " is not annotated with @SubscribesTo");
-		}
-
-		events.remove(annotation.value(), subscriber);
+		checkSubscriber(subscriber, annotation -> events.remove(annotation.value(), (EventSubscriber<? super Event>) subscriber));
 	}
 
-	@SuppressWarnings({ "rawtypes", "unchecked" })
+	private void checkSubscriber(EventSubscriber<?> subscriber, Consumer<SubscribesTo> consumer) {
+		Optional<SubscribesTo> optional = ClassUtil.getAnnotation(subscriber.getClass(), SubscribesTo.class);
+		Preconditions.checkArgument(optional.isPresent(), String.format("%s is not annotated with @SubscribesTo", subscriber.getClass()));
+		consumer.accept(optional.get());
+	}
+
 	@Override
 	public <E extends Event> void post(Player player, E event) {
-		Collection<EventSubscriber> subscribers = events.get(event.getClass());
+		Collection<EventSubscriber<? super Event>> subscribers = events.get(event.getClass());
 
-		for (EventSubscriber<E> subscriber : subscribers) {
+		for (EventSubscriber<? super Event> subscriber : subscribers) {
 			/* Check to be sure we can subscribe to the event. */
 			if (subscriber.test(event)) {
 				subscriber.subscribe(context, player, event);
