@@ -8,7 +8,7 @@ public final class BufferedConnection implements Runnable {
 	GameApplet applet;
 	private int bufferIndex;
 	private int cycle;
-	private boolean dummy = false;
+	private boolean stopped = false;
 	private boolean erred = false;
 	private InputStream input;
 	private OutputStream output;
@@ -27,7 +27,7 @@ public final class BufferedConnection implements Runnable {
 	}
 
 	public int available() throws IOException {
-		if (dummy) {
+		if (stopped) {
 			return 0;
 		}
 
@@ -35,7 +35,7 @@ public final class BufferedConnection implements Runnable {
 	}
 
 	public void debug() {
-		System.out.println("dummy:" + dummy);
+		System.out.println("stopped:" + stopped);
 		System.out.println("tcycl:" + cycle);
 		System.out.println("tnum:" + bufferIndex);
 		System.out.println("writer:" + writing);
@@ -48,7 +48,7 @@ public final class BufferedConnection implements Runnable {
 	}
 
 	public int read() throws IOException {
-		if (dummy) {
+		if (stopped) {
 			return 0;
 		}
 
@@ -56,7 +56,7 @@ public final class BufferedConnection implements Runnable {
 	}
 
 	public void read(byte[] buffer, int offset, int length) throws IOException {
-		if (dummy) {
+		if (stopped) {
 			return;
 		}
 
@@ -116,7 +116,7 @@ public final class BufferedConnection implements Runnable {
 	}
 
 	public void stop() {
-		dummy = true;
+		stopped = true;
 		try {
 			if (input != null) {
 				input.close();
@@ -141,7 +141,7 @@ public final class BufferedConnection implements Runnable {
 	}
 
 	public void write(byte[] buffer, int length, int offset) throws IOException {
-		if (dummy) {
+		if (stopped) {
 			return;
 		}
 
