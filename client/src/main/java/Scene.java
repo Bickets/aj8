@@ -499,9 +499,9 @@ public class Scene {
 		tiles[z][x][y].anInt1321 = l;
 	}
 
-	public void method279(int plane, int x, int y, int l, int orientation, int texture, int centreZ, int eastZ, int northEastZ,
+	public void method279(int plane, int x, int y, int collision, int orientation, int texture, int centreZ, int eastZ, int northEastZ,
 			int northZ, int k2, int l2, int i3, int j3, int k3, int l3, int i4, int j4, int k4, int l4) {
-		if (l == 0) {
+		if (collision == 0) {
 			GenericTile tile = new GenericTile(k2, l2, i3, j3, -1, k4, false);
 			for (int z = plane; z >= 0; z--) {
 				if (tiles[z][x][y] == null) {
@@ -512,7 +512,7 @@ public class Scene {
 			tiles[plane][x][y].aClass43_1311 = tile;
 			return;
 		}
-		if (l == 1) {
+		if (collision == 1) {
 			GenericTile tile = new GenericTile(k3, l3, i4, j4, texture, l4, centreZ == eastZ && centreZ == northEastZ
 					&& centreZ == northZ);
 			for (int z = plane; z >= 0; z--) {
@@ -525,7 +525,7 @@ public class Scene {
 			return;
 		}
 		ComplexTile tile = new ComplexTile(y, k3, j3, northEastZ, texture, i4, orientation, k2, k4, i3, northZ, eastZ, centreZ,
-				l, j4, l3, l2, x, l4);
+				collision, j4, l3, l2, x, l4);
 		for (int z = plane; z >= 0; z--) {
 			if (tiles[z][x][y] == null) {
 				tiles[z][x][y] = new SceneTile(x, y, z);
