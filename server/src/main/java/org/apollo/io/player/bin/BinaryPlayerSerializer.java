@@ -85,8 +85,6 @@ public final class BinaryPlayerSerializer extends PlayerSerializer {
 				out.writeByte(skill.getCurrentLevel());
 				out.writeDouble(skill.getExperience());
 			}
-		} finally {
-			appendToCache(player);
 		}
 	}
 
@@ -118,27 +116,6 @@ public final class BinaryPlayerSerializer extends PlayerSerializer {
 		File f = BinaryPlayerUtil.getFile(credentials.getUsername());
 		if (!f.exists()) {
 			return new PlayerSerializerResponse(LoginConstants.STATUS_OK, new Player(credentials, Player.DEFAULT_SPAWN_POSITION, world));
-		}
-
-		try {
-			/* Attempt to grab the cached player, if it exists. */
-			Player player = getFromCache(credentials.getEncodedUsername());
-
-			if (player != null) {
-				/* It exists, validate the caches credentials to the requested. */
-				if (!player.getName().equalsIgnoreCase(credentials.getUsername()) || !player.getPassword().equals(credentials.getPassword())) {
-					return new PlayerSerializerResponse(LoginConstants.STATUS_INVALID_CREDENTIALS);
-				}
-
-				return new PlayerSerializerResponse(LoginConstants.STATUS_OK, player);
-			}
-
-		} finally {
-			/*
-			 * Invalidate this cache entry, it will be added again when the
-			 * player is saved.
-			 */
-			removeFromCache(credentials.getEncodedUsername());
 		}
 
 		try (DataInputStream in = new DataInputStream(new FileInputStream(f))) {
