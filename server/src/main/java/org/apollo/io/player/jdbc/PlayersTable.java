@@ -16,7 +16,7 @@ import org.apollo.game.model.Position;
  *
  * @author Ryley Kimmel <ryley.kimmel@live.com>
  */
-public final class PlayersTable extends Table {
+public final class PlayersTable implements Table {
 
 	/**
 	 * A prepared statement which selects player information from the database.

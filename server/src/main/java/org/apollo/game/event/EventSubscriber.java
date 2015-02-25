@@ -11,6 +11,7 @@ import org.apollo.game.model.Player;
  *
  * @param <E> The type of event to the subscriber.
  */
+@FunctionalInterface
 public interface EventSubscriber<E extends Event> extends Predicate<E> {
 
 	/**
@@ -25,7 +26,6 @@ public interface EventSubscriber<E extends Event> extends Predicate<E> {
 
 	@Override
 	default boolean test(E event) {
-		// Method intended to be overridden.
 		return true;
 	}
 
